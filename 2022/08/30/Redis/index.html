@@ -7,7 +7,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/redis.png">
 <meta property="article:published_time" content="2022-08-30T10:25:07.000Z">
-<meta property="article:modified_time" content="2022-09-05T15:40:17.261Z">
+<meta property="article:modified_time" content="2022-09-05T15:56:07.530Z">
 <meta property="article:author" content="Whale">
 <meta property="article:tag" content="Redis">
 <meta name="twitter:card" content="summary">
@@ -53,7 +53,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: true,
-  postUpdate: '2022-09-05 23:40:17'
+  postUpdate: '2022-09-05 23:56:07'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -142,7 +142,7 @@
       }
     }
     detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/top_img.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Whale's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Redis Notes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-08-30T10:25:07.000Z" title="Created 2022-08-30 18:25:07">2022-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-05T15:40:17.261Z" title="Updated 2022-09-05 23:40:17">2022-09-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/">Database</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/Redis/">Redis</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis Notes"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1-Redis介绍相关知识"><a href="#1-Redis介绍相关知识" class="headerlink" title="1. Redis介绍相关知识"></a>1. Redis介绍相关知识</h2><p>Redis是单线程+多路IO复用技术</p>
+    })(window)</script><meta name="generator" content="Hexo 6.2.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">9</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">6</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/top_img.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Whale's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Redis Notes</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-08-30T10:25:07.000Z" title="Created 2022-08-30 18:25:07">2022-08-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-09-05T15:56:07.530Z" title="Updated 2022-09-05 23:56:07">2022-09-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/">Database</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Database/Redis/">Redis</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Redis Notes"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="1-Redis介绍相关知识"><a href="#1-Redis介绍相关知识" class="headerlink" title="1. Redis介绍相关知识"></a>1. Redis介绍相关知识</h2><p>Redis是单线程+多路IO复用技术</p>
 <p>多路复用是指使用一个线程来检查多个文件描述符（Socket）的就绪状态，比如调用select和poll函数，传入多个文件描述符，如果有一个文件描述符就绪，则返回，否则阻塞直到超时。得到就绪状态后进行真正的操作可以在同一个线程里执行，也可以启动线程执行（比如使用线程池）</p>
 <p>端口号<code>6379</code></p>
 <p>默认16个数据库，类似数组下标从0开始，初始默认使用0号库</p>
@@ -270,7 +270,7 @@
 <td>以新换旧，设置了新值同时获得旧值</td>
 </tr>
 </tbody></table>
-<p><img src="/2022/08/30/Redis/image-20220831005752139.png" alt="image-20220831005752139"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220831005752139.png" alt="image-20220831005752139"></p>
 <blockquote>
 <p>*NX: 当数据库中key不存在时，可以将key-value添加数据库</p>
 <p>*XX: 当数据库中key存在时，可以将key-value添加数据库，与NX参数互斥</p>
@@ -286,11 +286,11 @@
 <p>Redis单命令的原子性主要得益于Redis的单线程。</p>
 </blockquote>
 <h4 id="2-2-3-数据结构"><a href="#2-2-3-数据结构" class="headerlink" title="2.2.3 数据结构"></a>2.2.3 数据结构</h4><p>String的数据结构为简单动态字符串(Simple Dynamic String,缩写SDS)。是可以修改的字符串，内部结构实现上类似于Java的ArrayList，采用预分配冗余空间的方式来减少内存的频繁分配。</p>
-<p><img src="/2022/08/30/Redis/image-20220831010522193.png" alt="image-20220831010522193"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220831010522193.png" alt="image-20220831010522193"></p>
 <p>如图中所示，内部为当前字符串实际分配的空间capacity一般要高于实际字符串长度len。当字符串长度小于1M时，扩容都是加倍现有的空间，如果超过1M，扩容时一次只会多扩1M的空间。需要注意的是字符串最大长度为512M。</p>
 <h3 id="2-3-Redis列表-List"><a href="#2-3-Redis列表-List" class="headerlink" title="2.3 Redis列表(List)"></a>2.3 Redis列表(List)</h3><h4 id="2-3-1-简介"><a href="#2-3-1-简介" class="headerlink" title="2.3.1 简介"></a>2.3.1 简介</h4><p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。</p>
 <p>它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。</p>
-<p><img src="/2022/08/30/Redis/image-20220901100702152.png" alt="image-20220901100702152"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901100702152.png" alt="image-20220901100702152"></p>
 <h4 id="2-3-2-常用命令"><a href="#2-3-2-常用命令" class="headerlink" title="2.3.2 常用命令"></a>2.3.2 常用命令</h4><table>
 <thead>
 <tr>
@@ -338,7 +338,7 @@
 <h4 id="2-3-3-数据结构"><a href="#2-3-3-数据结构" class="headerlink" title="2.3.3 数据结构"></a>2.3.3 数据结构</h4><p>List的数据结构为快速链表quickList。</p>
 <p>首先在列表元素较少的情况下会使用一块连续的内存存储，这个结构是zipList，也即是压缩列表。它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成quicklist。</p>
 <p>因为普通的链表需要的附加指针空间太大，会比较浪费空间。比如这个列表里存的只是int类型的数据，结构上还需要两个额外的指针prev和next。</p>
-<p><img src="/2022/08/30/Redis/image-20220901101645368.png" alt="image-20220901101645368"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901101645368.png" alt="image-20220901101645368"></p>
 <p>Redis将链表和ziplist结合起来组成了quicklist。也就是将多个ziplist使用双向指针串起来使用。这样既满足了快速的插入删除性能，又不会出现太大的空间冗余。</p>
 <h3 id="2-4-Redis集合-Set"><a href="#2-4-Redis集合-Set" class="headerlink" title="2.4 Redis集合(Set)"></a>2.4 Redis集合(Set)</h3><h4 id="2-4-1-简介"><a href="#2-4-1-简介" class="headerlink" title="2.4.1 简介"></a>2.4.1 简介</h4><p>Redis set对外提供的功能与list类似，是一个列表的功能，特殊之处在于set是可以<strong>自动排重</strong>的，当你需要存储一个列表数据，又不希望出现重复数据时，set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，这个也是list所不能提供的。</p>
 <p>Redis的Set是string类型的<strong>无序集合</strong>。<strong>底层是一个value为null的hash表</strong>，所以添加，删除，查找的**复杂度都是O(1)**。</p>
@@ -399,11 +399,11 @@
 <h3 id="2-5-Redis哈希-Hash"><a href="#2-5-Redis哈希-Hash" class="headerlink" title="2.5 Redis哈希(Hash)"></a>2.5 Redis哈希(Hash)</h3><h4 id="2-5-1-简介"><a href="#2-5-1-简介" class="headerlink" title="2.5.1 简介"></a>2.5.1 简介</h4><p>Redis hash是一个键值对集合。是一个string类型的field和value的映射表，特别适合用于存储对象。</p>
 <p>类似Java里面的Map&lt;String,Object&gt;</p>
 <p>用户ID为查找的key，存储的value用户对象包含姓名，年龄，生日等信息，如果用普通的key&#x2F;value结构来存储，主要有以下2种存储方式：</p>
-<p><img src="/2022/08/30/Redis/image-20220901104741224.png" alt="image-20220901104741224"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901104741224.png" alt="image-20220901104741224"></p>
 <p>每次修改用户的某个属性需要，先反序列化改好后再序列化回去。开销较大。</p>
-<p><img src="/2022/08/30/Redis/image-20220901104754643.png" alt="image-20220901104754643"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901104754643.png" alt="image-20220901104754643"></p>
 <p>用户ID数据冗余</p>
-<p><img src="/2022/08/30/Redis/image-20220901104806546.png" alt="image-20220901104806546"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901104806546.png" alt="image-20220901104806546"></p>
 <p>通过 <code>key(用户ID) + field(属性标签)</code> 就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和并发修改控制的问题</p>
 <h4 id="2-5-2-常用命令"><a href="#2-5-2-常用命令" class="headerlink" title="2.5.2 常用命令"></a>2.5.2 常用命令</h4><table>
 <thead>
