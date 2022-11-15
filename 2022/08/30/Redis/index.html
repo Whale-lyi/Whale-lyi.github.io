@@ -11,7 +11,7 @@
   
   <title>
     
-      Redis Notes 
+      Redis(1) Basics 
       
       
       |
@@ -149,7 +149,7 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">Redis Notes</div>
+      <div class="post-title">Redis(1) Basics</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
@@ -769,9 +769,11 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">jedis.hset(<span class="string">&quot;hash1&quot;</span>,<span class="string">&quot;userName&quot;</span>,<span class="string">&quot;lisi&quot;</span>);</span><br><span class="line">System.out.println(jedis.hget(<span class="string">&quot;hash1&quot;</span>,<span class="string">&quot;userName&quot;</span>));</span><br><span class="line">Map&lt;String,String&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;String,String&gt;();</span><br><span class="line">map.put(<span class="string">&quot;telphone&quot;</span>,<span class="string">&quot;13810169999&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;address&quot;</span>,<span class="string">&quot;atguigu&quot;</span>);</span><br><span class="line">map.put(<span class="string">&quot;email&quot;</span>,<span class="string">&quot;abc@163.com&quot;</span>);</span><br><span class="line">jedis.hmset(<span class="string">&quot;hash2&quot;</span>,map);</span><br><span class="line">List&lt;String&gt; result = jedis.hmget(<span class="string">&quot;hash2&quot;</span>, <span class="string">&quot;telphone&quot;</span>,<span class="string">&quot;email&quot;</span>);</span><br></pre></td></tr></table></figure></li>
 <li><p>zset</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">jedis.zadd(<span class="string">&quot;zset01&quot;</span>, <span class="number">100d</span>, <span class="string">&quot;z3&quot;</span>);</span><br><span class="line">jedis.zadd(<span class="string">&quot;zset01&quot;</span>, <span class="number">90d</span>, <span class="string">&quot;l4&quot;</span>);</span><br><span class="line"> </span><br><span class="line">Set&lt;String&gt; zrange = jedis.zrange(<span class="string">&quot;zset01&quot;</span>, <span class="number">0</span>, -<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="7-SpringBoot整合Redis"><a href="#7-SpringBoot整合Redis" class="headerlink" title="7. SpringBoot整合Redis"></a>7. SpringBoot整合Redis</h2></li>
+</li>
 </ul>
 </li>
+</ul>
+<h2 id="7-SpringBoot整合Redis"><a href="#7-SpringBoot整合Redis" class="headerlink" title="7. SpringBoot整合Redis"></a>7. SpringBoot整合Redis</h2><ul>
 <li><p>引入依赖</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--redis--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.commons<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>commons-pool2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.11.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 </li>
@@ -938,7 +940,7 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Redis%20Notes + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F08%2F30%2FRedis%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Redis(1)%20Basics + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F08%2F30%2FRedis%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
