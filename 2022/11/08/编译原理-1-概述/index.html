@@ -279,40 +279,40 @@
 </ul>
 <h4 id="1-2-一个编译器的结构"><a href="#1-2-一个编译器的结构" class="headerlink" title="1.2 一个编译器的结构"></a>1.2 一个编译器的结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108230106768.png" alt="image-20221108230106768"></p>
 <h3 id="自制编译器："><a href="#自制编译器：" class="headerlink" title="自制编译器："></a>自制编译器：</h3><h4 id="1-可执行文件"><a href="#1-可执行文件" class="headerlink" title="1. 可执行文件"></a>1. 可执行文件</h4><ul>
-<li><p>现代的 Linux 上的可执行文件，通常是指符合 ELF（Executable and Linking Format）这 种特定形式的文件。</p>
+<li><p>现代的 Linux 上的可执行文件，通常是指符合 ELF(Executable and Linking Format)这种特定形式的文件。</p>
 <ul>
-<li>ls、cp 这些命令（command）对应的实体文件都是可执行文件，例如 /bin/ls 和 /bin/cp 等。</li>
+<li>ls、cp 这些命令(command)对应的实体文件都是可执行文件，例如 /bin/ls 和 /bin/cp 等。</li>
 <li>使用 file 命令能够查看文件是否符合 ELF 的形式。会显示 ELF……executable</li>
 </ul>
 </li>
-<li><p>ELF 文件中包含了<strong>程序（代码）</strong>以及如何运行该程序的<strong>相关信息（元数据）</strong>。程序（代码）就是机器语言（machine language）的列表。</p>
+<li><p>ELF 文件中包含了<strong>程序(代码)</strong>以及如何运行该程序的<strong>相关信息(元数据)</strong>。程序(代码)就是机器语言(machine language)的列表。</p>
 </li>
-<li>GCC 将 C 语言的程序转化为用机器语言（例如 486 的机器语言）描述的程序。<strong>将机器语言的程序按照 ELF 这种特定的文件格式注入文件，得到的就是可执行文件。</strong></li>
+<li>GCC 将 C 语言的程序转化为用机器语言(例如 486 的机器语言)描述的程序。<strong>将机器语言的程序按照 ELF 这种特定的文件格式注入文件，得到的就是可执行文件。</strong></li>
 </ul>
 <h4 id="2-编译"><a href="#2-编译" class="headerlink" title="2. 编译"></a>2. 编译</h4><blockquote>
 <p>gcc 命令是如何将 hello.c 转换为可执行文件的呢？</p>
 </blockquote>
 <p>C 语言的代码经过预处理、编译、汇编、链接这 4 个阶段的处理，最终生成可执行文件。</p>
 <p><strong>预处理</strong></p>
-<p>先由<strong>预处理器</strong>（preprocessor）对 #include 和 #define 进行处理。</p>
+<p>先由<strong>预处理器</strong>(preprocessor)对 #include 和 #define 进行处理。</p>
 <ul>
-<li>具体来说，读入头文件，将所有的宏展开，这就是预处理（preprocess）</li>
+<li>具体来说，读入头文件，将所有的宏展开，这就是预处理(preprocess)</li>
 <li>预处理的内容近似于 sed 命令和 awk 命令这样的纯文本操作，不考虑 C 语言语法的含义。</li>
 </ul>
 <p><strong>狭义的编译</strong></p>
-<p>编译器对预处理器的输出进行编译，生成<strong>汇编语言</strong>（assemble language）的代码。一般来说，汇编语言的代码的文件扩展名是“.s”。</p>
+<p>编译器对预处理器的输出进行编译，生成<strong>汇编语言</strong>(assemble language)的代码。一般来说，汇编语言的代码的文件扩展名是“.s”。</p>
 <p><strong>汇编</strong></p>
-<p>汇编语言的代码由<strong>汇编器</strong>（assembler）转换为机器语言，这个处理过程称为汇编（assemble）。</p>
-<p>汇编器的输出称为<strong>目标文件</strong>（object file）。一般来说，目标文件的扩展名是“.o”。</p>
+<p>汇编语言的代码由<strong>汇编器</strong>(assembler)转换为机器语言，这个处理过程称为汇编(assemble)。</p>
+<p>汇编器的输出称为<strong>目标文件</strong>(object file)。一般来说，目标文件的扩展名是“.o”。</p>
 <blockquote>
 <p>Linux 中，目标文件也是 ELF 文件。既然都是 ELF 文件，那么如何区分是目标文件还是可执行文件呢？</p>
 <p>ELF 文件中有用于提示文件种类的标志。例如， 用 file 命令来查看目标文件，会显示 ELF…relocatable，据此就能够将其和可执行文件区分开。</p>
 </blockquote>
 <p><strong>链接</strong></p>
-<p>目标文件本身还不能直接使用，无论是直接运行还是作为<strong>程序库</strong>（library）文件调用都不可以。</p>
-<p>将目标文件转换为最终可以使用的形式的处理称为链接（link）。使用程序库的情况下，会在这个阶段处理程序库的加载</p>
-<h4 id="3-程序运行环境"><a href="#3-程序运行环境" class="headerlink" title="3. 程序运行环境"></a>3. 程序运行环境</h4><p>链接的话题并非仅仅出现在 build 的过程中。如果使用了共享库，那么<strong>在开始运行程序时，链接才会发生</strong>。最近广泛使用的<strong>动态加载</strong>（dynamic load），就是一种将所有链接处理放到程序运行时进行的手法。</p>
-<p>在 Sun 的 Java VM 等具有代表性的 Java 的运行环境中，为了提高运行速度，采用了 <strong>JIT 编译器</strong>（Just In Time compiler）。JIT 编译器是在程序运行时进行处理，将程序转换为机器语言的编译器。也就是说，Java 语言是在运行时进行编译的。</p>
+<p>目标文件本身还不能直接使用，无论是直接运行还是作为<strong>程序库</strong>(library)文件调用都不可以。</p>
+<p>将目标文件转换为最终可以使用的形式的处理称为链接(link)。使用程序库的情况下，会在这个阶段处理程序库的加载</p>
+<h4 id="3-程序运行环境"><a href="#3-程序运行环境" class="headerlink" title="3. 程序运行环境"></a>3. 程序运行环境</h4><p>链接的话题并非仅仅出现在 build 的过程中。如果使用了共享库，那么<strong>在开始运行程序时，链接才会发生</strong>。最近广泛使用的<strong>动态加载</strong>(dynamic load)，就是一种将所有链接处理放到程序运行时进行的手法。</p>
+<p>在 Sun 的 Java VM 等具有代表性的 Java 的运行环境中，为了提高运行速度，采用了 <strong>JIT 编译器</strong>(Just In Time compiler)。JIT 编译器是在程序运行时进行处理，将程序转换为机器语言的编译器。也就是说，Java 语言是在运行时进行编译的。</p>
 
       </div>
       
