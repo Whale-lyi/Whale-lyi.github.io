@@ -175,7 +175,7 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h1><h2 id="自动机理论与词法分析器生成器"><a href="#自动机理论与词法分析器生成器" class="headerlink" title="自动机理论与词法分析器生成器"></a>自动机理论与词法分析器生成器</h2><h3 id="1-自动机"><a href="#1-自动机" class="headerlink" title="1. 自动机"></a>1. 自动机</h3><p>(Automaton 单数; Automata 复数)</p>
+        <h1 id="词法分析-3"><a href="#词法分析-3" class="headerlink" title="词法分析-3"></a>词法分析-3</h1><h2 id="自动机理论与词法分析器生成器"><a href="#自动机理论与词法分析器生成器" class="headerlink" title="自动机理论与词法分析器生成器"></a>自动机理论与词法分析器生成器</h2><h3 id="1-自动机"><a href="#1-自动机" class="headerlink" title="1. 自动机"></a>1. 自动机</h3><p>(Automaton 单数; Automata 复数)</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231221748.png" alt="image-20221115231221748" style="zoom:80%;" /></p>
 <ul>
 <li><p>两大要素：<strong>状态集</strong> $S$ 以及<strong>状态转移函数</strong> $\delta$</p>
@@ -187,7 +187,6 @@
 <h3 id="2-目标：正则表达式-RE-gt-词法分析器"><a href="#2-目标：正则表达式-RE-gt-词法分析器" class="headerlink" title="2. 目标：正则表达式 RE ==&gt; 词法分析器"></a>2. 目标：正则表达式 RE ==&gt; 词法分析器</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231625992.png" alt="image-20221115231625992" style="zoom:80%;" /></p>
 <blockquote>
 <p>终点固然令人向往, 这一路上的风景更是美不胜收</p>
-<p>$RE \Rightarrow \epsilon - NFA \Rightarrow NFA$</p>
 </blockquote>
 <h4 id="2-1-Definition-NFA-Nondeterministic-Finite-Automaton"><a href="#2-1-Definition-NFA-Nondeterministic-Finite-Automaton" class="headerlink" title="2.1 Definition (NFA (Nondeterministic Finite Automaton))"></a>2.1 Definition (NFA (Nondeterministic Finite Automaton))</h4><ul>
 <li><p>非确定性有穷自动机 $\mathcal{A}$ 是一个五元组 $\textcolor{red}{\mathcal{A} = (\Sigma, S, s_0, \delta, F)}$:</p>
@@ -207,12 +206,22 @@
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115234212017.png" alt="image-20221115234212017" style="zoom:80%;" /></p>
+<blockquote>
+<p>非确定性的来源：$\delta: S \times (\Sigma \cup { \textcolor{blue}{\epsilon} }) \rightarrow \textcolor{blue}{2^S} $</p>
+<ul>
+<li><p>$\epsilon$: 没有新来的字符也可能转移状态</p>
+</li>
+<li><p>接受同一个字符可能转移到不同的状态</p>
+</li>
+</ul>
+<p>$2^S$ 表示 $S$ 的所有子集，包括空集</p>
+</blockquote>
 <ul>
 <li><strong>约定：</strong>所有没有对应出边的字符默认指向一个不存在的 <strong>“空状态”</strong> ∅</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115232743665.png" alt="image-20221115232743665" style="zoom:80%;" /></p>
 <ul>
-<li>P和NP</li>
+<li>提出</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115232932323.png" alt="image-20221115232932323" style="zoom:80%;" /></p>
 <blockquote>
@@ -220,12 +229,15 @@
 </blockquote>
 <ul>
 <li>(非确定性)有穷自动机是一类极其简单的<strong>计算</strong>装置</li>
-<li>它可以<strong>识别</strong> (接受/拒绝) Σ 上的字符串</li>
+<li>它可以<strong>识别</strong> (接受/拒绝) $\Sigma$ 上的字符串</li>
 </ul>
 <h4 id="2-2-Definition-接受-Accept"><a href="#2-2-Definition-接受-Accept" class="headerlink" title="2.2 Definition (接受 (Accept))"></a>2.2 Definition (接受 (Accept))</h4><ul>
-<li><p>(非确定性) 有穷自动机 $\mathcal{A}$ 接受字符串 $x$, 当且仅当<strong>存在</strong>一条从开始状态 $s_0$ 到<strong>某个</strong>接受状态 $f ∈ F$、标号为 $x$ 的路径。</p>
+<li><p>(非确定性)有穷自动机 $\mathcal{A}$ 接受字符串 $x$, 当且仅当<strong>存在</strong>一条从开始状态 $s_0$ 到<strong>某个</strong>接受状态 $f ∈ F$、标号为 $x$ 的路径。</p>
 </li>
 <li><p>因此 $\mathcal{A}$ 定义了一种<strong>语言</strong> $L(\mathcal{A})$: 它能接受的所有字符串构成的集合</p>
+<blockquote>
+<p>若该语言与某一 RE 定义的语言相等，则表示该 RE 与该 NFA 等价</p>
+</blockquote>
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115234754835.png" alt="image-20221115234754835" style="zoom:80%;" /></p>
@@ -246,7 +258,7 @@
 <ul>
 <li>$1011 \in L(\mathcal{A})$: 不接受</li>
 <li>$0011 \in L(\mathcal{A})$: 接受</li>
-<li>$L(\mathcal{A})$ = {包含偶数个 1 或偶数个 0 的 01 串}</li>
+<li>$L(\mathcal{A}) = {包含偶数个 1 或偶数个 0 的 01 串}$</li>
 </ul>
 </li>
 </ul>
@@ -275,20 +287,147 @@
 <blockquote>
 <p>上面的确定性自动机和非确定性自动机是等价的</p>
 </blockquote>
-<h3 id="3-归纳推导"><a href="#3-归纳推导" class="headerlink" title="3. 归纳推导"></a>3. 归纳推导</h3><ul>
+<h4 id="2-5-归纳"><a href="#2-5-归纳" class="headerlink" title="2.5 归纳"></a>2.5 归纳</h4><ul>
 <li>NFA 简洁易于理解, 便于描述语言 $\textcolor{blue}{L(\mathcal{A})}$</li>
 <li>DFA 易于判断 $\textcolor{blue}{x \in L(\mathcal{A})}$, 适合产生词法分析器</li>
 <li>用 NFA 描述语言, 用 DFA 实现词法分析器</li>
 <li>$\textcolor{red}{RE \Rightarrow NFA \Rightarrow DFA \Rightarrow 词法分析器}$</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231625992.png" alt="image-20221115231625992" style="zoom:80%;" /></p>
-<h4 id="3-1-RE-gt-NFA"><a href="#3-1-RE-gt-NFA" class="headerlink" title="3.1 RE ==&gt; NFA"></a>3.1 RE ==&gt; NFA</h4>
+<h3 id="3-RE-Rightarrow-NFA"><a href="#3-RE-Rightarrow-NFA" class="headerlink" title="3. RE $\Rightarrow$ NFA"></a>3. RE $\Rightarrow$ NFA</h3><ul>
+<li><p>$r \Rightarrow N(r)$</p>
+</li>
+<li><p>要求：$\textcolor{red}{L(N(r)) = L(r)}$</p>
+</li>
+<li><p>从 RE 到 NFA: <strong>Thompson 构造法</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116142610957.png" alt="image-20221116142610957" style="zoom:80%;" /></p>
+</li>
+<li><p>Thompson 构造法的基本思想: <strong>按结构归纳</strong></p>
+</li>
+</ul>
+<h4 id="3-1-Definition-正则表达式"><a href="#3-1-Definition-正则表达式" class="headerlink" title="3.1 Definition (正则表达式)"></a>3.1 Definition (正则表达式)</h4><ul>
+<li><p>给定字母表 $\Sigma$ , $\Sigma$ 上的正则表达式<strong>由且仅由</strong>以下规则定义:</p>
+<ol>
+<li>$\epsilon$ 是正则表达式</li>
+<li>$\forall a \in \Sigma$, $a$ 是正则表达式</li>
+<li>如果 $s$ 是正则表达式, 则 $(s)$ 是正则表达式</li>
+<li>如果 $s$ 和 $t$ 是正则表达式, 则 $s|t, st, s^{*}$ 也是正则表达式</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>$\epsilon$ 是正则表达式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144106907.png" alt="image-20221116144106907" style="zoom:80%;" /></p>
+</li>
+<li><p>$a \in \Sigma$ 是正则表达式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144202213.png" alt="image-20221116144202213" style="zoom:80%;" /></p>
+</li>
+<li><p>如果 $s$ 是正则表达式, 则 $(s)$ 是正则表达式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144239653.png" alt="image-20221116144239653" style="zoom:80%;" /></p>
+</li>
+<li><p>如果 $s$, $t$ 是正则表达式, 则 $s|t$ 是正则表达式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144408101.png" alt="image-20221116144408101" style="zoom:80%;" /></p>
+<ul>
+<li>如果 $N(s)$ 或 $N(t)$ 的开始状态或接受状态不唯一, 怎么办?<ul>
+<li>根据<strong>归纳假设</strong>, $N(s)$ 与 $N(t)$ 的开始状态与接受状态均<strong>唯一</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果 $s$, $t$ 是正则表达式, 则 $st$ 是正则表达式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144528037.png" alt="image-20221116144528037" style="zoom:80%;" /></p>
+<ul>
+<li>根据<strong>归纳假设</strong>, $N(s)$ 与 $N(t)$ 的开始状态与接受状态均<strong>唯一</strong></li>
+</ul>
+</li>
+<li><p>如果 $s$ 是正则表达式, 则 $s^{*}$ 是正则表达式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144724260.png" alt="image-20221116144724260" style="zoom:80%;" /></p>
+<ul>
+<li>根据<strong>归纳假设</strong>, $N(s)$ 的开始状态与接受状态均<strong>唯一</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-N-r-的性质以及-Thompson-构造法复杂度分析"><a href="#3-2-N-r-的性质以及-Thompson-构造法复杂度分析" class="headerlink" title="3.2 $N(r)$ 的性质以及 Thompson 构造法复杂度分析"></a>3.2 $N(r)$ 的性质以及 Thompson 构造法复杂度分析</h4><ul>
+<li><p>$N(r)$ 的开始状态与接收状态均<strong>唯一</strong></p>
+</li>
+<li><p>开始状态没有入边，接收状态没有出边</p>
+</li>
+<li><p>$N(r)$ 的<strong>状态数</strong> $|S| \le 2 \times |r|$</p>
+<p>($|r|: r$ 中运算符与运算分量的总和)</p>
+</li>
+<li><p>每个状态最多有两个 $\epsilon$-入边与两个 $\epsilon$-出边</p>
+</li>
+<li>$\forall a \in \Sigma$, 每个状态最多有一个 $a$-入边与一个 $a$-出边</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116165020990.png" alt="image-20221116165020990" style="zoom:80%;" /></p>
+<h3 id="4-NFA-Rightarrow-DFA"><a href="#4-NFA-Rightarrow-DFA" class="headerlink" title="4. NFA $\Rightarrow$ DFA"></a>4. NFA $\Rightarrow$ DFA</h3><ul>
+<li><p>$N \Rightarrow D$</p>
+</li>
+<li><p>要求: $\textcolor{red}{L(D) = L(N)}$</p>
+</li>
+<li><p>从 NFA 到 DFA 的转换: <strong>子集构造法</strong>(Subset/Powerset Construction)</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116165300828.png" alt="image-20221116165300828" style="zoom:80%;" /></p>
+</li>
+<li><p><strong>思想: 用 DFA 模拟 NFA</strong></p>
+</li>
+</ul>
+<h4 id="4-1-用-DFA-模拟-NFA"><a href="#4-1-用-DFA-模拟-NFA" class="headerlink" title="4.1 用 DFA 模拟 NFA"></a>4.1 用 DFA 模拟 NFA</h4><p>$\textcolor{blue}{L(\mathcal{A}) = L((a|b)^{*}abb)}$</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170259111.png" alt="image-20221116170259111" style="zoom:80%;" /></p>
+<ul>
+<li><p>过程</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170337732.png" alt="image-20221116170337732" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h4 id="4-2-epsilon-闭包"><a href="#4-2-epsilon-闭包" class="headerlink" title="4.2 $\epsilon$-闭包"></a>4.2 $\epsilon$-闭包</h4><ul>
+<li><p>从状态 s 开始, 只通过 $\epsilon$-转移可达的状态集合</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170523291.png" alt="image-20221116170523291" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170532028.png" alt="image-20221116170532028" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170546504.png" alt="image-20221116170546504" style="zoom:80%;" /></p>
+</li>
+<li><p><strong>闭包(Closure): $f$-closure($T$)</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172358836.png" alt="image-20221116172358836" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h4 id="4-3-子集构造法-N-Rightarrow-D-的原理"><a href="#4-3-子集构造法-N-Rightarrow-D-的原理" class="headerlink" title="4.3 子集构造法($N \Rightarrow D$)的原理"></a>4.3 子集构造法($N \Rightarrow D$)的原理</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170833733.png" alt="image-20221116170833733" style="zoom:80%;" /></p>
+<h4 id="4-4-子集构造法的复杂度分析"><a href="#4-4-子集构造法的复杂度分析" class="headerlink" title="4.4 子集构造法的复杂度分析"></a>4.4 子集构造法的复杂度分析</h4><p>$(|S_{N}| = n)$</p>
+<ul>
+<li><p>$|S_{D}| = \Theta (2^{n})$</p>
+</li>
+<li><p>最坏情况下, $|S_{D}| = \Omega (2^{n})$</p>
+</li>
+<li><p>最坏情况举例</p>
+<ul>
+<li><p>$L_{n} = (a|b)^{*}a(a|b)^{n-1}$</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172141260.png" alt="image-20221116172141260" style="zoom:80%;" /></p>
+</li>
+<li><p>当 n = 4</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172204829.png" alt="image-20221116172204829" style="zoom:80%;" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-DFA-最小化"><a href="#5-DFA-最小化" class="headerlink" title="5 DFA 最小化"></a>5 DFA 最小化</h3><p>$\textcolor{blue}{L(\mathcal{A}) = L((a|b)^{*}abb)}$</p>
+<ul>
+<li><p>子集构造法得到的 DFA</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172537563.png" alt="image-20221116172537563" style="zoom:80%;" /></p>
+</li>
+<li><p>最小化后的 DFA</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172557173.png" alt="image-20221116172557173" style="zoom:80%;" /></p>
+</li>
+<li><p><strong>DFA 最小化算法</strong>基本思想: <strong>等价</strong>的状态可以合并</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172644918.png" alt="image-20221116172644918" style="zoom:80%;" /></p>
+<blockquote>
+<p><em>“With Robert E. Tarjan, for fundamental achievements in the design and analysis of algorithms and data structures” — Turing Award, 1986</em></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="5-1-如何定义等价状态"><a href="#5-1-如何定义等价状态" class="headerlink" title="5.1 如何定义等价状态"></a>5.1 如何定义等价状态</h4>
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2022/11/14/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" target="_self">
+              <a href="/2022/11/14/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-1/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -320,6 +459,11 @@
           </div>
           <div class="post-foot-prev">
             
+              <a href="/2022/11/16/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-2-HTML/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -332,7 +476,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">词法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%90%86%E8%AE%BA%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">自动机理论与词法分析器生成器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-text">1. 自动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%AE%E6%A0%87%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-RE-gt-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 目标：正则表达式 RE &#x3D;&#x3D;&gt; 词法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Definition-NFA-Nondeterministic-Finite-Automaton"><span class="toc-text">2.1 Definition (NFA (Nondeterministic Finite Automaton))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Definition-%E6%8E%A5%E5%8F%97-Accept"><span class="toc-text">2.2 Definition (接受 (Accept))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E5%85%B3%E4%BA%8E%E8%87%AA%E5%8A%A8%E6%9C%BA-mathcal-A-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">2.3 关于自动机 $\mathcal{A}$ 的两个基本问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Definition-DFA-Deterministic-Finite-Automaton"><span class="toc-text">2.4 Definition (DFA (Deterministic Finite Automaton))</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%BD%92%E7%BA%B3%E6%8E%A8%E5%AF%BC"><span class="toc-text">3. 归纳推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-RE-gt-NFA"><span class="toc-text">3.1 RE &#x3D;&#x3D;&gt; NFA</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90-3"><span class="toc-text">词法分析-3</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%90%86%E8%AE%BA%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">自动机理论与词法分析器生成器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-text">1. 自动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%AE%E6%A0%87%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-RE-gt-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 目标：正则表达式 RE &#x3D;&#x3D;&gt; 词法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Definition-NFA-Nondeterministic-Finite-Automaton"><span class="toc-text">2.1 Definition (NFA (Nondeterministic Finite Automaton))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Definition-%E6%8E%A5%E5%8F%97-Accept"><span class="toc-text">2.2 Definition (接受 (Accept))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E5%85%B3%E4%BA%8E%E8%87%AA%E5%8A%A8%E6%9C%BA-mathcal-A-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">2.3 关于自动机 $\mathcal{A}$ 的两个基本问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Definition-DFA-Deterministic-Finite-Automaton"><span class="toc-text">2.4 Definition (DFA (Deterministic Finite Automaton))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-%E5%BD%92%E7%BA%B3"><span class="toc-text">2.5 归纳</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RE-Rightarrow-NFA"><span class="toc-text">3. RE $\Rightarrow$ NFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-Definition-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3.1 Definition (正则表达式)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-N-r-%E7%9A%84%E6%80%A7%E8%B4%A8%E4%BB%A5%E5%8F%8A-Thompson-%E6%9E%84%E9%80%A0%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-text">3.2 $N(r)$ 的性质以及 Thompson 构造法复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-NFA-Rightarrow-DFA"><span class="toc-text">4. NFA $\Rightarrow$ DFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E7%94%A8-DFA-%E6%A8%A1%E6%8B%9F-NFA"><span class="toc-text">4.1 用 DFA 模拟 NFA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-epsilon-%E9%97%AD%E5%8C%85"><span class="toc-text">4.2 $\epsilon$-闭包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E6%B3%95-N-Rightarrow-D-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">4.3 子集构造法($N \Rightarrow D$)的原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-text">4.4 子集构造法的复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-DFA-%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-text">5 DFA 最小化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E7%AD%89%E4%BB%B7%E7%8A%B6%E6%80%81"><span class="toc-text">5.1 如何定义等价状态</span></a></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>

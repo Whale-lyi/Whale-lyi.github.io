@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Web前端开发(2) HTML 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Web前端开发(2) HTML</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2022-11-16 10:28:15
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                    <b>#</b> Web前端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="2-HTML-Basics"><a href="#2-HTML-Basics" class="headerlink" title="2-HTML Basics"></a>2-HTML Basics</h1><h2 id="1-HTML-Overview"><a href="#1-HTML-Overview" class="headerlink" title="1 HTML Overview"></a>1 HTML Overview</h2><h3 id="1-1-HTML"><a href="#1-1-HTML" class="headerlink" title="1.1 HTML"></a>1.1 HTML</h3><ul>
+<li>Hypertext Markup Language (HTML) , 全称为超文本标记语⾔, 是⼀种标记语⾔。它包括⼀系列标签．通过这些标签可以将网络上的文档格式统⼀, 使分散的Internet资源连接为⼀个逻辑整体。</li>
+<li>HTML(超文本标记语⾔——HyperText Markup Language)是构成 Web 世界的⼀砖⼀瓦。它定义了网页内容的含义和结构。除 HTML 以外的其它技术则通常用来描述⼀个网页的表现与展示效果(如 CSS), 或功能与行为(如 JavaScript) — MDN</li>
+</ul>
+<h4 id="1-1-1-HTML版本"><a href="#1-1-1-HTML版本" class="headerlink" title="1.1.1 HTML版本"></a>1.1.1 HTML版本</h4><ul>
+<li>1989: 伯纳斯-李写了⼀份备忘录, 提议建⽴⼀个基于互联网的超文本系统</li>
+<li>1995: RFC 1866, HTML 2成为官方标准语⾔</li>
+<li>1997: HTML 4</li>
+<li>1999: HTML 4.01</li>
+<li>2001-01: XHTML</li>
+<li>2014 html5</li>
+<li>2016 html5.1</li>
+<li>2017 html5.2</li>
+</ul>
+<h4 id="1-1-2-HTML-and-XHTML"><a href="#1-1-2-HTML-and-XHTML" class="headerlink" title="1.1.2 HTML and XHTML"></a>1.1.2 HTML and XHTML</h4><ul>
+<li>HTML最初是⼀种应用程序标准通用标记语⾔(SGML)<ul>
+<li>SGML是⼀种⾮常灵活的标记语⾔</li>
+<li>需要⼀个相对复杂、宽松且通常⾃定义的解析器</li>
+</ul>
+</li>
+<li>XHTML:<ul>
+<li>XML的应用程序, SGML的⼀个更严格的子集</li>
+<li>真正的XHTML文档允许使用标准XML⼯具执行自动化处理</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-标记语言"><a href="#1-2-标记语言" class="headerlink" title="1.2 标记语言"></a>1.2 标记语言</h3><ul>
+<li><p>标记:</p>
+<ul>
+<li>在文档中嵌入代码</li>
+<li>代码被称为“标签”</li>
+<li>代码：描述结构文档、包括处理说明</li>
+</ul>
+</li>
+<li><p>标记语⾔:</p>
+<ul>
+<li>描述标签语法的计算机语⾔</li>
+<li>可以与其他⼯具⼀起使用来指定渲染</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-2-1-逻辑标记"><a href="#1-2-1-逻辑标记" class="headerlink" title="1.2.1 逻辑标记"></a>1.2.1 逻辑标记</h4><ul>
+<li>逻辑标记:<ul>
+<li>描述文档的各个部分</li>
+<li>不指定如何渲染</li>
+</ul>
+</li>
+<li>例如：<ul>
+<li><code>This is &lt;strong&gt;very&lt;/strong&gt; important</code></li>
+<li>This is <strong>very</strong> important</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-2-2-逻辑"><a href="#1-2-2-逻辑" class="headerlink" title="1.2.2 逻辑"></a>1.2.2 逻辑</h4><ul>
+<li>呈现是客户的“决定”</li>
+<li>当客户端无法展示时, 会出现优雅降级<ul>
+<li><code>&lt;img alt=&quot;image description&quot; src=&quot;foo.gif&quot;&gt;</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="1-2-3-Markdown"><a href="#1-2-3-Markdown" class="headerlink" title="1.2.3 Markdown"></a>1.2.3 Markdown</h4><ul>
+<li>Markdown 是⼀种轻量级标记语⾔, 它允许人们使用易读易写的纯文本格式编写文档。</li>
+<li>Markdown 语⾔在 2004 由约翰·格鲁伯(英语：John Gruber)创建。</li>
+<li>Markdown 编写的文档可以导出 HTML、Word、图像、PDF、Epub等多种格式的文档。</li>
+<li>Markdown 编写的文档后缀为 .md, .markdown。</li>
+<li>Markdown 应用<ul>
+<li>Markdown 能被使用来撰写电⼦书, 如：Gitbook。</li>
+<li>当前许多网站都⼴泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息。例如：GitHub、简书、reddit、Diaspora、Stack Exchange、OpenStreetMap、 SourceForge等。</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Form"><a href="#2-Form" class="headerlink" title="2 Form"></a>2 Form</h2><h3 id="2-1-表单"><a href="#2-1-表单" class="headerlink" title="2.1 表单"></a>2.1 表单</h3><ul>
+<li><p><code>&lt;form&gt;</code>: HTML 表单用于收集用户的输入信息</p>
+</li>
+<li><p>HTML 表单表示文档中的⼀个区域, 此区域包含交互控件, 将用户收集到的信息发送到 Web 服务器。</p>
+<ul>
+<li>基本语法: <code>&lt;form parameters&gt; ...form elements... &lt;/form&gt;</code></li>
+<li>表单元素允许用户在表单中输入内容, 比如：文本域 (textarea)、下拉列表(select)、单选框(radiobuttons)、复选框(checkbox)等等</li>
+<li>包含提交按钮</li>
+<li>当用户单击确认按钮时, 表单的内容会被传送到服务器。表单的动作属性 action 定义了服务端的文件名。</li>
+</ul>
+</li>
+<li><p>例子：必须将表单的控件包装在块元素中, 比如div, fieldset等</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116105212321.png" alt="image-20221116105212321"></p>
+</li>
+</ul>
+<h3 id="2-2-标签"><a href="#2-2-标签" class="headerlink" title="2.2 \ 标签"></a>2.2 \<form> 标签</h3><h3 id="2-3-标签"><a href="#2-3-标签" class="headerlink" title="2.3 \ 标签"></a>2.3 \<input> 标签</h3><ul>
+<li><p><code>&lt;input&gt;</code>标签规定了用户可以在其中输入数据的输入字段。</p>
+</li>
+<li><p><code>&lt;input&gt;</code>元素在<code>&lt;form&gt;</code>元素中使用, 用来声明允许用户输⼊数据的 input 控件。</p>
+</li>
+<li><p>输⼊字段可通过多种方式改变, 取决于 type 属性</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116105456792.png" alt="image-20221116105456792"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116105533147.png" alt="image-20221116105533147" style="zoom: 67%;" /></p>
+</li>
+</ul>
+<h4 id="2-3-1-关于-的思考"><a href="#2-3-1-关于-的思考" class="headerlink" title="2.3.1 关于 \ 的思考"></a>2.3.1 关于 \<input> 的思考</h4><ul>
+<li>输⼊的类型这么多, 为什么不使用元素呢?<ul>
+<li><code>&lt;input type=&quot;text&quot; .../&gt;</code> -&gt; <code>&lt;text/&gt; or &lt;text&gt;&lt;/text&gt;</code></li>
+<li><code>&lt;input type=&quot;checkbox&quot; .../&gt;</code> -&gt; <code>&lt;checkbox.../&gt;</code></li>
+</ul>
+</li>
+<li>事实上, 当表单在1996年⾸次被设计并引⼊到html中时, 这只是⼀个糟糕的设计决策, 我们⼀直遵循它到目前为止</li>
+<li>另一个缺陷：<code>checked=&quot;checked&quot;...</code>, 很怪异</li>
+</ul>
+<h4 id="2-3-2-隐藏字段"><a href="#2-3-2-隐藏字段" class="headerlink" title="2.3.2 隐藏字段"></a>2.3.2 隐藏字段</h4><ul>
+<li><code>&lt;input type=&quot;hidden&quot; name=&quot;hiddenField&quot; value=&quot;...&quot;</code></li>
+<li>作用<ul>
+<li>隐藏域在页面中对于用户是不可见的, 在表单中插⼊隐藏域的目的在于收集或发送信息, 以利于被处理表单的程序所使用。浏览者单击发送按钮发送表单的时候, 隐藏域的信息也被⼀起发送到服务器。</li>
+<li>在提交表单时提交上来以确定用户身份, 如sessionkey等等</li>
+<li>form 里有多个提交按钮, 分清是哪⼀个按钮提交的</li>
+<li>⼀个网页中有多个form, 是不能同时提交的, 但有时这些form确实相互作用, 就可以在form中添加隐藏域来使它们联系起来</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-Web-Standards"><a href="#3-Web-Standards" class="headerlink" title="3 Web Standards"></a>3 Web Standards</h2><h3 id="3-1-Web标准"><a href="#3-1-Web标准" class="headerlink" title="3.1 Web标准"></a>3.1 Web标准</h3><ul>
+<li>更严格和结构化的语⾔</li>
+<li>不同浏览器之间的兼容性更强</li>
+<li>更有可能让页面在以后也能正确显示</li>
+<li>可以与SVG(图形)、MathML、MusicML等其他XML数据进行交换。</li>
+</ul>
+<h3 id="3-2-XHTML-1-0-vs-HTML-4-01"><a href="#3-2-XHTML-1-0-vs-HTML-4-01" class="headerlink" title="3.2 XHTML 1.0 vs HTML 4.01"></a>3.2 XHTML 1.0 vs HTML 4.01</h3><ul>
+<li>文档结构<ul>
+<li>XHTML DOCTYPE 是强制性的</li>
+<li><code>&lt;html&gt;</code> 中的XML namespace 属性是强制性的</li>
+<li><code>&lt;html&gt;, &lt;head&gt;, &lt;title&gt;, &lt;body&gt;</code> 也是强制性的</li>
+</ul>
+</li>
+<li>元素语法<ul>
+<li>XHTML元素必须正确嵌套</li>
+<li>XHTML元素必须始终关闭</li>
+<li>XHTML元素必须小写</li>
+<li>XHTML文档必须有一个根元素</li>
+</ul>
+</li>
+<li>属性语法<ul>
+<li>XHTML属性必须使用小写</li>
+<li>XHTML属性值必须用引号包围</li>
+<li>XHTML属性最小化也是禁止的</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-HTML5-Basics"><a href="#3-HTML5-Basics" class="headerlink" title="3-HTML5 Basics"></a>3-HTML5 Basics</h1><ul>
+<li>HTML 的最新稳定版本, HTML5 将 HTML 从用于构造⼀个⽂档的⼀个简单标记, 扩展到⼀个完整的应用程序开发平台。除其他功能外, HTML5 还包括新元素和用于增强存储、多媒体和硬件访问的JavaScript APIs</li>
+<li>HTML5 是 W3C 与 WHATWG 合作的结果,WHATWG 指 Web Hypertext Application Technology Working Group。</li>
+</ul>
+<h2 id="1-HTML5-应用"><a href="#1-HTML5-应用" class="headerlink" title="1 HTML5 应用"></a>1 HTML5 应用</h2><ul>
+<li>本地数据存储</li>
+<li>访问本地文件</li>
+<li>本地SQL数据</li>
+<li>缓存引用</li>
+<li>Javascript工作者</li>
+<li>XHTMLHttpRequest 2</li>
+</ul>
+<h2 id="2-HTML5-优势"><a href="#2-HTML5-优势" class="headerlink" title="2 HTML5 优势"></a>2 HTML5 优势</h2><ul>
+<li>跨浏览器兼容性</li>
+<li>大道至简</li>
+<li>语义化</li>
+<li>可用性和用户体验的改进</li>
+<li>无插件范式</li>
+<li>安全</li>
+<li>大量用于移动应用和游戏</li>
+<li>在网站抓取和索引方面, HTML5 对 SEO 友好</li>
+</ul>
+<h3 id="2-1-大道至简"><a href="#2-1-大道至简" class="headerlink" title="2.1 大道至简"></a>2.1 大道至简</h3><ul>
+<li><p>旧路新铺</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116112819692.png" alt="image-20221116112819692" style="zoom:80%;" /></p>
+</li>
+<li><p>新的 DOCTYPE 声明</p>
+<ul>
+<li>简化的 Doctype<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116112903469.png" alt="image-20221116112903469" style="zoom:80%;" /></li>
+</ul>
+</li>
+<li><p>干净的标记和改进的代码</p>
+<ul>
+<li><p>简化的字符集<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116113041638.png" alt="image-20221116113041638" style="zoom:80%;" /></p>
+</li>
+<li><p>简化的标签</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116113131530.png" alt="image-20221116113131530" style="zoom:80%;" /></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-语义化"><a href="#2-2-语义化" class="headerlink" title="2.2 语义化"></a>2.2 语义化</h3><ul>
+<li><p>根据结构化的内容选择合适的标签</p>
+</li>
+<li><p>优点</p>
+<ul>
+<li>有利于SEO(搜索引擎优化, 便于爬虫理解)</li>
+<li>开发维护体验好</li>
+<li>用户体验更好</li>
+<li>更好的可访问性, 方便任何设备对代码进行解析</li>
+</ul>
+</li>
+<li><p>Semantic Markup</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116113406881.png" alt="image-20221116113406881" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h4 id="2-2-1-微数据"><a href="#2-2-1-微数据" class="headerlink" title="2.2.1 微数据"></a>2.2.1 微数据</h4><ul>
+<li>微数据是WHATWG HTML 标准的⼀部分, 用于在网页上的现有内容中嵌套元数据。搜索引擎, 网络抓取⼯具和浏览器可以从网页中提取和处理微数据, 并使用它为用户提供更丰富的浏览体验。</li>
+<li>强调机器的可读性<ul>
+<li>SEO 优势</li>
+<li>使用 Microdata 在 HTML 文档中嵌入机器可读数据</li>
+<li>易于编写的语法(添加到任何元素)</li>
+<li>兼容其他数据格式, 如RDF和JSON</li>
+</ul>
+</li>
+<li><p>微数据词汇表</p>
+<ul>
+<li>schema.org词汇表</li>
+<li>Google丰富摘要词汇表(www.data-vocabulary.org)<ul>
+<li>若要在 2021 年 1 ⽉ 29 ⽇之后继续使用, 需要将 data-vocabulary.org 标记替换为 schema.org 标记。</li>
+</ul>
+</li>
+<li>WHATWG/microformats.org词汇表</li>
+</ul>
+</li>
+<li><p>示例：</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116114055177.png" alt="image-20221116114055177" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116114222889.png" alt="image-20221116114222889"></p>
+</li>
+</ul>
+<h4 id="2-2-2-结构化数据"><a href="#2-2-2-结构化数据" class="headerlink" title="2.2.2 结构化数据"></a>2.2.2 结构化数据</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116114132109.png" alt="image-20221116114132109" style="zoom:80%;" /></p>
+<h3 id="2-3-可用性和用户体验的改进"><a href="#2-3-可用性和用户体验的改进" class="headerlink" title="2.3 可用性和用户体验的改进"></a>2.3 可用性和用户体验的改进</h3><ul>
+<li>HTML5 为 Web 开发人员提供了多项技术改进和改进的功能。使用 HTML5 代码, Web 开发人员可以轻松设计更好的应用程序和动态网站, 从而带来更好的用户体验。</li>
+<li>无障碍是⼀种让尽可能多的用户可以使用你的网站的做法。传统上我们认为这只与残疾人士有关, 但提升网站的无障碍也可以让其他用户群体受益。比如使用移动设备的人群, 那些使用低速网络连接的人群。</li>
+</ul>
+<h4 id="2-3-1-无障碍富网络应用-WAI-ARIA"><a href="#2-3-1-无障碍富网络应用-WAI-ARIA" class="headerlink" title="2.3.1 无障碍富网络应用 WAI-ARIA"></a>2.3.1 无障碍富网络应用 WAI-ARIA</h4><ul>
+<li>ARIA是“Accessible Rich Internet Applications ”的缩写。它是W3C的Web无障碍推进组织(Web Accessibility Initiative / WAI)在2014年3⽉20⽇发布的可访问富互联网应用实现指南。WAI-ARIA是⼀个为残疾人士等提供无障碍访问动态、可交互Web内容的技术规范。</li>
+<li><p>ARIA 提供语义, 因此作者可以将用户界面上的⾏为和结构信息传达给辅助技术(例如屏幕阅读器)。</p>
+</li>
+<li><p>屏幕阅读器</p>
+<ul>
+<li>用表格布局网页, 可能会读出给人造成困惑的结果, 特别是如果布局复杂, 并且有许多嵌套表格的话。</li>
+<li>现代的布局, 布局标记不再会妨碍内容的读取。它在代码大小方面也更加精简和小巧, 这意味着代码更容易维护, 并且用户下载的带宽更少（特别适合慢速连接的用户）。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116114638058.png" alt="image-20221116114638058" style="zoom:80%;" /></p>
+<h3 id="2-4-HTML5-无插件范式"><a href="#2-4-HTML5-无插件范式" class="headerlink" title="2.4 HTML5 无插件范式"></a>2.4 HTML5 无插件范式</h3><ul>
+<li>过去, 很多功能只能通过插件或者复杂的 hack (本地绘图API、本地socket等)来实现, 但是在 HTML5中提供了对这些功能的原生支持。</li>
+</ul>
+<h4 id="2-4-1-插件的问题"><a href="#2-4-1-插件的问题" class="headerlink" title="2.4.1 插件的问题"></a>2.4.1 插件的问题</h4><ul>
+<li>插件安装可能失败。</li>
+<li>插件可能被禁用或者是屏蔽。</li>
+<li>插件⾃身会成为被攻击的对象。</li>
+<li>插件不容易与HTML⽂档的其他部分集成（因为插件边界、剪裁和通明度问题）</li>
+</ul>
+<blockquote>
+<p>“Whenever a Mac crashes, more often that not is because of Flash” —Steve Jobs</p>
+</blockquote>
+<h3 id="2-5-安全"><a href="#2-5-安全" class="headerlink" title="2.5 安全"></a>2.5 安全</h3><ul>
+<li>跨源资源共享(CORS)使Web服务器允许其他域名的网页访问自己的资源<ul>
+<li>CORS放宽了同源访问规则(Same Origin Rule), 这是Web服务器内置的基础安全措施之一</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-6-移动应用和游戏"><a href="#2-6-移动应用和游戏" class="headerlink" title="2.6 移动应用和游戏"></a>2.6 移动应用和游戏</h3><ul>
+<li>多设备跨平台</li>
+<li>自适应网页设计</li>
+</ul>
+<h3 id="2-7-SEO"><a href="#2-7-SEO" class="headerlink" title="2.7 SEO"></a>2.7 SEO</h3><ul>
+<li>HTML5 带有各种属性和模块，使网络爬虫可以轻松搜索你的内容并使其正确编入索引，从而提高其在搜索引擎搜索结果页面中的排名</li>
+<li>HTML5 技术提供了具有广泛结构元素、语义、表单类型、新属性和媒体元素的各种功能，使数字营销专家和开发人员更容易专注于更好的搜索引擎优化技术并推动更多的自然搜索流量</li>
+</ul>
+<h2 id="3-HTML5-总览"><a href="#3-HTML5-总览" class="headerlink" title="3 HTML5 总览"></a>3 HTML5 总览</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116115918921.png" alt="image-20221116115918921"></p>
+<h2 id="4-HTML5-新功能特性"><a href="#4-HTML5-新功能特性" class="headerlink" title="4 HTML5 新功能特性"></a>4 HTML5 新功能特性</h2>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/15/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90-3/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2022-11-16 10:28:15
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                        <b>#</b> Web前端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HTML-Basics"><span class="toc-text">2-HTML Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTML-Overview"><span class="toc-text">1 HTML Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-HTML"><span class="toc-text">1.1 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-HTML%E7%89%88%E6%9C%AC"><span class="toc-text">1.1.1 HTML版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-HTML-and-XHTML"><span class="toc-text">1.1.2 HTML and XHTML</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80"><span class="toc-text">1.2 标记语言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E9%80%BB%E8%BE%91%E6%A0%87%E8%AE%B0"><span class="toc-text">1.2.1 逻辑标记</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E9%80%BB%E8%BE%91"><span class="toc-text">1.2.2 逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-Markdown"><span class="toc-text">1.2.3 Markdown</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Form"><span class="toc-text">2 Form</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%A1%A8%E5%8D%95"><span class="toc-text">2.1 表单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%A0%87%E7%AD%BE"><span class="toc-text">2.2 \ 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%A0%87%E7%AD%BE"><span class="toc-text">2.3 \ 标签</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%85%B3%E4%BA%8E-%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-text">2.3.1 关于 \ 的思考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E9%9A%90%E8%97%8F%E5%AD%97%E6%AE%B5"><span class="toc-text">2.3.2 隐藏字段</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Web-Standards"><span class="toc-text">3 Web Standards</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Web%E6%A0%87%E5%87%86"><span class="toc-text">3.1 Web标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-XHTML-1-0-vs-HTML-4-01"><span class="toc-text">3.2 XHTML 1.0 vs HTML 4.01</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HTML5-Basics"><span class="toc-text">3-HTML5 Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTML5-%E5%BA%94%E7%94%A8"><span class="toc-text">1 HTML5 应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-HTML5-%E4%BC%98%E5%8A%BF"><span class="toc-text">2 HTML5 优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%A4%A7%E9%81%93%E8%87%B3%E7%AE%80"><span class="toc-text">2.1 大道至简</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AF%AD%E4%B9%89%E5%8C%96"><span class="toc-text">2.2 语义化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%BE%AE%E6%95%B0%E6%8D%AE"><span class="toc-text">2.2.1 微数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="toc-text">2.2.2 结构化数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8F%AF%E7%94%A8%E6%80%A7%E5%92%8C%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-text">2.3 可用性和用户体验的改进</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E6%97%A0%E9%9A%9C%E7%A2%8D%E5%AF%8C%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8-WAI-ARIA"><span class="toc-text">2.3.1 无障碍富网络应用 WAI-ARIA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-HTML5-%E6%97%A0%E6%8F%92%E4%BB%B6%E8%8C%83%E5%BC%8F"><span class="toc-text">2.4 HTML5 无插件范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">2.4.1 插件的问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%AE%89%E5%85%A8"><span class="toc-text">2.5 安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E5%92%8C%E6%B8%B8%E6%88%8F"><span class="toc-text">2.6 移动应用和游戏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-SEO"><span class="toc-text">2.7 SEO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-HTML5-%E6%80%BB%E8%A7%88"><span class="toc-text">3 HTML5 总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-HTML5-%E6%96%B0%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-text">4 HTML5 新功能特性</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2022 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91(2)%20HTML + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F16%2FWeb%25E5%2589%258D%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-2-HTML%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/16/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-2-HTML/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
