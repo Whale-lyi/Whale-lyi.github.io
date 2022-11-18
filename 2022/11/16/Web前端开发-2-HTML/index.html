@@ -652,7 +652,198 @@
 <li>HTML5 技术提供了具有广泛结构元素、语义、表单类型、新属性和媒体元素的各种功能, 使数字营销专家和开发人员更容易专注于更好的搜索引擎优化技术并推动更多的自然搜索流量</li>
 </ul>
 <h2 id="3-HTML5-总览"><a href="#3-HTML5-总览" class="headerlink" title="3 HTML5 总览"></a>3 HTML5 总览</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116115918921.png" alt="image-20221116115918921"></p>
-<h2 id="4-HTML5-新功能特性"><a href="#4-HTML5-新功能特性" class="headerlink" title="4 HTML5 新功能特性"></a>4 HTML5 新功能特性</h2>
+<h2 id="4-HTML5-新功能特性"><a href="#4-HTML5-新功能特性" class="headerlink" title="4 HTML5 新功能特性"></a>4 HTML5 新功能特性</h2><ul>
+<li>新元素</li>
+<li>新属性</li>
+<li>完全支持 CSS 3</li>
+<li>Video 和 Audio</li>
+<li>2D/3D 制图</li>
+<li>web存储</li>
+<li>离线浏览</li>
+<li>HTML5 Web SQL 数据库</li>
+<li>HTML5 Web Workers</li>
+<li>HTML WebSocket</li>
+</ul>
+<h3 id="4-1-HTML5-新元素"><a href="#4-1-HTML5-新元素" class="headerlink" title="4.1 HTML5 新元素"></a>4.1 HTML5 新元素</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221117234438242.png" alt="image-20221117234438242" style="zoom:80%;" /></p>
+<h4 id="4-1-1-过时的元素"><a href="#4-1-1-过时的元素" class="headerlink" title="4.1.1 过时的元素"></a>4.1.1 过时的元素</h4><ul>
+<li>能使用CSS替代的元素<ul>
+<li><code>basefont, center, font, tt, u</code></li>
+</ul>
+</li>
+<li>不再使用frame框架</li>
+<li>只有部分浏览器支持的元素<ul>
+<li><code>applet, bgsound, marquee</code></li>
+</ul>
+</li>
+<li>其他被废除的元素<ul>
+<li><code>isindex, dir, rb</code>等</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-2-HTML5-表单"><a href="#4-2-HTML5-表单" class="headerlink" title="4.2 HTML5 表单"></a>4.2 HTML5 表单</h3><ul>
+<li>新的表单功能<ul>
+<li>不需要JavaScript，原生方式</li>
+<li>新的输入类型<ul>
+<li><code>color, datetime, email</code></li>
+<li><code>search, tel, url</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>旧浏览器中新的表单控件会平滑降级</p>
+<ul>
+<li>未知的输入类型被视为文本</li>
+</ul>
+</li>
+<li><p>新输入类型</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221118130414056.png" alt="image-20221118130414056" style="zoom:80%;" /></p>
+<h3 id="4-3-HTML5-音视频"><a href="#4-3-HTML5-音视频" class="headerlink" title="4.3 HTML5 音视频"></a>4.3 HTML5 音视频</h3><ul>
+<li>HTML5 新的媒体元素<ul>
+<li><code>&lt;audio&gt;, &lt;video&gt;</code></li>
+</ul>
+</li>
+<li>原生的音视频, 不需要JavaScript<ul>
+<li>可用JavaScript编程</li>
+<li>CSS样式</li>
+</ul>
+</li>
+<li>支持各种不同的编解码器</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- Basic Video --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">controls</span> <span class="attr">src</span>=<span class="string">&quot;goldrush.mp4&quot;</span>&gt;</span></span><br><span class="line">    A movie about HTML5</span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- Video with additional attributes --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">id</span>=<span class="string">&quot;movies&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">controls</span> <span class="attr">preload</span>=<span class="string">&quot;metadata&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">width</span>=<span class="string">&quot;400px&quot;</span> <span class="attr">height</span>=<span class="string">&quot;300px&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">poster</span>=<span class="string">&quot;html5.png&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;goldrush.webm&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">source</span> <span class="attr">src</span>=<span class="string">&quot;goldrush.mp4&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">track</span> <span class="attr">label</span>=<span class="string">&quot;English&quot;</span> <span class="attr">kind</span>=<span class="string">&quot;subtitles&quot;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">srclang</span>=<span class="string">&quot;en&quot;</span> <span class="attr">src</span>=<span class="string">&quot;subtitles_en.vtt&quot;</span>&gt;</span></span><br><span class="line">    A movie by Rocky Lubbers</span><br><span class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="4-4-HTML5-Canvas画布与SVG"><a href="#4-4-HTML5-Canvas画布与SVG" class="headerlink" title="4.4 HTML5 Canvas画布与SVG"></a>4.4 HTML5 Canvas画布与SVG</h3><ul>
+<li>提供原生的绘图功能<ul>
+<li>以前只能用插件(Flash, Silverlight)</li>
+</ul>
+</li>
+<li>完全集成到HTML5文档中( DOM 的一部分)<ul>
+<li>可用CSS样式</li>
+<li>可用JavaScript控制</li>
+</ul>
+</li>
+<li><p>用于动画、图表、图像、像素操作等</p>
+</li>
+<li><p>Canvas 支持 2D 和 3D (WebGL)</p>
+</li>
+<li>将影响动画图形和图表(使用库)</li>
+</ul>
+<h4 id="4-4-1-SVG与Canvas"><a href="#4-4-1-SVG与Canvas" class="headerlink" title="4.4.1 SVG与Canvas"></a>4.4.1 SVG与Canvas</h4><ul>
+<li>SVG 是一种用 XML 描绘 2D 图形的语言</li>
+<li>Canvas 绘制 2D 图像，使用 JavaScript</li>
+<li>SVG 是基于 XML 的，这意味着 SVG DOM 中的每个元素都是可用的。可以为元素附加 JavaScript 事件处理程序</li>
+<li>在 SVG 中，每个绘制的形状都作为一个对象。如果 SVG 对象的属性发生了更改，浏览器可以自动重新渲染形状</li>
+<li>Canvas 是一个像素一个像素渲染的。在 Canvas 中，一旦绘制出图形，它就会被浏览器遗忘。如果他的位置需要改变，整个场景需要重新绘制，包括可能被图形覆盖的任何对象</li>
+</ul>
+<h4 id="4-4-2-Canvas-与-SVG-的比较"><a href="#4-4-2-Canvas-与-SVG-的比较" class="headerlink" title="4.4.2 Canvas 与 SVG 的比较"></a>4.4.2 Canvas 与 SVG 的比较</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Canvas</th>
+<th>SVG</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>依赖分辨率</td>
+<td>不依赖分辨率</td>
+</tr>
+<tr>
+<td>不支持事件处理器</td>
+<td>支持事件处理器</td>
+</tr>
+<tr>
+<td>弱的文本渲染能力</td>
+<td>最适合带有大型渲染区域的应用程序(比如谷歌地图)</td>
+</tr>
+<tr>
+<td>能够以 .png 或 .jpg 格式保存结果图像</td>
+<td>复杂度高会减慢渲染速度(任何过度使用 DOM 的应用都不快)</td>
+</tr>
+<tr>
+<td>最适合图像密集型的游戏，其中的许多对象会被频繁重绘</td>
+<td>不适合游戏应用</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="4-4-3-SVG"><a href="#4-4-3-SVG" class="headerlink" title="4.4.3 SVG"></a>4.4.3 SVG</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">baseProfile</span>=<span class="string">&quot;full&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">width</span>=<span class="string">&quot;300&quot;</span> <span class="attr">height</span>=<span class="string">&quot;200&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">rect</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100%&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">fill</span>=<span class="string">&quot;black&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">circle</span> <span class="attr">cx</span>=<span class="string">&quot;150&quot;</span> <span class="attr">cy</span>=<span class="string">&quot;100&quot;</span> <span class="attr">r</span>=<span class="string">&quot;90&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">fill</span>=<span class="string">&quot;blue&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221118134053321.png" alt="image-20221118134053321" style="zoom:80%;" /></p>
+<h3 id="4-5-HTML5-Web-存储"><a href="#4-5-HTML5-Web-存储" class="headerlink" title="4.5 HTML5 Web 存储"></a>4.5 HTML5 Web 存储</h3><ul>
+<li><p>最早本地存储使用的是 cookie, 但是 Web 存储更加的安全与快速</p>
+</li>
+<li><p>客户端存储数据的两个对象为</p>
+<ul>
+<li><p><code>localStorage</code>: 用于长久保存整个网站的数据，保存的数据没有过期时间，直到手动去除</p>
+</li>
+<li><p><code>sessionStorage</code>: 用于临时保存同⼀窗口(或标签页)的数据，在关闭窗口或标签页之后将会删除这些数据。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-6-HTML5-应用程序缓存"><a href="#4-6-HTML5-应用程序缓存" class="headerlink" title="4.6 HTML5 应用程序缓存"></a>4.6 HTML5 应用程序缓存</h3><ul>
+<li>使用 HTML5，通过创建 cache manifest 文件, 可以轻松地创建 web 应用的离线版本</li>
+<li>HTML5 引入了应用程序缓存，这意味着 web 应用可进行缓存，并可在没有因特网连接时进行访问</li>
+<li>应用程序缓存为应用带来三个优势<ul>
+<li>离线浏览：用户可在应用离线时使用它们</li>
+<li>速度：已缓存资源加载得更快</li>
+<li>减少服务器负载：浏览器将只从服务器下载更新过或更改过的资源</li>
+</ul>
+</li>
+<li>manifest 文件是简单的文本文件，他告知浏览器被缓存的内容(以及不缓存的内容)。manifest 文件可分为三个部分<ul>
+<li>CACHE MANIFEST：在此标题下列出的文件将在首次下载后进行缓存</li>
+<li>NETWORK：在此标题下列出的文件需要与服务器的连接，且不会被缓存</li>
+<li>FALLBACK：在此标题下列出的文件规定当页面无法访问时的回退页面(比如 404 页面)</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-6-1-更新缓存"><a href="#4-6-1-更新缓存" class="headerlink" title="4.6.1 更新缓存"></a>4.6.1 更新缓存</h4><ul>
+<li>一旦应用被缓存，他就会保持缓存直到发生下列情况：<ul>
+<li>用户清空浏览器缓存</li>
+<li>manifest 文件被修改</li>
+<li>由程序来更新应用缓存</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221118135644913.png" alt="image-20221118135644913" style="zoom:80%;" /></p>
+<h3 id="4-7-HTML5-Web-SQL-数据库"><a href="#4-7-HTML5-Web-SQL-数据库" class="headerlink" title="4.7 HTML5 Web SQL 数据库"></a>4.7 HTML5 Web SQL 数据库</h3><ul>
+<li>Web SQL 数据库 API 并不是 HTML5 规范的一部分，但它是一个独立的规范，引入了一组使用 SQL 操作客户端数据库的 APIs</li>
+<li>规范中定义的三个核心方法<ul>
+<li><code>openDatabase</code>: 这个方法使用现有的数据库或者新建的数据库创建一个数据库对象</li>
+<li><code>transaction</code>: 这个方法让我们能够控制一个事务，以及基于这种情况执行提交或者回滚</li>
+<li><code>executeSql</code>: 这个方法用于执行实际的 SQL 查询</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-8-HTML5-Web-Workers"><a href="#4-8-HTML5-Web-Workers" class="headerlink" title="4.8 HTML5 Web Workers"></a>4.8 HTML5 Web Workers</h3><ul>
+<li><p>当在 HTML 页面中执行脚本时，页面的状态是不可响应的，直到脚本已完成</p>
+</li>
+<li><p>web worker 是运行在后台的 JavaScript，独立于其他脚本，不会影响页面的性能。可以继续做任何愿意做的事情: 点击、选取内容等等，而此时 web worker 在后台运行</p>
+</li>
+</ul>
+<h3 id="4-9-HTML5-WebSocket"><a href="#4-9-HTML5-WebSocket" class="headerlink" title="4.9 HTML5 WebSocket"></a>4.9 HTML5 WebSocket</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221118140432259.png" alt="image-20221118140432259" style="zoom:80%;" /></p>
+<h2 id="5-Something-else"><a href="#5-Something-else" class="headerlink" title="5. Something else"></a>5. Something else</h2><h3 id="5-1-Feature-Detection"><a href="#5-1-Feature-Detection" class="headerlink" title="5.1 Feature Detection"></a>5.1 Feature Detection</h3><ul>
+<li>Feature detect with Modernizr (part of H5BP): <a target="_blank" rel="noopener" href="http://www.modernizr.com">http://www.modernizr.com</a></li>
+</ul>
+<h3 id="5-2-HTML5-Enabling-JavaScript"><a href="#5-2-HTML5-Enabling-JavaScript" class="headerlink" title="5.2 HTML5 Enabling JavaScript"></a>5.2 HTML5 Enabling JavaScript</h3><ul>
+<li>使⽤ Sjoerd Visscher 创建的 “HTML5 Enabling JavaScript”, “shiv” 来解决该问题</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221118140918519.png" alt="image-20221118140918519" style="zoom:80%;" /></p>
+<h3 id="5-3-H5-相关组织"><a href="#5-3-H5-相关组织" class="headerlink" title="5.3 H5 相关组织"></a>5.3 H5 相关组织</h3><ul>
+<li>Web Hypertext Application Technology Working Group (WHATWG)<ul>
+<li><a target="_blank" rel="noopener" href="http://www.whatwg.org/specs/web-apps/current-work/">http://www.whatwg.org/specs/web-apps/current-work/</a></li>
+</ul>
+</li>
+<li>World Wide Web Consortium (W3C)<ul>
+<li><a target="_blank" rel="noopener" href="http://dev.w3.org/html5/spec/Overview.html">http://dev.w3.org/html5/spec/Overview.html</a></li>
+</ul>
+</li>
+<li>Internet Engineering Task Force (IETF)<ul>
+<li><a target="_blank" rel="noopener" href="http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol">http://tools.ietf.org/html/draft-hixie-thewebsocketprotocol</a></li>
+</ul>
+</li>
+</ul>
+
       </div>
       
         <div class="prev-or-next">
@@ -690,6 +881,11 @@
           </div>
           <div class="post-foot-prev">
             
+              <a href="/2022/11/17/SpringCloud-2-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -702,7 +898,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HTML-Basics"><span class="toc-text">2-HTML Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTML-Overview"><span class="toc-text">1 HTML Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-HTML"><span class="toc-text">1.1 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-HTML%E7%89%88%E6%9C%AC"><span class="toc-text">1.1.1 HTML版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-HTML-and-XHTML"><span class="toc-text">1.1.2 HTML and XHTML</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80"><span class="toc-text">1.2 标记语言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E9%80%BB%E8%BE%91%E6%A0%87%E8%AE%B0"><span class="toc-text">1.2.1 逻辑标记</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E9%80%BB%E8%BE%91"><span class="toc-text">1.2.2 逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-Markdown"><span class="toc-text">1.2.3 Markdown</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-HTML%E5%9F%BA%E7%A1%80"><span class="toc-text">1.3 HTML基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-HTML%E5%85%83%E7%B4%A0%E8%AF%A6%E8%A7%A3"><span class="toc-text">1.3.1 HTML元素详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E6%88%96%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0"><span class="toc-text">1.3.2 块级元素或行内元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-%E5%90%84%E7%A7%8D%E6%A0%87%E7%AD%BE"><span class="toc-text">1.3.3 各种标签</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%EF%BC%9A-lt-gt"><span class="toc-text">注释：&lt;!--..--&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E6%A0%87%E9%A2%98%EF%BC%9A-lt-title-gt"><span class="toc-text">网页标题：&lt;title&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-meta-gt"><span class="toc-text">&lt;meta&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">字符编码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-h1-gt-lt-h6-gt-%E6%A0%87%E7%AD%BE"><span class="toc-text">&lt;h1&gt; - &lt;h6&gt;标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-p-gt"><span class="toc-text">&lt;p&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-br-gt"><span class="toc-text">&lt;br&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-a-gt"><span class="toc-text">&lt;a&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F-lt-img-gt"><span class="toc-text">图像&lt;img&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E6%A0%BC%E5%BC%8F"><span class="toc-text">图像格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-em-gt-lt-strong-gt"><span class="toc-text">&lt;em&gt; &lt;strong&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E7%9A%84%E6%A0%87%E7%AD%BE"><span class="toc-text">嵌套的标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Table-lt-table-gt-lt-tr-gt-lt-td-gt-lt-th-gt-lt-caption-gt"><span class="toc-text">Table: &lt;table&gt; &lt;tr&gt; &lt;td&gt; &lt;th&gt; &lt;caption&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-blockquote-gt"><span class="toc-text">&lt;blockquote&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%8C%E5%86%85%E5%BC%95%E7%94%A8-lt-q-gt"><span class="toc-text">行内引用&lt;q&gt;</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-HTML%E5%AD%97%E7%AC%A6%E5%AE%9E%E4%BD%93"><span class="toc-text">1.3.4 HTML字符实体</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Form"><span class="toc-text">2 Form</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%A1%A8%E5%8D%95"><span class="toc-text">2.1 表单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-lt-form-gt-%E6%A0%87%E7%AD%BE"><span class="toc-text">2.2 &lt;form&gt; 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-lt-input-gt-%E6%A0%87%E7%AD%BE"><span class="toc-text">2.3 &lt;input&gt; 标签</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%85%B3%E4%BA%8E-lt-input-gt-%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-text">2.3.1 关于 &lt;input&gt; 的思考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E9%9A%90%E8%97%8F%E5%AD%97%E6%AE%B5"><span class="toc-text">2.3.2 隐藏字段</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Web-Standards"><span class="toc-text">3 Web Standards</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Web%E6%A0%87%E5%87%86"><span class="toc-text">3.1 Web标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-XHTML-1-0-vs-HTML-4-01"><span class="toc-text">3.2 XHTML 1.0 vs HTML 4.01</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HTML5-Basics"><span class="toc-text">3-HTML5 Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTML5-%E5%BA%94%E7%94%A8"><span class="toc-text">1 HTML5 应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-HTML5-%E4%BC%98%E5%8A%BF"><span class="toc-text">2 HTML5 优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%A4%A7%E9%81%93%E8%87%B3%E7%AE%80"><span class="toc-text">2.1 大道至简</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AF%AD%E4%B9%89%E5%8C%96"><span class="toc-text">2.2 语义化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%BE%AE%E6%95%B0%E6%8D%AE"><span class="toc-text">2.2.1 微数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="toc-text">2.2.2 结构化数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8F%AF%E7%94%A8%E6%80%A7%E5%92%8C%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-text">2.3 可用性和用户体验的改进</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E6%97%A0%E9%9A%9C%E7%A2%8D%E5%AF%8C%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8-WAI-ARIA"><span class="toc-text">2.3.1 无障碍富网络应用 WAI-ARIA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-HTML5-%E6%97%A0%E6%8F%92%E4%BB%B6%E8%8C%83%E5%BC%8F"><span class="toc-text">2.4 HTML5 无插件范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">2.4.1 插件的问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%AE%89%E5%85%A8"><span class="toc-text">2.5 安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E5%92%8C%E6%B8%B8%E6%88%8F"><span class="toc-text">2.6 移动应用和游戏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-SEO"><span class="toc-text">2.7 SEO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-HTML5-%E6%80%BB%E8%A7%88"><span class="toc-text">3 HTML5 总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-HTML5-%E6%96%B0%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-text">4 HTML5 新功能特性</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HTML-Basics"><span class="toc-text">2-HTML Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTML-Overview"><span class="toc-text">1 HTML Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-HTML"><span class="toc-text">1.1 HTML</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-HTML%E7%89%88%E6%9C%AC"><span class="toc-text">1.1.1 HTML版本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-HTML-and-XHTML"><span class="toc-text">1.1.2 HTML and XHTML</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A0%87%E8%AE%B0%E8%AF%AD%E8%A8%80"><span class="toc-text">1.2 标记语言</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E9%80%BB%E8%BE%91%E6%A0%87%E8%AE%B0"><span class="toc-text">1.2.1 逻辑标记</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E9%80%BB%E8%BE%91"><span class="toc-text">1.2.2 逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-Markdown"><span class="toc-text">1.2.3 Markdown</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-HTML%E5%9F%BA%E7%A1%80"><span class="toc-text">1.3 HTML基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-HTML%E5%85%83%E7%B4%A0%E8%AF%A6%E8%A7%A3"><span class="toc-text">1.3.1 HTML元素详解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0%E6%88%96%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0"><span class="toc-text">1.3.2 块级元素或行内元素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-%E5%90%84%E7%A7%8D%E6%A0%87%E7%AD%BE"><span class="toc-text">1.3.3 各种标签</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%EF%BC%9A-lt-gt"><span class="toc-text">注释：&lt;!--..--&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E6%A0%87%E9%A2%98%EF%BC%9A-lt-title-gt"><span class="toc-text">网页标题：&lt;title&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-meta-gt"><span class="toc-text">&lt;meta&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81"><span class="toc-text">字符编码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-h1-gt-lt-h6-gt-%E6%A0%87%E7%AD%BE"><span class="toc-text">&lt;h1&gt; - &lt;h6&gt;标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-p-gt"><span class="toc-text">&lt;p&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-br-gt"><span class="toc-text">&lt;br&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-a-gt"><span class="toc-text">&lt;a&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F-lt-img-gt"><span class="toc-text">图像&lt;img&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E6%A0%BC%E5%BC%8F"><span class="toc-text">图像格式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-em-gt-lt-strong-gt"><span class="toc-text">&lt;em&gt; &lt;strong&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E7%9A%84%E6%A0%87%E7%AD%BE"><span class="toc-text">嵌套的标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Table-lt-table-gt-lt-tr-gt-lt-td-gt-lt-th-gt-lt-caption-gt"><span class="toc-text">Table: &lt;table&gt; &lt;tr&gt; &lt;td&gt; &lt;th&gt; &lt;caption&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#lt-blockquote-gt"><span class="toc-text">&lt;blockquote&gt;</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%8C%E5%86%85%E5%BC%95%E7%94%A8-lt-q-gt"><span class="toc-text">行内引用&lt;q&gt;</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-HTML%E5%AD%97%E7%AC%A6%E5%AE%9E%E4%BD%93"><span class="toc-text">1.3.4 HTML字符实体</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Form"><span class="toc-text">2 Form</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%A1%A8%E5%8D%95"><span class="toc-text">2.1 表单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-lt-form-gt-%E6%A0%87%E7%AD%BE"><span class="toc-text">2.2 &lt;form&gt; 标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-lt-input-gt-%E6%A0%87%E7%AD%BE"><span class="toc-text">2.3 &lt;input&gt; 标签</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E5%85%B3%E4%BA%8E-lt-input-gt-%E7%9A%84%E6%80%9D%E8%80%83"><span class="toc-text">2.3.1 关于 &lt;input&gt; 的思考</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E9%9A%90%E8%97%8F%E5%AD%97%E6%AE%B5"><span class="toc-text">2.3.2 隐藏字段</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Web-Standards"><span class="toc-text">3 Web Standards</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Web%E6%A0%87%E5%87%86"><span class="toc-text">3.1 Web标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-XHTML-1-0-vs-HTML-4-01"><span class="toc-text">3.2 XHTML 1.0 vs HTML 4.01</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HTML5-Basics"><span class="toc-text">3-HTML5 Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-HTML5-%E5%BA%94%E7%94%A8"><span class="toc-text">1 HTML5 应用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-HTML5-%E4%BC%98%E5%8A%BF"><span class="toc-text">2 HTML5 优势</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%A4%A7%E9%81%93%E8%87%B3%E7%AE%80"><span class="toc-text">2.1 大道至简</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AF%AD%E4%B9%89%E5%8C%96"><span class="toc-text">2.2 语义化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%BE%AE%E6%95%B0%E6%8D%AE"><span class="toc-text">2.2.1 微数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E7%BB%93%E6%9E%84%E5%8C%96%E6%95%B0%E6%8D%AE"><span class="toc-text">2.2.2 结构化数据</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8F%AF%E7%94%A8%E6%80%A7%E5%92%8C%E7%94%A8%E6%88%B7%E4%BD%93%E9%AA%8C%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-text">2.3 可用性和用户体验的改进</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E6%97%A0%E9%9A%9C%E7%A2%8D%E5%AF%8C%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8-WAI-ARIA"><span class="toc-text">2.3.1 无障碍富网络应用 WAI-ARIA</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-HTML5-%E6%97%A0%E6%8F%92%E4%BB%B6%E8%8C%83%E5%BC%8F"><span class="toc-text">2.4 HTML5 无插件范式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E6%8F%92%E4%BB%B6%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">2.4.1 插件的问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%AE%89%E5%85%A8"><span class="toc-text">2.5 安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E7%A7%BB%E5%8A%A8%E5%BA%94%E7%94%A8%E5%92%8C%E6%B8%B8%E6%88%8F"><span class="toc-text">2.6 移动应用和游戏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-SEO"><span class="toc-text">2.7 SEO</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-HTML5-%E6%80%BB%E8%A7%88"><span class="toc-text">3 HTML5 总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-HTML5-%E6%96%B0%E5%8A%9F%E8%83%BD%E7%89%B9%E6%80%A7"><span class="toc-text">4 HTML5 新功能特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-HTML5-%E6%96%B0%E5%85%83%E7%B4%A0"><span class="toc-text">4.1 HTML5 新元素</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E8%BF%87%E6%97%B6%E7%9A%84%E5%85%83%E7%B4%A0"><span class="toc-text">4.1.1 过时的元素</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-HTML5-%E8%A1%A8%E5%8D%95"><span class="toc-text">4.2 HTML5 表单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-HTML5-%E9%9F%B3%E8%A7%86%E9%A2%91"><span class="toc-text">4.3 HTML5 音视频</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-HTML5-Canvas%E7%94%BB%E5%B8%83%E4%B8%8ESVG"><span class="toc-text">4.4 HTML5 Canvas画布与SVG</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-1-SVG%E4%B8%8ECanvas"><span class="toc-text">4.4.1 SVG与Canvas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-2-Canvas-%E4%B8%8E-SVG-%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">4.4.2 Canvas 与 SVG 的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-3-SVG"><span class="toc-text">4.4.3 SVG</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-HTML5-Web-%E5%AD%98%E5%82%A8"><span class="toc-text">4.5 HTML5 Web 存储</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-HTML5-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%BC%93%E5%AD%98"><span class="toc-text">4.6 HTML5 应用程序缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-6-1-%E6%9B%B4%E6%96%B0%E7%BC%93%E5%AD%98"><span class="toc-text">4.6.1 更新缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-HTML5-Web-SQL-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">4.7 HTML5 Web SQL 数据库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8-HTML5-Web-Workers"><span class="toc-text">4.8 HTML5 Web Workers</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-9-HTML5-WebSocket"><span class="toc-text">4.9 HTML5 WebSocket</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Something-else"><span class="toc-text">5. Something else</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Feature-Detection"><span class="toc-text">5.1 Feature Detection</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-HTML5-Enabling-JavaScript"><span class="toc-text">5.2 HTML5 Enabling JavaScript</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-H5-%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87"><span class="toc-text">5.3 H5 相关组织</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
