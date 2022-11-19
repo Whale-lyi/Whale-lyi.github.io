@@ -451,16 +451,16 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929153007206.png" alt="image-20220929153007206" style="zoom:50%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929153101799.png" alt="image-20220929153101799" style="zoom:50%;" /></p>
 <ul>
-<li>共享的代码称为<code>可再入程序</code>，如编辑器、编译器</li>
-<li>可再入程序是<code>纯代码</code>的</li>
+<li>共享的代码称为<strong>可再入程序</strong>，如编辑器、编译器</li>
+<li>可再入程序是<strong>纯代码</strong>的</li>
 <li>前述的程序与数据集均是内存级的</li>
 <li>那么，在不同时段中针对(同一个外存数据文件)运行(同一个外存程序文件)，意味着完全不同的(P, C, D, R, PSW)</li>
 <li>所以两次运行构成两个不同的进程</li>
 </ul>
 <h4 id="概念级的进程状态"><a href="#概念级的进程状态" class="headerlink" title="概念级的进程状态"></a><strong>概念级的进程状态</strong></h4><ul>
-<li><code>运行态</code>(running)：进程占有处理器运行</li>
-<li><code>就绪态</code>(ready)：进程具备运行条件，等待系统分配处理器以便运行</li>
-<li><code>等待态</code>(waiting)/<code>阻塞态</code>(blocked)/睡眠态(sleep)：进程由于等待资源、输入输出、信号等而不具备运行条件</li>
+<li><strong>运行态</strong>(running)：进程占有处理器运行</li>
+<li><strong>就绪态</strong>(ready)：进程具备运行条件，等待系统分配处理器以便运行</li>
+<li><strong>等待态</strong>(waiting)/<strong>阻塞态</strong>(blocked)/睡眠态(sleep)：进程由于等待资源、输入输出、信号等而不具备运行条件</li>
 </ul>
 <h4 id="进程三态模型"><a href="#进程三态模型" class="headerlink" title="进程三态模型"></a><strong>进程三态模型</strong></h4><ol>
 <li><p>运行态 -&gt; 等待态</p>
@@ -501,17 +501,17 @@
 </ul>
 <h4 id="进程挂起的概念"><a href="#进程挂起的概念" class="headerlink" title="进程挂起的概念"></a><strong>进程挂起的概念</strong></h4><ul>
 <li>OS无法预期进程的数目与资源需求，计算机系统在运行过程中可能出现资源不足的情况</li>
-<li>运行资源不足表现为<code>性能低</code>和<code>死锁</code>两种情况</li>
+<li>运行资源不足表现为<strong>性能低</strong>和<strong>死锁</strong>两种情况</li>
 <li>解决办法：剥夺某些进程的内存及其他资源，调入OS管理的磁盘对换区，不参加进程调度，待<br>适当时候再调入内存、恢复资源、参与运行</li>
-<li>这就是<code>进程挂起</code>(suspend)</li>
+<li>这就是<strong>进程挂起</strong>(suspend)</li>
 <li>挂起态与等待态有着本质区别，后者占有已申请到的资源处于等待，前者没有任何资源</li>
 </ul>
 <h4 id="进程挂起的选择与恢复"><a href="#进程挂起的选择与恢复" class="headerlink" title="进程挂起的选择与恢复"></a><strong>进程挂起的选择与恢复</strong></h4><ul>
-<li>一般选择<code>等待态</code>进程进入<code>挂起等待态</code>(blocked suspend)</li>
-<li>也可选择<code>就绪态</code>进程进入<code>挂起就绪态</code>(ready suspend)</li>
-<li><code>运行态</code>进程还可以挂起自己</li>
-<li>等待事件结束后，<code>挂起等待态</code>进入<code>挂起就绪态</code></li>
-<li>一般选择<code>挂起就绪态</code>进程予以恢复</li>
+<li>一般选择<strong>等待态</strong>进程进入<strong>挂起等待态</strong>(blocked suspend)</li>
+<li>也可选择<strong>就绪态</strong>进程进入<strong>挂起就绪态</strong>(ready suspend)</li>
+<li><strong>运行态</strong>进程还可以挂起自己</li>
+<li>等待事件结束后，<strong>挂起等待态</strong>进入<strong>挂起就绪态</strong></li>
+<li>一般选择<strong>挂起就绪态</strong>进程予以恢复</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221016164253509.png" alt="image-20221016164253509"></p>
 <h3 id="2-3-2-进程的数据描述"><a href="#2-3-2-进程的数据描述" class="headerlink" title="2.3.2 进程的数据描述"></a>2.3.2 进程的数据描述</h3><h4 id="进程控制块-Process-Control-Block-PCB"><a href="#进程控制块-Process-Control-Block-PCB" class="headerlink" title="进程控制块(Process Control Block,PCB)"></a><strong>进程控制块(Process Control Block,PCB)</strong></h4><ul>
@@ -559,7 +559,7 @@
 <li>某一时刻进程的内容及其执行状态集合：<ul>
 <li>进程控制块: 保存进程的标识信息、处理器状态信息和进程控制信息</li>
 <li>进程程序块: 进程执行的程序空间</li>
-<li>进程数据块: 进程处理的数据空间，包括数据、处理函数的<code>用户栈</code>和可修改的程序</li>
+<li>进程数据块: 进程处理的数据空间，包括数据、处理函数的<strong>用户栈</strong>和可修改的程序</li>
 <li>进程核心栈: 每个进程捆绑一个，进程在内核模式下运行时使用的堆栈，中断或系统过程使用。保存内核函数调用的参数、局部变量和返回地址</li>
 </ul>
 </li>
@@ -631,8 +631,8 @@
 </ul>
 <h4 id="原语与进程控制原语"><a href="#原语与进程控制原语" class="headerlink" title="原语与进程控制原语"></a><strong>原语与进程控制原语</strong></h4><ul>
 <li>进程控制过程中涉及对OS核心数据结构(进程表/PCB池/队列/资源表)的修改</li>
-<li>为防止与时间有关的错误，应使用<code>原语</code></li>
-<li>原语是<code>由若干条指令构成</code>的完成某种特定功能的程序，执行上具有<code>不可分割性</code></li>
+<li>为防止与时间有关的错误，应使用<strong>原语</strong></li>
+<li>原语是<strong>由若干条指令构成</strong>的完成某种特定功能的程序，执行上具有<strong>不可分割性</strong></li>
 <li>原语的执行可以通过关闭中断实现(进入原语前关闭,退出原语前打开)</li>
 <li>不是进程控制的整个流程都用原语实现，而是在进程控制当中对核心数据结构进行操作的关键代码段用原语来实现</li>
 <li>进程控制使用的原语称为进程控制原语</li>
@@ -641,25 +641,25 @@
 <h3 id="2-3-4-进程切换与模式切换"><a href="#2-3-4-进程切换与模式切换" class="headerlink" title="2.3.4 进程切换与模式切换"></a>2.3.4 进程切换与模式切换</h3><h4 id="进程切换"><a href="#进程切换" class="headerlink" title="进程切换"></a><strong>进程切换</strong></h4><ul>
 <li>进程切换指从正在运行的进程中收回处理器，让待运行进程来占有处理器运行</li>
 <li>内核获得处理器控制权之后，如果需要就可以实现进程切换，因此进程切换必定在内核态</li>
-<li>进程切换实质上就是被中断运行进程与待运行进程的<code>上下文切换</code>，处理过程是：<ul>
+<li>进程切换实质上就是被中断运行进程与待运行进程的<strong>上下文切换</strong>，处理过程是：<ul>
 <li>保存被中断进程的上下文</li>
 <li>转向进程调度</li>
 <li>恢复待运行进程的上下文</li>
 </ul>
 </li>
 <li>工作过程：<ol>
-<li>(中断/异常等触发)<code>正向模式切换</code>并<code>压入PSW/PC</code></li>
-<li><code>保存</code>被中断进程的<code>现场信息</code></li>
+<li>(中断/异常等触发)<strong>正向模式切换</strong>并<strong>压入 PSW/PC</strong></li>
+<li><strong>保存</strong>被中断进程的<strong>现场信息</strong></li>
 <li>处理具体中断/异常</li>
-<li>把被中断进程的系统堆栈指针<code>SP值保存到PCB</code></li>
-<li><code>调整</code>被中断进程的<code>PCB</code>信息，如进程状态</li>
-<li>把被中断进程的PCB<code>加入相关队列</code></li>
+<li>把被中断进程的系统堆栈指针<strong>SP值保存到PCB</strong></li>
+<li><strong>调整</strong>被中断进程的<strong>PCB</strong>信息，如进程状态</li>
+<li>把被中断进程的PCB<strong>加入相关队列</strong></li>
 <li>选择下一个占用CPU运行的进程</li>
-<li><code>修改</code>被选中进程的<code>PCB</code>信息，如进程状态</li>
-<li><code>设置</code>被选中进程的<code>地址空间</code>，<code>恢复存储管理信息</code></li>
-<li><code>恢复</code>被选中进程的<code>SP</code>值到处理器寄存器SP</li>
-<li><code>恢复</code>被选中进程的<code>现场信息</code>进入处理器</li>
-<li>(中断返回指令触发)<code>逆向模式转换</code>并<code>弹出PSW/PC</code></li>
+<li><strong>修改</strong>被选中进程的<strong>PCB</strong>信息，如进程状态</li>
+<li><strong>设置</strong>被选中进程的<strong>地址空间</strong>，<strong>恢复存储管理信息</strong></li>
+<li><strong>恢复</strong>被选中进程的<strong>SP</strong>值到处理器寄存器SP</li>
+<li><strong>恢复</strong>被选中进程的<strong>现场信息</strong>进入处理器</li>
+<li>(中断返回指令触发)<strong>逆向模式转换</strong>并<strong>弹出 PSW/PC</strong></li>
 </ol>
 </li>
 </ul>
@@ -685,7 +685,7 @@
 </li>
 </ul>
 <h4 id="进程切换的发生时机"><a href="#进程切换的发生时机" class="headerlink" title="进程切换的发生时机"></a><strong>进程切换的发生时机</strong></h4><ul>
-<li>进程切换一定发生在<code>中断/异常/系统调用</code>处理过程中，常见的情况是：<ul>
+<li>进程切换一定发生在<strong>中断/异常/系统调用</strong>处理过程中，常见的情况是：<ul>
 <li>阻塞式系统调用、虚拟地址异常导致被中断进程进入等待态</li>
 <li>时间片中断、I/O中断后发现更高优先级进程，导致被中断进程转入就绪态</li>
 <li>终止用系统调用、不能继续执行的异常，导致被中断进程进入终止态</li>
@@ -754,7 +754,7 @@
 <li><p>传统进程是单线程结构进程</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221013141541780.png" alt="image-20221013141541780"></p>
 </li>
-<li><p><code>进程是处理器调度和资源分配的基本单位</code></p>
+<li><p><strong>进程是处理器调度和资源分配的基本单位</strong></p>
 </li>
 <li><p>在并发程序设计上存在的问题：</p>
 <ul>
@@ -777,7 +777,7 @@
 <ul>
 <li><p>多线程环境下<strong>进程</strong>的概念</p>
 <ul>
-<li><p>在多线程环境下，<code>进程是操作系统中进行保护和资源分配的独立单位</code>，具有：</p>
+<li><p>在多线程环境下，<strong>进程是操作系统中进行保护和资源分配的独立单位</strong>，具有：</p>
 <ul>
 <li>用来容纳进程映像的虚拟地址空间</li>
 <li>对进程、文件和设备的存取保护机制</li>
@@ -789,7 +789,7 @@
 </ul>
 </li>
 <li>多线程环境下<strong>线程</strong>的概念<ul>
-<li><code>线程是进程的一条执行路径，是调度的基本单位</code>，同一个进程中的所有线程<strong>共享进程获得的主存空间和资源</strong>。它具有<ul>
+<li><strong>线程是进程的一条执行路径，是调度的基本单位</strong>，同一个进程中的所有线程<strong>共享进程获得的主存空间和资源</strong>。它具有<ul>
 <li>线程执行状态</li>
 <li>受保护的线程上下文，当线程不运行时，用于存储现场信息</li>
 <li>独立的程序指令计数器</li>
@@ -846,7 +846,7 @@
 <li>线程管理的所有工作由OS内核来做</li>
 <li>OS提供了一个应用程序设计接口API，供开发者使用KLT</li>
 <li>OS直接调度KLT</li>
-<li>当任务提交操作系统执行时，内核为其创建进程和一个<code>基线程</code>，线程执行过程中可通过内核的创建线程原语来创建其他线程</li>
+<li>当任务提交操作系统执行时，内核为其创建进程和一个<strong>基线程</strong>，线程执行过程中可通过内核的创建线程原语来创建其他线程</li>
 <li>内核需要为进程及进程中的单个线程维护现场信息，所以应在内核空间中建立和维护进程控制块和线程控制块(thread control block,TCB)</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221013151327647.png" alt="image-20221013151327647"></p>
@@ -873,7 +873,7 @@
 <h4 id="Jacketing技术"><a href="#Jacketing技术" class="headerlink" title="Jacketing技术"></a><strong>Jacketing技术</strong></h4><ul>
 <li>把阻塞式系统调用改造成非阻塞式的</li>
 <li>当线程陷入系统调用时，执行Jacketing程序</li>
-<li>由Jacketing程序来检查资源使用情况，以决定是否执行<code>进程切换</code>或<code>传递控制权给另一个线程</code></li>
+<li>由Jacketing程序来检查资源使用情况，以决定是否执行<strong>进程切换</strong>或<strong>传递控制权给另一个线程</strong></li>
 </ul>
 <h4 id="用户级线程-vs-内核级线程"><a href="#用户级线程-vs-内核级线程" class="headerlink" title="用户级线程 vs. 内核级线程"></a><strong>用户级线程 vs. 内核级线程</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018152645596.png" alt="image-20221018152645596"></p>
 <ul>
@@ -949,20 +949,20 @@
 <li>收回处理器</li>
 </ul>
 <h3 id="2-5-2-处理器调度算法"><a href="#2-5-2-处理器调度算法" class="headerlink" title="2.5.2 处理器调度算法"></a>2.5.2 处理器调度算法</h3><h4 id="选择处理器调度算法的原则"><a href="#选择处理器调度算法的原则" class="headerlink" title="选择处理器调度算法的原则"></a><strong>选择处理器调度算法的原则</strong></h4><ul>
-<li><code>资源利用率</code>：使得CPU或其他资源的使用率尽可能高且能够并行工作</li>
-<li><code>响应时间</code>：使交互式用户的响应时间尽可能小，或尽快处理实时任务</li>
-<li><code>周转时间</code>：提交给系统开始到执行完成获得结果为止的这段时间间隔称周转时间，应该使周转时间或平均周转时间尽可能短<ul>
+<li><strong>资源利用率</strong>：使得CPU或其他资源的使用率尽可能高且能够并行工作</li>
+<li><strong>响应时间</strong>：使交互式用户的响应时间尽可能小，或尽快处理实时任务</li>
+<li><strong>周转时间</strong>：提交给系统开始到执行完成获得结果为止的这段时间间隔称周转时间，应该使周转时间或平均周转时间尽可能短<ul>
 <li>归一化周转时间 = 周转时间 / CPU服务时间 &gt; 1，目标不断接近1</li>
 </ul>
 </li>
-<li><code>吞吐量</code>：单位时间处理的进程数尽可能多</li>
-<li><code>公平性</code>：确保每个用户每个进程获得合理的CPU份额或其他资源份额</li>
+<li><strong>吞吐量</strong>：单位时间处理的进程数尽可能多</li>
+<li><strong>公平性</strong>：确保每个用户每个进程获得合理的CPU份额或其他资源份额</li>
 </ul>
 <h4 id="优先数调度算法"><a href="#优先数调度算法" class="headerlink" title="优先数调度算法"></a><strong>优先数调度算法</strong></h4><ul>
 <li>根据分配给进程的优先数决定运行进程<ul>
 <li>抢占式优先数调度算法</li>
 <li>非抢占式优先数调度算法<ul>
-<li><code>没有运行态 -&gt; 就绪态的跳转</code></li>
+<li><strong>没有运行态 -&gt; 就绪态的跳转</strong></li>
 </ul>
 </li>
 </ul>
@@ -980,29 +980,29 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221017110647416.png" alt="image-20221017110647416"></p>
 <h4 id="与使用处理器的服务时间长短相关的优先数"><a href="#与使用处理器的服务时间长短相关的优先数" class="headerlink" title="与使用处理器的服务时间长短相关的优先数"></a><strong>与使用处理器的服务时间长短相关的优先数</strong></h4><ul>
-<li><code>计算时间短(SJF)</code>(作业/进程)优先</li>
-<li><code>剩余计算时间短(SRTF)</code>进程优先</li>
-<li><code>响应比高者(HRRF)</code>(作业/进程)优先<ul>
+<li><strong>计算时间短(SJF)</strong>(作业/进程)优先</li>
+<li><strong>剩余计算时间短(SRTF)</strong>进程优先</li>
+<li><strong>响应比高者(HRRF)</strong>(作业/进程)优先<ul>
 <li>响应比 = $\frac{等待时间 + 期待(预估)处理器的服务时间}{期待(预估)处理器的服务时间}$</li>
 </ul>
 </li>
-<li><code>先来先服务(FCFS)</code>：先进队先被选择(常用于非抢占式)<ul>
+<li><strong>先来先服务(FCFS)</strong>：先进队先被选择(常用于非抢占式)<ul>
 <li>多用于高级调度；低级调度中，以计算为主的进程过于优越，即容易造成长时间占用处理器</li>
 </ul>
 </li>
 </ul>
 <h4 id="时间片轮转调度算法"><a href="#时间片轮转调度算法" class="headerlink" title="时间片轮转调度算法"></a><strong>时间片轮转调度算法</strong></h4><ul>
-<li><code>根据各个进程进入就绪队列的时间先后轮流占有CPU一个时间片</code></li>
+<li><strong>根据各个进程进入就绪队列的时间先后轮流占有CPU一个时间片</strong></li>
 <li>时间片中断</li>
-<li><code>时间片长度的确定</code>：选择长短合适的时间片, 过长则退化为先来先服务算法, 过短则调度开销大</li>
+<li><strong>时间片长度的确定</strong>：选择长短合适的时间片, 过长则退化为先来先服务算法, 过短则调度开销大</li>
 <li>单时间片，多时间片和动态时间片</li>
 </ul>
 <h4 id="分级调度算法-feedback"><a href="#分级调度算法-feedback" class="headerlink" title="分级调度算法(feedback)"></a><strong>分级调度算法(feedback)</strong></h4><ul>
 <li>又称多队列策略，反馈循环队列，多级反馈队列调度算法</li>
 <li>基本思想<ul>
-<li><code>建立多个不同优先级的就绪进程队列</code></li>
-<li><code>多个就绪进程队列间按照优先数调度</code></li>
-<li><code>高优先级就绪进程</code>，分配的时间片短</li>
+<li><strong>建立多个不同优先级的就绪进程队列</strong></li>
+<li><strong>多个就绪进程队列间按照优先数调度</strong></li>
+<li><strong>高优先级就绪进程</strong>，分配的时间片短</li>
 <li>单个就绪进程队列中进程的优先数和时间片相同</li>
 </ul>
 </li>
@@ -1058,7 +1058,7 @@
 <li>调度器总是选择优先级较高的进程</li>
 <li>提供多个就绪队列(一组就绪队列)代表各个级别的优先级</li>
 <li>问题：低优先级有可能饥饿<ul>
-<li><code>一个进程的优先级应该随着它的时间或执行的历史而变化</code></li>
+<li><strong>一个进程的优先级应该随着它的时间或执行的历史而变化</strong></li>
 </ul>
 </li>
 </ul>
@@ -1075,12 +1075,12 @@
 </li>
 </ul>
 <h4 id="4-调度算法"><a href="#4-调度算法" class="headerlink" title="4.调度算法"></a><strong>4.调度算法</strong></h4><ul>
-<li><code>FCFS</code>(<em>先来先服务</em>) <strong>非抢占</strong></li>
-<li><code>RR</code>(<em>时间片轮转</em>) <strong>抢占</strong></li>
-<li><code>SPN</code>(<em>最短进程优先</em>) <strong>非抢占</strong></li>
-<li><code>SRT</code>(<em>最短剩余时间优先</em>) <strong>抢占</strong></li>
-<li><code>HRRF</code>(<em>最高响应比优先</em>) <strong>非抢占</strong></li>
-<li><code>Feedback</code>(<em>多级反馈调度</em>) <strong>抢占</strong>   //RR+优先级</li>
+<li><strong>FCFS</strong>(<em>先来先服务</em>) <strong>非抢占</strong></li>
+<li><strong>RR</strong>(<em>时间片轮转</em>) <strong>抢占</strong></li>
+<li><strong>SPN</strong>(<em>最短进程优先</em>) <strong>非抢占</strong></li>
+<li><strong>SRT</strong>(<em>最短剩余时间优先</em>) <strong>抢占</strong></li>
+<li><strong>HRRF</strong>(<em>最高响应比优先</em>) <strong>非抢占</strong></li>
+<li><strong>Feedback</strong>(<em>多级反馈调度</em>) <strong>抢占</strong>   //RR+优先级</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162324280.png" alt="image-20221018162324280"></p>
 <h5 id="FCFS-先来先服务"><a href="#FCFS-先来先服务" class="headerlink" title="FCFS(先来先服务)"></a><strong>FCFS(先来先服务)</strong></h5><ul>
@@ -1131,7 +1131,7 @@
 </ul>
 </li>
 <li>分级原则：外设访问, 交互性, 时间紧迫程度, 系统效率, 用户立场, …</li>
-<li>当一个进程第一次进入系统时，它被放置在RQ0，当它第一次被抢占后并返回就绪状态时，它被放置在RQ1。在随后的时间里，每当它被抢占时，它被降级到下一个低优先级队列中。<code>一个短进程</code>很快会执行完，<code>不会在就绪队列中降很多级。</code></li>
+<li>当一个进程第一次进入系统时，它被放置在RQ0，当它第一次被抢占后并返回就绪状态时，它被放置在RQ1。在随后的时间里，每当它被抢占时，它被降级到下一个低优先级队列中。<strong>一个短进程</strong>很快会执行完，<strong>不会在就绪队列中降很多级。</strong></li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163513176.png" alt="image-20221018163513176" style="zoom:67%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163829039.png" alt="image-20221018163829039" style="zoom:67%;" /></p>
