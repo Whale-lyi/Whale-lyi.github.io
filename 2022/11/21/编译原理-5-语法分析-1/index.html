@@ -175,7 +175,86 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="语法分析-1"><a href="#语法分析-1" class="headerlink" title="语法分析-1"></a>语法分析-1</h1><h2 id="ANTLR-4-语法分析器"><a href="#ANTLR-4-语法分析器" class="headerlink" title="ANTLR 4 语法分析器"></a>ANTLR 4 语法分析器</h2>
+        <h1 id="语法分析-1"><a href="#语法分析-1" class="headerlink" title="语法分析-1"></a>语法分析-1</h1><h2 id="ANTLR-4-语法分析器"><a href="#ANTLR-4-语法分析器" class="headerlink" title="ANTLR 4 语法分析器"></a>ANTLR 4 语法分析器</h2><h3 id="1-二义性文法"><a href="#1-二义性文法" class="headerlink" title="1. 二义性文法"></a>1. 二义性文法</h3><ul>
+<li>二义性是不能接受的，必须消除</li>
+</ul>
+<h4 id="1-1-IfStat"><a href="#1-1-IfStat" class="headerlink" title="1.1 IfStat"></a>1.1 IfStat</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 不考虑 antlr 的处理, 单看文法这是有二义性的</span><br><span class="line">stat : &#x27;if&#x27; expr &#x27;then&#x27; stat</span><br><span class="line">     | &#x27;if&#x27; expr &#x27;then&#x27; stat &#x27;else&#x27; stat</span><br><span class="line">     | expr</span><br><span class="line">     ;</span><br><span class="line">     </span><br><span class="line">/* </span><br><span class="line"> if a then if b then c else d</span><br><span class="line"> 此处 else d 归属是模糊的</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">// 解决方法非常复杂:</span><br><span class="line">// 将 else 与最近的未被匹配的 if 匹配</span><br><span class="line">stat : matched_stat | open_stat ;</span><br><span class="line"></span><br><span class="line">matched_stat : &#x27;if&#x27; expr &#x27;then&#x27; matched_stat &#x27;else&#x27; matched_stat</span><br><span class="line">             | expr</span><br><span class="line">             ;</span><br><span class="line"></span><br><span class="line">open_stat: &#x27;if&#x27; expr &#x27;then&#x27; stat</span><br><span class="line">         | &#x27;if&#x27; expr &#x27;then&#x27; matched_stat &#x27;else&#x27; open_stat</span><br><span class="line">         ;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Q: 如何判断文法有没有二义性</p>
+<p>A: 做不到, 只能靠经验</p>
+<p>Q: ANTLR 如何解决二义性问题</p>
+<p>A: 通过书写规则的顺序来决定优先级, 解释为优先级高的结构</p>
+</blockquote>
+<h4 id="1-2-Left-Factoring"><a href="#1-2-Left-Factoring" class="headerlink" title="1.2 Left-Factoring"></a>1.2 Left-Factoring</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">stat : &#x27;if&#x27; expr &#x27;then&#x27; stat</span><br><span class="line">     | &#x27;if&#x27; expr &#x27;then&#x27; stat &#x27;else&#x27; stat</span><br><span class="line">     | expr</span><br><span class="line">     ;</span><br><span class="line">==============================================</span><br><span class="line">stat : &#x27;if&#x27; expr &#x27;then&#x27; stat stat_prime ;</span><br><span class="line">stat_prime : &#x27;else&#x27; stat</span><br><span class="line">     |</span><br><span class="line">     ;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>很明显, 提取左公因子无助于消除文法二义性</li>
+<li>ANTLR 4 可以处理有左公因子的文法</li>
+</ul>
+<h4 id="1-3-Expr"><a href="#1-3-Expr" class="headerlink" title="1.3 Expr"></a>1.3 Expr</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">expr :</span><br><span class="line">  | expr &#x27;*&#x27; expr</span><br><span class="line">  | expr &#x27;-&#x27; expr</span><br><span class="line">  | DIGIT</span><br><span class="line">  ;</span><br><span class="line"></span><br><span class="line">// 同样存在二义性</span><br><span class="line">1-2-3 -&gt; (1-2)-3 | 1-(2-3)</span><br><span class="line">1-2*3 -&gt; (1-2)*3 | 1-(2*3)</span><br><span class="line"></span><br><span class="line">// 解决方法, 但是引入很多冗余文法符号</span><br><span class="line">// 左递归文法, expr 只有左侧的 expr 是递归的</span><br><span class="line">expr : expr &#x27;-&#x27; term</span><br><span class="line">     | term</span><br><span class="line">     ;</span><br><span class="line">     </span><br><span class="line">term : term &#x27;*&#x27; factor</span><br><span class="line">     | factor</span><br><span class="line">     ;</span><br><span class="line">     </span><br><span class="line">factor : DIGIT ;</span><br><span class="line"></span><br><span class="line">// 右递归文法, 也能解决优先级, 但会改变结合性 1-2-3 -&gt; 1-(2-3)</span><br><span class="line">expr : term expr_prime ;</span><br><span class="line">expr_prime : &#x27;-&#x27; term expr_prime</span><br><span class="line">     |</span><br><span class="line">     ;</span><br><span class="line">     </span><br><span class="line">term : factor term_prime ;</span><br><span class="line">term_prime : &#x27;*&#x27; factor term_prime</span><br><span class="line">     |</span><br><span class="line">     ;</span><br><span class="line">     </span><br><span class="line">factor : DIGIT ;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>左递归(左结合)，右递归(右结合)</li>
+<li>ANTLR 4 可以处理(直接)左递归<ul>
+<li>写在上方的规则优先级高</li>
+<li>但是有些情况需要右结合(^)<ul>
+<li>二元运算符需要特别标记 <code>&lt;assoc = right&gt; expr &#39;^&#39; expr</code></li>
+<li>一元运算符不需要标记，因为只能解释为右结合 <code>------1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Call-Graphs"><a href="#2-Call-Graphs" class="headerlink" title="2. Call Graphs"></a>2. Call Graphs</h3><h4 id="2-1-监听器模式"><a href="#2-1-监听器模式" class="headerlink" title="2.1 监听器模式"></a>2.1 监听器模式</h4><ul>
+<li><p>ANTLR 通过深度优先遍历生成的语法树</p>
+<ul>
+<li>除了叶子节点, 所有的内部节点至少会经过两次</li>
+<li>ANTLR 会为其生成 <code>ENTERXXX(), EXITXXX()</code> 的方法</li>
+</ul>
+</li>
+<li><p>一条规则有不同选择时, 通过添加 <code>#label</code> 来区分, 单个选择内部使用 <code>op</code> 来区分</p>
+<ul>
+<li>ANTLR 会生成对应的 <code>ENTER\EXIT LABEL</code> 方法, <code>op</code> 则作为成员变量</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">expr: ID &#x27;(&#x27; exprList? &#x27;)&#x27;    # Call // function call</span><br><span class="line">    | expr &#x27;[&#x27; expr &#x27;]&#x27;       # Index // array subscripts</span><br><span class="line">    | op = &#x27;-&#x27; expr                # Negate // right association</span><br><span class="line">    | op = &#x27;!&#x27; expr                # Not // right association</span><br><span class="line">    | &lt;assoc = right&gt; expr &#x27;^&#x27; expr # Power</span><br><span class="line">    | lhs = expr (op = &#x27;*&#x27;| op = &#x27;/&#x27;) rhs = expr     # MultDiv</span><br><span class="line">    | lhs = expr (op = &#x27;+&#x27;| op = &#x27;-&#x27;) rhs = expr     # AddSub</span><br><span class="line">    | lhs = expr (op = &#x27;==&#x27; | op = &#x27;!=&#x27;) rhs = expr  # EQNE</span><br><span class="line">    | &#x27;(&#x27; expr &#x27;)&#x27;            # Parens</span><br><span class="line">    | ID                      # Id</span><br><span class="line">    | INT                     # Int</span><br><span class="line">    ;</span><br></pre></td></tr></table></figure>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221122164530981.png" alt="image-20221122164530981" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h3 id="3-上下文无关文法"><a href="#3-上下文无关文法" class="headerlink" title="3. 上下文无关文法"></a>3. 上下文无关文法</h3><h4 id="3-1-语法"><a href="#3-1-语法" class="headerlink" title="3.1 语法"></a>3.1 语法</h4><h5 id="Definition-Context-Free-Grammar-CFG-上下文无关文法"><a href="#Definition-Context-Free-Grammar-CFG-上下文无关文法" class="headerlink" title="Definition (Context-Free Grammar (CFG); 上下文无关文法)"></a>Definition (Context-Free Grammar (CFG); 上下文无关文法)</h5><p>上下文无关文法 $G$ 是一个四元组 $G = (T,N,P,S):$</p>
+<ul>
+<li><p>$T$ 是<strong>终结符号</strong> (Terminal) 集合, 对应于词法分析器产生的词法单元;</p>
+</li>
+<li><p>$N$ 是<strong>非终结符号</strong> (Non-terminal) 集合;</p>
+</li>
+<li><p>$P$ 是<strong>产生式</strong> (Production) 集合;</p>
+<ul>
+<li><p>$A \in N \longrightarrow α \in (T \cup N)^*$</p>
+</li>
+<li><p>头部/左部 (Head) $A$: <strong>单个</strong>非终结符</p>
+</li>
+<li><p>体部/右部 (Body) $α$: 终结符与非终结符构成的串, 也可以是空串 $\epsilon$</p>
+</li>
+</ul>
+</li>
+<li><p>$S$ 为<strong>开始</strong> (Start) 符号。要求 $S \in N$ 且唯一。</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124173937897.png" alt="image-20221124173937897" style="zoom:80%;" /></p>
+<h4 id="3-2-语义"><a href="#3-2-语义" class="headerlink" title="3.2 语义"></a>3.2 语义</h4><p>上下文无关文法 $G$ 定义了一个<strong>语言</strong> $L(G)$</p>
+<ul>
+<li>语言是<strong>串</strong>的集合</li>
+<li>串从何来?</li>
+</ul>
+<h5 id="推导-Derivation"><a href="#推导-Derivation" class="headerlink" title="推导 (Derivation)"></a>推导 (Derivation)</h5><ul>
+<li>推导即是将某个产生式的左边<strong>替换</strong>成它的右边</li>
+<li>每一步推导需要选择<strong>替换哪个非终结符号</strong>, 以及<strong>使用哪个产生式</strong></li>
+</ul>
+<blockquote>
+<p>$E \to E + E \mid E \ast E \mid (E) \mid -E \mid \bf id$</p>
+<ul>
+<li>$E \implies -E \implies -(E) \implies -(E + E) \implies -(\textbf{id} + E) \implies -(\textbf{id} + \textbf{id})$</li>
+<li>$E \implies -E \implies -(E) \implies -(E + E) \implies \textcolor{blue}{-(E + \textbf{id})} \implies -(\textbf{id} + \textbf{id})$</li>
+</ul>
+</blockquote>
+
       </div>
       
         <div class="prev-or-next">
@@ -225,7 +304,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-1"><span class="toc-text">语法分析-1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ANTLR-4-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">ANTLR 4 语法分析器</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-1"><span class="toc-text">语法分析-1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ANTLR-4-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">ANTLR 4 语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%8C%E4%B9%89%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 二义性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-IfStat"><span class="toc-text">1.1 IfStat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-Left-Factoring"><span class="toc-text">1.2 Left-Factoring</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-Expr"><span class="toc-text">1.3 Expr</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Call-Graphs"><span class="toc-text">2. Call Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%9B%91%E5%90%AC%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.1 监听器模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">3. 上下文无关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95"><span class="toc-text">3.1 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Context-Free-Grammar-CFG-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">Definition (Context-Free Grammar (CFG); 上下文无关文法)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E8%AF%AD%E4%B9%89"><span class="toc-text">3.2 语义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC-Derivation"><span class="toc-text">推导 (Derivation)</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
