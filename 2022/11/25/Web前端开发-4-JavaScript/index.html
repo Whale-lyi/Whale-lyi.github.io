@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Web前端开发(4) JavaScript 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Web前端开发(4) JavaScript</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2022-11-25 14:02:17
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                    <b>#</b> Web前端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="6-JS-Basics"><a href="#6-JS-Basics" class="headerlink" title="6-JS Basics"></a>6-JS Basics</h1><h2 id="1-客户端基础"><a href="#1-客户端基础" class="headerlink" title="1. 客户端基础"></a>1. 客户端基础</h2><h3 id="1-1-客户端脚本"><a href="#1-1-客户端脚本" class="headerlink" title="1.1 客户端脚本"></a>1.1 客户端脚本</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221125151322702.png" alt="image-20221125151322702" style="zoom:80%;" /></p>
+<h3 id="1-2-客户端编程"><a href="#1-2-客户端编程" class="headerlink" title="1.2 客户端编程"></a>1.2 客户端编程</h3><ul>
+<li>HTML适合于开发静态⻚⾯<ul>
+<li>可以指定⽂本/图像布局，链接…</li>
+<li>Web⻚⾯每次访问时看起来都是⼀样的</li>
+<li>为了开发交互/响应式⻚⾯，必须以某种形式集成编程</li>
+</ul>
+</li>
+<li>客户端编程<ul>
+<li>程序是⽤单独的编程(或脚本)语⾔编写的<ul>
+<li>例如，JavaScript, JScript, VBScript</li>
+</ul>
+</li>
+<li>程序被嵌⼊到Web⻚⾯的HTML中，使⽤(HTML)标记来标识程序组件<ul>
+<li>例如，<code>&lt;script type=&quot;text/javascript&quot;&gt; ... &lt;/script&gt;</code></li>
+</ul>
+</li>
+<li>浏览器在加载⻚⾯时执⾏程序，将程序的动态输出与HTML的静态内容集成在⼀起</li>
+<li>还允许⽤户(客户端)输⼊信息并对其进⾏处理，可在将输⼊提交到远程服务器之前对其进⾏验证</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-客户端与服务器端编程"><a href="#1-3-客户端与服务器端编程" class="headerlink" title="1.3 客户端与服务器端编程"></a>1.3 客户端与服务器端编程</h3><ul>
+<li>客户端脚本(JavaScript)的好处:<ul>
+<li>可⽤性:可以修改⻚⾯⽽不必返回到服务器(更快的UI)</li>
+<li>效率:可以在不等待服务器的情况下对⻚⾯进⾏⼩⽽快速的更改</li>
+<li>事件驱动:可以响应⽤户操作，如点击和按键源代码</li>
+<li>平台独⽴性:任何⽀持脚本的浏览器都可以解释代码</li>
+</ul>
+</li>
+<li>服务器端编程(例如PHP)的好处:<ul>
+<li>安全性:可以访问服务器的私有数据;客户端看不到</li>
+<li>兼容性:不受浏览器兼容性问题的影响</li>
+<li>功能全:可以写⽂件，打开与服务器的连接，连接数据库…</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-4-常见脚本任务"><a href="#1-4-常见脚本任务" class="headerlink" title="1.4 常见脚本任务"></a>1.4 常见脚本任务</h3><ul>
+<li>向Web⻚⾯添加动态特性<ul>
+<li>表单数据的验证(可能是最常⽤的应⽤程序)</li>
+<li>图像翻转</li>
+<li>时间敏感或随机⻚⾯元素</li>
+<li>处理cookies</li>
+</ul>
+</li>
+<li>定义Web接⼝<ul>
+<li>利⽤按钮，⽂本框，可点击的图像，提示等</li>
+</ul>
+</li>
+<li>客户端脚本的限制<ul>
+<li>因为脚本代码嵌⼊在⻚⾯中，所以它对外界是可⻅的</li>
+<li>出于安全原因，脚本所能做的事情是有限的<ul>
+<li>例如，⽆法访问客户端的硬盘驱动器</li>
+</ul>
+</li>
+<li>因为它们被设计为在任何机器平台上运⾏，所以脚本不包含特定于平台的命令</li>
+<li>脚本语⾔功能不全<ul>
+<li>例如，JavaScript对象⾮常粗糙，不适合⼤型项⽬开发</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-JavaScript概述"><a href="#2-JavaScript概述" class="headerlink" title="2. JavaScript概述"></a>2. JavaScript概述</h2><h3 id="2-1-何为JavaScript"><a href="#2-1-何为JavaScript" class="headerlink" title="2.1 何为JavaScript"></a>2.1 何为JavaScript</h3><ul>
+<li>从“玩具”到流行<ul>
+<li>⽹⻚, AJAX, Web 2.0／3.0</li>
+<li>⼤量web应⽤</li>
+<li>APP</li>
+<li>控制硬件，Arduino, Tessel, Espruino, NodeBots等，应⽤于嵌⼊式系统、IOT、机器⼈等领域</li>
+<li>桌⾯程序（Electron），SpaceX ⻰⻜船的触控 UI 基于 Chromium + JavaScript 技术栈开发，开放的 Web 技术就此成为了⼈类⾸个应⽤到载⼈航天领域的 GUI 技术栈</li>
+<li>服务端</li>
+<li>命令⾏⼯具</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/21/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-1/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2022-11-25 14:02:17
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                        <b>#</b> Web前端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#6-JS-Basics"><span class="toc-text">6-JS Basics</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E5%9F%BA%E7%A1%80"><span class="toc-text">1. 客户端基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%84%9A%E6%9C%AC"><span class="toc-text">1.1 客户端脚本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%BC%96%E7%A8%8B"><span class="toc-text">1.2 客户端编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E7%BC%96%E7%A8%8B"><span class="toc-text">1.3 客户端与服务器端编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%B8%B8%E8%A7%81%E8%84%9A%E6%9C%AC%E4%BB%BB%E5%8A%A1"><span class="toc-text">1.4 常见脚本任务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-JavaScript%E6%A6%82%E8%BF%B0"><span class="toc-text">2. JavaScript概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BD%95%E4%B8%BAJavaScript"><span class="toc-text">2.1 何为JavaScript</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2022 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91(4)%20JavaScript + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F25%2FWeb%25E5%2589%258D%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-4-JavaScript%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/25/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-4-JavaScript/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

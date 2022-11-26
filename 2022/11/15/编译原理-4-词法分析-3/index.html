@@ -217,7 +217,7 @@
 <p>$2^S$ 表示 $S$ 的所有子集, 包括空集</p>
 </blockquote>
 <ul>
-<li><strong>约定：</strong>所有没有对应出边的字符默认指向一个不存在的 <strong>“空状态”</strong> ∅</li>
+<li><strong>约定：</strong>所有没有对应出边的字符默认指向一个不存在的 <strong>“空状态”</strong> $\empty$</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115232743665.png" alt="image-20221115232743665" style="zoom:80%;" /></p>
 <ul>
@@ -379,7 +379,7 @@
 </li>
 </ul>
 <h4 id="4-2-epsilon-闭包"><a href="#4-2-epsilon-闭包" class="headerlink" title="4.2 $\epsilon$-闭包"></a>4.2 $\epsilon$-闭包</h4><ul>
-<li><p>从状态 s 开始, 只通过 $\epsilon$-转移可达的状态集合</p>
+<li><p>从状态 $s$ 开始, 只通过 $\epsilon$-转移可达的状态集合</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170523291.png" alt="image-20221116170523291" style="zoom:80%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170532028.png" alt="image-20221116170532028" style="zoom:80%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170546504.png" alt="image-20221116170546504" style="zoom:80%;" /></p>
@@ -497,7 +497,7 @@
 <p><strong>注意</strong></p>
 <ul>
 <li>这是 <strong>DFA</strong> 最小化算法, 要保证状态图完整</li>
-<li>要先检查是否需要补 “死状态” ∅</li>
+<li>要先检查是否需要补 “死状态” $\empty$</li>
 </ul>
 <blockquote>
 <p>如何分析 DFA 最小化算法的复杂度?</p>
