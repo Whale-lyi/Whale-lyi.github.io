@@ -333,6 +333,49 @@
 <li>正则表达式的表达能力<strong>严格弱于</strong>上下文无关文法</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126150328339.png" alt="image-20221126150328339" style="zoom:80%;" /></p>
+<h4 id="4-1-RE-rightarrow-CFG"><a href="#4-1-RE-rightarrow-CFG" class="headerlink" title="4.1 RE $\rightarrow$ CFG"></a>4.1 RE $\rightarrow$ CFG</h4><p>每个<strong>正则表达式</strong> $r$ 对应的语言 $L(r)$ 都可以使用<strong>上下文无关文法</strong>来描述</p>
+<ul>
+<li><p>RE</p>
+<ul>
+<li>$r = (a \mid b)^\ast abb$</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151201551.png" alt="image-20221126151201551" style="zoom:80%;" /></p>
+</li>
+<li><p>CFG</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151258746.png" alt="image-20221126151258746" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h4 id="4-2-CFG-rightarrow-RE-反例"><a href="#4-2-CFG-rightarrow-RE-反例" class="headerlink" title="4.2 CFG $\rightarrow$ RE 反例"></a>4.2 CFG $\rightarrow$ RE 反例</h4><ul>
+<li><p>CFG</p>
+<ul>
+<li><p>$L = \set{a^nb^n \mid n \ge 0}$</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151604143.png" alt="image-20221126151604143" style="zoom:80%;" /></p>
+</li>
+</ul>
+</li>
+<li><p>RE</p>
+<ul>
+<li>该语言<strong>无法</strong>使用正则表达式来描述</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151732638.png" alt="image-20221126151732638" style="zoom:80%;" /></p>
+<ul>
+<li>因为 $m \gt k$, 所以一定会有状态经过了不止一次, 假设就是 $s_i$, 上图画出第一次碰到和最后一次碰到的状态<ul>
+<li>第一次到最后一次中间消耗的 $a$ 的个数一定 $\ge 1$</li>
+</ul>
+</li>
+<li>假设消耗掉 $a^i$ 后第一次到达 $s_i$, 此时接收 $b^i$ 后根据假设应当到达终止状态 $f$ <ul>
+<li>但因为第一次到达和最后一次到达的 $s_i$ 是相同的状态, 因此也应当可以接受 $a^{i+j}b^i$</li>
+<li><strong>矛盾！</strong> </li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>该反例称为泵引理, Pumping Lemma</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126153050203.png" alt="image-20221126153050203" style="zoom:80%;" /></p>
+</li>
+</ul>
 
       </div>
       
@@ -388,7 +431,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-1"><span class="toc-text">语法分析-1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ANTLR-4-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">ANTLR 4 语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%8C%E4%B9%89%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 二义性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-IfStat"><span class="toc-text">1.1 IfStat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-Left-Factoring"><span class="toc-text">1.2 Left-Factoring</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-Expr"><span class="toc-text">1.3 Expr</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Call-Graphs"><span class="toc-text">2. Call Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%9B%91%E5%90%AC%E5%99%A8%E6%A8%A1%E5%BC%8F-Listener"><span class="toc-text">2.1 监听器模式(Listener)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F-Visitor"><span class="toc-text">2.2 访问者模式(Visitor)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">3. 上下文无关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95"><span class="toc-text">3.1 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Context-Free-Grammar-CFG-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">Definition (Context-Free Grammar (CFG); 上下文无关文法)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E8%AF%AD%E4%B9%89"><span class="toc-text">3.2 语义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC-Derivation"><span class="toc-text">推导 (Derivation)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentential-Form-%E5%8F%A5%E5%9E%8B"><span class="toc-text">Definition (Sentential Form; 句型)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentence-%E5%8F%A5%E5%AD%90"><span class="toc-text">Definition (Sentence; 句子)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E6%96%87%E6%B3%95-G-%E7%94%9F%E6%88%90%E7%9A%84%E8%AF%AD%E8%A8%80-L-G"><span class="toc-text">Definition (文法 $G$ 生成的语言 $L(G)$)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%85%B3%E4%BA%8E%E6%96%87%E6%B3%95-G-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">3.3 关于文法 $G$ 的两个基本问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-%E7%BB%99%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2-x-in-T-ast-x-in-L-G"><span class="toc-text">3.3.1 给定字符串 $x \in T^\ast , x \in L(G)$ ?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-2-L-G-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">3.3.2 $L(G)$ 是什么?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">4 正则表达式</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-1"><span class="toc-text">语法分析-1</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ANTLR-4-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">ANTLR 4 语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%8C%E4%B9%89%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 二义性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-IfStat"><span class="toc-text">1.1 IfStat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-Left-Factoring"><span class="toc-text">1.2 Left-Factoring</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-Expr"><span class="toc-text">1.3 Expr</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Call-Graphs"><span class="toc-text">2. Call Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%9B%91%E5%90%AC%E5%99%A8%E6%A8%A1%E5%BC%8F-Listener"><span class="toc-text">2.1 监听器模式(Listener)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F-Visitor"><span class="toc-text">2.2 访问者模式(Visitor)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">3. 上下文无关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95"><span class="toc-text">3.1 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Context-Free-Grammar-CFG-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">Definition (Context-Free Grammar (CFG); 上下文无关文法)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E8%AF%AD%E4%B9%89"><span class="toc-text">3.2 语义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC-Derivation"><span class="toc-text">推导 (Derivation)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentential-Form-%E5%8F%A5%E5%9E%8B"><span class="toc-text">Definition (Sentential Form; 句型)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentence-%E5%8F%A5%E5%AD%90"><span class="toc-text">Definition (Sentence; 句子)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E6%96%87%E6%B3%95-G-%E7%94%9F%E6%88%90%E7%9A%84%E8%AF%AD%E8%A8%80-L-G"><span class="toc-text">Definition (文法 $G$ 生成的语言 $L(G)$)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%85%B3%E4%BA%8E%E6%96%87%E6%B3%95-G-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">3.3 关于文法 $G$ 的两个基本问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-%E7%BB%99%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2-x-in-T-ast-x-in-L-G"><span class="toc-text">3.3.1 给定字符串 $x \in T^\ast , x \in L(G)$ ?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-2-L-G-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">3.3.2 $L(G)$ 是什么?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">4 正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-RE-rightarrow-CFG"><span class="toc-text">4.1 RE $\rightarrow$ CFG</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-CFG-rightarrow-RE-%E5%8F%8D%E4%BE%8B"><span class="toc-text">4.2 CFG $\rightarrow$ RE 反例</span></a></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
