@@ -242,6 +242,18 @@
 <p>$该选择哪个\textcolor{teal}{\textbf{产生式}} (按编号进行索引) 或者\textcolor{cyan}{\textbf{报错}} (空单元格)$</p>
 </li>
 </ul>
+<h4 id="2-4-Definition-LL-1-文法"><a href="#2-4-Definition-LL-1-文法" class="headerlink" title="2.4 Definition ($LL(1)$ 文法)"></a>2.4 Definition ($LL(1)$ 文法)</h4><p>$如果文法$ $G$ 的$\textcolor{red}{\textbf{预测分析表}}是\textcolor{blue}{\textbf{无冲突}}的, 则$ $G$ $是$ $LL(1)$ $文法$</p>
+<ul>
+<li><p>$\textcolor{blue}{\textbf{无冲突}}: 每个单元格里只有一个产生式 (编号)$ </p>
+</li>
+<li><p>$对于当前选择的\textcolor{blue}{\textbf{非终结符}},$ </p>
+<p>$仅根据输入中\textcolor{red}{\textbf{当前的词法单元}} (LL(\textcolor{red}{1}))$ $即可确定需要使用哪条\textcolor{teal}{\textbf{产生式}}$</p>
+</li>
+</ul>
+<h5 id="递归下降的、预测分析实现方法"><a href="#递归下降的、预测分析实现方法" class="headerlink" title="递归下降的、预测分析实现方法"></a>递归下降的、预测分析实现方法</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129222546435.png" alt="image-20221129222546435" style="zoom: 67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129224308689.png" alt="image-20221129224308689" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129224316884.png" alt="image-20221129224316884" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129224326342.png" alt="image-20221129224326342" style="zoom:80%;" /></p>
 
       </div>
       
@@ -292,7 +304,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-2"><span class="toc-text">语法分析-2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 什么是$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B"><span class="toc-text">2.1 自顶向下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6"><span class="toc-text">如何选择非终结符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D"><span class="toc-text">2.2 递归下降</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">递归下降示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">2.3 预测分析表</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-2"><span class="toc-text">语法分析-2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 什么是$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B"><span class="toc-text">2.1 自顶向下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6"><span class="toc-text">如何选择非终结符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D"><span class="toc-text">2.2 递归下降</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">递归下降示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">2.3 预测分析表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Definition-LL-1-%E6%96%87%E6%B3%95"><span class="toc-text">2.4 Definition ($LL(1)$ 文法)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84%E3%80%81%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="toc-text">递归下降的、预测分析实现方法</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
