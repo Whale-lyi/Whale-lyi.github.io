@@ -217,7 +217,7 @@
 <p>$2^S$ 表示 $S$ 的所有子集, 包括空集</p>
 </blockquote>
 <ul>
-<li><strong>约定：</strong>所有没有对应出边的字符默认指向一个不存在的 <strong>“空状态”</strong> $\empty$</li>
+<li><strong>约定：</strong>所有没有对应出边的字符默认指向一个不存在的 <strong>“空状态”</strong> $\emptyset$</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115232743665.png" alt="image-20221115232743665" style="zoom:80%;" /></p>
 <ul>
@@ -497,7 +497,7 @@
 <p><strong>注意</strong></p>
 <ul>
 <li>这是 <strong>DFA</strong> 最小化算法, 要保证状态图完整</li>
-<li>要先检查是否需要补 “死状态” $\empty$</li>
+<li>要先检查是否需要补 “死状态” $\emptyset$</li>
 </ul>
 <blockquote>
 <p>如何分析 DFA 最小化算法的复杂度?</p>
@@ -522,7 +522,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124170335679.png" alt="image-20221124170335679" style="zoom:80%;" /></p>
 <ul>
-<li>$\forall a \in \Sigma.\delta(\empty, a) = \empty$<ul>
+<li>$\forall a \in \Sigma.\delta(\emptyset, a) = \emptyset$<ul>
 <li>需要<strong>消除</strong> “死状态”, 避免词法分析器徒劳消耗输入流</li>
 </ul>
 </li>
@@ -584,10 +584,10 @@
 <li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128163832278.png" alt="image-20221128163832278" style="zoom:80%;" /></li>
 </ol>
 </li>
-<li><p>关于 $\textcolor{red}{\empty}$ (注意: 它不是正则表达式) 的规定</p>
+<li><p>关于 $\textcolor{red}{\emptyset}$ (注意: 它不是正则表达式) 的规定</p>
 <ul>
-<li>$\empty r = r\empty = \empty$</li>
-<li>$\empty\mid r = r$</li>
+<li>$\emptyset r = r\emptyset = \emptyset$</li>
+<li>$\emptyset\mid r = r$</li>
 </ul>
 </li>
 </ul>
