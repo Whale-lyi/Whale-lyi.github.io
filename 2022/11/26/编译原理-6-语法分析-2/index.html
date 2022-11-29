@@ -193,14 +193,14 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212519129.png" alt="image-20221129212519129" style="zoom:80%;" /></p>
 <p>ANTLR</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212642012.png" alt="image-20221129212642012" style="zoom:80%;" /></p>
-<h3 id="2-LL-1-语法分析器"><a href="#2-LL-1-语法分析器" class="headerlink" title="2. $LL(1)$语法分析器"></a>2. $LL(1)$语法分析器</h3><h4 id="2-1-什么是-LL-1-语法分析器"><a href="#2-1-什么是-LL-1-语法分析器" class="headerlink" title="2.1 什么是$LL(1)$语法分析器"></a>2.1 什么是$LL(1)$语法分析器</h4><ul>
+<h3 id="2-什么是-LL-1-语法分析器"><a href="#2-什么是-LL-1-语法分析器" class="headerlink" title="2. 什么是$LL(1)$语法分析器"></a>2. 什么是$LL(1)$语法分析器</h3><ul>
 <li>自顶向下的、</li>
 <li>递归下降的、</li>
 <li>基于预测分析表的、</li>
 <li>适用于$\textcolor{red}{LL(1) \textbf{文法}}$的、</li>
 <li>$LL(1)$ 语法分析器</li>
 </ul>
-<h4 id="2-2-自顶向下"><a href="#2-2-自顶向下" class="headerlink" title="2.2 自顶向下"></a>2.2 自顶向下</h4><p>$\textcolor{red}{\textbf{自顶向下}}构建语法分析树$</p>
+<h4 id="2-1-自顶向下"><a href="#2-1-自顶向下" class="headerlink" title="2.1 自顶向下"></a>2.1 自顶向下</h4><p>$\textcolor{red}{\textbf{自顶向下}}构建语法分析树$</p>
 <ul>
 <li>$\textcolor{blue}{\textbf{根节点}}是文法的起始符号$ $S$</li>
 <li>$每个\textcolor{blue}{\textbf{中间节点}}表示\textcolor{purple}{\textbf{对某个非终结符应用某个产生式进行推导}}$<ul>
@@ -208,8 +208,38 @@
 </ul>
 </li>
 <li>$\textcolor{blue}{\textbf{叶节点}}是词法单元流$ $w$$<ul>
-<li>$仅包含终结符号与特殊的\textcolor{teal}{\textbf{文件结束符}}$ $\textcolor{teal}{$}$ $\textcolor{teal}{\texttt{EOF}}$</li>
+<li>$仅包含终结符号与特殊的\textcolor{teal}{\textbf{文件结束符}}$ $\textcolor{teal}{$}$ $\textcolor{teal}{\texttt{(EOF)}}$</li>
 </ul>
+</li>
+</ul>
+<h5 id="如何选择非终结符"><a href="#如何选择非终结符" class="headerlink" title="如何选择非终结符"></a>如何选择非终结符</h5><ul>
+<li>在推导的每一步, $L\textcolor{red}{L}(1)$ 总是选择<strong>最左边的非终结符进行展开</strong><ul>
+<li>Leftmost derivation, 最左推导</li>
+</ul>
+</li>
+<li>$\textcolor{red}{L}L(1)$: 从左向右读入词法单元</li>
+</ul>
+<h4 id="2-2-递归下降"><a href="#2-2-递归下降" class="headerlink" title="2.2 递归下降"></a>2.2 递归下降</h4><p>$\textcolor{red}{\textbf{递归}}\textcolor{blue}{\textbf{下降}}的典型实现框架$</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129215551497.png" alt="image-20221129215551497" style="zoom:80%;" /></p>
+<ul>
+<li>为每个<strong>非终结符</strong>写一个<strong>递归函数</strong></li>
+<li>内部按需调用其它非终结符对应的递归函数, <strong>下降</strong>一层</li>
+</ul>
+<h5 id="递归下降示例"><a href="#递归下降示例" class="headerlink" title="递归下降示例"></a>递归下降示例</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129222116911.png" alt="image-20221129222116911" style="zoom:80%;" /></p>
+<ul>
+<li>每次都选择语法分析树<strong>最左边</strong>的非终结符进行展开</li>
+</ul>
+<blockquote>
+<p>$Q: 同样是展开非终结符 S, 为什么前两次选择了 S \to (S + F), 而第三次选择了 S \to F$ $?$</p>
+<ul>
+<li>因为它们面对的<strong>当前词法单元</strong>不同</li>
+</ul>
+</blockquote>
+<h4 id="2-3-预测分析表"><a href="#2-3-预测分析表" class="headerlink" title="2.3 预测分析表"></a>2.3 预测分析表</h4><p>$使用\textcolor{red}{\textbf{预测分析表}}确定产生式$</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129222546435.png" alt="image-20221129222546435" style="zoom:80%;" /></p>
+<ul>
+<li><p>$指明了每个\textcolor{blue}{\textbf{非终结符}}在面对不同的\textcolor{red}{\textbf{词法单元或文件结束符}}时,$</p>
+<p>$该选择哪个\textcolor{teal}{\textbf{产生式}} (按编号进行索引) 或者\textcolor{cyan}{\textbf{报错}} (空单元格)$</p>
 </li>
 </ul>
 
@@ -262,7 +292,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-2"><span class="toc-text">语法分析-2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. $LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2.1 什么是$LL(1)$语法分析器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B"><span class="toc-text">2.2 自顶向下</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-2"><span class="toc-text">语法分析-2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 什么是$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B"><span class="toc-text">2.1 自顶向下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6"><span class="toc-text">如何选择非终结符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D"><span class="toc-text">2.2 递归下降</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">递归下降示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">2.3 预测分析表</span></a></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
