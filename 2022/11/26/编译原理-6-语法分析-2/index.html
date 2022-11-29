@@ -175,7 +175,32 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="语法分析-2"><a href="#语法分析-2" class="headerlink" title="语法分析-2"></a>语法分析-2</h1><h2 id="递归下降的语法分析器"><a href="#递归下降的语法分析器" class="headerlink" title="递归下降的语法分析器"></a>递归下降的语法分析器</h2>
+        <h1 id="语法分析-2"><a href="#语法分析-2" class="headerlink" title="语法分析-2"></a>语法分析-2</h1><h2 id="递归下降的-LL-1-语法分析器"><a href="#递归下降的-LL-1-语法分析器" class="headerlink" title="递归下降的$LL(1)$语法分析器"></a>递归下降的$LL(1)$语法分析器</h2><h3 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h3><p>语法分析算法可分为两类: $LL$, $LR$</p>
+<ul>
+<li>$LR$ 更加复杂</li>
+</ul>
+<p><strong>构建语法分析树</strong>: 自顶向下 $vs.$ 自底向上</p>
+<ul>
+<li>$LL$ 为自顶向下</li>
+<li>$LR$ 为自底向上</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212330806.png" alt="image-20221129212330806" style="zoom:80%;" /></p>
+<p>只考虑<strong>无二义性</strong>的文法</p>
+<ul>
+<li>这意味着, 每个句子对应唯一的一棵语法分析树</li>
+<li>本节主题: <strong>$LL(1)$ 语法分析器</strong></li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212519129.png" alt="image-20221129212519129" style="zoom:80%;" /></p>
+<p>ANTLR</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212642012.png" alt="image-20221129212642012" style="zoom:80%;" /></p>
+<h3 id="2-LL-1-语法分析器"><a href="#2-LL-1-语法分析器" class="headerlink" title="2. $LL(1)$语法分析器"></a>2. $LL(1)$语法分析器</h3><h4 id="2-1-什么是-LL-1-语法分析器"><a href="#2-1-什么是-LL-1-语法分析器" class="headerlink" title="2.1 什么是$LL(1)$语法分析器"></a>2.1 什么是$LL(1)$语法分析器</h4><ul>
+<li>自顶向下的、</li>
+<li>递归下降的、</li>
+<li>基于预测分析表的、</li>
+<li>适用于$\textcolor{red}{LL(1) \textbf{文法}}$的、</li>
+<li>$LL(1)$ 语法分析器</li>
+</ul>
+
       </div>
       
         <div class="prev-or-next">
@@ -225,7 +250,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-2"><span class="toc-text">语法分析-2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">递归下降的语法分析器</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-2"><span class="toc-text">语法分析-2</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. $LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2.1 什么是$LL(1)$语法分析器</span></a></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
