@@ -505,26 +505,30 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(o !== <span class="literal">null</span>) ...</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(o !== <span class="literal">null</span>) ...</span><br><span class="line">!!<span class="string">&quot;&quot;</span> -&gt; <span class="literal">false</span></span><br><span class="line">!![] -&gt; <span class="literal">true</span></span><br><span class="line">+!![] -&gt; <span class="number">1</span></span><br></pre></td></tr></table></figure>
 <h3 id="3-8-null-NaN-undefined"><a href="#3-8-null-NaN-undefined" class="headerlink" title="3.8 null, NaN, undefined"></a>3.8 null, NaN, undefined</h3><ul>
 <li>NaN<ul>
 <li>isNaN()</li>
-<li>typeof(NaN)</li>
+<li>typeof(NaN) -&gt; number</li>
 <li>比如字符串转换成数值失败时</li>
+<li>与所有的值都不相等。包括它自己</li>
 </ul>
 </li>
 <li>undefined</li>
 <li>null<ul>
-<li>typeof(null)—&gt;object</li>
+<li>typeof(null) —&gt; object</li>
 </ul>
 </li>
 <li>(-)Infinity：大到无法表示的值</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1000</span> / <span class="number">0</span>;</span><br><span class="line"><span class="built_in">isNaN</span>(x); </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x = <span class="number">1000</span> / <span class="number">0</span>;  <span class="comment">// number</span></span><br><span class="line"><span class="built_in">isNaN</span>(x);  <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 <h3 id="3-9"><a href="#3-9" class="headerlink" title="3.9 ==="></a>3.9 <code>===</code></h3><ul>
 <li>平常业务中比较建议尽量不要使用 <code>==</code> 和 <code>!=</code>。这两个比较的时候会做一些强制的类型转换, 所以比较结果很可能有误。务必使用 <code>=== 和 !==</code>。</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129174208384.png" alt="image-20221129174208384" style="zoom:80%;" /></p>
+<blockquote>
+<p>undifined == null  -&gt; true</p>
+</blockquote>
 <h3 id="3-10-Math对象"><a href="#3-10-Math对象" class="headerlink" title="3.10 Math对象"></a>3.10 Math对象</h3><ul>
 <li>methods: abs, ceil, cos, floor, log, max, min, pow, random, round, sin, sqrt, tan</li>
 <li>properties: E, PI</li>
@@ -535,7 +539,7 @@
 </li>
 <li><p>大多数逻辑运算符自动转换类型</p>
 <ul>
-<li>5&lt;”7” 为true</li>
+<li>5 &lt; “7” 为true</li>
 <li>42 == 42.0 为 true</li>
 <li>“5.0” == 5 为 true</li>
 </ul>
