@@ -473,7 +473,186 @@
 </ol>
 </li>
 </ul>
-<h4 id="文件的保护"><a href="#文件的保护" class="headerlink" title="文件的保护"></a>文件的保护</h4>
+<h3 id="5-4-2-文件的保护"><a href="#5-4-2-文件的保护" class="headerlink" title="5.4.2 文件的保护"></a>5.4.2 文件的保护</h3><h4 id="文件的保护"><a href="#文件的保护" class="headerlink" title="文件的保护"></a>文件的保护</h4><ul>
+<li><strong>文件保护</strong>是指防止文件被破坏</li>
+<li>操作系统必须提供文件保护机制，有效实现文件的完整性</li>
+<li>常用的文件保护办法<ul>
+<li>文件副本</li>
+<li>文件存取矩阵与文件存取表</li>
+<li>文件属性</li>
+</ul>
+</li>
+</ul>
+<h4 id="文件的副本"><a href="#文件的副本" class="headerlink" title="文件的副本"></a>文件的副本</h4><ul>
+<li>文件系统必须要有防止硬软件故障，保存信息完整性的能力</li>
+<li>文件副本是主要实现机制<ul>
+<li>动态多副本技术</li>
+<li>转储、备份与恢复</li>
+</ul>
+</li>
+</ul>
+<h4 id="动态多副本"><a href="#动态多副本" class="headerlink" title="动态多副本"></a>动态多副本</h4><ul>
+<li>第一种办法是在多个介质上维持同一内容的文件，并且在更新内容时同时进行</li>
+<li>这种方法需要增加设备费用和系统负载，一般适用于容量较小且较为重要的文件，例如不需更新的系统文件及专用文件，当文件发生故障时只要切换到备用设备就可</li>
+</ul>
+<h4 id="文件转储"><a href="#文件转储" class="headerlink" title="文件转储"></a>文件转储</h4><ul>
+<li>文件转储：定时把文件复制转储到其它介质上，当某介质上出现故障时，复原转储文件</li>
+<li>转储又可分成两种方式：<ul>
+<li>一是在一定时间间隔或一个单位处理结束时，系统自动复写更新过的文件和数据</li>
+<li>二是每天或每周把文件信息全部复写一遍，需要时再通过装入转储文件来恢复系统，诸如BACKUP、RESTORE等命令</li>
+</ul>
+</li>
+</ul>
+<h4 id="文件的存取控制矩阵"><a href="#文件的存取控制矩阵" class="headerlink" title="文件的存取控制矩阵"></a>文件的存取控制矩阵</h4><ul>
+<li>系统为每个用户设置访问每个文件对象的存取属性</li>
+<li>系统的全部用户对全部文件的存取属性就组成的一个二维矩阵，称为存取控制矩阵</li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205103154217.png" alt="image-20221205103154217" style="zoom:80%;" /></li>
+</ul>
+<h4 id="存取控制表"><a href="#存取控制表" class="headerlink" title="存取控制表"></a>存取控制表</h4><ul>
+<li>由于操作系统拥有很多用户和众多文件，存取控制矩阵是一个稀疏矩阵，可以将其简化为一张存取控制表</li>
+<li>每行包括：用户、文件、存取属性</li>
+<li>存取控制表仅登记那些对文件拥有存取属性的部分</li>
+</ul>
+<h4 id="基于存取控制矩阵-表的文件保护"><a href="#基于存取控制矩阵-表的文件保护" class="headerlink" title="基于存取控制矩阵/表的文件保护"></a>基于存取控制矩阵/表的文件保护</h4><ul>
+<li>存取属性：可以有访问、读、写、执行、创建、删除、授权等等</li>
+<li>系统通过查阅(矩阵/表)核对用户对文件的存取权限</li>
+<li>文件属主使用GRANT、REVOKE等命令进行授权，甚至把授权权转授给他信任的用户</li>
+<li>系统管理用户(超级用户)等同于文件属主权限，并获得对系统文件的授访问权权限</li>
+</ul>
+<h4 id="文件属性"><a href="#文件属性" class="headerlink" title="文件属性"></a>文件属性</h4><ul>
+<li>存取控制表的一种简化方法是用户分类，再针对每类用户规定文件属性</li>
+<li>用户分类：属主、合作者、其他</li>
+<li>文件属性：读、写、执行、…</li>
+<li>文件属性可以放在文件目录项中，管理大为简化</li>
+<li>用户使用文件时，通过核对文件属性，实现保护</li>
+</ul>
+<h4 id="文件属性的例子"><a href="#文件属性的例子" class="headerlink" title="文件属性的例子"></a>文件属性的例子</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205103440530.png" alt="image-20221205103440530" style="zoom:80%;" /></p>
+<h1 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h1><h2 id="1-Inode、目录项、层次目录结构"><a href="#1-Inode、目录项、层次目录结构" class="headerlink" title="1. Inode、目录项、层次目录结构"></a>1. Inode、目录项、层次目录结构</h2><h4 id="Linux特殊目录项建立方法"><a href="#Linux特殊目录项建立方法" class="headerlink" title="Linux特殊目录项建立方法"></a>Linux特殊目录项建立方法</h4><p>Linux系统的 FCB 中的文件名和其他管理信息分开，其他信息单独组成一个数据结构，称为索引节点 inode，此索引节点在磁盘上的位置由 inode号 标识。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205082251475.png" alt="image-20221205082251475" style="zoom:80%;" /></p>
+<blockquote>
+<p>文件名(含路径) $\stackrel{目录检索}{\longrightarrow}$ 目录项 $\longrightarrow$ [文件名(不含路径), inode号]</p>
+</blockquote>
+<h4 id="Inode"><a href="#Inode" class="headerlink" title="Inode"></a>Inode</h4><ul>
+<li>文件系统中的每个文件都有一个磁盘 inode 与之对应，这些inode被集中存放于磁盘上的 inode 区。FCB 对于文件的作用，犹如 PCB 对于进程的作用，集中这个文件的所有相关信息，找到inode，就能获得此文件的必要信息。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">inode</span> &#123;</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">long</span> i_ino; <span class="comment">/*inode号*/</span></span><br><span class="line">    <span class="type">atomic_t</span> i_count; <span class="comment">/*inode引用数*/</span></span><br><span class="line">    <span class="type">kdev_t</span> i_dev; <span class="comment">/*inode所在设备*/</span></span><br><span class="line">	...</span><br><span class="line">    <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据块索引在union结构的每个具体文件系统中，其中的 <code>i_data[15]</code> 数组给出数据块地址索引<ul>
+<li>前12项为直接索引，第13项为一次间接索引，第14项为二次间接索引，第15项为三次间接索引。</li>
+</ul>
+</li>
+<li>磁盘 inode 记录文件的属性和相关信息，文件访问过程中会频繁地用到它，不断来回于内外存之间引用它，当然是极不经济的。为此，为此，在内存区开辟一张 活动inode 表。磁盘inode 反映文件静态特性，活动inode 反映文件动态特性。</li>
+<li>当访问某文件时，若在活动inode 表中找不到其inode，就申请一个空闲活动 inode，把磁盘inode 内容复制给它，随之就可用来控制文件读写</li>
+<li>当用户关闭文件时，活动inode 的内容回写到对应的磁盘inode 中，再释放活动inode 以供它用。把FCB的主要内容与索引节点号分开，不仅能够加快目录检索速度，而且，便于实现文件共享。</li>
+</ul>
+<h4 id="层次目录结构"><a href="#层次目录结构" class="headerlink" title="层次目录结构"></a>层次目录结构</h4><ul>
+<li>每一级目录可以是下一级目录的说明，也可以是文件的说明，形成层次关系</li>
+<li>多级目录结构采用<strong>树型结构</strong>，是一棵倒向有根树，树根是根目录；从根向下，每个树枝是一个子目录；而树叶是文件</li>
+<li>树型多级目录优点:<ul>
+<li>较好地反映现实世界中具有层次关系的数据集合和确切地反映系统内部文件的分支结构；</li>
+<li><strong>不同文件可重名，只要它们不位于同一末端子目录中，易于规定不同层次或子目录中文件的不同存取权限，便于文件的保护、保密和共享</strong>等，有利于系统的维护和查找。</li>
+</ul>
+</li>
+<li>如果规定每个文件都只有一个父目录，称为<strong>纯树型目录结构</strong>，其缺点是<strong>文件共享不是对称的，父目录有效拥有该文件，其他被授权用户必须经过属主目录才能对该文件进行访问</strong></li>
+<li>有向无环图目录 尽管它<strong>允许文件有多个父目录而破坏树的特性</strong>，但不同用户可以对称方式实现文件共享，即可能属于不同用户的多个目录，使用不同文件名能访问和共享同一个文件。</li>
+<li>有向无环图目录结构的维护比纯树型目录结构复杂，<strong>由于一个文件可能有多个父目录，需为每个文件维护一个引用计数，用来记录文件的父目录个数，仅当引用计数为1时，删除操作才移去文件，否则仅仅把相关记录从父目录中删去。</strong></li>
+<li><strong>Linux支持多父目录，但其中一个是主父目录，它是文件拥有者</strong>，且文件被物理存储在此目录下，其他次父目录通过link方式来连结和引用文件，允许任一父目录删除共享文件。<ul>
+<li>下图示例这种文件共享的情形，文件/home/fei1为myfile.c的主父目录(图中实线表示)，/home/fei2和/home/fei3/fei4均为文件myfile.c的次父目录(图中虚线表示)。</li>
+</ul>
+</li>
+<li>Windows实现被称作“快捷方式”的多父目录连结，快捷方式是一些指向不同文件夹(子目录)和菜单之间任意复制和移动的文件及文件夹的指针，删除快捷方式就是删除指针。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205093920792.png" alt="image-20221205093920792" style="zoom:80%;" /></p>
+<h2 id="2-Unix-Linux文件系统的多重索引结构"><a href="#2-Unix-Linux文件系统的多重索引结构" class="headerlink" title="2. Unix/Linux文件系统的多重索引结构"></a>2. Unix/Linux文件系统的多重索引结构</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205094000697.png" alt="image-20221205094000697" style="zoom:80%;" /></p>
+<blockquote>
+<p>在UNIX系统中，每个i节点中分别含有 10 个直接地址的索引和一、二、三级间接索引。若每个盘块放128个盘块地址，则一个1MB的文件分别占用多少各级索引所使用的数据物理块？20MB的文件呢？设每个盘块有512B。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205094103433.png" alt="image-20221205094103433" style="zoom:80%;" /></p>
+</blockquote>
+<h2 id="3-文件系统的功能与实现"><a href="#3-文件系统的功能与实现" class="headerlink" title="3. 文件系统的功能与实现"></a>3. 文件系统的功能与实现</h2><h3 id="3-1-文件系统调用的实现"><a href="#3-1-文件系统调用的实现" class="headerlink" title="3.1 文件系统调用的实现"></a>3.1 文件系统调用的实现</h3><ul>
+<li>文件系统提供给用户程序的一组系统调用，包括：<strong>创建、删除、打开、关闭、读、写和控制</strong>，通过这些系统调用用户能获得文件系统的各种服务。</li>
+<li>在为应用程序服务时，文件系统需要沿路径查找目录以获得该文件的各种信息，这往往要多次访问文件存储器，使访问速度减慢，若把所有文件目录都复制到主存，访问速度可加快，但却又增加主存开销。</li>
+<li>方案: 把常用和正在使用的那些文件目录复制进主存，这样，<strong>既不增加太多主存开销，又可明显减少查找时间</strong></li>
+<li>系统为每个用户进程建立一张活动文件表，用户使用文件之前先通过“打开”操作，把该文件的文件目录复制到指定主存区域</li>
+<li>当不再使用该文件时，使用“关闭”操作切断和该文件目录的联系，这样，文件被打开后，可被用户多次使用，直至文件被关闭或撤销，大大减少访盘次数，提高文件系统的效率</li>
+</ul>
+<h4 id="文件系统磁盘结构"><a href="#文件系统磁盘结构" class="headerlink" title="文件系统磁盘结构"></a>文件系统磁盘结构</h4><ol>
+<li><p>超级块：占用 1# 号块</p>
+<ul>
+<li><p>占用1#号块，存放文件系统结构和管理信息</p>
+<blockquote>
+<p>如记录inode表所占盘块数、文件数据所占盘块数、主存中登记的空闲盘块数、主存中登记的空闲块物理块号、主存中登记的空闲inode数、主存中登记的空闲inode编号，及其他文件管理控制信息</p>
+</blockquote>
+</li>
+<li><p>可见超级块既有盘位示图的功能，又记录整个文件卷的控制数据。</p>
+</li>
+<li><p>每当一个块设备作为文件卷被安装时，该设备的超级块就要复制到主存系统区中备用，而拆卸文件卷时，修改过的超级块需复制回磁盘的超级块中。</p>
+</li>
+</ul>
+</li>
+<li><p>索引节点区：2#～k+1# 块</p>
+<ul>
+<li>存放inode表，每个文件都有各种属性，它们被记录在称为索引节点inode的结构中；所有inode都有相同大小，且inode表是inode结构的列表，文件系统中的每个文件在该表中都有一个inode。又分磁盘inode表和主存活动inode表，后者解决频繁访问磁盘inode表的效率问题</li>
+</ul>
+</li>
+<li><p>数据区：k+2#～n# 为数据块 </p>
+<ul>
+<li>文件的内容保存在这个区域，磁盘上所有物理块的大小是一样的，如果文件包含超过一块的数据，则文件内容会存放在多个盘块中</li>
+</ul>
+</li>
+</ol>
+<h5 id="重要数据结构"><a href="#重要数据结构" class="headerlink" title="重要数据结构"></a>重要数据结构</h5><ul>
+<li><strong>用户打开文件表</strong><ul>
+<li>进程的PCB结构中保留一个files_struct，称为用户打开文件表或文件描述符表，表项的序号为文件描述符fd，该登记项内登记<strong>系统打开文件表的一个入口指针fp</strong>，通过此系统打开文件表项连接到打开文件的活动inode</li>
+</ul>
+</li>
+<li><strong>系统打开文件表</strong><ul>
+<li>是为解决多用户进程共享文件、父子进程共享文件而设置的系统数据结构file_struct，主存专门开辟最多可登记256项的系统打开文件表区，<strong>当打开一个文件时，通过此表项把用户打开文件表的表项与文件活动inode联接起来，以实现数据的访问和信息的共享</strong></li>
+</ul>
+</li>
+<li><strong>主存活动inode表</strong><ul>
+<li>为解决频繁访问磁盘索引节点inode表的效率问题，系统开辟的主存区，正在使用的文件的inode被调入主存活动索引节点inode中，以加快文件访问速度</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100646528.png" alt="image-20221205100646528" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100848938.png" alt="image-20221205100848938" style="zoom:80%;" /></p>
+<h4 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h4><h5 id="文件的创建"><a href="#文件的创建" class="headerlink" title="文件的创建"></a>文件的创建</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> fd, mode;</span><br><span class="line"><span class="type">char</span> *filenamep;</span><br><span class="line">fd = create(filenamep, mode);</span><br></pre></td></tr></table></figure>
+<ol>
+<li>为新文件分配<strong>索引节点和活动索引节点</strong>，并把<strong>索引节点编号与文件分量名</strong>组成<strong>新目录项</strong>，记到目录中</li>
+<li>在新文件所对应的活动索引节点中置初值，如<strong>置存取权限i_mode，连接计数i_nlink</strong>等</li>
+<li>分配<strong>用户打开文件表项和系统打开文件表项，置表项初值，读写位移f_offset清“0”</strong></li>
+<li>把各表项及文件<strong>对应的活动索引节点用指针连接起来</strong>，把文件描述字返回给调用者。</li>
+</ol>
+<h5 id="文件的删除"><a href="#文件的删除" class="headerlink" title="文件的删除"></a>文件的删除</h5><ul>
+<li>删除把指定文件从所在的目录文件中除去</li>
+<li>如果没有连接用户(i_link 为“1”)，还要把<strong>文件占用的存储空间释放</strong>。删除系统调用形式为：<code>unlink(filenamep)</code></li>
+<li>在执行删除时，必须要求用户对该文件具有“写”操作权</li>
+</ul>
+<h5 id="文件的打开"><a href="#文件的打开" class="headerlink" title="文件的打开"></a>文件的打开</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> fd, mode;</span><br><span class="line"><span class="type">char</span> * filenamep;</span><br><span class="line">fd = open (filenamep, mode);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>检索目录，把它的<strong>外存索引节点复制到活动索引节点表</strong></li>
+<li>根据参数mode核对权限，如果非法，则这次打开失败</li>
+<li>当“打开”合法时，<strong>为文件分配用户打开文件表项和系统打开文件表项</strong>，并为表项设置初值。<strong>通过指针建立这些表项与活动索引节点间的联系</strong>。把文件描述字，即用户打开文件表中相应<strong>文件表项的序号返回给调用者</strong></li>
+</ul>
+<h5 id="文件的关闭"><a href="#文件的关闭" class="headerlink" title="文件的关闭"></a>文件的关闭</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> fd;</span><br><span class="line">close (fd);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>根据<strong>fd找到用户打开文件表项，再找到系统打开文件表项</strong>。<strong>释放</strong>用户打开文件表项</li>
+<li>把对应<strong>系统打开文件表项中的f_count减“1”</strong>，如果非“0” ，说明还有进程共享这一表项，不用释放直接返回；否则释放表项</li>
+<li>把<strong>活动索引节点中的i_count减“1”</strong> ，若不为“0”，表明还有用户进程正在使用该文件，不用释放而直接返回，<strong>否则在把该活动索引节点中的内容复制回文件卷上的相应索引节点中后，释放该活动索引节点</strong></li>
+<li>f_count和i_count分别反映进程动态地共享一个文件的两种方式<ul>
+<li>f_count<strong>反映不同进程通过同一个系统打开文件表项共享一个文件的情况</strong></li>
+<li>i_count<strong>反映不同进程通过不同系统打开文件表项共享一个文件的情况</strong></li>
+<li>通过两种方式，进程之间既可用相同的位移指针f_offset，也可用不同位移指针f_offset共享同一个文件</li>
+</ul>
+</li>
+</ul>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> nr, fd, count;</span><br><span class="line"><span class="type">char</span> buf [ ]</span><br><span class="line">nr = read (fd, buf, count);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>系统根据f_flag中的信息，<strong>检查读操作合法性</strong></li>
+<li>再<strong>根据当前位移量f_offset值，要求读出的字节数</strong>，及活动索引节点中<strong>i_data[15]指出的文件物理块存放地址，把相应的物理块读到缓冲区中</strong>，然后再送到bufp指向的用户主存区中。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205102611877.png" alt="image-20221205102611877" style="zoom:80%;" /></p>
+<h3 id="3-2-文件共享"><a href="#3-2-文件共享" class="headerlink" title="3.2 文件共享"></a>3.2 文件共享</h3><h3 id="3-3-文件空间管理"><a href="#3-3-文件空间管理" class="headerlink" title="3.3 文件空间管理"></a>3.3 文件空间管理</h3><h3 id="3-4-主存映射文件"><a href="#3-4-主存映射文件" class="headerlink" title="3.4 主存映射文件"></a>3.4 主存映射文件</h3><h3 id="3-5-虚拟文件系统"><a href="#3-5-虚拟文件系统" class="headerlink" title="3.5 虚拟文件系统"></a>3.5 虚拟文件系统</h3>
       </div>
       
         <div class="prev-or-next">
@@ -511,7 +690,7 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2022/11/21/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90-1/" target="_self">
+              <a href="/2022/11/21/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -528,7 +707,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="toc-text">第五章 文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">5.1 文件系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-1-%E6%96%87%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">5.1.1 文件的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">文件的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E5%90%8D"><span class="toc-text">文件的命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">文件的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">引入文件的优点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="toc-text">5.1.2 文件系统及其功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">文件系统的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-text">文件系统中的文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">文件系统的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">文件系统的组成</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">5.2 文件的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-1-%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-text">5.2.1 文件的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E5%92%8C%E5%9D%97"><span class="toc-text">卷和块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF%E5%AE%89%E6%8E%92"><span class="toc-text">顺序存取存储设备的信息安排</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF%E5%AE%89%E6%8E%92"><span class="toc-text">直接存取存储设备的信息安排</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-2-%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="toc-text">5.2.2 文件的逻辑结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%96%87%E4%BB%B6"><span class="toc-text">逻辑文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="toc-text">流式文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="toc-text">记录式文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%BC%8F%E6%96%87%E4%BB%B6%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">记录式文件与数据库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-3-%E8%AE%B0%E5%BD%95%E7%9A%84%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3"><span class="toc-text">5.2.3 记录的成组与分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">成组与分解的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E6%93%8D%E4%BD%9C"><span class="toc-text">成组与分解操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E6%93%8D%E4%BD%9C%E7%A4%BA%E6%84%8F"><span class="toc-text">成组与分解操作示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-text">成组与分解的特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-4-%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">5.2.4 文件的物理结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">文件的物理结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6"><span class="toc-text">顺序文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">顺序文件的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%96%87%E4%BB%B6"><span class="toc-text">连接文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">连接文件的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%96%87%E4%BB%B6"><span class="toc-text">直接文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6"><span class="toc-text">索引文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E7%9A%84%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F"><span class="toc-text">索引文件的访问方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">索引文件的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A1%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">索引表的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-text">一种多级索引结构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">5.3 文件目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-1-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">5.3.1 文件目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">文件目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">一级目录结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">二级目录结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">二级目录结构的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">树形目录结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">树形目录结构的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D"><span class="toc-text">树形目录结构中的文件定位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84-1"><span class="toc-text">树形目录结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-2-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="toc-text">5.3.2 文件目录管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE"><span class="toc-text">文件查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%A1%B9%E6%9F%A5%E6%89%BE"><span class="toc-text">目录项查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%A4%84%E7%90%86"><span class="toc-text">文件目录处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B4%BB%E5%8A%A8%E6%96%87%E4%BB%B6%E8%A1%A8"><span class="toc-text">活动文件表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B1%E4%BA%AB%E3%80%81%E4%BF%9D%E6%8A%A4%E5%92%8C%E4%BF%9D%E5%AF%86"><span class="toc-text">5.4 文件的共享、保护和保密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-1-%E6%96%87%E4%BB%B6%E7%9A%84%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E6%8A%A4"><span class="toc-text">5.4.1 文件的安全与保护</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E6%8A%A4"><span class="toc-text">文件的安全与保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB"><span class="toc-text">文件共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E7%9A%84%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="toc-text">文件共享的并发控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%9D%E5%AF%86%E6%8E%AA%E6%96%BD"><span class="toc-text">文件的保密措施</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%9D%E6%8A%A4"><span class="toc-text">文件的保护</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="toc-text">第五章 文件管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">5.1 文件系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-1-%E6%96%87%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">5.1.1 文件的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">文件的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%91%BD%E5%90%8D"><span class="toc-text">文件的命名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">文件的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%98%E7%82%B9"><span class="toc-text">引入文件的优点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-2-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E5%85%B6%E5%8A%9F%E8%83%BD"><span class="toc-text">5.1.2 文件系统及其功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">文件系统的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6"><span class="toc-text">文件系统中的文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">文件系统的功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">文件系统的组成</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E6%96%87%E4%BB%B6%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">5.2 文件的组织</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-1-%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%98%E5%82%A8"><span class="toc-text">5.2.1 文件的存储</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E5%92%8C%E5%9D%97"><span class="toc-text">卷和块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF%E5%AE%89%E6%8E%92"><span class="toc-text">顺序存取存储设备的信息安排</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E5%AD%98%E5%8F%96%E5%AD%98%E5%82%A8%E8%AE%BE%E5%A4%87%E7%9A%84%E4%BF%A1%E6%81%AF%E5%AE%89%E6%8E%92"><span class="toc-text">直接存取存储设备的信息安排</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-2-%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="toc-text">5.2.2 文件的逻辑结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%96%87%E4%BB%B6"><span class="toc-text">逻辑文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%81%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="toc-text">流式文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%BC%8F%E6%96%87%E4%BB%B6"><span class="toc-text">记录式文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E5%BC%8F%E6%96%87%E4%BB%B6%E4%B8%8E%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">记录式文件与数据库</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-3-%E8%AE%B0%E5%BD%95%E7%9A%84%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3"><span class="toc-text">5.2.3 记录的成组与分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">成组与分解的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E6%93%8D%E4%BD%9C"><span class="toc-text">成组与分解操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E6%93%8D%E4%BD%9C%E7%A4%BA%E6%84%8F"><span class="toc-text">成组与分解操作示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%90%E7%BB%84%E4%B8%8E%E5%88%86%E8%A7%A3%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-text">成组与分解的特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-4-%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">5.2.4 文件的物理结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">文件的物理结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6"><span class="toc-text">顺序文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E6%96%87%E4%BB%B6%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">顺序文件的优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%96%87%E4%BB%B6"><span class="toc-text">连接文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">连接文件的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%96%87%E4%BB%B6"><span class="toc-text">直接文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6"><span class="toc-text">索引文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E7%9A%84%E8%AE%BF%E9%97%AE%E6%96%B9%E5%BC%8F"><span class="toc-text">索引文件的访问方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">索引文件的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E8%A1%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">索引表的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%A7%8D%E5%A4%9A%E7%BA%A7%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-text">一种多级索引结构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">5.3 文件目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-1-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">5.3.1 文件目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">文件目录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">一级目录结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">二级目录结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">二级目录结构的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">树形目录结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">树形目录结构的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E5%AE%9A%E4%BD%8D"><span class="toc-text">树形目录结构中的文件定位</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%91%E5%BD%A2%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84-1"><span class="toc-text">树形目录结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-2-%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E7%AE%A1%E7%90%86"><span class="toc-text">5.3.2 文件目录管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E6%89%BE"><span class="toc-text">文件查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95%E9%A1%B9%E6%9F%A5%E6%89%BE"><span class="toc-text">目录项查找</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95%E5%A4%84%E7%90%86"><span class="toc-text">文件目录处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B4%BB%E5%8A%A8%E6%96%87%E4%BB%B6%E8%A1%A8"><span class="toc-text">活动文件表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B1%E4%BA%AB%E3%80%81%E4%BF%9D%E6%8A%A4%E5%92%8C%E4%BF%9D%E5%AF%86"><span class="toc-text">5.4 文件的共享、保护和保密</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-1-%E6%96%87%E4%BB%B6%E7%9A%84%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E6%8A%A4"><span class="toc-text">5.4.1 文件的安全与保护</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%AE%89%E5%85%A8%E4%B8%8E%E4%BF%9D%E6%8A%A4"><span class="toc-text">文件的安全与保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB"><span class="toc-text">文件共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB%E7%9A%84%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6"><span class="toc-text">文件共享的并发控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%9D%E5%AF%86%E6%8E%AA%E6%96%BD"><span class="toc-text">文件的保密措施</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-2-%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%9D%E6%8A%A4"><span class="toc-text">5.4.2 文件的保护</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E4%BF%9D%E6%8A%A4"><span class="toc-text">文件的保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%89%AF%E6%9C%AC"><span class="toc-text">文件的副本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%A4%9A%E5%89%AF%E6%9C%AC"><span class="toc-text">动态多副本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%BD%AC%E5%82%A8"><span class="toc-text">文件转储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E7%9F%A9%E9%98%B5"><span class="toc-text">文件的存取控制矩阵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E8%A1%A8"><span class="toc-text">存取控制表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%AD%98%E5%8F%96%E6%8E%A7%E5%88%B6%E7%9F%A9%E9%98%B5-%E8%A1%A8%E7%9A%84%E6%96%87%E4%BB%B6%E4%BF%9D%E6%8A%A4"><span class="toc-text">基于存取控制矩阵&#x2F;表的文件保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7"><span class="toc-text">文件属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%B1%9E%E6%80%A7%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">文件属性的例子</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Inode%E3%80%81%E7%9B%AE%E5%BD%95%E9%A1%B9%E3%80%81%E5%B1%82%E6%AC%A1%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">1. Inode、目录项、层次目录结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E7%89%B9%E6%AE%8A%E7%9B%AE%E5%BD%95%E9%A1%B9%E5%BB%BA%E7%AB%8B%E6%96%B9%E6%B3%95"><span class="toc-text">Linux特殊目录项建立方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Inode"><span class="toc-text">Inode</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">层次目录结构</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Unix-Linux%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%A4%9A%E9%87%8D%E7%B4%A2%E5%BC%95%E7%BB%93%E6%9E%84"><span class="toc-text">2. Unix&#x2F;Linux文件系统的多重索引结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8A%9F%E8%83%BD%E4%B8%8E%E5%AE%9E%E7%8E%B0"><span class="toc-text">3. 文件系统的功能与实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.1 文件系统调用的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%A3%81%E7%9B%98%E7%BB%93%E6%9E%84"><span class="toc-text">文件系统磁盘结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">重要数据结构</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-text">文件系统调用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%9B%E5%BB%BA"><span class="toc-text">文件的创建</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%88%A0%E9%99%A4"><span class="toc-text">文件的删除</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%89%93%E5%BC%80"><span class="toc-text">文件的打开</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B3%E9%97%AD"><span class="toc-text">文件的关闭</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="toc-text">读文件</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%96%87%E4%BB%B6%E5%85%B1%E4%BA%AB"><span class="toc-text">3.2 文件共享</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%96%87%E4%BB%B6%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="toc-text">3.3 文件空间管理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E4%B8%BB%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="toc-text">3.4 主存映射文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%99%9A%E6%8B%9F%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text">3.5 虚拟文件系统</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>

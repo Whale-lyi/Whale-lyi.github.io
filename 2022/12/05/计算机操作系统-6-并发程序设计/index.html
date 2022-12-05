@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      计算机操作系统(6) 并发程序设计 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">计算机操作系统(6) 并发程序设计</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2022-12-05 10:36:43
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                    <b>#</b> 计算机操作系统
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="第六章-并发程序设计"><a href="#第六章-并发程序设计" class="headerlink" title="第六章 并发程序设计"></a>第六章 并发程序设计</h1><h2 id="6-1-并发进程"><a href="#6-1-并发进程" class="headerlink" title="6.1 并发进程"></a>6.1 并发进程</h2><h3 id="6-1-1-顺序程序设计"><a href="#6-1-1-顺序程序设计" class="headerlink" title="6.1.1 顺序程序设计"></a>6.1.1 顺序程序设计</h3><ul>
+<li>一个进程在处理器上的顺序执行是严格按序的，一个进程只有当一个操作结束后，才能开始后继操作</li>
+<li>顺序程序设计是把一个程序设计成一个顺序执行的程序模块，顺序的含义不但指一个程序模块内部，也指两个程序模块之间</li>
+</ul>
+<h4 id="顺序程序设计特点"><a href="#顺序程序设计特点" class="headerlink" title="顺序程序设计特点"></a>顺序程序设计特点</h4><ul>
+<li>程序执行的顺序性</li>
+<li>程序环境的封闭性</li>
+<li>执行结果的确定性</li>
+<li>计算过程的可再现性</li>
+</ul>
+<h3 id="6-1-2-进程的并发性"><a href="#6-1-2-进程的并发性" class="headerlink" title="6.1.2 进程的并发性"></a>6.1.2 进程的并发性</h3><ul>
+<li>进程的并发性(Concurrency)是指一组进程的执行在时间上是重叠的</li>
+<li>例如：有两个进程A(a1、a2、a3)和B(b1、b2、b3)并发执行，若允许进程交叉执行，如执行操作序列为 a1，b1，a2，b2，a3，b3 或 a1，a2，b1，b2，b3，a3 等，则说进程A和B的执行是并发的</li>
+<li>从宏观上看，并发性反映一个时间段中几个进程都在同一处理器上，处于运行还未运行结束状态</li>
+<li>从微观上看，任一时刻仅有一个进程在处理器上运行</li>
+</ul>
+<h4 id="并发程序设计"><a href="#并发程序设计" class="headerlink" title="并发程序设计"></a>并发程序设计</h4><ul>
+<li>使一个程序分成若干个可同时执行的程序模块的方法称并发程序设计(concurrent programming)，每个程序模块和它执行时所处理的数据就组成一个进程</li>
+</ul>
+<h4 id="进程的并发性"><a href="#进程的并发性" class="headerlink" title="进程的并发性"></a>进程的并发性</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105242312.png" alt="image-20221205105242312" style="zoom:80%;" /></p>
+<ul>
+<li>由于程序是按照while(TRUE) {input，process，output}串行地输入 - 处理 - 输出来编制的，所以该程序只能顺序地执行，这时系统的效率相当低</li>
+<li>如果把求解这个问题的程序分成三部分：<ul>
+<li>i: while(TRUE) {input，send}</li>
+<li>p: while(TRUE) {receive，process，send}</li>
+<li>o: while(TRUE) {receive，output}</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105403896.png" alt="image-20221205105403896" style="zoom:80%;" /></p>
+<ul>
+<li>每一部分是一个小程序，它们可并发执行，并会产生制约关系，其中 send 和 receive 操作用于小程序之间通过通信机制解决制约关系，以便协调一致地工作</li>
+</ul>
+<h4 id="并发进程的分类"><a href="#并发进程的分类" class="headerlink" title="并发进程的分类"></a>并发进程的分类</h4><ul>
+<li>并发进程分类：无关的，交互的</li>
+<li>无关的并发进程：一个进程的执行与其他并发进程的进展无关<ul>
+<li>并发进程的无关性是进程的执行与时间无关的一个充分条件，又称为Bernstein条件</li>
+</ul>
+</li>
+<li>交互的并发进程: 不满足Bernstein条件，一个进程的执行可能影响其他并发进程的结果</li>
+</ul>
+<h4 id="Bernstein条件"><a href="#Bernstein条件" class="headerlink" title="Bernstein条件"></a>Bernstein条件</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105705207.png" alt="image-20221205105705207" style="zoom:80%;" /></p>
+<ul>
+<li>没有读写冲突与写写冲突</li>
+</ul>
+<blockquote>
+<p>举例: 有如下分属四个进程中的四条语句：</p>
+<ul>
+<li>S1: a := x + y</li>
+<li>S2: b := z + 1</li>
+<li>S3: c := a – b</li>
+<li>S4: w := c + 1</li>
+</ul>
+<p>于是有:</p>
+<p>R(S1)={x,y}, R(S2)={z}, R(S3)={a,b}, R(S4)={c}；</p>
+<p>W(S1)={a},   W(S2)={b}, W(S3)={c},   W(S4)={w}</p>
+<p>S1和S2可并发执行，满足Bernstein条件</p>
+<p>其他语句并发执行可能会产生与时间有关的错误</p>
+</blockquote>
+<h4 id="与时间有关的错误"><a href="#与时间有关的错误" class="headerlink" title="与时间有关的错误"></a>与时间有关的错误</h4><ul>
+<li>对于一组交互的并发进程，执行的相对速度无法相互控制，各种与时间有关的错误就可能出现</li>
+<li>与时间有关错误的表现形式：<ul>
+<li>结果不唯一</li>
+<li>永远等待</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>并发是开放的: 每执行完一条机器指令都有被抢占的风险</p>
+<p>顺序是封闭的</p>
+</blockquote>
+<h4 id="机票问题"><a href="#机票问题" class="headerlink" title="机票问题"></a>机票问题</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205110025898.png" alt="image-20221205110025898" style="zoom:80%;" /></p>
+<ul>
+<li>此时出现把同一张票卖给两个旅客的情况，两个旅客可能各自都买到一张同天同次航班的机票，可是，Aj的值实际上只减去1，造成余票数不正确。特别是，当某次航班只有一张余票时，可能把一张票同时售给两位旅客</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/12/02/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-5-%E4%BA%8B%E4%BB%B6/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2022-12-05 10:36:43
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                        <b>#</b> 计算机操作系统
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">第六章 并发程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B"><span class="toc-text">6.1 并发进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">6.1.1 顺序程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-text">顺序程序设计特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">6.1.2 进程的并发性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">并发程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">进程的并发性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">并发进程的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bernstein%E6%9D%A1%E4%BB%B6"><span class="toc-text">Bernstein条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E6%97%B6%E9%97%B4%E6%9C%89%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF"><span class="toc-text">与时间有关的错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%BA%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="toc-text">机票问题</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2022 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(6)%20%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F05%2F%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F-6-%25E5%25B9%25B6%25E5%258F%2591%25E7%25A8%258B%25E5%25BA%258F%25E8%25AE%25BE%25E8%25AE%25A1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-6-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
