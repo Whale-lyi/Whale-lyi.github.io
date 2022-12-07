@@ -192,7 +192,7 @@
 <li>从微观上看，任一时刻仅有一个进程在处理器上运行</li>
 </ul>
 <h4 id="并发程序设计"><a href="#并发程序设计" class="headerlink" title="并发程序设计"></a>并发程序设计</h4><ul>
-<li>使一个程序分成若干个可同时执行的程序模块的方法称并发程序设计(concurrent programming)，每个程序模块和它执行时所处理的数据就组成一个进程</li>
+<li>使一个程序分成若干个可同时执行的程序模块的方法称<strong>并发程序设计(concurrent programming)</strong>，每个程序模块和它执行时所处理的数据就组成一个进程</li>
 </ul>
 <h4 id="进程的并发性"><a href="#进程的并发性" class="headerlink" title="进程的并发性"></a>进程的并发性</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105242312.png" alt="image-20221205105242312" style="zoom:80%;" /></p>
 <ul>
@@ -250,6 +250,14 @@
 <ul>
 <li>此时出现把同一张票卖给两个旅客的情况，两个旅客可能各自都买到一张同天同次航班的机票，可是，Aj的值实际上只减去1，造成余票数不正确。特别是，当某次航班只有一张余票时，可能把一张票同时售给两位旅客</li>
 </ul>
+<h4 id="主存管理问题"><a href="#主存管理问题" class="headerlink" title="主存管理问题"></a>主存管理问题</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206175155957.png" alt="image-20221206175155957" style="zoom:80%;" /></p>
+<ul>
+<li>由于 <code>borrow</code> 和 <code>return</code> 共享代表主存物理资源的临界变量 X，对并发执行不加限制会导致错误，例如，一个进程调用borrow申请主存，在执行比较 B 和 X 大小的指令后，发现 B &gt; X，但在执行 <code>&#123;进程进入等待主存资源队列&#125;</code> 前，另一个进程调用 return 抢先执行，归还所借全部主存资源；这时，由于前一个进程还未成为等待者，return中的 <code>&#123;释放等主存资源进程&#125;</code> 相当于空操作，以后当调用 borrow 的应用进程被置成 <code>&#123;等主存资源&#125;</code> 时，可能己经没有其他进程再来归还主存，从而，申请资源的进程处于永远等待状态</li>
+</ul>
+<h3 id="6-1-3-进程的交互-竞争与协作"><a href="#6-1-3-进程的交互-竞争与协作" class="headerlink" title="6.1.3 进程的交互: 竞争与协作"></a>6.1.3 进程的交互: 竞争与协作</h3><ul>
+<li>进程之间存在两种基本关系：竞争关系和协作关系</li>
+<li>第一种是<strong>竞争关系</strong>，一个进程的执行可能影响到同其竞争资源的其他进程，如果两个进程要访问同一资源，那么，一个进程通过操作系统分配得到该资源，另一个将不得不等待 第二种是协作关系，某些进程为完成同一任务需要分工协作，由于合作的每一个进程都是独立地以不可预知的速度推进，这就需要相互协作的进程在某些协调点上协调各自的工作。当合作进程中的一个到达协调点后，在尚未得到其伙伴进程发来的消息或信号之前应阻塞自己，直到其他合作进程发来协调信号或消息后方被唤醒并继续执行</li>
+</ul>
 
       </div>
       
@@ -305,7 +313,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">第六章 并发程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B"><span class="toc-text">6.1 并发进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">6.1.1 顺序程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-text">顺序程序设计特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">6.1.2 进程的并发性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">并发程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">进程的并发性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">并发进程的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bernstein%E6%9D%A1%E4%BB%B6"><span class="toc-text">Bernstein条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E6%97%B6%E9%97%B4%E6%9C%89%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF"><span class="toc-text">与时间有关的错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%BA%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="toc-text">机票问题</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">第六章 并发程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B"><span class="toc-text">6.1 并发进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">6.1.1 顺序程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-text">顺序程序设计特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">6.1.2 进程的并发性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">并发程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">进程的并发性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">并发进程的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bernstein%E6%9D%A1%E4%BB%B6"><span class="toc-text">Bernstein条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E6%97%B6%E9%97%B4%E6%9C%89%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF"><span class="toc-text">与时间有关的错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%BA%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="toc-text">机票问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98"><span class="toc-text">主存管理问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-3-%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%A4%E4%BA%92-%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%8D%8F%E4%BD%9C"><span class="toc-text">6.1.3 进程的交互: 竞争与协作</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
