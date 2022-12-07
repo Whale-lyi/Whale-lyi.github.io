@@ -266,7 +266,7 @@
 <ul>
 <li>用户在某个元素上点击⿏标或悬停光标</li>
 <li>用户在键盘中按下某个按键</li>
-<li>用户调整浏览器的⼤⼩或者关闭浏览器窗⼝</li>
+<li>用户调整浏览器的大⼩或者关闭浏览器窗⼝</li>
 <li>一个网页停止加载</li>
 <li>提交表单</li>
 <li>播放、暂停、关闭视频</li>
@@ -310,7 +310,7 @@
 <li>message</li>
 </ul>
 <h3 id="2-4-触屏和移动设备事件"><a href="#2-4-触屏和移动设备事件" class="headerlink" title="2.4 触屏和移动设备事件"></a>2.4 触屏和移动设备事件</h3><ul>
-<li>功能强⼤的移动设备, 特别是带有触摸屏的移动设备被⼴泛采用, 要求创建新的事件类别</li>
+<li>功能强大的移动设备, 特别是带有触摸屏的移动设备被⼴泛采用, 要求创建新的事件类别</li>
 <li>在许多情况下, 触屏事件映射到传统事件类型, 如单击和滚动。但并⾮所有触屏UI的交互都模仿⿏标, 也不是所有的触摸都可以被视为⿏标事件<ul>
 <li>gesturestart, gestureend </li>
 </ul>
@@ -331,7 +331,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">name</span>(<span class="params">event</span>) &#123;</span><br><span class="line">    <span class="comment">// an event handler function ...</span></span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
 <h3 id="2-7-鼠标事件"><a href="#2-7-鼠标事件" class="headerlink" title="2.7 鼠标事件"></a>2.7 鼠标事件</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221202141346694.png" alt="image-20221202141346694" style="zoom:80%;" /></p>
 <h2 id="3-事件处理模型"><a href="#3-事件处理模型" class="headerlink" title="3 事件处理模型"></a>3 事件处理模型</h2><h3 id="3-1-DOM-0"><a href="#3-1-DOM-0" class="headerlink" title="3.1 DOM 0"></a>3.1 DOM 0</h3><ul>
-<li>此事件处理模型是由Netscape Navigator引⼊的, 到2005年仍然是跨浏览器最多的模型。有两种模型类型：<ul>
+<li>此事件处理模型是由Netscape Navigator引入的, 到2005年仍然是跨浏览器最多的模型。有两种模型类型：<ul>
 <li>内联模型: 事件处理程序作为元素的属性添加。</li>
 <li>传统模型: 可以通过脚本添加/删除事件处理程序。与内联模型一样, 每个事件只能注册一个事件处理程序。通过将处理程序名称分配给元素对象的事件属性来添加事件。要删除事件处理程序, 只需将属性设置为null。</li>
 </ul>
@@ -551,31 +551,31 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221202154313441.png" alt="image-20221202154313441" style="zoom:80%;" /></p>
 <h4 id="3-5-1-闭包执行"><a href="#3-5-1-闭包执行" class="headerlink" title="3.5.1 闭包执行"></a>3.5.1 闭包执行</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221202154522893.png" alt="image-20221202154522893" style="zoom:80%;" /></p>
 <h2 id="4-提升"><a href="#4-提升" class="headerlink" title="4 提升"></a>4 提升</h2><h3 id="4-1-提升-Hosting"><a href="#4-1-提升-Hosting" class="headerlink" title="4.1 提升(Hosting)"></a>4.1 提升(Hosting)</h3><ul>
-<li>引擎会在解释JavaScript代码之前⾸先进⾏编译，编译过程中的⼀部分⼯作就是<strong>找到所有的声明</strong>，并⽤合适的作⽤域将他们关联起来，这也正是词法作⽤域的核⼼内容。</li>
-<li>JavaScript 变量的另⼀个不同寻常的地⽅是，你可以先使⽤变量稍后再声明变量⽽不会引发异常。这⼀概念称为<strong>变量提升</strong>；JavaScript 变量感觉上是被“提升”或移到了函数或语句的最前⾯。</li>
-<li>但是，提升后的变量将返回 <code>undefined</code> 值。因此在使⽤或引⽤某个变量之后进⾏声明和初始化操作，这个被提升的变量仍将返回 <code>undefined</code> 值。</li>
+<li>引擎会在解释JavaScript代码之前首先进行编译，编译过程中的⼀部分⼯作就是<strong>找到所有的声明</strong>，并用合适的作用域将他们关联起来，这也正是词法作用域的核心内容。</li>
+<li>JavaScript 变量的另⼀个不同寻常的地方是，你可以先使用变量稍后再声明变量而不会引发异常。这⼀概念称为<strong>变量提升</strong>；JavaScript 变量感觉上是被”提升”或移到了函数或语句的最前面。</li>
+<li>但是，提升后的变量将返回 <code>undefined</code> 值。因此在使用或引用某个变量之后进行声明和初始化操作，这个被提升的变量仍将返回 <code>undefined</code> 值。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 例子 1*/</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x === <span class="literal">undefined</span>); <span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 例子 2*/</span></span><br><span class="line"><span class="comment">// will return a value of undefined</span></span><br><span class="line"><span class="keyword">var</span> myvar = <span class="string">&quot;my value&quot;</span>;</span><br><span class="line"></span><br><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(myvar); <span class="comment">// undefined</span></span><br><span class="line">	<span class="keyword">var</span> myvar = <span class="string">&quot;local value&quot;</span>;</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 例子 1*/</span></span><br><span class="line"><span class="keyword">var</span> x;</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(x === <span class="literal">undefined</span>); <span class="comment">// true</span></span><br><span class="line">x = <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 例子 2*/</span></span><br><span class="line"><span class="keyword">var</span> myvar = <span class="string">&quot;my value&quot;</span>;</span><br><span class="line">(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> myvar;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(myvar); <span class="comment">// undefined</span></span><br><span class="line">	myvar = <span class="string">&quot;local value&quot;</span>;</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
 <ul>
-<li>由于存在变量提升，⼀个函数中所有的var语句应尽可能地放在接近函数顶部的地⽅。这个习惯将⼤⼤提升代码的清晰度。</li>
+<li>由于存在变量提升，⼀个函数中所有的var语句应尽可能地放在接近函数顶部的地方。这个习惯将大大提升代码的清晰度。</li>
 </ul>
 <h3 id="4-2-let-const"><a href="#4-2-let-const" class="headerlink" title="4.2 let const"></a>4.2 let const</h3><ul>
-<li>ES6新增块级作⽤域。这个区块对这些变量从⼀开始就形成了封闭作⽤域，直到声明语句完成，这些变量才能被访问（获取或设置），否则会报错ReferenceError</li>
-<li>暂时性死区（英temporal dead zone，简 TDZ），即代码块开始到变量声明语句完成之间的区域</li>
-<li>通过 let 声明的变量<strong>没有变量提升</strong>、<strong>拥有暂时性死区</strong>，作⽤于<strong>块级作⽤域</strong>：<ul>
-<li>当进⼊变量的作⽤域（包围它的语法块），⽴即为它创建（绑定）存储空间，不会⽴即初始化，也不会被赋值</li>
-<li>访问（获取或设置）该变量会抛出异常 ReferenceError</li>
-<li>当执⾏到变量的声明语句时，如果变量定义了值则会被赋值，如果变量没有定义值，则被赋值为undefined</li>
+<li>ES6新增块级作用域。这个区块对这些变量从⼀开始就形成了封闭作用域，直到声明语句完成，这些变量才能被访问(获取或设置)，否则会报错ReferenceError</li>
+<li>暂时性死区(英temporal dead zone，简 TDZ)，即代码块开始到变量声明语句完成之间的区域</li>
+<li>通过 let 声明的变量<strong>没有变量提升</strong>、<strong>拥有暂时性死区</strong>，作用于<strong>块级作用域</strong>：<ul>
+<li>当进入变量的作用域(包围它的语法块)，立即为它创建(绑定)存储空间，不会立即初始化，也不会被赋值</li>
+<li>访问(获取或设置)该变量会抛出异常 ReferenceError</li>
+<li>当执行到变量的声明语句时，如果变量定义了值则会被赋值，如果变量没有定义值，则被赋值为undefined</li>
 </ul>
 </li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123; <span class="comment">// TDZ starts at beginning of scope</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(bar); <span class="comment">// undefined</span></span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(foo); <span class="comment">// ReferenceError</span></span><br><span class="line">	<span class="keyword">var</span> bar = <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">let</span> foo = <span class="number">2</span>; <span class="comment">// End of TDZ (for foo)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="4-3-temporal"><a href="#4-3-temporal" class="headerlink" title="4.3 temporal"></a>4.3 temporal</h3><ul>
-<li>使⽤术语“temporal”是因为区域取决于执⾏顺序（时间），⽽不是编写代码的顺序（位置）。例如，下⾯的代码会⽣效，是因为即使使⽤ let 变量的函数出现在变量声明之前，但函数的执⾏是在暂时性死区的外⾯。</li>
+<li>使用术语”temporal”是因为区域取决于执行顺序(时间)，而不是编写代码的顺序(位置)。例如，下面的代码会生效，是因为即使使用 let 变量的函数出现在变量声明之前，但函数的执行是在暂时性死区的外面</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	<span class="comment">// TDZ starts at beginning of scope</span></span><br><span class="line">	<span class="keyword">const</span> <span class="title function_">func</span> = (<span class="params"></span>) =&gt; <span class="variable language_">console</span>.<span class="title function_">log</span>(letVar); <span class="comment">// OK</span></span><br><span class="line">	<span class="comment">// Within the TDZ letVar access throws `ReferenceError`</span></span><br><span class="line">	<span class="keyword">let</span> letVar = <span class="number">3</span>; <span class="comment">// End of TDZ (for letVar)</span></span><br><span class="line">	<span class="title function_">func</span>(); <span class="comment">// Called outside TDZ!</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="4-4-函数提升"><a href="#4-4-函数提升" class="headerlink" title="4.4 函数提升"></a>4.4 函数提升</h3><ul>
-<li>对于函数来说，只有函数声明会被提升到顶部，⽽函数表达式不会被提升</li>
+<li>对于函数来说，只有函数声明会被提升到顶部，而函数表达式不会被提升</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 函数声明 */</span></span><br><span class="line"><span class="title function_">foo</span>(); <span class="comment">// &quot;bar&quot;</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">foo</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;bar&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 函数表达式 */</span></span><br><span class="line"><span class="title function_">baz</span>(); <span class="comment">// 类型错误：baz 不是⼀个函数</span></span><br><span class="line"><span class="keyword">var</span> baz = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;bar2&quot;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>
