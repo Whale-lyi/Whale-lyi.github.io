@@ -175,7 +175,25 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h1><h2 id="一、类型系统与类型检查"><a href="#一、类型系统与类型检查" class="headerlink" title="一、类型系统与类型检查"></a>一、类型系统与类型检查</h2>
+        <h1 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h1><h2 id="一、类型系统与类型检查"><a href="#一、类型系统与类型检查" class="headerlink" title="一、类型系统与类型检查"></a>一、类型系统与类型检查</h2><h3 id="1-类型系统"><a href="#1-类型系统" class="headerlink" title="1. 类型系统"></a>1. 类型系统</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151819743.png" alt="image-20221207151819743" style="zoom:80%;" /></p>
+<h4 id="1-1-JS-糟糕的类型系统"><a href="#1-1-JS-糟糕的类型系统" class="headerlink" title="1.1 JS 糟糕的类型系统"></a>1.1 JS 糟糕的类型系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151842025.png" alt="image-20221207151842025" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151856769.png" alt="image-20221207151856769" style="zoom:80%;" /></p>
+<h3 id="2-类型检查"><a href="#2-类型检查" class="headerlink" title="2. 类型检查"></a>2. 类型检查</h3><h4 id="2-1-类型检查"><a href="#2-1-类型检查" class="headerlink" title="2.1 类型检查"></a>2.1 类型检查</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152018144.png" alt="image-20221207152018144" style="zoom:80%;" /></p>
+<h4 id="2-2-类型转换"><a href="#2-2-类型转换" class="headerlink" title="2.2 类型转换"></a>2.2 类型转换</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152042825.png" alt="image-20221207152042825" style="zoom:80%;" /></p>
+<blockquote>
+<p><strong>不要写这样的代码!!!</strong></p>
+</blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152141192.png" alt="image-20221207152141192" style="zoom:80%;" /></p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/c/language/conversion">Conversion @ cppreference.com</a></li>
+</ul>
+<h4 id="2-3-类型综合"><a href="#2-3-类型综合" class="headerlink" title="2.3 类型综合"></a>2.3 类型综合</h4><p>根据子表达式的类型确定表达式的类型</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152444442.png" alt="image-20221207152444442" style="zoom:80%;" /></p>
+<h4 id="2-4-类型推导"><a href="#2-4-类型推导" class="headerlink" title="2.4 类型推导"></a>2.4 类型推导</h4><p>根据某语言结构的使用方式确定表达式的类型</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152504821.png" alt="image-20221207152504821" style="zoom:80%;" /></p>
+<h3 id="3-动手构建数组类型表达式"><a href="#3-动手构建数组类型表达式" class="headerlink" title="3. 动手构建数组类型表达式"></a>3. 动手构建数组类型表达式</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152709599.png" alt="image-20221207152709599" style="zoom:80%;" /></p>
+<h4 id="3-1-语法分析树"><a href="#3-1-语法分析树" class="headerlink" title="3.1 语法分析树"></a>3.1 语法分析树</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152729596.png" alt="image-20221207152729596" style="zoom:80%;" /></p>
+
       </div>
       
         <div class="prev-or-next">
@@ -213,6 +231,11 @@
           </div>
           <div class="post-foot-prev">
             
+              <a href="/2022/12/09/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-7-Node-js/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -225,7 +248,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="toc-text">语义分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">一、类型系统与类型检查</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="toc-text">语义分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">一、类型系统与类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1. 类型系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-JS-%E7%B3%9F%E7%B3%95%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1 JS 糟糕的类型系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2. 类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2.1 类型检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">2.2 类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E7%B1%BB%E5%9E%8B%E7%BB%BC%E5%90%88"><span class="toc-text">2.3 类型综合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">2.4 类型推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%A8%E6%89%8B%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3. 动手构建数组类型表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E6%A0%91"><span class="toc-text">3.1 语法分析树</span></a></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
