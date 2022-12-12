@@ -175,7 +175,8 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h1><h2 id="一、类型系统与类型检查"><a href="#一、类型系统与类型检查" class="headerlink" title="一、类型系统与类型检查"></a>一、类型系统与类型检查</h2><h3 id="1-类型系统"><a href="#1-类型系统" class="headerlink" title="1. 类型系统"></a>1. 类型系统</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151819743.png" alt="image-20221207151819743" style="zoom:80%;" /></p>
+        <h1 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h1><p>本节课代码见<a target="_blank" rel="noopener" href="https://github.com/courses-at-nju-by-hfwei/2022-compilers-coding">https://github.com/courses-at-nju-by-hfwei/2022-compilers-coding</a></p>
+<h2 id="一、类型系统与类型检查"><a href="#一、类型系统与类型检查" class="headerlink" title="一、类型系统与类型检查"></a>一、类型系统与类型检查</h2><h3 id="1-类型系统"><a href="#1-类型系统" class="headerlink" title="1. 类型系统"></a>1. 类型系统</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151819743.png" alt="image-20221207151819743" style="zoom:80%;" /></p>
 <h4 id="1-1-JS-糟糕的类型系统"><a href="#1-1-JS-糟糕的类型系统" class="headerlink" title="1.1 JS 糟糕的类型系统"></a>1.1 JS 糟糕的类型系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151842025.png" alt="image-20221207151842025" style="zoom:80%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151856769.png" alt="image-20221207151856769" style="zoom:80%;" /></p>
 <h3 id="2-类型检查"><a href="#2-类型检查" class="headerlink" title="2. 类型检查"></a>2. 类型检查</h3><h4 id="2-1-类型检查"><a href="#2-1-类型检查" class="headerlink" title="2.1 类型检查"></a>2.1 类型检查</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152018144.png" alt="image-20221207152018144" style="zoom:80%;" /></p>
@@ -191,8 +192,50 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152444442.png" alt="image-20221207152444442" style="zoom:80%;" /></p>
 <h4 id="2-4-类型推导"><a href="#2-4-类型推导" class="headerlink" title="2.4 类型推导"></a>2.4 类型推导</h4><p>根据某语言结构的使用方式确定表达式的类型</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152504821.png" alt="image-20221207152504821" style="zoom:80%;" /></p>
-<h3 id="3-动手构建数组类型表达式"><a href="#3-动手构建数组类型表达式" class="headerlink" title="3. 动手构建数组类型表达式"></a>3. 动手构建数组类型表达式</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152709599.png" alt="image-20221207152709599" style="zoom:80%;" /></p>
+<h3 id="3-数组类型文法"><a href="#3-数组类型文法" class="headerlink" title="3. 数组类型文法"></a>3. 数组类型文法</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152709599.png" alt="image-20221207152709599" style="zoom:80%;" /></p>
 <h4 id="3-1-语法分析树"><a href="#3-1-语法分析树" class="headerlink" title="3.1 语法分析树"></a>3.1 语法分析树</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152729596.png" alt="image-20221207152729596" style="zoom:80%;" /></p>
+<h4 id="3-2-Listener"><a href="#3-2-Listener" class="headerlink" title="3.2 Listener"></a>3.2 Listener</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160736411.png" alt="image-20221212160736411" style="zoom:80%;" /></p>
+<h4 id="3-3-ParseTreeProperty"><a href="#3-3-ParseTreeProperty" class="headerlink" title="3.3 ParseTreeProperty"></a>3.3 ParseTreeProperty</h4><ul>
+<li>通过 ANTLR4 提供的 <code>ParseTreeProperty&lt;&gt;</code> 来存储 <code>basicType</code> 与 <code>arrayType</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ParseTreeProperty&lt;Type&gt; arrayTypeProperty = <span class="keyword">new</span> <span class="title class_">ParseTreeProperty</span>&lt;&gt;();</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ParseTreeProperty&lt;Type&gt; basicTypeProperty = <span class="keyword">new</span> <span class="title class_">ParseTreeProperty</span>&lt;&gt;();</span><br></pre></td></tr></table></figure>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160750687.png" alt="image-20221212160750687" style="zoom:80%;" /></p>
+<ul>
+<li>赋值语句类型检查，详见代码</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212162801953.png" alt="image-20221212162801953" style="zoom:80%;" /></p>
+<h3 id="4-类型声明文法"><a href="#4-类型声明文法" class="headerlink" title="4. 类型声明文法"></a>4. 类型声明文法</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160914001.png" alt="image-20221212160914001" style="zoom:80%;" /></p>
+<ul>
+<li>与数组类似，需要保存最左侧的类型</li>
+</ul>
+<h3 id="5-类型系统"><a href="#5-类型系统" class="headerlink" title="5. 类型系统"></a>5. 类型系统</h3><p><a target="_blank" rel="noopener" href="https://youtu.be/SWTWkYbcWU0">https://youtu.be/SWTWkYbcWU0</a></p>
+<h2 id="二、属性文法"><a href="#二、属性文法" class="headerlink" title="二、属性文法"></a>二、属性文法</h2><h3 id="1-属性文法"><a href="#1-属性文法" class="headerlink" title="1. 属性文法"></a>1. 属性文法</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212165143201.png" alt="image-20221212165143201" style="zoom:80%;" /></p>
+<p>$\textcolor{red}{\textbf{属性文法}\text{(Attribute Grammar)}:} 为上下文无关文法赋予\textcolor{blue}{\textbf{语义}}$</p>
+<blockquote>
+<p>终结符或非终结符上的属性就可以看作语义</p>
+<p>属性分为两类:</p>
+<ul>
+<li>综合属性</li>
+<li>继承属性</li>
+</ul>
+</blockquote>
+<h4 id="1-1-关键问题"><a href="#1-1-关键问题" class="headerlink" title="1.1 关键问题"></a>1.1 关键问题</h4><p><strong>如何基于上下文无关文法做上下文相关分析?</strong></p>
+<blockquote>
+<p>上下文相关文法分析复杂度太高</p>
+</blockquote>
+<p>关键: <strong>语法分析树</strong>上的<strong>有序</strong>信息流动</p>
+<ul>
+<li>通过 DFS 来遍历</li>
+</ul>
+<h3 id="2-计算属性值"><a href="#2-计算属性值" class="headerlink" title="2. 计算属性值"></a>2. 计算属性值</h3><h4 id="2-1-Offline-方式"><a href="#2-1-Offline-方式" class="headerlink" title="2.1 Offline 方式"></a>2.1 Offline 方式</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212170016385.png" alt="image-20221212170016385" style="zoom:80%;" /></p>
+<blockquote>
+<p>但因为要先建立语法分析树，实际上遍历了两遍，效率并不高</p>
+</blockquote>
+<h4 id="2-2-语法分析过程中"><a href="#2-2-语法分析过程中" class="headerlink" title="2.2 语法分析过程中"></a>2.2 语法分析过程中</h4><p>在<strong>语法分析过程中</strong>实现属性文法</p>
+<p><strong>基本思想: </strong>一个动作在它<strong>左边的</strong>所有文法符号都<strong>处理</strong>过之后立刻执行</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212170232773.png" alt="image-20221212170232773" style="zoom:80%;" /></p>
+<p><strong>时机(Timing)</strong></p>
+<p>语义动作嵌入在什么地方? 这决定了何时执行语义动作。</p>
 
       </div>
       
@@ -248,7 +291,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="toc-text">语义分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">一、类型系统与类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1. 类型系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-JS-%E7%B3%9F%E7%B3%95%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1 JS 糟糕的类型系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2. 类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2.1 类型检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">2.2 类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E7%B1%BB%E5%9E%8B%E7%BB%BC%E5%90%88"><span class="toc-text">2.3 类型综合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">2.4 类型推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%A8%E6%89%8B%E6%9E%84%E5%BB%BA%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3. 动手构建数组类型表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E6%A0%91"><span class="toc-text">3.1 语法分析树</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="toc-text">语义分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">一、类型系统与类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1. 类型系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-JS-%E7%B3%9F%E7%B3%95%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1 JS 糟糕的类型系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2. 类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2.1 类型检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">2.2 类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E7%B1%BB%E5%9E%8B%E7%BB%BC%E5%90%88"><span class="toc-text">2.3 类型综合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">2.4 类型推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E6%96%87%E6%B3%95"><span class="toc-text">3. 数组类型文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E6%A0%91"><span class="toc-text">3.1 语法分析树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-Listener"><span class="toc-text">3.2 Listener</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-ParseTreeProperty"><span class="toc-text">3.3 ParseTreeProperty</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E6%96%87%E6%B3%95"><span class="toc-text">4. 类型声明文法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">5. 类型系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">二、属性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 属性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98"><span class="toc-text">1.1 关键问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="toc-text">2. 计算属性值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Offline-%E6%96%B9%E5%BC%8F"><span class="toc-text">2.1 Offline 方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B%E4%B8%AD"><span class="toc-text">2.2 语法分析过程中</span></a></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
