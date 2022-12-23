@@ -175,7 +175,196 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="LLVM-IR-简介"><a href="#LLVM-IR-简介" class="headerlink" title="LLVM IR 简介"></a>LLVM IR 简介</h1>
+        <h1 id="LLVM-IR"><a href="#LLVM-IR" class="headerlink" title="LLVM IR"></a>LLVM IR</h1><h2 id="一、LLVM-IR-简介"><a href="#一、LLVM-IR-简介" class="headerlink" title="一、LLVM IR 简介"></a>一、LLVM IR 简介</h2><h3 id="1-LLVM"><a href="#1-LLVM" class="headerlink" title="1. LLVM"></a>1. LLVM</h3><blockquote>
+<p>基础设施而非编译器</p>
+<p>目标: 模块化，可重用</p>
+</blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221222200423196.png" alt="image-20221222200423196" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221222200437641.png" alt="image-20221222200437641" style="zoom:80%;" /></p>
+<ul>
+<li>包含范围(黄色)</li>
+<li>Clang 为 LLVM 子项目，狭义上的 LLVM 并不包含 Clang</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223001148768.png" alt="image-20221223001148768" style="zoom:80%;" /></p>
+<h3 id="2-Clang"><a href="#2-Clang" class="headerlink" title="2. Clang"></a>2. Clang</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223001849775.png" alt="image-20221223001849775" style="zoom:80%;" /></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 和 GCC 类似，直接编译为可执行文件</span></span><br><span class="line">clang .\hello.c -o hello</span><br><span class="line"><span class="comment"># -ast-dump 得到抽象语法树</span></span><br><span class="line">clang -Xclang -ast-dump -c hello.c</span><br></pre></td></tr></table></figure>
+<h3 id="3-IR"><a href="#3-IR" class="headerlink" title="3. IR"></a>3. IR</h3><h4 id="3-1-IR"><a href="#3-1-IR" class="headerlink" title="3.1 IR"></a>3.1 IR</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219162837400.png" alt="image-20221219162837400" style="zoom:80%;" /></p>
+<p>IR: Intermediate Representation(中间表示)</p>
+<p>LLVM IR: <strong>带有类型的</strong>、介于高级程序设计语言与汇编语言之间</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Module</td>
+<td>IR 的基本单位，每个 Module 对应一个 .c 文件</td>
+</tr>
+<tr>
+<td>Function / Global variables</td>
+<td>每个 Module 中有若干函数与全局变量</td>
+</tr>
+<tr>
+<td>Basic Block</td>
+<td>基本块，由若干指令构成。但是<strong>除了最后一条指令</strong>(返回或跳转到其他基本块)，全部都是<strong>顺序执行指令</strong>，不能是分支或跳转</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="3-2-LLVM-IR"><a href="#3-2-LLVM-IR" class="headerlink" title="3.2 LLVM IR"></a>3.2 LLVM IR</h4><p><strong>示例</strong></p>
+<h5 id="opt0"><a href="#opt0" class="headerlink" title="opt0"></a>opt0</h5><ul>
+<li><code>factorial0.c</code></li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223164427023.png" alt="image-20221223164427023" style="zoom:80%;" /></p>
+<ul>
+<li><p><code>clang -S -emit-llvm factorial0.c -o f0-opt0.ll</code></p>
+<blockquote>
+<p>-S: 生成的中间表示是人类可阅读的</p>
+<p>-emit-llvm: 生成中间代码就可以停止</p>
+</blockquote>
+</li>
+<li><p>f0-opt0.ll</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223164448062.png" alt="image-20221223164448062" style="zoom:80%;" /></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>;</td>
+<td>注释 <code>;xxx</code></td>
+</tr>
+<tr>
+<td>optnone</td>
+<td>没有优化</td>
+</tr>
+<tr>
+<td>declare</td>
+<td>声明函数</td>
+</tr>
+<tr>
+<td>define</td>
+<td>定义函数</td>
+</tr>
+<tr>
+<td>@</td>
+<td>全局符号(全局变量/函数名) <code>@main</code></td>
+</tr>
+<tr>
+<td>%</td>
+<td>局部变量 <code>%</code></td>
+</tr>
+<tr>
+<td>i32/i8</td>
+<td>32位/8位整型, 类型信息, llvm是强类型</td>
+</tr>
+<tr>
+<td>*</td>
+<td>指针, <code>i32*</code></td>
+</tr>
+<tr>
+<td>icmp</td>
+<td>整数间的比较</td>
+</tr>
+<tr>
+<td>alloca</td>
+<td>分配空间，返回的是指针, 如 i32*</td>
+</tr>
+<tr>
+<td>align n</td>
+<td>n字节对齐, <code>align 4</code></td>
+</tr>
+<tr>
+<td>store</td>
+<td>存储数据</td>
+</tr>
+<tr>
+<td>call</td>
+<td>调用函数</td>
+</tr>
+<tr>
+<td>zext</td>
+<td>扩展</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>三地址码(TAC: Three-Address Code, 也称三地址指令)</p>
+<ul>
+<li>LLVM 所有指令操作数都小于等于3</li>
+<li><code>mul</code>: 两个操作数 + 一个存结果的虚拟寄存器</li>
+</ul>
+<p>静态单赋值(SSA: Static Single Assignment)</p>
+<ul>
+<li>每一个变量都只允许定义一次</li>
+</ul>
+</blockquote>
+<h5 id="opt1"><a href="#opt1" class="headerlink" title="opt1"></a>opt1</h5><ul>
+<li><p><code>clang -S -emit-llvm factorial0.c -o f0-opt1.ll -o1 -g0</code></p>
+<blockquote>
+<p>-o1: 进行优化</p>
+<p>-g0: 去掉 debug 相关信息</p>
+</blockquote>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223180457115.png" alt="image-20221223180457115" style="zoom:80%;" /></p>
+<ul>
+<li>可以看到 <code>alloca, store</code> 部分代码被删去<ul>
+<li>解释一: 函数参数没有用到</li>
+<li><strong>解释二</strong>: <code>alloca, store</code> 是内存操作(memory), 其他则是虚拟寄存器操作(register), 使用 <code>-o1</code> 往往会<strong>将内存操作优化掉</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-SSA"><a href="#4-SSA" class="headerlink" title="4. SSA"></a>4. SSA</h3><h4 id="4-1-phi-函数"><a href="#4-1-phi-函数" class="headerlink" title="4.1 $\phi$ 函数"></a>4.1 $\phi$ 函数</h4><blockquote>
+<p>上面的例子都是顺序执行代码，如果遇到分支语句如何满足 SSA</p>
+</blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223181451471.png" alt="image-20221223181451471" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223211226055.png" alt="image-20221223211226055" style="zoom:80%;" /></p>
+<blockquote>
+<p>$\phi$ 函数在 LLVM IR 中是一种高级的指令(抽象的), 不对应于具体的机器指令(没有机器指令可以实现)</p>
+<p>通常通过分配给一个寄存器或存储到一个公共堆栈内存位置来完成</p>
+</blockquote>
+<h4 id="4-2-CFG"><a href="#4-2-CFG" class="headerlink" title="4.2 CFG"></a>4.2 CFG</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223211527170.png" alt="image-20221223211527170" style="zoom:80%;" /></p>
+<blockquote>
+<p>系统调用图只显示了函数间的调用关系, 我们也想了解函数内部的控制流信息</p>
+<ul>
+<li>使用控制流图</li>
+</ul>
+</blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223211912503.png" alt="image-20221223211912503" style="zoom:80%;" /></p>
+<h4 id="4-3-举例-递归"><a href="#4-3-举例-递归" class="headerlink" title="4.3 举例(递归)"></a>4.3 举例(递归)</h4><h5 id="opt0-1"><a href="#opt0-1" class="headerlink" title="opt0"></a>opt0</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223212142241.png" alt="image-20221223212142241" style="zoom:80%;" /></p>
+<blockquote>
+<p>factorial 函数翻译后被分为 4 段(基本块)</p>
+<p>即, 每个<strong>函数</strong>被分为若干<strong>基本块</strong></p>
+</blockquote>
+<p>上方代码之所以没有用到 $\phi$ 函数, 是因为使用了 <code>store load</code> 指令</p>
+<ul>
+<li>基本块最后一条指令(结束指令)</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223212902324.png" alt="image-20221223212902324" style="zoom:80%;" /></p>
+<h5 id="opt1-1"><a href="#opt1-1" class="headerlink" title="opt1"></a>opt1</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223213036680.png" alt="image-20221223213036680" style="zoom:80%;" /></p>
+<p>优化后不使用 <code>store load</code> 内存操作, 需要使用 $\phi$ 函数</p>
+<p><a target="_blank" rel="noopener" href="https://mapping-high-level-constructs-to-llvm-ir.readthedocs.io/en/latest/control-structures/ssa-phi.html">Single-Static Assignment Form and PHI(How to implement it?)</a></p>
+<h5 id="opt3"><a href="#opt3" class="headerlink" title="opt3"></a>opt3</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223214428140.png" alt="image-20221223214428140" style="zoom:80%;" /></p>
+<h4 id="4-4-举例-循环"><a href="#4-4-举例-循环" class="headerlink" title="4.4 举例(循环)"></a>4.4 举例(循环)</h4><h5 id="opt0-2"><a href="#opt0-2" class="headerlink" title="opt0"></a>opt0</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223214627570.png" alt="image-20221223214627570" style="zoom:80%;" /></p>
+<h5 id="opt1-2"><a href="#opt1-2" class="headerlink" title="opt1"></a>opt1</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223214917187.png" alt="image-20221223214917187" style="zoom:80%;" /></p>
+<blockquote>
+<p>这里做了一个优化, 将判断条件取反, 即判断 val 是否小于 2</p>
+<p>为了符合 SSA, 需要对 i 与 temp 进行选择, 分别对应 %6 %7 </p>
+</blockquote>
+<h5 id="opt3-1"><a href="#opt3-1" class="headerlink" title="opt3"></a>opt3</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223215450428.png" alt="image-20221223215450428" style="zoom:80%;" /></p>
+
       </div>
       
         <div class="prev-or-next">
@@ -225,7 +414,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LLVM-IR-%E7%AE%80%E4%BB%8B"><span class="toc-text">LLVM IR 简介</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LLVM-IR"><span class="toc-text">LLVM IR</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81LLVM-IR-%E7%AE%80%E4%BB%8B"><span class="toc-text">一、LLVM IR 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-LLVM"><span class="toc-text">1. LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Clang"><span class="toc-text">2. Clang</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IR"><span class="toc-text">3. IR</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-IR"><span class="toc-text">3.1 IR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-LLVM-IR"><span class="toc-text">3.2 LLVM IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#opt0"><span class="toc-text">opt0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt1"><span class="toc-text">opt1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-SSA"><span class="toc-text">4. SSA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-phi-%E5%87%BD%E6%95%B0"><span class="toc-text">4.1 $\phi$ 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-CFG"><span class="toc-text">4.2 CFG</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E4%B8%BE%E4%BE%8B-%E9%80%92%E5%BD%92"><span class="toc-text">4.3 举例(递归)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#opt0-1"><span class="toc-text">opt0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt1-1"><span class="toc-text">opt1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt3"><span class="toc-text">opt3</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-%E4%B8%BE%E4%BE%8B-%E5%BE%AA%E7%8E%AF"><span class="toc-text">4.4 举例(循环)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#opt0-2"><span class="toc-text">opt0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt1-2"><span class="toc-text">opt1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt3-1"><span class="toc-text">opt3</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
