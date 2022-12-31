@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Node.js 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <!-- 代码块风格 -->
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.10/dist/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Node.js</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2022-12-30 00:49:41
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Frontend/" title="Frontend">
+                    <b>#</b> Frontend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Frontend/Node-js/" title="Node.js">
+                    <b>#</b> Node.js
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="Node-js"><a href="#Node-js" class="headerlink" title="Node.js"></a>Node.js</h1><h2 id="初识-Node-js-与内置模块"><a href="#初识-Node-js-与内置模块" class="headerlink" title="初识 Node.js 与内置模块"></a>初识 Node.js 与内置模块</h2><h3 id="1-fs-文件系统模块"><a href="#1-fs-文件系统模块" class="headerlink" title="1. fs 文件系统模块"></a>1. fs 文件系统模块</h3><h4 id="1-1-什么是-fs"><a href="#1-1-什么是-fs" class="headerlink" title="1.1 什么是 fs"></a>1.1 什么是 fs</h4><p>fs 模块是 Node.js 官方提供的，用来操作文件的模块。提供了一系列的方法和属性，用来满足用户对文件的操作需求</p>
+<ul>
+<li><code>fs.readFile()</code>: 用来读取指定文件的内容</li>
+<li><code>fs.writeFile()</code>: 用来向指定的文件写入内容</li>
+</ul>
+<p>如果要在 JS 代码中，使用 fs 模块来操作文件，需要使用如下方式导入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-读取指定文件的内容"><a href="#1-2-读取指定文件的内容" class="headerlink" title="1.2 读取指定文件的内容"></a>1.2 读取指定文件的内容</h4><p><strong><code>fs.readFile()</code>的语法格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.<span class="title function_">readFile</span>(path[, options], callback)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数1: 必选参数，字符串，表示文件的路径</li>
+<li>参数2: 可选参数，表示以什么编码格式来读取文件</li>
+<li>参数3: 必选参数，文件读取完成后，通过回调函数拿到读取的结果</li>
+</ul>
+<p><strong><code>fs.readFile()</code>的示例代码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 以 UTF-8 的编码格式, 读取指定文件内容，并打印 err 和 dataStr 的值</span></span><br><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line">fs.<span class="title function_">readFile</span>(<span class="string">&#x27;./11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>, <span class="keyword">function</span>(<span class="params">err, dataStr</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(dataStr);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>读取成功</p>
+<ul>
+<li>err: null</li>
+<li>dataStr: 文件内容</li>
+</ul>
+</li>
+<li><p>读取失败</p>
+<ul>
+<li>err: 错误对象</li>
+<li>dataStr: undefined</li>
+</ul>
+</li>
+</ul>
+<p><strong>判断文件是否读取成功</strong></p>
+<p>可以判断 err 对象是否为 null</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line">fs.<span class="title function_">readFile</span>(<span class="string">&#x27;./11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>, <span class="keyword">function</span>(<span class="params">err, dataStr</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;文件读取失败: &#x27;</span> + err.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;文件读取成功, 内容是: &#x27;</span> + dataStr);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="1-3-向指定文件写入内容"><a href="#1-3-向指定文件写入内容" class="headerlink" title="1.3 向指定文件写入内容"></a>1.3 向指定文件写入内容</h4><p><strong><code>fs.writeFile()</code>的语法格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fs.<span class="title function_">writeFile</span>(file, data[, options], callback)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数1: 必选参数，需要制定一个文件路径的字符串</li>
+<li>参数2: 必选参数，表示要写入的内容</li>
+<li>参数3: 可选参数，表示以什么编码格式来写入文件内容, 默认值是 utf8</li>
+<li>参数4: 必选参数，文件写入完成后的回调函数</li>
+</ul>
+<p><strong><code>fs.writeFile()</code>的示例代码</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line">fs.<span class="title function_">writeFile</span>(<span class="string">&#x27;./11.txt&#x27;</span>, <span class="string">&#x27;Hello Node.js&#x27;</span>, <span class="keyword">function</span>(<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>写入成功<ul>
+<li>err: null</li>
+</ul>
+</li>
+<li>写入失败<ul>
+<li>err: 错误对象</li>
+</ul>
+</li>
+</ul>
+<p><strong>判断文件是否写入成功</strong></p>
+<p>可以判断 err 对象是否为 null</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line">fs.<span class="title function_">writeFile</span>(<span class="string">&#x27;./11.txt&#x27;</span>, <span class="string">&#x27;Hello Node.js&#x27;</span>, <span class="keyword">function</span>(<span class="params">err</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(err) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;文件写入失败: &#x27;</span> + err.<span class="property">message</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;文件写入成功&#x27;</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="1-4-处理路径问题"><a href="#1-4-处理路径问题" class="headerlink" title="1.4 处理路径问题"></a>1.4 处理路径问题</h4><p>在使用 fs 模块操作文件时，如果提供的操作路径是以 ./ 或 ../ 开头的相对路径时，很容易出现路径动态拼接错误的问题</p>
+<ul>
+<li>原因：代码在运行时，会以<strong>执行 node 命令时所处的目录</strong>，动态拼接出被操作文件的完整路径</li>
+<li>解决：直接提供完整的路径<ul>
+<li><code>__dirname</code> 表示当前文件所处目录</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> fs = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>);</span><br><span class="line">fs.<span class="title function_">readFile</span>(__dirname + <span class="string">&#x27;/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>, <span class="keyword">function</span>(<span class="params">err, dataStr</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(dataStr);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="2-path-路径模块"><a href="#2-path-路径模块" class="headerlink" title="2. path 路径模块"></a>2. path 路径模块</h3><h4 id="2-1-什么是-path-路径模块"><a href="#2-1-什么是-path-路径模块" class="headerlink" title="2.1 什么是 path 路径模块"></a>2.1 什么是 path 路径模块</h4><p>path 模块是 Node.js 官方提供的，用来处理路径的模块。提供了一系列的方法和属性，用来满足用户对路径的处理需求</p>
+<ul>
+<li><code>path.join()</code>: 用来将多个路径片段拼接成一个完整的路径字符串</li>
+<li><code>path.basename()</code>: 用来从路径字符串中，将文件名解析出来</li>
+</ul>
+<p>使用如下方法导入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-路径拼接"><a href="#2-2-路径拼接" class="headerlink" title="2.2 路径拼接"></a>2.2 路径拼接</h4><p><strong><code>path.join()</code>的语法格式</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.<span class="title function_">join</span>([...paths])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数: …paths 字符串类型，路径片段的序列</li>
+<li>返回值: 字符串</li>
+</ul>
+<p><strong><code>path.join()</code>的代码示例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> pathStr = path.<span class="title function_">join</span>(<span class="string">&#x27;/a&#x27;</span>, <span class="string">&#x27;/b/c&#x27;</span>, <span class="string">&#x27;../&#x27;</span>, <span class="string">&#x27;./d&#x27;</span>, <span class="string">&#x27;e&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(pathStr); <span class="comment">// 输出 \a\b\d\e</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pathStr2 = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;./11.txt&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(pathStr2);</span><br></pre></td></tr></table></figure>
+<ul>
+<li>今后涉及到路径的拼接操作，使用 <code>path.join()</code>，不要直接使用 + 进行字符串的拼接</li>
+</ul>
+<h4 id="2-3-获取路径中的文件名"><a href="#2-3-获取路径中的文件名" class="headerlink" title="2.3 获取路径中的文件名"></a>2.3 获取路径中的文件名</h4><p><strong><code>path.basename()</code>的语法格式</strong></p>
+<p>使用 <code>path.basename()</code> 可以获取到路径中的最后一部分，常通过该方法获取路径中的文件名</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.<span class="title function_">basename</span>(path[, ext])</span><br></pre></td></tr></table></figure>
+<ul>
+<li>path: 必选参数，表示一个路径的字符串</li>
+<li>ext: 可选参数，表示文件扩展名的字符串</li>
+<li>返回值: 路径中的最后一部分</li>
+</ul>
+<p><strong><code>path.basename()</code>的代码示例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fpath = <span class="string">&#x27;/a/b/c/index.html&#x27;</span></span><br><span class="line"><span class="keyword">var</span> fullName = path.<span class="title function_">basename</span>(fpath)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(fullName) <span class="comment">// index.html</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> nameWithoutExt = path.<span class="title function_">basename</span>(fpath, <span class="string">&#x27;.html&#x27;</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(nameWithoutExt) <span class="comment">//index</span></span><br></pre></td></tr></table></figure>
+<h4 id="2-4-获取路径中的文件扩展名"><a href="#2-4-获取路径中的文件扩展名" class="headerlink" title="2.4 获取路径中的文件扩展名"></a>2.4 获取路径中的文件扩展名</h4><p><strong><code>path.extname()</code>的语法格式</strong></p>
+<p>使用 <code>path.extname()</code> 可以获取到路径中的扩展名部分</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">path.<span class="title function_">extname</span>(path)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>path: 必选参数，表示一个路径的字符串</li>
+<li>返回值: 扩展名字符串</li>
+</ul>
+<p><strong><code>path.extname()</code>的代码示例</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> fpath = <span class="string">&#x27;/a/b/c/index.html&#x27;</span></span><br><span class="line"><span class="keyword">const</span> fext = path.<span class="title function_">extname</span>(fpath)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(fext) <span class="comment">// .html</span></span><br></pre></td></tr></table></figure>
+<h3 id="3-http-模块"><a href="#3-http-模块" class="headerlink" title="3. http 模块"></a>3. http 模块</h3><h4 id="3-1-什么是-http-模块"><a href="#3-1-什么是-http-模块" class="headerlink" title="3.1 什么是 http 模块"></a>3.1 什么是 http 模块</h4><p>http 模块是 Node.js 官方提供的、用来创建 web 服务器的模块。通过 http 模块提供的 <code>http.createServer()</code> 方法，就能方便地把一台普通的电脑，变成一台 web 服务器，从而对外提供服务</p>
+<p>使用如下方法导入</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="3-2-创建基本-Web-服务器"><a href="#3-2-创建基本-Web-服务器" class="headerlink" title="3.2 创建基本 Web 服务器"></a>3.2 创建基本 Web 服务器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建 web 服务器实例</span></span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 为服务器实例绑定 request 事件，监听客户端的请求</span></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&#x27;request&#x27;</span>, <span class="keyword">function</span> (<span class="params">req, res</span>) &#123;</span><br><span class="line">    <span class="comment">// 只要有请求，就会触发 request 事件，从而调用这个事件处理函数</span></span><br><span class="line">    <span class="keyword">const</span> url = req.<span class="property">url</span></span><br><span class="line">    <span class="keyword">const</span> method = req.<span class="property">method</span></span><br><span class="line">    <span class="keyword">const</span> str = <span class="string">`Your request url is <span class="subst">$&#123;url&#125;</span>, and request method is <span class="subst">$&#123;method&#125;</span>`</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置 Content-Type 响应头，解决中文乱码的问题</span></span><br><span class="line">    res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/html; charset=utf-8&#x27;</span>)</span><br><span class="line">    <span class="comment">// 向客户端响应内容</span></span><br><span class="line">    res.<span class="title function_">end</span>(str)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用 .listen() 方法就能启动服务器</span></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">8080</span>, <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">	<span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><strong>req 请求对象</strong></p>
+<p>只要服务器接收到了客户端的请求，就会调用通过 <code>server.on()</code> 为服务器绑定的 request 事件处理函数</p>
+<p>如果想在事件处理函数中，访问与客户端相关的数据或属性，可以使用 req 对象</p>
+<p><strong>res 响应对象</strong></p>
+<p>在服务器的 request 事件处理函数中，访问与服务器相关的数据或属性，可以使用 req 对象</p>
+<h4 id="3-3-根据不同-url-响应不同内容"><a href="#3-3-根据不同-url-响应不同内容" class="headerlink" title="3.3 根据不同 url 响应不同内容"></a>3.3 根据不同 url 响应不同内容</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> http = <span class="built_in">require</span>(<span class="string">&#x27;http&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> server = http.<span class="title function_">createServer</span>()</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">on</span>(<span class="string">&#x27;request&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> url = req.<span class="property">url</span></span><br><span class="line">  <span class="comment">// 设置默认的响应内容为 404 Not found</span></span><br><span class="line">  <span class="keyword">let</span> content = <span class="string">&#x27;&lt;h1&gt;404 Not found!&lt;/h1&gt;&#x27;</span></span><br><span class="line">  <span class="comment">// 判断用户请求的是否为 / 或 /index.html 首页</span></span><br><span class="line">  <span class="comment">// 判断用户请求的是否为 /about.html 关于页面</span></span><br><span class="line">  <span class="keyword">if</span> (url === <span class="string">&#x27;/&#x27;</span> || url === <span class="string">&#x27;/index.html&#x27;</span>) &#123;</span><br><span class="line">    content = <span class="string">&#x27;&lt;h1&gt;首页&lt;/h1&gt;&#x27;</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (url === <span class="string">&#x27;/about.html&#x27;</span>) &#123;</span><br><span class="line">    content = <span class="string">&#x27;&lt;h1&gt;关于页面&lt;/h1&gt;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  res.<span class="title function_">setHeader</span>(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/html; charset=utf-8&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">end</span>(content)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">server.<span class="title function_">listen</span>(<span class="number">80</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;server running at http://127.0.0.1&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><h3 id="1-模块化的基本概念"><a href="#1-模块化的基本概念" class="headerlink" title="1. 模块化的基本概念"></a>1. 模块化的基本概念</h3><h4 id="1-1-什么是模块化"><a href="#1-1-什么是模块化" class="headerlink" title="1.1 什么是模块化"></a>1.1 什么是模块化</h4><ul>
+<li>模块化是指解决一个复杂问题时，自顶向下逐层把系统划分为若干模块的过程，模块是可组合、分解和更换的单元。</li>
+<li>编程领域中的模块化，就是遵守固定的规则，把一个大文件拆成独立并相互依赖的多个小模块</li>
+<li>模块化可提高代码的复用性和可维护性，实现按需加载。</li>
+</ul>
+<h4 id="1-2-模块化规范"><a href="#1-2-模块化规范" class="headerlink" title="1.2 模块化规范"></a>1.2 模块化规范</h4><ul>
+<li>模块化规范是对代码进行模块化拆分和组合时，需要遵守的规则<ul>
+<li>如使用何种语法格式引用模块和向外暴露成员</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Node-js-中的模块化"><a href="#2-Node-js-中的模块化" class="headerlink" title="2. Node.js 中的模块化"></a>2. Node.js 中的模块化</h3><h4 id="2-1-Node-js-中模块的分类"><a href="#2-1-Node-js-中模块的分类" class="headerlink" title="2.1 Node.js 中模块的分类"></a>2.1 Node.js 中模块的分类</h4><ul>
+<li>内置模块：由 Node.js 官方提供的，例如 fs, path, http 等</li>
+<li>自定义模块：用户创建的每个 .js 文件，都是自定义模块</li>
+<li>第三方模块：由第三方开发出来的模块，使用前需下载</li>
+</ul>
+<h4 id="2-2-加载模块"><a href="#2-2-加载模块" class="headerlink" title="2.2 加载模块"></a>2.2 加载模块</h4><ul>
+<li><code>require()</code> 方法，可以加载三类模块，只有加载自定义模块需要路径名(可以省略后缀名)<ul>
+<li>使用 <code>require()</code> 加载模块时，会执行被加载模块中的代码</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-3-模块作用域"><a href="#2-3-模块作用域" class="headerlink" title="2.3 模块作用域"></a>2.3 模块作用域</h4><ul>
+<li><p>和函数作用域类似，在自定义模块中定义的变量、方法等成员，只能在当前模块内被访问，这种模块级别的访问限制，叫做模块作用域</p>
+</li>
+<li><p>可以防止全局变量污染</p>
+</li>
+</ul>
+<h4 id="2-4-向外共享模块作用域中的成员"><a href="#2-4-向外共享模块作用域中的成员" class="headerlink" title="2.4 向外共享模块作用域中的成员"></a>2.4 向外共享模块作用域中的成员</h4><p><strong><code>module</code> 对象</strong></p>
+<ul>
+<li>每个 .js 自定义模块中都有一个 <code>module</code> 对象，它里面存储了和当前模块有关的信息</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Module <span class="punctuation">&#123;</span></span><br><span class="line">  id<span class="punctuation">:</span> &#x27;.&#x27;<span class="punctuation">,</span></span><br><span class="line">  path<span class="punctuation">:</span> &#x27;E<span class="punctuation">:</span>\\WorkSpace\\VSC\\nodejs&#x27;<span class="punctuation">,</span></span><br><span class="line">  exports<span class="punctuation">:</span> <span class="punctuation">&#123;</span><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  filename<span class="punctuation">:</span> &#x27;E<span class="punctuation">:</span>\\WorkSpace\\VSC\\nodejs\\a.js&#x27;<span class="punctuation">,</span></span><br><span class="line">  loaded<span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">  children<span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">  paths<span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    &#x27;E<span class="punctuation">:</span>\\WorkSpace\\VSC\\nodejs\\node_modules&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;E<span class="punctuation">:</span>\\WorkSpace\\VSC\\node_modules&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;E<span class="punctuation">:</span>\\WorkSpace\\node_modules&#x27;<span class="punctuation">,</span></span><br><span class="line">    &#x27;E<span class="punctuation">:</span>\\node_modules&#x27;</span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong><code>module.exports</code> 对象</strong></p>
+<ul>
+<li>在自定义模块中，可以使用 <code>module.exports</code> 对象，将模块内的成员共享出去，供外界使用。</li>
+<li>外界使用 <code>require()</code> 导入自定义模块时，得到的就是 <code>module.exports</code> 指向的对象。</li>
+<li>使用 <code>require()</code> 导入模块时，<strong>导入的结果永远以 <code>module.exports</code> 指向的对象为准</strong>。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 向 module.exports 对象上挂载属性和方法</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>.<span class="property">username</span> = <span class="string">&#x27;zs&#x27;</span>;</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span>.<span class="property">sayHello</span> = <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Hello!&#x27;</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><strong><code>exports</code> 对象</strong></p>
+<ul>
+<li>默认情况下，<code>exports</code> 和 <code>module.exports</code> 指向同一个对象。<strong>最终共享的结果，以 <code>module.exports</code> 指向的对象为准。</strong></li>
+</ul>
+<h4 id="2-5-Node-js-中的模块化规范"><a href="#2-5-Node-js-中的模块化规范" class="headerlink" title="2.5 Node.js 中的模块化规范"></a>2.5 Node.js 中的模块化规范</h4><p>Node.js 遵循了 CommonJS 模块化规范，CommonJS 规定了模块的特性和各模块之间如何互相依赖</p>
+<p><strong>CommonJS 模块化规范</strong></p>
+<ul>
+<li>每个模块内部，<code>module</code> 变量代表当前模块</li>
+<li><code>module</code> 变量是一个对象，<code>module.exports</code> 是对外的接口</li>
+<li>加载某个模块即加载该模块的 <code>module.exports</code> 属性，<code>require()</code> 用于加载模块</li>
+</ul>
+<h3 id="3-npm-与包"><a href="#3-npm-与包" class="headerlink" title="3. npm 与包"></a>3. npm 与包</h3><h4 id="3-1-包"><a href="#3-1-包" class="headerlink" title="3.1 包"></a>3.1 包</h4>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/12/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-7-%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2022-12-30 00:49:41
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Frontend/" title="Frontend">
+                        <b>#</b> Frontend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Frontend/Node-js/" title="Node.js">
+                        <b>#</b> Node.js
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Node-js"><span class="toc-text">Node.js</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E8%AF%86-Node-js-%E4%B8%8E%E5%86%85%E7%BD%AE%E6%A8%A1%E5%9D%97"><span class="toc-text">初识 Node.js 与内置模块</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-fs-%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9D%97"><span class="toc-text">1. fs 文件系统模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF-fs"><span class="toc-text">1.1 什么是 fs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E8%AF%BB%E5%8F%96%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E7%9A%84%E5%86%85%E5%AE%B9"><span class="toc-text">1.2 读取指定文件的内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E5%90%91%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%86%99%E5%85%A5%E5%86%85%E5%AE%B9"><span class="toc-text">1.3 向指定文件写入内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E5%A4%84%E7%90%86%E8%B7%AF%E5%BE%84%E9%97%AE%E9%A2%98"><span class="toc-text">1.4 处理路径问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-path-%E8%B7%AF%E5%BE%84%E6%A8%A1%E5%9D%97"><span class="toc-text">2. path 路径模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E4%BB%80%E4%B9%88%E6%98%AF-path-%E8%B7%AF%E5%BE%84%E6%A8%A1%E5%9D%97"><span class="toc-text">2.1 什么是 path 路径模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%B7%AF%E5%BE%84%E6%8B%BC%E6%8E%A5"><span class="toc-text">2.2 路径拼接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E8%8E%B7%E5%8F%96%E8%B7%AF%E5%BE%84%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E5%90%8D"><span class="toc-text">2.3 获取路径中的文件名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E8%8E%B7%E5%8F%96%E8%B7%AF%E5%BE%84%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E6%89%A9%E5%B1%95%E5%90%8D"><span class="toc-text">2.4 获取路径中的文件扩展名</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-http-%E6%A8%A1%E5%9D%97"><span class="toc-text">3. http 模块</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E4%BB%80%E4%B9%88%E6%98%AF-http-%E6%A8%A1%E5%9D%97"><span class="toc-text">3.1 什么是 http 模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E5%88%9B%E5%BB%BA%E5%9F%BA%E6%9C%AC-Web-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">3.2 创建基本 Web 服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E6%A0%B9%E6%8D%AE%E4%B8%8D%E5%90%8C-url-%E5%93%8D%E5%BA%94%E4%B8%8D%E5%90%8C%E5%86%85%E5%AE%B9"><span class="toc-text">3.3 根据不同 url 响应不同内容</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-text">模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">1. 模块化的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-text">1.1 什么是模块化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83"><span class="toc-text">1.2 模块化规范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Node-js-%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-text">2. Node.js 中的模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Node-js-%E4%B8%AD%E6%A8%A1%E5%9D%97%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">2.1 Node.js 中模块的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E5%8A%A0%E8%BD%BD%E6%A8%A1%E5%9D%97"><span class="toc-text">2.2 加载模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E6%A8%A1%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">2.3 模块作用域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E5%90%91%E5%A4%96%E5%85%B1%E4%BA%AB%E6%A8%A1%E5%9D%97%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%AD%E7%9A%84%E6%88%90%E5%91%98"><span class="toc-text">2.4 向外共享模块作用域中的成员</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-Node-js-%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96%E8%A7%84%E8%8C%83"><span class="toc-text">2.5 Node.js 中的模块化规范</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-npm-%E4%B8%8E%E5%8C%85"><span class="toc-text">3. npm 与包</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%8C%85"><span class="toc-text">3.1 包</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2022 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Node.js + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F30%2FNode-js%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/30/Node-js/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
