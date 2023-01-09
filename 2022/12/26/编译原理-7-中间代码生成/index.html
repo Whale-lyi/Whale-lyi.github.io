@@ -188,7 +188,7 @@
 <li>起始符号为第三段的 $P$</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226163911815.png" alt="image-20221226163911815" style="zoom:80%;" /></p>
-<h4 id="2-2-表达式的的中间代码翻译"><a href="#2-2-表达式的的中间代码翻译" class="headerlink" title="2.2 表达式的的中间代码翻译"></a>2.2 表达式的的中间代码翻译</h4><ul>
+<h4 id="2-2-表达式的中间代码翻译"><a href="#2-2-表达式的中间代码翻译" class="headerlink" title="2.2 表达式的中间代码翻译"></a>2.2 表达式的中间代码翻译</h4><ul>
 <li>综合属性 $\textcolor{green}{E.code}$: 中间代码</li>
 <li>综合属性 $\textcolor{blue}{E.addr}$: 变量名(包括临时变量)、常量</li>
 </ul>
@@ -209,7 +209,52 @@
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226171518951.png" alt="image-20221226171518951" style="zoom:80%;" /></p>
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230104195326682.png" alt="image-20230104195326682" style="zoom:80%;" /></p>
+<ul>
+<li>综合属性 $\textcolor{green}{L.array(.base)}$: 数组基地址(即，数组名)</li>
+<li>综合属性 $\textcolor{red}{L.addr}$: 偏移地址</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230104195549841.png" alt="image-20230104195549841" style="zoom:80%;" /></p>
+<ul>
+<li><p>eg: $c + a[i][j]$</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132058170.png" alt="image-20230108132058170" style="zoom:80%;" /></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://llvm.org/docs/GetElementPtr.html">GEP Instruction</a></p>
+<blockquote>
+<p>为什么要多一个 <code>i64 0</code>:</p>
+<ul>
+<li>%2 指向的是这一整个数组，如果直接对其偏移就会偏移 n 个数组大小的位置</li>
+<li>因此需要 i64 0，先对其解一层([0])</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>  <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132135329.png" alt="image-20230108132135329" style="zoom:80%;" /></p>
+<h4 id="2-4-控制流语句与布尔表达式的中间代码翻译"><a href="#2-4-控制流语句与布尔表达式的中间代码翻译" class="headerlink" title="2.4 控制流语句与布尔表达式的中间代码翻译"></a>2.4 控制流语句与布尔表达式的中间代码翻译</h4><p>继承属性 $\textcolor{blue}{B.true, B.f alse, S.next}$ 指明了<strong>控制流跳转目标</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132248288.png" alt="image-20230108132248288" style="zoom:80%;" /></p>
+<ul>
+<li>继承属性 $\textcolor{red}{S.next}$<ul>
+<li>$S.next$ 为语句 $S$ 指明了 “跳出” $S$ 的目标</li>
+<li>$P$ “知道” $S.next$ 在哪，会在 $S$ 后面添加标签</li>
+</ul>
+</li>
+<li>代表了表达式的翻译, 包括数组引用</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109214843035.png" alt="image-20230109214843035" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109215321211.png" alt="image-20230109215321211" style="zoom:80%;" /></p>
+<h5 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109215437475.png" alt="image-20230109215437475" style="zoom:80%;" /></p>
+<ul>
+<li><p>举例</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109220923761.png" alt="image-20230109220923761" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h5 id="if-else-语句"><a href="#if-else-语句" class="headerlink" title="if-else 语句"></a>if-else 语句</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109221547115.png" alt="image-20230109221547115" style="zoom:80%;" /></p>
+<ul>
+<li><p>举例</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109221603920.png" alt="image-20230109221603920" style="zoom:80%;" /></p>
+</li>
+</ul>
+<h5 id="while-语句"><a href="#while-语句" class="headerlink" title="while 语句"></a>while 语句</h5>
       </div>
       
         <div class="prev-or-next">
@@ -264,7 +309,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="toc-text">中间代码生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91%E4%B8%8E%E6%8E%A7%E5%88%B6%E6%B5%81%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-text">一、表达式的翻译与控制流的翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83"><span class="toc-text">1. 核心</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E5%A4%A7%E5%B1%80%E8%A7%82"><span class="toc-text">1.1 大局观</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%88%86%E5%B7%A5%E3%80%81%E5%90%88%E4%BD%9C"><span class="toc-text">1.2 分工、合作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-text">2. 表达式的翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E6%80%BB%E8%A7%88"><span class="toc-text">2.1 总览</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91"><span class="toc-text">2.2 表达式的的中间代码翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91"><span class="toc-text">2.3 数组引用的中间代码翻译</span></a></li></ol></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="toc-text">中间代码生成</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91%E4%B8%8E%E6%8E%A7%E5%88%B6%E6%B5%81%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-text">一、表达式的翻译与控制流的翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A0%B8%E5%BF%83"><span class="toc-text">1. 核心</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E5%A4%A7%E5%B1%80%E8%A7%82"><span class="toc-text">1.1 大局观</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%88%86%E5%B7%A5%E3%80%81%E5%90%88%E4%BD%9C"><span class="toc-text">1.2 分工、合作</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E7%BF%BB%E8%AF%91"><span class="toc-text">2. 表达式的翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E6%80%BB%E8%A7%88"><span class="toc-text">2.1 总览</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91"><span class="toc-text">2.2 表达式的中间代码翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E6%95%B0%E7%BB%84%E5%BC%95%E7%94%A8%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91"><span class="toc-text">2.3 数组引用的中间代码翻译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E6%8E%A7%E5%88%B6%E6%B5%81%E8%AF%AD%E5%8F%A5%E4%B8%8E%E5%B8%83%E5%B0%94%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%BF%BB%E8%AF%91"><span class="toc-text">2.4 控制流语句与布尔表达式的中间代码翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#if-%E8%AF%AD%E5%8F%A5"><span class="toc-text">if 语句</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#if-else-%E8%AF%AD%E5%8F%A5"><span class="toc-text">if-else 语句</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#while-%E8%AF%AD%E5%8F%A5"><span class="toc-text">while 语句</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
       
     </div>
   </div>
