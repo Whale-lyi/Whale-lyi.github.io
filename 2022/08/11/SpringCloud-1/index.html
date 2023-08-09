@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      SpringCloud(1) 服务注册中心 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">SpringCloud(1) 服务注册中心</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/SpringCloud/" title="SpringCloud">
+                    <b>#</b> SpringCloud
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="服务注册中心"><a href="#服务注册中心" class="headerlink" title="服务注册中心"></a>服务注册中心</h1><h2 id="1-Eureka"><a href="#1-Eureka" class="headerlink" title="1 Eureka"></a>1 Eureka</h2><h3 id="1-1-Eureka基础知识"><a href="#1-1-Eureka基础知识" class="headerlink" title="1.1 Eureka基础知识"></a>1.1 Eureka基础知识</h3><ul>
+<li>什么是服务治理<ul>
+<li>Spring Cloud封装了Netflix公司开发的Eureka模块来实现服务治理</li>
+<li>在传统的rpc远程调用框架中，管理每个服务与服务之间依赖关系比较复杂，管理比较复杂，所以需要使用服务治理，管理服务于服务之间依赖关系，可以实现服务调用、负载均衡、容错等，实现服务发现与注册。</li>
+</ul>
+</li>
+<li>什么是服务注册与发现<ul>
+<li>Eureka采用了CS的设计架构，Eureka Server作为服务注册功能的服务器，它是服务注册中心。而系统中的其他微服务，使用 Eureka 的客户端连接到Eureka Sever并维持心跳连接。这样系统的维护人员就可以通过Euleka Server来监控系统中各个微服务是否正常运行。</li>
+<li>在服务注册与发现中，有一个注册中心。当服务器启动的时候，会把当前自己服务器的信息比如服务地址通讯地址等以别名方式注册到注册中心上。另一方(消费者|服务提供者)，以该别名的方式去注册中心上获取到实际的服务通讯地址，然后再实现本地RPC调用RPC远程调用框架核心设计思想：在于注册中心，因为使用注册中心管理每个服务与服务之间的一个依赖关系(服务治理概念)。在任何rpc远程框架中，都会有一个注册中心(存放服务地址相关信息(接口地址))</li>
+</ul>
+</li>
+<li>包含两个组件<ul>
+<li>Eureka Server提供服务注册服务<ul>
+<li>各个微服务节点通过配置启动后，会在Eureka Server中进行注册，这样Eureka Server中的服务注册表中将会存储所有可用服务节点的信息，服务节点的信息可以在界面中直观看到。</li>
+</ul>
+</li>
+<li>Eureka Client通过注册中心进行访问<ul>
+<li>是一个Java客户端，用于简化Eureka Server的交互，客户端同时也具备一个内置的、使用轮询(round-robin)负载算法的负载均衡器。在应用启动后，将会向Eureka Server发送心跳(默认周期为30秒)。如果Eureka Server在多个心跳周期内没有接收到某个节点的心跳, Eureka Server将会从服务注册表中把这个服务节点移除(默认90秒)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-Eureka-Server端配置"><a href="#1-2-Eureka-Server端配置" class="headerlink" title="1.2 Eureka Server端配置"></a>1.2 Eureka Server端配置</h3><ol>
+<li><p>创建工程 cloud-eureka-server7001</p>
+</li>
+<li><p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-server<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>添加application.yml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">7001</span><br><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">localhost</span>  <span class="hljs-comment"># eureka服务端的实例名称</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment"># false表示不向注册中心注册自己</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-comment"># false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-comment"># 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://$&#123;eureka.instance.hostname&#125;:$&#123;server.port&#125;/eureka/</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>主启动</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaServer</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EurekaMain7001</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(EurekaMain7001.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>测试运行<code>EurekaMain7001</code>，浏览器输入<code>http://localhost:7001/</code>回车，会查看到Spring Eureka服务主页。</p>
+</li>
+</ol>
+<h3 id="1-3-Eureka-Client端配置"><a href="#1-3-Eureka-Client端配置" class="headerlink" title="1.3 Eureka Client端配置"></a>1.3 Eureka Client端配置</h3><ol>
+<li><p>修改工程 cloud-provider-payment8001</p>
+</li>
+<li><p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-eureka-client<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>添加application.yml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">8001</span><br>  <br><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">application:</span><br>    <span class="hljs-attr">name:</span> <span class="hljs-string">cloud-payment-service</span><br>    <br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment"># 表示是否将自己注册进EurekaServer 默认为true</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment"># 是否从EurekaServer抓取已有的注册信息, 默认为true。单点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://localhost:7001/eureka</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>主启动</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentMain8001</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(PaymentMain8001.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+<ul>
+<li><p>启动cloud-provider-payment8001和cloud-eureka-server7001工程。</p>
+</li>
+<li><p>浏览器输入 <a target="_blank" rel="noopener" href="http://localhost:7001/">http://localhost:7001/</a> 主页内的<strong>Instances currently registered with Eureka</strong>会显示cloud-provider-payment8001的配置文件application.yml设置的应用名<strong>cloud-payment-service</strong></p>
+</li>
+</ul>
+</li>
+<li><p>自我保护机制</p>
+<blockquote>
+<p>EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARELESSER THAN THRESHOLD AND HENCFT ARE NOT BEING EXPIRED JUST TO BE SAFE.</p>
+<p>紧急情况！EUREKA可能错误地声称实例在没有启动的情况下启动了。续订小于阈值，因此实例不会为了安全而过期。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="1-4-Eureka集群原理说明"><a href="#1-4-Eureka集群原理说明" class="headerlink" title="1.4 Eureka集群原理说明"></a>1.4 Eureka集群原理说明</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220727165105034.png" alt="image-20220727165105034"></p>
+<ul>
+<li>问题：微服务RPC远程服务调用最核心的是什么<ul>
+<li>高可用，试想你的注册中心只有一个，万一它出故障了，会导致整个微服务环境不可用。</li>
+</ul>
+</li>
+<li>解决办法：搭建Eureka注册中心集群，实现负载均衡+故障容错。<ul>
+<li><strong>互相注册，相互守望</strong>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-5-Eureka集群环境构建"><a href="#1-5-Eureka集群环境构建" class="headerlink" title="1.5 Eureka集群环境构建"></a>1.5 Eureka集群环境构建</h3><ul>
+<li><p>创建cloud-eureka-server7002工程，参考<strong>1.1.2</strong></p>
+</li>
+<li><p>找到C:\Windows\System32\drivers\etc路径下的hosts文件，修改映射配置添加进hosts文件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">127.0.0.1 eureka7001.com<br>127.0.0.1 eureka7002.com<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改cloud-eureka-server7001配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">7001</span><br><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">eureka7001.com</span> <span class="hljs-comment">#eureka服务端的实例名称</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span>     <span class="hljs-comment">#false表示不向注册中心注册自己。</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">false</span>     <span class="hljs-comment">#false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span><br>    <span class="hljs-attr">service-url:</span><br>    <span class="hljs-comment">#集群指向其它eureka</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://eureka7002.com:7002/eureka/</span><br>    <span class="hljs-comment">#单机就是7001自己</span><br>      <span class="hljs-comment">#defaultZone: http://eureka7001.com:7001/eureka/</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改cloud-eureka-server7002配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">server:</span><br>  <span class="hljs-attr">port:</span> <span class="hljs-number">7002</span><br><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">hostname:</span> <span class="hljs-string">eureka7002.com</span>  <span class="hljs-comment"># eureka服务端的实例名称</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment"># false表示不向注册中心注册自己</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-comment"># false表示自己端就是注册中心，我的职责就是维护服务实例，并不需要去检索服务</span><br>    <span class="hljs-attr">fetch-registry:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-comment"># 设置与Eureka Server交互的地址查询服务和注册服务都需要依赖这个地址</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://eureka7001.com:7001/eureka/</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>启动服务，访问eureka7001.com:7001与eureka7002.com:7002</p>
+</li>
+</ul>
+<h3 id="1-6-将微服务注册进Eureka集群"><a href="#1-6-将微服务注册进Eureka集群" class="headerlink" title="1.6 将微服务注册进Eureka集群"></a>1.6 将微服务注册进Eureka集群</h3><ul>
+<li><p>修改微服务application.yml</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#表示是否将自己注册进Eurekaserver默认为true。</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span><br>    <span class="hljs-attr">fetchRegistry:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://eureka7001.com:7001/eureka,</span> <span class="hljs-string">http://eureka7002.com:7002/eureka</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="1-7-支付微服务集群配置"><a href="#1-7-支付微服务集群配置" class="headerlink" title="1.7 支付微服务集群配置"></a>1.7 支付微服务集群配置</h3><ul>
+<li><p>构建cloud-provider-payment8002工程，参考cloud-provider-payment8001 (<strong>1.1.3</strong>)</p>
+</li>
+<li><p>修改8001&#x2F;8002的Controller，添加serverPort</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentController</span>&#123;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;server.port&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String serverPort;<span class="hljs-comment">//添加serverPort</span><br><br>    <span class="hljs-meta">@PostMapping(value = &quot;/payment/create&quot;)</span><br>    <span class="hljs-keyword">public</span> CommonResult <span class="hljs-title function_">create</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Payment payment)</span><br>    &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> paymentService.create(payment);<br>        log.info(<span class="hljs-string">&quot;*****插入结果：&quot;</span> + result);<br><br>        <span class="hljs-keyword">if</span>(result &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CommonResult</span>(<span class="hljs-number">200</span>, <span class="hljs-string">&quot;插入数据库成功,serverPort: &quot;</span> + serverPort, result);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CommonResult</span>(<span class="hljs-number">444</span>, <span class="hljs-string">&quot;插入数据库失败&quot;</span>, <span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>负载均衡</strong></p>
+<ul>
+<li><p>cloud-consumer-order80订单服务访问地址不能写死</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderController</span> &#123;<br><br>    <span class="hljs-comment">//public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">PAYMENT_URL</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://CLOUD-PAYMENT-SERVICE&quot;</span>; <span class="hljs-comment">//Eureka注册的服务名</span><br>    <br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>使用@LoadBalanced注解赋予RestTemplate负载均衡的能力</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ApplicationContextConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span> <span class="hljs-comment">//使用@LoadBalanced注解赋予RestTemplate负载均衡的能力</span><br>    <span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title function_">getRestTemplate</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>测试</p>
+<ul>
+<li><p>先要启动EurekaServer，7001&#x2F;7002服务</p>
+</li>
+<li><p>再要启动服务提供者provider，8001&#x2F;8002服务</p>
+</li>
+<li><p>浏览器输入 - <a target="_blank" rel="noopener" href="http://localhost/consumer/payment/get/31">http://localhost/consumer/payment/get/31</a></p>
+</li>
+<li><p><strong>结果：负载均衡效果达到，8001&#x2F;8002端口交替出现</strong></p>
+<p>Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号，且该服务还有负载功能。</p>
+</li>
+<li><p><strong>相互注册，相互守望</strong></p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220727165120848.png" alt="image-20220727165120848"></p>
+</li>
+</ul>
+<h3 id="1-8-actuator微服务信息完善"><a href="#1-8-actuator微服务信息完善" class="headerlink" title="1.8 actuator微服务信息完善"></a>1.8 actuator微服务信息完善</h3><ul>
+<li><p>主机名称：服务名称修改(也就是将IP地址，换成可读性高的名字)</p>
+<ul>
+<li><p>修改cloud-provider-payment8001，cloud-provider-payment8002的YML - eureka.instance.instance-id</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span> <span class="hljs-comment">#添加此处</span><br><br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8002</span> <span class="hljs-comment">#添加此处</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改之后eureka主页将显示payment8001，payment8002代替原来显示的IP地址。</p>
+</li>
+</ul>
+</li>
+<li><p>访问信息有IP信息提示，(就是将鼠标指针移至payment8001，payment8002名下，会有IP地址提示)</p>
+<ul>
+<li><p>修改部分 - YML - eureka.instance.prefer-ip-address</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span> <br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#添加此处</span><br>    <br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8002</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#添加此处</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-9-服务发现Discovery"><a href="#1-9-服务发现Discovery" class="headerlink" title="1.9 服务发现Discovery"></a>1.9 服务发现Discovery</h3><p>对于注册进eureka里面的微服务，可以通过服务发现来获得该服务的信息</p>
+<ul>
+<li><p>修改cloud-provider-payment8001的Controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentController</span>&#123;<br>	...<br>    <br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> DiscoveryClient discoveryClient;<br><br>    ...<br><br>    <span class="hljs-meta">@GetMapping(value = &quot;/payment/discovery&quot;)</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">discovery</span><span class="hljs-params">()</span><br>    &#123;<br>        List&lt;String&gt; services = discoveryClient.getServices();<br>        <span class="hljs-keyword">for</span> (String element : services) &#123;<br>            log.info(<span class="hljs-string">&quot;*****element: &quot;</span>+element);<br>        &#125;<br><br>        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="hljs-string">&quot;CLOUD-PAYMENT-SERVICE&quot;</span>);<br>        <span class="hljs-keyword">for</span> (ServiceInstance instance : instances) &#123;<br>            log.info(instance.getServiceId()+<span class="hljs-string">&quot;\t&quot;</span>+instance.getHost()+<span class="hljs-string">&quot;\t&quot;</span>+instance.getPort()+<span class="hljs-string">&quot;\t&quot;</span>+instance.getUri());<br>        &#125;<br><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.discoveryClient;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>8001主启动类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-meta">@EnableDiscoveryClient</span><span class="hljs-comment">//添加该注解</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentMain001</span> &#123;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(PaymentMain001.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>自测</p>
+<ul>
+<li>浏览器输入<a target="_blank" rel="noopener" href="http://localhost:8001/payment/discovery">http://localhost:8001/payment/discovery</a></li>
+</ul>
+</li>
+</ul>
+<h3 id="1-10-Eureka自我保护"><a href="#1-10-Eureka自我保护" class="headerlink" title="1.10 Eureka自我保护"></a>1.10 Eureka自我保护</h3><ul>
+<li><p><strong>概述</strong></p>
+<ul>
+<li><p>保护模式主要用于一组客户端和Eureka Server之间存在网络分区场景下的保护。一旦进入保护模式，Eureka Server将会尝试保护其服务注册表中的信息，不再删除服务注册表中的数据，也就是不会注销任何微服务。</p>
+</li>
+<li><p>如果在Eureka Server的首页看到以下这段提示，则说明Eureka进入了保护模式:</p>
+<blockquote>
+<p>EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THANTHRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUSTTO BE SAFE</p>
+</blockquote>
+</li>
+<li><p>一句话：某时刻某一个微服务不可用了，Eureka不会立刻清理，依旧会对该微服务的信息进行保存。</p>
+</li>
+<li><p>属于CAP里面的AP分支。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>为什么会产生Eureka自我保护机制?</strong></p>
+<ul>
+<li>为了EurekaClient可以正常运行，防止与EurekaServer网络不通情况下，EurekaServer不会立刻将EurekaClient服务剔除</li>
+</ul>
+</li>
+<li><p><strong>什么是自我保护模式?</strong></p>
+<ul>
+<li>默认情况下，如果EurekaServer在一定时间内没有接收到某个微服务实例的心跳，EurekaServer将会注销该实例(默认90秒)。但是当网络分区故障发生(延时、卡顿、拥挤)时，微服务与EurekaServer之间无法正常通信，以上行为可能变得非常危险了——因为微服务本身其实是健康的，此时本不应该注销这个微服务。Eureka通过“自我保护模式”来解决这个问题——当EurekaServer节点在短时间内丢失过多客户端时(可能发生了网络分区故障)，那么这个节点就会进入自我保护模式。</li>
+<li><strong>在自我保护模式中，Eureka Server会保护服务注册表中的信息，不再注销任何服务实例</strong>。</li>
+<li>它的设计哲学就是宁可保留错误的服务注册信息，也不盲目注销任何可能健康的服务实例。一句话讲解：<strong>好死不如赖活着</strong>。</li>
+<li>综上，自我保护模式是一种应对网络异常的安全保护措施。它的架构哲学是宁可同时保留所有微服务(健康的微服务和不健康的微服务都会保留)也不盲目注销任何健康的微服务。使用自我保护模式，可以让Eureka集群更加的健壮、稳定。</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-11-禁止Eureka自我保护"><a href="#1-11-禁止Eureka自我保护" class="headerlink" title="1.11 禁止Eureka自我保护"></a>1.11 禁止Eureka自我保护</h3><ul>
+<li><p>在eurekaServer端7001处设置关闭自我保护机制</p>
+</li>
+<li><p>默认自我保护机制是开启的，使用<code>eureka.server.enable-self-preservation = false</code>可以禁用自我保护模式</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">server:</span><br>    <span class="hljs-comment">#关闭自我保护机制，保证不可用服务被及时踢除</span><br>    <span class="hljs-attr">enable-self-preservation:</span> <span class="hljs-literal">false</span><br>    <span class="hljs-attr">eviction-interval-timer-in-ms:</span> <span class="hljs-number">2000</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>关闭效果：</p>
+<ul>
+<li><p>spring-eureka主页会显示出一句：</p>
+<blockquote>
+<p>THE SELF PRESERVATION MODE IS TURNED OFF. THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK&#x2F;OTHER PROBLEMS.</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>生产者客户端eureakeClient端8001</p>
+<ul>
+<li><p>默认</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">eureka.instance.lease-renewal-interval-in-seconds=30</span><br><span class="hljs-string">eureka.instance.lease-expiration-duration-in-seconds=90</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改为</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment">#心跳检测与续约时间</span><br>    <span class="hljs-comment">#开发时没置小些，保证服务关闭后注册中心能即使剔除服务</span><br>    <span class="hljs-comment">#Eureka客户端向服务端发送心跳的时间间隔，单位为秒(默认是30秒)</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">1</span><br>    <span class="hljs-comment">#Eureka服务端在收到最后一次心跳后等待时间上限，单位为秒(默认是90秒)，超时将剔除服务</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>测试</p>
+<ul>
+<li>7001和8001都配置完成</li>
+<li>先启动7001再启动8001</li>
+<li>先关闭8001，马上就被删除了</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-Zookeeper"><a href="#2-Zookeeper" class="headerlink" title="2 Zookeeper"></a>2 Zookeeper</h2><h2 id="3-Consul"><a href="#3-Consul" class="headerlink" title="3 Consul"></a>3 Consul</h2><h2 id="4-Nacos"><a href="#4-Nacos" class="headerlink" title="4 Nacos"></a>4 Nacos</h2>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/08/06/Kaptcha%E4%BD%BF%E7%94%A8%E7%AE%80%E4%BB%8B/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/SpringCloud/" title="SpringCloud">
+                        <b>#</b> SpringCloud
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/08/30/Redis/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83"><span class="toc-text">服务注册中心</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Eureka"><span class="toc-text">1 Eureka</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Eureka%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">1.1 Eureka基础知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Eureka-Server%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2 Eureka Server端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Eureka-Client%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="toc-text">1.3 Eureka Client端配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Eureka%E9%9B%86%E7%BE%A4%E5%8E%9F%E7%90%86%E8%AF%B4%E6%98%8E"><span class="toc-text">1.4 Eureka集群原理说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-Eureka%E9%9B%86%E7%BE%A4%E7%8E%AF%E5%A2%83%E6%9E%84%E5%BB%BA"><span class="toc-text">1.5 Eureka集群环境构建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E5%B0%86%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E8%BF%9BEureka%E9%9B%86%E7%BE%A4"><span class="toc-text">1.6 将微服务注册进Eureka集群</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E6%94%AF%E4%BB%98%E5%BE%AE%E6%9C%8D%E5%8A%A1%E9%9B%86%E7%BE%A4%E9%85%8D%E7%BD%AE"><span class="toc-text">1.7 支付微服务集群配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-actuator%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BF%A1%E6%81%AF%E5%AE%8C%E5%96%84"><span class="toc-text">1.8 actuator微服务信息完善</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0Discovery"><span class="toc-text">1.9 服务发现Discovery</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-10-Eureka%E8%87%AA%E6%88%91%E4%BF%9D%E6%8A%A4"><span class="toc-text">1.10 Eureka自我保护</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-11-%E7%A6%81%E6%AD%A2Eureka%E8%87%AA%E6%88%91%E4%BF%9D%E6%8A%A4"><span class="toc-text">1.11 禁止Eureka自我保护</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Zookeeper"><span class="toc-text">2 Zookeeper</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Consul"><span class="toc-text">3 Consul</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Nacos"><span class="toc-text">4 Nacos</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + SpringCloud(1)%20%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%AD%E5%BF%83 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F08%2F11%2FSpringCloud-1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/08/11/SpringCloud-1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

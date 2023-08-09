@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      云计算(1) 云计算概念 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">云计算(1) 云计算概念</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                    <b>#</b> 云计算
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="一、云计算概念"><a href="#一、云计算概念" class="headerlink" title="一、云计算概念"></a>一、云计算概念</h1><h2 id="1-云计算定义"><a href="#1-云计算定义" class="headerlink" title="1 云计算定义"></a>1 云计算定义</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928102058638.png" alt="image-20220928102058638"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928102121291.png" alt="image-20220928102121291"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928102135445.png" alt="image-20220928102135445"></p>
+<h2 id="2-计算模式的演进"><a href="#2-计算模式的演进" class="headerlink" title="2 计算模式的演进"></a>2 计算模式的演进</h2><p><strong>人类对计算的追求</strong>: <code>自动化、高性能、易使用</code></p>
+<p><strong>演进过程</strong>:</p>
+<p>   主机系统与集中计算: 仅规定了计费使用的模式，没有IT资源管理方面的考虑。</p>
+<p>-&gt; <code>效用计算</code>: 考虑购买主机成本高，将IT资源包装成可以度量的服务提供给用户。</p>
+<p>-&gt; 客户机&#x2F;服务器模式: (IBM: 设备放在IBM内部，通过网络远程使用)</p>
+<p>-&gt; 集群计算</p>
+<p>-&gt; <code>服务计算</code>(软件即服务SaaS): 将所有应用程序都作为服务提供，而不是购买软件。</p>
+<ul>
+<li>不同服务相对独立，松散耦合，随意组合。重点是服务发现。</li>
+</ul>
+<p>-&gt; 个人计算机与桌面计算</p>
+<p>-&gt; 分布式计算</p>
+<p>-&gt; 网格计算</p>
+<p>-&gt; <code>云计算</code>: “效用计算 + 服务计算”</p>
+<ul>
+<li><code>增强版的效用计算(不仅考虑计费，还考虑 IT 管理) + 更广泛的服务计算(不仅是软件，还包括基础设施和平台)</code></li>
+</ul>
+<p><strong>传统分布式计算系统</strong></p>
+<ul>
+<li>计算机集群: 将多个可信、静态的独立节点连接起来协作完成计算</li>
+<li>P2P网络: 每一个节点既是客户端也是服务器，提供部分系统资源</li>
+<li>计算网格: 将多个异构计算机动态、紧耦合地整合在一起完成计算任务</li>
+</ul>
+<p><strong>传统分布式系统的特点及问题</strong></p>
+<ul>
+<li>计算集群(计算抽象)<ul>
+<li>基本组件为计算节点、通信软件、网络接口卡</li>
+<li>集群应该合并多个系统镜像到一个单系统镜像，然而并没有</li>
+<li>依靠中间件实现单系统镜像的支持</li>
+<li>以单独计算机身份接入互联网</li>
+</ul>
+</li>
+<li>P2P系统(存储抽象)<ul>
+<li>节点是简单接入互联网的客户机，自治、自由加入和退出</li>
+<li>无中心协作或中心数据库；没有专用的物理互联网络</li>
+</ul>
+</li>
+<li>计算网格(接近”云”)<ul>
+<li>计算资源整合，一个集成的资源池，提供基础设施；类比电力网格</li>
+<li>节点包括：工作站、服务器、集群、超级计算机</li>
+<li>计算和数据网格、P2P网格</li>
+<li>太异构、用户管理、耗资源的协议、安全性、应用受限</li>
+</ul>
+</li>
+</ul>
+<p><strong>云计算基本想法</strong></p>
+<ul>
+<li>一种完美的分布式计算解决方案——对网格的优化<ul>
+<li>大量计算节点，同构可控</li>
+<li>专用内部网络</li>
+<li>通过互联网对外服务（公有云）</li>
+<li>全面虚拟化：计算、存储、网络、桌面</li>
+<li>集中管理：安全、高效</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928102556298.png" alt="image-20220928102556298"></p>
+<p><strong>云计算 vs. 网格计算</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928102623483.png" alt="image-20220928102623483"></p>
+<h2 id="3-云计算的发展与推动力"><a href="#3-云计算的发展与推动力" class="headerlink" title="3 云计算的发展与推动力"></a>3 云计算的发展与推动力</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028151806915.png" alt="image-20221028151806915"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029212704108.png" alt="image-20221029212704108"></p>
+<p><code>持续优化的动力：节能降耗、降低维护成本、提升资产安全、提升信息系统的容灾备份能力</code></p>
+<h2 id="4-云计算的特征与分类"><a href="#4-云计算的特征与分类" class="headerlink" title="4 云计算的特征与分类"></a>4 云计算的特征与分类</h2><h3 id="4-1-概念模型"><a href="#4-1-概念模型" class="headerlink" title="4.1 概念模型"></a>4.1 概念模型</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928103628210.png" alt="image-20220928103628210"></p>
+<h3 id="4-2-特征"><a href="#4-2-特征" class="headerlink" title="4.2 特征"></a>4.2 特征</h3><ul>
+<li>现实中云的特点：大、规模动态伸缩、边界是模糊的、飘忽不定，无法也无需确定具体位置</li>
+<li>Elastic Computing Cloud<ul>
+<li>亚马逊弹性计算云的成功</li>
+</ul>
+</li>
+<li>云计算的特点<ul>
+<li>超大规模——需求</li>
+<li>虚拟化——技术</li>
+<li>按需服务——商业模式</li>
+<li>通用</li>
+<li>高可伸缩</li>
+<li>极其廉价</li>
+<li>高可靠——要求</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3-云部署模型"><a href="#4-3-云部署模型" class="headerlink" title="4.3 云部署模型"></a>4.3 云部署模型</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928103759022.png" alt="image-20220928103759022"></p>
+<h3 id="4-4-云的服务模型"><a href="#4-4-云的服务模型" class="headerlink" title="4.4 云的服务模型"></a>4.4 云的服务模型</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928103844673.png" alt="image-20220928103844673"></p>
+<p><strong>IaaS</strong></p>
+<ul>
+<li>通过虚拟机方式对外提供计算和存储能力</li>
+<li>机器享有公网IP，多个虚拟机之间通过网络进行通信；也会有内部子网</li>
+<li>类似租用独立的计算机</li>
+<li>用户自行解决多台机器之间的协同问题</li>
+<li>优势<ul>
+<li>允许用户动态申请和释放资源</li>
+<li>按使用量计费</li>
+<li>更高的资源使用效率（节能环保）</li>
+</ul>
+</li>
+</ul>
+<p><strong>PaaS</strong></p>
+<ul>
+<li>提供用户应用程序的开发和运行环境，包括应用编程接口和运行平台等，支持应用从创建到运行整个生命周期需要的各种软硬件资源和工具。<ul>
+<li>经过封装的IT能力，或逻辑资源：数据库、文件系统和应用运行环境</li>
+<li>主要面向软件开发者（包括应用服务上）</li>
+</ul>
+</li>
+<li>PaaS自身负责资源的动态扩展和容错管理</li>
+<li>用户无需考虑节点间的配合问题</li>
+<li>用户自主权降低，需按照给定的编程环境和编程模型构建应用</li>
+<li>类似MPI (Message Passing Interface)编程<ul>
+<li>只适用于解决模型特定的计算问题</li>
+</ul>
+</li>
+</ul>
+<p><strong>SaaS</strong></p>
+<ul>
+<li>通过标准的Web浏览器获软件客户端访问云上的应用</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928104113819.png" alt="image-20220928104113819"></p>
+<h2 id="5-云计算相关的技术"><a href="#5-云计算相关的技术" class="headerlink" title="5 云计算相关的技术"></a>5 云计算相关的技术</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928104157857.png" alt="image-20220928104157857"></p>
+<h2 id="6-云计算三元认知论"><a href="#6-云计算三元认知论" class="headerlink" title="6 云计算三元认知论"></a>6 云计算三元认知论</h2><ul>
+<li>一种商业模式<ul>
+<li>一种全新的商业模式，从产品提供的服务类型看，而非技术角度</li>
+<li>区别于传统的”互联网服务”模式：在软件服务基础上提供平台和基础设施服务</li>
+<li>除了服务理念，还要有具体的实现机制；云平台就是具体体现，包括计算范式和实现方式</li>
+</ul>
+</li>
+<li>一种计算范式<ul>
+<li>理论层面的实现方式，偏向针对商业模式的体系结构设计</li>
+<li>云体逻辑结构：具体落地的云平台逻辑结构——物理结构就是云数据中心<ul>
+<li>计算+存储+通信</li>
+</ul>
+</li>
+<li>云栈逻辑结构：面向服务的云平台逻辑结构——物理结构就是管理系统的结构</li>
+<li>基础设施即服务，平台即服务，软件即服务</li>
+</ul>
+</li>
+<li>一种实现方式<ul>
+<li>数据中心+云平台管理系统</li>
+<li>软件定义数据中心：软件定义计算，软件定义存储，软件定义网络，软件定义安全</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-云计算的开源方法论"><a href="#7-云计算的开源方法论" class="headerlink" title="7 云计算的开源方法论"></a>7 云计算的开源方法论</h2><ul>
+<li><p>云计算时代，开源不仅是一种开放源代码的具体产品，更是一种方法论、一种构造大规模复杂软件的协作方式。</p>
+</li>
+<li><p>开源的可以是各行各业的技术或产品</p>
+</li>
+<li><p>开源软件 —— 一种版权持有人为任何人和任何目的提供学习、修改和分发权力，并公布源代码的计算机软件</p>
+<ol>
+<li>许可证不应限制任何个人或团体奖包含该开源软件的广义作品进行销售或赠予</li>
+<li>开源软件的程序必须包含源代码，必须允许发布源代码及以后的程序</li>
+<li>开源软件许可证必须允许修改和派生作品，并允许使用原有软件的许可条款发布他们</li>
+</ol>
+</li>
+<li><p>开源软件 vs. 自由软件 vs. 免费软件</p>
+<ul>
+<li>开源不一定自由，开源不一定免费，自由不一定免费；免费不一定开源，不一定自由</li>
+</ul>
+</li>
+</ul>
+<p><strong>价值和意义</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928104559253.png" alt="image-20220928104559253"></p>
+<h2 id="8-三个问题"><a href="#8-三个问题" class="headerlink" title="8 三个问题"></a>8 三个问题</h2><h3 id="8-1-发展阶段"><a href="#8-1-发展阶段" class="headerlink" title="8.1 发展阶段"></a>8.1 发展阶段</h3><p>Google Trends、国家重视程度、产业发展现状</p>
+<h3 id="8-2-云计算的优势"><a href="#8-2-云计算的优势" class="headerlink" title="8.2 云计算的优势"></a>8.2 云计算的优势</h3><ul>
+<li>经济性<ul>
+<li>能耗接近硬件成本；管理成本线性增长</li>
+</ul>
+</li>
+<li>可扩展性和可伸缩性<ul>
+<li>类似个人笔记本电脑的单个虚拟机</li>
+<li>组建超出想象的计算能力的集群<ul>
+<li>内存达到40万GB</li>
+<li>近似无上限的硬盘空间</li>
+<li>快速完成</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>虚拟化：模拟出符合用户需求的任何计算环境</li>
+<li>高可靠：多副本容错、计算节点同构可互换等措施</li>
+<li>管理简单：无需专职IT维护人员</li>
+<li>安全：专业的团队 + 严格的权限管理</li>
+</ul>
+<h3 id="8-3-大数据关系"><a href="#8-3-大数据关系" class="headerlink" title="8.3 大数据关系"></a>8.3 大数据关系</h3><ul>
+<li>海量数据或巨量数据，其规模巨大到无法通过目前主流的计算机系统在合理时间内获取、存储、管理、处理并提炼以帮助使用者决策。</li>
+<li>为什么会产生大数据？<ul>
+<li>数据产生方式的改变</li>
+<li>人类活动越来越依赖数据</li>
+<li>互联网+物联网：互联网用户，传感器，摄像头…</li>
+</ul>
+</li>
+<li>特征<ul>
+<li>3V：Volume(量大), Variety(多样), Velocity(快速)</li>
+<li>4V+1C：Value(低价值密度), Complexity(复杂：处理和分析难度大)</li>
+<li>5V：Volume, Variety, Velocity, Value, Veracity(真实)</li>
+</ul>
+</li>
+<li>大数据促进了云计算的产生，激发了云计算的潜力；云计算为大数据的收集、存储、加工和应用提供了更好的支持。<ul>
+<li>关系密切而多样</li>
+</ul>
+</li>
+</ul>
+<h2 id="9-难点、风险与挑战"><a href="#9-难点、风险与挑战" class="headerlink" title="9 难点、风险与挑战"></a>9 难点、风险与挑战</h2><h3 id="9-1-云计算技术难点"><a href="#9-1-云计算技术难点" class="headerlink" title="9.1 云计算技术难点"></a>9.1 云计算技术难点</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928105239558.png" alt="image-20220928105239558"></p>
+<h3 id="9-2-风险与挑战"><a href="#9-2-风险与挑战" class="headerlink" title="9.2 风险与挑战"></a>9.2 风险与挑战</h3><ul>
+<li>增加了安全漏洞<ul>
+<li>运程使用IT资源需要云用户将信任边界扩展到外部的云，建立这样的安全架构同时又不引入安全漏洞是非常困难的</li>
+<li>重叠的信任边界和不断增加的数据曝光为恶意的云用户提供了更多的攻击IT资源、窃取或破坏企业数据的机会</li>
+</ul>
+</li>
+<li>降低了运营管理控制<ul>
+<li>云用户对云资源的管理控制低于对企业内部IT资源的管理控制<ul>
+<li>云提供者可能不遵守它发布的云服务保证</li>
+<li>云用户和云提供者之间较长的地理距离可能需要更多的网络跳数，会带来延迟波动和带宽受限</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>云提供者之间有限的可移植性<ul>
+<li>由于缺乏行业标准，不同的云提供者提供的服务存在较大差异</li>
+</ul>
+</li>
+<li>多地区法规和法律问题<ul>
+<li>第三方云提供者通常选择造价较低、方便的地理位置建立数据中心，而云用户通常不会意识到所使用IT资源和自身数据所存放的位置</li>
+<li>某些云用户可能会遇到严重的法律问题<ul>
+<li>例如：英国法律规定，英国公民的个人数据只能留在英国境内</li>
+</ul>
+</li>
+<li>潜在的数据获得和公开<ul>
+<li>例如：某些国家的法律规定，某些类型的数据必须向某些政府机构或数据主体公开</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="9-3-缺陷与未来"><a href="#9-3-缺陷与未来" class="headerlink" title="9.3 缺陷与未来"></a>9.3 缺陷与未来</h3><ul>
+<li>虽然是最成功的商业计算模型，但不是完美的，仍有缺陷<ul>
+<li>从平台角度看—-没有统一的标准</li>
+<li>从计算角度看—-针对松耦合的数据处理</li>
+<li>从数据角度看—-管理和分析商业数据</li>
+<li>从资源集成角度看—-必须集中到云中</li>
+<li>从信息安全角度看—-暴露、丢失的风险</li>
+</ul>
+</li>
+<li>然而这些恰是网格的优势所在</li>
+<li>未来：云格计算—-结合的基准是SOA</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/20/6-S081-Lab-2-System-calls/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                        <b>#</b> 云计算
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-2-%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E5%BF%B5"><span class="toc-text">一、云计算概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BA%91%E8%AE%A1%E7%AE%97%E5%AE%9A%E4%B9%89"><span class="toc-text">1 云计算定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E6%A8%A1%E5%BC%8F%E7%9A%84%E6%BC%94%E8%BF%9B"><span class="toc-text">2 计算模式的演进</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E5%8F%91%E5%B1%95%E4%B8%8E%E6%8E%A8%E5%8A%A8%E5%8A%9B"><span class="toc-text">3 云计算的发展与推动力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E7%89%B9%E5%BE%81%E4%B8%8E%E5%88%86%E7%B1%BB"><span class="toc-text">4 云计算的特征与分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B"><span class="toc-text">4.1 概念模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%89%B9%E5%BE%81"><span class="toc-text">4.2 特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%BA%91%E9%83%A8%E7%BD%B2%E6%A8%A1%E5%9E%8B"><span class="toc-text">4.3 云部署模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E4%BA%91%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">4.4 云的服务模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9B%B8%E5%85%B3%E7%9A%84%E6%8A%80%E6%9C%AF"><span class="toc-text">5 云计算相关的技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%BA%91%E8%AE%A1%E7%AE%97%E4%B8%89%E5%85%83%E8%AE%A4%E7%9F%A5%E8%AE%BA"><span class="toc-text">6 云计算三元认知论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E5%BC%80%E6%BA%90%E6%96%B9%E6%B3%95%E8%AE%BA"><span class="toc-text">7 云计算的开源方法论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">8 三个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%8F%91%E5%B1%95%E9%98%B6%E6%AE%B5"><span class="toc-text">8.1 发展阶段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E4%BA%91%E8%AE%A1%E7%AE%97%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-text">8.2 云计算的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%85%B3%E7%B3%BB"><span class="toc-text">8.3 大数据关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%9A%BE%E7%82%B9%E3%80%81%E9%A3%8E%E9%99%A9%E4%B8%8E%E6%8C%91%E6%88%98"><span class="toc-text">9 难点、风险与挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E4%BA%91%E8%AE%A1%E7%AE%97%E6%8A%80%E6%9C%AF%E9%9A%BE%E7%82%B9"><span class="toc-text">9.1 云计算技术难点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E9%A3%8E%E9%99%A9%E4%B8%8E%E6%8C%91%E6%88%98"><span class="toc-text">9.2 风险与挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E7%BC%BA%E9%99%B7%E4%B8%8E%E6%9C%AA%E6%9D%A5"><span class="toc-text">9.3 缺陷与未来</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%91%E8%AE%A1%E7%AE%97(1)%20%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E5%BF%B5 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F29%2F%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597-1-%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597%25E6%25A6%2582%25E5%25BF%25B5%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-1-%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E5%BF%B5/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

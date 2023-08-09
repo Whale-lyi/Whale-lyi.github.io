@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      编译原理(6) LLVM IR 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">编译原理(6) LLVM IR</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                    <b>#</b> 编译原理
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="LLVM-IR"><a href="#LLVM-IR" class="headerlink" title="LLVM IR"></a>LLVM IR</h1><h2 id="一、LLVM-IR-简介"><a href="#一、LLVM-IR-简介" class="headerlink" title="一、LLVM IR 简介"></a>一、LLVM IR 简介</h2><h3 id="1-LLVM"><a href="#1-LLVM" class="headerlink" title="1. LLVM"></a>1. LLVM</h3><blockquote>
+<p>基础设施而非编译器</p>
+<p>目标: 模块化，可重用</p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221222200423196.png" alt="image-20221222200423196" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221222200437641.png" alt="image-20221222200437641" style="zoom:80%;" />
+
+<ul>
+<li>包含范围(黄色)</li>
+<li>Clang 为 LLVM 子项目，狭义上的 LLVM 并不包含 Clang</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223001148768.png" alt="image-20221223001148768" style="zoom:80%;" />
+
+<h3 id="2-Clang"><a href="#2-Clang" class="headerlink" title="2. Clang"></a>2. Clang</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223001849775.png" alt="image-20221223001849775" style="zoom:80%;" />
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 和 GCC 类似，直接编译为可执行文件</span><br>clang .\hello.c -o hello<br><span class="hljs-comment"># -ast-dump 得到抽象语法树</span><br>clang -Xclang -ast-dump -c hello.c<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-IR"><a href="#3-IR" class="headerlink" title="3. IR"></a>3. IR</h3><h4 id="3-1-IR"><a href="#3-1-IR" class="headerlink" title="3.1 IR"></a>3.1 IR</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219162837400.png" alt="image-20221219162837400" style="zoom:80%;" />
+
+<p>IR: Intermediate Representation(中间表示)</p>
+<p>LLVM IR: <strong>带有类型的</strong>、介于高级程序设计语言与汇编语言之间</p>
+<table>
+<thead>
+<tr>
+<th>组成</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Module</td>
+<td>IR 的基本单位，每个 Module 对应一个 .c 文件</td>
+</tr>
+<tr>
+<td>Function &#x2F; Global variables</td>
+<td>每个 Module 中有若干函数与全局变量</td>
+</tr>
+<tr>
+<td>Basic Block</td>
+<td>基本块，由若干指令构成。但是<strong>除了最后一条指令</strong>(返回或跳转到其他基本块)，全部都是<strong>顺序执行指令</strong>，不能是分支或跳转</td>
+</tr>
+</tbody></table>
+<h4 id="3-2-LLVM-IR"><a href="#3-2-LLVM-IR" class="headerlink" title="3.2 LLVM IR"></a>3.2 LLVM IR</h4><p><strong>示例</strong></p>
+<h5 id="opt0"><a href="#opt0" class="headerlink" title="opt0"></a>opt0</h5><ul>
+<li><code>factorial0.c</code></li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223164427023.png" alt="image-20221223164427023" style="zoom:80%;" />
+
+<ul>
+<li><p><code>clang -S -emit-llvm factorial0.c -o f0-opt0.ll</code></p>
+<blockquote>
+<p>-S: 生成的中间表示是人类可阅读的</p>
+<p>-emit-llvm: 生成中间代码就可以停止</p>
+</blockquote>
+</li>
+<li><p>f0-opt0.ll</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223164448062.png" alt="image-20221223164448062" style="zoom:80%;" />
+
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>;</td>
+<td>注释 <code>;xxx</code></td>
+</tr>
+<tr>
+<td>optnone</td>
+<td>没有优化</td>
+</tr>
+<tr>
+<td>declare</td>
+<td>声明函数</td>
+</tr>
+<tr>
+<td>define</td>
+<td>定义函数</td>
+</tr>
+<tr>
+<td>@</td>
+<td>全局符号(全局变量&#x2F;函数名) <code>@main</code></td>
+</tr>
+<tr>
+<td>%</td>
+<td>局部变量 <code>%</code></td>
+</tr>
+<tr>
+<td>i32&#x2F;i8</td>
+<td>32位&#x2F;8位整型, 类型信息, llvm是强类型</td>
+</tr>
+<tr>
+<td>*</td>
+<td>指针, <code>i32*</code></td>
+</tr>
+<tr>
+<td>icmp</td>
+<td>整数间的比较</td>
+</tr>
+<tr>
+<td>alloca</td>
+<td>分配空间，返回的是指针, 如 i32*</td>
+</tr>
+<tr>
+<td>align n</td>
+<td>n字节对齐, <code>align 4</code></td>
+</tr>
+<tr>
+<td>store</td>
+<td>存储数据</td>
+</tr>
+<tr>
+<td>call</td>
+<td>调用函数</td>
+</tr>
+<tr>
+<td>zext</td>
+<td>扩展</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>三地址码(TAC: Three-Address Code, 也称三地址指令)</p>
+<ul>
+<li>LLVM 所有指令操作数都小于等于3</li>
+<li><code>mul</code>: 两个操作数 + 一个存结果的虚拟寄存器</li>
+</ul>
+<p>静态单赋值(SSA: Static Single Assignment)</p>
+<ul>
+<li>每一个变量都只允许定义一次</li>
+</ul>
+</blockquote>
+<h5 id="opt1"><a href="#opt1" class="headerlink" title="opt1"></a>opt1</h5><ul>
+<li><p><code>clang -S -emit-llvm factorial0.c -o f0-opt1.ll -O1 -g0</code></p>
+<blockquote>
+<p>-o1: 进行优化</p>
+<p>-g0: 去掉 debug 相关信息</p>
+</blockquote>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223180457115.png" alt="image-20221223180457115" style="zoom:80%;" />
+
+<ul>
+<li>可以看到 <code>alloca, store</code> 部分代码被删去<ul>
+<li>解释一: 函数参数没有用到</li>
+<li><strong>解释二</strong>: <code>alloca, store</code> 是内存操作(memory), 其他则是虚拟寄存器操作(register), 使用 <code>-o1</code> 往往会<strong>将内存操作优化掉</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-SSA"><a href="#4-SSA" class="headerlink" title="4. SSA"></a>4. SSA</h3><h4 id="4-1-phi-函数"><a href="#4-1-phi-函数" class="headerlink" title="4.1 $\phi$ 函数"></a>4.1 $\phi$ 函数</h4><blockquote>
+<p>上面的例子都是顺序执行代码，如果遇到分支语句如何满足 SSA</p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223181451471.png" alt="image-20221223181451471" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223211226055.png" alt="image-20221223211226055" style="zoom:80%;" />
+
+<blockquote>
+<p>$\phi$ 函数在 LLVM IR 中是一种高级的指令(抽象的), 不对应于具体的机器指令(没有机器指令可以实现)</p>
+<p>通常通过分配给一个寄存器或存储到一个公共堆栈内存位置来完成</p>
+</blockquote>
+<h4 id="4-2-CFG"><a href="#4-2-CFG" class="headerlink" title="4.2 CFG"></a>4.2 CFG</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223211527170.png" alt="image-20221223211527170" style="zoom:80%;" />
+
+<blockquote>
+<p>系统调用图只显示了函数间的调用关系, 我们也想了解函数内部的控制流信息</p>
+<ul>
+<li>使用控制流图</li>
+</ul>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223211912503.png" alt="image-20221223211912503" style="zoom:80%;" />
+
+<h4 id="4-3-举例-递归"><a href="#4-3-举例-递归" class="headerlink" title="4.3 举例(递归)"></a>4.3 举例(递归)</h4><h5 id="opt0-1"><a href="#opt0-1" class="headerlink" title="opt0"></a>opt0</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223212142241.png" alt="image-20221223212142241" style="zoom:80%;" />
+
+<blockquote>
+<p>factorial 函数翻译后被分为 4 段(基本块)</p>
+<p>即, 每个<strong>函数</strong>被分为若干<strong>基本块</strong></p>
+</blockquote>
+<p>上方代码之所以没有用到 $\phi$ 函数, 是因为使用了 <code>store load</code> 指令</p>
+<ul>
+<li>基本块最后一条指令(结束指令)</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223212902324.png" alt="image-20221223212902324" style="zoom:80%;" />
+
+<h5 id="opt1-1"><a href="#opt1-1" class="headerlink" title="opt1"></a>opt1</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223213036680.png" alt="image-20221223213036680" style="zoom:80%;" />
+
+<p>优化后不使用 <code>store load</code> 内存操作, 需要使用 $\phi$ 函数</p>
+<p><a target="_blank" rel="noopener" href="https://mapping-high-level-constructs-to-llvm-ir.readthedocs.io/en/latest/control-structures/ssa-phi.html">Single-Static Assignment Form and PHI(How to implement it?)</a></p>
+<h5 id="opt3"><a href="#opt3" class="headerlink" title="opt3"></a>opt3</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223214428140.png" alt="image-20221223214428140" style="zoom:80%;" />
+
+<h4 id="4-4-举例-循环"><a href="#4-4-举例-循环" class="headerlink" title="4.4 举例(循环)"></a>4.4 举例(循环)</h4><h5 id="opt0-2"><a href="#opt0-2" class="headerlink" title="opt0"></a>opt0</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223214627570.png" alt="image-20221223214627570" style="zoom:80%;" />
+
+<h5 id="opt1-2"><a href="#opt1-2" class="headerlink" title="opt1"></a>opt1</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223214917187.png" alt="image-20221223214917187" style="zoom:80%;" />
+
+<blockquote>
+<p>这里做了一个优化, 将判断条件取反, 即判断 val 是否小于 2</p>
+<p>为了符合 SSA, 需要对 i 与 temp 进行选择, 分别对应 %6 %7 </p>
+</blockquote>
+<h5 id="opt3-1"><a href="#opt3-1" class="headerlink" title="opt3"></a>opt3</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223215450428.png" alt="image-20221223215450428" style="zoom:80%;" />
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/12/09/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-7-Node-js/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                        <b>#</b> 编译原理
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/12/26/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-7-%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LLVM-IR"><span class="toc-text">LLVM IR</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81LLVM-IR-%E7%AE%80%E4%BB%8B"><span class="toc-text">一、LLVM IR 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-LLVM"><span class="toc-text">1. LLVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Clang"><span class="toc-text">2. Clang</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-IR"><span class="toc-text">3. IR</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-IR"><span class="toc-text">3.1 IR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-LLVM-IR"><span class="toc-text">3.2 LLVM IR</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#opt0"><span class="toc-text">opt0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt1"><span class="toc-text">opt1</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-SSA"><span class="toc-text">4. SSA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-phi-%E5%87%BD%E6%95%B0"><span class="toc-text">4.1 $\phi$ 函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-CFG"><span class="toc-text">4.2 CFG</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E4%B8%BE%E4%BE%8B-%E9%80%92%E5%BD%92"><span class="toc-text">4.3 举例(递归)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#opt0-1"><span class="toc-text">opt0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt1-1"><span class="toc-text">opt1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt3"><span class="toc-text">opt3</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-%E4%B8%BE%E4%BE%8B-%E5%BE%AA%E7%8E%AF"><span class="toc-text">4.4 举例(循环)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#opt0-2"><span class="toc-text">opt0</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt1-2"><span class="toc-text">opt1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#opt3-1"><span class="toc-text">opt3</span></a></li></ol></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(6)%20LLVM%20IR + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F19%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-6-LLVM-IR%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6-LLVM-IR/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

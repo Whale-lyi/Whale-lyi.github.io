@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Web前端开发(1) Internet and WWW 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Web前端开发(1) Internet and WWW</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                    <b>#</b> Web前端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="0-Introduction"><a href="#0-Introduction" class="headerlink" title="0-Introduction"></a>0-Introduction</h1><h2 id="1-浏览器Browsers"><a href="#1-浏览器Browsers" class="headerlink" title="1 浏览器Browsers"></a>1 浏览器Browsers</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><h4 id="1-1-1-拥抱不确定性"><a href="#1-1-1-拥抱不确定性" class="headerlink" title="1.1.1 拥抱不确定性"></a>1.1.1 拥抱不确定性</h4><ul>
+<li>十年前：微软垄断下严格限定的边界</li>
+<li>现在：宽松，比如响应式web设计、渐进渐强</li>
+<li>放弃所谓绝对的解决方案：不同设备，不同的浏览器，不同规格的屏幕访问</li>
+</ul>
+<h4 id="1-1-2-从微软独家垄断到今天百花齐放"><a href="#1-1-2-从微软独家垄断到今天百花齐放" class="headerlink" title="1.1.2 从微软独家垄断到今天百花齐放"></a>1.1.2 从微软独家垄断到今天百花齐放</h4><ul>
+<li>第一次浏览器大战：1995-1999</li>
+<li>后.com大战：2000-2005，IE占据了90%左右的市场份额</li>
+<li>今天：Chrome, Firefox，Opera，Safari，IE；移动设备的大规模增长；浏览器版本更新频率极快</li>
+</ul>
+<h4 id="1-1-3-我们现在所处的位置"><a href="#1-1-3-我们现在所处的位置" class="headerlink" title="1.1.3 我们现在所处的位置"></a>1.1.3 我们现在所处的位置</h4><ul>
+<li>可变因素：屏幕分辨率 像素深度 浏览器兼容性 屏幕大小 人机交互输入框类型…</li>
+</ul>
+<h3 id="1-2-浏览器"><a href="#1-2-浏览器" class="headerlink" title="1.2 浏览器"></a>1.2 浏览器</h3><ul>
+<li>四大派系，核心是布局引擎，用以决定文档和样式如何渲染<ul>
+<li>微软的Trident，IE的内核</li>
+<li>基于开源项目WebKit的浏览器</li>
+<li>基于Blink开源项目的浏览器<ul>
+<li>2013从WebKit中派生，是最新版的Chrome和Opera的布局引擎</li>
+</ul>
+</li>
+<li>Mozilla公司的Gecko，Firefox的内核</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-JavaScript引擎"><a href="#1-3-JavaScript引擎" class="headerlink" title="1.3 JavaScript引擎"></a>1.3 JavaScript引擎</h3><ul>
+<li>Chakra：IE</li>
+<li>SquirrelFish Extreme／Nitro：Webkit</li>
+<li>V8：Chrome和Opera<ul>
+<li>第⼀个在执行前将JS编译为原生代码的JS引擎</li>
+</ul>
+</li>
+<li>SpiderMonkey：Firefox</li>
+</ul>
+<h3 id="1-4-因此"><a href="#1-4-因此" class="headerlink" title="1.4 因此"></a>1.4 因此</h3><ul>
+<li>测试尽可能多的浏览器是必要</li>
+<li>然而为特定浏览器或浏览器版本开发或写特定的代码，很少奏效。这是⼀个过于庞大的清单</li>
+<li>需要考虑的是特性，特性检测</li>
+</ul>
+<h1 id="1-1-Internet"><a href="#1-1-Internet" class="headerlink" title="1.1-Internet"></a>1.1-Internet</h1><h2 id="1-互联网"><a href="#1-互联网" class="headerlink" title="1 互联网"></a>1 互联网</h2><ul>
+<li>互联网与万维网有何不同<ul>
+<li>WWW &#x3D; HTML* + HTTP(S)</li>
+<li>包含CSS，JavaScript，以及其他浏览器内容</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-1-简要发展史"><a href="#1-1-简要发展史" class="headerlink" title="1.1 简要发展史"></a>1.1 简要发展史</h3><ul>
+<li>万维网，1989-91由Tim Berners-Lee创造：This is for Everyone</li>
+<li>发布流行的浏览器：Netscape 1994, IE 1995</li>
+<li>Amazon.com 1995 -&gt; Google 1996 -&gt; .COM 2000-2002 -&gt; web2.0 2004 -&gt; web3.0 2016</li>
+</ul>
+<h3 id="1-2-相关组织"><a href="#1-2-相关组织" class="headerlink" title="1.2 相关组织"></a>1.2 相关组织</h3><ul>
+<li>Internet Engineering Task Force (IETF)：互联网协议标准</li>
+<li>Internet Corporation for Assigned Names and Numbers (ICANN)：顶级域名</li>
+<li>World Wide Web Consortium (W3C)：Web标准</li>
+</ul>
+<h2 id="2-常用协议"><a href="#2-常用协议" class="headerlink" title="2 常用协议"></a>2 常用协议</h2><h3 id="2-1-网际互连协议-IP"><a href="#2-1-网际互连协议-IP" class="headerlink" title="2.1 网际互连协议(IP)"></a>2.1 网际互连协议(IP)</h3><ul>
+<li>IPv4</li>
+<li>IPv6</li>
+</ul>
+<h3 id="2-2-传输控制协议-TCP"><a href="#2-2-传输控制协议-TCP" class="headerlink" title="2.2 传输控制协议(TCP)"></a>2.2 传输控制协议(TCP)</h3><ul>
+<li>是⼀种面向连接的、可靠的、基于字节流的传输层通信协议，由IETF的RFC 793定义。</li>
+<li>命令：netstat (Windows)、CurrPorts</li>
+</ul>
+<h3 id="2-3-用户数据报协议-UDP"><a href="#2-3-用户数据报协议-UDP" class="headerlink" title="2.3 用户数据报协议(UDP)"></a>2.3 用户数据报协议(UDP)</h3><ul>
+<li>User Data Protocol，是传输层协议</li>
+<li>⼀个简单的面向数据报的传输层协议，提供的是非面向连接的、不可靠的数据流传输</li>
+<li>没有超时重发等机制，故而传输速度很快</li>
+</ul>
+<h3 id="2-4-域名系统-DNS"><a href="#2-4-域名系统-DNS" class="headerlink" title="2.4 域名系统(DNS)"></a>2.4 域名系统(DNS)</h3><ul>
+<li>DNS是域名系统,Domain Name System的缩写</li>
+<li>因特网上作为域名和IP地址互相映射的⼀个分布式数据库</li>
+<li>DNS系统的作用<ul>
+<li>正向解析：根据主机名称(域名)查找对应的IP地址</li>
+<li>反向解析：根据IP地址查找对应的主机域名</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-1-DNS之前…"><a href="#2-4-1-DNS之前…" class="headerlink" title="2.4.1 DNS之前…"></a>2.4.1 DNS之前…</h4><p>… hosts.txt文件</p>
+<ul>
+<li>DNS 之前(直到1985), name-to-IP地址是通过使用FTP从中央服务器下载单个文件(hosts.txt)完成的<ul>
+<li>hosts.txt中的名称不是结构化的</li>
+<li>hosts.txt文件在大多数操作系统上仍然可以⼯作，可用于定义本地名称<ul>
+<li>Windows: C:\Windows\system32\drivers\etc\hosts</li>
+<li>Mac: &#x2F;private&#x2F;etc&#x2F;hosts</li>
+<li>Linux: &#x2F;etc&#x2F;hosts</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-2-解析器与名称服务器"><a href="#2-4-2-解析器与名称服务器" class="headerlink" title="2.4.2 解析器与名称服务器"></a>2.4.2 解析器与名称服务器</h4><ul>
+<li>主机上的应用程序通过DNS客户端访问域名系统，称为解析器</li>
+<li>解析器联系DNS服务器，称为名称服务器</li>
+<li>DNS服务器返回IP地址给解析器，解析器将IP地址传递给应用程序</li>
+<li>反向查找也可以，即查找给定IP地址的主机名</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233154115.png" alt="image-20221114233154115" style="zoom:80%;" />
+
+<h4 id="2-4-3-DNS名称层次结构"><a href="#2-4-3-DNS名称层次结构" class="headerlink" title="2.4.3 DNS名称层次结构"></a>2.4.3 DNS名称层次结构</h4><ul>
+<li><p>DNS层次结构可以用树表示</p>
+</li>
+<li><p>根域名和顶级域名由互联网中央名称注册机构(ICANN)管理。</p>
+</li>
+<li><p>在顶级域名(TLD，TopLevel Domain)之下，名称空间的管理被委派给不同的组织</p>
+</li>
+<li><p>每个组织都可以进⼀步授权</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233239657.png" alt="image-20221114233239657"></p>
+<h4 id="2-4-4-域名"><a href="#2-4-4-域名" class="headerlink" title="2.4.4 域名"></a>2.4.4 域名</h4><ul>
+<li><p>主机和DNS域名根据其在域名树中的位置命名</p>
+</li>
+<li><p>DNS域名树中的每个节点都可以通过唯⼀的全限定域名(FQDN)来标识。FQDN给出了在DNS树中的位置。</p>
+<ul>
+<li>software.nju.edu.cn or software.nju.edu.cn.</li>
+</ul>
+</li>
+<li><p>⼀个FQDN由标签(“software”，“nju”， “edu”， “cn”)组成，标签之间用句号(“.”)隔开。</p>
+<ul>
+<li>结尾可以有⼀个句号(“.”)。</li>
+<li>每个标签最多可以有63个字符</li>
+<li>FQDN包含字符、数字和破折号(“ - “)</li>
+<li>fFQDN不区分大小写</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-5-名称服务器的层次结构"><a href="#2-4-5-名称服务器的层次结构" class="headerlink" title="2.4.5 名称服务器的层次结构"></a>2.4.5 名称服务器的层次结构</h4><ul>
+<li><p>层次名称空间的解析是由层次化的名称服务器完成的</p>
+</li>
+<li><p>每个服务器负责(授权)DNS名称空间的⼀个连续部分，称为区域。</p>
+</li>
+<li><p>区域是子树的⼀部分</p>
+</li>
+<li><p>DNS服务器对其所属区域内的主机进行应答</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233847492.png" alt="image-20221114233847492" style="zoom:80%;" />
+
+<h4 id="2-4-6-主名称服务器和辅名称服务器"><a href="#2-4-6-主名称服务器和辅名称服务器" class="headerlink" title="2.4.6 主名称服务器和辅名称服务器"></a>2.4.6 主名称服务器和辅名称服务器</h4><ul>
+<li>对于每个区域，必须有⼀个主名称服务器和辅助名称服务器<ul>
+<li>主服务器(主服务器)维护⼀个区域文件，其中包含关于区域的域名信息。对主服务器进行更新。</li>
+<li>辅服务器复制存储在主服务器上的数据。</li>
+</ul>
+</li>
+<li>添加⼀个主机: 当⼀个新主机(“xxx.cs.xxx.edu.cn”)被添加到⼀个区域时，管理员将该主机的IP信息(IP地址和名称)添加到主服务器上的配置文件中</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233955965.png" alt="image-20221114233955965" style="zoom:80%;" />
+
+<h4 id="2-4-7-根域名服务器"><a href="#2-4-7-根域名服务器" class="headerlink" title="2.4.7 根域名服务器"></a>2.4.7 根域名服务器</h4><ul>
+<li>互联网的顶级域名解析服务由根服务器完成</li>
+<li>只有13个根域名服务器</li>
+<li>根服务器对网络安全、运行稳定至关重要，被称为互联网的“中枢神经”</li>
+</ul>
+<h4 id="2-4-8-域名解析"><a href="#2-4-8-域名解析" class="headerlink" title="2.4.8 域名解析"></a>2.4.8 域名解析</h4><ul>
+<li>用户程序发出主机名到IP地址的请求</li>
+<li>本地解析器向主机的名称服务器提出DNS查询</li>
+<li>名称服务器检查它是否被授权回答查询。<ul>
+<li>如果是，它会响应。</li>
+<li>否则，它将从根树开始查询其他名称服务器</li>
+</ul>
+</li>
+<li>当名称服务器得到答案时，它将其发送到解析器。</li>
+</ul>
+<h4 id="2-4-9-递归和迭代查询"><a href="#2-4-9-递归和迭代查询" class="headerlink" title="2.4.9 递归和迭代查询"></a>2.4.9 递归和迭代查询</h4><ul>
+<li>查询有两种类型: 递归查询、迭代(非递归)查询</li>
+<li>递归查询:如果主机所询问的本地域名服务器不知道被查询的域名的IP地址，那么本地域名服务器就以DNS客户的身份，向其它根域名服务器继续发出查询请求报文(即替主机继续查询)，而不是让主机自己进行下⼀步查询。</li>
+<li>迭代查询:当根域名服务器收到本地域名服务器发出的迭代查询请求报文时，要么给出所要查询的IP地址，要么告诉本地服务器：“你下⼀步应当向哪⼀个域名服务器进行查询” 。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114234325153.png" alt="image-20221114234325153"></p>
+<h4 id="2-4-10-缓存"><a href="#2-4-10-缓存" class="headerlink" title="2.4.10 缓存"></a>2.4.10 缓存</h4><ul>
+<li>为了减少DNS流量，名称服务器会缓存域名&#x2F;IP地址映射信息</li>
+<li>当查询的条目在缓存中时，服务器不会联系其他服务器</li>
+</ul>
+<h4 id="2-4-11-资源记录-Resource-Records"><a href="#2-4-11-资源记录-Resource-Records" class="headerlink" title="2.4.11 资源记录(Resource Records)"></a>2.4.11 资源记录(Resource Records)</h4><ul>
+<li>分布式数据库的数据库记录称为资源记录(RR)。</li>
+<li>资源记录存储在名称服务器上的配置文件(分区文件)中。</li>
+<li>DNS数据库包含的不仅仅是主机名到地址的记录:<ul>
+<li>名称服务器记录 ns</li>
+<li>主机名别名 CNAME</li>
+<li>邮件服务器 mx</li>
+<li>主机信息 hinfo</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-资源标识符"><a href="#3-资源标识符" class="headerlink" title="3 资源标识符"></a>3 资源标识符</h2><ul>
+<li>统⼀资源标识符<ul>
+<li>Uniform Resource Identifier，URI</li>
+<li>用于标识某⼀互联网资源名称的字符串，该种标识允许用户对任何(包括本地和互联网)的资源通过特定的协议进行交互操作。</li>
+</ul>
+</li>
+<li>统⼀资源定位符<ul>
+<li>Uniform Resource Locator，URL</li>
+<li>URL是⼀种URI，它标识⼀个互联网资源，并指定对其进行操作或获取该资源的方法。</li>
+</ul>
+</li>
+<li>统⼀资源名称<ul>
+<li>Uniform Resource Name，URN</li>
+<li>定义某事物的身份</li>
+<li>URN仅用于命名，而不指定地址</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-1-URI"><a href="#3-1-URI" class="headerlink" title="3.1 URI"></a>3.1 URI</h3><ul>
+<li>RFC 2396</li>
+<li>URI可被视为定位符(URL)，名称(URN)或两者兼备</li>
+<li>URI格式由URI协议名(例如http、ftp、mailto、file)，⼀个冒号，和协议对应的内容所构成</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114235136029.png" alt="image-20221114235136029"></p>
+<h3 id="3-2-URN"><a href="#3-2-URN" class="headerlink" title="3.2 URN"></a>3.2 URN</h3><ul>
+<li>URN是基于某名字空间通过名称指定资源的URI</li>
+<li>位置⽆关</li>
+<li>需要基础设施，因而未被⼴泛应用</li>
+<li>Example URN：urn:ietf:rfc:2141</li>
+</ul>
+<h3 id="3-3-URL"><a href="#3-3-URL" class="headerlink" title="3.3 URL"></a>3.3 URL</h3><ul>
+<li>统⼀资源定位符 URL 是对可以从因特网上得到的资源的位置和访问方法的⼀种简洁的表示。</li>
+<li>URL 给资源的位置提供⼀种抽象的识别方法，并用这种方法给资源定位。</li>
+</ul>
+<h4 id="3-3-1-URL的一般形式"><a href="#3-3-1-URL的一般形式" class="headerlink" title="3.3.1 URL的一般形式"></a>3.3.1 URL的一般形式</h4><ul>
+<li>协议 (http:): 标识用于获取内容的协议.</li>
+<li>主机 (&#x2F;&#x2F;host.company.com): 要连接到的计算机的名称.</li>
+<li>端口 (80): 允许多个服务器在同⼀台机器上运行.</li>
+<li>路径(&#x2F;a&#x2F;b&#x2F;c.html): 服务器用于查找内容.</li>
+<li>查询字段 (?user&#x3D;Alice&amp;year&#x3D;2008): 提供其他参数</li>
+<li>片段标识符(p2): 单页面路由，锚点定位</li>
+</ul>
+<h4 id="3-3-2-URL协议"><a href="#3-3-2-URL协议" class="headerlink" title="3.3.2 URL协议"></a>3.3.2 URL协议</h4><ul>
+<li><p>http、https、file、mailto</p>
+</li>
+<li><p>还有其他几种协议，比如ftp，但已经不常用了</p>
+</li>
+</ul>
+<h4 id="3-3-3-URL路径-a-b-c-html"><a href="#3-3-3-URL路径-a-b-c-html" class="headerlink" title="3.3.3 URL路径(&#x2F;a&#x2F;b&#x2F;c.html)"></a>3.3.3 URL路径(&#x2F;a&#x2F;b&#x2F;c.html)</h4><ul>
+<li><p>传递到web服务器进行解释。早期的web服务器: </p>
+<ul>
+<li>静态HTML文件的路径名。</li>
+<li>生成HTML内容的程序的路径名(例如foo.php)。</li>
+</ul>
+</li>
+<li><p>路由信息</p>
+<ul>
+<li>将层次位置映射到要执行的函数以及函数的参数</li>
+</ul>
+</li>
+<li><p>应用程序编程接口(API)设计，示例:</p>
+<ul>
+<li>&#x2F;user&#x2F;create</li>
+<li>&#x2F;user&#x2F;list</li>
+<li>&#x2F;user&#x2F;0x23490</li>
+<li>&#x2F;user&#x2F;delete&#x2F;0x23433</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-3-4-查询字段"><a href="#3-3-4-查询字段" class="headerlink" title="3.3.4 查询字段"></a>3.3.4 查询字段</h4><ul>
+<li><p>查询字段是指在URL的末尾加上用于向服务器发送信息的字符串(变量)。 将“?”放在URL的末尾，然后再加上“参数 &#x3D; 值”，想加上多个参数的话，使用“&amp;”。</p>
+</li>
+<li><p>网站访问分析(被动参数)</p>
+<ul>
+<li>被动参数对显示的内容没有影响。</li>
+<li>为了了解用户从哪里到达了自己的网站，设定固有的参数来统计。</li>
+<li>通常，当想要分析网站流入的来源以吸引客户，或者想要知道来自搜索引擎⼴告的流入客户时，可以使用它。</li>
+</ul>
+</li>
+<li><p>显示动态页面结果(活动参数)</p>
+<ul>
+<li>会影响显示的内容。换句话说，添加参数将改变网站上显示的内容</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-3-5-URL的使用"><a href="#3-3-5-URL的使用" class="headerlink" title="3.3.5 URL的使用"></a>3.3.5 URL的使用</h4><ul>
+<li>加载页面，在浏览器地址栏输入URL</li>
+<li>加载图像: <code>&lt;img src=&quot;...&quot; /&gt;</code></li>
+<li>加载样式表: <code>&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;...&quot;&gt;</code></li>
+<li>嵌入页面: <code>&lt;iframe src=&quot;http://www.google.com&quot;&gt;</code></li>
+</ul>
+<h4 id="3-3-6-URL编码"><a href="#3-3-6-URL编码" class="headerlink" title="3.3.6 URL编码"></a>3.3.6 URL编码</h4><ul>
+<li>URL编码将字符转换为可通过因特网传输的格式。</li>
+<li>URL只能使用 ASCII 字符集通过因特网进行发送。</li>
+<li>由于URL通常包含 ASCII 集之外的字符，因此必须将URL转换为有效的 ASCII 格式。</li>
+<li>URL编码使用后跟⼗六进制数字的 “%” 替代不安全的 ASCII 字符。</li>
+<li>URL不能包含空格。URL 编码通常使用加号(+)或 %20 替代空格。</li>
+</ul>
+<h2 id="4-超文本Hypertext"><a href="#4-超文本Hypertext" class="headerlink" title="4 超文本Hypertext"></a>4 超文本Hypertext</h2><ul>
+<li>超文本是用超链接的方法，将各种不同空间的文字信息组织在⼀起的网状文本。</li>
+<li>超链接是Web页面区别于其他媒体的重要特征之⼀，网页浏览者只要单击网页中的超链接就可以自动跳转到超链接的目标对象，且超链接的数量是不受限制的。</li>
+<li>用标签<code>&lt;a&gt;</code>来实现</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114235831918.png" alt="image-20221114235831918"></p>
+<h3 id="4-1-种类"><a href="#4-1-种类" class="headerlink" title="4.1 种类"></a>4.1 种类</h3><ul>
+<li>网页上的超链接⼀般分为三种：<ul>
+<li>绝对URL的超链接</li>
+<li>相对URL的超链接</li>
+<li>同⼀网页的超链接，锚点链接&#x2F;书签链接。</li>
+</ul>
+</li>
+</ul>
+<h1 id="1-2-WWW"><a href="#1-2-WWW" class="headerlink" title="1.2 WWW"></a>1.2 WWW</h1><h2 id="1-Web"><a href="#1-Web" class="headerlink" title="1 Web"></a>1 Web</h2><h3 id="1-1-Web服务器和浏览器"><a href="#1-1-Web服务器和浏览器" class="headerlink" title="1.1 Web服务器和浏览器"></a>1.1 Web服务器和浏览器</h3><ul>
+<li><p>Web服务器</p>
+<ul>
+<li>Apache</li>
+<li>Microsoft Internet Information Server (IIS) (part of Windows)</li>
+</ul>
+</li>
+<li><p>Web浏览器: 从Web服务器获取&#x2F;显示文档</p>
+<ul>
+<li>Microsoft Internet Explorer (IE)</li>
+<li>Mozilla Firefox</li>
+<li>Apple Safari</li>
+<li>Google Chrome</li>
+<li>Opera</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-Web的表现形式"><a href="#1-2-Web的表现形式" class="headerlink" title="1.2 Web的表现形式"></a>1.2 Web的表现形式</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116234212980.png" alt="image-20221116234212980" style="zoom:80%;" />
+
+<h3 id="1-3-互联网的影响"><a href="#1-3-互联网的影响" class="headerlink" title="1.3 互联网的影响"></a>1.3 互联网的影响</h3><ul>
+<li>改变生活方式、改变交流方式、改变购物方式、改变娱乐方式、改变教育方式、改变医疗方式</li>
+</ul>
+<h3 id="1-4-Web发展历程"><a href="#1-4-Web发展历程" class="headerlink" title="1.4 Web发展历程"></a>1.4 Web发展历程</h3><p>Text -&gt; Web 1.0 -&gt;  Web 2.0 -&gt;  Web 3.0</p>
+<h2 id="2-Web1-0-Web2-0-Web3-0"><a href="#2-Web1-0-Web2-0-Web3-0" class="headerlink" title="2 Web1.0 Web2.0 Web3.0"></a>2 Web1.0 Web2.0 Web3.0</h2><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221117000428194.png" alt="image-20221117000428194" style="zoom:80%;" />
+
+<h3 id="2-1-演变"><a href="#2-1-演变" class="headerlink" title="2.1 演变"></a>2.1 演变</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221117000444817.png" alt="image-20221117000444817" style="zoom:80%;" />
+
+<h3 id="2-2-Web-2-0"><a href="#2-2-Web-2-0" class="headerlink" title="2.2 Web 2.0"></a>2.2 Web 2.0</h3><h4 id="2-2-1-Web-2-0特点"><a href="#2-2-1-Web-2-0特点" class="headerlink" title="2.2.1 Web 2.0特点"></a>2.2.1 Web 2.0特点</h4><ul>
+<li>Web2.0是⼀个架构在知识上的环境，人与人之间交互而产生出的内容，经由在服务导向的架构中的程序，在这个环境中被发布、管理和使用。</li>
+</ul>
+<h4 id="2-2-2-Web-2-0典型应用"><a href="#2-2-2-Web-2-0典型应用" class="headerlink" title="2.2.2 Web 2.0典型应用"></a>2.2.2 Web 2.0典型应用</h4><ul>
+<li>Facebook，Wiki百科，豆瓣，土豆网，微博</li>
+</ul>
+<h4 id="2-2-3-Web-2-0的局限性"><a href="#2-2-3-Web-2-0的局限性" class="headerlink" title="2.2.3 Web 2.0的局限性"></a>2.2.3 Web 2.0的局限性</h4><ul>
+<li>传播端过剩，过度饱和</li>
+<li>概念偏差</li>
+<li>时间</li>
+<li>互动模式</li>
+<li>数据确权和授权</li>
+</ul>
+<h4 id="2-2-4-用户缺乏自主权"><a href="#2-2-4-用户缺乏自主权" class="headerlink" title="2.2.4 用户缺乏自主权"></a>2.2.4 用户缺乏自主权</h4><ul>
+<li>用户对数字身份缺乏自主权<ul>
+<li>不同账户体系间相互独⽴</li>
+<li>联邦身份管理模式，减少重复开户的次数</li>
+</ul>
+</li>
+<li>用户对个人数据缺乏自主权<ul>
+<li>弱势，“要么同意，要么不服务”的选择</li>
+<li>被采集甚至过度采集</li>
+</ul>
+</li>
+<li>用户在算法面前缺乏自主权<ul>
+<li>算法滥用、算法作恶，比如大数据杀熟</li>
+<li>滥用人性弱点，过度激励、诱导用户消费</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-Web-3-0"><a href="#2-3-Web-3-0" class="headerlink" title="2.3 Web 3.0"></a>2.3 Web 3.0</h3><blockquote>
+<p>Tim Berners-Lee: </p>
+<p>“人们不停地质问Web 3.0到底是什么。我认为当可缩放矢量图形在 Web 2.0的基础上大面积使用——所有东西都起波纹、被折叠并且看起来没有棱角——以及⼀整张语义网涵盖著大量的数据，你就可以访问这难以置信的数据资源。</p>
+<p>Google CEO 埃里克施密特定义是：</p>
+<p>Web 3.0是⼀系列组合在⼀起的应用，对于个人用户来讲互联网将更具有可管理性，也意味着，互联网将由⼀系列的标准化Web组件拼装起来。</p>
+<p>以太坊的联合创始人加文·伍德(Gavin Wood)：</p>
+<p>“Web3.0是⼀组兼容的协议。这些协议为用户提供了强大并且可验证的保证，保护他们接收和发送的信息以及他们的支付信息。通过授权用户在低门槛市场中为自己行动，我们可以确保审查和垄断机会的减少。”</p>
+</blockquote>
+<h4 id="2-3-1-Web-3-0特征"><a href="#2-3-1-Web-3-0特征" class="headerlink" title="2.3.1 Web 3.0特征"></a>2.3.1 Web 3.0特征</h4><ul>
+<li>语义化、3D、人工智能、去中心化</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-4-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                        <b>#</b> Web前端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/16/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-2-HTML/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#0-Introduction"><span class="toc-text">0-Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8Browsers"><span class="toc-text">1 浏览器Browsers</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%83%8C%E6%99%AF"><span class="toc-text">1.1 背景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E6%8B%A5%E6%8A%B1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7"><span class="toc-text">1.1.1 拥抱不确定性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E4%BB%8E%E5%BE%AE%E8%BD%AF%E7%8B%AC%E5%AE%B6%E5%9E%84%E6%96%AD%E5%88%B0%E4%BB%8A%E5%A4%A9%E7%99%BE%E8%8A%B1%E9%BD%90%E6%94%BE"><span class="toc-text">1.1.2 从微软独家垄断到今天百花齐放</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-%E6%88%91%E4%BB%AC%E7%8E%B0%E5%9C%A8%E6%89%80%E5%A4%84%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-text">1.1.3 我们现在所处的位置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-text">1.2 浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-JavaScript%E5%BC%95%E6%93%8E"><span class="toc-text">1.3 JavaScript引擎</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%9B%A0%E6%AD%A4"><span class="toc-text">1.4 因此</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-1-Internet"><span class="toc-text">1.1-Internet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BA%92%E8%81%94%E7%BD%91"><span class="toc-text">1 互联网</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%AE%80%E8%A6%81%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="toc-text">1.1 简要发展史</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87"><span class="toc-text">1.2 相关组织</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE"><span class="toc-text">2 常用协议</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%BD%91%E9%99%85%E4%BA%92%E8%BF%9E%E5%8D%8F%E8%AE%AE-IP"><span class="toc-text">2.1 网际互连协议(IP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE-TCP"><span class="toc-text">2.2 传输控制协议(TCP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%8D%8F%E8%AE%AE-UDP"><span class="toc-text">2.3 用户数据报协议(UDP)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F-DNS"><span class="toc-text">2.4 域名系统(DNS)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-DNS%E4%B9%8B%E5%89%8D%E2%80%A6"><span class="toc-text">2.4.1 DNS之前…</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E8%A7%A3%E6%9E%90%E5%99%A8%E4%B8%8E%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">2.4.2 解析器与名称服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-3-DNS%E5%90%8D%E7%A7%B0%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">2.4.3 DNS名称层次结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-4-%E5%9F%9F%E5%90%8D"><span class="toc-text">2.4.4 域名</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-5-%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">2.4.5 名称服务器的层次结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-6-%E4%B8%BB%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E8%BE%85%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">2.4.6 主名称服务器和辅名称服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-7-%E6%A0%B9%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">2.4.7 根域名服务器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-8-%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="toc-text">2.4.8 域名解析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-9-%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2"><span class="toc-text">2.4.9 递归和迭代查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-10-%E7%BC%93%E5%AD%98"><span class="toc-text">2.4.10 缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-11-%E8%B5%84%E6%BA%90%E8%AE%B0%E5%BD%95-Resource-Records"><span class="toc-text">2.4.11 资源记录(Resource Records)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B5%84%E6%BA%90%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">3 资源标识符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-URI"><span class="toc-text">3.1 URI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-URN"><span class="toc-text">3.2 URN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-URL"><span class="toc-text">3.3 URL</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-URL%E7%9A%84%E4%B8%80%E8%88%AC%E5%BD%A2%E5%BC%8F"><span class="toc-text">3.3.1 URL的一般形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-URL%E5%8D%8F%E8%AE%AE"><span class="toc-text">3.3.2 URL协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-3-URL%E8%B7%AF%E5%BE%84-a-b-c-html"><span class="toc-text">3.3.3 URL路径(&#x2F;a&#x2F;b&#x2F;c.html)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-4-%E6%9F%A5%E8%AF%A2%E5%AD%97%E6%AE%B5"><span class="toc-text">3.3.4 查询字段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-5-URL%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">3.3.5 URL的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-6-URL%E7%BC%96%E7%A0%81"><span class="toc-text">3.3.6 URL编码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%B6%85%E6%96%87%E6%9C%ACHypertext"><span class="toc-text">4 超文本Hypertext</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%A7%8D%E7%B1%BB"><span class="toc-text">4.1 种类</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-2-WWW"><span class="toc-text">1.2 WWW</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Web"><span class="toc-text">1 Web</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="toc-text">1.1 Web服务器和浏览器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Web%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F"><span class="toc-text">1.2 Web的表现形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">1.3 互联网的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Web%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="toc-text">1.4 Web发展历程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Web1-0-Web2-0-Web3-0"><span class="toc-text">2 Web1.0 Web2.0 Web3.0</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%BC%94%E5%8F%98"><span class="toc-text">2.1 演变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Web-2-0"><span class="toc-text">2.2 Web 2.0</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-Web-2-0%E7%89%B9%E7%82%B9"><span class="toc-text">2.2.1 Web 2.0特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-Web-2-0%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-text">2.2.2 Web 2.0典型应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-Web-2-0%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-text">2.2.3 Web 2.0的局限性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E7%94%A8%E6%88%B7%E7%BC%BA%E4%B9%8F%E8%87%AA%E4%B8%BB%E6%9D%83"><span class="toc-text">2.2.4 用户缺乏自主权</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Web-3-0"><span class="toc-text">2.3 Web 3.0</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-Web-3-0%E7%89%B9%E5%BE%81"><span class="toc-text">2.3.1 Web 3.0特征</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91(1)%20Internet%20and%20WWW + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F14%2FWeb%25E5%2589%258D%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/14/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      编译原理(3) 语法分析 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">编译原理(3) 语法分析</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                    <b>#</b> 编译原理
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h1><h2 id="一、ANTLR-4-语法分析器"><a href="#一、ANTLR-4-语法分析器" class="headerlink" title="一、ANTLR 4 语法分析器"></a>一、ANTLR 4 语法分析器</h2><h3 id="1-二义性文法"><a href="#1-二义性文法" class="headerlink" title="1. 二义性文法"></a>1. 二义性文法</h3><ul>
+<li>二义性是不能接受的，必须消除</li>
+</ul>
+<h4 id="1-1-IfStat"><a href="#1-1-IfStat" class="headerlink" title="1.1 IfStat"></a>1.1 IfStat</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr">// 不考虑 antlr 的处理, 单看文法这是有二义性的<br>stat : &#x27;if&#x27; expr &#x27;then&#x27; stat<br>     | &#x27;if&#x27; expr &#x27;then&#x27; stat &#x27;else&#x27; stat<br>     | expr<br>     ;<br>     <br>/* <br> if a then if b then c else d<br> 此处 else d 归属是模糊的<br>*/<br><br>// 解决方法非常复杂:<br>// 将 else 与最近的未被匹配的 if 匹配<br>stat : matched_stat | open_stat ;<br><br>matched_stat : &#x27;if&#x27; expr &#x27;then&#x27; matched_stat &#x27;else&#x27; matched_stat<br>             | expr<br>             ;<br><br>open_stat: &#x27;if&#x27; expr &#x27;then&#x27; stat<br>         | &#x27;if&#x27; expr &#x27;then&#x27; matched_stat &#x27;else&#x27; open_stat<br>         ;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Q: 如何判断文法有没有二义性</p>
+<p>A: 做不到, 只能靠经验</p>
+<p>Q: ANTLR 如何解决二义性问题</p>
+<p>A: 通过书写规则的顺序来决定优先级, 优先解释为优先级高的结构</p>
+</blockquote>
+<h4 id="1-2-Left-Factoring"><a href="#1-2-Left-Factoring" class="headerlink" title="1.2 Left-Factoring"></a>1.2 Left-Factoring</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr">stat : &#x27;if&#x27; expr &#x27;then&#x27; stat<br>     | &#x27;if&#x27; expr &#x27;then&#x27; stat &#x27;else&#x27; stat<br>     | expr<br>     ;<br>==============================================<br>stat : &#x27;if&#x27; expr &#x27;then&#x27; stat stat_prime ;<br>stat_prime : &#x27;else&#x27; stat<br>     |<br>     ;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>很明显, 提取左公因子无助于消除文法二义性</li>
+<li>ANTLR 4 可以处理有左公因子的文法</li>
+</ul>
+<h4 id="1-3-Expr"><a href="#1-3-Expr" class="headerlink" title="1.3 Expr"></a>1.3 Expr</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr">expr :<br>  | expr &#x27;*&#x27; expr<br>  | expr &#x27;-&#x27; expr<br>  | DIGIT<br>  ;<br><br>// 同样存在二义性<br>1-2-3 -&gt; (1-2)-3 | 1-(2-3)<br>1-2*3 -&gt; (1-2)*3 | 1-(2*3)<br><br>// 解决方法, 但是引入很多冗余文法符号<br>// 左递归文法, expr 只有左侧的 expr 是递归的<br>expr : expr &#x27;-&#x27; term<br>     | term<br>     ;<br>     <br>term : term &#x27;*&#x27; factor<br>     | factor<br>     ;<br>     <br>factor : DIGIT ;<br><br>// 右递归文法, 也能解决优先级, 但会改变结合性 1-2-3 -&gt; 1-(2-3)<br>expr : term expr_prime ;<br>expr_prime : &#x27;-&#x27; term expr_prime<br>     |<br>     ;<br>     <br>term : factor term_prime ;<br>term_prime : &#x27;*&#x27; factor term_prime<br>     |<br>     ;<br>     <br>factor : DIGIT ;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>左递归(左结合)，右递归(右结合)</li>
+<li>ANTLR 4 可以处理(直接)左递归<ul>
+<li>写在上方的规则优先级高</li>
+<li>但是有些情况需要右结合(^)<ul>
+<li>二元运算符需要特别标记 <code>&lt;assoc = right&gt; expr &#39;^&#39; expr</code></li>
+<li>一元运算符不需要标记，因为只能解释为右结合 <code>------1</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-Call-Graphs"><a href="#2-Call-Graphs" class="headerlink" title="2. Call Graphs"></a>2. Call Graphs</h3><h4 id="2-1-监听器模式-Listener"><a href="#2-1-监听器模式-Listener" class="headerlink" title="2.1 监听器模式(Listener)"></a>2.1 监听器模式(Listener)</h4><ul>
+<li><p>ANTLR 通过深度优先遍历生成的语法树</p>
+<ul>
+<li>除了叶子节点, 所有的内部节点至少会经过两次</li>
+<li>ANTLR 会为其生成 <code>ENTERXXX(), EXITXXX()</code> 的方法</li>
+</ul>
+</li>
+<li><p>一条规则有不同选择时, 通过添加 <code>#label</code> 来区分, 单个选择内部使用 <code>op</code> 来区分</p>
+<ul>
+<li>ANTLR 会生成对应的 <code>ENTER\EXIT LABEL</code> 方法, <code>op</code> 则作为成员变量</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr">expr: ID &#x27;(&#x27; exprList? &#x27;)&#x27;    # Call // function call<br>    | expr &#x27;[&#x27; expr &#x27;]&#x27;       # Index // array subscripts<br>    | op = &#x27;-&#x27; expr                # Negate // right association<br>    | op = &#x27;!&#x27; expr                # Not // right association<br>    | &lt;assoc = right&gt; expr &#x27;^&#x27; expr # Power<br>    | lhs = expr (op = &#x27;*&#x27;| op = &#x27;/&#x27;) rhs = expr     # MultDiv<br>    | lhs = expr (op = &#x27;+&#x27;| op = &#x27;-&#x27;) rhs = expr     # AddSub<br>    | lhs = expr (op = &#x27;==&#x27; | op = &#x27;!=&#x27;) rhs = expr  # EQNE<br>    | &#x27;(&#x27; expr &#x27;)&#x27;            # Parens<br>    | ID                      # Id<br>    | INT                     # Int<br>    ;<br></code></pre></td></tr></table></figure>
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221122164530981.png" alt="image-20221122164530981" style="zoom:80%;" /></li>
+</ul>
+<h4 id="2-2-访问者模式-Visitor"><a href="#2-2-访问者模式-Visitor" class="headerlink" title="2.2 访问者模式(Visitor)"></a>2.2 访问者模式(Visitor)</h4><ul>
+<li><p>详见实验</p>
+</li>
+<li><p>Visitor在访问每个节点的子节点前会调用<code>visitChildren()</code>函数</p>
+</li>
+<li><p>Visitor在访问每个终结符节点时会调用<code>visitTerminal()</code>函数</p>
+</li>
+<li><p>对于每一个语法规则都存在一个对应的visit函数，如 exp 规则对应的函数为<code>visitExp()</code></p>
+</li>
+</ul>
+<h3 id="3-上下文无关文法"><a href="#3-上下文无关文法" class="headerlink" title="3. 上下文无关文法"></a>3. 上下文无关文法</h3><h4 id="3-1-语法"><a href="#3-1-语法" class="headerlink" title="3.1 语法"></a>3.1 语法</h4><h5 id="Definition-Context-Free-Grammar-CFG-上下文无关文法"><a href="#Definition-Context-Free-Grammar-CFG-上下文无关文法" class="headerlink" title="Definition (Context-Free Grammar (CFG); 上下文无关文法)"></a>Definition (Context-Free Grammar (CFG); 上下文无关文法)</h5><p>上下文无关文法 $G$ 是一个四元组 $G &#x3D; (T,N,P,S):$</p>
+<ul>
+<li><p>$T$ 是<strong>终结符号</strong> (Terminal) 集合, 对应于词法分析器产生的词法单元;</p>
+</li>
+<li><p>$N$ 是<strong>非终结符号</strong> (Non-terminal) 集合;</p>
+</li>
+<li><p>$P$ 是<strong>产生式</strong> (Production) 集合;</p>
+<ul>
+<li><p>$A \in N \longrightarrow α \in (T \cup N)^\ast$</p>
+</li>
+<li><p>头部&#x2F;左部 (Head) $A$: <strong>单个</strong>非终结符</p>
+</li>
+<li><p>体部&#x2F;右部 (Body) $α$: 终结符与非终结符构成的串, 也可以是空串 $\epsilon$</p>
+</li>
+</ul>
+</li>
+<li><p>$S$ 为<strong>开始</strong> (Start) 符号。要求 $S \in N$ 且唯一。</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124173937897.png" alt="image-20221124173937897" style="zoom:80%;" />
+
+<h4 id="3-2-语义"><a href="#3-2-语义" class="headerlink" title="3.2 语义"></a>3.2 语义</h4><p>上下文无关文法 $G$ 定义了一个<strong>语言</strong> $L(G)$</p>
+<ul>
+<li>语言是<strong>串</strong>的集合</li>
+<li>串从何来?</li>
+</ul>
+<h5 id="推导-Derivation"><a href="#推导-Derivation" class="headerlink" title="推导 (Derivation)"></a>推导 (Derivation)</h5><ul>
+<li>推导即是将某个产生式的左边<strong>替换</strong>成它的右边</li>
+<li>每一步推导需要选择<strong>替换哪个非终结符号</strong>, 以及<strong>使用哪个产生式</strong></li>
+</ul>
+<blockquote>
+<p>$E \to E + E \mid E \ast E \mid (E) \mid -E \mid \bf id$</p>
+<ul>
+<li>$E \implies -E \implies -(E) \implies -(E + E) \implies -(\textbf{id} + E) \implies -(\textbf{id} + \textbf{id})$</li>
+<li>$E \implies -E \implies -(E) \implies -(E + E) \implies \textcolor{blue}{-(E + \textbf{id})} \implies -(\textbf{id} + \textbf{id})$</li>
+</ul>
+<p>$E \implies -E:$ 经过一步推导得出</p>
+<p>$E \stackrel{+}{\implies} -(\textbf{id} + E):$ 经过一步或多步推导得出</p>
+<p>$E \stackrel{\ast}{\implies} -(\textbf{id} + E):$ 经过零步或多步推导得出</p>
+</blockquote>
+<h5 id="Definition-Sentential-Form-句型"><a href="#Definition-Sentential-Form-句型" class="headerlink" title="Definition (Sentential Form; 句型)"></a>Definition (Sentential Form; 句型)</h5><p>如果 $S \stackrel{\ast}{\implies} \alpha ,$ 且 $ \alpha \in (T \cup N)^\ast ,$ 则称 $\alpha$ 是文法 $G$ 的一个<strong>句型</strong></p>
+<blockquote>
+<ul>
+<li>$E \to E + E \mid E \ast E \mid (E) \mid -E \mid \bf id$</li>
+<li>$E \implies -E \implies -(E) \implies -(E + E) \implies -(\textbf{id} + E) \implies -(\textbf{id} + \textbf{id})$<ul>
+<li>夹杂着终结符和非终结符的串都叫做句型</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h5 id="Definition-Sentence-句子"><a href="#Definition-Sentence-句子" class="headerlink" title="Definition (Sentence; 句子)"></a>Definition (Sentence; 句子)</h5><p>如果 $S \stackrel{\ast}{\implies} w ,$ 且 $w \in T^\ast ,$ 则称 $w$ 是文法 $G$ 的一个<strong>句子</strong></p>
+<h5 id="Definition-文法-G-生成的语言-L-G"><a href="#Definition-文法-G-生成的语言-L-G" class="headerlink" title="Definition (文法 $G$ 生成的语言 $L(G)$)"></a>Definition (文法 $G$ 生成的语言 $L(G)$)</h5><p>文法 $G$ 的<strong>语言</strong> $L(G)$ 是它能推导出的<strong>所有句子</strong>构成的集合。</p>
+<ul>
+<li>$w \in L(G) \iff S \stackrel{\ast}{\Rightarrow} w$</li>
+</ul>
+<h4 id="3-3-关于文法-G-的两个基本问题"><a href="#3-3-关于文法-G-的两个基本问题" class="headerlink" title="3.3 关于文法 $G$ 的两个基本问题"></a>3.3 关于文法 $G$ 的两个基本问题</h4><ul>
+<li><p><strong>Membership问题:</strong> 给定字符串 $x \in \textcolor{red}{T^\ast} , x \in L(G)$ ?</p>
+</li>
+<li><p>$L(G)$ 究竟是什么?</p>
+</li>
+</ul>
+<h5 id="3-3-1-给定字符串-x-in-T-ast-x-in-L-G"><a href="#3-3-1-给定字符串-x-in-T-ast-x-in-L-G" class="headerlink" title="3.3.1 给定字符串 $x \in T^\ast , x \in L(G)$ ?"></a>3.3.1 给定字符串 $x \in T^\ast , x \in L(G)$ ?</h5><ul>
+<li><p>即, 检查 $x$ 是否符合文法 $G$</p>
+</li>
+<li><p>这就是<strong>语法分析器</strong>的任务:</p>
+<ul>
+<li>为输入的词法单元流寻找推导、<strong>构建语法分析树</strong>, 或者报错</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-3-2-L-G-是什么"><a href="#3-3-2-L-G-是什么" class="headerlink" title="3.3.2 $L(G)$ 是什么?"></a>3.3.2 $L(G)$ 是什么?</h5><ul>
+<li><p>这是<strong>程序设计语言设计者</strong>需要考虑的问题</p>
+</li>
+<li><p>一些例子</p>
+<ul>
+<li><p>$L(G) &#x3D; \set{良匹配括号串}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126144503343.png" alt="image-20221126144503343" style="zoom:80%;" />
+</li>
+<li><p>$L(G) &#x3D; \set{a^nb^n \mid n \ge 0}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126144707716.png" alt="image-20221126144707716" style="zoom:80%;" />
+</li>
+<li><p>$字母表 \Sigma &#x3D; \set{a, b} 上的所有 \textcolor{blue}{\textbf{回文串}} (Palindrome) 构成的语言$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126144933786.png" alt="image-20221126144933786" style="zoom:80%;" />
+</li>
+<li><p>$\set{b^na^mb^{2n} \mid n \ge 0, m \ge 0}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126145059081.png" alt="image-20221126145059081" style="zoom:80%;" />
+</li>
+<li><p>$\set{x \in \set{a, b}^\ast \mid x 中 a, b 个数 \textcolor{red}{\textbf{相同}}}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126145228086.png" alt="image-20221126145228086" style="zoom:80%;" />
+
+<ul>
+<li>$a, b$ 开头是对称的, 此处只考虑 $a$ 开头</li>
+<li>一定存在一个 $b$ 使得按这个 $b$ 分割的两个串中 $a, b$ 个数相同</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126145545729.png" alt="image-20221126145544058" style="zoom: 25%;" />
+
+
+</li>
+<li><p>$\set{x \in \set{a, b}^\ast \mid x 中 a, b 个数 \textcolor{red}{\textbf{不同}}}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126150206032.png" alt="image-20221126150206032" style="zoom:80%;" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-正则表达式"><a href="#4-正则表达式" class="headerlink" title="4 正则表达式"></a>4 正则表达式</h3><p>为什么不使用优雅、强大的<strong>正则表达式</strong>描述程序设计语言的语法?</p>
+<ul>
+<li>正则表达式的表达能力<strong>严格弱于</strong>上下文无关文法</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126150328339.png" alt="image-20221126150328339" style="zoom:80%;" />
+
+<h4 id="4-1-RE-rightarrow-CFG"><a href="#4-1-RE-rightarrow-CFG" class="headerlink" title="4.1 RE $\rightarrow$ CFG"></a>4.1 RE $\rightarrow$ CFG</h4><p>每个<strong>正则表达式</strong> $r$ 对应的语言 $L(r)$ 都可以使用<strong>上下文无关文法</strong>来描述</p>
+<ul>
+<li><p>RE</p>
+<ul>
+<li>$r &#x3D; (a \mid b)^\ast abb$</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151201551.png" alt="image-20221126151201551" style="zoom:80%;" />
+</li>
+<li><p>CFG</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151258746.png" alt="image-20221126151258746" style="zoom:80%;" /></li>
+</ul>
+<h4 id="4-2-CFG-rightarrow-RE-反例"><a href="#4-2-CFG-rightarrow-RE-反例" class="headerlink" title="4.2 CFG $\rightarrow$ RE 反例"></a>4.2 CFG $\rightarrow$ RE 反例</h4><ul>
+<li><p>CFG</p>
+<ul>
+<li><p>$L &#x3D; \set{a^nb^n \mid n \ge 0}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151604143.png" alt="image-20221126151604143" style="zoom:80%;" /></li>
+</ul>
+</li>
+<li><p>RE</p>
+<ul>
+<li>该语言<strong>无法</strong>使用正则表达式来描述</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126151732638.png" alt="image-20221126151732638" style="zoom:80%;" />
+
+<ul>
+<li><p>因为 $m \gt k$, 所以一定会有状态经过了不止一次, 假设就是 $s_i$, 上图画出第一次碰到和最后一次碰到的状态</p>
+<ul>
+<li>第一次到最后一次中间消耗的 $a$ 的个数一定 $\ge 1$</li>
+</ul>
+</li>
+<li><p>假设消耗掉 $a^i$ 后第一次到达 $s_i$, 此时接收 $b^i$ 后根据假设应当到达终止状态 $f$ </p>
+<ul>
+<li>但因为第一次到达和最后一次到达的 $s_i$ 是相同的状态, 因此也应当可以接受 $a^{i+j}b^i$</li>
+<li><strong>矛盾！</strong></li>
+</ul>
+</li>
+<li><p>该反例称为泵引理, Pumping Lemma</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126153050203.png" alt="image-20221126153050203" style="zoom:80%;" /></li>
+</ul>
+<h2 id="二、递归下降的-LL-1-语法分析器"><a href="#二、递归下降的-LL-1-语法分析器" class="headerlink" title="二、递归下降的$LL(1)$语法分析器"></a>二、递归下降的$LL(1)$语法分析器</h2><h3 id="1-背景介绍"><a href="#1-背景介绍" class="headerlink" title="1. 背景介绍"></a>1. 背景介绍</h3><p>语法分析算法可分为两类: $LL$, $LR$</p>
+<ul>
+<li>$LR$ 更加复杂</li>
+</ul>
+<p><strong>构建语法分析树</strong>: 自顶向下 $vs.$ 自底向上</p>
+<ul>
+<li>$LL$ 为自顶向下</li>
+<li>$LR$ 为自底向上</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212330806.png" alt="image-20221129212330806" style="zoom:80%;" />
+
+<p>只考虑<strong>无二义性</strong>的文法</p>
+<ul>
+<li>这意味着, 每个句子对应唯一的一棵语法分析树</li>
+<li>本节主题: <strong>$LL(1)$ 语法分析器</strong></li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212519129.png" alt="image-20221129212519129" style="zoom:80%;" />
+
+<p>ANTLR</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129212642012.png" alt="image-20221129212642012" style="zoom:80%;" />
+
+<h3 id="2-什么是-LL-1-语法分析器"><a href="#2-什么是-LL-1-语法分析器" class="headerlink" title="2. 什么是$LL(1)$语法分析器"></a>2. 什么是$LL(1)$语法分析器</h3><ul>
+<li>自顶向下的、</li>
+<li>递归下降的、</li>
+<li>基于预测分析表的、</li>
+<li>适用于$\textcolor{red}{LL(1) \textbf{文法}}$的、</li>
+<li>$LL(1)$ 语法分析器</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130144459907.png" alt="image-20221130144459907" style="zoom:80%;" />
+
+<h4 id="2-1-自顶向下"><a href="#2-1-自顶向下" class="headerlink" title="2.1 自顶向下"></a>2.1 自顶向下</h4><p>$\textcolor{red}{\textbf{自顶向下}}构建语法分析树$</p>
+<ul>
+<li>$\textcolor{blue}{\textbf{根节点}}是文法的起始符号$ $S$</li>
+<li>$每个\textcolor{blue}{\textbf{中间节点}}表示\textcolor{purple}{\textbf{对某个非终结符应用某个产生式进行推导}}$<ul>
+<li>$\textcolor{red}{Q:}选择哪个非终结符, 以及选择哪个产生式$</li>
+</ul>
+</li>
+<li>$\textcolor{blue}{\textbf{叶节点}}是词法单元流$ $w$$<ul>
+<li>$仅包含终结符号与特殊的\textcolor{teal}{\textbf{文件结束符}}$ $\textcolor{teal}{$}$ $\textcolor{teal}{\texttt{(EOF)}}$</li>
+</ul>
+</li>
+</ul>
+<h5 id="如何选择非终结符"><a href="#如何选择非终结符" class="headerlink" title="如何选择非终结符"></a>如何选择非终结符</h5><ul>
+<li>在推导的每一步, $L\textcolor{red}{L}(1)$ 总是选择<strong>最左边的非终结符进行展开</strong><ul>
+<li>Leftmost derivation, 最左推导</li>
+</ul>
+</li>
+<li>$\textcolor{red}{L}L(1)$: 从左向右读入词法单元</li>
+</ul>
+<h4 id="2-2-递归下降"><a href="#2-2-递归下降" class="headerlink" title="2.2 递归下降"></a>2.2 递归下降</h4><p>$\textcolor{red}{\textbf{递归}}\textcolor{blue}{\textbf{下降}}的典型实现框架$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129215551497.png" alt="image-20221129215551497" style="zoom:80%;" />
+
+<ul>
+<li>为每个<strong>非终结符</strong>写一个<strong>递归函数</strong></li>
+<li>内部按需调用其它非终结符对应的递归函数, <strong>下降</strong>一层</li>
+</ul>
+<h5 id="递归下降示例"><a href="#递归下降示例" class="headerlink" title="递归下降示例"></a>递归下降示例</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129222116911.png" alt="image-20221129222116911" style="zoom:80%;" />
+
+<ul>
+<li>每次都选择语法分析树<strong>最左边</strong>的非终结符进行展开</li>
+</ul>
+<blockquote>
+<p>$Q: 同样是展开非终结符 S, 为什么前两次选择了 S \to (S + F), 而第三次选择了 S \to F$ $?$</p>
+<ul>
+<li>因为它们面对的<strong>当前词法单元</strong>不同</li>
+</ul>
+</blockquote>
+<h4 id="2-3-预测分析表"><a href="#2-3-预测分析表" class="headerlink" title="2.3 预测分析表"></a>2.3 预测分析表</h4><p>$使用\textcolor{red}{\textbf{预测分析表}}确定产生式$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129222546435.png" alt="image-20221129222546435" style="zoom:80%;" />
+
+<ul>
+<li><p>$指明了每个\textcolor{blue}{\textbf{非终结符}}在面对不同的\textcolor{red}{\textbf{词法单元或文件结束符}}时,$</p>
+<p>$该选择哪个\textcolor{teal}{\textbf{产生式}} (按编号进行索引) 或者\textcolor{cyan}{\textbf{报错}} (空单元格)$</p>
+</li>
+</ul>
+<h4 id="2-4-Definition-LL-1-文法"><a href="#2-4-Definition-LL-1-文法" class="headerlink" title="2.4 Definition ($LL(1)$ 文法)"></a>2.4 Definition ($LL(1)$ 文法)</h4><p>$如果文法$ $G$ 的$\textcolor{red}{\textbf{预测分析表}}是\textcolor{blue}{\textbf{无冲突}}的, 则$ $G$ $是$ $LL(1)$ $文法$</p>
+<ul>
+<li><p>$\textcolor{blue}{\textbf{无冲突}}: 每个单元格里只有一个产生式 (编号)$ </p>
+</li>
+<li><p>$对于当前选择的\textcolor{blue}{\textbf{非终结符}},$ </p>
+<p>$仅根据输入中\textcolor{red}{\textbf{当前的词法单元}} (LL(\textcolor{red}{1}))$ $即可确定需要使用哪条\textcolor{teal}{\textbf{产生式}}$</p>
+</li>
+</ul>
+<h5 id="递归下降的、预测分析实现方法"><a href="#递归下降的、预测分析实现方法" class="headerlink" title="递归下降的、预测分析实现方法"></a>递归下降的、预测分析实现方法</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129222546435.png" alt="image-20221129222546435" style="zoom: 67%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129224308689.png" alt="image-20221129224308689" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129224316884.png" alt="image-20221129224316884" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129224326342.png" alt="image-20221129224326342" style="zoom:80%;" />
+
+<h3 id="3-计算给定文法-G-的预测分析表"><a href="#3-计算给定文法-G-的预测分析表" class="headerlink" title="3. 计算给定文法 $G$ 的预测分析表"></a>3. 计算给定文法 $G$ 的预测分析表</h3><h4 id="3-1-引入"><a href="#3-1-引入" class="headerlink" title="3.1 引入"></a>3.1 引入</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129225435287.png" alt="image-20221129225435287" style="zoom:80%;" />
+
+<ul>
+<li>重点在于 optional_init 展开时如何选择</li>
+<li>非终结符展开要考虑两件事<ul>
+<li>最左侧的终结符是不是所需要的</li>
+<li>如果要展开的非终结符的一个备选分支是 $\epsilon$, 后面的字符是不是所需要的</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-FIRST-alpha"><a href="#3-2-FIRST-alpha" class="headerlink" title="3.2 FIRST($\alpha$)"></a>3.2 FIRST($\alpha$)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129231109091.png" alt="image-20221129231109091" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129231302198.png" alt="image-20221129231302198" style="zoom:80%;" />
+
+<h4 id="3-3-FOLLOW-A"><a href="#3-3-FOLLOW-A" class="headerlink" title="3.3 FOLLOW($A$)"></a>3.3 FOLLOW($A$)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129231515371.png" alt="image-20221129231515371" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129231529491.png" alt="image-20221129231529491" style="zoom:80%;" />
+
+<h4 id="3-4-计算FIRST-FOLLOW"><a href="#3-4-计算FIRST-FOLLOW" class="headerlink" title="3.4 计算FIRST,FOLLOW"></a>3.4 计算FIRST,FOLLOW</h4><h5 id="3-4-1-FIRST"><a href="#3-4-1-FIRST" class="headerlink" title="3.4.1 FIRST"></a>3.4.1 FIRST</h5><ol>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129232019642.png" alt="image-20221129232019642" style="zoom:80%;" />
+- 只有前面所有非终结符都能推出 $\epsilon$, 才需要考虑下一个</li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221129232037559.png" alt="image-20221129232037559" style="zoom:80%;" /></li>
+</ol>
+<p><strong>举例</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130141836513.png" alt="image-20221130141836513" style="zoom:80%;" />
+
+<h5 id="3-4-2-FOLLOW"><a href="#3-4-2-FOLLOW" class="headerlink" title="3.4.2 FOLLOW"></a>3.4.2 FOLLOW</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130142137823.png" alt="image-20221130142137823" style="zoom:80%;" />
+
+<p><strong>举例</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130142657320.png" alt="image-20221130142657320" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130142720412.png" alt="image-20221130142720412" style="zoom:80%;" />
+
+<h4 id="3-5-计算预测分析表"><a href="#3-5-计算预测分析表" class="headerlink" title="3.5 计算预测分析表"></a>3.5 计算预测分析表</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204172348302.png" alt="image-20221204172348302" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204172356127.png" alt="image-20221204172356127" style="zoom:80%;" />
+
+<blockquote>
+<p>当下的选择未必正确, 但 “你别无选择”</p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130144017088.png" alt="image-20221130144017088" style="zoom:80%;" />
+
+<blockquote>
+<p>什么是 $LL(0)$ : 每个非终结符只有一条产生式</p>
+</blockquote>
+<h3 id="4-非递归的预测分析算法"><a href="#4-非递归的预测分析算法" class="headerlink" title="4. 非递归的预测分析算法"></a>4. 非递归的预测分析算法</h3><p>S: 初始符号</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130144758691.png" alt="image-20221130144758691" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221130144842886.png" alt="image-20221130144842886" style="zoom:80%;" />
+
+<h3 id="5-非-LL-1-文法如何解决"><a href="#5-非-LL-1-文法如何解决" class="headerlink" title="5. 非$LL(1)$文法如何解决"></a>5. 非$LL(1)$文法如何解决</h3><p><strong>改造他!</strong></p>
+<ul>
+<li>消除左递归</li>
+<li>提取左公因子</li>
+</ul>
+<h4 id="5-1-提取左公因子"><a href="#5-1-提取左公因子" class="headerlink" title="5.1 提取左公因子"></a>5.1 提取左公因子</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr">x -&gt; aB | aC	// 这种情况开始都有 a, 不知道要使用哪条<br><br>// 改造为<br>x -&gt; aD<br>D -&gt; B | C<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>antlr 不需要这么处理, 会使用更好的技术来处理</li>
+</ul>
+<h4 id="5-2-消除左递归"><a href="#5-2-消除左递归" class="headerlink" title="5.2 消除左递归"></a>5.2 消除左递归</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204173936840.png" alt="image-20221204173936840" style="zoom:80%;" />
+
+<ul>
+<li>但是左递归文法在使用$LL(1)$文法的情况下是不能运行的</li>
+<li>$LL(1)$文法需要为 $E$ 写一个递归函数</li>
+<li>$E 在 \textcolor{red}{\textbf{不消耗任何词法单元}}的情况下, 直接递归调用 E, 造成\textcolor{green}{\textbf{死循环}}$</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204174331739.png" alt="image-20221204174331739" style="zoom:80%;" />
+
+<h5 id="右递归"><a href="#右递归" class="headerlink" title="右递归"></a>右递归</h5><p>如果一定要使用$LL(1)$文法，可以改为<strong>右递归</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204174513260.png" alt="image-20221204174513260" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204174554340.png" alt="image-20221204174554340" style="zoom:80%;" />
+
+<h4 id="5-3-文件结束符-的必要性"><a href="#5-3-文件结束符-的必要性" class="headerlink" title="5.3 文件结束符 $ 的必要性"></a>5.3 文件结束符 $ 的必要性</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204174726446.png" alt="image-20221204174726446" style="zoom:80%;" />
+
+<ul>
+<li>观察蓝框, 在输入结束的情况下, 栈中还有内容, 此时就需要利用 $ 来清空</li>
+</ul>
+<h2 id="三、Adaptive-LL-ast-语法分析算法"><a href="#三、Adaptive-LL-ast-语法分析算法" class="headerlink" title="三、Adaptive $LL(\ast)$ 语法分析算法"></a>三、Adaptive $LL(\ast)$ 语法分析算法</h2><h3 id="1-ANTLR-4"><a href="#1-ANTLR-4" class="headerlink" title="1. ANTLR 4"></a>1. ANTLR 4</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204223047803.png" alt="image-20221204223047803" style="zoom:80%;" />
+
+<blockquote>
+<p>直接左递归: E -&gt; E + T</p>
+<p>间接左递归: A -&gt; B, B -&gt; A</p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204224354903.png" alt="image-20221204224354903" style="zoom:80%;" />
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/courses-at-nju-by-hfwei/compilers-papers-we-love/tree/master/parsing">courses-at-nju-by-hfwei&#x2F;compilers-papers-we-love</a></p>
+</blockquote>
+<h3 id="2-直接左递归与优先级"><a href="#2-直接左递归与优先级" class="headerlink" title="2. 直接左递归与优先级"></a>2. 直接左递归与优先级</h3><h4 id="2-1-引入"><a href="#2-1-引入" class="headerlink" title="2.1 引入"></a>2.1 引入</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221204224547753.png" alt="image-20221204224547753" style="zoom:80%;" />
+
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr">// parser-allstar/LRExpr.g4<br><br>stat : expr &#x27;;&#x27; EOF;<br><br>expr : expr &#x27;*&#x27; expr<br>     | expr &#x27;+&#x27; expr<br>     | INT<br>     | ID<br>     ;<br></code></pre></td></tr></table></figure>
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205143936396.png" alt="image-20221205143936396" style="zoom:80%;" />
+
+<blockquote>
+<p>优先级体现在 * 比 + 深一层</p>
+<p>换言之，以上图为例，要考虑 expr:1 在哪一层展开</p>
+<ul>
+<li>和 + 同一层, 即上图情况, 则 * 更深, 优先级更高</li>
+<li>和的父节点一层, 则 + 与 * 优先级相同</li>
+</ul>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205144439777.png" alt="image-20221205144439777" style="zoom:80%;" />
+
+<h4 id="2-2-ANTLR-处理方法-优先级上升算法"><a href="#2-2-ANTLR-处理方法-优先级上升算法" class="headerlink" title="2.2 ANTLR 处理方法(优先级上升算法)"></a>2.2 ANTLR 处理方法(优先级上升算法)</h4><blockquote>
+<p>antlr4 LRExpr -Xlog</p>
+<ul>
+<li>添加 -Xlog 可以查看被 antlr4 重写后的文法</li>
+</ul>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205144716053.png" alt="image-20221205144716053" style="zoom: 67%;" />
+
+<p>$\Longrightarrow$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205144800009.png" alt="image-20221205144800009" style="zoom:80%;" />
+
+<p>$\stackrel{简化一下}{\Longrightarrow}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205144906176.png" alt="image-20221205144906176" style="zoom:67%;" />
+
+<p>可以先简单看作 $(\texttt{INT} \mid \texttt{ID})(\ast E \mid + E)^\ast$</p>
+<p>重点: 提供了一个优先级参数 <code>_p</code></p>
+<ul>
+<li>antlr4中, 优先级从上至下以此降低, 最底层优先级为 1, 每往上一层 +1<ul>
+<li>ID-1, INT-2, (expr ‘+’ expr)-3, (expr ‘*‘ expr)-4</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>举例</p>
+<p><strong>1 + 2 + 3</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205151912558.png" alt="image-20221205151912558" style="zoom:80%;" />
+
+<ul>
+<li><p>当遇到最后的 +3 时, 因为优先级限制不能直接展开, 否则就变成右结合了</p>
+</li>
+<li><p>exp[4] 中的 4 限制了要在哪一层展开, 这一层不满足, 要返回到上一层</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205152206296.png" alt="image-20221205152206296" style="zoom:80%;" />
+
+<ul>
+<li>在上一层展开 就变为 <code>ID &#39;+&#39; EXP[4] &#39;+&#39; EXP[4]</code></li>
+</ul>
+<p><strong>1 + 2 * 3</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205152508686.png" alt="image-20221205152508686" style="zoom:80%;" />
+
+
+
+<p><strong>1 * 2 + 3</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205152655882.png" alt="image-20221205152655882" style="zoom:80%;" />
+</blockquote>
+<h4 id="2-3-扩展一下语法"><a href="#2-3-扩展一下语法" class="headerlink" title="2.3 扩展一下语法"></a>2.3 扩展一下语法</h4><ol>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205152929622.png" alt="image-20221205152929622" style="zoom:80%;" />
+- 非常简单，因为不是左递归，处理时和 INT ID 一组
+</li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205153045251.png" alt="image-20221205153045251" style="zoom:80%;" />
+
+<ul>
+<li><code>&#39;-&#39; expr</code> 非左递归, 尽管优先级高, 处理时和 ID 一组</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205153149299.png" alt="image-20221205153149299" style="zoom:80%;" /></li>
+</ol>
+<blockquote>
+<p>举例</p>
+<p><strong>-a + b!</strong> $\implies$ (-a) + (b!)</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205153459054.png" alt="image-20221205153459054" style="zoom:80%;" />
+
+<p><strong>-a!!</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205154249678.png" alt="image-20221205154249678" style="zoom:80%;" />
+</blockquote>
+<ol start="3">
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205161948138.png" alt="image-20221205161948138" style="zoom:80%;" />
+- 为了实现幂运算的右结合, 推导幂运算是, expr的优先级仍然是 `expr[3]`</li>
+</ol>
+<blockquote>
+<p>举例</p>
+<p><strong>1^2^3 + 4</strong></p>
+</blockquote>
+<h4 id="2-4-如何决定优先级"><a href="#2-4-如何决定优先级" class="headerlink" title="2.4 如何决定优先级"></a>2.4 如何决定优先级</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205162834597.png" alt="image-20221205162834597" style="zoom:80%;" />
+
+<h3 id="3-错误报告与恢复"><a href="#3-错误报告与恢复" class="headerlink" title="3. 错误报告与恢复"></a>3. 错误报告与恢复</h3><h4 id="3-1-引入-1"><a href="#3-1-引入-1" class="headerlink" title="3.1 引入"></a>3.1 引入</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205162938835.png" alt="image-20221205162938835" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205163008937.png" alt="image-20221205163008937" style="zoom:80%;" />
+
+<blockquote>
+<p>短短 10 行的代码竟出现 100 个错误,</p>
+<ul>
+<li>说明不是遇到错误就停下来</li>
+</ul>
+</blockquote>
+<h4 id="3-2-恐慌-应急-Panic-模式"><a href="#3-2-恐慌-应急-Panic-模式" class="headerlink" title="3.2 恐慌&#x2F;应急(Panic)模式"></a>3.2 恐慌&#x2F;应急(Panic)模式</h4><ul>
+<li>假装成功、调整状态、继续进行</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205163248878.png" alt="image-20221205163248878" style="zoom:80%;" />
+
+<blockquote>
+<p>单词法符号移除</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205163551701.png" alt="image-20221205163551701" style="zoom:80%;" />
+
+<p>单词法符号补全</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205163601281.png" alt="image-20221205163601281" style="zoom:80%;" />
+</blockquote>
+<ul>
+<li>但这种方法只能解决简单的错误, 复杂可使用 “同步-返回” 策略</li>
+</ul>
+<h4 id="3-3-同步-返回-策略"><a href="#3-3-同步-返回-策略" class="headerlink" title="3.3 同步-返回 策略"></a>3.3 同步-返回 策略</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205163621087.png" alt="image-20221205163621087" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205164406514.png" alt="image-20221205164406514" style="zoom:80%;" />
+
+<blockquote>
+<p>静态与动态的区别</p>
+<p>例如图右侧, 因为group匹配的是第一条规则, expr跟着的只可能是 ‘]’, 而不包括 ‘)’</p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205164851153.png" alt="image-20221205164851153" style="zoom:80%;" />
+
+<h3 id="4-Adaptive-LL-ast"><a href="#4-Adaptive-LL-ast" class="headerlink" title="4. Adaptive $LL(\ast)$"></a>4. Adaptive $LL(\ast)$</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205165442256.png" alt="image-20221205165442256" style="zoom:80%;" />
+
+<blockquote>
+<p>$A: a^\ast b$</p>
+</blockquote>
+<ol>
+<li>为每个非终结符构造ATN网络</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205165458601.png" alt="image-20221205165458601" style="zoom:80%;" />
+
+<ol start="2">
+<li>根据ATN网络, 构造”向前看DFA”</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205172932199.png" alt="image-20221205172932199" style="zoom:80%;" />
+
+<p>要点: </p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205171258755.png" alt="image-20221205171258755" style="zoom:80%;" />
+
+<p>示例: </p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205173007857.png" alt="image-20221205173007857" style="zoom:80%;" />
+
+<blockquote>
+<p>$D_0$: 初始状态</p>
+<p>$f_{1&#x2F;2}$: 第1&#x2F;2条备选分支</p>
+<p>第一个分量: 状态名</p>
+<p>第二个分量: 当前子解析器在探索第几条分支</p>
+<p>第三个分量: 递归调用的符号组成的栈</p>
+</blockquote>
+<blockquote>
+<p>粗体是通过 move 得到，其他都是通过 闭包 得到的</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-5-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                        <b>#</b> 编译原理
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/25/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-4-JavaScript/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81ANTLR-4-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">一、ANTLR 4 语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%8C%E4%B9%89%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 二义性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-IfStat"><span class="toc-text">1.1 IfStat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-Left-Factoring"><span class="toc-text">1.2 Left-Factoring</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-Expr"><span class="toc-text">1.3 Expr</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Call-Graphs"><span class="toc-text">2. Call Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%9B%91%E5%90%AC%E5%99%A8%E6%A8%A1%E5%BC%8F-Listener"><span class="toc-text">2.1 监听器模式(Listener)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F-Visitor"><span class="toc-text">2.2 访问者模式(Visitor)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">3. 上下文无关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95"><span class="toc-text">3.1 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Context-Free-Grammar-CFG-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">Definition (Context-Free Grammar (CFG); 上下文无关文法)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E8%AF%AD%E4%B9%89"><span class="toc-text">3.2 语义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC-Derivation"><span class="toc-text">推导 (Derivation)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentential-Form-%E5%8F%A5%E5%9E%8B"><span class="toc-text">Definition (Sentential Form; 句型)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentence-%E5%8F%A5%E5%AD%90"><span class="toc-text">Definition (Sentence; 句子)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E6%96%87%E6%B3%95-G-%E7%94%9F%E6%88%90%E7%9A%84%E8%AF%AD%E8%A8%80-L-G"><span class="toc-text">Definition (文法 $G$ 生成的语言 $L(G)$)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%85%B3%E4%BA%8E%E6%96%87%E6%B3%95-G-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">3.3 关于文法 $G$ 的两个基本问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-%E7%BB%99%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2-x-in-T-ast-x-in-L-G"><span class="toc-text">3.3.1 给定字符串 $x \in T^\ast , x \in L(G)$ ?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-2-L-G-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">3.3.2 $L(G)$ 是什么?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">4 正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-RE-rightarrow-CFG"><span class="toc-text">4.1 RE $\rightarrow$ CFG</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-CFG-rightarrow-RE-%E5%8F%8D%E4%BE%8B"><span class="toc-text">4.2 CFG $\rightarrow$ RE 反例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">二、递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 什么是$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B"><span class="toc-text">2.1 自顶向下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6"><span class="toc-text">如何选择非终结符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D"><span class="toc-text">2.2 递归下降</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">递归下降示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">2.3 预测分析表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Definition-LL-1-%E6%96%87%E6%B3%95"><span class="toc-text">2.4 Definition ($LL(1)$ 文法)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84%E3%80%81%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="toc-text">递归下降的、预测分析实现方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%A1%E7%AE%97%E7%BB%99%E5%AE%9A%E6%96%87%E6%B3%95-G-%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">3. 计算给定文法 $G$ 的预测分析表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BC%95%E5%85%A5"><span class="toc-text">3.1 引入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-FIRST-alpha"><span class="toc-text">3.2 FIRST($\alpha$)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-FOLLOW-A"><span class="toc-text">3.3 FOLLOW($A$)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-%E8%AE%A1%E7%AE%97FIRST-FOLLOW"><span class="toc-text">3.4 计算FIRST,FOLLOW</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-1-FIRST"><span class="toc-text">3.4.1 FIRST</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-2-FOLLOW"><span class="toc-text">3.4.2 FOLLOW</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-%E8%AE%A1%E7%AE%97%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">3.5 计算预测分析表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%9D%9E%E9%80%92%E5%BD%92%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95"><span class="toc-text">4. 非递归的预测分析算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%9D%9E-LL-1-%E6%96%87%E6%B3%95%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-text">5. 非$LL(1)$文法如何解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E6%8F%90%E5%8F%96%E5%B7%A6%E5%85%AC%E5%9B%A0%E5%AD%90"><span class="toc-text">5.1 提取左公因子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E6%B6%88%E9%99%A4%E5%B7%A6%E9%80%92%E5%BD%92"><span class="toc-text">5.2 消除左递归</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%B3%E9%80%92%E5%BD%92"><span class="toc-text">右递归</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E6%96%87%E4%BB%B6%E7%BB%93%E6%9D%9F%E7%AC%A6-%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><span class="toc-text">5.3 文件结束符 $ 的必要性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Adaptive-LL-ast-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95"><span class="toc-text">三、Adaptive $LL(\ast)$ 语法分析算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ANTLR-4"><span class="toc-text">1. ANTLR 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%B4%E6%8E%A5%E5%B7%A6%E9%80%92%E5%BD%92%E4%B8%8E%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">2. 直接左递归与优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E5%BC%95%E5%85%A5"><span class="toc-text">2.1 引入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-ANTLR-%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95-%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8A%E5%8D%87%E7%AE%97%E6%B3%95"><span class="toc-text">2.2 ANTLR 处理方法(优先级上升算法)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E6%89%A9%E5%B1%95%E4%B8%80%E4%B8%8B%E8%AF%AD%E6%B3%95"><span class="toc-text">2.3 扩展一下语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E5%A6%82%E4%BD%95%E5%86%B3%E5%AE%9A%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">2.4 如何决定优先级</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%94%99%E8%AF%AF%E6%8A%A5%E5%91%8A%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-text">3. 错误报告与恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BC%95%E5%85%A5-1"><span class="toc-text">3.1 引入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E6%81%90%E6%85%8C-%E5%BA%94%E6%80%A5-Panic-%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.2 恐慌&#x2F;应急(Panic)模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%90%8C%E6%AD%A5-%E8%BF%94%E5%9B%9E-%E7%AD%96%E7%95%A5"><span class="toc-text">3.3 同步-返回 策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Adaptive-LL-ast"><span class="toc-text">4. Adaptive $LL(\ast)$</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(3)%20%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F21%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-3-%25E8%25AF%25AD%25E6%25B3%2595%25E5%2588%2586%25E6%259E%2590%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/21/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

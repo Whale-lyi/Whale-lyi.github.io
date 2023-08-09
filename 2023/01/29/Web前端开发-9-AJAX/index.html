@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Web前端开发(9) AJAX 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Web前端开发(9) AJAX</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                    <b>#</b> Web前端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="11-Asynchronous-JavaScript-and-XML-AJAX"><a href="#11-Asynchronous-JavaScript-and-XML-AJAX" class="headerlink" title="11-Asynchronous JavaScript and XML (AJAX)"></a>11-Asynchronous JavaScript and XML (AJAX)</h1><h2 id="1-RIA"><a href="#1-RIA" class="headerlink" title="1. RIA"></a>1. RIA</h2><h4 id="从网站到web应用"><a href="#从网站到web应用" class="headerlink" title="从网站到web应用"></a>从网站到web应用</h4><ul>
+<li>Client&#x2F;Server</li>
+<li>三层架构 Three-Tier<ul>
+<li>将业务应用规划中的表示层 UI、数据访问层 DAL 以及业务逻辑层 BLL, 其分层的核心任务是”高内聚低耦合”的实现</li>
+</ul>
+</li>
+<li>Model-View-Controller</li>
+<li>富互联网应用 Rich Internet</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129195934874.png" alt="image-20230129195934874" style="zoom:80%;" />
+
+<h4 id="传统的web应用"><a href="#传统的web应用" class="headerlink" title="传统的web应用"></a>传统的web应用</h4><ul>
+<li>瘦客户端架构<ul>
+<li>服务器完成大部分⼯作并保存大部分数据 -&gt; 更高的流量</li>
+</ul>
+</li>
+<li>同步通信<ul>
+<li>对于作为某些操作的结果发送的每个请求, 客户机在服务器完成响应之前不能与应用程序交互</li>
+<li>也就是说, 缺少交互性的用户体验</li>
+</ul>
+</li>
+</ul>
+<h4 id="Rich-Internet-Applications"><a href="#Rich-Internet-Applications" class="headerlink" title="Rich Internet Applications"></a>Rich Internet Applications</h4><p>MVC 的 RIA 实现</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129200104861.png" alt="image-20230129200104861" style="zoom:80%;" />
+
+<h4 id="RIA-优势与不足"><a href="#RIA-优势与不足" class="headerlink" title="RIA: 优势与不足"></a>RIA: 优势与不足</h4><p>优势</p>
+<ul>
+<li>不需要安装、易于升级、可以通过互联网&#x2F;内部网轻松获取、丰富的用户界面、更好的响应性、客户机&#x2F;服务器平衡、异步通信、网络效率</li>
+</ul>
+<p>不足</p>
+<ul>
+<li>搜索引擎不够友好、专有的(相对于开放标准)、完整性丧失(RIA通常不能很好地与HTML混合)、软件开发的复杂性(在客户端计算机上缓存或不缓存什么?)、RIA体系结构打破了 Web 页面范式</li>
+</ul>
+<h4 id="RIA-的实现方式"><a href="#RIA-的实现方式" class="headerlink" title="RIA 的实现方式"></a>RIA 的实现方式</h4><p>浏览器插件</p>
+<ul>
+<li>Flash&#x2F;Flex, Java Swing, Silverlight</li>
+<li>潜在的更强的交互性, 更高的应用障碍</li>
+<li>关注开放&#x2F;控制</li>
+</ul>
+<p>在浏览器中, 不需要插件</p>
+<ul>
+<li>AJAX</li>
+<li>更低的采用⻔槛</li>
+<li>跨浏览器问题?</li>
+</ul>
+<h2 id="2-Ajax"><a href="#2-Ajax" class="headerlink" title="2. Ajax"></a>2. Ajax</h2><h4 id="web同步通信模型"><a href="#web同步通信模型" class="headerlink" title="web同步通信模型"></a>web同步通信模型</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129201002280.png" alt="image-20230129201002280" style="zoom:80%;" />
+
+<ul>
+<li><p>同步: 用户必须等待新页面加载</p>
+<ul>
+<li>网页中使用的典型通信模式(点击-等待-刷新)</li>
+</ul>
+</li>
+<li><p>几乎所有对新数据的更改都会导致页面刷新</p>
+</li>
+</ul>
+<h4 id="web异步通信模型"><a href="#web异步通信模型" class="headerlink" title="web异步通信模型"></a>web异步通信模型</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129201105411.png" alt="image-20230129201105411" style="zoom:80%;" />
+
+<ul>
+<li>异步: 用户可以在数据加载时继续与页面交互<ul>
+<li>Ajax使通信模式成为可能</li>
+</ul>
+</li>
+<li>使用新数据进行更改, 但不刷新页面</li>
+</ul>
+<h4 id="AJAX"><a href="#AJAX" class="headerlink" title="AJAX"></a>AJAX</h4><ul>
+<li>AJAX(Asynchronous JavaScript And XML)是一种使用 XMLHttpRequest 技术构建更复杂, 动态的网页的编程实践</li>
+<li>Asynchronous JavaScript + XML(异步 JavaScript 和 XML), 其本身不是一种新技术, 而是一个在 2005 年被 Jesse James Garrett 提出的新术语, 用来描述一种使用现有技术集合的’新’方法, 包括: HTML 或 XHTML, CSS, JavaScript, DOM, XML (en-US), XSLT, 以 及最重要的 XMLHttpRequest</li>
+<li>AJAX 允许只更新一个 HTML 页面的部分 DOM, 而无须重新加载整个页面。AJAX 还允许异步⼯作, 这意味着当网页的一部分正试图重新加载时, 您的代码可以继续运行(相比之下, 同步会阻止代码继续运行, 直到这部分的网页完成重新加载)</li>
+<li>尽管 X 在 Ajax 中代表 XML, 但由于 JSON 的许多优势, 比如更加轻量以及作为 Javascript 的一部分, ⽬前 JSON 的使用比 XML 更加普遍。JSON 和 XML 都被用于在 Ajax 模型中打包信息</li>
+<li>通过交互式网站和现代 Web 标准, AJAX 正在逐渐被 JavaScript 框架中的函数和官方的 Fetch API 标准取代。</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129201143208.png" alt="image-20230129201143208" style="zoom:80%;" />
+
+<h4 id="AJAX-事件处理"><a href="#AJAX-事件处理" class="headerlink" title="AJAX 事件处理"></a>AJAX 事件处理</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230131130418795.png" alt="image-20230131130418795" style="zoom:80%;" />
+
+<h4 id="AJAX-优缺点"><a href="#AJAX-优缺点" class="headerlink" title="AJAX 优缺点"></a>AJAX 优缺点</h4><p>优点</p>
+<ul>
+<li>更好的交互性和响应性</li>
+<li>页面将更易于使用</li>
+<li>由于部分呈现, 减少了到Web服务器的连接</li>
+<li>因为只加载更新页面所需的数据, 而不是刷新整个页面, 因此节省了带宽</li>
+<li>有助于减少网络流量。</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>后退和刷新按钮变得不可用</li>
+<li>收藏网页将变得不可用</li>
+<li>要求在Web浏览器上启用 JavaScript</li>
+<li>网络延迟可能会破坏可用性</li>
+<li>通过AJAX加载的数据不会被任何主要搜索引擎索引。因此, 使其SEO不友好</li>
+</ul>
+<h4 id="使用AJAX的真实场景"><a href="#使用AJAX的真实场景" class="headerlink" title="使用AJAX的真实场景"></a>使用AJAX的真实场景</h4><p>下面的列表描述了AJAX可以发挥作用的一些现实场景:</p>
+<ul>
+<li>自动完成搜索文本框</li>
+<li>级联下拉列表框</li>
+<li>实时通信, 如即时消息传递</li>
+<li>实时数据更新, 如分数更新</li>
+<li>即时表单验证反馈</li>
+<li>自动保存用户信息</li>
+</ul>
+<h2 id="3-XMLHttpRequest"><a href="#3-XMLHttpRequest" class="headerlink" title="3. XMLHttpRequest"></a>3. XMLHttpRequest</h2><h4 id="AJAX-组件"><a href="#AJAX-组件" class="headerlink" title="AJAX 组件"></a>AJAX 组件</h4><ul>
+<li>AJAX不能独立⼯作</li>
+<li>与其他技术结合使用, 以创建以下列表中描述的交互式Web页面:<ul>
+<li>JavaScript:<ul>
+<li>松散类型的脚本语言</li>
+<li>当页面中发生事件时调用 JavaScript 函数</li>
+<li>整个AJAX操作的胶水</li>
+</ul>
+</li>
+<li>DOM:<ul>
+<li>用于访问和操作结构化文档的 API</li>
+<li>表示XML和HTML文档的结构</li>
+</ul>
+</li>
+<li>CSS:<ul>
+<li>允许将表示样式与内容清晰分离, 并且可以通过JavaScript以编程方式更改</li>
+</ul>
+</li>
+<li>XMLHttpRequest:<ul>
+<li>JavaScript对象, 它执行与服务器的异步交互</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="XMLHttpRequest-对象简介"><a href="#XMLHttpRequest-对象简介" class="headerlink" title="XMLHttpRequest 对象简介"></a>XMLHttpRequest 对象简介</h4><ul>
+<li>是AJAX最重要的组件</li>
+<li>自2000年7月Internet Explorer 5.5发布以来一直可用</li>
+<li>是一个API, 可以被 JavaScript、JScript、VBScript 和其他 Web 浏览器脚本语言使用</li>
+<li>用于使用 HTTP 在 Web 服务器之间传输和操作 XML 数据</li>
+<li>在 Web 页面的客户端和服务器端之间建立独立的连接通道</li>
+<li>除了XML, XMLHttpRequest还可以用于获取其他格式的数据, 比如 JSON 甚⾄纯文本</li>
+<li>执行如下操作:<ul>
+<li>在后台从客户端发送数据</li>
+<li>从服务器接收数据</li>
+<li>更新网页, 无需重新加载</li>
+</ul>
+</li>
+</ul>
+<h4 id="AJAX-Web应用程序模型的处理周期"><a href="#AJAX-Web应用程序模型的处理周期" class="headerlink" title="AJAX Web应用程序模型的处理周期"></a>AJAX Web应用程序模型的处理周期</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230131131459962.png" alt="image-20230131131459962" style="zoom:80%;" />
+
+<h4 id="XMLHttpRequest对象的常见属性"><a href="#XMLHttpRequest对象的常见属性" class="headerlink" title="XMLHttpRequest对象的常见属性"></a>XMLHttpRequest对象的常见属性</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230131131646027.png" alt="image-20230131131646027" style="zoom:80%;" />
+
+<h4 id="XMLHttpRequest对象的基本方法"><a href="#XMLHttpRequest对象的基本方法" class="headerlink" title="XMLHttpRequest对象的基本方法"></a>XMLHttpRequest对象的基本方法</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230131131718361.png" alt="image-20230131131718361" style="zoom:80%;" />
+
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><ul>
+<li>为了使用 JavaScript 向服务器发送一个 http 请求, 需要一个包含必要函数功能的 XMLHttpRequest 对象实例</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> httpRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br><br><span class="hljs-comment">// Old compatibility code, no longer needed.</span><br><span class="hljs-keyword">if</span> (<span class="hljs-variable language_">window</span>.<span class="hljs-property">XMLHttpRequest</span>) &#123; <span class="hljs-comment">// Mozilla, Safari, IE7+ ...</span><br>	httpRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();<br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (<span class="hljs-variable language_">window</span>.<span class="hljs-property">ActiveXObject</span>) &#123; <span class="hljs-comment">// IE 6 and older</span><br>	httpRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ActiveXObject</span>(<span class="hljs-string">&quot;Microsoft.XMLHTTP&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>创建 XMLHttpRequest 对象后, 需要决定在收到服务器对请求的响应后要做什么</li>
+<li>在这一步, 需要定义 JavaScript 函数, 该函数将处理服务器响应</li>
+<li>这可以使用 XMLHttpRequest 对象的 onreadystatechange 属性来完成, 如下所示的代码片段</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">httpRequest.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>	<span class="hljs-comment">//process the server response</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>设置响应功能后, 需要进行请求</li>
+<li>为了发出请求, 需要调用 XMLHttpRequest 对象的 open() 和 send() 方法, 如下所示:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">httpRequest.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>,<span class="hljs-string">&#x27;serverpage.php&#x27;</span>,<span class="hljs-literal">true</span>);<br>httpRequest.<span class="hljs-title function_">send</span>(<span class="hljs-literal">null</span>);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>下面的列表描述了前面代码片段中传递给 open() 方法的参数:</p>
+<ul>
+<li>第一个参数是HTTP请求方法, 例如GET、POST和HEAD</li>
+<li>第⼆个参数是请求的 Web 页面的 URL</li>
+<li>第三个参数(可选)设置请求是否是异步的</li>
+</ul>
+</li>
+<li><p>处理服务器的响应:</p>
+<ul>
+<li>首先, 响应函数需要检查请求的就绪状态<ul>
+<li>如果就绪状态的值为 4, 则可以进一步执行</li>
+</ul>
+</li>
+<li>接下来, 需要检查HTTP服务器响应的响应代码</li>
+</ul>
+</li>
+<li><p>下面的代码片段描述了如何处理服务器的响应:</p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">httpRequest.<span class="hljs-property">onreadystatechange</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-keyword">if</span> (httpRequest.<span class="hljs-property">readyState</span> === <span class="hljs-number">4</span>) &#123;<br>     	<span class="hljs-comment">// everything is good, the response is received</span><br>     	<span class="hljs-keyword">if</span> (httpRequest.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123; <br>            <span class="hljs-comment">// process the response </span><br>        &#125; <span class="hljs-keyword">else</span> &#123; <br>            <span class="hljs-comment">// request encountered some problem,</span><br>     		<span class="hljs-comment">// for example, the response may contain a HTTP 404 (Not Found) response code</span><br>    	&#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123; <br>        <span class="hljs-comment">// still not ready </span><br>    &#125; <br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h4 id="使用-XMLHttpRequest-获取数据"><a href="#使用-XMLHttpRequest-获取数据" class="headerlink" title="使用 XMLHttpRequest 获取数据"></a>使用 XMLHttpRequest 获取数据</h4><ul>
+<li>下面的代码片段描述了如何在Web页面上显示来自 Web 服务器的响应</li>
+</ul>
+<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;ajaxButton&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span>&gt;</span>Make a request<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript"></span><br><span class="language-javascript">(<span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">    <span class="hljs-keyword">var</span> httpRequest;</span><br><span class="language-javascript">    <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&quot;ajaxButton&quot;</span>).<span class="hljs-title function_">addEventListener</span>(<span class="hljs-string">&#x27;click&#x27;</span>, makeRequest);</span><br><span class="language-javascript">    </span><br><span class="language-javascript">    <span class="hljs-keyword">function</span> <span class="hljs-title function_">makeRequest</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        httpRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">XMLHttpRequest</span>();</span><br><span class="language-javascript">        </span><br><span class="language-javascript">        <span class="hljs-keyword">if</span> (!httpRequest) &#123;</span><br><span class="language-javascript">        	<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;Giving up :( Cannot create an XMLHTTP instance&#x27;</span>);</span><br><span class="language-javascript">        	<span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">        httpRequest.<span class="hljs-property">onreadystatechange</span> = alertContents;</span><br><span class="language-javascript">        httpRequest.<span class="hljs-title function_">open</span>(<span class="hljs-string">&#x27;GET&#x27;</span>, <span class="hljs-string">&#x27;test.html&#x27;</span>);</span><br><span class="language-javascript">        httpRequest.<span class="hljs-title function_">send</span>();</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">    <span class="hljs-keyword">function</span> <span class="hljs-title function_">alertContents</span>(<span class="hljs-params"></span>) &#123;</span><br><span class="language-javascript">        <span class="hljs-keyword">if</span> (httpRequest.<span class="hljs-property">readyState</span> === <span class="hljs-title class_">XMLHttpRequest</span>.<span class="hljs-property">DONE</span>) &#123;</span><br><span class="language-javascript">            <span class="hljs-keyword">if</span> (httpRequest.<span class="hljs-property">status</span> === <span class="hljs-number">200</span>) &#123;</span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(httpRequest.<span class="hljs-property">responseText</span>);</span><br><span class="language-javascript">            &#125; <span class="hljs-keyword">else</span> &#123;</span><br><span class="language-javascript">            	<span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;There was a problem with the request.&#x27;</span>);</span><br><span class="language-javascript">            &#125;</span><br><span class="language-javascript">        &#125;</span><br><span class="language-javascript">    &#125;</span><br><span class="language-javascript">&#125;)();</span><br><span class="language-javascript"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="跨站的-XMLHttpRequest"><a href="#跨站的-XMLHttpRequest" class="headerlink" title="跨站的 XMLHttpRequest"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest">跨站的 XMLHttpRequest</a></h4><ul>
+<li>现代浏览器可以通过执行 WebApps ⼯作小组通过的 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/CORS">Access Control for Cross-Site Requests</a> 标注来支持跨站请求。只要服务器端的配置允许您从您的 Web 应用发送请求, 就可以使用 XMLHttpRequest。否则, 会抛出一个 INVALID_ACCESS_ERR 异常</li>
+<li>跨源资源共享(<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Glossary/CORS">CORS</a>, 或通俗地译为跨域资源共享)是一种基于 HTTP 头的机制, 该机制通过允许服务器标示除了它自⼰以外的其它源(域、协议和端口), 使得浏览器允许这些 origin 访问加载自⼰的资源。跨源资源共享还通过一种机制来检查服务器是否会允许要发送的真实请求, 该机制通过浏览器发起一个到服务器托管的跨源资源的”<strong>预检</strong>“请求。在预检中, 浏览器发送的头中标示有 HTTP 方法和真实请求中会用到的头</li>
+<li>跨源 HTTP 请求的一个例子: 运行在 <a target="_blank" rel="noopener" href="https://domain-a.com/">https://domain-a.com</a> 的 JavaScript 代码使用 XMLHttpRequest 来发起一个到 <a target="_blank" rel="noopener" href="https://domain-b.com/data.json">https://domain-b.com/data.json</a> 的请求</li>
+<li>出于安全性, 浏览器限制脚本内发起的跨源 HTTP 请求。例如, XMLHttpRequest 和 Fetch API 遵循同源策略。这意味着使用这些 API 的 Web 应用程序只能从加载应用程序的同一个域请求 HTTP 资源, 除非响应报文包含了正确 CORS 响应头</li>
+<li>CORS 机制允许 Web 应用服务器进行跨源访问控制, 从而使跨源数据传输得以安全进行。现代浏览器支持在 API 容器中(例如 XMLHttpRequest 或 Fetch)使用 CORS, 以降低跨源 HTTP 请求所带来的风险</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230131150700326.png" alt="image-20230131150700326" style="zoom:80%;" />
+
+<h4 id="Fetch"><a href="#Fetch" class="headerlink" title="Fetch"></a>Fetch</h4><ul>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API">Fetch</a> 是一个现代的概念, 等同于 XMLHttpRequest。它提供了许多与 XMLHttpRequest 相同的功能, 但被设计成更具可扩展性和高效性</li>
+<li>Fetch API 提供了一个 JavaScript 接口, 用于访问和操纵 HTTP 管道的一些具体部分, 例如请求和响应。它还提供了一个全局 fetch() 方法, 该方法提供了一种简单, 合理的方式来跨网络异步获取资源</li>
+<li>这种功能以前是使用 XMLHttpRequest 实现的。Fetch 提供了一个更理想的替代方案, 可以很容易地被其他技术使用, 例如 Service Workers。Fetch 还提供了专⻔的逻辑空间来定义其他与 HTTP 相关的概念, 例如 CORS 和 HTTP 的扩展</li>
+</ul>
+<h4 id="基本的-fetch-请求"><a href="#基本的-fetch-请求" class="headerlink" title="基本的 fetch 请求"></a>基本的 fetch 请求</h4><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Fetch_API/Using_Fetch">使用 fetch</a></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;http://example.com/movies.json&#x27;</span>)<br> .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">response</span> =&gt;</span> response.<span class="hljs-title function_">json</span>())<br> .<span class="hljs-title function_">then</span>(<span class="hljs-function"><span class="hljs-params">data</span> =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(data));<br></code></pre></td></tr></table></figure>
+
+<h2 id="4-Ajax的局限"><a href="#4-Ajax的局限" class="headerlink" title="4. Ajax的局限"></a>4. Ajax的局限</h2><h4 id="Ajax-风险"><a href="#Ajax-风险" class="headerlink" title="Ajax 风险"></a>Ajax 风险</h4><p>浏览器后退机制的破坏, 后退和前进按钮问题、安全风险、搜索引擎、书签的问题</p>
+<h4 id="并发连接数限制"><a href="#并发连接数限制" class="headerlink" title="并发连接数限制"></a>并发连接数限制</h4><ul>
+<li>HTTP 1.1 (RFC 2616)建议单用户客户端不应该与任何服务器或代理保持超过2个连接</li>
+<li>大多数浏览器(包括IE)都遵守这个规则</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230131151621856.png" alt="image-20230131151621856" style="zoom:80%;" />
+
+<h2 id="5-提示"><a href="#5-提示" class="headerlink" title="5. 提示"></a>5. 提示</h2><h4 id="Ajax-优化"><a href="#Ajax-优化" class="headerlink" title="Ajax 优化"></a>Ajax 优化</h4><ul>
+<li>优化任何 Ajax 应用程序的方法是找到优化其中的每个元素的最佳方法。应用程序尽可能快速高效地运行是很重要的</li>
+</ul>
+<h4 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h4><p>当从服务器接收新数据时没有巨大的延迟时, Ajax应用程序是快速的。优化两个方面将有助于应用程序成功</p>
+<ul>
+<li>第一种是压缩从服务器发送到客户端的所有数据。这对于快速数据传输非常重要</li>
+<li>第⼆个问题与数据本身有关。从客户机和服务器来回发送的数据也应该尽可能地优化。</li>
+</ul>
+<h4 id="数据"><a href="#数据" class="headerlink" title="数据"></a>数据</h4><ul>
+<li>向服务器发送数据时, 发送最小数量的信息。如果要发送键&#x2F;值对, 请保持键和值都小。尽可能列举选择。而不是像这样:<ul>
+<li>user_choice&#x3D;add_data_to_database&amp;data1&#x3D;value1&amp;data2&#x3D;value2</li>
+</ul>
+</li>
+<li>考虑将每个选项设置为单个值, 并发送该值:<ul>
+<li>c&#x3D;3&amp;d1&#x3D;value1&amp;d2&#x3D;value2</li>
+</ul>
+</li>
+<li>更小的数据使得被拦截的信息更难被解释(一个很好的安全好处), 并保持需要发送和解析的数据的大小更小</li>
+</ul>
+<h4 id="代码优化"><a href="#代码优化" class="headerlink" title="代码优化"></a>代码优化</h4><ul>
+<li>Ajax 优化的另一个重要部分是优化在客户机上执行的 JavaScript 代码, 并创建尽可能快的数据检索<ul>
+<li>内联 SQL 查询</li>
+<li>存储过程</li>
+</ul>
+</li>
+<li>在客户机上, 许多 JavaScript 技术将有助于增加代码的执行时间。当接收到 Ajax 响应时代码可能需要执行的 DOM 操作时, 这一点尤其重要</li>
+<li>没有人说 Ajax 应用程序在没有任何优化的情况下不能平稳有效地运行。在大多数情况下, 以太网连接的速度、计算机的处理能力以及浏览器中 JavaScript 的更好实现将确保应用程序运行良好。优化将使应用程序运行得更快。对于用户来说, 越快越好</li>
+</ul>
+<h4 id="AJAX实现的最佳实践"><a href="#AJAX实现的最佳实践" class="headerlink" title="AJAX实现的最佳实践"></a>AJAX实现的最佳实践</h4><ul>
+<li>理解这一切意味着什么<ul>
+<li>维基百科</li>
+</ul>
+</li>
+<li>检查合适的使用场景</li>
+<li>学会用原始代码实现它</li>
+</ul>
+<h4 id="使用库"><a href="#使用库" class="headerlink" title="使用库"></a>使用库</h4><ul>
+<li>库不仅提供了可以使用的详尽特性集, 而且还确保代码与所有浏览器兼容, 而无需做任何额外的⼯作<ul>
+<li>axios</li>
+<li>AngularJS</li>
+</ul>
+</li>
+<li>掌握一个库</li>
+</ul>
+<h4 id="了解-Ajax-库的局限性"><a href="#了解-Ajax-库的局限性" class="headerlink" title="了解 Ajax 库的局限性"></a>了解 Ajax 库的局限性</h4><ul>
+<li>所有 JavaScript 库都允许访问 Ajax 对象, 该对象规范了浏览器之间的差异, 并提供了一致的界面。然而, 在提供统一的界面时, 这些库也必须简化界面, 因为不是每个浏览器都实现每个特性。这将阻止您访问 XMLHttpRequest 的全部功能</li>
+<li>直接与 XHR 对象交互还减少了函数开销, 进一步提高了性能。只是要注意, 如果放弃使用 Ajax 库, 可能会在使用更⽼、更晦涩的浏览器时遇到一些问题</li>
+</ul>
+<h4 id="利用适当的事件和回调函数"><a href="#利用适当的事件和回调函数" class="headerlink" title="利用适当的事件和回调函数"></a>利用适当的事件和回调函数</h4><ul>
+<li>正确使用这些事件和它们各自的回调来操作 UI, 以获得更好的用户体验。</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">$.<span class="hljs-title function_">ajax</span>(&#123;<br>    <span class="hljs-comment">//Other code</span><br>    <span class="hljs-attr">success</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) &#123;<br>        <span class="hljs-comment">// Update the UI here to reflect that the request was successful.</span><br>        <span class="hljs-title function_">doSomethingClever</span>();<br>    &#125;,<br>    <span class="hljs-attr">error</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) &#123;<br>        <span class="hljs-comment">// Update the UI here to reflect that the request was unsuccessful</span><br>        <span class="hljs-title function_">doSomethingMoreClever</span>();<br>    &#125;,<br>    <span class="hljs-attr">complete</span>: <span class="hljs-keyword">function</span>(<span class="hljs-params">msg</span>) &#123;<br>        <span class="hljs-comment">// Update the UI here to reflect completion</span><br>        <span class="hljs-title function_">doSomethingEvenMoreClever</span>();<br>    &#125;<br>&#125;);<br></code></pre></td></tr></table></figure>
+
+<h4 id="选择合适的格式"><a href="#选择合适的格式" class="headerlink" title="选择合适的格式"></a>选择合适的格式</h4><ul>
+<li>在考虑数据传输技术时, 必须考虑以下几个因素: 特性集、兼容性、性能和方向(到服务器或从服务器)</li>
+<li>在考虑数据格式时, 唯一需要比较的尺度是速度</li>
+<li>没有一种数据格式总是比其他格式更好。根据正在传输的数据及其在页面上的预期用途, 一个可能下载得更快, 而另一个可能解析得更快</li>
+</ul>
+<h4 id="数据格式-XML"><a href="#数据格式-XML" class="headerlink" title="数据格式 - XML"></a>数据格式 - XML</h4><ul>
+<li>XML<ul>
+<li>极大的互操作性(在服务器端和客户端都有出⾊的支持)</li>
+<li>严格的格式</li>
+<li>容易验证</li>
+<li>非常详细。每一个离散的数据都需要大量的结构, 而数据与结构的比率极低</li>
+<li>XML的语法也有点模糊</li>
+<li>解析这个语法同样是不明确的</li>
+</ul>
+</li>
+<li>XML 在高性能 Ajax 中没有一席之地</li>
+</ul>
+<h4 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a>JSON</h4><ul>
+<li>JSON(JavaScript Object Notation)由Douglas Crockford形式化并推⼴开来, 是一种使用 JavaScript 对象和数组文字语法编写的轻量级且易于解析的数据格式。基于 ECMAScript 的一个子集</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-comment">// Verbose JSON 信息最多, 可读性好</span><br><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span> <br>        <span class="hljs-attr">&quot;id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>     	<span class="hljs-attr">&quot;username&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alice&quot;</span><span class="hljs-punctuation">,</span><br>     	<span class="hljs-attr">&quot;realname&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Alice Smith&quot;</span><span class="hljs-punctuation">,</span> <br>     	<span class="hljs-attr">&quot;email&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alice@alicesmith.com&quot;</span> <br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> ...<br><span class="hljs-punctuation">]</span><br><br><span class="hljs-comment">// Simple JSON 简化形式</span><br><span class="hljs-punctuation">[</span><br>	<span class="hljs-punctuation">&#123;</span> <br>    	<span class="hljs-attr">&quot;i&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1</span><span class="hljs-punctuation">,</span><br>    	<span class="hljs-attr">&quot;u&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alice&quot;</span><span class="hljs-punctuation">,</span><br>    	<span class="hljs-attr">&quot;r&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Alice Smith&quot;</span><span class="hljs-punctuation">,</span><br>    	<span class="hljs-attr">&quot;e&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;alice@alicesmith.com&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span> ...<br><span class="hljs-punctuation">]</span><br><br><span class="hljs-comment">// Array JSON</span><br><span class="hljs-punctuation">[</span><br>	<span class="hljs-punctuation">[</span><br>        <span class="hljs-number">1</span><span class="hljs-punctuation">,</span> <br>     	<span class="hljs-string">&quot;alice&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;Alice Smith&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-string">&quot;alice@alicesmith.com&quot;</span> <br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> ...<br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="JSON-P"><a href="#JSON-P" class="headerlink" title="JSON-P"></a>JSON-P</h4><ul>
+<li>Jsonp(JSON with Padding) 是 json 的一种”使用模式”, 可以让网页从别的域名(网站)那获取资料, 即跨域读取数据<ul>
+<li>当使用动态脚本标记插⼊时, JSON 数据被视为另一个 JavaScript 文件, 并作为本机代码执行。为了实现这一点, 必须将数据包装在回调函数中</li>
+</ul>
+</li>
+<li>由于数据被视为原生 JavaScript, 因此它将以原生 JavaScript 速度进行解析</li>
+<li>有一个避免使用 JSON-P 的原因与性能无关: 由于 JSON-P 必须是可执行的 JavaScript, 任何人都可以调用它, 并在任何使用动态脚本标签插⼊的网站中包含它</li>
+<li>不要在 JSON-P 中编码任何敏感数据, 因为即使使用随机 url 或 cookie, 也不能确保它保持私有</li>
+</ul>
+<h4 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h4><ul>
+<li>HTML作为一种数据格式, 既缓慢⼜臃肿</li>
+</ul>
+<h4 id="自定义格式"><a href="#自定义格式" class="headerlink" title="自定义格式"></a>自定义格式</h4><ul>
+<li>这种格式非常简洁, 并提供了非常高的数据结构比(显著高于任何其他格式, 不包括纯文本)</li>
+<li>最重要的决定之一是使用什么作为分隔符</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">1:alice:Alice Smith:alice@alicesmith.com;<br>2:bob:Bob Jones:bob@bobjones.com;<br></code></pre></td></tr></table></figure>
+
+<h4 id="数据格式总结"><a href="#数据格式总结" class="headerlink" title="数据格式总结"></a>数据格式总结</h4><p>一般支持轻量级格式; 最好的格式是 JSON 和字符分隔的自定义格式。如果数据集很大, 解析时间成为问题, 可以使用以下两种技术之一:</p>
+<ul>
+<li>JSON-P 数据, 使用动态脚本标记插⼊获取。这将数据视为可执行的 JavaScript, 而不是字符串, 并允许极快的解析。这可以跨域使用, 但不应该用于敏感数据</li>
+<li>字符分隔的自定义格式, 使用 XHR 或动态脚本标记插⼊获取, 并使用 split() 进行解析。这种技术解析超大数据集的速度略快于 JSON-P 技术, 而且通常具有较小的文件大小</li>
+</ul>
+<h4 id="缓存数据"><a href="#缓存数据" class="headerlink" title="缓存数据"></a>缓存数据</h4><p>最快的Ajax请求是不必发出的请求。防止不必要的请求有两种主要方法:</p>
+<ul>
+<li>在服务器端, 设置HTTP报头, 以确保响应将缓存在浏览器中</li>
+<li>在客户端, 将获取的数据存储在本地, 这样就不会再次请求它</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/01/28/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-8-%E9%89%B4%E6%9D%83/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
+                        <b>#</b> Web前端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/01/31/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-10-HTTP%E3%80%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#11-Asynchronous-JavaScript-and-XML-AJAX"><span class="toc-text">11-Asynchronous JavaScript and XML (AJAX)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-RIA"><span class="toc-text">1. RIA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E7%BD%91%E7%AB%99%E5%88%B0web%E5%BA%94%E7%94%A8"><span class="toc-text">从网站到web应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84web%E5%BA%94%E7%94%A8"><span class="toc-text">传统的web应用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Rich-Internet-Applications"><span class="toc-text">Rich Internet Applications</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RIA-%E4%BC%98%E5%8A%BF%E4%B8%8E%E4%B8%8D%E8%B6%B3"><span class="toc-text">RIA: 优势与不足</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RIA-%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F"><span class="toc-text">RIA 的实现方式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Ajax"><span class="toc-text">2. Ajax</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#web%E5%90%8C%E6%AD%A5%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">web同步通信模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#web%E5%BC%82%E6%AD%A5%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%9E%8B"><span class="toc-text">web异步通信模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AJAX"><span class="toc-text">AJAX</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AJAX-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86"><span class="toc-text">AJAX 事件处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AJAX-%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">AJAX 优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8AJAX%E7%9A%84%E7%9C%9F%E5%AE%9E%E5%9C%BA%E6%99%AF"><span class="toc-text">使用AJAX的真实场景</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-XMLHttpRequest"><span class="toc-text">3. XMLHttpRequest</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#AJAX-%E7%BB%84%E4%BB%B6"><span class="toc-text">AJAX 组件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XMLHttpRequest-%E5%AF%B9%E8%B1%A1%E7%AE%80%E4%BB%8B"><span class="toc-text">XMLHttpRequest 对象简介</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AJAX-Web%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%A4%84%E7%90%86%E5%91%A8%E6%9C%9F"><span class="toc-text">AJAX Web应用程序模型的处理周期</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XMLHttpRequest%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%B8%B8%E8%A7%81%E5%B1%9E%E6%80%A7"><span class="toc-text">XMLHttpRequest对象的常见属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XMLHttpRequest%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%96%B9%E6%B3%95"><span class="toc-text">XMLHttpRequest对象的基本方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-XMLHttpRequest-%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-text">使用 XMLHttpRequest 获取数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B7%A8%E7%AB%99%E7%9A%84-XMLHttpRequest"><span class="toc-text">跨站的 XMLHttpRequest</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fetch"><span class="toc-text">Fetch</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84-fetch-%E8%AF%B7%E6%B1%82"><span class="toc-text">基本的 fetch 请求</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Ajax%E7%9A%84%E5%B1%80%E9%99%90"><span class="toc-text">4. Ajax的局限</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ajax-%E9%A3%8E%E9%99%A9"><span class="toc-text">Ajax 风险</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%BF%9E%E6%8E%A5%E6%95%B0%E9%99%90%E5%88%B6"><span class="toc-text">并发连接数限制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%8F%90%E7%A4%BA"><span class="toc-text">5. 提示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Ajax-%E4%BC%98%E5%8C%96"><span class="toc-text">Ajax 优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1"><span class="toc-text">通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE"><span class="toc-text">数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96"><span class="toc-text">代码优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#AJAX%E5%AE%9E%E7%8E%B0%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-text">AJAX实现的最佳实践</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E5%BA%93"><span class="toc-text">使用库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%86%E8%A7%A3-Ajax-%E5%BA%93%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-text">了解 Ajax 库的局限性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E9%80%82%E5%BD%93%E7%9A%84%E4%BA%8B%E4%BB%B6%E5%92%8C%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0"><span class="toc-text">利用适当的事件和回调函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E6%A0%BC%E5%BC%8F"><span class="toc-text">选择合适的格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F-XML"><span class="toc-text">数据格式 - XML</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON"><span class="toc-text">JSON</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JSON-P"><span class="toc-text">JSON-P</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HTML"><span class="toc-text">HTML</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%BC%E5%BC%8F"><span class="toc-text">自定义格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E6%A0%BC%E5%BC%8F%E6%80%BB%E7%BB%93"><span class="toc-text">数据格式总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%95%B0%E6%8D%AE"><span class="toc-text">缓存数据</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91(9)%20AJAX + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F01%2F29%2FWeb%25E5%2589%258D%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-9-AJAX%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/01/29/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-9-AJAX/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      计算机操作系统(6) 并发程序设计 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">计算机操作系统(6) 并发程序设计</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                    <b>#</b> 计算机操作系统
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="第六章-并发程序设计"><a href="#第六章-并发程序设计" class="headerlink" title="第六章 并发程序设计"></a>第六章 并发程序设计</h1><h2 id="6-1-并发进程"><a href="#6-1-并发进程" class="headerlink" title="6.1 并发进程"></a>6.1 并发进程</h2><h3 id="6-1-1-顺序程序设计"><a href="#6-1-1-顺序程序设计" class="headerlink" title="6.1.1 顺序程序设计"></a>6.1.1 顺序程序设计</h3><ul>
+<li>一个进程在处理器上的顺序执行是严格按序的, 一个进程只有当一个操作结束后, 才能开始后继操作</li>
+<li>顺序程序设计是把一个程序设计成一个顺序执行的程序模块, 顺序的含义不但指一个程序模块内部, 也指两个程序模块之间</li>
+</ul>
+<h4 id="顺序程序设计特点"><a href="#顺序程序设计特点" class="headerlink" title="顺序程序设计特点"></a>顺序程序设计特点</h4><ul>
+<li>程序执行的顺序性</li>
+<li>程序环境的封闭性</li>
+<li>执行结果的确定性</li>
+<li>计算过程的可再现性</li>
+</ul>
+<h3 id="6-1-2-进程的并发性"><a href="#6-1-2-进程的并发性" class="headerlink" title="6.1.2 进程的并发性"></a>6.1.2 进程的并发性</h3><ul>
+<li>进程的并发性(Concurrency)是指一组进程的执行在时间上是重叠的</li>
+<li>例如：有两个进程 A(a1、a2、a3) 和 B(b1、b2、b3) 并发执行, 若允许进程交叉执行, 如执行操作序列为 a1, b1, a2, b2, a3, b3 或 a1, a2, b1, b2, b3, a3 等, 则说进程 A 和 B 的执行是并发的</li>
+<li>从宏观上看, 并发性反映一个时间段中几个进程都在同一处理器上, 处于运行还未运行结束状态</li>
+<li>从微观上看, 任一时刻仅有一个进程在处理器上运行</li>
+</ul>
+<h4 id="并发程序设计"><a href="#并发程序设计" class="headerlink" title="并发程序设计"></a>并发程序设计</h4><ul>
+<li>使一个程序分成若干个可同时执行的程序模块的方法称<strong>并发程序设计(concurrent programming)</strong>, 每个程序模块和它执行时所处理的数据就组成一个进程</li>
+</ul>
+<h4 id="进程的并发性"><a href="#进程的并发性" class="headerlink" title="进程的并发性"></a>进程的并发性</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105242312.png" alt="image-20221205105242312" style="zoom:80%;" />
+
+<ul>
+<li>由于程序是按照 while(TRUE) {input, process, output} 串行地输入 - 处理 - 输出来编制的, 所以该程序只能顺序地执行, 这时系统的效率相当低</li>
+<li>如果把求解这个问题的程序分成三部分：<ul>
+<li>i: while(TRUE) {input, send}</li>
+<li>p: while(TRUE) {receive, process, send}</li>
+<li>o: while(TRUE) {receive, output}</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105403896.png" alt="image-20221205105403896" style="zoom:80%;" />
+
+<ul>
+<li>每一部分是一个小程序, 它们可并发执行, 并会产生制约关系, 其中 send 和 receive 操作用于小程序之间通过通信机制解决制约关系, 以便协调一致地工作</li>
+</ul>
+<h4 id="并发进程的分类"><a href="#并发进程的分类" class="headerlink" title="并发进程的分类"></a>并发进程的分类</h4><ul>
+<li>并发进程分类：无关的, 交互的</li>
+<li>无关的并发进程：一个进程的执行与其他并发进程的进展无关<ul>
+<li>并发进程的无关性是进程的执行与时间无关的一个充分条件, 又称为Bernstein条件</li>
+</ul>
+</li>
+<li>交互的并发进程: 不满足Bernstein条件, 一个进程的执行可能影响其他并发进程的结果</li>
+</ul>
+<h4 id="Bernstein条件"><a href="#Bernstein条件" class="headerlink" title="Bernstein条件"></a>Bernstein条件</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205105705207.png" alt="image-20221205105705207" style="zoom:80%;" />
+
+<ul>
+<li>没有读写冲突与写写冲突</li>
+</ul>
+<blockquote>
+<p>举例: 有如下分属四个进程中的四条语句：</p>
+<ul>
+<li>S1: a :&#x3D; x + y</li>
+<li>S2: b :&#x3D; z + 1</li>
+<li>S3: c :&#x3D; a – b</li>
+<li>S4: w :&#x3D; c + 1</li>
+</ul>
+<p>于是有:</p>
+<p>R(S1)&#x3D;{x, y}, R(S2)&#x3D;{z}, R(S3)&#x3D;{a, b}, R(S4)&#x3D;{c}；</p>
+<p>W(S1)&#x3D;{a},  W(S2)&#x3D;{b}, W(S3)&#x3D;{c},  W(S4)&#x3D;{w}</p>
+<p>S1和S2可并发执行, 满足Bernstein条件</p>
+<p>其他语句并发执行可能会产生与时间有关的错误</p>
+</blockquote>
+<h4 id="与时间有关的错误"><a href="#与时间有关的错误" class="headerlink" title="与时间有关的错误"></a>与时间有关的错误</h4><ul>
+<li>对于一组交互的并发进程, 执行的相对速度无法相互控制, 各种与时间有关的错误就可能出现</li>
+<li>与时间有关错误的表现形式：<ul>
+<li>结果不唯一</li>
+<li>永远等待</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>并发是开放的: 每执行完一条机器指令都有被抢占的风险</p>
+<p>顺序是封闭的</p>
+</blockquote>
+<h4 id="机票问题"><a href="#机票问题" class="headerlink" title="机票问题"></a>机票问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205110025898.png" alt="image-20221205110025898" style="zoom:80%;" />
+
+<ul>
+<li>此时出现把同一张票卖给两个旅客的情况, 两个旅客可能各自都买到一张同天同次航班的机票, 可是, Aj 的值实际上只减去 1, 造成余票数不正确。特别是, 当某次航班只有一张余票时, 可能把一张票同时售给两位旅客</li>
+</ul>
+<h4 id="主存管理问题"><a href="#主存管理问题" class="headerlink" title="主存管理问题"></a>主存管理问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206175155957.png" alt="image-20221206175155957" style="zoom:80%;" />
+
+<ul>
+<li>由于 <code>borrow</code> 和 <code>return</code> 共享代表主存物理资源的临界变量 X, 对并发执行不加限制会导致错误, 例如, 一个进程调用borrow申请主存, 在执行比较 B 和 X 大小的指令后, 发现 B &gt; X, 但在执行 <code>&#123;进程进入等待主存资源队列&#125;</code> 前, 另一个进程调用 return 抢先执行, 归还所借全部主存资源；这时, 由于前一个进程还未成为等待者, return中的 <code>&#123;释放等主存资源进程&#125;</code> 相当于空操作, 以后当调用 borrow 的应用进程被置成 <code>&#123;等主存资源&#125;</code> 时, 可能己经没有其他进程再来归还主存, 从而, 申请资源的进程处于永远等待状态</li>
+</ul>
+<h3 id="6-1-3-进程的交互-竞争与协作"><a href="#6-1-3-进程的交互-竞争与协作" class="headerlink" title="6.1.3 进程的交互: 竞争与协作"></a>6.1.3 进程的交互: 竞争与协作</h3><ul>
+<li>进程之间存在两种基本关系：竞争关系和协作关系</li>
+<li>第一种是<strong>竞争关系</strong>, 一个进程的执行可能影响到同其竞争资源的其他进程, 如果两个进程要访问同一资源, 那么, 一个进程通过操作系统分配得到该资源, 另一个将不得不等待</li>
+<li>第二种是<strong>协作关系</strong>, 某些进程为完成同一任务需要分工协作, 由于合作的每一个进程都是独立地以不可预知的速度推进, 这就需要相互协作的进程在某些协调点上协调各自的工作。当合作进程中的一个到达协调点后, 在尚未得到其伙伴进程发来的消息或信号之前应阻塞自己, 直到其他合作进程发来协调信号或消息后方被唤醒并继续执行</li>
+</ul>
+<h4 id="竞争关系带来的问题"><a href="#竞争关系带来的问题" class="headerlink" title="竞争关系带来的问题"></a>竞争关系带来的问题</h4><ul>
+<li>资源竞争的两个控制问题：</li>
+<li>一个是死锁 (Deadlock) 问题: 一组进程如果都获得了部分资源, 还想要得到其他进程所占有的资源, 最终所有的进程将陷入死锁</li>
+<li>一个是饥饿 (Starvation) 问题: 一个进程由于其他进程总是优先于它而被无限期拖延</li>
+<li>操作系统需要保证诸进程能互斥地访问临界资源, 既要解决饥饿问题, 又要解决死锁问题</li>
+</ul>
+<h4 id="竞争关系-死锁"><a href="#竞争关系-死锁" class="headerlink" title="竞争关系: 死锁"></a>竞争关系: 死锁</h4><ul>
+<li>死锁 : 一组进程因争夺资源陷入永远等待的状态</li>
+<li>P0 和 P1 两个进程, 均需要使用 S 和 Q 两类资源, 每类资源数为1</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207221321962.png" alt="image-20221207221321962" style="zoom:80%;" />
+
+<h4 id="竞争关系-进程的互斥"><a href="#竞争关系-进程的互斥" class="headerlink" title="竞争关系: 进程的互斥"></a>竞争关系: 进程的互斥</h4><ul>
+<li><strong>进程的互斥(mutual exclusion)</strong> 是解决进程间竞争关系(间接制约关系)的手段。进程互斥指若干个进程要使用同一共享资源时, 任何时刻最多允许一个进程去使用, 其他要使用该资源的进程必须等待, 直到占有资源的进程释放该资源</li>
+</ul>
+<h4 id="协作关系-进程的同步"><a href="#协作关系-进程的同步" class="headerlink" title="协作关系: 进程的同步"></a>协作关系: 进程的同步</h4><ul>
+<li><strong>进程的同步(Synchronization)</strong> 是解决进程间协作关系(直接制约关系)的手段。进程同步指两个以上进程基于某个条件来协调它们的活动。一个进程的执行依赖于另一个协作进程的消息或信号, 当一个进程没有得到来自于另一个进程的消息或信号时则需等待, 直到消息或信号到达才被唤醒</li>
+</ul>
+<h4 id="进程的交互-竞争与协作"><a href="#进程的交互-竞争与协作" class="headerlink" title="进程的交互: 竞争与协作"></a>进程的交互: 竞争与协作</h4><ul>
+<li>进程互斥关系是一种特殊的进程同步关系, 即逐次使用互斥共享资源, 是对进程使用资源次序上的一种协调</li>
+</ul>
+<h2 id="6-2-临界区管理"><a href="#6-2-临界区管理" class="headerlink" title="6.2 临界区管理"></a>6.2 临界区管理</h2><h3 id="6-2-1-互斥与临界区"><a href="#6-2-1-互斥与临界区" class="headerlink" title="6.2.1 互斥与临界区"></a>6.2.1 互斥与临界区</h3><h4 id="互斥与临界区"><a href="#互斥与临界区" class="headerlink" title="互斥与临界区"></a>互斥与临界区</h4><ul>
+<li>并发进程中与共享变量有关的程序段叫“临界区”(critical section), 共享变量代表的资源叫“临界资源”</li>
+<li>与同一变量有关的临界区分散在各进程的程序段中, 而各进程的执行速度不可预见</li>
+<li>竞争条件(race condition)</li>
+<li>如果保证进程在临界区执行时, 不让另一个进程进入临界区, 即各进程对共享变量的访问是互斥的, 就不会造成与时间有关的错误</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207224320111.png" alt="image-20221207224320111" style="zoom:80%;" />
+
+<h4 id="临界区调度原则"><a href="#临界区调度原则" class="headerlink" title="临界区调度原则"></a>临界区调度原则</h4><ul>
+<li>临界区调度原则(Dijkstra, 1965)：<ul>
+<li>一次至多一个进程能够进入临界区内执行</li>
+<li>如果已有进程在临界区, 其他试图进入的进程应等待</li>
+<li>进入临界区内的进程应在有限时间内退出, 以便让等待进程中的一个进入</li>
+</ul>
+</li>
+</ul>
+<h3 id="6-2-2-临界区管理的尝试"><a href="#6-2-2-临界区管理的尝试" class="headerlink" title="6.2.2 临界区管理的尝试"></a>6.2.2 临界区管理的尝试</h3><h4 id="尝试一"><a href="#尝试一" class="headerlink" title="尝试一"></a>尝试一</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202161342205.png" alt="image-20230202161342205" style="zoom:80%;" />
+
+<ul>
+<li><strong>存在的问题: 两个进程可能都进去</strong></li>
+</ul>
+<h4 id="尝试二"><a href="#尝试二" class="headerlink" title="尝试二"></a>尝试二</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202161443892.png" alt="image-20230202161443892" style="zoom:80%;" />
+
+<ul>
+<li><strong>存在的问题: 两个进程都进不去</strong></li>
+</ul>
+<h4 id="实现临界区的软件算法-Peterson算法"><a href="#实现临界区的软件算法-Peterson算法" class="headerlink" title="实现临界区的软件算法: Peterson算法"></a>实现临界区的软件算法: Peterson算法</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202161817788.png" alt="image-20230202161817788" style="zoom:80%;" />
+
+<ul>
+<li>下面这种方案也可以实现, 但是不满足通用性的要求<ul>
+<li>P0 和 P1 使用临界区的次序变成了完全一比一的交替方式</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207233038513.png" alt="image-20221207233038513" style="zoom:80%;" />
+
+<ul>
+<li>P0中执行了turn&#x3D;1, 暂时进不去, 等P1中执行turn&#x3D;0, P0可以进去, P0使用完临界区, 退出临界区的时候, 将turn&#x3D;0(好像是多余的), 此时P1还是进不去, 要等P0执行turn&#x3D;1, 使得P1有机会进入临界区</li>
+<li>之后, P1退出临界区的时候, turn&#x3D;1, P0暂时进不去, 等在P1中执行turn&#x3D;0, P0可以再次进入临界区</li>
+<li>因此, P0和P1使用临界区的次序变成了完全一比一的交替方式, 这只能是临界区互斥使用的一个特例, 不能满足临界区互斥使用的完全随机性</li>
+</ul>
+<h3 id="6-2-3-实现临界区管理的硬件设施"><a href="#6-2-3-实现临界区管理的硬件设施" class="headerlink" title="6.2.3 实现临界区管理的硬件设施"></a>6.2.3 实现临界区管理的硬件设施</h3><h4 id="关中断"><a href="#关中断" class="headerlink" title="关中断"></a>关中断</h4><ul>
+<li>实现互斥的最简单方法</li>
+<li>关中断适用场合</li>
+<li>关中断方法的缺点</li>
+</ul>
+<h4 id="测试并建立指令"><a href="#测试并建立指令" class="headerlink" title="测试并建立指令"></a>测试并建立指令</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// TS指令的处理过程</span><br><span class="hljs-type">bool</span> <span class="hljs-title function_">TS</span><span class="hljs-params">(<span class="hljs-type">bool</span> &amp;x)</span> &#123;<br>    <span class="hljs-keyword">if</span>(x) &#123;<br>        x = <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// TS指令实现进程互斥</span><br><span class="hljs-type">bool</span> s = <span class="hljs-literal">true</span>;<br>cobegin<br>process <span class="hljs-title function_">Pi</span><span class="hljs-params">()</span> &#123; <span class="hljs-comment">//i=1，2，...，n</span><br>    <span class="hljs-keyword">while</span>(!TS(s)); <span class="hljs-comment">//上锁</span><br>    &#123;临界区&#125;;<br>    s = <span class="hljs-literal">true</span>; <span class="hljs-comment">//开锁</span><br>&#125;<br>coend<br></code></pre></td></tr></table></figure>
+
+<h4 id="对换指令"><a href="#对换指令" class="headerlink" title="对换指令"></a>对换指令</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">SWAP</span><span class="hljs-params">(<span class="hljs-type">bool</span> &amp;a，<span class="hljs-type">bool</span> &amp;b)</span> &#123;<br>    <span class="hljs-type">bool</span> temp = a;<br>    a = b;<br>    b = temp;<br>&#125;<br><br><span class="hljs-comment">//对换指令实现进程互斥</span><br><span class="hljs-type">bool</span> lock = <span class="hljs-literal">false</span>;<br>cobegin<br>Process <span class="hljs-title function_">Pi</span><span class="hljs-params">( )</span>&#123; <span class="hljs-comment">//i=1，2，...，n</span><br>    <span class="hljs-type">bool</span> keyi = <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">do</span> &#123;<br>        SWAP(keyi，lock);<br>    &#125; <span class="hljs-keyword">while</span> (keyi); <span class="hljs-comment">//上锁</span><br>    &#123;临界区&#125;;<br>    SWAP(keyi，lock); <span class="hljs-comment">//开锁</span><br>&#125;<br>coend<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-3-信号量与PV操作"><a href="#6-3-信号量与PV操作" class="headerlink" title="6.3 信号量与PV操作"></a>6.3 信号量与PV操作</h2><h3 id="6-3-1-信号量与PV操作的问题背景"><a href="#6-3-1-信号量与PV操作的问题背景" class="headerlink" title="6.3.1 信号量与PV操作的问题背景"></a>6.3.1 信号量与PV操作的问题背景</h3><h4 id="并发程序设计的基本概念"><a href="#并发程序设计的基本概念" class="headerlink" title="并发程序设计的基本概念"></a>并发程序设计的基本概念</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202170410386.png" alt="image-20230202170410386" style="zoom:80%;" />
+
+<ul>
+<li><strong>临界资源</strong>：并发进程之间需要<strong>互斥使用的共享资源</strong>, 称为临界资源<ul>
+<li>举例: 火车上的卫生间就是一种互斥使用的共享资源</li>
+<li>使用<strong>共享变量代表共享资源</strong></li>
+<li>并发进程中<strong>与共享变量有关的程序段叫“临界区”</strong>(critical section)</li>
+<li>临界区：并发进程之间控制共享资源使用的程序段</li>
+</ul>
+</li>
+<li>并发进程之间的关系</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202170853336.png" alt="image-20230202170853336" style="zoom:80%;" />
+
+<h4 id="“忙式等待”方法解决临界区调度问题的缺点"><a href="#“忙式等待”方法解决临界区调度问题的缺点" class="headerlink" title="“忙式等待”方法解决临界区调度问题的缺点"></a>“忙式等待”方法解决临界区调度问题的缺点</h4><ul>
+<li>临界区管理的简单方法（忙式等待&#x2F;反复测试）<ol>
+<li>关中断</li>
+<li>测试并建立指令</li>
+<li>对换指令</li>
+<li>Peterson算法</li>
+</ol>
+</li>
+<li>存在的问题<ol>
+<li>对不能进入临界区的进程, 采用忙式等待测试法, 浪费CPU时间</li>
+<li>将测试能否进入临界区的责任推给各个竞争的进程会削弱系统的可靠性, 加重用户编程负担</li>
+</ol>
+</li>
+<li>通用的解决方案：信号量与PV操作</li>
+</ul>
+<h4 id="操作系统中“并发问题”解决方案的知识框架"><a href="#操作系统中“并发问题”解决方案的知识框架" class="headerlink" title="操作系统中“并发问题”解决方案的知识框架"></a>操作系统中“并发问题”解决方案的知识框架</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207234329963.png" alt="image-20221207234329963" style="zoom:80%;" />
+
+<h3 id="6-3-2-信号量与PV操作的基本原理"><a href="#6-3-2-信号量与PV操作的基本原理" class="headerlink" title="6.3.2 信号量与PV操作的基本原理"></a>6.3.2 信号量与PV操作的基本原理</h3><ul>
+<li>前面方法解决临界区调度问题的缺点:<ol>
+<li>对不能进入临界区的进程, 采用忙式等待测试法, 浪费CPU时间</li>
+<li>将测试能否进入临界区的责任推给各个竞争的进程会削弱系统的可靠性, 加重用户编程负担</li>
+</ol>
+</li>
+<li>1965年E.W.Dijkstra提出了新的同步工具–信号量和P、V操作原语(荷兰语中“检测(Proberen)”和“增量(Verhogen)”的头字母)</li>
+<li>一个进程在某一特殊点上被迫停止执行直到接收到一个对应的特殊变量值, 这种特殊变量就是<strong>信号量(semaphore)</strong>, 复杂的进程协作需求都可以通过适当的信号结构得到满足</li>
+</ul>
+<h4 id="信号量与PV操作的数据结构与原语操作"><a href="#信号量与PV操作的数据结构与原语操作" class="headerlink" title="信号量与PV操作的数据结构与原语操作"></a>信号量与PV操作的数据结构与原语操作</h4><p>设s为一个<strong>记录型数据结构</strong>, 一个分量为<strong>整型量value</strong>, 另一个为<strong>信号量队列queue</strong>, P和V操作原语定义</p>
+<ul>
+<li>P(s): 将信号量 s 减 1, 若结果 &lt; 0, 则调用 P(s) 的进程被置成<strong>等待信号量 s 的状态(阻塞态)</strong></li>
+<li>V(s): 将信号量 s 加 1, 若结果 &lt;&#x3D; 0, 则释放(唤醒)一个等待信号量 s 的进程, 使其转换为<strong>就绪态</strong></li>
+<li>原语: CPU处于内核态, 在<strong>关中断</strong>环境下执行的一段指令序列<ul>
+<li>原子性：不被中断, 确保安全且完整执行这段指令序列</li>
+</ul>
+</li>
+</ul>
+<p><strong>强调：</strong>对于信号量, <strong>只允许使用P, V原语操作访问信号量</strong>, 不能直接对信号量的整型值做读写操作, 也不能对信号量的队列做任何其他操作</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208001244075.png" alt="image-20221208001244075" style="zoom:80%;" />
+
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">semaphore</span> &#123;</span><br>    <span class="hljs-type">int</span> value;	<span class="hljs-comment">// 信号量值</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">pcb</span>* <span class="hljs-title">list</span>;</span>	<span class="hljs-comment">// 信号量队列指针</span><br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">P</span><span class="hljs-params">(semaphore s)</span> &#123; <span class="hljs-comment">// also named wait</span><br>    s.value--;<br>    <span class="hljs-keyword">if</span> (s.value &lt; <span class="hljs-number">0</span>) &#123;<br>        sleep(s.<span class="hljs-built_in">list</span>); <span class="hljs-comment">// 若信号量值小于0, 执行 P 操作的进程调用 sleep 阻塞自己, 被置成等待信号量 s 状态并移入 s 信号量队列, 转向进程调度程序</span><br>    &#125;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">V</span><span class="hljs-params">(semaphore s)</span> &#123; <span class="hljs-comment">// also named signal</span><br>	s.value++;<br>    <span class="hljs-keyword">if</span> (s.value &lt;= <span class="hljs-number">0</span>) &#123;<br>        wakeup(s.<span class="hljs-built_in">list</span>); <span class="hljs-comment">// 若信号量值小于等于0, 调用 wakeup 从信号量 s 队列中释放一个等待信号量 s 的进程并转换成就绪态, 进程继续执行</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="PV操作与进程状态转换模型"><a href="#PV操作与进程状态转换模型" class="headerlink" title="PV操作与进程状态转换模型"></a>PV操作与进程状态转换模型</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202171833199.png" alt="image-20230202171833199"></p>
+<h4 id="PV操作与进程状态队列模型"><a href="#PV操作与进程状态队列模型" class="headerlink" title="PV操作与进程状态队列模型"></a>PV操作与进程状态队列模型</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208001550844.png" alt="image-20221208001550844" style="zoom:80%;" />
+
+<p>强调: 不同的进程因为请求不同资源, 将进入不同信号量的等待队列, 分为不同的等待队列进行管理</p>
+<h4 id="信号量与PV操作的推论"><a href="#信号量与PV操作的推论" class="headerlink" title="信号量与PV操作的推论"></a>信号量与PV操作的推论</h4><ul>
+<li>推论1：若<strong>信号量 s 为正值</strong>, 则该值等于在封锁进程之前对<strong>信号量 s 可施行的 P 操作次数</strong>、亦等于 s 所代表的<strong>实际还可以使用的物理资源数</strong></li>
+<li>推论2：若<strong>信号量 s 为负值</strong>, 则其绝对值等于登记排列在该<strong>信号量 s 队列之中等待的进程个数</strong>、亦即恰好等于对信号量 s 实施 P 操作而被封锁起来并进入信号量 s 队列的进程数</li>
+<li>推论3：通常, P 操作意味着请求一个资源, V 操作意味着释放一个资源。在一定条件下, P 操作代表阻塞进程操作, 而 V 操作代表唤醒被阻塞进程的操作</li>
+</ul>
+<h3 id="6-3-3-信号量的应用"><a href="#6-3-3-信号量的应用" class="headerlink" title="6.3.3 信号量的应用"></a>6.3.3 信号量的应用</h3><h4 id="信号量程序设计的一般结构"><a href="#信号量程序设计的一般结构" class="headerlink" title="信号量程序设计的一般结构"></a>信号量程序设计的一般结构</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">semaphore s = <span class="hljs-number">1</span>;<br>cobegin<br>    Process Pi &#123; <span class="hljs-comment">/* i=1，…，n */</span><br>        ...<br>        P(s);<br>        <span class="hljs-comment">/* critical region 临界区*/</span><br>        V(s); <br>        ...<br>    &#125;;<br>coend<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>在表达纯粹互斥关系时信号量初值为 1, 且同一个信号量的PV操作处于同一侧进程中。但这种情形不适用于同步关系</li>
+</ul>
+<h4 id="信号量与PV操作控制并发进程之间的临界资源"><a href="#信号量与PV操作控制并发进程之间的临界资源" class="headerlink" title="信号量与PV操作控制并发进程之间的临界资源"></a>信号量与PV操作控制并发进程之间的临界资源</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208142449148.png" alt="image-20221208142449148" style="zoom:80%;" />
+
+<h4 id="互斥问题-飞机票问题"><a href="#互斥问题-飞机票问题" class="headerlink" title="互斥问题: 飞机票问题"></a>互斥问题: 飞机票问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208145047961.png" alt="image-20221208145047961" style="zoom:80%;" />
+
+<ul>
+<li><p>上面代码有缺陷: 将不同航班剩余票数合并为同一个信号量, 效率很低</p>
+</li>
+<li><p>改进</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208145205395.png" alt="image-20221208145205395" style="zoom:80%;" />
+
+<h4 id="互斥问题-哲学家就餐问题"><a href="#互斥问题-哲学家就餐问题" class="headerlink" title="互斥问题: 哲学家就餐问题"></a>互斥问题: 哲学家就餐问题</h4><p>有五个哲学家围坐在一圆桌旁, 桌中央有一盘通心面, 每人面前有一只空盘子, 每两人之间放一把叉子。每个哲学家思考、饥饿、然后吃通心面。为了吃面, <strong>每个哲学家必须获得两把叉子, 且每人只能直接从自己左边或右边去取叉子</strong></p>
+<ul>
+<li>哲学家顺时针编号</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208145438484.png" alt="image-20221208145438484" style="zoom:80%;" />
+
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">semaphore fork[<span class="hljs-number">5</span>];<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">5</span>;i++) &#123;<br>    fork[i]=<span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-comment">// cobegin 并发开始</span><br>process <span class="hljs-title function_">philosopher_i</span><span class="hljs-params">()</span> &#123; <span class="hljs-comment">//i=0，1，2，3，4</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        think();<br>        P(fork[i]); <span class="hljs-comment">//先取右手的叉子</span><br>        P(fork[(i+<span class="hljs-number">1</span>)%<span class="hljs-number">5</span>]); <span class="hljs-comment">//再取左手的叉子</span><br>        eat();<br>        V(fork[i]);<br>        V(fork[(i+<span class="hljs-number">1</span>)%<span class="hljs-number">5</span>]);<br>    &#125;<br>&#125;<br><span class="hljs-comment">// coend</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>问题: 两个 P 操作之间存在缝隙, 如果哲学家进程均在取到第一个叉子后被中断, 会产生<strong>死锁</strong></li>
+</ul>
+<h5 id="有若干种办法可避免这类死锁"><a href="#有若干种办法可避免这类死锁" class="headerlink" title="有若干种办法可避免这类死锁"></a>有若干种办法可避免这类死锁</h5><ul>
+<li>至多允许四个哲学家同时取叉子(C.A.R. Hoare方案)</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">semaphore fork[<span class="hljs-number">5</span>];<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">5</span>;i++) &#123;<br>    fork[i]= <span class="hljs-number">1</span>;<br>&#125;<br>semaphore room=<span class="hljs-number">4</span>; <span class="hljs-comment">//增加一个侍者, 设想有两个房间1号房间是会议室, 2号房间是餐厅</span><br><span class="hljs-comment">// cobegin</span><br>process <span class="hljs-title function_">philosopher_i</span><span class="hljs-params">()</span>&#123; <span class="hljs-comment">/*i=0, 1, 2, 3, 4 */</span><br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        think();<br>        P(room); <span class="hljs-comment">//控制最多允许4位哲学家进入2号房间餐厅取叉子</span><br>        P(fork[i];<br>        P(fork[(i+<span class="hljs-number">1</span>) % <span class="hljs-number">5</span>]);<br>        eat();<br>        V(fork[i]);<br>        V(fork([i+<span class="hljs-number">1</span>] % <span class="hljs-number">5</span>);<br>        V(room);<br>    &#125;<br>&#125;<br><span class="hljs-comment">// coend</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>奇数号先取左手边的叉子, 偶数号先取右手边的叉子</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">philosopher</span> <span class="hljs-params">(<span class="hljs-type">int</span> i)</span> &#123; <br>    <span class="hljs-keyword">if</span> (i % <span class="hljs-number">2</span> == <span class="hljs-number">0</span>) &#123;<br>        P(fork[i]); <span class="hljs-comment">//偶数哲学家先右手</span><br>        P(fork[(i+<span class="hljs-number">1</span>) % <span class="hljs-number">5</span>]); <span class="hljs-comment">//后左手</span><br>        eat();<br>        V(fork[i]);<br>        V(fork[(i+<span class="hljs-number">1</span>) % <span class="hljs-number">5</span>]);<br>    &#125;<br>    <span class="hljs-keyword">else</span> &#123;<br>        P(fork[(i+<span class="hljs-number">1</span>) % <span class="hljs-number">5</span>]); <span class="hljs-comment">//奇数哲学家, 先左手</span><br>        P(fork[i]); <span class="hljs-comment">//后右手</span><br>        eat();<br>        V(fork[(i+<span class="hljs-number">1</span>) % <span class="hljs-number">5</span>]);<br>        V(fork[i]);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>每个哲学家取到手边的两把叉子才吃, 否则一把叉子也不取(第五版教材, Page 188, AND型信号量)</li>
+</ul>
+<h4 id="同步问题-生产者-消费者问题"><a href="#同步问题-生产者-消费者问题" class="headerlink" title="同步问题: 生产者-消费者问题"></a>同步问题: 生产者-消费者问题</h4><p>有 n 个生产者和 m 个消费者, 连接在一个有 k 个单位缓冲区的有界缓冲上。其中, 生产者进程 Producer_i 和消费者进程 Consumer_j 都是并发进程, <strong>只要缓冲区未满, 生产者 Producer_i 生产的产品就可投入缓冲区；只要缓冲区不空, 消费者进程 Consumer_j 就可从缓冲区取走并消耗产品</strong></p>
+<p>可能情形</p>
+<ul>
+<li>n &#x3D; 1, m &#x3D; 1, k &#x3D; 1</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202194743796.png" alt="image-20230202194743796" style="zoom:80%;" />
+
+<ul>
+<li>n &#x3D; 1, m &#x3D; 1, k &gt; 1</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202194823170.png" alt="image-20230202194823170" style="zoom:80%;" />
+
+<ul>
+<li>n &gt; 1, m &gt; 1, k &gt; 1</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202194839839.png" alt="image-20230202194839839" style="zoom:80%;" />
+
+<h4 id="同步问题-苹果-橘子问题"><a href="#同步问题-苹果-橘子问题" class="headerlink" title="同步问题: 苹果-橘子问题"></a>同步问题: 苹果-橘子问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208153217954.png" alt="image-20221208153217954" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208153248165.png" alt="image-20221208153248165" style="zoom:80%;" />
+
+<h4 id="信号量-前驱关系"><a href="#信号量-前驱关系" class="headerlink" title="信号量-前驱关系"></a>信号量-前驱关系</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">Semaphore s1=<span class="hljs-number">0</span>; <span class="hljs-comment">/*表示进程P1是否已经执行完成*/</span><br>Semaphore s2=<span class="hljs-number">0</span>; <span class="hljs-comment">/*表示进程P2是否已经执行完成*/</span><br>Semaphore s3=<span class="hljs-number">0</span>; <span class="hljs-comment">/*表示进程P3是否已经执行完成*/</span><br>Semaphore s4=<span class="hljs-number">0</span>; <span class="hljs-comment">/*表示进程P4是否已经执行完成*/</span><br>Semaphore s5=<span class="hljs-number">0</span>; <span class="hljs-comment">/*表示进程P5是否已经执行完成*/</span><br>main () &#123;<br>cobegin<br>    <span class="hljs-title function_">P1</span><span class="hljs-params">()</span>;<br>    P2();<br>    P3();<br>    P4();<br>    P5();<br>    p6();<br>coend<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230710162452442.png" alt="image-20230710162452442"></th>
+<th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202210826126.png" alt="image-20230202210826126" style="zoom:80%;" /></th>
+</tr>
+</thead>
+</table>
+<h4 id="读者-写者问题"><a href="#读者-写者问题" class="headerlink" title="读者&#x2F;写者问题"></a>读者&#x2F;写者问题</h4><p>读者与写者问题(reader-writer problem) (Courtois, 1971)也是一个经典的并发程序设计问题。有两组并发进程：读者和写者, 共享一个文件 F, 要求：</p>
+<ol>
+<li>允许多个读者可同时对文件执行读操作</li>
+<li>只允许一个写者往文件中写信息</li>
+<li>任意写者在完成写操作之前不允许其他读者或写者工作</li>
+<li>写者执行写操作前, 应让已有的写者和读者全部退出</li>
+</ol>
+<p>使用PV操作求解该问题</p>
+<p><strong>读者优先</strong></p>
+<ul>
+<li><code>rmutex</code> 控制对 <code>read_count</code> 的互斥访问；</li>
+<li>读者需要对互斥信号量 <code>rmutex</code> 进行排队；</li>
+<li>只有第一个读者需要对 <code>wmutex</code> 排队，后来的读者不需要对 <code>wmutex</code> 排队，可以插队到写者前面；</li>
+<li>为了保证读时不被打断，读时用 <code>wmutex</code> 信号量阻塞写者；当前所有读者读完后，写者才开始写。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">semaphore rmutex = <span class="hljs-number">1</span>; <span class="hljs-comment">// 控制对 read_count 的互斥访问</span><br>semaphore wmutex = <span class="hljs-number">1</span>; <span class="hljs-comment">// 控制对文件内容的互斥写</span><br><span class="hljs-type">int</span> read_count = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 读者进程</span><br>process <span class="hljs-title function_">reader_i</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        P(rmutex);<br>        <span class="hljs-keyword">if</span>(read_count == <span class="hljs-number">0</span>)<br>            P(wmutex);<br>        read_count++;<br>        V(rmutex);<br>        <br>        read();<br>        <br>        P(rmutex);<br>        read_count--;<br>        <span class="hljs-keyword">if</span>(read_count == <span class="hljs-number">0</span>)<br>            V(wmutex);<br>        V(rmutex);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 写者进程</span><br>process <span class="hljs-title function_">writer_i</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        P(wmutex);<br>        write();<br>        V(wmutex);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>写者优先</strong></p>
+<ul>
+<li>后来的写者可以插队到先来的、还未开始读的读者前面；</li>
+<li>互斥变量 <code>z</code> 保证了每次最多只有一个读者在互斥变量 <code>rmutex</code> 排队；</li>
+<li>“第一个”写者到来时，写者可以立刻对 <code>rmutex</code> 排队，且此时最多只有一个读者在 <code>rmutex</code> 排队；</li>
+<li>“后来的”写者到来时，不用对 <code>rmutex</code> 排队，直接等前面的写者写完后继续写；</li>
+<li>“最后一个”写者离开时，开放 <code>rmutex</code> 使得读者可以开始读；</li>
+<li>写者使用 <code>rmutex</code> 阻塞读者。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">semaphore x = <span class="hljs-number">1</span>, y = <span class="hljs-number">1</span>, z = <span class="hljs-number">1</span>; <span class="hljs-comment">// read_count, write_count互斥</span><br>semaphore rmutex = <span class="hljs-number">1</span>, wmutex = <span class="hljs-number">1</span>; <span class="hljs-comment">// 读锁、写锁</span><br><span class="hljs-type">int</span> read_count = <span class="hljs-number">0</span>, write_count = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 读者进程</span><br>process <span class="hljs-title function_">reader_i</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>    	P(z);<br>        P(rmutex);<br>        P(x);<br>        <span class="hljs-keyword">if</span>(read_count == <span class="hljs-number">0</span>)<br>            P(wmutex);<br>        read_count++;<br>        V(x);<br>        V(rmutex);<br>        V(z);<br><br>        read();<br><br>        P(x);<br>        read_count--;<br>        <span class="hljs-keyword">if</span>(read_count == <span class="hljs-number">0</span>)<br>            V(wmutex);<br>        V(x);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 写者进程</span><br>process <span class="hljs-title function_">writer_i</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>    	P(y);<br>        <span class="hljs-keyword">if</span>(write_count == <span class="hljs-number">0</span>)<br>            P(rmutex);<br>        write_count++;<br>        V(y);<br><br>        P(wmutex);<br>        write();<br>        V(wmutex);<br><br>        P(y);<br>        write_count--;<br>        <span class="hljs-keyword">if</span>(write_count == <span class="hljs-number">0</span>)<br>            V(rmutex);<br>        V(y);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>读写公平</strong></p>
+<ul>
+<li>只比读者优先增加了一个互斥信号量 <code>S</code>；</li>
+<li>所有读者和写者一起对互斥信号量 <code>S</code> 排队，这样后来的读者无法插队到先来的写者前面；</li>
+<li>其他性质与读者优先相同。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">semaphore rmutex = <span class="hljs-number">1</span>; <span class="hljs-comment">// 控制对 read_count 的互斥访问</span><br>semaphore wmutex = <span class="hljs-number">1</span>; <span class="hljs-comment">// 控制对文件内容的互斥写</span><br>semaphore s = <span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> read_count = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">// 读者进程</span><br>process <span class="hljs-title function_">reader_i</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        P(s);<br>        P(rmutex);<br>        <span class="hljs-keyword">if</span>(read_count == <span class="hljs-number">0</span>)<br>            P(wmutex);<br>        read_count++;<br>        V(rmutex);<br>        V(s);<br>        <br>        read();<br>        <br>        P(rmutex);<br>        read_count--;<br>        <span class="hljs-keyword">if</span>(read_count == <span class="hljs-number">0</span>)<br>            V(wmutex);<br>        V(rmutex);<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 写者进程</span><br>process <span class="hljs-title function_">writer_i</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>        P(s);<br>        P(wmutex);<br>        write();<br>        V(wmutex);<br>        V(s);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202211221247.png" alt="image-20230202211221247" style="zoom:80%;" />
+
+<h4 id="睡眠的理发师问题"><a href="#睡眠的理发师问题" class="headerlink" title="睡眠的理发师问题"></a>睡眠的理发师问题</h4><p>理发店里有一位理发师、一把理发椅和 n 把供等候理发的顾客坐的椅子</p>
+<p>如果没有顾客, 理发师便在理发椅上睡觉, 一个顾客到来时, 它必须叫醒理发师, 如果理发师正在理发时又有顾客来到, 如果有空椅子可坐, 就坐下来等待, 否则就离开</p>
+<p>使用PV操作求解该问题</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202211603175.png" alt="image-20230202211603175" style="zoom:80%;" />
+
+<h4 id="农夫猎人问题"><a href="#农夫猎人问题" class="headerlink" title="农夫猎人问题"></a>农夫猎人问题</h4><p>有一个铁笼子, 每次只能放入一个动物。猎手向笼中放入老虎, 农夫向笼中放入羊；动物园等待取笼中的老虎, 饭店等待取笼中的羊。请用P、V操作原语写出同步执行的程序</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202211938726.png" alt="image-20230202211938726" style="zoom:80%;" />
+
+<h4 id="银行业务问题"><a href="#银行业务问题" class="headerlink" title="银行业务问题"></a>银行业务问题</h4><p>某大型银行办理人民币储蓄业务, 由 n 个储蓄员负责。每个顾客进入银行后先至取号机取一个号, 并且在等待区找到空沙发坐下等着叫号。取号机给出的号码依次递增, 并假定有足够多的空沙发容纳顾客。当一个储蓄员空闲下来, 就叫下一个号。</p>
+<p>请用信号量和 PV 操作正确编写储蓄员进程和顾客进程的程序</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202223152625.png" alt="image-20230202223152625" style="zoom:80%;" />
+
+<h4 id="缓冲区管理"><a href="#缓冲区管理" class="headerlink" title="缓冲区管理"></a>缓冲区管理</h4><p>有 n 个进程将字符逐个读入到一个容量为 80 的缓冲区中(n &gt; 1), 当缓冲区满后, 由输出进程 Q 负责一次性取走这 80 个字符。这种过程循环往复, 请用信号量和P、V操作写出 n 个读入进程(P1, P2, …Pn)和输出进程 Q 能正确工作的动作序列</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230202224056349.png" alt="image-20230202224056349" style="zoom:80%;" />
+
+<h4 id="售票问题"><a href="#售票问题" class="headerlink" title="售票问题"></a>售票问题</h4><p>汽车司机与售票员之间必须协同工作, 一方面只有售票员把车门关好了司机才能开车, 因此, 售票员关好门应通知司机开车, 然后售票员进行售票。另一方面, 只有当汽车已经停下, 售票员才能开门上下客, 故司机停车后应该通知售票员。假定某辆公共汽车上有一名司机与两名售票员, 汽车当前正在始发站停车上客, 试用信号量与P、V操作写出他们的同步算法</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203124338266.png" alt="image-20230203124338266" style="zoom:80%;" />
+
+<h4 id="吸烟者问题"><a href="#吸烟者问题" class="headerlink" title="吸烟者问题"></a>吸烟者问题</h4><p>一个经典同步问题：吸烟者问题(patil, 1971)。三个吸烟者在一个房间内, 还有一个香烟供应者。为了制造并抽掉香烟, 每个吸烟者需要三样东西：烟草、纸和火柴, 供应者有丰富货物提供。三个吸烟者中, 第一个有自己的烟草, 第二个有自己的纸, 第三个有自己的火柴。供应者随机地将两样东西放在桌子上, 允许一个吸烟者进行对健康不利的吸烟。当吸烟者完成吸烟后唤醒供应者, 供应者再把两样东西放在桌子上, 唤醒另一个吸烟者。试用信号量和P、V操作求解该问题</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203124508358.png" alt="image-20230203124508358" style="zoom:80%;" />
+
+<h2 id="6-4-管程"><a href="#6-4-管程" class="headerlink" title="6.4 管程"></a>6.4 管程</h2><h3 id="6-4-1-管程和条件变量"><a href="#6-4-1-管程和条件变量" class="headerlink" title="6.4.1 管程和条件变量"></a>6.4.1 管程和条件变量</h3><p>为什么要引入管程？</p>
+<ul>
+<li>把分散在各进程中的临界区集中起来进行管理</li>
+<li>防止进程有意或无意的违法同步操作</li>
+<li>便于用高级语言来书写程序</li>
+</ul>
+<h4 id="管程定义和属性"><a href="#管程定义和属性" class="headerlink" title="管程定义和属性"></a>管程定义和属性</h4><ul>
+<li>管程的定义<ul>
+<li>管程是由局部于自己的若干公共变量及其说明和所有访问这些公共变量的过程所组成的软件模块</li>
+</ul>
+</li>
+<li>管程的属性<ul>
+<li>共享性、安全性、互斥性</li>
+</ul>
+</li>
+</ul>
+<h4 id="管程的形式"><a href="#管程的形式" class="headerlink" title="管程的形式"></a>管程的形式</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">type &lt;管程名&gt; = monitor &#123;<br>    &lt;局部变量说明&gt;;<br>    &lt;条件变量说明&gt;;<br>    &lt;初始化语句&gt;;<br>    define &lt;管程内定义的, 管程外可调用的过程或函数名列表&gt;;<br>    use &lt;管程外定义的, 管程内将调用的过程或函数名列表&gt;;<br>    <br>    &lt;过程名/函数名&gt;(&lt;形式参数表&gt;) &#123;<br>    	&lt;过程/函数体&gt;;<br>    &#125;<br>    ...<br>    &lt;过程名/函数名&gt;(&lt;形式参数表&gt;) &#123;<br>    	&lt;过程/函数体&gt;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="管程的结构"><a href="#管程的结构" class="headerlink" title="管程的结构"></a>管程的结构</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203142923995.png" alt="image-20230203142923995" style="zoom:80%;" />
+
+<h4 id="管程的条件变量"><a href="#管程的条件变量" class="headerlink" title="管程的条件变量"></a>管程的条件变量</h4><ul>
+<li>条件变量: 是出现在管程内的一种数据结构, 且只有在管程中才能被访问, 它对管程内的所有过程是全局的, 只能通过两个原语操作来控制它<ul>
+<li><code>wait()</code>: 阻塞调用进程并释放管程, 直到另一个进程在该条件变量上执行signal()</li>
+<li><code>signal()</code>:<ul>
+<li>如果存在其他进程由于对条件变量执行 wait() 而被阻塞, 便释放之</li>
+<li>如果没有进程在等待, 那么, 信号不被保存, 并不是立即退出管程等待队列，而是进入 next 信号量，以保证多个进程都可以正常退出。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="管程问题讨论"><a href="#管程问题讨论" class="headerlink" title="管程问题讨论"></a>管程问题讨论</h4><ul>
+<li>使用 signal 释放等待进程时, 可能出现两个进程同时停留在管程内。解决方法：<ul>
+<li>执行 signal 的进程等待, 直到被释放进程退出管程或等待另一个条件变量</li>
+<li>被释放进程等待, 直到执行 signal 的进程退出管程或等待另一个条件</li>
+</ul>
+</li>
+<li>霍尔(Hoare, 1974)采用第一种办法</li>
+<li>汉森(Hansen)选择两者的折衷, 规定管程中的过程所执行的signal操作是过程体的最后一个操作</li>
+</ul>
+<h3 id="6-4-2-管程的实现-Hoare方法"><a href="#6-4-2-管程的实现-Hoare方法" class="headerlink" title="6.4.2 管程的实现(Hoare方法)"></a>6.4.2 管程的实现(Hoare方法)</h3><ul>
+<li>霍尔方法使用 P 和 V 操作原语来实现对管程中过程的互斥调用, 及实现对共享资源互斥使用的管理</li>
+<li>不要求 signal 操作是过程体的最后一个操作, 且 wait 和 signal 操作可被设计成可以中断的过程</li>
+<li>使用 <code>signal()</code> 释放一个等待进程时，霍尔管程让执行 <code>signal()</code> 的进程等待，直到<strong>被释放进程退出管程或等待另一个条件</strong></li>
+<li>霍尔管程基于 PV 操作原语实现：<ul>
+<li><code>wait()</code> 和 <code>signal()</code> 可以是程序过程</li>
+<li>可以用语言机制实现霍尔管程</li>
+</ul>
+</li>
+</ul>
+<h4 id="Hoare管程数据结构"><a href="#Hoare管程数据结构" class="headerlink" title="Hoare管程数据结构"></a>Hoare管程数据结构</h4><p><code>mutex</code></p>
+<ul>
+<li>对每个管程, 使用用于管程中过程互斥调用的信号量 mutex (初值为1)</li>
+<li>进程调用管程中的任何过程时, 应执行P(mutex)；进程退出管程时, 需要判断是否有进程在 next 信号量等待, <strong>如果有(即 next_count &gt; 0), 则通过 V(next) 唤醒一个发出 signal 的进程, 否则应执行 V(mutex) 开放管程</strong>, 以便让其他调用者进入</li>
+<li><strong>为了使进程在等待资源期间, 其他进程能进入管程, 故在 wait 操作中也必须执行 V(mutex)</strong>, 否则会妨碍其他进程进入管程, 导致无法释放资源</li>
+</ul>
+<p><code>next, next-count</code></p>
+<ul>
+<li>对每个管程, 引入信号量 next(初值为0), <strong>凡发出 signal 操作的进程应该用 P(next) 阻塞自己</strong>, 直到被释放进程退出管程或产生其他等待条件</li>
+<li>进程在退出管程的过程前, 须检查是否有别的进程在信号量 next 上等待, 若有, 则用 V(next) 唤醒它。next-count(初值为0), 用来记录在 next 上等待的进程个数</li>
+</ul>
+<p><code>x-sem, x-count</code></p>
+<ul>
+<li>引入信号量 x-sem(初值为0), 申请资源得不到满足时, 执行 P(x-sem) 阻塞。由于释放资源时, 需要知道是否有别的进程在等待资源, 用计数器 x-count(初值为0) 记录等待资源的进程数</li>
+<li>执行 signal 操作时, 应让等待资源的诸进程中的某个进程立即恢复运行, 而不让其他进程抢先进入管程, 这可以用 V(x-sem) 来实现</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203153058116.png" alt="image-20230203153058116" style="zoom:80%;" />
+
+<h3 id="6-4-3-管程求解进程的同步与互斥问题"><a href="#6-4-3-管程求解进程的同步与互斥问题" class="headerlink" title="6.4.3 管程求解进程的同步与互斥问题"></a>6.4.3 管程求解进程的同步与互斥问题</h3><h4 id="读者写者问题"><a href="#读者写者问题" class="headerlink" title="读者写者问题"></a>读者写者问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203152456907.png" alt="image-20230203152456907" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203152512970.png" alt="image-20230203152512970" style="zoom:80%;" />
+
+<h4 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203153252412.png" alt="image-20230203153252412" style="zoom:80%;" />
+
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">cobegin<br>process <span class="hljs-title function_">philosopher_i</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>) &#123;<br>    	thinking();<br>        dining_philosopers.pickup(i);<br>        eating();<br>        dining_philosophers.putdown(i);<br>    &#125;<br>&#125;<br>coend<br></code></pre></td></tr></table></figure>
+
+<h4 id="生产者-消费者问题"><a href="#生产者-消费者问题" class="headerlink" title="生产者-消费者问题"></a>生产者-消费者问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203153221933.png" alt="image-20230203153221933" style="zoom:80%;" />
+
+<h4 id="苹果-橘子问题"><a href="#苹果-橘子问题" class="headerlink" title="苹果-橘子问题"></a>苹果-橘子问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203153239345.png" alt="image-20230203153239345" style="zoom:80%;" />
+
+<h2 id="6-5-进程通信"><a href="#6-5-进程通信" class="headerlink" title="6.5 进程通信"></a>6.5 进程通信</h2><h3 id="6-5-1-进程通信-消息传递"><a href="#6-5-1-进程通信-消息传递" class="headerlink" title="6.5.1 进程通信(消息传递)"></a>6.5.1 进程通信(消息传递)</h3><ul>
+<li>当进程互相交互时, 必须满足两个基本要求：同步和通信<ul>
+<li>为实施互斥, 进程间需要同步</li>
+<li>为了协作, 进程间需要交换信息</li>
+</ul>
+</li>
+<li>消息传递提供了这些功能, 最典型的消息传递原语<ul>
+<li>send 发送消息的原语</li>
+<li>receive 接收消息的原语</li>
+</ul>
+</li>
+</ul>
+<h4 id="进程直接通信"><a href="#进程直接通信" class="headerlink" title="进程直接通信"></a>进程直接通信</h4><ul>
+<li>对称直接寻址, 发送进程和接收进程必须命名对方以便通信, 原语 send() 和 receive() 定义如下：<ul>
+<li>send(P, messsage) 发送消息到进程P</li>
+<li>receive(Q, message) 接收来自进程Q的消息</li>
+</ul>
+</li>
+<li>非对称直接寻址, 只要发送者命名接收者, 而接收者不需要命名发送者, send() 和 receive() 定义如下：<ul>
+<li>send(P, messsage) 发送消息到进程P</li>
+<li>receive(id, message) 接收来自任何进程的消息, 变量id置成与其通信的进程名称</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203155706290.png" alt="image-20230203155706290" style="zoom:80%;" />
+
+<h4 id="消息格式"><a href="#消息格式" class="headerlink" title="消息格式"></a>消息格式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203161752192.png" alt="image-20230203161752192" style="zoom:80%;" />
+
+<h4 id="进程间接通信"><a href="#进程间接通信" class="headerlink" title="进程间接通信"></a>进程间接通信</h4><ul>
+<li><p>消息不是直接从发送者发送到接收者, 而是发送到由临时保存这些消息的队列组成的一个共享数据结构, 这些队列通常成为信箱(mailbox)</p>
+</li>
+<li><p>一个进程给合适的信箱发送消息, 另一进程从信箱中获得消息</p>
+</li>
+<li><p>间接通信的 send() 和 receive() 定义如下：</p>
+<ul>
+<li>send(A, message)：把一封信件(消息)传送到信箱 A</li>
+<li>receive(A, message)：从信箱 A 接收一封信件(消息)</li>
+</ul>
+</li>
+<li><p>信箱可以分成信箱头和信箱体两部分, 信箱头指出信箱容量、信件格式、存放信件位置的指针等；信箱体用来存放信件, 信箱体分成若干个区, 每个区可容纳一封信</p>
+</li>
+<li><p>“发送”和“接收”两条原语的功能为：</p>
+<ul>
+<li>发送信件：如果指定的信箱未满, 则将信件送入信箱中由指针所指示的位置, 并释放等待该信箱中信件的等待者；否则, 发送信件者被置成等待信箱状态</li>
+<li>接收信件：如果指定信箱中有信, 则取出一封信件, 并释放等待信箱的等待者, 否则, 接收信件者被置成等待信箱中信件的状态</li>
+</ul>
+</li>
+</ul>
+<h4 id="send-receive原语的算法描述"><a href="#send-receive原语的算法描述" class="headerlink" title="send&#x2F;receive原语的算法描述"></a>send&#x2F;receive原语的算法描述</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203162732043.png" alt="image-20230203162732043" style="zoom:80%;" />
+
+<h4 id="消息传递求解生产者消费者问题"><a href="#消息传递求解生产者消费者问题" class="headerlink" title="消息传递求解生产者消费者问题"></a>消息传递求解生产者消费者问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203162507141.png" alt="image-20230203162507141" style="zoom:80%;" />
+
+<h4 id="有关消息传递的若干问题"><a href="#有关消息传递的若干问题" class="headerlink" title="有关消息传递的若干问题"></a>有关消息传递的若干问题</h4><ul>
+<li>关于信箱容量问题</li>
+<li>关于多进程与信箱相连的信件接收问题</li>
+<li>关于信箱的所有权问题<ul>
+<li>信箱为操作系统所有是指由操作系统统一设置信箱, 归系统所有, 供相互通信的进程共享, 消息缓冲机制就是一个著名的例子</li>
+</ul>
+</li>
+<li>关于信件的格式问题和其他有关问题</li>
+<li>关于通信进程的同步问题</li>
+</ul>
+<blockquote>
+<p>消息缓冲是在1973年由P.B.Hansan提出的一种进程间高级通信设施, 并在RC4000系统中实现</p>
+<p>消息缓冲通信的基本思想是：由操作系统统一管理一组用于通信的消息缓冲存储区, 每一个消息缓冲存储区可存放一个消息(信件)。当一个进程要发送消息时, 先在自己的消息发送区里生成待发送的消息, 包括：接收进程名、消息长度、消息正文等。然后, 向系统申请一个消息缓冲区, 把消息从发送区复制到消息缓冲区中, 注意在复制过程中系统会将接收进程名换成发送进程名, 以便接收者识别。随后该消息缓冲区被挂到接收消息的进程的消息队列上, 供接收者在需要时从消息队列中摘下并复制到消息接收区去使用, 同时释放消息缓冲区。</p>
+</blockquote>
+<h4 id="消息缓冲通信"><a href="#消息缓冲通信" class="headerlink" title="消息缓冲通信"></a>消息缓冲通信</h4><p>消息缓冲通信涉及的数据结构：</p>
+<ul>
+<li>sender：发送消息的进程名或标识符</li>
+<li>size：发送的消息长度</li>
+<li>text：发送的消息正文</li>
+<li>next-ptr：指向下一个消息缓冲区的指针</li>
+</ul>
+<p>在进程的PCB中涉及通信的数据结构：</p>
+<ul>
+<li>mptr：消息队列队首指针</li>
+<li>mutex：消息队列互斥信号量, 初值为1</li>
+<li>sm：表示接收进程消息队列上消息的个数, 初值为0, 是控制收发进程同步的信号量</li>
+</ul>
+<p>发送原语和接收原语的实现如下：</p>
+<ul>
+<li>发送原语Send：申请一个消息缓冲区, 把发送区内容复制到这个缓冲区中；找到接收进程的PCB, 执行互斥操作 P(mutex)；把缓冲区挂到接收进程消息队列的尾部, 执行V(sm)、即消息数加1；执行V(mutex)</li>
+<li>接收原语Receive：执行P(sm)查看有否信件；执行互斥操作P(mutex), 从消息队列中摘下第一个消息, 执行V(mutex)；把消息缓冲区内容复制到接收区, 释放消息缓冲区</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203163117130.png" alt="image-20230203163117130" style="zoom:80%;" />
+
+<h4 id="管道和套接字"><a href="#管道和套接字" class="headerlink" title="管道和套接字"></a>管道和套接字</h4><ul>
+<li>管道(pipeline)是Unix和C的传统通信方式</li>
+<li>套接字(socket)起源于Unix BSD版本, 目前已经被Unix和Windows操作系统广泛采用, 并支持TCP&#x2F;IP协议, 即支持本机的进程间通信, 也支持网络级的进程间通信</li>
+<li>管道和套接字都是基于信箱的消息传递方式的一种变体, 它们与传统的信箱方式等价, 区别在于没有预先设定消息的边界。换言之, 如果一个进程发送10条100字节的消息, 而另一个进程接收1000个字节, 那么接收者将一次获得10条消息</li>
+</ul>
+<h3 id="6-5-2-高级进程通信机制"><a href="#6-5-2-高级进程通信机制" class="headerlink" title="6.5.2 高级进程通信机制"></a>6.5.2 高级进程通信机制</h3><h4 id="基于流的进程通信"><a href="#基于流的进程通信" class="headerlink" title="基于流的进程通信"></a>基于流的进程通信</h4><ul>
+<li><p>多个进程使用一个共享的消息缓冲区(可称为管道、多路转换器、套接字)</p>
+</li>
+<li><p>一些进程往消息缓冲区写入字符流(send&#x2F;write)</p>
+</li>
+<li><p>一些进程从消息缓冲区读出字符流(receive&#x2F;read)</p>
+</li>
+<li><p>信息交换单位基于字符流, 长度任意</p>
+</li>
+</ul>
+<h4 id="基于字符流的进程通信规约"><a href="#基于字符流的进程通信规约" class="headerlink" title="基于字符流的进程通信规约"></a>基于字符流的进程通信规约</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203163500686.png" alt="image-20230203163500686" style="zoom:80%;" />
+
+<h4 id="远程过程调用RPC"><a href="#远程过程调用RPC" class="headerlink" title="远程过程调用RPC"></a>远程过程调用RPC</h4><ul>
+<li><p>采用<strong>客户&#x2F;服务器</strong>计算模式</p>
+</li>
+<li><p><strong>服务器进程</strong>提供一系列<strong>过程&#x2F;服务</strong>, 供客户进程调用</p>
+</li>
+<li><p><strong>客户进程</strong>通过调用服务器进程提供的<strong>过程&#x2F;服务</strong>获得鼓舞</p>
+</li>
+<li><p>考虑到客户计算机和服务器计算机的硬件异构型, 外部数据表示 XDR 被引入来转换每台计算机的特殊数据格式为标准数据格式</p>
+</li>
+</ul>
+<h4 id="基于RPC-XDR的高级通信规约"><a href="#基于RPC-XDR的高级通信规约" class="headerlink" title="基于RPC&#x2F;XDR的高级通信规约"></a>基于RPC&#x2F;XDR的高级通信规约</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203163812713.png" alt="image-20230203163812713" style="zoom:80%;" />
+
+<h4 id="远程过程调用-RPC-Remote-Procedure-Call"><a href="#远程过程调用-RPC-Remote-Procedure-Call" class="headerlink" title="远程过程调用(RPC, Remote Procedure Call)"></a>远程过程调用(RPC, Remote Procedure Call)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203163945300.png" alt="image-20230203163945300" style="zoom:80%;" />
+
+<h4 id="RPC执行步骤"><a href="#RPC执行步骤" class="headerlink" title="RPC执行步骤"></a>RPC执行步骤</h4><ol>
+<li>客户进程以普通方式调用客户存根</li>
+<li>客户存根组织RPC消息并执行Send, 激活内核程序</li>
+<li>内核把消息通过网络发送到远地内核</li>
+<li>远地内核把消息送到服务器存根</li>
+<li>服务器存根取出消息中参数后调用服务器过程</li>
+<li>服务器过程执行完后把结果返回至服务器存根</li>
+<li>服务器存根进程将它打包并激活内核程序</li>
+<li>服务器内核把消息通过网络发送至客户机内核</li>
+<li>客户内核把消息交给客户存根</li>
+<li>客户存根从消息中取出结果返回给客户进程</li>
+<li>客户进程获得控制权并得到了过程调用的结果</li>
+</ol>
+<h2 id="6-6-死锁"><a href="#6-6-死锁" class="headerlink" title="6.6 死锁"></a>6.6 死锁</h2><h3 id="6-6-1-死锁的产生"><a href="#6-6-1-死锁的产生" class="headerlink" title="6.6.1 死锁的产生"></a>6.6.1 死锁的产生</h3><h4 id="若干死锁的例子"><a href="#若干死锁的例子" class="headerlink" title="若干死锁的例子"></a>若干死锁的例子</h4><p><strong>进程推进顺序不当产生死锁</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203165502862.png" alt="image-20230203165502862" style="zoom:80%;" />
+
+<p><strong>PV操作使用不当产生死锁</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203165733619.png" alt="image-20230203165733619" style="zoom:80%;" />
+
+<p><strong>资源分配不当引起死锁</strong></p>
+<ul>
+<li>若系统中有 m 个资源被 n 个进程共享, 每个进程都要求 K 个资源, 而 m &lt; nk 时, 即资源数小于进程所要求的总数时, 如果分配不当就可能引起死锁</li>
+</ul>
+<p><strong>对临时性资源使用不加限制引起死锁</strong></p>
+<ul>
+<li>进程通信使用的信件是一种临时性资源, 如果对信件的发送和接收不加限制, 可能引起死锁</li>
+<li>进程 P1 等待进程 P3 的信件 S3 来到后再向进程 P2 发送信件 S1；P2 又要等待 P1 的信件 S1 来到后再向 P3 发送信件 S2；而 P3 也要等待 P2 的信件 S2 来到后才能发出信件 S3。这种情况下形成了循环等待, 产生死锁</li>
+</ul>
+<h4 id="死锁定义"><a href="#死锁定义" class="headerlink" title="死锁定义"></a>死锁定义</h4><ul>
+<li>操作系统中的死锁指：如果在一个进程集合中的每个进程都在等待只能由该集合中的其他一个进程才能引发的事件, 则称一组进程或系统此时发生死锁。</li>
+<li>例如, n个进程P1, P2, …, Pn, Pi因为申请不到资源 Rj 而处于等待状态, 而 Rj 又被 Pi+1 占有, Pn 欲申请的资源被 P1 占有, 此时这 n 个进程的等待状态永远不能结束, 则说这 n 个进程处于死锁状态</li>
+</ul>
+<h4 id="产生死锁因素"><a href="#产生死锁因素" class="headerlink" title="产生死锁因素"></a>产生死锁因素</h4><ul>
+<li>不仅与系统拥有的资源数量有关, 而且与资源分配策略, 进程对资源的使用要求以及并发进程的推进顺序有关</li>
+</ul>
+<h3 id="6-6-2-死锁的防止"><a href="#6-6-2-死锁的防止" class="headerlink" title="6.6.2 死锁的防止"></a>6.6.2 死锁的防止</h3><h4 id="系统形成死锁的四个必要条件"><a href="#系统形成死锁的四个必要条件" class="headerlink" title="系统形成死锁的四个必要条件"></a>系统形成死锁的四个必要条件</h4><ul>
+<li><strong>互斥条件</strong>(mutual exclusion)：系统中存在临界资源, 进程应互斥地使用这些资源</li>
+<li><strong>占有和等待条件</strong>(hold and wait)：进程请求资源得不到满足而等待时, 不释放已占有的资源</li>
+<li><strong>不剥夺条件</strong>(no preemption)：已被占用的资源只能由属主释放, 不允许被其它进程剥夺</li>
+<li><strong>循环等待条件</strong>(circular wait)：存在循环等待链, 其中, 每个进程都在链中等待下一个进程所持有的资源, 造成这组进程永远等待</li>
+</ul>
+<h4 id="破坏条件"><a href="#破坏条件" class="headerlink" title="破坏条件"></a>破坏条件</h4><p>破坏第一个条件</p>
+<ul>
+<li>使资源可同时访问而不是互斥使用</li>
+<li>可再入程序、只读数据文件、时钟、磁盘等软硬件资源均可用这种办法管理, <strong>但有许多资源如可写文件、磁带机等由于特殊性质决定只能互斥占有</strong>, 而不能被同时访问, 所以这种做法许多场合行不通。(有些资源具有天生的互斥性)</li>
+</ul>
+<p>破坏第二个条件</p>
+<ul>
+<li>静态分配</li>
+<li><strong>进程在执行中不再申请资源</strong>, 就不会出现占有某些资源再等待另一些资源的情况</li>
+<li>实现简单, 被许多操作系统采用, 但会<strong>严重地降低资源利用率</strong>, 因为在每个进程占有的资源中, 有些资源在运行后期使用, 甚至有些资源在例外情况下才被使用, 可能造成进程占有一些几乎不用的资源, 而使其他想用这些资源的进程产生等待</li>
+</ul>
+<p>破坏第三个条件</p>
+<ul>
+<li>采用剥夺式调度方法</li>
+<li>当进程在申请资源未获准许的情况下, 如主动释放资源(一种剥夺式), 然后才去等待</li>
+</ul>
+<p>破坏第四个条件</p>
+<ul>
+<li>上述死锁防止办法造成资源利用率和吞吐率低。介绍两种比较实用的死锁防止方法</li>
+</ul>
+<h4 id="采用层次分配策略-破坏条件2和4"><a href="#采用层次分配策略-破坏条件2和4" class="headerlink" title="采用层次分配策略(破坏条件2和4)"></a>采用层次分配策略(破坏条件2和4)</h4><ul>
+<li>资源被分成多个层次</li>
+<li>当进程得到某一层的一个资源后, 它只能再申请较高层次的资源</li>
+<li>当进程要释放某层的一个资源时, 必须先释放占有的较高层次的资源</li>
+<li>当进程得到某一层的一个资源后, 它想申请该层的另一个资源时, 必须先释放该层中的已占资源</li>
+</ul>
+<h4 id="层次策略的变种按序分配策略"><a href="#层次策略的变种按序分配策略" class="headerlink" title="层次策略的变种按序分配策略"></a>层次策略的变种按序分配策略</h4><ul>
+<li>把系统的所有资源排一个顺序, 例如, 系统若共有 n 个进程, 共有 m 个资源, 用 ri 表示第 i 个资源, 于是这 m 个资源是：r1, r2…, rm</li>
+<li>规定如果进程不得在占用资源 ri(1&lt;&#x3D;i&lt;&#x3D;m) 后再申请 rj(j&lt;i)。不难证明, 按这种策略分配资源时系统不会发生死锁</li>
+</ul>
+<h3 id="6-6-3-死锁的避免"><a href="#6-6-3-死锁的避免" class="headerlink" title="6.6.3 死锁的避免"></a>6.6.3 死锁的避免</h3><ul>
+<li>银行家算法<ul>
+<li>银行家拥有一笔周转资金</li>
+<li>客户要求分期贷款, 如果客户能够得到各期贷款, 就一定能够归还贷款, 否则就一定不能归还贷款</li>
+<li>银行家应谨慎的贷款, 防止出现坏帐</li>
+</ul>
+</li>
+<li>用银行家算法避免死锁<ul>
+<li>操作系统(银行家)</li>
+<li>操作系统管理的资源(周转资金)</li>
+<li>进程(要求贷款的客户)</li>
+</ul>
+</li>
+</ul>
+<h4 id="银行家算法的数据结构"><a href="#银行家算法的数据结构" class="headerlink" title="银行家算法的数据结构"></a>银行家算法的数据结构</h4><p>一个系统有 <strong>n 个进程和 m 种不同类型的资源</strong>, 定义包含以下向量和矩阵的数据结构:</p>
+<ul>
+<li><p>系统每类资源总数–该 m 个元素的向量为系统中每类资源的数量</p>
+<ul>
+<li>Resource &#x3D; (R1, R2 , …, Rm)</li>
+</ul>
+</li>
+<li><p>每类资源未分配数量–该 m 个元素的向量为系统中每类资源尚可供分配的数量</p>
+<ul>
+<li>Available &#x3D; (V1, V2 , …, Vm)</li>
+</ul>
+</li>
+<li><p>最大需求矩阵–每个进程对每类资源的最大需求量, Cij表示进程 Pi 需 Rj 类资源最大数</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203171542152.png" alt="image-20230203171542152" style="zoom:80%;" />
+
+<ul>
+<li>分配矩阵–表示进程当前已分得的资源数, Aij 表示进程 Pi 已分到 Rj 类资源的个数</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203171616097.png" alt="image-20230203171616097" style="zoom:80%;" />
+
+<h4 id="银行家算法中下列关系式确保成立"><a href="#银行家算法中下列关系式确保成立" class="headerlink" title="银行家算法中下列关系式确保成立"></a>银行家算法中下列关系式确保成立</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203171718724.png" alt="image-20230203171718724" style="zoom:80%;" />
+
+<h4 id="一种死锁避免策略"><a href="#一种死锁避免策略" class="headerlink" title="一种死锁避免策略"></a>一种死锁避免策略</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203171817254.png" alt="image-20230203171817254" style="zoom:80%;" />
+
+<h4 id="系统安全性定义"><a href="#系统安全性定义" class="headerlink" title="系统安全性定义"></a>系统安全性定义</h4><p>在时刻 T0 系统是安全的, 仅当存在一个进程序列P1, …, Pn , 对进程Pk满足公式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203171853323.png" alt="image-20230203171853323" style="zoom:80%;" />
+
+<h4 id="实例说明系统所处的安全或不安全状态"><a href="#实例说明系统所处的安全或不安全状态" class="headerlink" title="实例说明系统所处的安全或不安全状态"></a>实例说明系统所处的安全或不安全状态</h4><ul>
+<li>如果系统中共有五个进程和 A、B、C 三类资源</li>
+<li>A类资源共有10个, B类资源共有5个, C类资源共有7个</li>
+<li>在时刻T0, 系统目前资源分配情况如下</li>
+<li>资源总数[10 5 7]</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203171944508.png" alt="image-20230203171944508" style="zoom:80%;" />
+
+<p>可以断言目前系统处于安全状态, 因为, 序列{P1, P3, P4, P2, P0}能满足安全性条件</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203172228269.png" alt="image-20230203172228269" style="zoom:80%;" />
+
+<h4 id="银行家算法的基本思想"><a href="#银行家算法的基本思想" class="headerlink" title="银行家算法的基本思想"></a>银行家算法的基本思想</h4><ul>
+<li>系统中的所有进程进入进程集合</li>
+<li>在安全状态下系统收到进程的资源请求后, 先把资源<strong>试探性分配</strong>给它</li>
+<li>系统用剩下的可用资源和进程集合中其他进程还要的资源数作比较, 在进程集合中<strong>找到剩余资源能满足最大需求量的进程</strong>, 从而, <strong>保证这个进程运行完毕并归还全部资源</strong></li>
+<li>把这个进程<strong>从集合中去掉</strong>, 系统的剩余资源更多了, 反复执行上述步骤。&#x2F;&#x2F;进程退出系统, 资源回收</li>
+<li>最后, 检查进程集合, 若为空表明本次申请可行, 系统处于安全状态, 可实施本次分配; 否则, 有进程执行不完, 系统处于不安全状态, 本次资源分配暂不实施, 让申请进程等待。</li>
+</ul>
+<h3 id="6-6-4-死锁的检测和解除"><a href="#6-6-4-死锁的检测和解除" class="headerlink" title="6.6.4 死锁的检测和解除"></a>6.6.4 死锁的检测和解除</h3><h4 id="资源分配图和死锁定理"><a href="#资源分配图和死锁定理" class="headerlink" title="资源分配图和死锁定理"></a>资源分配图和死锁定理</h4><ul>
+<li>解决死锁问题的一条途径是<strong>死锁检测和解除</strong>，这种方法对资源的分配不加任何限制，也不采取死锁避免措施，但系统定时地运行一个“死锁检测”程序，判断系统内是否已出现死锁，如果检测到系统已发生了死锁，再采取措施解除它</li>
+</ul>
+<h4 id="进程-资源分配图"><a href="#进程-资源分配图" class="headerlink" title="进程-资源分配图"></a>进程-资源分配图</h4><ul>
+<li>约定 Pi-&gt;Rj 为请求边，表示进程 Pi 申请资源类 Rj 中的一个资源得不到满足而处于等待 Rj 类资源的状态，该有向边从进程开始指到方框的边缘，表示进程 Pi 申请 Rj 类中的一个资源。</li>
+<li>Rj-&gt;Pi 为分配边，表示 Rj 类中的一个资源已被进程 Pi 占用，由于已把一个具体的资源分给了进程 Pi，故该有向边从方框内的某个黑圆点出发指向进程。</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203173105215.png" alt="image-20230203173105215" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203173204493.png" alt="image-20230203173204493" style="zoom:80%;" />
+
+<h4 id="简化进程-资源分配图检测系统是否处于死锁状态"><a href="#简化进程-资源分配图检测系统是否处于死锁状态" class="headerlink" title="简化进程-资源分配图检测系统是否处于死锁状态"></a>简化进程-资源分配图检测系统是否处于死锁状态</h4><ul>
+<li><p>如果进程-资源分配图中<strong>无环路</strong>，则此时系统<strong>没有发生死锁</strong></p>
+</li>
+<li><p>如果进程-资源分配图中<strong>有环路</strong>，且<strong>每个资源类中仅有一个资源</strong>，则系统中发生了死锁，此时，<strong>环路是系统发生死锁的充要条件</strong>，环路中的进程便为死锁进程</p>
+</li>
+<li><p>如果进程-资源分配图中<strong>有环路</strong>，且涉及的资源类中有多个资源，则环路的存在<strong>只是产生死锁的必要条件</strong>而不是充分条件</p>
+</li>
+<li><p>如果能在进程-资源分配图中<strong>消去此进程的所有请求边和分配边</strong>，成为<strong>孤立结点</strong>。经一系列简化，使所有进程成为孤立结点，则该图是可完全简化的；否则则称该图是不可完全简化的</p>
+</li>
+<li><p>系统为死锁状态的<strong>充分条件</strong>是：当且仅当该状态的进程-资源分配图是<strong>不可完全简化</strong>的。该充分条件称为<strong>死锁定理</strong></p>
+</li>
+</ul>
+<h4 id="死锁的检测和解除方法"><a href="#死锁的检测和解除方法" class="headerlink" title="死锁的检测和解除方法"></a>死锁的检测和解除方法</h4><ul>
+<li>借助于死锁的安全性测试算法来实现。<strong>死锁检测算法与死锁避免算法是类似的，不同在于前者考虑了检查每个进程还需要的所有资源能否满足要求</strong>；而后者则仅要根据进程的当前申请资源量来判断系统是否进入了不安全状态</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203173634312.png" alt="image-20230203173634312"></p>
+<h4 id="死锁的解除"><a href="#死锁的解除" class="headerlink" title="死锁的解除"></a>死锁的解除</h4><ul>
+<li>结束所有进程的执行，重新启动操作系统。方法简单，但以前工作全部作废，损失很大。</li>
+<li>撤销陷于死锁的所有进程，解除死锁继续运行。</li>
+<li>逐个撤销陷于死锁的进程，回收其资源重新分派，直至死锁解除。</li>
+<li>剥夺陷于死锁的进程占用的资源，但并不撤销它，直至死锁解除。可仿照撤销陷于死锁进程的条件来选择剥夺资源的进程</li>
+<li>根据系统保存的检查点，让所有进程回退，直到足以解除死锁，这种措施要求系统建立保存检查点、回退及重启机制</li>
+<li>当检测到死锁时，如果存在某些未卷入死锁的进程，而随着这些进程执行到结束，有可能释放足够的资源来解除死锁</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/12/02/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-5-%E4%BA%8B%E4%BB%B6/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                        <b>#</b> 计算机操作系统
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/12/05/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4-%E7%AC%A6%E5%8F%B7%E8%A1%A8/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">第六章 并发程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B"><span class="toc-text">6.1 并发进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-1-%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">6.1.1 顺序程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%BA%E5%BA%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%89%B9%E7%82%B9"><span class="toc-text">顺序程序设计特点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-2-%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">6.1.2 进程的并发性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">并发程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E6%80%A7"><span class="toc-text">进程的并发性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">并发进程的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bernstein%E6%9D%A1%E4%BB%B6"><span class="toc-text">Bernstein条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8E%E6%97%B6%E9%97%B4%E6%9C%89%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF"><span class="toc-text">与时间有关的错误</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%BA%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="toc-text">机票问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E7%AE%A1%E7%90%86%E9%97%AE%E9%A2%98"><span class="toc-text">主存管理问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-3-%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%A4%E4%BA%92-%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%8D%8F%E4%BD%9C"><span class="toc-text">6.1.3 进程的交互: 竞争与协作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%9E%E4%BA%89%E5%85%B3%E7%B3%BB%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">竞争关系带来的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%9E%E4%BA%89%E5%85%B3%E7%B3%BB-%E6%AD%BB%E9%94%81"><span class="toc-text">竞争关系: 死锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AB%9E%E4%BA%89%E5%85%B3%E7%B3%BB-%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%92%E6%96%A5"><span class="toc-text">竞争关系: 进程的互斥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8F%E4%BD%9C%E5%85%B3%E7%B3%BB-%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5"><span class="toc-text">协作关系: 进程的同步</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BA%A4%E4%BA%92-%E7%AB%9E%E4%BA%89%E4%B8%8E%E5%8D%8F%E4%BD%9C"><span class="toc-text">进程的交互: 竞争与协作</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E4%B8%B4%E7%95%8C%E5%8C%BA%E7%AE%A1%E7%90%86"><span class="toc-text">6.2 临界区管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-1-%E4%BA%92%E6%96%A5%E4%B8%8E%E4%B8%B4%E7%95%8C%E5%8C%BA"><span class="toc-text">6.2.1 互斥与临界区</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E4%B8%8E%E4%B8%B4%E7%95%8C%E5%8C%BA"><span class="toc-text">互斥与临界区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B4%E7%95%8C%E5%8C%BA%E8%B0%83%E5%BA%A6%E5%8E%9F%E5%88%99"><span class="toc-text">临界区调度原则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-2-%E4%B8%B4%E7%95%8C%E5%8C%BA%E7%AE%A1%E7%90%86%E7%9A%84%E5%B0%9D%E8%AF%95"><span class="toc-text">6.2.2 临界区管理的尝试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%B8%80"><span class="toc-text">尝试一</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%9D%E8%AF%95%E4%BA%8C"><span class="toc-text">尝试二</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%B4%E7%95%8C%E5%8C%BA%E7%9A%84%E8%BD%AF%E4%BB%B6%E7%AE%97%E6%B3%95-Peterson%E7%AE%97%E6%B3%95"><span class="toc-text">实现临界区的软件算法: Peterson算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-3-%E5%AE%9E%E7%8E%B0%E4%B8%B4%E7%95%8C%E5%8C%BA%E7%AE%A1%E7%90%86%E7%9A%84%E7%A1%AC%E4%BB%B6%E8%AE%BE%E6%96%BD"><span class="toc-text">6.2.3 实现临界区管理的硬件设施</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E4%B8%AD%E6%96%AD"><span class="toc-text">关中断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%E5%B9%B6%E5%BB%BA%E7%AB%8B%E6%8C%87%E4%BB%A4"><span class="toc-text">测试并建立指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%8D%A2%E6%8C%87%E4%BB%A4"><span class="toc-text">对换指令</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8EPV%E6%93%8D%E4%BD%9C"><span class="toc-text">6.3 信号量与PV操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-1-%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8EPV%E6%93%8D%E4%BD%9C%E7%9A%84%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF"><span class="toc-text">6.3.1 信号量与PV操作的问题背景</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">并发程序设计的基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%80%9C%E5%BF%99%E5%BC%8F%E7%AD%89%E5%BE%85%E2%80%9D%E6%96%B9%E6%B3%95%E8%A7%A3%E5%86%B3%E4%B8%B4%E7%95%8C%E5%8C%BA%E8%B0%83%E5%BA%A6%E9%97%AE%E9%A2%98%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-text">“忙式等待”方法解决临界区调度问题的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%AD%E2%80%9C%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98%E2%80%9D%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%E7%9A%84%E7%9F%A5%E8%AF%86%E6%A1%86%E6%9E%B6"><span class="toc-text">操作系统中“并发问题”解决方案的知识框架</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-2-%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8EPV%E6%93%8D%E4%BD%9C%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">6.3.2 信号量与PV操作的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8EPV%E6%93%8D%E4%BD%9C%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E5%8E%9F%E8%AF%AD%E6%93%8D%E4%BD%9C"><span class="toc-text">信号量与PV操作的数据结构与原语操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PV%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E6%A8%A1%E5%9E%8B"><span class="toc-text">PV操作与进程状态转换模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#PV%E6%93%8D%E4%BD%9C%E4%B8%8E%E8%BF%9B%E7%A8%8B%E7%8A%B6%E6%80%81%E9%98%9F%E5%88%97%E6%A8%A1%E5%9E%8B"><span class="toc-text">PV操作与进程状态队列模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8EPV%E6%93%8D%E4%BD%9C%E7%9A%84%E6%8E%A8%E8%AE%BA"><span class="toc-text">信号量与PV操作的推论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-3-%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">6.3.3 信号量的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%80%E8%88%AC%E7%BB%93%E6%9E%84"><span class="toc-text">信号量程序设计的一般结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E4%B8%8EPV%E6%93%8D%E4%BD%9C%E6%8E%A7%E5%88%B6%E5%B9%B6%E5%8F%91%E8%BF%9B%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%9A%84%E4%B8%B4%E7%95%8C%E8%B5%84%E6%BA%90"><span class="toc-text">信号量与PV操作控制并发进程之间的临界资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%97%AE%E9%A2%98-%E9%A3%9E%E6%9C%BA%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="toc-text">互斥问题: 飞机票问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%97%AE%E9%A2%98-%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98"><span class="toc-text">互斥问题: 哲学家就餐问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%89%E8%8B%A5%E5%B9%B2%E7%A7%8D%E5%8A%9E%E6%B3%95%E5%8F%AF%E9%81%BF%E5%85%8D%E8%BF%99%E7%B1%BB%E6%AD%BB%E9%94%81"><span class="toc-text">有若干种办法可避免这类死锁</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98-%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">同步问题: 生产者-消费者问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98-%E8%8B%B9%E6%9E%9C-%E6%A9%98%E5%AD%90%E9%97%AE%E9%A2%98"><span class="toc-text">同步问题: 苹果-橘子问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F-%E5%89%8D%E9%A9%B1%E5%85%B3%E7%B3%BB"><span class="toc-text">信号量-前驱关系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E8%80%85-%E5%86%99%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">读者&#x2F;写者问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9D%A1%E7%9C%A0%E7%9A%84%E7%90%86%E5%8F%91%E5%B8%88%E9%97%AE%E9%A2%98"><span class="toc-text">睡眠的理发师问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%9C%E5%A4%AB%E7%8C%8E%E4%BA%BA%E9%97%AE%E9%A2%98"><span class="toc-text">农夫猎人问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%B6%E8%A1%8C%E4%B8%9A%E5%8A%A1%E9%97%AE%E9%A2%98"><span class="toc-text">银行业务问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E7%AE%A1%E7%90%86"><span class="toc-text">缓冲区管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%94%AE%E7%A5%A8%E9%97%AE%E9%A2%98"><span class="toc-text">售票问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%B8%E7%83%9F%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">吸烟者问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-%E7%AE%A1%E7%A8%8B"><span class="toc-text">6.4 管程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-1-%E7%AE%A1%E7%A8%8B%E5%92%8C%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="toc-text">6.4.1 管程和条件变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B%E5%AE%9A%E4%B9%89%E5%92%8C%E5%B1%9E%E6%80%A7"><span class="toc-text">管程定义和属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="toc-text">管程的形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">管程的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B%E7%9A%84%E6%9D%A1%E4%BB%B6%E5%8F%98%E9%87%8F"><span class="toc-text">管程的条件变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B%E9%97%AE%E9%A2%98%E8%AE%A8%E8%AE%BA"><span class="toc-text">管程问题讨论</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-2-%E7%AE%A1%E7%A8%8B%E7%9A%84%E5%AE%9E%E7%8E%B0-Hoare%E6%96%B9%E6%B3%95"><span class="toc-text">6.4.2 管程的实现(Hoare方法)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Hoare%E7%AE%A1%E7%A8%8B%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">Hoare管程数据结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-3-%E7%AE%A1%E7%A8%8B%E6%B1%82%E8%A7%A3%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5%E9%97%AE%E9%A2%98"><span class="toc-text">6.4.3 管程求解进程的同步与互斥问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E8%80%85%E5%86%99%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">读者写者问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E5%B0%B1%E9%A4%90%E9%97%AE%E9%A2%98"><span class="toc-text">哲学家就餐问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">生产者-消费者问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8B%B9%E6%9E%9C-%E6%A9%98%E5%AD%90%E9%97%AE%E9%A2%98"><span class="toc-text">苹果-橘子问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text">6.5 进程通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-1-%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1-%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92"><span class="toc-text">6.5.1 进程通信(消息传递)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%9B%B4%E6%8E%A5%E9%80%9A%E4%BF%A1"><span class="toc-text">进程直接通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E6%A0%BC%E5%BC%8F"><span class="toc-text">消息格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E6%8E%A5%E9%80%9A%E4%BF%A1"><span class="toc-text">进程间接通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#send-receive%E5%8E%9F%E8%AF%AD%E7%9A%84%E7%AE%97%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="toc-text">send&#x2F;receive原语的算法描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E6%B1%82%E8%A7%A3%E7%94%9F%E4%BA%A7%E8%80%85%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">消息传递求解生产者消费者问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%85%B3%E6%B6%88%E6%81%AF%E4%BC%A0%E9%80%92%E7%9A%84%E8%8B%A5%E5%B9%B2%E9%97%AE%E9%A2%98"><span class="toc-text">有关消息传递的若干问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E6%81%AF%E7%BC%93%E5%86%B2%E9%80%9A%E4%BF%A1"><span class="toc-text">消息缓冲通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%92%8C%E5%A5%97%E6%8E%A5%E5%AD%97"><span class="toc-text">管道和套接字</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-2-%E9%AB%98%E7%BA%A7%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E6%9C%BA%E5%88%B6"><span class="toc-text">6.5.2 高级进程通信机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E6%B5%81%E7%9A%84%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1"><span class="toc-text">基于流的进程通信</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%AD%97%E7%AC%A6%E6%B5%81%E7%9A%84%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6"><span class="toc-text">基于字符流的进程通信规约</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8RPC"><span class="toc-text">远程过程调用RPC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ERPC-XDR%E7%9A%84%E9%AB%98%E7%BA%A7%E9%80%9A%E4%BF%A1%E8%A7%84%E7%BA%A6"><span class="toc-text">基于RPC&#x2F;XDR的高级通信规约</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9C%E7%A8%8B%E8%BF%87%E7%A8%8B%E8%B0%83%E7%94%A8-RPC-Remote-Procedure-Call"><span class="toc-text">远程过程调用(RPC, Remote Procedure Call)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RPC%E6%89%A7%E8%A1%8C%E6%AD%A5%E9%AA%A4"><span class="toc-text">RPC执行步骤</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E6%AD%BB%E9%94%81"><span class="toc-text">6.6 死锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-1-%E6%AD%BB%E9%94%81%E7%9A%84%E4%BA%A7%E7%94%9F"><span class="toc-text">6.6.1 死锁的产生</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8B%A5%E5%B9%B2%E6%AD%BB%E9%94%81%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">若干死锁的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E5%AE%9A%E4%B9%89"><span class="toc-text">死锁定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%A7%E7%94%9F%E6%AD%BB%E9%94%81%E5%9B%A0%E7%B4%A0"><span class="toc-text">产生死锁因素</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-2-%E6%AD%BB%E9%94%81%E7%9A%84%E9%98%B2%E6%AD%A2"><span class="toc-text">6.6.2 死锁的防止</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%BD%A2%E6%88%90%E6%AD%BB%E9%94%81%E7%9A%84%E5%9B%9B%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="toc-text">系统形成死锁的四个必要条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A0%B4%E5%9D%8F%E6%9D%A1%E4%BB%B6"><span class="toc-text">破坏条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%87%E7%94%A8%E5%B1%82%E6%AC%A1%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5-%E7%A0%B4%E5%9D%8F%E6%9D%A1%E4%BB%B62%E5%92%8C4"><span class="toc-text">采用层次分配策略(破坏条件2和4)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%82%E6%AC%A1%E7%AD%96%E7%95%A5%E7%9A%84%E5%8F%98%E7%A7%8D%E6%8C%89%E5%BA%8F%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-text">层次策略的变种按序分配策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-3-%E6%AD%BB%E9%94%81%E7%9A%84%E9%81%BF%E5%85%8D"><span class="toc-text">6.6.3 死锁的避免</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-text">银行家算法的数据结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95%E4%B8%AD%E4%B8%8B%E5%88%97%E5%85%B3%E7%B3%BB%E5%BC%8F%E7%A1%AE%E4%BF%9D%E6%88%90%E7%AB%8B"><span class="toc-text">银行家算法中下列关系式确保成立</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E7%A7%8D%E6%AD%BB%E9%94%81%E9%81%BF%E5%85%8D%E7%AD%96%E7%95%A5"><span class="toc-text">一种死锁避免策略</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E6%80%A7%E5%AE%9A%E4%B9%89"><span class="toc-text">系统安全性定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B%E8%AF%B4%E6%98%8E%E7%B3%BB%E7%BB%9F%E6%89%80%E5%A4%84%E7%9A%84%E5%AE%89%E5%85%A8%E6%88%96%E4%B8%8D%E5%AE%89%E5%85%A8%E7%8A%B6%E6%80%81"><span class="toc-text">实例说明系统所处的安全或不安全状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">银行家算法的基本思想</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-4-%E6%AD%BB%E9%94%81%E7%9A%84%E6%A3%80%E6%B5%8B%E5%92%8C%E8%A7%A3%E9%99%A4"><span class="toc-text">6.6.4 死锁的检测和解除</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E5%9B%BE%E5%92%8C%E6%AD%BB%E9%94%81%E5%AE%9A%E7%90%86"><span class="toc-text">资源分配图和死锁定理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B-%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E5%9B%BE"><span class="toc-text">进程-资源分配图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E8%BF%9B%E7%A8%8B-%E8%B5%84%E6%BA%90%E5%88%86%E9%85%8D%E5%9B%BE%E6%A3%80%E6%B5%8B%E7%B3%BB%E7%BB%9F%E6%98%AF%E5%90%A6%E5%A4%84%E4%BA%8E%E6%AD%BB%E9%94%81%E7%8A%B6%E6%80%81"><span class="toc-text">简化进程-资源分配图检测系统是否处于死锁状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E6%A3%80%E6%B5%8B%E5%92%8C%E8%A7%A3%E9%99%A4%E6%96%B9%E6%B3%95"><span class="toc-text">死锁的检测和解除方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%BB%E9%94%81%E7%9A%84%E8%A7%A3%E9%99%A4"><span class="toc-text">死锁的解除</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(6)%20%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F05%2F%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F-6-%25E5%25B9%25B6%25E5%258F%2591%25E7%25A8%258B%25E5%25BA%258F%25E8%25AE%25BE%25E8%25AE%25A1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-6-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

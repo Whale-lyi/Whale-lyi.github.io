@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Linux程序设计(1) Linux Basics 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Linux程序设计(1) Linux Basics</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/Linux%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" title="Linux程序设计">
+                    <b>#</b> Linux程序设计
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-What-is-Linux"><a href="#1-What-is-Linux" class="headerlink" title="1. What is Linux?"></a>1. What is Linux?</h2><p>根据 GNU 通用公共许可证开发的免费类 Unix 操作系统。</p>
+<ol>
+<li>开源</li>
+<li>受欢迎</li>
+<li>支持大多数可用平台</li>
+</ol>
+<h3 id="1-1-GNU-Linux"><a href="#1-1-GNU-Linux" class="headerlink" title="1.1 GNU &amp; Linux"></a>1.1 GNU &amp; Linux</h3><p>GNU&#x2F;Linux System</p>
+<ul>
+<li>Linux kernel</li>
+<li>GNU software&#x2F;library</li>
+</ul>
+<p>Distributions(发行版)：</p>
+<ul>
+<li>Ubuntu, Debian, Mint, Red Hat, Fodore, SuSe, Mandrake, Redflag…</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214155540587.png" alt="image-20230214155540587" style="zoom:80%;" />
+
+<h4 id="What-is-So-Special-for-Linux"><a href="#What-is-So-Special-for-Linux" class="headerlink" title="What is So Special for Linux?"></a>What is So Special for Linux?</h4><ul>
+<li>大多数软件(包括Linux内核)均为 GPL 版(<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/GNU_General_Public_License">GNU General Public License</a>)</li>
+<li>称为”<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Copyleft">copyleft</a>“(而不是”copyright”)<ol>
+<li>你可以复制软件</li>
+<li>你可以获得源代码</li>
+<li>你可以更改源代码并重新编译</li>
+<li>你可以分发更改后的源和二进制文件</li>
+<li>你可能会为此付费</li>
+</ol>
+</li>
+<li>你只是<strong>不能更改许可证</strong><ul>
+<li>因此，所有客户都享有与您相同的权利</li>
+<li>因此，您真的不能单靠销售软件赚钱</li>
+</ul>
+</li>
+<li>其他开源许可证 (例如BSD) 也可用</li>
+</ul>
+<h2 id="2-Linux-Installation"><a href="#2-Linux-Installation" class="headerlink" title="2. Linux Installation"></a>2. Linux Installation</h2><h3 id="2-1-Installing-Linux"><a href="#2-1-Installing-Linux" class="headerlink" title="2.1 Installing Linux"></a>2.1 Installing Linux</h3><ol>
+<li>从可启动媒体启动系统</li>
+<li>所有安装程序都需要执行本质上相同的步骤：<ol>
+<li>选择语言，键盘类型，鼠标类型</li>
+<li>磁盘分区(Create partitions)</li>
+<li>设置引导加载程序(Setup a boot loader)</li>
+<li>配置网络</li>
+<li>配置用户和认证</li>
+<li>选择包装组</li>
+<li>配置X</li>
+<li>安装软件包</li>
+<li>创建启动盘</li>
+</ol>
+</li>
+</ol>
+<h3 id="2-2-Partitioning-Theory"><a href="#2-2-Partitioning-Theory" class="headerlink" title="2.2 Partitioning Theory"></a>2.2 Partitioning Theory</h3><p>硬盘的分区组织方式</p>
+<h4 id="MBR"><a href="#MBR" class="headerlink" title="MBR"></a>MBR</h4><ol>
+<li>在基于Intel的计算机上必须进行分区</li>
+<li>最多四个主分区</li>
+<li>一个主分区可以是扩展分区</li>
+<li>扩展分区可以容纳无限数量的逻辑分区(Linux：最大59)<ul>
+<li>扩展分区可以放4个逻辑分区，或者将其中的逻辑分区换为二级的扩展分区</li>
+</ul>
+</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162131763.png" alt="image-20230214162131763" style="zoom:80%;" />
+
+<blockquote>
+<p>上图中表示是一个双系统，所以同时有windows和linux</p>
+<ol>
+<li>hda：磁盘的第一个扇区包含 MBR 和分区表(早期的都是 MBR 组织的，后面使用了 GPT (使用GUID分区表))</li>
+<li>hda1：第一个主分区包含Windows 95文件系统</li>
+<li>hda2：第二主分区是扩展分区，拥有三个逻辑分区</li>
+<li>hda5：第一个逻辑分区包含一个Linux文件系统，该文件系统将被安装为&#x2F;</li>
+<li>hda6：第二个逻辑分区包含一个Linux文件系统，该文件系统将挂载为&#x2F;home</li>
+<li>hda7：第三个逻辑分区拥有一个Linux交换空间</li>
+</ol>
+</blockquote>
+<p><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/zh-hans/%E4%B8%BB%E5%BC%95%E5%AF%BC%E8%AE%B0%E5%BD%95">MBR(Master Boot Record)</a></p>
+<ul>
+<li>Size: 512 bytes (硬盘的首个扇区)</li>
+<li>Addressed by BIOS(由 BIOS 寻址)</li>
+<li>Content:<ul>
+<li>446 bytes program code (to boot an OS)</li>
+<li>64 bytes partition table with max 4 entries</li>
+<li>2 bytes “magic number” (0x55AA)</li>
+</ul>
+</li>
+</ul>
+<h4 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162723879.png" alt="image-20230214162723879" style="zoom:80%;" />
+
+<ul>
+<li>保留的 MBR 是为了在较老的机器上也能读取到磁盘上的信息</li>
+<li>GPT 是 MBR 不够用了才会选择使用</li>
+<li>支持上百个主分区，不需要扩展分区(支持超过128，但是windows限制128)</li>
+<li>Header记录Entry信息，Entry记录Partition信息，形成三级结构</li>
+<li>Secondary GPT 是备份，因此 GPT 相较于 MBR 方式会有更多的空间无法使用</li>
+</ul>
+<h3 id="2-3-File-System"><a href="#2-3-File-System" class="headerlink" title="2.3 File System"></a>2.3 File System</h3><p>什么是文件系统</p>
+<ul>
+<li>操作系统中负责存取和管理文件的部分</li>
+<li>A collection of files and certain of their attributes. It provides a name space for file serial numbers referring to those files. (susv3)</li>
+</ul>
+<p>Linux 中的文件系统:</p>
+<ul>
+<li>VFS</li>
+<li>EXT2, EXT3, FAT32…</li>
+</ul>
+<h3 id="2-4-Disk-Partitioning"><a href="#2-4-Disk-Partitioning" class="headerlink" title="2.4 Disk Partitioning"></a>2.4 Disk Partitioning</h3><ul>
+<li>至少要创建<ul>
+<li>根目录(&#x2F;)，750MB(建议1.5G或更高)，需要指定一个主分区</li>
+<li>交换分区(swap)，大小等于内存量,用于虚拟内存</li>
+</ul>
+</li>
+<li>推荐：&#x2F;boot(16MB)，用于启动，常存放boot loader</li>
+<li>可能需要&#x2F;想要创建其他分区：&#x2F;usr，&#x2F;usr&#x2F;local，&#x2F;var，&#x2F;tmp，&#x2F;opt，&#x2F;home<ul>
+<li>例如可以将 &#x2F;home 指定一个主分区，那么向 home 文件夹存放数据会存放到对应的分区，形成挂载结构</li>
+</ul>
+</li>
+<li>Linux下的默认分区程序是fdisk，发行版可以添加自己的分区程序</li>
+</ul>
+<h3 id="2-5-Linux-Startup-Flow"><a href="#2-5-Linux-Startup-Flow" class="headerlink" title="2.5 Linux Startup Flow"></a>2.5 Linux Startup Flow</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230217103017442.png" alt="image-20230217103017442" style="zoom:80%;" />
+
+<blockquote>
+<p>BIOS 通过查找硬盘，启动boot loader</p>
+<p>init 是第一个启动的应用程序，是个用户态程序</p>
+</blockquote>
+<ol>
+<li>BIOS：<ul>
+<li>检查内存，从非易失性内存中加载选项，检查启动设备，加载启动设备的MBR并执行它</li>
+</ul>
+</li>
+<li>MBR<ul>
+<li>包含一个”boot loader”和分区表</li>
+<li>传统上由 LILO&#x2F;GRUB 设置</li>
+</ul>
+</li>
+<li>Boot loader<ul>
+<li>将压缩的内核映像加载到内存中</li>
+<li>内核解压缩并启动</li>
+</ul>
+</li>
+<li>初始化过程<ul>
+<li>配置文件 &#x2F;etc&#x2F;inittab</li>
+<li>运行水平</li>
+</ul>
+</li>
+</ol>
+<h4 id="Basic-Input-Output-System-BIOS"><a href="#Basic-Input-Output-System-BIOS" class="headerlink" title="Basic Input Output System(BIOS)"></a>Basic Input Output System(BIOS)</h4><ul>
+<li>检查内存和硬件是否正常(POST)</li>
+<li>从非易失性存储器中加载选项<ol>
+<li>内存时序</li>
+<li>启动设备顺序</li>
+</ol>
+</li>
+<li>检查启动设备：软盘，CD-ROM，硬盘等</li>
+<li>加载启动设备的 MBR 并执行</li>
+</ul>
+<h4 id="EFI"><a href="#EFI" class="headerlink" title="EFI"></a>EFI</h4><p>增强版的BIOS, 支持GPT，支持更多的设备</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230217103757283.png" alt="image-20230217103757283" style="zoom:80%;" />
+
+<h4 id="Boot-loader"><a href="#Boot-loader" class="headerlink" title="Boot loader"></a>Boot loader</h4><ul>
+<li>引导加载程序加载并启动Linux内核<ol>
+<li>可以将启动参数传递给Linux内核，例如设备信息</li>
+<li>可以选择加载初始根磁盘</li>
+<li>也可以启动其他操作系统</li>
+</ol>
+</li>
+<li>通用引导加载程序：<ol>
+<li>LILO：Linux Loader(很古老，不考)</li>
+<li>GRUB：Grand Unified Boot Loader</li>
+</ol>
+</li>
+<li>除非使用其他引导加载程序，否则通常在&#x2F;dev&#x2F;hda中进行配置。</li>
+</ul>
+<h4 id="GRUB-Grand-Unified-Boot-Loader"><a href="#GRUB-Grand-Unified-Boot-Loader" class="headerlink" title="GRUB(Grand Unified Boot Loader)"></a>GRUB(Grand Unified Boot Loader)</h4><ul>
+<li>程序存储在 MBR (第一阶段) 和 &#x2F;boot&#x2F;grub (第1.5和第二阶段) 中</li>
+<li>了解文件系统结构；无需像LILO一样激活配置</li>
+<li>配置文件：&#x2F;boot&#x2F;grub&#x2F;grub.cfg<ul>
+<li>最重要就是配置内核和init文件的位置</li>
+</ul>
+</li>
+<li>通过grub-install安装在MBR中</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs grub.cfg">title Ubuntu, kernel 2.6.20-16-generic<br>root (hd0,1)<br>kernel /boot/vmlinuz-2.6.20-16-generic root=UUID=3f784cd9-516f-4808-a601-b19356f6bdea ro quiet splash locale=zh_CN vga=0x318 // 内核与参数<br>initrd /boot/initrd.img-2.6.20-16-generic // init程序<br><br>// 配置 windows<br>title Microsoft Windows XP<br>Professional<br>root	(hd0, 0) // 0号磁盘0号分区<br>savedefault<br>makeactive<br>chainloader +1 // 找新的引导程序，windows有自己的<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-Using-the-System"><a href="#3-Using-the-System" class="headerlink" title="3. Using the System"></a>3. Using the System</h2><h3 id="3-1-Basic-Knowledge"><a href="#3-1-Basic-Knowledge" class="headerlink" title="3.1 Basic Knowledge"></a>3.1 Basic Knowledge</h3><h4 id="Installing-Software-on-Linux"><a href="#Installing-Software-on-Linux" class="headerlink" title="Installing Software on Linux"></a>Installing Software on Linux</h4><ul>
+<li>From a tarball</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译源代码安装软件：automake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br>./configure<br>make<br>su - <span class="hljs-comment"># 只有make install需要切换root权限</span><br>make install <span class="hljs-comment"># 将编译后的二进制码安装到系统</span><br><br><span class="hljs-comment"># cmake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake ..	<span class="hljs-comment"># cmake后面跟application目录，..即上级目录</span><br>make VERBOSE=1	<span class="hljs-comment"># VERBOSE参数可选，仅多打印一些东西</span><br>su -<br>make install<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>yum + rpm (red hat系列使用rpm安装包)<ul>
+<li>RPM: RPM Package Management<ul>
+<li>rpm –q –a，查询</li>
+<li>rpm –ivh package-name，安装</li>
+<li>rpm –e package-name，卸载</li>
+</ul>
+</li>
+<li>单独使用rpm会造成可能需要下载无数的依赖，因此需要管理工具的存在-yum</li>
+</ul>
+</li>
+<li>dpkg：ubuntu系列,类似rpm</li>
+<li>apt-get command *：在线下载<ul>
+<li>update：下载最新的软件包列表</li>
+</ul>
+</li>
+<li>aptitude：可能能解决版本冲突</li>
+</ul>
+<h4 id="Multi-user-and-Multi-tasking"><a href="#Multi-user-and-Multi-tasking" class="headerlink" title="Multi-user and Multi-tasking"></a>Multi-user and Multi-tasking</h4><ul>
+<li>Linux是一个<strong>多用户，多任务</strong>的操作系统：多个用户可以同时运行多个彼此独立的任务。</li>
+<li>在使用系统之前，总是需要”登录”：用<strong>用户名，密码</strong>识别</li>
+<li>多种登录系统的方式<ol>
+<li>控制台：直接连接的键盘，鼠标，显示器</li>
+<li>串口</li>
+<li>网络连接</li>
+</ol>
+</li>
+</ul>
+<h4 id="Virtual-Terminal"><a href="#Virtual-Terminal" class="headerlink" title="Virtual Terminal"></a>Virtual Terminal</h4><ul>
+<li>在大多数Linux发行版中，控制台模拟许多虚拟终端</li>
+<li>每个虚拟终端都可以看作是一个单独的直接连接的控制台：不同的用户可以使用不同的虚拟终端</li>
+<li>典型设置：<ol>
+<li>VT 1-6：<strong>文本模式登录</strong></li>
+<li>VT 7：图形模式登录提示(如果启用)</li>
+</ol>
+</li>
+<li>使用Alt-Fn(如果在X中为Ctrl-Alt-Fn)在VT之间切换</li>
+</ul>
+<h4 id="Linux-Commands"><a href="#Linux-Commands" class="headerlink" title="Linux Commands"></a>Linux Commands</h4><ul>
+<li>Linux系统上的所有操作都可以通过键入命令来完成：<ul>
+<li>运行Linux系统不需要GUI(X-Window)，图形界面是一个用户态程序</li>
+</ul>
+</li>
+<li>为了在 X-Window 中键入命令，您需要启动 终端模拟器(即图形界面中的终端)</li>
+<li>命令提示<ul>
+<li>可以自己配置<ul>
+<li>修改环境变量: <code>export SUDO_PS1=&quot;\u@\h:\w\$&quot;</code>, <code>export PS1=&quot;\u@\h:\w\$&quot;</code></li>
+</ul>
+</li>
+<li><code>$</code>：以普通用户身份登录</li>
+<li><code>#</code>：以root身份登录</li>
+</ul>
+</li>
+<li>命令提示符：<code>用户名@计算机名:当前目录$</code></li>
+</ul>
+<h4 id="Command-Syntax"><a href="#Command-Syntax" class="headerlink" title="Command Syntax"></a>Command Syntax</h4><ul>
+<li>Linux命令具有以下格式：<ul>
+<li><code>$ command option(s) argument(s)</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Some-Basic-Linux-Commands"><a href="#Some-Basic-Linux-Commands" class="headerlink" title="Some Basic Linux Commands"></a>Some Basic Linux Commands</h4><ul>
+<li>passwd：更改密码</li>
+<li>mkpasswd：生成随机密码</li>
+<li>date，cal：找出今天的日期并显示日历</li>
+<li>who，finger：找出还有谁在系统上处于活动状态</li>
+<li>clear：清除屏幕</li>
+<li>echo：在屏幕上写一条消息</li>
+<li>write、wall、talk、mesg<ol>
+<li>write：给其他用户发信息</li>
+<li>wall：write all, 给所有登录到系统的用户发信息</li>
+<li>talk：建立聊天session</li>
+<li>mesg：可以屏蔽用户发来的信息</li>
+</ol>
+</li>
+</ul>
+<h3 id="3-2-Working-with-Files-and-Directories"><a href="#3-2-Working-with-Files-and-Directories" class="headerlink" title="3.2 Working with Files and Directories"></a>3.2 Working with Files and Directories</h3><ul>
+<li>什么是文件？<ul>
+<li>数据的集合</li>
+<li>可以写入或读取或两者兼有的对象。文件具有某些属性，包括访问权限和类型(susv3)</li>
+</ul>
+</li>
+<li>文件结构<ul>
+<li>通常：字节流，记录序列，记录树</li>
+<li>在Linux中：<strong>字节流</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="File-Types"><a href="#File-Types" class="headerlink" title="File Types"></a>File Types</h4><ol>
+<li>普通文件(regular file)：<ul>
+<li>文本或代码数据；没有特别的内部结构</li>
+</ul>
+</li>
+<li>字符型设备文件(character special file)</li>
+<li>块型设备文件(block special file)<ul>
+<li><strong>special files：代表硬件或逻辑设备</strong></li>
+<li>位于 &#x2F;dev 目录</li>
+</ul>
+</li>
+<li>网络接口(socket)</li>
+<li>符号链接(symbolic link)<ul>
+<li>软链接：类似windows上的快捷方式</li>
+<li>硬链接：<strong>同一个文件有两个文件名</strong>，创建出来的硬链接不占用磁盘空间和inode号。</li>
+</ul>
+</li>
+<li>目录(directory)：该目录中的文件列表</li>
+<li>管道(fifo)</li>
+</ol>
+<blockquote>
+<p>驱动程序留给应用程序的接口, 只有三种</p>
+<ul>
+<li>character special file</li>
+<li>block special file</li>
+<li>socket</li>
+</ul>
+</blockquote>
+<h4 id="Directory-Structure"><a href="#Directory-Structure" class="headerlink" title="Directory Structure"></a>Directory Structure</h4><ul>
+<li>所有Linux目录都包含在一个虚拟的”统一文件系统”中。</li>
+<li>物理设备挂载在挂载点上<ul>
+<li>软盘</li>
+<li>硬盘分区</li>
+<li>CD-ROM驱动器</li>
+</ul>
+</li>
+<li>没有驱动器号，例如A:，C:，…</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143200633.png" alt="image-20230227143200633" style="zoom:80%;" />
+
+<h4 id="Main-Directories-in-Linux"><a href="#Main-Directories-in-Linux" class="headerlink" title="Main Directories in Linux"></a>Main Directories in Linux</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143638153.png" alt="image-20230227143638153" style="zoom:80%;" />
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.pathname.com/fhs">Linux Filesystem Hierarchy Standard</a></p>
+</blockquote>
+<h4 id="Basic-Commands"><a href="#Basic-Commands" class="headerlink" title="Basic Commands"></a>Basic Commands</h4><ul>
+<li>pwd：当前目录</li>
+<li>cd：更改目录</li>
+<li>mkdir：创建目录</li>
+<li>rmdir：删除目录</li>
+<li>ls：列出目录的内容，-l，-a(显示隐藏文件, 形如<code>.*</code>)，-R(递归打印所有的子目录中的文件)选项</li>
+<li>touch：更新文件的访问, 修改时间</li>
+<li>cp：复制文件</li>
+<li>mv：移动并重命名文件</li>
+<li>ln：链接文件</li>
+<li>rm：删除文件</li>
+<li>cat：打印文件内容</li>
+<li>more&#x2F;less：逐页显示文件，more不可以回退，less可以回退</li>
+</ul>
+<h4 id="File-Permission"><a href="#File-Permission" class="headerlink" title="File Permission"></a>File Permission</h4><ul>
+<li><p>文件权限可帮助保护文件免受其他用户侵害</p>
+</li>
+<li><p>三个访问级别：</p>
+<ol>
+<li>用户(User)：创建文件的用户</li>
+<li>组(Group)：拥有文件的组中的所有用户</li>
+<li>其他(Others)：其他</li>
+</ol>
+</li>
+<li><p>三个权限：</p>
+<ol>
+<li>读取(r)：读取文件内容或目录内容</li>
+<li>写(w)：更改文件内容或在目录中创建&#x2F;删除文件</li>
+<li>执行(x)：以程序执行文件或使用目录作为活动目录</li>
+</ol>
+</li>
+<li><p><code>ls -l</code></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227153229304.png" alt="image-20230227153229304" style="zoom:80%;" /></li>
+</ul>
+<h4 id="Changing-Permissions"><a href="#Changing-Permissions" class="headerlink" title="Changing Permissions"></a>Changing Permissions</h4><ul>
+<li><p><code>chmod &lt;who operator what&gt; filename</code></p>
+<ul>
+<li><p>who:</p>
+<ul>
+<li><code>u</code> &#x3D; owner of file</li>
+<li><code>g</code> &#x3D; group</li>
+<li><code>o</code> &#x3D; other users on the system</li>
+<li><code>a</code> &#x3D; all(u + g + o)</li>
+</ul>
+</li>
+<li><p>operator:</p>
+<ul>
+<li><p><code>+</code> &#x3D; add permission</p>
+</li>
+<li><p><code>-</code> &#x3D; remove permission</p>
+</li>
+<li><p><code>=</code> &#x3D; clear permissions and set to mode specified</p>
+</li>
+</ul>
+</li>
+<li><p>what: <code>r, w, x</code></p>
+</li>
+</ul>
+</li>
+<li><p><code>chmod &lt;number&gt; file</code></p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227154029252.png" alt="image-20230227154029252" style="zoom:80%;" />
+
+<h4 id="Default-File-Permissions"><a href="#Default-File-Permissions" class="headerlink" title="Default File Permissions"></a>Default File Permissions</h4><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>权限</th>
+<th>数字权限</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>File</td>
+<td>-rw-r–r–</td>
+<td>644</td>
+</tr>
+<tr>
+<td>Directory</td>
+<td>drwxr-xr-x</td>
+<td>755</td>
+</tr>
+</tbody></table>
+<h4 id="Editing-Files"><a href="#Editing-Files" class="headerlink" title="Editing Files"></a>Editing Files</h4><ul>
+<li>vi、emacs、gedit</li>
+</ul>
+<h3 id="3-3-Working-with-Processes"><a href="#3-3-Working-with-Processes" class="headerlink" title="3.3 Working with Processes"></a>3.3 Working with Processes</h3><p>什么是进程</p>
+<ul>
+<li>A process is a task.</li>
+<li>进程是一个正在执行的程序实例。由执行程序，它的当前值，状态信息以及通过操作系统管理此进程执行情况的资源组成。</li>
+<li>An address space with one or more threads executing within that address space, and the required system resources for those threads. (susv3)</li>
+<li>正在运行的程序就是进程的一个示例</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303101357067.png" alt="image-20230303101357067" style="zoom:80%;" />
+
+<ul>
+<li>shell是一个读取命令并启动适当进程的进程<ul>
+<li><code>echo $$</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="Starting-and-Stopping-a-Process"><a href="#Starting-and-Stopping-a-Process" class="headerlink" title="Starting and Stopping a Process"></a>Starting and Stopping a Process</h4><ul>
+<li>所有进程均由其他进程启动<ol>
+<li>父子关系</li>
+<li>一个例外：init (PID 1) 由内核本身启动</li>
+<li>树层次结构</li>
+</ol>
+</li>
+<li>可以终止进程的原因有两个：<ol>
+<li>该进程完成后会自行终止。</li>
+<li>该进程被另一个进程的信号终止</li>
+</ol>
+</li>
+</ul>
+<h4 id="Basic-Commands-1"><a href="#Basic-Commands-1" class="headerlink" title="Basic Commands"></a>Basic Commands</h4><ul>
+<li>ps：报告进程状态</li>
+<li>pstree：显示进程树</li>
+<li>jobs, fg, bg, ctrl-z：作业控制<ul>
+<li>bg: 后台执行</li>
+<li>fg: 前台执行</li>
+<li>ctrl-z: 暂停进程, 可通过fg, bg恢复</li>
+</ul>
+</li>
+<li>kill：杀死进程</li>
+<li>nohup：运行命令，忽略挂起信号</li>
+<li>nice，renice：修改进程优先级</li>
+<li>top：查看进程的cpu占用</li>
+</ul>
+<h4 id="Daemons"><a href="#Daemons" class="headerlink" title="Daemons"></a>Daemons</h4><p>“守护进程”一词指的是一个永不停止的进程，通常是控制诸如打印机队列之类的系统资源或执行网络服务的系统进程。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303103555052.png" alt="image-20230303103555052" style="zoom:80%;" />
+
+<h3 id="3-4-Linux-Documentation"><a href="#3-4-Linux-Documentation" class="headerlink" title="3.4 Linux Documentation"></a>3.4 Linux Documentation</h3><h4 id="How-to-Find-Help"><a href="#How-to-Find-Help" class="headerlink" title="How to Find Help?"></a>How to Find Help?</h4><ul>
+<li><code>man</code></li>
+<li><code>info</code></li>
+<li><code>command –-help</code></li>
+<li>HOWTO 文档</li>
+<li>参考互联网</li>
+</ul>
+<h4 id="The-man-command"><a href="#The-man-command" class="headerlink" title="The man command"></a>The man command</h4><ul>
+<li>使用 man 命令，您可以阅读命令的手册页</li>
+<li>手册页存储在 &#x2F;usr&#x2F;man</li>
+<li>手册页包括：<ol>
+<li>名称：命令名称和在线说明</li>
+<li>概要：命令的语法</li>
+<li>描述：有关命令的工作方式及其作用的说明</li>
+<li>文件：命令使用的文件</li>
+<li>错误：已知的错误和错误</li>
+<li>另请参阅：与此命令相关的其他命令</li>
+</ol>
+</li>
+<li>“-k”选项：<ul>
+<li><code>man –k</code>: 是否还有其他版本说明书</li>
+<li>要选择正确的部分，请添加部分编号：man 1 passwd，man 5 passwd</li>
+</ul>
+</li>
+<li>手册分为8个部分：<ol>
+<li>用户命令</li>
+<li>系统调用</li>
+<li>库调用</li>
+<li>设备</li>
+<li>文件格式和协议</li>
+<li>游戏</li>
+<li>公约，宏程序包等</li>
+<li>系统管理</li>
+</ol>
+</li>
+</ul>
+<h4 id="The-info-command"><a href="#The-info-command" class="headerlink" title="The info command"></a>The info command</h4><ul>
+<li>用于阅读文档的程序，有时可以代替手册页</li>
+<li>有关信息的信息存储在 &#x2F;usr&#x2F;info</li>
+<li>一些信息命令：<ol>
+<li>space：下一屏文字</li>
+<li>delete：上一屏文字</li>
+<li>n：下一个节点</li>
+<li>p：上一个节点</li>
+<li>u：上节点</li>
+<li>q：退出信息</li>
+<li>tab：跳至下一个菜单项</li>
+</ol>
+</li>
+</ul>
+<h2 id="4-Linux-UNIX-Overview"><a href="#4-Linux-UNIX-Overview" class="headerlink" title="4. Linux&#x2F;UNIX Overview"></a>4. Linux&#x2F;UNIX Overview</h2><ul>
+<li>早期的UNIX<ul>
+<li>一个简单的文件系统</li>
+<li>一个进程子系统和一个Shell</li>
+</ul>
+</li>
+<li>内核和核外程序</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303104322848.png" alt="image-20230303104322848" style="zoom:80%;" />
+
+<h4 id="Programmer’s-Viewpoint"><a href="#Programmer’s-Viewpoint" class="headerlink" title="Programmer’s Viewpoint"></a>Programmer’s Viewpoint</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303105118990.png" alt="image-20230303105118990" style="zoom:80%;" />
+
+<h2 id="5-Linux-System-Basic"><a href="#5-Linux-System-Basic" class="headerlink" title="5. Linux System Basic"></a>5. Linux System Basic</h2><h3 id="5-1-基本命令"><a href="#5-1-基本命令" class="headerlink" title="5.1 基本命令"></a>5.1 基本命令</h3><ul>
+<li>文件操作<ul>
+<li>列出目录内容: ls, (dir, vdir 与ls功能类似)</li>
+<li>创建特殊文件: mkdir, mknod, mkfifo<ul>
+<li>mknod: 创建设备文件</li>
+<li>mkfifo: 创建管道</li>
+</ul>
+</li>
+<li>文件操作: cp, mv, rm</li>
+<li>修改文件属性: chmod, chown, chgrp, touch<ul>
+<li>chown: 改文件拥有者、用户组</li>
+<li>chgrp: 更改用户组</li>
+</ul>
+</li>
+<li>查找文件: (locate), find<ul>
+<li>locate: 功能和 find 类似</li>
+</ul>
+</li>
+<li>字符串匹配: grep(egrep)<ul>
+<li>grep: 在文本文件中搜索字符串</li>
+<li>egrep: grep 扩展</li>
+</ul>
+</li>
+<li>其它: pwd, cd, ar, file, tar, more, less, head, tail, cat<ul>
+<li>ar: 打包库文件</li>
+<li>file: 显示文件类型</li>
+<li>more, less: 一页页显示</li>
+<li>head, tail: 显示文件头部、尾部</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程操作：ps, kill, jobs, fg, bg, nice</li>
+<li>其它<ul>
+<li>who, whoami, passwd, su, uname, …<ul>
+<li>whoami: 当前用户名</li>
+<li>uname: 显示内核信息</li>
+</ul>
+</li>
+<li>man</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-2-重定向"><a href="#5-2-重定向" class="headerlink" title="5.2 重定向"></a>5.2 重定向</h3><ul>
+<li><p>标准输入、标准输出、标准错误</p>
+<ul>
+<li>对应的文件描述符：0, 1, 2</li>
+<li>C语言变量：stdin, stdout, stderr</li>
+</ul>
+</li>
+<li><p><code>&lt;</code>, <code>&gt;</code>, <code>&gt;&gt;</code>, <code>2&gt;</code>, <code>2&gt;&gt;</code>, <code>&amp;&gt;</code></p>
+<ul>
+<li>例: <code>kill –HUP 1234 &gt; killout.txt 2&gt; killerr.txt</code></li>
+<li>例: <code>kill –HUP 1234 &gt; killout.txt 2&gt;&amp; 1</code><ul>
+<li><code>&amp;1</code>: 1号fd, 不加&amp;会重定向到名称为1的文件</li>
+</ul>
+</li>
+<li><code>&lt;</code>: 重定向 0号fd</li>
+<li><code>&gt;</code>: 重定向内容会覆盖掉文件, 默认重定向 1号fd</li>
+<li><code>&gt;&gt;</code>: 重定向内容追加到文件末尾, 默认重定向 1号fd</li>
+<li><code>2&gt;</code>: 只重定向 2号fd 的内容</li>
+<li><code>&amp;&gt;</code>: 重定向 1,2号fd</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt; abc.txt<br><span class="hljs-built_in">cat</span> 文件名<br><br><span class="hljs-comment"># 这里的文件名作为cat参数存在</span><br><span class="hljs-comment"># 类似于C语言中，main(int argc, char** argv)</span><br><span class="hljs-comment"># 当argc等于0，在system.in中读，再system.out打印</span><br><span class="hljs-comment"># 当cat后面加上参数，就读出文件内容，输出在屏幕上</span><br><span class="hljs-comment"># cat &lt; 文件名，这里是重定向</span><br><span class="hljs-comment"># 执行流程完全不一样，仍然是走else分支</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="5-3-管道"><a href="#5-3-管道" class="headerlink" title="5.3 管道"></a>5.3 管道</h3><ul>
+<li>一个进程的输出作为另一个进程的输入</li>
+<li>存在一个管道文件，这个文件作为输入传递给后面的命令</li>
+<li>例:<ul>
+<li><code>ls | wc –l</code></li>
+<li><code>ls –lF | grep ^d</code></li>
+<li><code>ar t /usr/lib/libc.a | grep printf | pr -4 -t</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="5-4-环境变量"><a href="#5-4-环境变量" class="headerlink" title="5.4 环境变量"></a>5.4 环境变量</h3><ul>
+<li>环境变量<ul>
+<li>操作环境的参数</li>
+<li>查看和设置环境变量：echo, env, set<ul>
+<li>env: 显示所有环境变量</li>
+<li>set: 设置环境变量</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>例: PATH环境变量<ul>
+<li><code>echo $PATH</code></li>
+<li><code>/usr/local/bin:/bin:/usr/bin:/usr/X11R6/bin:/home/song/bin</code></li>
+<li><code>PATH=$PATH:.</code></li>
+<li><code>export PATH</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="5-5-高级命令与正则表达式"><a href="#5-5-高级命令与正则表达式" class="headerlink" title="5.5 高级命令与正则表达式"></a>5.5 高级命令与正则表达式</h3><ul>
+<li>find: 查找磁盘上的文件<ul>
+<li>可以使用通配符, 可以通过文件大小查找, 可以使用逻辑表达式</li>
+<li>可以对找到的每一个文件执行一个命令</li>
+<li><code>find / -name &#39;*.cpp&#39; | xargs grep main -n 2&gt; /dev/null</code></li>
+</ul>
+</li>
+<li>sed: 用于做替换<ul>
+<li>可以把文本文件里的一段内容替换为其他内容</li>
+<li><code>sed &#39;s/\([0-9A-Za-z_]\&#123;1,\&#125;\)\[ \&#123;0,\&#125;\]\[ \&#123;0,\&#125;\]/*\1\[\]/g&#39; code1.cpp</code><ul>
+<li>‘s&#x2F;…&#x2F;…&#x2F;g’</li>
+<li>将第一个省略号内容替换为第二个省略号内容</li>
+<li>g表示每行全部都匹配, 不加每行最多匹配一次</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>grep</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/14/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-1-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/Linux%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" title="Linux程序设计">
+                        <b>#</b> Linux程序设计
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/02/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%E5%8F%91-1/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-What-is-Linux"><span class="toc-text">1. What is Linux?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-GNU-Linux"><span class="toc-text">1.1 GNU &amp; Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-So-Special-for-Linux"><span class="toc-text">What is So Special for Linux?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Linux-Installation"><span class="toc-text">2. Linux Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Installing-Linux"><span class="toc-text">2.1 Installing Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Partitioning-Theory"><span class="toc-text">2.2 Partitioning Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MBR"><span class="toc-text">MBR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GPT"><span class="toc-text">GPT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-File-System"><span class="toc-text">2.3 File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Disk-Partitioning"><span class="toc-text">2.4 Disk Partitioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Linux-Startup-Flow"><span class="toc-text">2.5 Linux Startup Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Input-Output-System-BIOS"><span class="toc-text">Basic Input Output System(BIOS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EFI"><span class="toc-text">EFI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boot-loader"><span class="toc-text">Boot loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB-Grand-Unified-Boot-Loader"><span class="toc-text">GRUB(Grand Unified Boot Loader)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Using-the-System"><span class="toc-text">3. Using the System</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Basic-Knowledge"><span class="toc-text">3.1 Basic Knowledge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-Software-on-Linux"><span class="toc-text">Installing Software on Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-user-and-Multi-tasking"><span class="toc-text">Multi-user and Multi-tasking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Virtual-Terminal"><span class="toc-text">Virtual Terminal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-Commands"><span class="toc-text">Linux Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Command-Syntax"><span class="toc-text">Command Syntax</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Some-Basic-Linux-Commands"><span class="toc-text">Some Basic Linux Commands</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Working-with-Files-and-Directories"><span class="toc-text">3.2 Working with Files and Directories</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Types"><span class="toc-text">File Types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Directory-Structure"><span class="toc-text">Directory Structure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Main-Directories-in-Linux"><span class="toc-text">Main Directories in Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Permission"><span class="toc-text">File Permission</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Changing-Permissions"><span class="toc-text">Changing Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Default-File-Permissions"><span class="toc-text">Default File Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Editing-Files"><span class="toc-text">Editing Files</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Working-with-Processes"><span class="toc-text">3.3 Working with Processes</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-and-Stopping-a-Process"><span class="toc-text">Starting and Stopping a Process</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands-1"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daemons"><span class="toc-text">Daemons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Linux-Documentation"><span class="toc-text">3.4 Linux Documentation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-Find-Help"><span class="toc-text">How to Find Help?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-man-command"><span class="toc-text">The man command</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-info-command"><span class="toc-text">The info command</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Linux-UNIX-Overview"><span class="toc-text">4. Linux&#x2F;UNIX Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Programmer%E2%80%99s-Viewpoint"><span class="toc-text">Programmer’s Viewpoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Linux-System-Basic"><span class="toc-text">5. Linux System Basic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-text">5.1 基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">5.2 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%AE%A1%E9%81%93"><span class="toc-text">5.3 管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">5.4 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">5.5 高级命令与正则表达式</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Linux%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1(1)%20Linux%20Basics + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F02%2F14%2FLinux%25E7%25A8%258B%25E5%25BA%258F%25E8%25AE%25BE%25E8%25AE%25A1-1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/02/14/Linux%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

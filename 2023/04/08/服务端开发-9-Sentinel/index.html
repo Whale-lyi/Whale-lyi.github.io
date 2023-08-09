@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      服务端开发(9) 基于Sentinel的流控与熔断 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">服务端开发(9) 基于Sentinel的流控与熔断</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                    <b>#</b> 服务端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h3 id="1-Sentinel"><a href="#1-Sentinel" class="headerlink" title="1. Sentinel"></a>1. Sentinel</h3><ul>
+<li>Sentinel 是面向分布式、多语言异构化服务架构的流量治理组件，主要以流量为切入点，从流量路由、流量控制、流量整形、熔断降级、系统自适应过载保护、热点流量防护等多个维度来帮助开发者保障微服务的稳定性</li>
+<li>源代码：<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel">https://github.com/alibaba/Sentinel</a><ul>
+<li>其中例子代码：Sentinel&#x2F;sentinel-demo</li>
+</ul>
+</li>
+<li>Dashboard下载：<a target="_blank" rel="noopener" href="https://github.com/alibaba/Sentinel/releases">https://github.com/alibaba/Sentinel/releases</a></li>
+<li>中文用户文档：<a target="_blank" rel="noopener" href="https://sentinelguard.io/zh-cn/docs/introduction.html">https://sentinelguard.io/zh-cn/docs/introduction.html</a></li>
+</ul>
+<h4 id="Sentinel组成"><a href="#Sentinel组成" class="headerlink" title="Sentinel组成"></a>Sentinel组成</h4><ul>
+<li>核心库（Java 客户端）：不依赖任何框架&#x2F;库，能够运行于 Java 8 及以上的版本的运行时环境，同时对 Dubbo &#x2F; Spring Cloud 等框架也有较好的支持</li>
+<li>控制台（Dashboard）：Dashboard 主要负责管理推送规则、监控、管理机器信息等</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408151555033.png" alt="image-20230408151555033"></p>
+<blockquote>
+<p>控制台不维护规则，仅会通过端口查看</p>
+</blockquote>
+<h3 id="2-使用步骤"><a href="#2-使用步骤" class="headerlink" title="2. 使用步骤"></a>2. 使用步骤</h3><ol>
+<li>定义资源<ul>
+<li>代码直接定义</li>
+<li>使用注解定义</li>
+<li>自动定义</li>
+</ul>
+</li>
+<li>定义规则<ul>
+<li>流量控制规则</li>
+<li>熔断降级规则</li>
+<li>系统保护规则</li>
+<li>来源访问控制规则</li>
+<li>热点参数规则</li>
+</ul>
+</li>
+<li>查看效果<ul>
+<li>日志</li>
+<li>Dashboard</li>
+</ul>
+</li>
+</ol>
+<h4 id="定义资源"><a href="#定义资源" class="headerlink" title="定义资源"></a>定义资源</h4><ul>
+<li><p>资源是 Sentinel 的关键概念。它可以是 Java 应用程序中的任何内容，例如，由应用程序提供的服务，或由应用程序调用的其它应用提供的服务，甚至可以是一段代码</p>
+</li>
+<li><p>只要通过 Sentinel API 定义的代码，就是资源，能够被 Sentinel 保护起来。大部分情况下，可以使用方法签名，URL，甚至服务名称作为资源名来标示资源</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408152504931.png" alt="image-20230408152504931" style="zoom: 80%;" />
+
+<h4 id="定义规则"><a href="#定义规则" class="headerlink" title="定义规则"></a>定义规则</h4><ul>
+<li>围绕资源的实时状态设定的规则，可以包括流量控制规则、熔断降级规则以及系统保护规则。所有规则可以动态实时调整</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408152626363.png" alt="image-20230408152626363"></p>
+<ul>
+<li>规则的种类<ul>
+<li>流量控制规则</li>
+<li>熔断降级规则</li>
+<li>系统保护规则（CPU、内存占用等）</li>
+<li>来源访问控制规则（客户端来源）</li>
+<li>热点参数规则（依据请求的某一个参数来做限定）</li>
+</ul>
+</li>
+</ul>
+<h4 id="查看效果"><a href="#查看效果" class="headerlink" title="查看效果"></a>查看效果</h4><ul>
+<li><p>QPS一般指每秒查询率。每秒查询率（QPS，Queries-per-second）是对一个特定的查询服务器在规定时间内所处理流量多少的衡量标准</p>
+</li>
+<li><p>日志路径：C:\Users\14669\logs\csp\com-alibaba-csp-sentinel-demo-flow-FlowQpsDemo-metrics.log.2023-04-08</p>
+</li>
+<li><p>–timestamp-|——date time—-|–resource–|p|block|s|e|rt</p>
+<ul>
+<li>p 代表通过的请求, block 代表被阻止的请求, s 代表成功执行完成的请求个数, e 代表用户自定义的异常, rt 代表平均响应时长</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408155015781.png" alt="image-20230408155015781" style="zoom:80%;" />
+
+<h3 id="3-简单的例子"><a href="#3-简单的例子" class="headerlink" title="3. 简单的例子"></a>3. 简单的例子</h3><h4 id="SentinelResource-注解（基于Spring-Boot）"><a href="#SentinelResource-注解（基于Spring-Boot）" class="headerlink" title="@SentinelResource 注解（基于Spring Boot）"></a><code>@SentinelResource</code> 注解（基于Spring Boot）</h4><ul>
+<li><p>文档（注解支持）：<a target="_blank" rel="noopener" href="https://sentinelguard.io/zh-cn/docs/annotation-support.html">https://sentinelguard.io/zh-cn/docs/annotation-support.html</a></p>
+</li>
+<li><p>例子代码：Sentinel&#x2F;sentinel-demo&#x2F;sentinel-demo-annotation-spring-aop</p>
+</li>
+<li><p>依赖：sentinel-core、sentinel-annotation-aspectj、sentinel-transport-simple-http（与控制台连接）</p>
+</li>
+<li><p>配置Bean <code>SentinelResourceAspect</code>、注解 <code>@SentinelResource</code></p>
+</li>
+<li><p>sentinel.properties（配置项）</p>
+<ul>
+<li>文档：<a target="_blank" rel="noopener" href="https://sentinelguard.io/zh-cn/docs/startup-configuration.html">https://sentinelguard.io/zh-cn/docs/startup-configuration.html</a></li>
+<li><code>csp.sentinel.dashboard.server=www.sentinel.com:80</code></li>
+<li><code>csp.sentinel.api.port=8719</code></li>
+<li><code>project.name=mydemo</code></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cristianoxm/article/details/113745358">blockHandler与fallback的区别</a></p>
+</li>
+</ul>
+<h4 id="Sentinel-控制台"><a href="#Sentinel-控制台" class="headerlink" title="Sentinel 控制台"></a>Sentinel 控制台</h4><ul>
+<li><p>文档：<a target="_blank" rel="noopener" href="https://sentinelguard.io/zh-cn/docs/dashboard.html">https://sentinelguard.io/zh-cn/docs/dashboard.html</a></p>
+</li>
+<li><p>配置控制台的参数传入</p>
+<ul>
+<li><code>java -Dcsp.sentinel.dashboard.server=www.sentinel.com:80 ......</code></li>
+<li><code>mvn spring-boot:run -Dspring-boot.run.jvmArguments=&quot;-Dcsp.sentinel.dashboard.server=www.sentinel.com:80&quot;</code></li>
+</ul>
+</li>
+<li><p>配置应用的端口号</p>
+<ul>
+<li>应用默认端口号：8719</li>
+<li><code>csp.sentinel.api.port=8719</code></li>
+</ul>
+</li>
+</ul>
+<h3 id="4-限流"><a href="#4-限流" class="headerlink" title="4. 限流"></a>4. 限流</h3><ul>
+<li>限流的直接表现是在执行 <code>Entry nodeA = SphU.entry(资源名字)</code> 的时候抛出 FlowException 异常</li>
+<li>FlowException 是 BlockException 的子类，您可以捕捉 BlockException 来自定义被限流之后的处理逻辑</li>
+<li>一条限流规则主要由下面几个因素组成，我们可以组合这些元素来实现不同的限流效果<ul>
+<li>resource：资源名，即限流规则的作用对象</li>
+<li>count: 限流阈值</li>
+<li>grade: 限流阈值类型，QPS 或线程数</li>
+<li>strategy: 根据调用关系选择策略</li>
+</ul>
+</li>
+</ul>
+<h4 id="并发线程数流量控制"><a href="#并发线程数流量控制" class="headerlink" title="并发线程数流量控制"></a>并发线程数流量控制</h4><ul>
+<li><p>线程数限流用于保护业务线程数不被耗尽</p>
+</li>
+<li><p>Sentinel线程数限流不负责创建和管理线程池，而是简单统计当前请求上下文的线程个数，如果超出阈值，新的请求会被立即拒绝</p>
+</li>
+<li><p>代码：<code>Sentinel\sentinel-demo\sentinel-demo-basic\..\flow\FlowThreadDemo.java</code></p>
+</li>
+</ul>
+<h4 id="QPS流量控制"><a href="#QPS流量控制" class="headerlink" title="QPS流量控制"></a>QPS流量控制</h4><ul>
+<li>当QPS超过任意规则的阈值后，新的请求就会被立即拒绝，拒绝方式为抛出 FlowException</li>
+<li>代码：<code>Sentinel\sentinel-demo\sentinel-demo-basic\..\flow\FlowQpsDemo.java</code></li>
+</ul>
+<h3 id="5-熔断降级"><a href="#5-熔断降级" class="headerlink" title="5. 熔断降级"></a>5. 熔断降级</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408160644672.png" alt="image-20230408160644672"></p>
+<h4 id="熔断策略–慢调用比例-SLOW-REQUEST-RATIO"><a href="#熔断策略–慢调用比例-SLOW-REQUEST-RATIO" class="headerlink" title="熔断策略–慢调用比例 (SLOW_REQUEST_RATIO)"></a>熔断策略–慢调用比例 (SLOW_REQUEST_RATIO)</h4><ul>
+<li><p>代码：<code>Sentinel\sentinel-demo\sentinel-demo-basic\..\degrade\SlowRatioCircuitBreakerDemo.java</code></p>
+</li>
+<li><p>设置RT（最大的响应时间），用于判断慢调用</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408160732639.png" alt="image-20230408160732639"></p>
+<h4 id="熔断策略–异常比例-ERROR-RATIO"><a href="#熔断策略–异常比例-ERROR-RATIO" class="headerlink" title="熔断策略–异常比例 (ERROR_RATIO)"></a>熔断策略–异常比例 (ERROR_RATIO)</h4><ul>
+<li><p><code>代码：Sentinel\sentinel-demo\sentinel-demo-basic\..\degrade\ExceptionRatioCircuitBreakerDemo.java</code></p>
+</li>
+<li><p>异常比率的阈值范围是 [0.0, 1.0]，代表 0% - 100%。</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408160803154.png" alt="image-20230408160803154"></p>
+<h4 id="熔断策略–异常数-ERROR-COUNT"><a href="#熔断策略–异常数-ERROR-COUNT" class="headerlink" title="熔断策略–异常数 (ERROR_COUNT)"></a>熔断策略–异常数 (ERROR_COUNT)</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408160814319.png" alt="image-20230408160814319"></p>
+<h3 id="6-Spring-Cloud-Alibaba-Sentinel"><a href="#6-Spring-Cloud-Alibaba-Sentinel" class="headerlink" title="6. Spring Cloud Alibaba Sentinel"></a>6. Spring Cloud Alibaba Sentinel</h3><ul>
+<li>文档：<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel">https://github.com/alibaba/spring-cloud-alibaba/wiki/Sentinel</a></li>
+<li>例子代码：<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba.git">https://github.com/alibaba/spring-cloud-alibaba.git</a><ul>
+<li>子目录：spring-cloud-alibaba-examples</li>
+</ul>
+</li>
+<li>增加依赖：spring-cloud-starter-alibaba-sentinel</li>
+<li>配置控制台信息</li>
+<li>HTTP 埋点（自动定义url资源）</li>
+<li>Feign 支持，断路器支持</li>
+<li>RestTemplate 支持</li>
+<li>Spring Cloud Gateway 支持</li>
+<li>Endpoint 支持（&#x2F;actuator&#x2F;sentinel）<ul>
+<li>management.endpoints.web.exposure.include&#x3D;*</li>
+</ul>
+</li>
+</ul>
+<h4 id="注册-DataSource"><a href="#注册-DataSource" class="headerlink" title="注册 DataSource"></a>注册 DataSource</h4><ul>
+<li>目前支持file、nacos、zk、apollo、redis 这 5 种类型</li>
+<li>FileRefreshableDataSource 和 NacosDataSource</li>
+<li>nacos需要添加依赖sentinel-datasource-nacos</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408160946106.png" alt="image-20230408160946106"></p>
+<h4 id="服务部署"><a href="#服务部署" class="headerlink" title="服务部署"></a>服务部署</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408161036130.png" alt="image-20230408161036130"></p>
+<h4 id="演示内容"><a href="#演示内容" class="headerlink" title="演示内容"></a>演示内容</h4><ul>
+<li>访问sentinel控制台</li>
+<li>访问get-licenses： <a target="_blank" rel="noopener" href="http://www.license.com/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/">http://www.license.com/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/</a></li>
+<li>控制台查询：实时监控、簇点链路，可以看到已经自动创建了资源</li>
+<li>定义流控规则（阈值0）、熔断规则</li>
+<li>访问get-license-feign：<a target="_blank" rel="noopener" href="http://www.license.com/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a/feign">http://www.license.com/v1/organizations/e254f8c-c442-4ebe-a82a-e2fc1d1ff78a/licenses/f3831f8c-c338-4ebe-a82a-e2fc1d1ff78a/feign</a></li>
+<li>查看链路资源：<code>GET:http://organizationservice/v1/organizations/&#123;organizationId&#125;</code></li>
+<li>定义熔断规则，测试发现返回了缺省值</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/04/06/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-8-NACOS/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                        <b>#</b> 服务端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/04/13/Linux%E9%87%8D%E7%82%B9/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Sentinel"><span class="toc-text">1. Sentinel</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Sentinel%E7%BB%84%E6%88%90"><span class="toc-text">Sentinel组成</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4"><span class="toc-text">2. 使用步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E8%B5%84%E6%BA%90"><span class="toc-text">定义资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E8%A7%84%E5%88%99"><span class="toc-text">定义规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%95%88%E6%9E%9C"><span class="toc-text">查看效果</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">3. 简单的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SentinelResource-%E6%B3%A8%E8%A7%A3%EF%BC%88%E5%9F%BA%E4%BA%8ESpring-Boot%EF%BC%89"><span class="toc-text">@SentinelResource 注解（基于Spring Boot）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sentinel-%E6%8E%A7%E5%88%B6%E5%8F%B0"><span class="toc-text">Sentinel 控制台</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%99%90%E6%B5%81"><span class="toc-text">4. 限流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%BA%BF%E7%A8%8B%E6%95%B0%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-text">并发线程数流量控制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#QPS%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6"><span class="toc-text">QPS流量控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%86%94%E6%96%AD%E9%99%8D%E7%BA%A7"><span class="toc-text">5. 熔断降级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%86%94%E6%96%AD%E7%AD%96%E7%95%A5%E2%80%93%E6%85%A2%E8%B0%83%E7%94%A8%E6%AF%94%E4%BE%8B-SLOW-REQUEST-RATIO"><span class="toc-text">熔断策略–慢调用比例 (SLOW_REQUEST_RATIO)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%86%94%E6%96%AD%E7%AD%96%E7%95%A5%E2%80%93%E5%BC%82%E5%B8%B8%E6%AF%94%E4%BE%8B-ERROR-RATIO"><span class="toc-text">熔断策略–异常比例 (ERROR_RATIO)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%86%94%E6%96%AD%E7%AD%96%E7%95%A5%E2%80%93%E5%BC%82%E5%B8%B8%E6%95%B0-ERROR-COUNT"><span class="toc-text">熔断策略–异常数 (ERROR_COUNT)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-Spring-Cloud-Alibaba-Sentinel"><span class="toc-text">6. Spring Cloud Alibaba Sentinel</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E5%86%8C-DataSource"><span class="toc-text">注册 DataSource</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2"><span class="toc-text">服务部署</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%94%E7%A4%BA%E5%86%85%E5%AE%B9"><span class="toc-text">演示内容</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91(9)%20%E5%9F%BA%E4%BA%8ESentinel%E7%9A%84%E6%B5%81%E6%8E%A7%E4%B8%8E%E7%86%94%E6%96%AD + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F04%2F08%2F%25E6%259C%258D%25E5%258A%25A1%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-9-Sentinel%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/04/08/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-9-Sentinel/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

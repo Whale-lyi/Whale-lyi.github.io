@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      软件工程与计算Ⅱ 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">软件工程与计算Ⅱ</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97/" title="软件工程与计算">
+                    <b>#</b> 软件工程与计算
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="第一、二章-软件工程概论"><a href="#第一、二章-软件工程概论" class="headerlink" title="第一、二章 软件工程概论"></a>第一、二章 软件工程概论</h2><h3 id="软件工程（名词解释）"><a href="#软件工程（名词解释）" class="headerlink" title="软件工程（名词解释）"></a>软件工程（名词解释）</h3><ol>
+<li>应用系统的、规范的、可量化的方法，来开发、运行和维护软件，即将工程应用到软件</li>
+<li>对 (1) 中各种方法的研究</li>
+</ol>
+<h3 id="从1950s—2000s之间的特点"><a href="#从1950s—2000s之间的特点" class="headerlink" title="从1950s—2000s之间的特点"></a>从1950s—2000s之间的特点</h3><ul>
+<li>1950s：科学计算；以机器为中心进行编程；像生产硬件一样生产软件</li>
+<li>1960s：业务应用；软件不同于硬件；用软件工艺的方式生产软件</li>
+<li>1970s：结构化方法；瀑布模型；强调规则和纪律。奠定了软件工程的基础</li>
+<li>1980s：追求生产力最大化；现代结构化方法&#x2F;面向对象编程广泛应用；重视过程的作用</li>
+<li>1990s：企业为中心的大规模软件系统开发；追求快速开发、可变更性和用户价值；web应用出现</li>
+<li>2000s：大规模web应用；大量面向大众的web产品；追求快速开发、可变更性、用户价值和创新</li>
+</ul>
+<h2 id="第四章-项目启动"><a href="#第四章-项目启动" class="headerlink" title="第四章 项目启动"></a>第四章 项目启动</h2><h3 id="如何管理团队"><a href="#如何管理团队" class="headerlink" title="如何管理团队"></a>如何管理团队</h3><ol>
+<li><p>团队结构：主程序员团队；民主团队；开放团队</p>
+</li>
+<li><p>团队建设：建立团队章程；持续成功；和谐沟通；避免团队杀手</p>
+</li>
+</ol>
+<h3 id="质量保障措施"><a href="#质量保障措施" class="headerlink" title="质量保障措施"></a>质量保障措施</h3><ol>
+<li>需求开发：需求评审、需求度量</li>
+<li>体系结构：体系结构评审、集成测试</li>
+<li>详细设计：详细设计评审、设计度量、集成测试</li>
+<li>实现：代码评审、代码度量、测试</li>
+<li>测试：测试、测试度量</li>
+</ol>
+<h3 id="配置管理活动"><a href="#配置管理活动" class="headerlink" title="配置管理活动"></a>配置管理活动</h3><ol>
+<li>标识配置项</li>
+<li>版本管理</li>
+<li>变更控制</li>
+<li>配置审计</li>
+<li>状态报告</li>
+<li>软件发布管理</li>
+</ol>
+<h2 id="第五章-软件需求基础"><a href="#第五章-软件需求基础" class="headerlink" title="第五章 软件需求基础"></a>第五章 软件需求基础</h2><h3 id="需求定义"><a href="#需求定义" class="headerlink" title="需求定义"></a>需求定义</h3><ol>
+<li>用户为了解决问题或达到某些目标所需要的条件或能力</li>
+<li>系统或系统部件为了满足合同、标准、规范或其他正式文档所规定的要求而需要具备的条件或能力</li>
+<li>对 (1) 或 (2) 中一个条件或一种能力的文档化描述</li>
+</ol>
+<h3 id="需求的三个层次"><a href="#需求的三个层次" class="headerlink" title="需求的三个层次"></a>需求的三个层次</h3><p>【题型】给出一个实例，给出三个层次的例子；对给定的需求实例，判断其层次</p>
+<p>【示例】</p>
+<ol>
+<li><p>系统使用三个月后，销售额应该提高20%（业务需求）</p>
+</li>
+<li><p>系统要帮助收银员完成销售处理（用户需求）</p>
+</li>
+<li><p>收银员输入商品的标识和数量时，系统要显示商品的描述、单价、数量和总价（系统级需求）</p>
+</li>
+</ol>
+<p>【描述】</p>
+<ol>
+<li><p>业务需求：抽象层次最高的需求称为业务需求，是系统建立的战略出发点，表现为高层次的目标，描述了组织为什么要开发系统</p>
+</li>
+<li><p>用户需求：执行实际工作的用户对系统所能完成的具体任务的期望，描述了系统能够帮助用户做些什么</p>
+</li>
+<li><p>系统级需求：用户对系统行为的期望，每个系统及需求反映了一次外界与系统的交互行为，或者系统的一个实现细节</p>
+</li>
+</ol>
+<h3 id="需求的类型"><a href="#需求的类型" class="headerlink" title="需求的类型"></a>需求的类型</h3><p>【题型】对给定实例，给出其不同类型的需求例子；对给定的需求示例，判断需求类型</p>
+<p>【需求分类】项目需求、过程需求和系统需求（软件需求、硬件需求和其他需求）</p>
+<p>【软件需求分类】</p>
+<ol>
+<li><p>功能需求：和系统主要工作相关的需求，即在不考虑物理约束的情况下，用户希望系统能够执行的活动，这些活动可以帮助用户完成任务</p>
+</li>
+<li><p>性能需求：速度、容量、吞吐量、负载、实时性</p>
+</li>
+<li><p>质量属性：可靠性、可用性、安全性、可维护性、可移植性、易用性</p>
+</li>
+<li><p>对外接口：系统和环境中其他系统之间需要建立的接口，包括用户界面、硬件接口、软件接口、网络通信接口</p>
+</li>
+<li><p>约束：进行系统构造时需要遵守的约定，例如编程语言、硬件设施等</p>
+</li>
+<li><p>数据需求：功能需求的补充，是需要在数据库、文件或者其他介质中存储的数据描述</p>
+</li>
+</ol>
+<h2 id="第六章-需求分析方法"><a href="#第六章-需求分析方法" class="headerlink" title="第六章 需求分析方法"></a>第六章 需求分析方法</h2><h3 id="建立用例图"><a href="#建立用例图" class="headerlink" title="建立用例图"></a>建立用例图</h3><p>【四要素】用例、参与者、关系、系统边界</p>
+<p>【步骤】</p>
+<ol>
+<li>进行目标分析与确定解决方向</li>
+<li>寻找参与者</li>
+<li>寻找用例</li>
+<li>细化用例</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712193813264.png" alt="image-20230712193813264"></p>
+<h3 id="建立分析类图（概念类图、领域模型）"><a href="#建立分析类图（概念类图、领域模型）" class="headerlink" title="建立分析类图（概念类图、领域模型）"></a>建立分析类图（概念类图、领域模型）</h3><p>【基本元素】对象、类、链接、关联（聚合）、继承</p>
+<p>【图示】</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131001510.png" alt="image-20230712131001510"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131008234.png" alt="image-20230712131008234"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131013064.png" alt="image-20230712131013064"></p>
+<p>【步骤】</p>
+<ol>
+<li><p>对每个用例文本描述，尤其是场景描述，建立局部的概念类图</p>
+</li>
+<li><p>将所有用例产生的局部概念类图进行合并，建立软件系统的整体概念类图</p>
+</li>
+</ol>
+<p>【建立局部概念类图】</p>
+<ol>
+<li><p>识别候选类</p>
+</li>
+<li><p>确定概念类</p>
+</li>
+<li><p>识别关联</p>
+</li>
+<li><p>识别重要属性</p>
+</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131047057.png" alt="image-20230712131047057"></p>
+<h3 id="建立系统顺序图"><a href="#建立系统顺序图" class="headerlink" title="建立系统顺序图"></a>建立系统顺序图</h3><p>系统顺序图是将整个系统看作一个黑箱的对象而描述的简单顺序图形式，他强调外部参与者和系统的交互行为，重点展示系统级事件</p>
+<p>【步骤】</p>
+<ol>
+<li><p>确定上下文环境</p>
+</li>
+<li><p>根据用例描述找到交互对象</p>
+</li>
+<li><p>按照用例描述中的流程顺序，逐步添加消息</p>
+</li>
+</ol>
+<p>【图例】</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712133632656.png" alt="image-20230712133632656"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712133636625.png" alt="image-20230712133636625"></p>
+<h3 id="建立状态图"><a href="#建立状态图" class="headerlink" title="建立状态图"></a>建立状态图</h3><p>【要素】</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/clip_image002.jpg" alt="img"></p>
+<p>【步骤】</p>
+<ol>
+<li><p>确定上下文环境</p>
+</li>
+<li><p>识别状态</p>
+</li>
+<li><p>建立状态转换</p>
+</li>
+<li><p>补充详细信息，完善状态图</p>
+</li>
+</ol>
+<h2 id="第七章-需求文档化与验证"><a href="#第七章-需求文档化与验证" class="headerlink" title="第七章 需求文档化与验证"></a>第七章 需求文档化与验证</h2><h3 id="为什么建立需求规格说明？结合实验进行说明"><a href="#为什么建立需求规格说明？结合实验进行说明" class="headerlink" title="为什么建立需求规格说明？结合实验进行说明"></a>为什么建立需求规格说明？结合实验进行说明</h3><ol>
+<li>软件开发过程中，子任务和人员之间存在错综复杂的关系，存在大量的沟通和交流，所以软件系统开发需要编写多种不同类型的文档，每种文档都针对项目中需要进行广泛交流的内容</li>
+<li>软件需求是项目中需要进行广泛交流的内容之一，所以需求开发阶段需要进行需求的文档化</li>
+</ol>
+<h3 id="对给定的需求示例，判断并修正其错误（对给定的需求规格说明片段，找出并修正其错误）"><a href="#对给定的需求示例，判断并修正其错误（对给定的需求规格说明片段，找出并修正其错误）" class="headerlink" title="对给定的需求示例，判断并修正其错误（对给定的需求规格说明片段，找出并修正其错误）"></a>对给定的需求示例，判断并修正其错误（对给定的需求规格说明片段，找出并修正其错误）</h3><p>【需求文档化要点】</p>
+<ol>
+<li><p>技术文档写作要点：简洁、精确、易读（查询）、易修改</p>
+</li>
+<li><p>需求书写要点：使用用户术语、可验证、可行性</p>
+</li>
+<li><p>需求规格说明文档书写要点：充分利用标准的文档模板、保持所有内容位置得当；保持文档内的需求集具有完备性和一致性；为需求划分优先级</p>
+</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712134722603.png" alt="image-20230712134722603"></p>
+<h3 id="对给定的需求实例，设计功能测试用例，结合测试方法"><a href="#对给定的需求实例，设计功能测试用例，结合测试方法" class="headerlink" title="对给定的需求实例，设计功能测试用例，结合测试方法"></a>对给定的需求实例，设计功能测试用例，结合测试方法</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712134738179.png" alt="image-20230712134738179"></p>
+<h2 id="第八章-软件设计基础"><a href="#第八章-软件设计基础" class="headerlink" title="第八章 软件设计基础"></a>第八章 软件设计基础</h2><h3 id="软件设计定义"><a href="#软件设计定义" class="headerlink" title="软件设计定义"></a>软件设计定义</h3><ol>
+<li>软件设计是关于软件对象的设计，是一种设计活动，具有设计的普遍特性</li>
+<li>软件设计既指软件对象实现的规格说明，也指产生这个规格说明的过程</li>
+</ol>
+<h3 id="软件设计的核心思想"><a href="#软件设计的核心思想" class="headerlink" title="软件设计的核心思想"></a>软件设计的核心思想</h3><p>抽象和分解</p>
+<ol>
+<li>抽象是在纵向上聚焦各子系统的接口。抽象可以分离接口和实现，让人更好地关注系统本质，从而降低复杂度</li>
+<li>分解是在横向上将系统分割为几个相对简单的子系统以及各子系统之间的关系。分解之后只需要关注经过抽象的相对简单的子系统及其相互间的关系，从而降低复杂度</li>
+</ol>
+<h3 id="软件工程设计的三个层次及各层主要思想"><a href="#软件工程设计的三个层次及各层主要思想" class="headerlink" title="软件工程设计的三个层次及各层主要思想"></a>软件工程设计的三个层次及各层主要思想</h3><p>【高层设计】</p>
+<p>基于反映软件高层抽象的构件层次，描述系统的高层结构、关注点和设计决策</p>
+<p>【中层设计】</p>
+<p>更加关注组成构件的模块的划分、导入&#x2F;导出、过程之间调用关系或者类之间的协作</p>
+<p>【低层设计】</p>
+<p>深入模块和类的内部，关注具体的数据结构、算法、类型、语句和控制结构等</p>
+<h2 id="第九、十章-软件体系结构设计与构建"><a href="#第九、十章-软件体系结构设计与构建" class="headerlink" title="第九、十章 软件体系结构设计与构建"></a>第九、十章 软件体系结构设计与构建</h2><h3 id="体系结构的概念"><a href="#体系结构的概念" class="headerlink" title="体系结构的概念"></a>体系结构的概念</h3><p>一个软件系统的体系结构规定了系统的计算部件与部件之间的交互</p>
+<h3 id="体系结构风格的优缺点"><a href="#体系结构风格的优缺点" class="headerlink" title="体系结构风格的优缺点"></a>体系结构风格的优缺点</h3><p><strong>主程序&#x2F;子程序</strong></p>
+<ul>
+<li>优点：流程清晰，易于理解；强控制性</li>
+<li>缺点：<ul>
+<li>程序调用是一种强耦合的连接方式，非常依赖交互方的接口规格，这会使系统难以修改和复用</li>
+<li>程序调用的连接方式限制了各部件之间的数据交互，可能会使不同部件使用隐含的共享数据交流，产生不必要的公共耦合，进而破坏它的“正确性”控制能力</li>
+</ul>
+</li>
+</ul>
+<p><strong>面向对象式</strong></p>
+<ul>
+<li>优点：内部实现的可修改性；易开发、易理解、易复用的结构组织</li>
+<li>缺点：接口的耦合性；标识的耦合性；副作用（Ex. A 和 B 都修改 C）</li>
+</ul>
+<p><strong>分层</strong></p>
+<ul>
+<li>优点：设计机制清晰，易于理解；支持并行开发；更好的可复用性和内部可修改性</li>
+<li>缺点：交互协议难以修改；性能损失；难以确定层次数量和粒度</li>
+</ul>
+<p><strong>MVC</strong></p>
+<ul>
+<li>优点：易开发性；视图和控制的可修改性；适宜于网络系统开发的特征</li>
+<li>缺点：复杂性；模型修改困难</li>
+</ul>
+<h3 id="体系结构设计的过程"><a href="#体系结构设计的过程" class="headerlink" title="体系结构设计的过程"></a>体系结构设计的过程</h3><ol>
+<li>分析关键需求和项目约束</li>
+<li>选择体系结构风格</li>
+<li>进行软件体系结构逻辑设计</li>
+<li>依赖逻辑设计进行软件体系结构物理设计</li>
+<li>完善软件体系结构设计</li>
+<li>定义构件接口</li>
+<li>迭代过程 3-6</li>
+</ol>
+<h3 id="包的原则"><a href="#包的原则" class="headerlink" title="包的原则"></a>包的原则</h3><p><strong>重用发布等价原则 REP</strong></p>
+<p>（不要把很多用例放在一个包里），一个包中的类应该形成一个可复用和可发布的模块，模块提供一致的功能，减少复用者的工作</p>
+<p><strong>共同封闭原则 CCP</strong></p>
+<p>（不要把一个用例拆成多个包），最小化变化给程序员造成的影响，一起变化的类放在一个包里</p>
+<p><strong>共同重用原则 CRP</strong></p>
+<p>根据公共复用给类分组，一个包里的类应当一起被复用，常常导致细分包</p>
+<blockquote>
+<p>CCP和CRP原则互相排斥：CCP使维护者更简单，CRP使复用者更简单；CCP包更大，CRP包更小</p>
+</blockquote>
+<p><strong>无环依赖原则 ACP</strong></p>
+<p>包的依赖结构应该是一个有向无环图</p>
+<p><strong>稳定依赖原则 SDP</strong></p>
+<p>向下接口的依赖是不稳定依赖</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712141123090.png" alt="image-20230712141123090"></p>
+<p><strong>稳定抽象原则 SAP</strong></p>
+<p>稳定包应是抽象包，不稳定包应是具体包</p>
+<h3 id="体系结构构件之间接口的定义"><a href="#体系结构构件之间接口的定义" class="headerlink" title="体系结构构件之间接口的定义"></a>体系结构构件之间接口的定义</h3><p>根据分配的需求确定模块对外接口，如逻辑层接口根据页面的需求得到，数据层接口根据逻辑层调用得到</p>
+<p>根据刺激与响应确定接口，依据详细规格明确接口内容（参数，返回值）</p>
+<ol>
+<li><p>通常情况，VIEW的需接口可以直接作为响应LOGIC的供接口</p>
+</li>
+<li><p>通常情况，LOGIC的需接口需要分解为同层模块和不同DATA的供接口</p>
+</li>
+</ol>
+<h3 id="体系结构开发集成测试用例（Stub和Driver）"><a href="#体系结构开发集成测试用例（Stub和Driver）" class="headerlink" title="体系结构开发集成测试用例（Stub和Driver）"></a>体系结构开发集成测试用例（Stub和Driver）</h3><ol>
+<li><p>依据模块接口建立桩程序</p>
+<p>桩（Stub）：自顶向下集成，先集成和测试上层的模块，下层的模块使用伪装的具有相同接口的桩，比真实程序简单得多，是用最简单的逻辑。</p>
+</li>
+<li><p>编写驱动程序，在桩程序的帮助下进行集成测试</p>
+<p>驱动（Driver）：自底向上集成，从底层的模块集成起，测试的时候上层的模块使用伪装的相同接口的驱动</p>
+</li>
+<li><p>持续集成：提倡尽早集成和频繁集成</p>
+<p>尽早集成指开发之初就利用 stub 集成起来，频繁集成指每次完成一些开发任务，就用开发结果替换 stub 中相应组件</p>
+<p>好处：a. 防止软件开发中出现无法集成与发布的情况。 b. 有利于检查和发现集成缺陷</p>
+<p>工具链：利用版本控制工具和持续集成工具</p>
+</li>
+</ol>
+<h2 id="第十一章-人机交互设计"><a href="#第十一章-人机交互设计" class="headerlink" title="第十一章 人机交互设计"></a>第十一章 人机交互设计</h2><h3 id="易用性概念-Useability"><a href="#易用性概念-Useability" class="headerlink" title="易用性概念(Useability)"></a>易用性概念(Useability)</h3><p>易用性是人机交互中一个既重要又复杂的概念，不仅关注人使用系统的过程，同时还关注系统对使用它的人所产生的作用。因为比较复杂，所以易用性不是单维度的质量属性，而是多维度的质量属性，包括易学性、易记性、效率、出错率和主观满意度</p>
+<h3 id="能够列出至少5个界面设计的注意事项，并加以解释"><a href="#能够列出至少5个界面设计的注意事项，并加以解释" class="headerlink" title="能够列出至少5个界面设计的注意事项，并加以解释"></a>能够列出至少5个界面设计的注意事项，并加以解释</h3><p>【题型】例子违反了哪几条界面设计原则&#x2F;很好的运用了哪些原则？</p>
+<ol>
+<li><p>简洁设计：不要使用太大的菜单，不要在一个窗口表现过多的信息类别，不要在一个表单中使用太多的颜色和字体作为线索，等等</p>
+</li>
+<li><p>一致性设计：遵循用户已有的精神模型，不要出现相似任务具有不同的交互机制（例如按钮位置不一致）</p>
+</li>
+<li><p>低出错率设计：首先帮助用户避免犯错，设计不让用户犯严重错误的系统，错误出现时，系统要提供简洁、有建设性、具体的指导来帮助用户消除错误</p>
+</li>
+<li><p>易记性设计：减少用户的记忆负担，方式有：逐层递进展示信息、使用直观的快捷方式、设置有意义的默认值</p>
+</li>
+</ol>
+<h3 id="精神模型、差异性"><a href="#精神模型、差异性" class="headerlink" title="精神模型、差异性"></a>精神模型、差异性</h3><p>精神模型：用户进行人机交互时头脑中的任务模型，人机交互设计需要依据精神模型进行隐喻设计</p>
+<p>差异性：不同用户群体的任务模型是有差异的，可以划分为新手用户、专家用户、熟练用户</p>
+<p>【新手用户】是对业务不熟悉的人，设计系统时要关注易学性，进行业务导航，尽量避免出错</p>
+<p>【专家用户】是能熟练操作计算机完成业务的人，设计系统要关注效率</p>
+<p>【熟练用户】介于新手和专家之间，要在易学性和效率之间折中</p>
+<h3 id="导航、反馈、协作式设计"><a href="#导航、反馈、协作式设计" class="headerlink" title="导航、反馈、协作式设计"></a>导航、反馈、协作式设计</h3><p><strong>导航</strong></p>
+<ul>
+<li>为用户提供一个完成任务的入口，好的导航会让这个入口非常符合人的精神模型</li>
+<li>有全局结构和局部结构两种方式<ul>
+<li>全局结构包括窗口、菜单、列表、快捷方式等，主要以功能分层和任务交互过程为依据</li>
+<li>局部结构包括可视化控件布局与组合、按钮设置、文本颜色等，主要以用户关注的任务细节为依据</li>
+</ul>
+</li>
+</ul>
+<p><strong>反馈</strong></p>
+<ul>
+<li>提示用户交互行为的结果，但不能打断用户工作时的意识流</li>
+</ul>
+<p><strong>协作式设计</strong></p>
+<ul>
+<li>人和计算机是人机交互的两方，其中人的因素是比较固定的，一定时期内不会发生大的变化，所以要让二者交互顺畅，就需要让计算机更多地适应人的因素，这也是人机交互设计以用户为中心的根本原因</li>
+<li>这种调整计算机因素以更好地适应并帮助用户地设计方式就成为协作式设计</li>
+</ul>
+<h2 id="第十二章-详细设计概述"><a href="#第十二章-详细设计概述" class="headerlink" title="第十二章 详细设计概述"></a>第十二章 详细设计概述</h2><h3 id="详细设计的出发点"><a href="#详细设计的出发点" class="headerlink" title="详细设计的出发点"></a>详细设计的出发点</h3><p>软件详细设计在软件体系结构设计之后进行，以需求开发的结果和软件体系结构的结果为出发点</p>
+<h3 id="职责分配"><a href="#职责分配" class="headerlink" title="职责分配"></a>职责分配</h3><p>通过职责建立静态模型</p>
+<p>【抽象对象的职责】类的职责主要由两部分组成：属性职责和方法职责。属性表示对象的状态，方法表示对象的行为</p>
+<p>【抽象类之间的关系】类与类之间存在一定关系。关系表达了相应职责的划分与组合。它们的强弱顺序为：依赖 &lt; 关联 &lt; 聚合 &lt; 组合 &lt; 继承</p>
+<p>【添加辅助类】帮助实现所有功能</p>
+<h3 id="协作"><a href="#协作" class="headerlink" title="协作"></a>协作</h3><p>通过协作建立动态模型</p>
+<p>【抽象对象之间的协作】有两种方法</p>
+<ol>
+<li><p>从小到大，将对象的小职责聚合形成大职责</p>
+</li>
+<li><p>从大到小，将大职责分配给各个小对象</p>
+</li>
+</ol>
+<h3 id="控制风格"><a href="#控制风格" class="headerlink" title="控制风格"></a>控制风格</h3><p>为了完成某一个大职责，需要对职责的分配做很多决策。控制风格决定了决策谁来做和怎么做决策。</p>
+<p>【集中式】作决策的往往只有一个对象，由这个对象决定怎么来分配职责，怎么实现大的职责</p>
+<p>【委托式】做出决策的对象不止一个，分别承担一定的职责，做出一定的决策，从而实现大的职责</p>
+<p>【分散式】无法找到明确的控制对象，每个对象只承担一个相对较小的职责，完全由各个对象自治的方式来实现大的职责</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712155653249.png" alt="image-20230712155653249"></p>
+<h3 id="给定分析类图、系统顺序图和设计因素描述，建立设计类图或者详细顺序图"><a href="#给定分析类图、系统顺序图和设计因素描述，建立设计类图或者详细顺序图" class="headerlink" title="给定分析类图、系统顺序图和设计因素描述，建立设计类图或者详细顺序图"></a>给定分析类图、系统顺序图和设计因素描述，建立设计类图或者详细顺序图</h3><p>抽象类的职责 -&gt; 抽象类之间的关系 -&gt; 添加辅助类</p>
+<p>辅助类：接口类、数据类、启动类、控制器类等</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712155731069.png" alt="image-20230712155731069"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712155735000.png" alt="image-20230712155735000"></p>
+<h3 id="协作的测试"><a href="#协作的测试" class="headerlink" title="协作的测试"></a>协作的测试</h3><p>类间协作的桩程序：Mock Object</p>
+<h2 id="第十三章-详细设计中的模块化与信息隐藏"><a href="#第十三章-详细设计中的模块化与信息隐藏" class="headerlink" title="第十三章 详细设计中的模块化与信息隐藏"></a>第十三章 详细设计中的模块化与信息隐藏</h2><h3 id="耦合与内聚"><a href="#耦合与内聚" class="headerlink" title="耦合与内聚"></a>耦合与内聚</h3><p>耦合描述的是两个模块之间关系的复杂程度</p>
+<p>内聚描述的是一个模块内部的联系的紧密性</p>
+<h3 id="对例子说明它们之间的耦合程度与内聚，给出理由"><a href="#对例子说明它们之间的耦合程度与内聚，给出理由" class="headerlink" title="对例子说明它们之间的耦合程度与内聚，给出理由"></a>对例子说明它们之间的耦合程度与内聚，给出理由</h3><p>【耦合】（高-&gt;低）</p>
+<ol>
+<li><p>内容耦合（一个模块直接修改另一模块内容，GOTO语句，共享代码，内部类肯定是内容耦合）</p>
+</li>
+<li><p>公共耦合（模块间共享全局变量，文件，设备等）</p>
+</li>
+<li><p>重复耦合（两个模块有相同的业务逻辑代码）</p>
+</li>
+<li><p>控制耦合（一个模块给另一个模块传递控制信息，共享逻辑）</p>
+</li>
+<li><p>印记耦合（传递的数据结构只使用了一部分）</p>
+</li>
+<li><p>数据耦合（只共享对方需要的数据）</p>
+</li>
+</ol>
+<p>【内聚】（高-&gt;低）</p>
+<ol>
+<li><p>信息内聚（模块每个操作都有各自入口点，相对独立，所有操作在相同数据结构上完成，如：栈）</p>
+</li>
+<li><p>功能内聚（模块只执行一个操作或达成单一目的，如：计算平方根，决定最短路径）</p>
+</li>
+<li><p>通信内聚（对相同数据执行不同操作：查书名、查作者、查出版商）</p>
+</li>
+<li><p>过程内聚（与步骤有关：守门员传后卫，后卫传中场，中场传前锋）</p>
+</li>
+<li><p>时间内聚（一系列与时间有关的操作：起床、刷牙、吃早点）</p>
+</li>
+<li><p>逻辑内聚（一系列可替换的操作：坐车去、坐飞机去、坐船去，switch）</p>
+</li>
+<li><p>偶然内聚（多个不相关操作）</p>
+</li>
+</ol>
+<h3 id="信息隐藏"><a href="#信息隐藏" class="headerlink" title="信息隐藏"></a>信息隐藏</h3><p>【基本思想】每个模块都隐藏一个重要的设计决策。</p>
+<p>每个模块都承担一定的职责，对外表现为一份契约，并且在这份契约之下隐藏着只有这个模块知道的设计决策或者秘密，决策的实现细节只有模块自己知道</p>
+<p>【两种常见的信息隐藏决策】</p>
+<p>根据需求分配的职责、内部实现机制</p>
+<p>【题型】</p>
+<p>对例子，说明其信息隐藏程度好坏</p>
+<h2 id="第十四章-详细设计中面向对象方法下的模块化"><a href="#第十四章-详细设计中面向对象方法下的模块化" class="headerlink" title="第十四章 详细设计中面向对象方法下的模块化"></a>第十四章 详细设计中面向对象方法下的模块化</h2><h3 id="模块化的原则"><a href="#模块化的原则" class="headerlink" title="模块化的原则"></a>模块化的原则</h3><p>【降低隐式耦合】</p>
+<ol>
+<li><p>全局变量是有害的</p>
+</li>
+<li><p>显式（代码清晰，不进行不必要的隐藏）</p>
+</li>
+<li><p>不要有代码重复</p>
+</li>
+</ol>
+<p>【降低访问耦合】</p>
+<ol start="4">
+<li><p>针对接口编程：供接口、需接口</p>
+</li>
+<li><p>接口分离原则（ISP）：将一个统一的接口匹配为多个更独立的接口</p>
+</li>
+<li><p>迪米特法则：不要出现a.getB().methodB()</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712161113622.png" alt="image-20230712161113622"></th>
+<th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712161116282.png" alt="image-20230712161116282"></th>
+</tr>
+</thead>
+</table>
+<p>【降低继承耦合】</p>
+<ol start="7">
+<li><p>里氏替换原则（LSP）：只要调用一个接口，不论是哪种子类或者父类自身，都可以完成相同语义的工作（因为接口没有被改变），（子类的前置条件必须与超类前置条件相同或更少，子类方法后置条件必须与超类方法后置条件相同会更多）</p>
+</li>
+<li><p>使用组合代替继承</p>
+</li>
+</ol>
+<p>【提高内聚】</p>
+<ol start="9">
+<li><p>单一职责原则</p>
+</li>
+<li><p>集中信息与行为</p>
+</li>
+</ol>
+<h2 id="第十五章-详细设计中面向对象方法下的信息隐藏"><a href="#第十五章-详细设计中面向对象方法下的信息隐藏" class="headerlink" title="第十五章 详细设计中面向对象方法下的信息隐藏"></a>第十五章 详细设计中面向对象方法下的信息隐藏</h2><h3 id="信息隐藏的含义"><a href="#信息隐藏的含义" class="headerlink" title="信息隐藏的含义"></a>信息隐藏的含义</h3><p>一个模块应该通过稳定的接口对外表现其所承载的需求，而隐藏它对需求的内部实现细节。</p>
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><ol>
+<li><p>将数据和行为同时包含在类中</p>
+</li>
+<li><p>分离对外接口与内部实现</p>
+</li>
+</ol>
+<p>封装实现细节：封装数据和行为；封装内部结构；封装其他对象的引用；封装类型信息；封装潜在变更</p>
+<h3 id="OCP"><a href="#OCP" class="headerlink" title="OCP"></a>OCP</h3><p>开闭原则OCP：对扩展开放，对修改封闭，即发生变更时，只需要添加新的代码而不需要修改原有的代码</p>
+<p>违反OCP原则的典型标志：switch或if-else</p>
+<p>可以使用多态来保证</p>
+<h3 id="DIP"><a href="#DIP" class="headerlink" title="DIP"></a>DIP</h3><p>依赖倒置原则DIP（与工厂结合紧密，解决new的创建问题）</p>
+<ol>
+<li><p>抽象不应该依赖于细节，细节应该依赖于抽象。（抽象是稳定的，细节是不稳定的）</p>
+</li>
+<li><p>高层模块不应该依赖于低层模块，而是双方都依赖于抽象。（抽象是稳定的，高低层模块都可能是不稳定的）</p>
+</li>
+</ol>
+<p>为具体类建立抽象接口并分离该接口是实现DIP的基本手段</p>
+<h2 id="第十六章-设计模式"><a href="#第十六章-设计模式" class="headerlink" title="第十六章 设计模式"></a>第十六章 设计模式</h2><h3 id="如何实现可修改性、可扩展性、灵活性"><a href="#如何实现可修改性、可扩展性、灵活性" class="headerlink" title="如何实现可修改性、可扩展性、灵活性"></a>如何实现可修改性、可扩展性、灵活性</h3><p>通过接口与实现分离，Java中有两种方式</p>
+<ol>
+<li><p>通过接口和实现该接口的类</p>
+</li>
+<li><p>通过子类继承父类</p>
+</li>
+</ol>
+<p>对于实现的可修改性，两种方式都没有任何耦合性</p>
+<p>对于实现的可扩展性，可通过新的子类的创建来实现</p>
+<p>对于实现的灵活性，可以通过多态的方式来实现</p>
+<h3 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165122139.png" alt="image-20230712165122139"></p>
+<h3 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165134077.png" alt="image-20230712165134077"></p>
+<h3 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165157920.png" alt="image-20230712165157920"></p>
+<h3 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165211255.png" alt="image-20230712165211255"></p>
+<h2 id="第十七、十八章-软件构造与代码设计"><a href="#第十七、十八章-软件构造与代码设计" class="headerlink" title="第十七、十八章 软件构造与代码设计"></a>第十七、十八章 软件构造与代码设计</h2><h3 id="构造包含的活动"><a href="#构造包含的活动" class="headerlink" title="构造包含的活动"></a>构造包含的活动</h3><p>详细设计、编程、测试、调试、代码评审、集成与构建、构造管理</p>
+<h3 id="重构、测试驱动开发、结对编程的概念"><a href="#重构、测试驱动开发、结对编程的概念" class="headerlink" title="重构、测试驱动开发、结对编程的概念"></a>重构、测试驱动开发、结对编程的概念</h3><p>【重构】修改软件系统的严谨方法，它在不改变代码外部表现的情况下改进其内部结构</p>
+<p>【测试驱动开发】编写一段代码前，优先完成该段代码的测试代码</p>
+<p>【结对编程】两个程序员挨着坐在一起，共同协作进行软件构造活动</p>
+<h3 id="给定代码段示例，对其进行改进或者发现其中的问题"><a href="#给定代码段示例，对其进行改进或者发现其中的问题" class="headerlink" title="给定代码段示例，对其进行改进或者发现其中的问题"></a>给定代码段示例，对其进行改进或者发现其中的问题</h3><p>【易读性】</p>
+<ul>
+<li><p>格式（使用缩进与对齐，将相关逻辑组织在一起，使用空行分隔逻辑，语句分行）</p>
+</li>
+<li><p>命名</p>
+</li>
+<li><p>注释（文档注释、内部注释）</p>
+</li>
+</ul>
+<p>【易维护性】</p>
+<ul>
+<li><p>小型任务（分解为多个高内聚、低耦合的小任务）</p>
+</li>
+<li><p>复杂决策（使用新的布尔变量来简化，使用有意义的名称封装复杂决策，表驱动编程）</p>
+</li>
+<li><p>数据使用（不要将变量用于与命名不符的目的，不要将单个变量用于多个目的，限制全局变量，不要使用突兀的数字与字符）</p>
+</li>
+<li><p>明确依赖关系</p>
+</li>
+</ul>
+<p>【可靠性】</p>
+<ul>
+<li><p>契约式设计</p>
+</li>
+<li><p>防御式编程</p>
+</li>
+</ul>
+<p>【使用模型辅助设计复杂代码】</p>
+<ul>
+<li>决策表、伪代码、程序流程图</li>
+</ul>
+<h3 id="单元测试用例的设计"><a href="#单元测试用例的设计" class="headerlink" title="单元测试用例的设计"></a>单元测试用例的设计</h3><ol>
+<li><p>为方法开发测试用例（根据方法的规格、方法代码的逻辑结构）</p>
+</li>
+<li><p>使用Mock Object测试类方法</p>
+</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165834545.png" alt="image-20230712165834545"></p>
+<ol start="3">
+<li>为类开发测试用例</li>
+</ol>
+<h3 id="契约式设计"><a href="#契约式设计" class="headerlink" title="契约式设计"></a>契约式设计</h3><p>如果一个函数或方法，在前置条件满足的情况下开始执行，完成后能够满足后置条件，那么这个函数或方法就是正确、可靠的。有异常与断言两种方式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165859268.png" alt="image-20230712165859268"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165903024.png" alt="image-20230712165903024"></p>
+<h3 id="防御式编程"><a href="#防御式编程" class="headerlink" title="防御式编程"></a>防御式编程</h3><p>在一个方法与其他方法、操作系统、硬件等外界环境交互时，不能确保外界都是正确的，所以要在外界发生错误时，保护方法内部不受损害</p>
+<p>会增加整体代码复杂度，降低易读性和性能，但显著提高程序的可靠性</p>
+<h3 id="表驱动"><a href="#表驱动" class="headerlink" title="表驱动"></a>表驱动</h3><p>复杂决策包装成决策表</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712170007005.png" alt="image-20230712170007005"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712170010619.png" alt="image-20230712170010619"></p>
+<h3 id="代码复杂度度量"><a href="#代码复杂度度量" class="headerlink" title="代码复杂度度量"></a>代码复杂度度量</h3><p>圈复杂度：从 1 开始，每次遇到 if&#x2F;while&#x2F;for&#x2F;repeat 就加 1，case语句每种情况都加 1</p>
+<h2 id="第十九章-软件测试"><a href="#第十九章-软件测试" class="headerlink" title="第十九章 软件测试"></a>第十九章 软件测试</h2><h3 id="掌握白盒测试和黑盒测试的常见方法，并能够进行优缺点比较"><a href="#掌握白盒测试和黑盒测试的常见方法，并能够进行优缺点比较" class="headerlink" title="掌握白盒测试和黑盒测试的常见方法，并能够进行优缺点比较"></a>掌握白盒测试和黑盒测试的常见方法，并能够进行优缺点比较</h3><p>【黑盒测试】</p>
+<p>基于规格的技术，黑盒测试是把测试对象看做一个黑盒子，完全基于输入和输出数据来判定测试对象的正确性</p>
+<p>常见方法：等价类划分、边界值分析、决策表、状态转换</p>
+<p>【白盒测试】</p>
+<p>基于代码的技术，白盒测试将测试对象看作透明的，不关心测试对象的规格，而是按照测试对象内部的程序结构来设计测试用例进行测试工作</p>
+<h3 id="白盒测试三种不同的方法"><a href="#白盒测试三种不同的方法" class="headerlink" title="白盒测试三种不同的方法"></a>白盒测试三种不同的方法</h3><p>【语句覆盖】确保被测试对象的每一行程序代码都至少执行一次</p>
+<p>【条件覆盖】确保程序中每个判断的每个结果都至少满足一次</p>
+<p>【路径覆盖】确保程序中每条独立的执行路径都至少执行一次</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712170210765.png" alt="image-20230712170210765"></p>
+<h3 id="给出一个场景，判断应该使用哪种测试方法，如何去写"><a href="#给出一个场景，判断应该使用哪种测试方法，如何去写" class="headerlink" title="给出一个场景，判断应该使用哪种测试方法，如何去写"></a>给出一个场景，判断应该使用哪种测试方法，如何去写</h3><p>对给定的场景和要求的测试方法，设计测试用例</p>
+<ol>
+<li><p>给出功能需求，则要求写功能测试用例</p>
+</li>
+<li><p>给出设计图，则要求写集成测试用例，Stub and Driver</p>
+</li>
+<li><p>给出方法描述，则要求写单元测试用例，Mock Object</p>
+</li>
+<li><p>JUnit基本使用方法</p>
+</li>
+</ol>
+<h2 id="第二十、二十一章-软件交付、软件维护与演化"><a href="#第二十、二十一章-软件交付、软件维护与演化" class="headerlink" title="第二十、二十一章 软件交付、软件维护与演化"></a>第二十、二十一章 软件交付、软件维护与演化</h2><h3 id="如何理解软件维护的重要性"><a href="#如何理解软件维护的重要性" class="headerlink" title="如何理解软件维护的重要性"></a>如何理解软件维护的重要性</h3><ol>
+<li>出现新的需求，如果不维护，软件将减少甚至失去服务用户的使用</li>
+<li>随着软件产品的生命周期越来越长，在软件生存期内外界环境发生变化的可能性越来越大，软件需要经常修改以适应外界变化</li>
+<li>软件产品中存在缺陷，当这些缺陷在使用中暴露出来时，必须予以及时的解决</li>
+</ol>
+<h3 id="开发可维护软件的方法"><a href="#开发可维护软件的方法" class="headerlink" title="开发可维护软件的方法"></a>开发可维护软件的方法</h3><ol>
+<li><p>考虑软件的可变更性：分析需求的易变性，为变更进行设计</p>
+</li>
+<li><p>为降低维护困难而开发：编写详细的技术文档并保持及时更新，保证代码的可读性，维护需求跟踪链，维护回归测试基线</p>
+</li>
+</ol>
+<h3 id="演化式生命周期模型"><a href="#演化式生命周期模型" class="headerlink" title="演化式生命周期模型"></a>演化式生命周期模型</h3><p>初始开发 -&gt; 演化 -&gt; 服务 -&gt; 逐步淘汰 -&gt; 停止</p>
+<p>【初始开发】可以实现全部需求，也可以只包含部分需求—对用户来说非常重要和紧急的最高优先级需求</p>
+<p>【演化】可能会有预先安排的需求增量，也可能完全是对变更请求的处理，保持软件产品的持续增值。</p>
+<p>【服务】不再持续地增加自己的价值，而只是周期性地修正已有的缺陷</p>
+<p>【逐步淘汰】不再提供软件产品的任何服务，即不再继续维护该软件</p>
+<p>【停止】正式退出使用状态。开发者不再维护，用户也不再使用</p>
+<h3 id="用户文档、系统文档"><a href="#用户文档、系统文档" class="headerlink" title="用户文档、系统文档"></a>用户文档、系统文档</h3><p>用户文档：为用户编写参考指南或者操作教程，常见有用户使用手册、联机帮助文档</p>
+<p>系统文档：更注重系统维护方面的内容</p>
+<h3 id="逆向工程、再工程"><a href="#逆向工程、再工程" class="headerlink" title="逆向工程、再工程"></a>逆向工程、再工程</h3><p>逆向工程：分析目标系统，标识系统的部件及其交互关系，并且使用其它形式或者更高层的抽象创建系统表现的过程</p>
+<p>再工程：检查和改造一个目标系统，用新的模式及其实现复原该目标系统</p>
+<h2 id="第二十二、二十三章-软件开发过程模型与职业基础"><a href="#第二十二、二十三章-软件开发过程模型与职业基础" class="headerlink" title="第二十二、二十三章 软件开发过程模型与职业基础"></a>第二十二、二十三章 软件开发过程模型与职业基础</h2><h3 id="软件生命周期模型"><a href="#软件生命周期模型" class="headerlink" title="软件生命周期模型"></a>软件生命周期模型</h3><p>需求工程 -&gt; 软件设计 -&gt; 软件实现 -&gt; 软件测试 -&gt; 软件交付 -&gt; 软件维护</p>
+<h3 id="解释与比较不同过程模型（要求、特征描述、优点、缺点）"><a href="#解释与比较不同过程模型（要求、特征描述、优点、缺点）" class="headerlink" title="解释与比较不同过程模型（要求、特征描述、优点、缺点）"></a>解释与比较不同过程模型（要求、特征描述、优点、缺点）</h3><p><strong>构建-修复模型</strong></p>
+<ul>
+<li><p>特征：对软件开发活动没有任何规划和组织，是完全依靠开发人员个人能力进行软件开发的方式</p>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li>没有对开发工作进行规范和组织，一旦开发活动超过个人的控制能力，开发活动就无法有效进行</li>
+<li>没有分析需求的真实性，给软件开发带来很大的风险</li>
+<li>没有考虑软件结构的质量，使得软件结构在不断地修改中越来越差，直至无法修改</li>
+<li>没有考虑测试和程序的可维护性，也没有任何文档，软件的维护十分困难</li>
+</ul>
+</li>
+<li><p>适用范围：</p>
+<ul>
+<li>软件规模很小，只需要几百行代码，开发复杂度个人能够胜任</li>
+<li>软件对质量的要求不高，即使出错也无所谓</li>
+<li>只关注开发活动，对后期维护的要求不高，甚至不需要维护</li>
+</ul>
+</li>
+</ul>
+<p><strong>瀑布模型</strong></p>
+<ul>
+<li>特征：要求每个活动的结果必须要进行验证，并且只有在经过验证之后才能作为后续开发活动的基础，被看作“文档驱动”</li>
+<li>优点：为软件开发活动定义了清晰的阶段划分，让开发者能够以关注点分离的方式更好地进行那些复杂的软件项目的开发活动</li>
+<li>缺点：<ul>
+<li>对文档的过高期望</li>
+<li>对开发活动的线性假设</li>
+<li>客户、用户参与不够</li>
+<li>里程碑粒度过粗</li>
+</ul>
+</li>
+<li>适用范围：<ul>
+<li>需求非常成熟、稳定、没有不确定的内容，也不会发生变化</li>
+<li>所需的技术成熟、可靠、没有不确定的技术难点，也没有开发人员不熟悉的技术问题</li>
+<li>复杂度适中，不至于产生太大的文档负担和过粗的里程碑</li>
+</ul>
+</li>
+</ul>
+<p><strong>增量迭代模型</strong></p>
+<ul>
+<li>特征：项目开始时，通过系统需求开发和核心体系结构设计活动完成项目对前景和范围的界定，然后再将后续开发活动组织为多个迭代、并行的瀑布式开发活动。（需求驱动）</li>
+<li>优点：<ul>
+<li>使用迭代式开发，具有更好的适用性</li>
+<li>并行开发可以帮助缩短软件产品的开发时间</li>
+<li>渐进交付可以加强用户反馈，降低开发风险</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>由于各个构件是逐渐并入已有的软件体系结构中的，所以加入构件必须不破坏已构造好的系统部分，这需要软件具备开放式的体系结构</li>
+<li>增量迭代模型需要一个完备、清晰的项目前景和范围以进行并行开发规划，但是在一些不稳定的领域，不确定性太多或者需求变化非常频繁，很难在项目开始就确定前景和范围</li>
+</ul>
+</li>
+<li>适用范围：<ul>
+<li>大规模软件系统开发</li>
+</ul>
+</li>
+</ul>
+<p><strong>演化模型</strong></p>
+<ul>
+<li>特征：可以更好地应对需求变更，将软件开发活动组织为多个迭代、并行的瀑布式开发活动</li>
+<li>优点：<ul>
+<li>使用迭代式开发，具有更好的适用性，尤其适用于需求变更频繁或者不确定性较多的软件系统开发</li>
+<li>并行开发可以帮助缩短软件产品的开发时间</li>
+<li>渐进交付可以加强用户反馈，降低开发风险</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>无法在项目早期阶段确定项目范围，所以项目的整体计划、进度调度，尤其是商务协商事宜无法准确把握</li>
+<li>后续迭代的开发活动是在前导迭代的基础上进行修改和扩展的，这容易让后续迭代忽略分析与设计工作，蜕变为构建-修复方式</li>
+</ul>
+</li>
+<li>适用范围：<ul>
+<li>不稳定领域的大规模软件系统开发</li>
+</ul>
+</li>
+</ul>
+<p><strong>原型模型</strong></p>
+<ul>
+<li>特征：注重使用抛弃式原型，而不是演化式原型</li>
+<li>优点：<ul>
+<li>对原型方法的使用加强了与客户、用户的交流，可以让最终产品取得更好的满意度</li>
+<li>适用于非常新颖的领域，这些领域因为新颖所以有着大量的不确定性</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>原型方法能够解决风险，但自身也能带来新的风险</li>
+<li>实践中，很多项目负责人不舍得抛弃“抛弃式原型”，使得质量较差的代码进入了最终产品，导致了最终产品的低质量</li>
+</ul>
+</li>
+<li>适用范围：<ul>
+<li>有着大量不确定性的新颖领域进行开发活动组织</li>
+</ul>
+</li>
+</ul>
+<p><strong>螺旋模型</strong></p>
+<ul>
+<li><p>特征：尽早解决比较高的风险，风险驱动</p>
+</li>
+<li><p>优点：可以降低风险，减少项目因风险造成的损失</p>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p>风险解决需要使用原型手段，也就会存在原型自身带来的风险</p>
+</li>
+<li><p>模型过于复杂，不利于管理者依据其组织软件开发活动</p>
+</li>
+</ul>
+</li>
+<li><p>适用范围</p>
+<ul>
+<li>高风险的大规模软件系统开发</li>
+</ul>
+</li>
+</ul>
+<h3 id="软件工程知识体系的知识域"><a href="#软件工程知识体系的知识域" class="headerlink" title="软件工程知识体系的知识域"></a>软件工程知识体系的知识域</h3><p>需求、设计、构造、测试、维护、配置管理、工程管理、工程过程、工程工具和方法、质量</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/07/08/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97/" title="软件工程与计算">
+                        <b>#</b> 软件工程与计算
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%A6%82%E8%AE%BA"><span class="toc-text">第一、二章 软件工程概论</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%EF%BC%88%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A%EF%BC%89"><span class="toc-text">软件工程（名词解释）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E1950s%E2%80%942000s%E4%B9%8B%E9%97%B4%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">从1950s—2000s之间的特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8"><span class="toc-text">第四章 项目启动</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E5%9B%A2%E9%98%9F"><span class="toc-text">如何管理团队</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%A8%E9%87%8F%E4%BF%9D%E9%9A%9C%E6%8E%AA%E6%96%BD"><span class="toc-text">质量保障措施</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E6%B4%BB%E5%8A%A8"><span class="toc-text">配置管理活动</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E9%9C%80%E6%B1%82%E5%9F%BA%E7%A1%80"><span class="toc-text">第五章 软件需求基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E5%AE%9A%E4%B9%89"><span class="toc-text">需求定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E5%B1%82%E6%AC%A1"><span class="toc-text">需求的三个层次</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9C%80%E6%B1%82%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-text">需求的类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95"><span class="toc-text">第六章 需求分析方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%94%A8%E4%BE%8B%E5%9B%BE"><span class="toc-text">建立用例图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%86%E6%9E%90%E7%B1%BB%E5%9B%BE%EF%BC%88%E6%A6%82%E5%BF%B5%E7%B1%BB%E5%9B%BE%E3%80%81%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-text">建立分析类图（概念类图、领域模型）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%B3%BB%E7%BB%9F%E9%A1%BA%E5%BA%8F%E5%9B%BE"><span class="toc-text">建立系统顺序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E7%AB%8B%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="toc-text">建立状态图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3%E5%8C%96%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-text">第七章 需求文档化与验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BB%BA%E7%AB%8B%E9%9C%80%E6%B1%82%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%EF%BC%9F%E7%BB%93%E5%90%88%E5%AE%9E%E9%AA%8C%E8%BF%9B%E8%A1%8C%E8%AF%B4%E6%98%8E"><span class="toc-text">为什么建立需求规格说明？结合实验进行说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%BB%99%E5%AE%9A%E7%9A%84%E9%9C%80%E6%B1%82%E7%A4%BA%E4%BE%8B%EF%BC%8C%E5%88%A4%E6%96%AD%E5%B9%B6%E4%BF%AE%E6%AD%A3%E5%85%B6%E9%94%99%E8%AF%AF%EF%BC%88%E5%AF%B9%E7%BB%99%E5%AE%9A%E7%9A%84%E9%9C%80%E6%B1%82%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%E7%89%87%E6%AE%B5%EF%BC%8C%E6%89%BE%E5%87%BA%E5%B9%B6%E4%BF%AE%E6%AD%A3%E5%85%B6%E9%94%99%E8%AF%AF%EF%BC%89"><span class="toc-text">对给定的需求示例，判断并修正其错误（对给定的需求规格说明片段，找出并修正其错误）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%BB%99%E5%AE%9A%E7%9A%84%E9%9C%80%E6%B1%82%E5%AE%9E%E4%BE%8B%EF%BC%8C%E8%AE%BE%E8%AE%A1%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%EF%BC%8C%E7%BB%93%E5%90%88%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="toc-text">对给定的需求实例，设计功能测试用例，结合测试方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80"><span class="toc-text">第八章 软件设计基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%AE%9A%E4%B9%89"><span class="toc-text">软件设计定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-text">软件设计的核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%89%E4%B8%AA%E5%B1%82%E6%AC%A1%E5%8F%8A%E5%90%84%E5%B1%82%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3"><span class="toc-text">软件工程设计的三个层次及各层主要思想</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B9%9D%E3%80%81%E5%8D%81%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%84%E5%BB%BA"><span class="toc-text">第九、十章 软件体系结构设计与构建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">体系结构的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E9%A3%8E%E6%A0%BC%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">体系结构风格的优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="toc-text">体系结构设计的过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8C%85%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-text">包的原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%9E%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">体系结构构件之间接口的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%EF%BC%88Stub%E5%92%8CDriver%EF%BC%89"><span class="toc-text">体系结构开发集成测试用例（Stub和Driver）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0-%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1"><span class="toc-text">第十一章 人机交互设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%93%E7%94%A8%E6%80%A7%E6%A6%82%E5%BF%B5-Useability"><span class="toc-text">易用性概念(Useability)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E5%A4%9F%E5%88%97%E5%87%BA%E8%87%B3%E5%B0%915%E4%B8%AA%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%8C%E5%B9%B6%E5%8A%A0%E4%BB%A5%E8%A7%A3%E9%87%8A"><span class="toc-text">能够列出至少5个界面设计的注意事项，并加以解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B2%BE%E7%A5%9E%E6%A8%A1%E5%9E%8B%E3%80%81%E5%B7%AE%E5%BC%82%E6%80%A7"><span class="toc-text">精神模型、差异性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E8%88%AA%E3%80%81%E5%8F%8D%E9%A6%88%E3%80%81%E5%8D%8F%E4%BD%9C%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">导航、反馈、协作式设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%BF%B0"><span class="toc-text">第十二章 详细设计概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%87%BA%E5%8F%91%E7%82%B9"><span class="toc-text">详细设计的出发点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%8C%E8%B4%A3%E5%88%86%E9%85%8D"><span class="toc-text">职责分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E4%BD%9C"><span class="toc-text">协作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E9%A3%8E%E6%A0%BC"><span class="toc-text">控制风格</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99%E5%AE%9A%E5%88%86%E6%9E%90%E7%B1%BB%E5%9B%BE%E3%80%81%E7%B3%BB%E7%BB%9F%E9%A1%BA%E5%BA%8F%E5%9B%BE%E5%92%8C%E8%AE%BE%E8%AE%A1%E5%9B%A0%E7%B4%A0%E6%8F%8F%E8%BF%B0%EF%BC%8C%E5%BB%BA%E7%AB%8B%E8%AE%BE%E8%AE%A1%E7%B1%BB%E5%9B%BE%E6%88%96%E8%80%85%E8%AF%A6%E7%BB%86%E9%A1%BA%E5%BA%8F%E5%9B%BE"><span class="toc-text">给定分析类图、系统顺序图和设计因素描述，建立设计类图或者详细顺序图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E4%BD%9C%E7%9A%84%E6%B5%8B%E8%AF%95"><span class="toc-text">协作的测试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="toc-text">第十三章 详细设计中的模块化与信息隐藏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%A6%E5%90%88%E4%B8%8E%E5%86%85%E8%81%9A"><span class="toc-text">耦合与内聚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E4%BE%8B%E5%AD%90%E8%AF%B4%E6%98%8E%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E8%80%A6%E5%90%88%E7%A8%8B%E5%BA%A6%E4%B8%8E%E5%86%85%E8%81%9A%EF%BC%8C%E7%BB%99%E5%87%BA%E7%90%86%E7%94%B1"><span class="toc-text">对例子说明它们之间的耦合程度与内聚，给出理由</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="toc-text">信息隐藏</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="toc-text">第十四章 详细设计中面向对象方法下的模块化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%8E%9F%E5%88%99"><span class="toc-text">模块化的原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="toc-text">第十五章 详细设计中面向对象方法下的信息隐藏</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-text">信息隐藏的含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%81%E8%A3%85"><span class="toc-text">封装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#OCP"><span class="toc-text">OCP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DIP"><span class="toc-text">DIP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">第十六章 设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E3%80%81%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%E3%80%81%E7%81%B5%E6%B4%BB%E6%80%A7"><span class="toc-text">如何实现可修改性、可扩展性、灵活性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="toc-text">策略模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="toc-text">抽象工厂模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">单例模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="toc-text">迭代器模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%83%E3%80%81%E5%8D%81%E5%85%AB%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E4%B8%8E%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1"><span class="toc-text">第十七、十八章 软件构造与代码设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%8C%85%E5%90%AB%E7%9A%84%E6%B4%BB%E5%8A%A8"><span class="toc-text">构造包含的活动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E6%9E%84%E3%80%81%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E3%80%81%E7%BB%93%E5%AF%B9%E7%BC%96%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">重构、测试驱动开发、结对编程的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99%E5%AE%9A%E4%BB%A3%E7%A0%81%E6%AE%B5%E7%A4%BA%E4%BE%8B%EF%BC%8C%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E6%94%B9%E8%BF%9B%E6%88%96%E8%80%85%E5%8F%91%E7%8E%B0%E5%85%B6%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">给定代码段示例，对其进行改进或者发现其中的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-text">单元测试用例的设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%91%E7%BA%A6%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">契约式设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="toc-text">防御式编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8%E9%A9%B1%E5%8A%A8"><span class="toc-text">表驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%BA%A6%E9%87%8F"><span class="toc-text">代码复杂度度量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="toc-text">第十九章 软件测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%8C%E6%8F%A1%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E5%92%8C%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E7%9A%84%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95%EF%BC%8C%E5%B9%B6%E8%83%BD%E5%A4%9F%E8%BF%9B%E8%A1%8C%E4%BC%98%E7%BC%BA%E7%82%B9%E6%AF%94%E8%BE%83"><span class="toc-text">掌握白盒测试和黑盒测试的常见方法，并能够进行优缺点比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E4%B8%89%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">白盒测试三种不同的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E5%9C%BA%E6%99%AF%EF%BC%8C%E5%88%A4%E6%96%AD%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8%E5%93%AA%E7%A7%8D%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%EF%BC%8C%E5%A6%82%E4%BD%95%E5%8E%BB%E5%86%99"><span class="toc-text">给出一个场景，判断应该使用哪种测试方法，如何去写</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E3%80%81%E4%BA%8C%E5%8D%81%E4%B8%80%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E4%BA%A4%E4%BB%98%E3%80%81%E8%BD%AF%E4%BB%B6%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%BC%94%E5%8C%96"><span class="toc-text">第二十、二十一章 软件交付、软件维护与演化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%BD%AF%E4%BB%B6%E7%BB%B4%E6%8A%A4%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="toc-text">如何理解软件维护的重要性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%8F%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E8%BD%AF%E4%BB%B6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">开发可维护软件的方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%94%E5%8C%96%E5%BC%8F%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A8%A1%E5%9E%8B"><span class="toc-text">演化式生命周期模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%96%87%E6%A1%A3%E3%80%81%E7%B3%BB%E7%BB%9F%E6%96%87%E6%A1%A3"><span class="toc-text">用户文档、系统文档</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E3%80%81%E5%86%8D%E5%B7%A5%E7%A8%8B"><span class="toc-text">逆向工程、再工程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81%E4%BA%8C%E5%8D%81%E4%B8%89%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%81%8C%E4%B8%9A%E5%9F%BA%E7%A1%80"><span class="toc-text">第二十二、二十三章 软件开发过程模型与职业基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A8%A1%E5%9E%8B"><span class="toc-text">软件生命周期模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E4%B8%8E%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%88%E8%A6%81%E6%B1%82%E3%80%81%E7%89%B9%E5%BE%81%E6%8F%8F%E8%BF%B0%E3%80%81%E4%BC%98%E7%82%B9%E3%80%81%E7%BC%BA%E7%82%B9%EF%BC%89"><span class="toc-text">解释与比较不同过程模型（要求、特征描述、优点、缺点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E7%9A%84%E7%9F%A5%E8%AF%86%E5%9F%9F"><span class="toc-text">软件工程知识体系的知识域</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97%E2%85%A1 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F07%2F12%2F%25E8%25BD%25AF%25E4%25BB%25B6%25E5%25B7%25A5%25E7%25A8%258B%25E4%25B8%258E%25E8%25AE%25A1%25E7%25AE%2597%25E2%2585%25A1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/07/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97%E2%85%A1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

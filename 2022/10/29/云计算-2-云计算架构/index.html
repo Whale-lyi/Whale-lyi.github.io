@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      云计算(2) 云计算架构 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">云计算(2) 云计算架构</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                    <b>#</b> 云计算
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="二、云计算架构"><a href="#二、云计算架构" class="headerlink" title="二、云计算架构"></a>二、云计算架构</h1><h2 id="1-计算架构及演化"><a href="#1-计算架构及演化" class="headerlink" title="1 计算架构及演化"></a>1 计算架构及演化</h2><ul>
+<li><p>计算机软硬件经历了长时间的演变，计算范式也经过了多次变化：集中式、CS、BS、并行、分布式等</p>
+</li>
+<li><p>不同的计算范式对应不同的计算架构</p>
+<ul>
+<li><strong>中央集权架构</strong><ul>
+<li>计算机刚出现时候的首选：所有计算及计算资源、业务逻辑都集中于一台主机</li>
+</ul>
+</li>
+<li><strong>客户机&#x2F;服务器架构</strong><ul>
+<li>客户端：承载少量计算任务和所有IO任务</li>
+<li>服务器：承载主要计算任务</li>
+<li>优点：关注点分离，简化软件复杂度、编程模式</li>
+<li>缺点：持久链接，系统伸缩能力受限</li>
+</ul>
+</li>
+<li><strong>中间层架构</strong>—-简化和提升伸缩能力<ul>
+<li>将业务逻辑和数据服务分别放在两个服务器上</li>
+<li>客户机到中间件为无状态的非持久链接—-提升架构弹性</li>
+</ul>
+</li>
+<li><strong>浏览器&#x2F;服务器架构</strong><ul>
+<li>对客户机、中间层架构的扩展—-客户端和中间层均改动</li>
+<li>客户端：负载进一步缩减，仅显示和运行基于浏览器的脚本程序</li>
+<li>服务器：Web服务器层屏蔽各中间件的差异，提供通用的用户访问界面</li>
+<li>扩展性高：对客户机性能无要求</li>
+<li>对网络性能要求高</li>
+</ul>
+</li>
+<li><strong>C&#x2F;S和B&#x2F;S混合架构</strong><ul>
+<li>没有一种架构能够适用于所有场景</li>
+<li>有些服务需要持久的链接（内部用户）</li>
+<li>有些仅通过非持久链接即可（外部用户）</li>
+</ul>
+</li>
+<li><strong>面向服务的架构（SOA）</strong></li>
+</ul>
+</li>
+<li><p><strong>SOA</strong></p>
+<ul>
+<li><p>中间层计算架构、B&#x2F;S架构、混合计算架构都可为云计算提供一定的伸缩能力</p>
+<ul>
+<li>共性：基于无状态连接【http请求】和基于服务的访问【而非过程调用】</li>
+</ul>
+</li>
+<li><p>Service-oriented Architecture 面向服务的体系结构</p>
+<ul>
+<li><p>每个程序只做本职工作，将服务暴露出来供其他程序使用</p>
+</li>
+<li><p>多个程序通过一个统一的界面协调工作—-控制复杂性，更容易管理</p>
+</li>
+<li><p>区别于“分布式对象”</p>
+<blockquote>
+<p>Java：Java对象、RMI(Remote Method Invocation，远程方法调用)</p>
+<p>CORBA：CORBA分布式对象、IDL(Interface Definition Language，接口定义语言)</p>
+<p>通过RPC(Remote Procedure Call，远程过程调用)连接</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005103200089.png" alt="image-20221005103200089"></p>
+<ul>
+<li>将Service(服务)作为分布式对象<ul>
+<li>SOA是关于如何设计一套使用服务的软件系统</li>
+<li>使得服务间的互操作性变得可扩展和有效</li>
+<li>特点：松耦合，定义并发布接口，基于标准的通信模型</li>
+<li>实例：<code>REST</code>(Representational State Transfer)<code>Web Service</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005103638669.png" alt="image-20221005103638669"></p>
+<h2 id="2-一般云计算架构的二维视角"><a href="#2-一般云计算架构的二维视角" class="headerlink" title="2 一般云计算架构的二维视角"></a>2 一般云计算架构的二维视角</h2><ul>
+<li><p>从不同的角度看，云计算架构的复杂性有一定的差异</p>
+</li>
+<li><p>最易于理解的二维视角：基础设施 + 应用程序；两者分别视为：前端(呈现给用户的界面) + 后端(云组件)</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005104717547.png" alt="image-20221005104717547"></p>
+</li>
+<li><p>多实例同时执行；不同实例之间能够协调对数据的处理及任务的执行；方便数据在各个模块之间共享。</p>
+</li>
+<li><p>基础架构—-云内部，后端</p>
+<ul>
+<li>硬件：服务器、存储器、网络交换机等</li>
+<li>管理软件：服务的高可用性、可恢复性、数据一致性、应用伸缩性、可预测性、云安全等</li>
+</ul>
+</li>
+<li><p>应用程序—-云对外，前端</p>
+<ul>
+<li>并发性、协调性、容错性、开放的API格式、开放的数据格式、承载数据密集型计算</li>
+</ul>
+</li>
+</ul>
+<p>基础架构的进一步分层结构</p>
+<ul>
+<li>虚拟化层<ul>
+<li>将硬件转换为统一的IT资源【可灵活拆分、统一计量、统一管理、软件定义的】</li>
+<li>可以在不同的抽象层实现：应用层、操作系统层、体系结构层、硬件层等</li>
+</ul>
+</li>
+<li>Web服务层<ul>
+<li>将云资源提供给客户的一种最方便的方式，解决大部分客户无法直接使用虚拟机的问题</li>
+<li>支持面广、对客户端要求低，只需要浏览器就可以访问；所有提供的服务均可以通过API访问，该类API为”表征状态转移” Representational State Transfer, REST</li>
+</ul>
+</li>
+<li>服务总线层<ul>
+<li>即中间件层，封装计算服务、数据存储、消息传递</li>
+<li>分离用户与虚拟化层、连接用户与Web服务层</li>
+</ul>
+</li>
+<li>客户机用户界面<ul>
+<li>Web门户，将各种服务混搭集成在一个页面</li>
+<li>基于Ajax,JavaScript，趋势是使用功能完善的组件<ul>
+<li>如JavaBeans&#x2F;Applets, Silvedight&#x2F;.NET等</li>
+<li>可下载和安装在客户机上</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005105203774.png" alt="image-20221005105203774"></p>
+<p>云应用程序的结构—-云应用程序与传统操作系统上的应用程序结构有所不同</p>
+<ul>
+<li>传统操作系统上的应用程序：进程、线程、服务、shell（应用程序的控制接口）<ul>
+<li>进程就是最终产品，每一个进程可运行多个指令序列（线程），一个线程对应一种服务</li>
+</ul>
+</li>
+<li>云环境中的应用程序：应用程序本身、应用实例、服务、云命令行界面（控制端）<ul>
+<li>应用程序是云应用最终的样子，由多个同时运行的实例支撑</li>
+<li>不同的应用实例运行在不同的服务器上，每一个应用实例提供一种或多种服务</li>
+<li>服务之间是相互独立的（微服务架构）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005110228629.png" alt="image-20221005110228629"></p>
+<h2 id="3-云计算逻辑架构"><a href="#3-云计算逻辑架构" class="headerlink" title="3 云计算逻辑架构"></a>3 云计算逻辑架构</h2><ul>
+<li>云体、云平台、云栈、云计算、云环境、云系统…</li>
+<li>云体<ul>
+<li>是云计算的物质基础，是云计算使用的资源集合，是构成云计算的软硬件环境，例如网络、服务器、存储器、交换机等。广义的云体包括数据中心机器辅助设施如电力、空调、机架、冷却等系统。</li>
+<li>目前可以认为：云体 就是 数据中心</li>
+</ul>
+</li>
+<li>云栈<ul>
+<li>又称云平台，是在云上建造的运行环境。它能够支持应用程序的发布、运行、监控、调度、伸缩，并为应用程序提供辅助服务机制，如访问控制、权限管理等。</li>
+</ul>
+</li>
+<li>云计算<ul>
+<li>是利用云体和云平台所进行的计算或处理——云计算可以在云体上直接进行，也可以在云平台上进行。无论在哪个层面开展，只要符合“按量计费、资源可伸缩”就是云计算。</li>
+<li>云存储、云服务、在云上运行自己的软件或算法，都是云计算。</li>
+<li>云计算是人们利用云体和云平台所从事的活动。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-1-逻辑云栈"><a href="#3-1-逻辑云栈" class="headerlink" title="3.1 逻辑云栈"></a>3.1 逻辑云栈</h3><ul>
+<li><p>云栈—-提供的服务多种多样，规模巨大，需要简历规则才能便于管理，即层次架构</p>
+</li>
+<li><p>云计算也遵循分层规则，组织为多个层次，相互叠加</p>
+<ul>
+<li>每一层都提供一种抽象，最下为物理硬件层</li>
+<li>每往上一层，易用性就增加一分</li>
+<li>到底应该分几层没有明确的规定或准则</li>
+<li>不同的厂商有不同分法：三层、四层、五层</li>
+</ul>
+</li>
+<li><p><code>以纵向的方式来构建云计算的整体架构</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005111806870.png" alt="image-20221005111806870"></p>
+</li>
+<li><p>云栈的三层模式</p>
+<ul>
+<li><p>基础设施即服务层</p>
+<ul>
+<li>不仅包括硬件设施，还包括虚拟化，因为各种硬件规格、性能、质量不统一，无法在其上直接建造云平台。虚拟化可以将各种硬件变为统一的标准件。</li>
+</ul>
+</li>
+<li><p>平台即服务层</p>
+<ul>
+<li>在虚拟化的IT资源上构建起应用程序的运行环境，对外提供的产品包括计算环境、云存储库、通信机制、控制调度机制，统称为云计算平台或云解决方案栈。消费的是云基础设施服务，支持的是上层的云应用程序。</li>
+</ul>
+</li>
+<li><p>应用程序层-软件即服务层</p>
+<ul>
+<li>基于网络进行远程访问的商用软件</li>
+<li>集中式管理，而非分散在每个用户站点</li>
+<li>单个实例多个租户架构—-一对多模型</li>
+<li>按照用量计费（实际应用中按月或其他时间周期计费）</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005112550160.png" alt="image-20221005112550160"></p>
+</li>
+</ul>
+</li>
+<li><p>从管理角度看，与云栈分层架构对应的是云计算技术体系结构——如何实现三层服务</p>
+</li>
+<li><p>不同供应商提供了不同的解决方案，没有统一的技术体系结构</p>
+</li>
+<li><p>综合不同厂商，构造如下参考体系结构：<code>关键是如何实现和管理</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005112653197.png" alt="image-20221005112653197"></p>
+</li>
+</ul>
+<h3 id="3-2-技术体系结构–各层内涵"><a href="#3-2-技术体系结构–各层内涵" class="headerlink" title="3.2 技术体系结构–各层内涵"></a>3.2 技术体系结构–各层内涵</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113005932.png" alt="image-20221005113005932"></p>
+<h3 id="3-3-IaaS实现机制"><a href="#3-3-IaaS实现机制" class="headerlink" title="3.3 IaaS实现机制"></a>3.3 IaaS实现机制</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113246238.png" alt="image-20221005113246238"></p>
+<h3 id="3-4-物理云栈OpenStack"><a href="#3-4-物理云栈OpenStack" class="headerlink" title="3.4 物理云栈OpenStack"></a>3.4 物理云栈OpenStack</h3><ul>
+<li>OpenStack是一个管理云计算中计算、存储和网络，甚至是应用的通用平台，其提供Web界面、命令行工具和应用程序接口（API）等使用接口。</li>
+<li>官方描述<ul>
+<li>The Most Widely Deployed <code>Open Source Cloud Software</code> in the World</li>
+<li>OpenStack is a <code>cloud operating system</code> that controls large pools of compute, storage, and networking resources throughout a datacenter, all managed and provisioned through APIs with common authentication mechanisms.</li>
+</ul>
+</li>
+<li>平台管理员<ul>
+<li>位于各厂商特定资源之上的云计算资源管理层</li>
+</ul>
+</li>
+<li>开发者<ul>
+<li>通过其为应用提供基础设施和相应软件依赖</li>
+<li>云编排平台：基于应用模板部署可扩展应用</li>
+</ul>
+</li>
+<li>最终用户<ul>
+<li>每一个最终用户被定义为一个租户</li>
+<li>为租户提供自助服务的基础设施和应用管理系统</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113731447.png" alt="image-20221005113731447"></p>
+<ul>
+<li><p>本质上OpenStack通过抽象和一个通用的API接口控制不同厂商提供的硬件和软件资源，是对计算系统的更高层次的抽象。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113815800.png" alt="image-20221005113815800"></p>
+</li>
+</ul>
+<h3 id="3-5-逻辑云体"><a href="#3-5-逻辑云体" class="headerlink" title="3.5 逻辑云体"></a>3.5 逻辑云体</h3><ul>
+<li>云栈是从纵向角度看云计算的整体架构，那么云体则主要是从横向角度看其架构模式</li>
+<li>类比传统操作系统横向切面：运行时环境 + 应用本身（程序+数据）<ul>
+<li>环境：进程&#x2F;线程&#x2F;内存管理 + 文件系统 + 进程间通信&#x2F;网络</li>
+<li>云应用程序<ul>
+<li>类似传统应用</li>
+</ul>
+</li>
+<li>云运行时环境<ul>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005114052410.png" alt="image-20221005114052410"></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005114130957.png" alt="image-20221005114130957"></p>
+<h3 id="3-6-物理云体云数据中心"><a href="#3-6-物理云体云数据中心" class="headerlink" title="3.6 物理云体云数据中心"></a>3.6 物理云体云数据中心</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005114253518.png" alt="image-20221005114253518"></p>
+<ul>
+<li><p>传统数据中心暴露的问题</p>
+<ul>
+<li>过多的机器</li>
+<li>机器利用率过低</li>
+<li>应用迁移太困难</li>
+<li>存储需求增长太快</li>
+</ul>
+</li>
+<li><p>软件定义的数据中心</p>
+</li>
+<li><p>重新重视虚拟化，以提高资源利用率</p>
+<ul>
+<li>不仅应用到计算节点</li>
+<li>复制到存储、网络、安全等方方面面</li>
+<li>软件定义计算：计算节点的虚拟化：虚拟机成为计算调度和管理的单位，不中断服务的前提下动态迁移。</li>
+<li>软件定义存储：分离管理接口与数据读写；统一的管理接口与上层管理软件交互；数据读写可以兼容各种不同的链接方式。</li>
+<li>软件定义网络：数据平面（数据转发）和控制平面（转发表的设置等）分离；集中控制，分布式转发。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005114453737.png" alt="image-20221005114453737"></p>
+</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-1-%E4%BA%91%E8%AE%A1%E7%AE%97%E6%A6%82%E5%BF%B5/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                        <b>#</b> 云计算
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-3-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84"><span class="toc-text">二、云计算架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%BC%94%E5%8C%96"><span class="toc-text">1 计算架构及演化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%80%E8%88%AC%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%E7%9A%84%E4%BA%8C%E7%BB%B4%E8%A7%86%E8%A7%92"><span class="toc-text">2 一般云计算架构的二维视角</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%91%E8%AE%A1%E7%AE%97%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="toc-text">3 云计算逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%80%BB%E8%BE%91%E4%BA%91%E6%A0%88"><span class="toc-text">3.1 逻辑云栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E2%80%93%E5%90%84%E5%B1%82%E5%86%85%E6%B6%B5"><span class="toc-text">3.2 技术体系结构–各层内涵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-IaaS%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-text">3.3 IaaS实现机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E7%89%A9%E7%90%86%E4%BA%91%E6%A0%88OpenStack"><span class="toc-text">3.4 物理云栈OpenStack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E9%80%BB%E8%BE%91%E4%BA%91%E4%BD%93"><span class="toc-text">3.5 逻辑云体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E7%89%A9%E7%90%86%E4%BA%91%E4%BD%93%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="toc-text">3.6 物理云体云数据中心</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%91%E8%AE%A1%E7%AE%97(2)%20%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F29%2F%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597-2-%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597%25E6%259E%25B6%25E6%259E%2584%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-2-%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      云计算(5) OpenStack 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">云计算(5) OpenStack</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                    <b>#</b> 云计算
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="五、OpenStack"><a href="#五、OpenStack" class="headerlink" title="五、OpenStack"></a>五、OpenStack</h1><h2 id="1-OpenStack简介"><a href="#1-OpenStack简介" class="headerlink" title="1. OpenStack简介"></a>1. OpenStack简介</h2><h3 id="1-1-OpenStack是什么"><a href="#1-1-OpenStack是什么" class="headerlink" title="1.1 OpenStack是什么"></a>1.1 OpenStack是什么</h3><ul>
+<li><p>OpenStack引领新一代数据中心：为下一代数据中心操作系统赋能</p>
+<ul>
+<li><p>专注于快速、灵活和自动化地提供服务</p>
+</li>
+<li><p>可编程、可扩展、多租户感知的基础架构</p>
+</li>
+<li><p>单一、大型、灵活、可扩展和自动化的单元</p>
+</li>
+</ul>
+</li>
+<li><p>是开源云计算平台，可控制整个数据中心的大型计算、存储和网络资源池</p>
+</li>
+<li><p>管理员能够通过Web界面、命令行或API接口控制、配置资源；用户可以通过Web界面使用资源。</p>
+</li>
+<li><p>既是一个<code>开源</code>软件，也是一个开源社区，里面包含很多开源子项目</p>
+</li>
+<li><p>提供了一个部署云的操作平台和工具集</p>
+<ul>
+<li>用OpenStack易于构建虚拟计算或存储服务云，可为公有、私有云(无论大小)提供<code>可扩展、灵活</code>的云计算</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029003014897.png" alt="image-20221029003014897"></p>
+<h4 id="1-1-1-设计理念"><a href="#1-1-1-设计理念" class="headerlink" title="1.1.1 设计理念"></a>1.1.1 设计理念</h4><p><strong>开放(Open)</strong></p>
+<ul>
+<li>理念：不重复造轮子，站在巨人的肩膀上</li>
+<li>措施：开源，尽最大可能重用开源项目</li>
+</ul>
+<p><strong>灵活(Flexible)</strong></p>
+<ul>
+<li>大量使用插件化方式进行架构设计与实现</li>
+<li>不使用任何不可替代的私有&#x2F;商业组件</li>
+</ul>
+<p><strong>可扩展(Scalable)</strong></p>
+<ul>
+<li>由多个相互独立的项目组成</li>
+<li>每个项目包含多个独立组件</li>
+<li>无中心架构，无状态架构</li>
+</ul>
+<h4 id="1-1-2-类比OS"><a href="#1-1-2-类比OS" class="headerlink" title="1.1.2 类比OS"></a>1.1.2 类比OS</h4><ul>
+<li>操作系统是一组<strong>主管并控制</strong>计算机操作、运用和运行硬件、软件资源和<strong>提供公共服务</strong>来组织用户交互的相互关联的系统软件程序。</li>
+<li>云平台综合管理系统指构架于服务器、存储、网络等<strong>基础硬件资源</strong>和单机操作系统、中间件、数据库等<strong>基础软件</strong>之上，<strong>管理</strong>海量的基础硬件、软件资源并提供底层公共云服务的软件程序。</li>
+<li>“云操作系统”的三种不同指代<ul>
+<li>类虚拟化中为适配云计算需求而被修改的传统操作系统</li>
+<li>在每一台物理设备上或集群里管理虚拟机的监控器VMM</li>
+<li>云平台或数据中心操作系统</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029003754755.png" alt="image-20221029003754755"></p>
+<p><strong>全面网络化、更多的安全考虑、计算可扩充性考虑</strong></p>
+<h4 id="1-1-3-地位"><a href="#1-1-3-地位" class="headerlink" title="1.1.3 地位"></a>1.1.3 地位</h4><ul>
+<li>重要地位：赋能安全、灵活、易扩展的全面自动化数据中心</li>
+<li>但除了云操作系统，构建云计算还需要很多其他东西：底层驱动 + 上层应用程序   同等重要</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029003920753.png" alt="image-20221029003920753"></p>
+<h3 id="1-2-从概念模型到物理部署"><a href="#1-2-从概念模型到物理部署" class="headerlink" title="1.2 从概念模型到物理部署"></a>1.2 从概念模型到物理部署</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004414598.png" alt="image-20221029004414598"></p>
+<blockquote>
+<p>块存储：对外提供的是扇区的访问方式，将硬盘包装成卷对外服务，可以划分不同大小的卷。</p>
+<p>文件存储：基于文件系统对外提供服务，用户可以像使用本地文件系统一样使用云文件存储服务。</p>
+<p>对象存储：一种特殊的文件存储，只有一个层次，用hash方式存储二进制文件。</p>
+</blockquote>
+<h4 id="1-2-1-Map-of-OpenStack-Projects"><a href="#1-2-1-Map-of-OpenStack-Projects" class="headerlink" title="1.2.1 Map of OpenStack Projects"></a>1.2.1 Map of OpenStack Projects</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029234715257.png" alt="image-20221029234715257"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004532607.png" alt="image-20221029004532607"></p>
+<ul>
+<li><p>除了以上各功能性服务组件，还有两个非常核心的基础组件</p>
+<ul>
+<li><p>消息队列：中心化的消息交换器，用于在服务组件不同模块传递消息；队列的优势在于可以<strong>缓冲请求</strong></p>
+</li>
+<li><p>数据库：构建时和运行时状态信息，例如可以使用的实例类型、正在使用的实例、可用网络等，也是各个组件间<strong>共享信息</strong>的重要组件</p>
+</li>
+</ul>
+</li>
+<li><p>服务目录：所有服务向其注册，了解OpenStack的所有服务——Keystone承担注册中心角色</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004704248.png" alt="image-20221029004704248"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004720874.png" alt="image-20221029004720874"></p>
+<h4 id="1-2-2-网络设计"><a href="#1-2-2-网络设计" class="headerlink" title="1.2.2 网络设计"></a>1.2.2 网络设计</h4><p>单台计算机设备：CPU、内存、硬盘、总线？ &lt;&#x3D;&#x3D;&gt; 云数据中心</p>
+<p><strong>所有组件分布在四种节点上</strong>：<code>云控制器</code>、<code>网络节点</code>、<code>计算节点</code>、<code>存储节点</code>；<strong>网络连接</strong></p>
+<ul>
+<li>控制节点中封装了很多Openstack的服务</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004954383.png" alt="image-20221029004954383"></p>
+<ul>
+<li>四种节点如何通过物理网络连接在一起？<ul>
+<li>管理网络：Openstack服务之间的通信，包括消息队列、数据库和API</li>
+<li>存储网络：虚拟机和存储节点之间的物理连接</li>
+<li>租户数据网络：为租户创建的<strong>虚拟网络</strong>提供物理路径</li>
+<li>对外的网络：互联网连接+对外的API网络</li>
+</ul>
+</li>
+<li>使用隔离的<strong>物理网络</strong>处理不同类型的网络流量：同一个节点在不同网络中使用不同接口</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029005158947.png" alt="image-20221029005158947"></p>
+<h4 id="1-2-3-物理模型设计"><a href="#1-2-3-物理模型设计" class="headerlink" title="1.2.3 物理模型设计"></a>1.2.3 物理模型设计</h4><p>物理模型设计——估算硬件容量</p>
+<ul>
+<li>例如：在Openstack环境中运行200个虚拟机<ul>
+<li>CPU评估<ul>
+<li>逻辑CPU数：物理CPU * 核数 * 超线程数；一个逻辑CPU对应一个虚拟CPU；一个虚拟CPU支持多个虚拟机【影响性能；可以使用频数计算】；一个虚拟机可以使用多个虚拟CPU，但不能多于逻辑CPU数；</li>
+<li>可以超额分配，但是不能超额执行；超分：单台物理机中虚拟机个数＊频数 &gt; 物理频数</li>
+</ul>
+</li>
+<li>内存评估<ul>
+<li>单台物理机虚拟机个数 * 虚拟机最大动态分配内存 + 主机内存用量</li>
+</ul>
+</li>
+<li>网络评估<ul>
+<li>网卡带宽 &gt; 单个虚拟机带宽 * 虚拟机个数；公共IP地址个数；浮动IP地址个数</li>
+</ul>
+</li>
+<li>存储评估<ul>
+<li>虚拟机的临时存储 + 永久存储；存储节点的对象存储、块存储和文件共享存储</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>最佳实践<ul>
+<li>分析需求、考虑需求增长情况、持续跟踪每一个服务单元、丢弃和替换服务单元等</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-3-案例：虚拟机创建过程"><a href="#1-3-案例：虚拟机创建过程" class="headerlink" title="1.3 案例：虚拟机创建过程"></a>1.3 案例：虚拟机创建过程</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029005608265.png" alt="image-20221029005608265"></p>
+<h2 id="2-云控制器：Keystone、Nova及其他服务"><a href="#2-云控制器：Keystone、Nova及其他服务" class="headerlink" title="2 云控制器：Keystone、Nova及其他服务"></a>2 云控制器：Keystone、Nova及其他服务</h2><h3 id="2-1-总览"><a href="#2-1-总览" class="headerlink" title="2.1 总览"></a>2.1 总览</h3><p>基础架构服务</p>
+<ul>
+<li>不属于OpenStack对外提供的公共服务，但被多个OpenStack组件使用</li>
+<li>消息队列：必须是集群式的；RabbitMQ，ZeroMQ，Qpid</li>
+<li>数据库：OpenStack的环境数据，使用数据等；MySQL和MongoDB</li>
+</ul>
+<p>OpenStack服务</p>
+<ul>
+<li>身份认证</li>
+<li>编排引擎</li>
+<li>计量服务</li>
+<li>仪表盘</li>
+<li>……</li>
+</ul>
+<p>所有服务不一定要部署在同一台物理设备</p>
+<p>运行每一类服务的都可以是一个独立的集群</p>
+<p>各服务的Restful API</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029135425428.png" alt="image-20221029135425428" style="zoom: 67%;" />
+
+<h3 id="2-2-物理部署"><a href="#2-2-物理部署" class="headerlink" title="2.2 物理部署"></a>2.2 物理部署</h3><ul>
+<li>Openstack采用 无中心结构、节点无本地状态</li>
+<li>控制器(除基础架构服务)使用对称高性能集群<ul>
+<li>请求聚合+负载均衡</li>
+<li>每一台物理设备运行相同的服务</li>
+</ul>
+</li>
+<li>控制器节点很容易水平扩展</li>
+<li>数据库、消息队列可采用非对称高可用集群</li>
+</ul>
+<blockquote>
+<p><strong>集群</strong>：两台或多台服务器的能力聚合就是服务器集群</p>
+<p><strong>非对称集群</strong>：通常用于高可用目的，比如扩展数据库、消息系统或者文件系统的读写能力。备用服务器只有在主服务器发生故障的时候才会接管系统。备用服务器可以看作悄悄执行的观察者，集群需要配置故障切换机制。</p>
+<p><strong>对称集群</strong>：所有节点都是活的，都参与请求的处理，当节点出现故障后，被集群丢弃，其他节点接管其工作负载并继续处理事务。典型的就是负载均衡集群，所有节点共享工作负载，增强性能和服务的扩展性</p>
+</blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029135846449.png" alt="image-20221029135846449"></p>
+<h3 id="2-3-Keystone服务"><a href="#2-3-Keystone服务" class="headerlink" title="2.3 Keystone服务"></a>2.3 Keystone服务</h3><p>身份认证和服务目录（所有其他服务需向Keystone注册API端点），由多个Provider组成</p>
+<ul>
+<li>身份提供者Identity Provider：服务用户、管理员用户、终端用户</li>
+<li>资源提供者resource Provider：project、domain</li>
+<li>认证提供者Authorization Provider：用户和用户组和他们角色之间的关系</li>
+<li>令牌提供者Token Provider：访问openstack服务需要一个有效的令牌，通过身份提供者的认证后获得令牌</li>
+<li>目录提供者Catalog Provider：维护服务和API端点的目录</li>
+<li>策略提供者Policy Provider：策略由多条规则组成，每条规则定义了哪些用户和角色被允许访问哪些资源</li>
+</ul>
+<p>高级特性</p>
+<ol>
+<li>联邦keystone：使用外部身份提供者提供的身份服务访问服务提供商可用资源的机制</li>
+<li>Fernet令牌：解决原生令牌提供者带来的性能问题</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029140245358.png" alt="image-20221029140245358"></p>
+<h3 id="2-4-Nova管理组件及API"><a href="#2-4-Nova管理组件及API" class="headerlink" title="2.4 Nova管理组件及API"></a>2.4 Nova管理组件及API</h3><p>Nova是Openstack中提供计算资源服务的项目，是OpenStack最核心的项目</p>
+<ul>
+<li>负责：虚拟机和其他计算资源的生命周期管理</li>
+<li>不负责：承载虚拟机的物理机自身的管理和全面的系统状态监控</li>
+</ul>
+<p>运行在云控制器上的组件</p>
+<ul>
+<li>Nova-api<ul>
+<li>云控制器中的编排引擎；通过API将消息写入数据库和消息队列向其他守护进程传递消息</li>
+</ul>
+</li>
+<li>Nova-conductor<ul>
+<li>代表计算节点上nova-compute执行数据库操作，提供数据库访问隔离；将来自计算节点请求并行化</li>
+</ul>
+</li>
+<li>Nova-scheduler<ul>
+<li>专门的调度算法；确定虚拟机创建的最佳放置位置；支持过滤器检查计算节点上资源可用性，通过加权机制过滤出计算节点列表，再确定启动虚拟机的最佳位置；支持自定义度量标准和策略考量配置</li>
+<li>在生产环境下，配置单独的存储主机，其调度器运行在存储主机上</li>
+</ul>
+</li>
+</ul>
+<p>Nova-compute则运行在计算节点上</p>
+<h3 id="2-5-其他服务"><a href="#2-5-其他服务" class="headerlink" title="2.5 其他服务"></a>2.5 其他服务</h3><p>云控制器托管用于镜像管理的Glance服务</p>
+<ul>
+<li>Glance API提供外部REST接口，用于查询虚拟机镜像及相关元数据</li>
+<li>Glance registry将镜像元数据存储在数据库中，并利用存储后端实际存储镜像<ul>
+<li>例如使用Swift对象存储作为镜像存储后端</li>
+</ul>
+</li>
+</ul>
+<p>网络服务采用类似Nova的部署概念</p>
+<ul>
+<li>网络API驻留在云控制器中，独立配置网络服务器节点</li>
+</ul>
+<p>仪表盘服务</p>
+<ul>
+<li>运行在Apache Web服务器后端，可以将其运行在可以访问API端点的单独节点上，降低云控制器负载</li>
+</ul>
+<p>计量服务</p>
+<ul>
+<li>跟踪资源使用情况，计算资源利用率</li>
+<li>多种使用目的：计费、容量规划、按需求和吞吐量的虚拟基础架构自动扩展等</li>
+</ul>
+<h2 id="3-计算节点：Nova、Magnum"><a href="#3-计算节点：Nova、Magnum" class="headerlink" title="3 计算节点：Nova、Magnum"></a>3 计算节点：Nova、Magnum</h2><h3 id="3-1-Nova-compute总览"><a href="#3-1-Nova-compute总览" class="headerlink" title="3.1 Nova-compute总览"></a>3.1 Nova-compute总览</h3><p>计算节点运行nova-compute服务，负责启动和终止虚拟机，通过消息总线监听虚拟机相关请求</p>
+<p>Scheduler 通过 MQ 通知 Compute 创建虚拟机，Compute 通过 MQ 请求 Conductor 从 DB 处获取虚拟机相关信息</p>
+<p><strong>Compute</strong>: Manages communication with hypervisor and virtual machines</p>
+<p>Hypervisor是Nova计算节点的核心，又称VMM</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141309092.png" alt="image-20221029141309092"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141320164.png" alt="image-20221029141320164"></p>
+<h3 id="3-2-核心：Hypervisor"><a href="#3-2-核心：Hypervisor" class="headerlink" title="3.2 核心：Hypervisor"></a>3.2 核心：Hypervisor</h3><p>Nova-compute通过API server控制节点上的Hypervisor</p>
+<p>支持多种Hypervisor，通过配置文件设置选择哪一个Hypervisor</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141458969.png" alt="image-20221029141458969"></p>
+<h3 id="3-3-Nova相关概念"><a href="#3-3-Nova相关概念" class="headerlink" title="3.3 Nova相关概念"></a>3.3 Nova相关概念</h3><p>Nova中对主机有一个层次划分—-高于一台物理主机</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141826800.png" alt="image-20221029141826800"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141917707.png" alt="image-20221029141917707"></p>
+<h3 id="3-4-Nova操作"><a href="#3-4-Nova操作" class="headerlink" title="3.4 Nova操作"></a>3.4 Nova操作</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141938319.png" alt="image-20221029141938319"></p>
+<h3 id="3-5-Nova单元"><a href="#3-5-Nova单元" class="headerlink" title="3.5 Nova单元"></a>3.5 Nova单元</h3><p>所有计算节点都要与消息总线和数据库服务器通信，随着计算节点增多，使得消息队列和数据库过载</p>
+<p>同时考虑到安全、易扩展和效率问题，按照Nova单元管理计算节点，增强计算节点的隔离性和分散性</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029142048816.png" alt="image-20221029142048816"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029142117676.png" alt="image-20221029142117676"></p>
+<h3 id="3-6-Magnum"><a href="#3-6-Magnum" class="headerlink" title="3.6 Magnum"></a>3.6 Magnum</h3><p>现实需求：在计算节点编排容器</p>
+<ul>
+<li>解决方案1：在Nova中添加可以管理容器生命周期的Hypervisor</li>
+<li>问题：和虚拟机不同，在容器中托管应用程序往往要部署多个容器，每个容器只运行一个进程，这些容器化的进程相互协作提供完整的应用程序功能。容器需要被成组地创建，需要配置网络连接用于协作进程之间的通信，还需要存储——独立为专门提供容器集群服务的项目：<strong>Magnum</strong></li>
+<li>项目目的：提供容器编排引擎(COE)以方便部署和管理容器集群</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029142247333.png" alt="image-20221029142247333"></p>
+<h2 id="4-存储节点：Swift、Cinder"><a href="#4-存储节点：Swift、Cinder" class="headerlink" title="4 存储节点：Swift、Cinder"></a>4 存储节点：Swift、Cinder</h2><h3 id="4-1-对象存储Swift"><a href="#4-1-对象存储Swift" class="headerlink" title="4.1 对象存储Swift"></a>4.1 对象存储Swift</h3><p>数据与其副本作为二进制大对象存储在对象存储服务器上</p>
+<p>对象存储没有文件存储的层次结构，对象存储在扁平的命名空间—-<code>一种特殊的文件系统</code></p>
+<p>使用REST或SOAP等API访问对象存储，而不是文件协议</p>
+<p>不适用于高性能要求以及经常更改的结构话化数据，例如数据库</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029143040123.png" alt="image-20221029143040123"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029143305120.png" alt="image-20221029143305120"></p>
+<h3 id="4-2-块存储Cinder"><a href="#4-2-块存储Cinder" class="headerlink" title="4.2 块存储Cinder"></a>4.2 块存储Cinder</h3><p>为云平台提供统一接口，按需分配的，持久化的块存储服务</p>
+<p>核心功能是对卷的管理，允许对卷、卷的类型、卷的快照、卷备份进行操作</p>
+<p>为后端不同的存储设备提供了统一的接口，不同的块设备服务厂商在 Cinder 中实现其驱动支持以与OpenStack进行整合</p>
+<p><strong><code>块存储作为虚拟机硬盘使用时，必须先分区、创建文件系统，再挂载到虚拟机文件系统层次结构中</code></strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029143430300.png" alt="image-20221029143430300"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029143442914.png" alt="image-20221029143442914"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029143500878.png" alt="image-20221029143500878"></p>
+<h2 id="5-网络节点：Neutron"><a href="#5-网络节点：Neutron" class="headerlink" title="5 网络节点：Neutron"></a>5 网络节点：Neutron</h2><h3 id="5-1-网络连接"><a href="#5-1-网络连接" class="headerlink" title="5.1 网络连接"></a>5.1 网络连接</h3><p>路由器：连接多个独立的网络</p>
+<p>虚拟路由器：连接多个虚拟的网络；负责转发所有人请求</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029152425537.png" alt="image-20221029152425537"></p>
+<p>解决方案：</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029152522515.png" alt="image-20221029152522515"></p>
+<p>浮动IP：每一台虚拟机都动态分配一个对外的IP地址；外部通过IP访问到虚拟机，虚拟机通过该IP访问外部网络。</p>
+<p>SNAT：虚拟机共享对外的IP地址，实现访问外部网络，但是外部无法通过IP地址定位到具体虚拟机。</p>
+<p>DNAT：在共享的IP地址基础上添加映射到虚拟机的端口号。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029152659036.png" alt="image-20221029152659036"></p>
+<h3 id="5-2-Neutron组件"><a href="#5-2-Neutron组件" class="headerlink" title="5.2 Neutron组件"></a>5.2 Neutron组件</h3><p>API服务器：运行在云控制器上</p>
+<ul>
+<li>基于插件的架构</li>
+<li>API服务将请求转发到特定插件，插件通过代理和设备交互或者控制资源</li>
+<li>提供了基于开源技术的插件和代理参考实现</li>
+<li>网络节点提供资源实现网络服务：路由、防火墙、负载均衡器和VPN</li>
+</ul>
+<p>核心插件：创建和管理网络、端口和子网</p>
+<p>服务插件：实现高阶网络服务、路由、防火墙等</p>
+<p>代理：计算和网络节点上，通过消息总线上的RPC和服务器交互</p>
+<ul>
+<li>L2代理：在计算和网络节点上，将虚拟机和网络设备连接到二层网络上</li>
+<li>DHCP代理、L3代理和VPN代理</li>
+</ul>
+<p>网络节点L3代理：配置虚拟路由器</p>
+<ul>
+<li>虚拟网络之间转发</li>
+<li>外部网络和虚拟网络之间转发</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160422687.png" alt="image-20221029160422687"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160445194.png" alt="image-20221029160445194"></p>
+<h3 id="5-3-细节"><a href="#5-3-细节" class="headerlink" title="5.3 细节"></a>5.3 细节</h3><p>网络节点细节</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160514440.png"></p>
+<p>计算节点上的网络配置细节</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160548839.png" alt="image-20221029160548839"></p>
+<h3 id="5-4-Distributed-Virtual-Routing-DVR"><a href="#5-4-Distributed-Virtual-Routing-DVR" class="headerlink" title="5.4 Distributed Virtual Routing (DVR)"></a>5.4 Distributed Virtual Routing (DVR)</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160641521.png" alt="image-20221029160641521"></p>
+<p>为了降低网络节点的负载，同时提高可扩展性，OpenStack在Juno版本引入了DVR特性，DVR部署在计算节点上</p>
+<p>计算节点上的VM使用floatingIP访问Internet，不必经过网络节点，直接从计算节点的DVR就可以访问</p>
+<h2 id="6-部署"><a href="#6-部署" class="headerlink" title="6 部署"></a>6 部署</h2><h3 id="6-1-DevOps"><a href="#6-1-DevOps" class="headerlink" title="6.1 DevOps"></a>6.1 DevOps</h3><p>矛盾：</p>
+<ul>
+<li>对于运维来说，稳定压倒一切，新 Feature 越少越好。而对于研发来说，却希望能开发更多的功能。</li>
+</ul>
+<p>DevOps 的理念：</p>
+<ul>
+<li>让研发（Development）和运维（Operations）一体化，让团队从业务需求出发，向着同一个目标前进。</li>
+</ul>
+<p>DevOps 是一种软件研发管理的思想，方法论，追求的是一种没有隔阂的理想的研发协作的状态，可能涉及到的角色有开发、测试、产品、项目管理、运维等等。</p>
+<p>DevOps（Development和Operations的组合）是一组过程、方法与系统的统称，用于促进开发（应用程序&#x2F;软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029161012546.png" alt="image-20221029161012546"></p>
+<h3 id="6-2-DevOps和Openstack"><a href="#6-2-DevOps和Openstack" class="headerlink" title="6.2 DevOps和Openstack"></a>6.2 DevOps和Openstack</h3><p>要求开发人员、网络工程师和运维人员必须相互协作，来部署、运维和维护OpenStack云基础架构</p>
+<p>OpenStack和DevOps结合</p>
+<ul>
+<li><p>要求</p>
+<ul>
+<li>OpenStack软件和部署云基础架构的持续增长的复杂性必须被简化</li>
+</ul>
+</li>
+<li><p>方式</p>
+<ul>
+<li><p>基础架构中的所有内容都必须自动化</p>
+</li>
+<li><p>将OpenStack分解为多个部分</p>
+</li>
+</ul>
+</li>
+<li><p>要点</p>
+<ul>
+<li><p>简化和模块化OpenStack服务；像开发构建模块一样开发OpenStack服务</p>
+</li>
+<li><p>在不影响整个系统的情况下，促进服务的定制和改进</p>
+</li>
+<li><p>使用正确的工具来构建服务，确保服务在相同输入情况下输出相同结果</p>
+</li>
+<li><p>将服务愿景从如何做切换到要做什么</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029161152125.png" alt="image-20221029161152125"></p>
+<h3 id="6-3-Ansible"><a href="#6-3-Ansible" class="headerlink" title="6.3 Ansible"></a>6.3 Ansible</h3><p>基础架构自动化引擎：安装Ansible自身部署系统和管理的目标系统</p>
+<p>模块</p>
+<ul>
+<li>封装系统资源或操作的组件，对资源及其属性进行建模；通过执行模块改变目标系统状态；执行后清除</li>
+</ul>
+<p>变量</p>
+<ul>
+<li>代表更新中的动态部分，可用于修改模块行为；可以用户自定义，作为模块一部分</li>
+</ul>
+<p>清单</p>
+<ul>
+<li>由Ansible管理的主机列表；支持将主机分类到多个组中；同一个主机可以出现在多个分段中</li>
+</ul>
+<p>角色</p>
+<ul>
+<li>表示在一组主机上配置服务时必须执行的任务集合；封装了在主机上部署服务所需的任务、变量、处理程序和其他相关功能；在Web服务器集群中为主机分配角色：Web服务器，数据库服务器，负载平衡器等</li>
+</ul>
+<p>Playbook</p>
+<ul>
+<li><p>Ansible的主要配置文件；描述了完整的系统部署计划，由一系列任务组成；用YAML编写</p>
+</li>
+<li><p>Yet Another Markup Language</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029161408318.png" alt="image-20221029161408318"></p>
+<h3 id="6-4-OpenStack-Ansible"><a href="#6-4-OpenStack-Ansible" class="headerlink" title="6.4 OpenStack Ansible"></a>6.4 OpenStack Ansible</h3><p>自动化部署OpenStack</p>
+<p>聚焦于提供多个角色和playbook，用于部署可扩展的、可理解投入生产的OpenStack环境</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029161427527.png" alt="image-20221029161427527"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-4-%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                        <b>#</b> 云计算
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81OpenStack"><span class="toc-text">五、OpenStack</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-OpenStack%E7%AE%80%E4%BB%8B"><span class="toc-text">1. OpenStack简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-OpenStack%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">1.1 OpenStack是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E8%AE%BE%E8%AE%A1%E7%90%86%E5%BF%B5"><span class="toc-text">1.1.1 设计理念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E7%B1%BB%E6%AF%94OS"><span class="toc-text">1.1.2 类比OS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-%E5%9C%B0%E4%BD%8D"><span class="toc-text">1.1.3 地位</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%8E%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B%E5%88%B0%E7%89%A9%E7%90%86%E9%83%A8%E7%BD%B2"><span class="toc-text">1.2 从概念模型到物理部署</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-Map-of-OpenStack-Projects"><span class="toc-text">1.2.1 Map of OpenStack Projects</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E7%BD%91%E7%BB%9C%E8%AE%BE%E8%AE%A1"><span class="toc-text">1.2.2 网络设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-3-%E7%89%A9%E7%90%86%E6%A8%A1%E5%9E%8B%E8%AE%BE%E8%AE%A1"><span class="toc-text">1.2.3 物理模型设计</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%A1%88%E4%BE%8B%EF%BC%9A%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%88%9B%E5%BB%BA%E8%BF%87%E7%A8%8B"><span class="toc-text">1.3 案例：虚拟机创建过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BA%91%E6%8E%A7%E5%88%B6%E5%99%A8%EF%BC%9AKeystone%E3%80%81Nova%E5%8F%8A%E5%85%B6%E4%BB%96%E6%9C%8D%E5%8A%A1"><span class="toc-text">2 云控制器：Keystone、Nova及其他服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%80%BB%E8%A7%88"><span class="toc-text">2.1 总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%89%A9%E7%90%86%E9%83%A8%E7%BD%B2"><span class="toc-text">2.2 物理部署</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Keystone%E6%9C%8D%E5%8A%A1"><span class="toc-text">2.3 Keystone服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Nova%E7%AE%A1%E7%90%86%E7%BB%84%E4%BB%B6%E5%8F%8AAPI"><span class="toc-text">2.4 Nova管理组件及API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%85%B6%E4%BB%96%E6%9C%8D%E5%8A%A1"><span class="toc-text">2.5 其他服务</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%A1%E7%AE%97%E8%8A%82%E7%82%B9%EF%BC%9ANova%E3%80%81Magnum"><span class="toc-text">3 计算节点：Nova、Magnum</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Nova-compute%E6%80%BB%E8%A7%88"><span class="toc-text">3.1 Nova-compute总览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%A0%B8%E5%BF%83%EF%BC%9AHypervisor"><span class="toc-text">3.2 核心：Hypervisor</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Nova%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="toc-text">3.3 Nova相关概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Nova%E6%93%8D%E4%BD%9C"><span class="toc-text">3.4 Nova操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-Nova%E5%8D%95%E5%85%83"><span class="toc-text">3.5 Nova单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-Magnum"><span class="toc-text">3.6 Magnum</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%AD%98%E5%82%A8%E8%8A%82%E7%82%B9%EF%BC%9ASwift%E3%80%81Cinder"><span class="toc-text">4 存储节点：Swift、Cinder</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8Swift"><span class="toc-text">4.1 对象存储Swift</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%9D%97%E5%AD%98%E5%82%A8Cinder"><span class="toc-text">4.2 块存储Cinder</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E7%BD%91%E7%BB%9C%E8%8A%82%E7%82%B9%EF%BC%9ANeutron"><span class="toc-text">5 网络节点：Neutron</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%BD%91%E7%BB%9C%E8%BF%9E%E6%8E%A5"><span class="toc-text">5.1 网络连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-Neutron%E7%BB%84%E4%BB%B6"><span class="toc-text">5.2 Neutron组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%BB%86%E8%8A%82"><span class="toc-text">5.3 细节</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-Distributed-Virtual-Routing-DVR"><span class="toc-text">5.4 Distributed Virtual Routing (DVR)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%83%A8%E7%BD%B2"><span class="toc-text">6 部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-DevOps"><span class="toc-text">6.1 DevOps</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-DevOps%E5%92%8COpenstack"><span class="toc-text">6.2 DevOps和Openstack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-Ansible"><span class="toc-text">6.3 Ansible</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-OpenStack-Ansible"><span class="toc-text">6.4 OpenStack Ansible</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%91%E8%AE%A1%E7%AE%97(5)%20OpenStack + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F29%2F%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597-5-OpenStack%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-5-OpenStack/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

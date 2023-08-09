@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      软件系统设计-架构(6) 评估架构 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">软件系统设计-架构(6) 评估架构</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                    <b>#</b> 软件系统设计
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-架构流程-Architecture-Process"><a href="#1-架构流程-Architecture-Process" class="headerlink" title="1. 架构流程 Architecture Process"></a>1. 架构流程 Architecture Process</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612192726697.png" alt="image-20230612192726697"></p>
+<h3 id="1-1-为什么要评估架构-Why-to-evaluate-architecture"><a href="#1-1-为什么要评估架构-Why-to-evaluate-architecture" class="headerlink" title="1.1 为什么要评估架构 Why to evaluate architecture?"></a>1.1 为什么要评估架构 Why to evaluate architecture?</h3><ol>
+<li>大型项目经常延迟交付和超出预算 Large projects often delivered late and over-budget<ol>
+<li>由于设计失败而无法及时交付 Don’t function as promised due to design failures</li>
+<li>商业组件不能按照预期运行 COTS components don’t work as expected</li>
+</ol>
+</li>
+<li>项目后期需要大量的返工 Considerable rework often required late in project<ol>
+<li>团队成员没有讨论这个问题 Team members not communicated the issues?</li>
+<li>团队成员中缺少可以尽早发现问题的专家 Team members lacking expertise to detect problems early?</li>
+<li>有代价 Costly</li>
+</ol>
+</li>
+<li>架构评估有助于缓解这些问题 Architecture evaluations help alleviate these problems<ol>
+<li>彻底评估商业组件的稳定性 Thoroughly assess COTS component suitability</li>
+<li>在问题变的需要一定代价去修复前识别发现问题 Identify problems before they become costly to fix</li>
+<li>通知管理层，以方便他们做出更好的决策 Inform management so they can make better decisions</li>
+</ol>
+</li>
+<li>在问题修复代价还比较低时尽早定位问题 Locate problems early when they are cheap to fix<ol>
+<li>设计缺陷 Design faults</li>
+<li>没有考虑到的商业组件行为 Unexpected COTS components behavior</li>
+<li>商业组件对整体系统架构不匹配 Mismatch of COTS components to overall architecture</li>
+</ol>
+</li>
+<li>传播架构&#x2F;设计最佳实践 Disseminate architecture&#x2F;design best practices<ol>
+<li>评估者是可以发现最佳实践的专家 Reviewers are experts, can capture best practices</li>
+<li>评估者拥有不同项目的广阔视野 Reviewers have broad perspective across many projects</li>
+</ol>
+</li>
+<li>提供更好的技术和项目信息给管理层 Provide management with better technical and project information</li>
+<li>确定通过培训可以对常见问题领域产生广泛影响的领域 Identify areas where training could provide broad impact on commonly recurring problem areas</li>
+<li>改善与商业组件供应商的互动 Improve interactions with COTS component suppliers</li>
+</ol>
+<h3 id="1-2-什么时候需要评估架构呢？When-to-evaluate-an-architecture"><a href="#1-2-什么时候需要评估架构呢？When-to-evaluate-an-architecture" class="headerlink" title="1.2 什么时候需要评估架构呢？When to evaluate an architecture?"></a>1.2 什么时候需要评估架构呢？When to evaluate an architecture?</h3><ol>
+<li>期望获得 Acquisition<ol>
+<li>选择不合适的商业组件时的最小风险 Minimize risks of choosing inappropriate COTS components</li>
+<li>涉及收购方和供应商(有明显的警告) Involve acquirers and vendors (with obvious caveats:-})</li>
+</ol>
+</li>
+<li>演化&#x2F;升级 Evolution&#x2F;Upgrade<ol>
+<li>评估变化的影响 Assess impact of changes</li>
+</ol>
+</li>
+<li>设计 Design<ol>
+<li>新架构适合需求的早期”验证” Early ‘validation’ that the new architecture is suitable for requirements</li>
+</ol>
+</li>
+<li>构建 Build<ol>
+<li>实际架构是否按预期构建 Is actual architecture built as intended</li>
+<li>它是否被很好的构建 Is it built ‘well?</li>
+</ol>
+</li>
+<li>总是尽早地进行评估 Always evaluate early!!!</li>
+</ol>
+<h3 id="1-3-为什么要尽早评估架构-Why-evaluate-architecture-early"><a href="#1-3-为什么要尽早评估架构-Why-evaluate-architecture-early" class="headerlink" title="1.3 为什么要尽早评估架构 Why evaluate architecture early?"></a>1.3 为什么要尽早评估架构 Why evaluate architecture early?</h3><ol>
+<li>架构评估需要尽早完成因为 Architecture evaluation should be done early because:<ol>
+<li>还有时间来修复 there is time for correction</li>
+<li>修复错误的决定的成本相对比较小 correcting wrong decision is relatively inexpensive</li>
+<li>它是最有效的质量保证和风险缓解技术之一 it is one of the most effective quality assurance and risk mitigation techniques</li>
+<li>这被认为是一种良好的商业惯例 it is considered a good commercial practice</li>
+</ol>
+</li>
+<li>早期质量评估具有成本效益（AT&amp;T：生产力提高 10%&#x2F;1991 年项目）- 最近，通过及早发现和解决问题，在 100,000 行(不含注释)的系统上节省了 100 万美元 Early quality evaluation is cost effective (AT&amp;T: 10% productivity increase&#x2F;project 1991) - Lately, $1 million savings on systems of 100,000 non-commentary LOC by detecting and resolving problems early</li>
+<li>存在相互竞争的要求；必须根据业务目标及早做出决定 There are competing requirements; decisions must be made early according to business goals</li>
+<li>架构设计决策的基本原理应该被捕获和推理 Rationale for architecture design decisions should be captured and reasoned about</li>
+</ol>
+<h3 id="1-4-如何评估软件架构-How-to-evaluate-software-architecture"><a href="#1-4-如何评估软件架构-How-to-evaluate-software-architecture" class="headerlink" title="1.4 如何评估软件架构 How to evaluate software architecture?"></a>1.4 如何评估软件架构 How to evaluate software architecture?</h3><ol>
+<li>评估架构的系统方法需要一种有助于提出正确问题的方法 A systematic approach to evaluate architecture needs a method that helps ask right questions<ol>
+<li>来发现风险 to discover risks</li>
+<li>来识别错误的架构决定 to identify wrong architectural choices</li>
+<li>确保质量问题得到解决 to ensure quality issues have been addressed</li>
+</ol>
+</li>
+<li>这里有很多用来评估软件架构的方法 There are a number of methods to evaluate software architecture:<ol>
+<li>Software Architecture Analysis Method (SAAM)</li>
+<li>Architecture Level Modifiability Analysis (ALMA)</li>
+<li>Performance Assessment of Software Architecture (PASA)</li>
+<li>Architecture Trade-off Analysis Method (ATAM)</li>
+</ol>
+</li>
+<li>所有这些方法都是基于场景的方法，因为质量属性是使用场景定义的 All these methods are scenario-based approaches as quality attributes are defined using scenarios</li>
+<li>场景被映射到架构组件上，以评估架构能力，以满足所需的质量属性 Scenarios are mapped on architectural components to evaluate architectural capability to fulfill desired quality attributes</li>
+</ol>
+<h3 id="1-5-一个方法为什么会有用？How-can-a-method-be-helpful"><a href="#1-5-一个方法为什么会有用？How-can-a-method-be-helpful" class="headerlink" title="1.5 一个方法为什么会有用？How can a method be helpful!?"></a>1.5 一个方法为什么会有用？How can a method be helpful!?</h3><ol>
+<li>它可以帮助涉众尽早问正确的问题来：It helps stakeholders ask right questions early to:<ol>
+<li>识别风险：可能对所需质量属性产生负面影响的架构决策<br>Identify risks: Architectural decisions that may negatively affect desired quality attributes</li>
+<li>发现敏感点：特定质量属性对其敏感的架构决策<br>Find sensitivity points: Architecture decisions to which a particular quality attribute is sensitive to</li>
+<li>发现<strong>权衡</strong>：影响多个质量属性的架构决策<br>Discover tradeoffs: Architecture decision that affect more than one quality attribute</li>
+</ol>
+</li>
+<li>发现趋势：架构决策与系统属性预测之间的相关性 Find trends: correlation between architectural decisions and predictions of system properties</li>
+<li>可以通过进一步分析、设计或原型制作来减轻风险 Efforts can be directed to mitigate the found risks by further analysis, design or prototyping</li>
+<li>所做的权衡和支持它们的理由可以适当地记录下来以备将来参考 Tradeoffs made and rationale underpinning them can appropriately be documented for future reference</li>
+</ol>
+<h3 id="1-6-评价分析方法-Analysis-Methods-for-Evaluation"><a href="#1-6-评价分析方法-Analysis-Methods-for-Evaluation" class="headerlink" title="1.6 评价分析方法 Analysis Methods for Evaluation"></a>1.6 评价分析方法 Analysis Methods for Evaluation</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612193355339.png" alt="image-20230612193355339"></p>
+<h3 id="1-7-评估格式-Evaluate-Forms"><a href="#1-7-评估格式-Evaluate-Forms" class="headerlink" title="1.7 评估格式 Evaluate Forms"></a>1.7 评估格式 Evaluate Forms</h3><ol>
+<li>由<strong>设计师</strong>在设计过程中评估 Evaluation by designers within the design process<ol>
+<li>“生成-测试”方法 “generate-and-test” approach</li>
+</ol>
+</li>
+<li>由<strong>同行</strong>在设计过程中评估 Evaluation by peers within the design process<ol>
+<li>审查者确定许多质量属性方案来推动审查。The reviewers determine a number of quality attribute scenarios to drive the review.</li>
+<li>架构师介绍要评估的架构部分 The architect presents the portion of the architecture to be evaluated.</li>
+<li>对于每个场景，设计人员都会遍历架构并解释如何满足场景。For each scenario, the designer walks through the architecture and explains how the scenario is satisfied.</li>
+<li>潜在的问题被捕获。Potential problems are captured.</li>
+</ol>
+</li>
+<li>架构设计完成后由<strong>外部人员</strong>进行评估 Evaluation by outsiders once the architecture has been designed</li>
+</ol>
+<h2 id="2-ATAM：架构权衡分析方法-ATAM：Architecture-Tradeoff-Analysis-Method"><a href="#2-ATAM：架构权衡分析方法-ATAM：Architecture-Tradeoff-Analysis-Method" class="headerlink" title="2. ATAM：架构权衡分析方法 ATAM：Architecture Tradeoff Analysis Method"></a>2. ATAM：架构权衡分析方法 ATAM：Architecture Tradeoff Analysis Method</h2><p>ATAM方法分为4个阶段完成</p>
+<h3 id="2-1-阶段0：伙伴与准备-Phase-0-Partnership-Preparation"><a href="#2-1-阶段0：伙伴与准备-Phase-0-Partnership-Preparation" class="headerlink" title="2.1 阶段0：伙伴与准备 Phase-0: Partnership &amp; Preparation"></a>2.1 阶段0：伙伴与准备 Phase-0: Partnership &amp; Preparation</h3><ol>
+<li>参与者：评估团队领导和关键项目决策者 Participants: evaluation team leadership and key project decision makers</li>
+<li>输入：架构文档 Inputs: the architecture documentation</li>
+<li>输出：评估计划 Outputs: the evaluation plan<ol>
+<li><strong>谁？</strong>涉众的初步名单 Who? a preliminary list of stakeholders</li>
+<li>逻辑：<strong>什么时候？什么地点和如何？</strong> Logistics: When? Where? and How?</li>
+<li>什么时候评估报告被送给<strong>谁</strong>？When the evaluation report is to be delivered to whom?</li>
+<li>评估报告中应该包含<strong>什么</strong>信息？What information to be included in the evaluation report?</li>
+</ol>
+</li>
+</ol>
+<h3 id="2-2-阶段1：评估-1-Phase-1-Evaluation-1"><a href="#2-2-阶段1：评估-1-Phase-1-Evaluation-1" class="headerlink" title="2.2 阶段1：评估(1) Phase-1: Evaluation (1)"></a>2.2 阶段1：评估(1) Phase-1: Evaluation (1)</h3><ol>
+<li>参与者：评估团队和项目决策者 Participants: evaluation team and project decision makers</li>
+<li>步骤1-6 Step 1-6</li>
+<li>输出 Outputs:<ol>
+<li>架构的简明介绍 a concise presentation of the architecture</li>
+<li>业务目标（驱动因素）的阐述 articulation of the business goals (drivers)</li>
+<li>作为场景实现的特定质量属性要求的优先列表 a prioritized list of specific quality attribute requlrements realized as scenarios</li>
+<li>效用树 utility tree</li>
+<li>风险和无风险 risks and nonrisks</li>
+<li>敏感点和权衡点 sensitivity points and tradeoff points</li>
+</ol>
+</li>
+</ol>
+<h4 id="2-2-1-第一步：介绍ATAM-Step1-Present-the-ATAM"><a href="#2-2-1-第一步：介绍ATAM-Step1-Present-the-ATAM" class="headerlink" title="2.2.1 第一步：介绍ATAM Step1 - Present the ATAM"></a>2.2.1 第一步：介绍ATAM Step1 - Present the ATAM</h4><p>评估负责人向集合的项目代表（”决策者”）简要介绍 ATAM，让他们了解评估的过程和输出<br>The evaluation leader presents the ATAM in brief to assembled project representatives (‘decision makers’) for their understanding of the process and outputs of the evaluation</p>
+<h4 id="2-2-2-第二步：介绍业务驱动因素-Step2-Present-the-Business-Drivers"><a href="#2-2-2-第二步：介绍业务驱动因素-Step2-Present-the-Business-Drivers" class="headerlink" title="2.2.2 第二步：介绍业务驱动因素 Step2 - Present the Business Drivers"></a>2.2.2 第二步：介绍业务驱动因素 Step2 - Present the Business Drivers</h4><p>项目经理或系统的客户从业务角度呈现系统概览，描述<br>Project manager or system’s customer presents a system overview from a business perspective, describing:</p>
+<ol>
+<li>它最重要的功能需求 its most important functional requirements</li>
+<li>其技术、管理、经济或政治限制 its technical, managerial, economic, or political constraints</li>
+<li>其商业目标和上下文 its business goals and context</li>
+<li>其主要涉众 its major stakeholders</li>
+<li>架构驱动因素（塑造架构的主要质量属性目标）the architectural drivers (major quality attribute goals that shape the architecture)</li>
+</ol>
+<h4 id="2-2-3-第三步：展示架构-Step3-Present-the-architecture"><a href="#2-2-3-第三步：展示架构-Step3-Present-the-architecture" class="headerlink" title="2.2.3 第三步：展示架构 Step3 - Present the architecture"></a>2.2.3 第三步：展示架构 Step3 - Present the architecture</h4><ol>
+<li>首席架构师在适当的细节级别上进行了描述架构的演示：<br>The lead architect makes a presentation describing the architecture at an appropriate level of detail:<ol>
+<li>技术限制，例如规定使用的操作系统、硬件或中间件 technical constraints such as an OS, hardware, or middleware prescribed for use</li>
+<li>系统必须与之交互的其他系统 other systems with which the system must interact</li>
+<li>用于满足质量属性要求的架构方法 architectural approaches used to meet quality attribute requirements</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>架构演示（大约 20 张幻灯片；60 分钟）Architecture Presentation (Approximately 20 slides; 60 Minutes)</p>
+<p>驱动架构需求、与这些需求相关的可测量数量，以及满足这些需求的任何现有标准&#x2F;模型&#x2F;方法（2-3 张幻灯片）Driving architectural requirements, the measurable quantities you associate with these requirements, and any existing standards&#x2F; models&#x2F; approaches for meeting these (2-3 slides)</p>
+<p>重要的架构信息（4-8 张幻灯片）：Important architectural information (4-8 slides):</p>
+<ol>
+<li>语境图 - 系统在其存在的语境中。系统将与之交互的人类或其他系统。 Context diagram-the system within the context in which it will exist. Humans or other systems with which the system will interact.</li>
+<li>模块或层视图 - 描述系统功能分解的模块（可以是子系统或层），以及填充这些的对象、过程、函数以及它们之间的关系（例如，过程调用、方法调用、回调，遏制）。Module or layer view- the modules (which may be subsystems or layers) that describe the system s decomposition of functionality, along with the objects, procedures, functions that populate these, and the relations among them (e.g, procedure call, method invocation, callback, containment).</li>
+<li>组件和连接器视图进程、线程以及连接它们的同步、数据流和事件。Component-and-connector view-processes, threads along with the synchronization, data flow, and events that connect them.</li>
+<li>部署视图 - CPU、存储、外部设备&#x2F;传感器以及连接它们的网络和通信设备。 还显示了在各种处理器上执行的进程。Deployment view- CPUs, storage, external devices&#x2F; sensors along with the networks and communication devices that connect them. Also shown are the processes that execute on the various processors.</li>
+</ol>
+<p>采用的架构方法、模式或策略，包括它们解决的质量属性以及这些方法如何解决这些属性的描述（3-6 张幻灯片）：Architectural approaches, patterns, or tactics employed, including what quality attributes they address and a description of how the approaches address those attributes (3-6 slides):</p>
+<ol>
+<li>商业现货 (COTS) 产品的使用以及它们的选择&#x2F;集成方式（1-2 张幻灯片）。Use of commercial off-the-shelf (COTS) products and how they are chosen&#x2F;integrated (1-2 slides).</li>
+<li>跟踪 1 到 3 个最重要的用例场景。 如果可能，包括每个场景消耗的运行时资源（1-3 张幻灯片）。Trace of 1 to 3 of the most important use case scenarios. If possible, include the runtime resources consumed for each scenario (1-3 slides).</li>
+<li>跟踪 1 到 3 个最重要的变化场景。 如果可能，根据更改的模块或界面（1-3 张幻灯片）描述更改影响（更改的估计大小&#x2F;难度） Trace of1 to 3 of the most important change scenarios. If possible, describe the change impact (estimated size&#x2F; difficulty of the change) in terms of the changed modules or interfaces (1-3 slides).</li>
+<li>与满足驱动架构要求相关的架构问题&#x2F;风险（2-3 张幻灯片）。Architectural issues&#x2F;risks with respect to meeting the driving architectural requirements (2-3 slides).</li>
+<li>词汇表（1张PPT）Glossary (1 slide).</li>
+</ol>
+</blockquote>
+<h4 id="2-2-4-第四步：确定架构方法-Step4-Identify-Architectural-Approaches"><a href="#2-2-4-第四步：确定架构方法-Step4-Identify-Architectural-Approaches" class="headerlink" title="2.2.4 第四步：确定架构方法 Step4 - Identify Architectural Approaches"></a>2.2.4 第四步：确定架构方法 Step4 - Identify Architectural Approaches</h4><ol>
+<li>ATAM 专注于通过理解架构方法来分析架构。ATAM focuses on analyzing an architecture by understanding its architectural approaches.</li>
+<li>在这一步，评估团队：By this step, the evaluation team<ol>
+<li>研究了架构文档 have studied the architecture documentation</li>
+<li>听取了架构师的展示 have heard the architect’s presentation</li>
+<li>向架构师询问了设计系统时使用的模式和策略 have asked the architect about patterns and tactics used in designing the system</li>
+</ol>
+</li>
+<li>评估团队对已确定的架构方法（风格、模式和策略）进行编目。The evaluation team catalogs the architectural approaches (styles, patterns and tactics) that have been identified.</li>
+</ol>
+<h4 id="2-2-5-第五步：生成质量属性效用树-Step5-Generate-Quality-Attribute-Utility-Tree"><a href="#2-2-5-第五步：生成质量属性效用树-Step5-Generate-Quality-Attribute-Utility-Tree" class="headerlink" title="2.2.5 第五步：生成质量属性效用树 Step5 - Generate Quality Attribute Utility Tree"></a>2.2.5 第五步：生成质量属性效用树 Step5 - Generate Quality Attribute Utility Tree</h4><ol>
+<li>这是指导其余分析的关键步骤。 This is a crucial step that guides the remainder of the analysis.</li>
+<li>评估团队与项目决策者合作，确定、确定和优化系统最重要的质量属性目标。The evaluation team works with the project decision makers to identify, prioritize and refine the system’s most important quality attribute goals.</li>
+<li>质量属性目标通过质量属性效用树详细阐述，该树通过精确定义相关质量属性需求使需求具体化。The quality attribute goals are articulated in detail via quality attribute utility tree that makes the requirements concrete by defining precisely the relevant quality attribute requirements.</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612194332541.png" alt="image-20230612194332541" style="zoom:80%;" />
+
+<h4 id="2-2-6-第六步：分析架构方法-Step6-Analyze-Architectural-Approaches"><a href="#2-2-6-第六步：分析架构方法-Step6-Analyze-Architectural-Approaches" class="headerlink" title="2.2.6 第六步：分析架构方法 Step6 - Analyze Architectural Approaches"></a>2.2.6 第六步：分析架构方法 Step6 - Analyze Architectural Approaches</h4><ol>
+<li>目标是让评估团队确信该方法的实例化适合满足特定于属性的要求。The goal is for the evaluation team to be convinced that the instantiation of the approach is appropriate for meeting the attribute-specific requirements.</li>
+<li>评估团队通过要求架构师解释架构如何相互支持，一次检查排名最高的场景（来自效用树）。The evaluation team examines that the highest-ranked scenarios(from the utility tree) one at a time by asking the architect to explain how the architecture supports each other.</li>
+<li>评估团队记录相关的架构决策，并通过讨论识别和分类其风险、非风险、敏感点和权衡。The evaluation team documents the relevant architectural decisions and identifies and catalogs their risks, nonrisks, sensitivity points, and tradeoffs through a discussion.</li>
+<li>分析是为了引出足够的架构信息，以在已经做出的架构决策和需要满足的质量属性之间建立某种联系。The analysis is to elicit sufficient architectural information to establish some link between the architectural decisions that have been made and quality attributes that need to be satisfied.</li>
+<li>在这一步结束时，评估团队应该清楚地了解整个架构的最重要方面、关键设计决策的基本原理以及风险、非风险、敏感点和权衡点的列表。At the end of this step, the evaluation team should have a clear picture of the most important aspects of the entire architecture, the rationale for key design decisions, and a list of risks, nonrisks, sensitivity points, and tradeoff points.</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612194526912.png" alt="image-20230612194526912"></p>
+<h4 id="2-2-7-ATAM-第-1-天的示例议程-Example-Agenda-for-Day-1-for-ATAM"><a href="#2-2-7-ATAM-第-1-天的示例议程-Example-Agenda-for-Day-1-for-ATAM" class="headerlink" title="2.2.7 ATAM 第 1 天的示例议程 Example Agenda for Day 1 for ATAM"></a>2.2.7 ATAM 第 1 天的示例议程 Example Agenda for Day 1 for ATAM</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612194601380.png" alt="image-20230612194601380"></p>
+<h3 id="2-3-阶段2：评估-2-Phase-2-Evaluation-2"><a href="#2-3-阶段2：评估-2-Phase-2-Evaluation-2" class="headerlink" title="2.3 阶段2：评估(2) Phase-2: Evaluation (2)"></a>2.3 阶段2：评估(2) Phase-2: Evaluation (2)</h3><ol>
+<li>参与者：评估团队，项目决策者和架构涉众 Participants: evaluation team, project decision makers, and architecture stakeholders</li>
+<li>步骤(1) 7-9 Step (1) 7~9</li>
+<li>输出：Outputs:<ol>
+<li>涉众社区的优先场景列表 a list of prioritized scenarios from the stakeholder community</li>
+<li>风险主题和业务驱动因素各自受到的威胁 risk themes and business drivers threatened by each one</li>
+</ol>
+</li>
+</ol>
+<h4 id="2-3-1-第一步：展示ATAM和之前的结果-Step-1-Present-the-ATAM-Previous-Results"><a href="#2-3-1-第一步：展示ATAM和之前的结果-Step-1-Present-the-ATAM-Previous-Results" class="headerlink" title="2.3.1 第一步：展示ATAM和之前的结果 Step-1: Present the ATAM &amp; Previous Results"></a>2.3.1 第一步：展示ATAM和之前的结果 Step-1: Present the ATAM &amp; Previous Results</h4><ol>
+<li>重复步骤 1，以便涉众了解方法和他们将扮演的角色。 Step 1 is repeated so that the stakeholders understand the method and the roles they are to play.</li>
+<li>评估负责人总结第 2 步到第 6 步的结果，并分享输出（效用树除外）。The evaluation leader recaps the results of steps 2 through 6, and shares the outputs (except the utility tree).</li>
+</ol>
+<h4 id="2-3-2-第七步：头脑风暴并确定场景的优先级-Step-7-Brainstorm-Prioritize-Scenarios"><a href="#2-3-2-第七步：头脑风暴并确定场景的优先级-Step-7-Brainstorm-Prioritize-Scenarios" class="headerlink" title="2.3.2 第七步：头脑风暴并确定场景的优先级 Step-7: Brainstorm &amp; Prioritize Scenarios"></a>2.3.2 第七步：头脑风暴并确定场景的优先级 Step-7: Brainstorm &amp; Prioritize Scenarios</h4><ol>
+<li>此步骤的目的是把握更大的涉众社区的脉搏，以了解系统成功对他们意味着什么。The purpose of this step is to take the pulse of the larger stakeholder community to understand what system success means to them.</li>
+<li>评估团队要求涉众集思广益，就其个人角色而言，在操作上有意义的场景。The evaluation team asks the stakeholders to brainstorm scenarios that are operationally meaningful with respect to their individual roles.</li>
+<li>一旦收集了场景，就会要求涉众对他们认为代表行为或质量问题的场景进行优先级排序和合并。Once the scenarios have been collected, stakeholders are asked to prioritize and merge scenarios they feel represent the behavior or quality concern.</li>
+<li>将优先场景列表与效用树中的场景进行比较。The list of prioritized scenarios is compared with those from the utility tree.</li>
+<li>如果差异很大，则额外的情景可能被识别为风险。If the discrepancy is significant, the additional scenario may be identified as a risk.</li>
+</ol>
+<h4 id="2-3-3-第八步：分析架构方法-Step-8-Analyze-Architectual-Approaches"><a href="#2-3-3-第八步：分析架构方法-Step-8-Analyze-Architectual-Approaches" class="headerlink" title="2.3.3 第八步：分析架构方法 Step-8: Analyze Architectual Approaches"></a>2.3.3 第八步：分析架构方法 Step-8: Analyze Architectual Approaches</h4><ol>
+<li>在此步骤中，评估团队执行与步骤 6 中相同的活动，使用排名最高的（例如前 5 到 10）但新生成的场景。In this step, the evaluation team performs the same activities as in Step 6, using the highest ranked (e.g. top 5 to 10), but newly generated scenarios.</li>
+<li>架构师解释了相关的架构决策如何有助于实现每个决策。The architect explains how relevant architectural decisions contribute to realizing each one.</li>
+</ol>
+<h4 id="2-3-4-第九步：展示结果-Step-9-Present-Results"><a href="#2-3-4-第九步：展示结果-Step-9-Present-Results" class="headerlink" title="2.3.4 第九步：展示结果 Step-9: Present Results"></a>2.3.4 第九步：展示结果 Step-9: Present Results</h4><ol>
+<li>评估团队根据共同的潜在问题或系统性缺陷将风险分组为风险主题。The evaluation team groups the risks into risk themes, based on common underlying concern or systemic deficiency.</li>
+<li>然后，确定的风险主题与步骤 2 中列出的特定业务驱动因素相关。The identified risk themes are then related to specific business drivers listed in Step 2.</li>
+<li>从评估中收集的信息被总结并呈现给所有涉众：The collected information from evaluation is summarized and presented to all stakeholders:<ol>
+<li>记录的架构方法 The architectural approaches documented</li>
+<li>集思广益的场景集及其优先级 The set of scenarios and their prioritization from brainstorming</li>
+<li>实用树 The utility tree</li>
+<li>发现的风险和记录的非风险 The risks discovered and nonrisks documented</li>
+<li>发现的敏感因素和权衡因素 The sensitivity points and tradeoff points found</li>
+<li>风险主题和受威胁的业务驱动因素 Risk themes and the business drivers threatened by each one</li>
+</ol>
+</li>
+</ol>
+<h3 id="2-4-阶段3：后续-Phase-3-Follow-up"><a href="#2-4-阶段3：后续-Phase-3-Follow-up" class="headerlink" title="2.4 阶段3：后续 Phase-3: Follow-up"></a>2.4 阶段3：后续 Phase-3: Follow-up</h3><ol>
+<li>参与者：评估团队和主要涉众(评估客户) Participants: evaluation team and key stakeholders (evaluation clients)</li>
+<li>输出：最终评估报告 Outputs: the final evaluation report</li>
+<li>评估团队制作一份书面最终报告，分发给主要涉众以供审核。The evaluation team produces a written final report that is circulated to key stakeholders for revlew.</li>
+<li>审查结束后，将报告提交给委托评估的人。After the review, the report is delivered to whom commissioned the evaluation.</li>
+</ol>
+<h3 id="2-5-ATAM阶段总结-Summary-of-ATAM-phases"><a href="#2-5-ATAM阶段总结-Summary-of-ATAM-phases" class="headerlink" title="2.5 ATAM阶段总结 Summary of ATAM phases"></a>2.5 ATAM阶段总结 Summary of ATAM phases</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612195042921.png" alt="image-20230612195042921"></p>
+<h3 id="2-6-ATAM输出总结-Summary-of-ATAM-Outputs"><a href="#2-6-ATAM输出总结-Summary-of-ATAM-Outputs" class="headerlink" title="2.6 ATAM输出总结 Summary of ATAM Outputs"></a>2.6 ATAM输出总结 Summary of ATAM Outputs</h3><ol>
+<li>架构的简明展示 A concise presentation of the architecture</li>
+<li>业务目标的阐述 Articulation of the business goals</li>
+<li>表示为质量属性场景的优先质量属性要求 Prioritized quality attribute requirements expressed as quality attribute scenarios</li>
+<li>效用树 A utility tree</li>
+<li>一组风险和非风险 A set of risks and nonrisks</li>
+<li>一组风险主题 A set of riskthemes</li>
+<li>将架构决策映射到质量要求 Mapping of architectural decisions to quality requirements</li>
+<li>一组确定的敏感度和权衡点 A set of identified sensitivity and tradeoff points</li>
+<li>最终的评估报告 Final evaluation report</li>
+</ol>
+<h3 id="2-7-轻量级架构评估-Lightweight-Architecture-Evaluation"><a href="#2-7-轻量级架构评估-Lightweight-Architecture-Evaluation" class="headerlink" title="2.7 轻量级架构评估 Lightweight Architecture Evaluation"></a>2.7 轻量级架构评估 Lightweight Architecture Evaluation</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612195204456.png" alt="image-20230612195204456"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/06/12/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-5-%E8%AE%B0%E5%BD%95%E6%9E%B6%E6%9E%84/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                        <b>#</b> 软件系统设计
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/06/12/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-7-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%9E%B6%E6%9E%84%E6%B5%81%E7%A8%8B-Architecture-Process"><span class="toc-text">1. 架构流程 Architecture Process</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%AF%84%E4%BC%B0%E6%9E%B6%E6%9E%84-Why-to-evaluate-architecture"><span class="toc-text">1.1 为什么要评估架构 Why to evaluate architecture?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%9C%80%E8%A6%81%E8%AF%84%E4%BC%B0%E6%9E%B6%E6%9E%84%E5%91%A2%EF%BC%9FWhen-to-evaluate-an-architecture"><span class="toc-text">1.2 什么时候需要评估架构呢？When to evaluate an architecture?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%B0%BD%E6%97%A9%E8%AF%84%E4%BC%B0%E6%9E%B6%E6%9E%84-Why-evaluate-architecture-early"><span class="toc-text">1.3 为什么要尽早评估架构 Why evaluate architecture early?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%A6%82%E4%BD%95%E8%AF%84%E4%BC%B0%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84-How-to-evaluate-software-architecture"><span class="toc-text">1.4 如何评估软件架构 How to evaluate software architecture?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E4%B8%80%E4%B8%AA%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E7%94%A8%EF%BC%9FHow-can-a-method-be-helpful"><span class="toc-text">1.5 一个方法为什么会有用？How can a method be helpful!?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E8%AF%84%E4%BB%B7%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95-Analysis-Methods-for-Evaluation"><span class="toc-text">1.6 评价分析方法 Analysis Methods for Evaluation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E8%AF%84%E4%BC%B0%E6%A0%BC%E5%BC%8F-Evaluate-Forms"><span class="toc-text">1.7 评估格式 Evaluate Forms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ATAM%EF%BC%9A%E6%9E%B6%E6%9E%84%E6%9D%83%E8%A1%A1%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95-ATAM%EF%BC%9AArchitecture-Tradeoff-Analysis-Method"><span class="toc-text">2. ATAM：架构权衡分析方法 ATAM：Architecture Tradeoff Analysis Method</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E9%98%B6%E6%AE%B50%EF%BC%9A%E4%BC%99%E4%BC%B4%E4%B8%8E%E5%87%86%E5%A4%87-Phase-0-Partnership-Preparation"><span class="toc-text">2.1 阶段0：伙伴与准备 Phase-0: Partnership &amp; Preparation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E9%98%B6%E6%AE%B51%EF%BC%9A%E8%AF%84%E4%BC%B0-1-Phase-1-Evaluation-1"><span class="toc-text">2.2 阶段1：评估(1) Phase-1: Evaluation (1)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E4%BB%8B%E7%BB%8DATAM-Step1-Present-the-ATAM"><span class="toc-text">2.2.1 第一步：介绍ATAM Step1 - Present the ATAM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E4%BB%8B%E7%BB%8D%E4%B8%9A%E5%8A%A1%E9%A9%B1%E5%8A%A8%E5%9B%A0%E7%B4%A0-Step2-Present-the-Business-Drivers"><span class="toc-text">2.2.2 第二步：介绍业务驱动因素 Step2 - Present the Business Drivers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E5%B1%95%E7%A4%BA%E6%9E%B6%E6%9E%84-Step3-Present-the-architecture"><span class="toc-text">2.2.3 第三步：展示架构 Step3 - Present the architecture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E7%A1%AE%E5%AE%9A%E6%9E%B6%E6%9E%84%E6%96%B9%E6%B3%95-Step4-Identify-Architectural-Approaches"><span class="toc-text">2.2.4 第四步：确定架构方法 Step4 - Identify Architectural Approaches</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-5-%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E7%94%9F%E6%88%90%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7%E6%95%88%E7%94%A8%E6%A0%91-Step5-Generate-Quality-Attribute-Utility-Tree"><span class="toc-text">2.2.5 第五步：生成质量属性效用树 Step5 - Generate Quality Attribute Utility Tree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-6-%E7%AC%AC%E5%85%AD%E6%AD%A5%EF%BC%9A%E5%88%86%E6%9E%90%E6%9E%B6%E6%9E%84%E6%96%B9%E6%B3%95-Step6-Analyze-Architectural-Approaches"><span class="toc-text">2.2.6 第六步：分析架构方法 Step6 - Analyze Architectural Approaches</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-7-ATAM-%E7%AC%AC-1-%E5%A4%A9%E7%9A%84%E7%A4%BA%E4%BE%8B%E8%AE%AE%E7%A8%8B-Example-Agenda-for-Day-1-for-ATAM"><span class="toc-text">2.2.7 ATAM 第 1 天的示例议程 Example Agenda for Day 1 for ATAM</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E9%98%B6%E6%AE%B52%EF%BC%9A%E8%AF%84%E4%BC%B0-2-Phase-2-Evaluation-2"><span class="toc-text">2.3 阶段2：评估(2) Phase-2: Evaluation (2)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E5%B1%95%E7%A4%BAATAM%E5%92%8C%E4%B9%8B%E5%89%8D%E7%9A%84%E7%BB%93%E6%9E%9C-Step-1-Present-the-ATAM-Previous-Results"><span class="toc-text">2.3.1 第一步：展示ATAM和之前的结果 Step-1: Present the ATAM &amp; Previous Results</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-%E7%AC%AC%E4%B8%83%E6%AD%A5%EF%BC%9A%E5%A4%B4%E8%84%91%E9%A3%8E%E6%9A%B4%E5%B9%B6%E7%A1%AE%E5%AE%9A%E5%9C%BA%E6%99%AF%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7-Step-7-Brainstorm-Prioritize-Scenarios"><span class="toc-text">2.3.2 第七步：头脑风暴并确定场景的优先级 Step-7: Brainstorm &amp; Prioritize Scenarios</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-3-%E7%AC%AC%E5%85%AB%E6%AD%A5%EF%BC%9A%E5%88%86%E6%9E%90%E6%9E%B6%E6%9E%84%E6%96%B9%E6%B3%95-Step-8-Analyze-Architectual-Approaches"><span class="toc-text">2.3.3 第八步：分析架构方法 Step-8: Analyze Architectual Approaches</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-4-%E7%AC%AC%E4%B9%9D%E6%AD%A5%EF%BC%9A%E5%B1%95%E7%A4%BA%E7%BB%93%E6%9E%9C-Step-9-Present-Results"><span class="toc-text">2.3.4 第九步：展示结果 Step-9: Present Results</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%98%B6%E6%AE%B53%EF%BC%9A%E5%90%8E%E7%BB%AD-Phase-3-Follow-up"><span class="toc-text">2.4 阶段3：后续 Phase-3: Follow-up</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-ATAM%E9%98%B6%E6%AE%B5%E6%80%BB%E7%BB%93-Summary-of-ATAM-phases"><span class="toc-text">2.5 ATAM阶段总结 Summary of ATAM phases</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-ATAM%E8%BE%93%E5%87%BA%E6%80%BB%E7%BB%93-Summary-of-ATAM-Outputs"><span class="toc-text">2.6 ATAM输出总结 Summary of ATAM Outputs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E8%BD%BB%E9%87%8F%E7%BA%A7%E6%9E%B6%E6%9E%84%E8%AF%84%E4%BC%B0-Lightweight-Architecture-Evaluation"><span class="toc-text">2.7 轻量级架构评估 Lightweight Architecture Evaluation</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84(6)%20%E8%AF%84%E4%BC%B0%E6%9E%B6%E6%9E%84 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F06%2F12%2F%25E8%25BD%25AF%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E8%25AE%25BE%25E8%25AE%25A1-%25E6%259E%25B6%25E6%259E%2584-6-%25E8%25AF%2584%25E4%25BC%25B0%25E6%259E%25B6%25E6%259E%2584%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/06/12/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-6-%E8%AF%84%E4%BC%B0%E6%9E%B6%E6%9E%84/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

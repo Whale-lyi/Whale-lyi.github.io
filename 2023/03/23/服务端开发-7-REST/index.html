@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      服务端开发(7) REST服务、微服务开发与部署 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">服务端开发(7) REST服务、微服务开发与部署</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                    <b>#</b> 服务端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-一个-Web-App-的开发和快速反馈"><a href="#1-一个-Web-App-的开发和快速反馈" class="headerlink" title="1. 一个 Web App 的开发和快速反馈"></a>1. 一个 Web App 的开发和快速反馈</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406005903378.png" alt="image-20230406005903378"></p>
+<blockquote>
+<p>华为云软件开发生产线 CodeArts</p>
+<ul>
+<li>集合业界先进理念，华为30年研发经验，可操作可落地的端到端一站式开发方法论和工具链。</li>
+<li>学习链接:  <a target="_blank" rel="noopener" href="https://support.huaweicloud.com/devcloud/index.html">https://support.huaweicloud.com/devcloud/index.html</a></li>
+<li>集华为研发实践、前沿研发理念、先进研发工具于一体，使能软件企业&#x2F;开发者简单高效地向最终用户交付有价值的软件。</li>
+</ul>
+</blockquote>
+<h2 id="2-开发模式"><a href="#2-开发模式" class="headerlink" title="2. 开发模式"></a>2. 开发模式</h2><p>前、后端不分离的开发模式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406134413889.png" alt="image-20230406134413889"></p>
+<p>前后端分离的开发模式</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406134433520.png" alt="image-20230406134433520"></p>
+<h2 id="3-单体应用程序"><a href="#3-单体应用程序" class="headerlink" title="3. 单体应用程序"></a>3. 单体应用程序</h2><ul>
+<li>数据库的表对所有模块可见</li>
+<li>一个人的修改整个应用都要重新构建、测试、部署</li>
+<li>整体复制分布式部署，不能拆分按需部署</li>
+</ul>
+<h2 id="4-微服务架构模式的特征"><a href="#4-微服务架构模式的特征" class="headerlink" title="4. 微服务架构模式的特征"></a>4. 微服务架构模式的特征</h2><ul>
+<li>应用程序分解为具有明确定义了职责范围的细粒度组件</li>
+<li>完全独立部署，独立测试，并可复用</li>
+<li>使用轻量级通信协议，HTTP 和 JSON，松耦合</li>
+<li>服务实现可使用多种编程语言和技术</li>
+<li>将大型团队划分成多个小型开发团队，每个团队只负责他们各自的服务</li>
+</ul>
+<h2 id="5-Spring-Boot-和-Spring-Cloud"><a href="#5-Spring-Boot-和-Spring-Cloud" class="headerlink" title="5. Spring Boot 和 Spring Cloud"></a>5. Spring Boot 和 Spring Cloud</h2><ul>
+<li>Spring Boot 提供了基于 Java 的、面向 REST 的微服务框架</li>
+<li>Spring Cloud 使实施和部署微服务到私有云或公有云变得更加简单</li>
+</ul>
+<h3 id="5-1-Spring-Boot"><a href="#5-1-Spring-Boot" class="headerlink" title="5.1 Spring Boot"></a>5.1 Spring Boot</h3><ul>
+<li><p>简化 Spring Web 开发</p>
+</li>
+<li><p>Spring Boot Starter</p>
+<ul>
+<li>自动管理依赖、版本号</li>
+</ul>
+</li>
+<li><p>自动配置</p>
+<ul>
+<li>根据类路径加载的类自动创建需要的Bean</li>
+<li>如: DataSource、JdbcTemplate、视图解析器等</li>
+</ul>
+</li>
+<li><p>Actuator</p>
+<ul>
+<li>&#x2F;autoconfig 使用了哪些自动配置（positiveMatches）</li>
+<li>&#x2F;beans，包含bean依赖关系</li>
+</ul>
+</li>
+<li><p>Spring initializer: 生成初始框架代码</p>
+<ul>
+<li>访问: <a target="_blank" rel="noopener" href="https://start.spring.io/">https://start.spring.io/</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="6-Rest原则"><a href="#6-Rest原则" class="headerlink" title="6. Rest原则"></a>6. Rest原则</h2><ul>
+<li>Representational State Transfer，表现层状态转移</li>
+<li>资源（Resources），就是网络上的一个实体，标识: URI</li>
+<li>表现层（Representation）: json、xml、html、pdf、excel</li>
+<li>状态转移（State Transfer）: 服务端–客户端</li>
+<li>HTTP协议的四个操作方式的动词: GET、POST、PUT、DELETE<ul>
+<li>CRUD: Create、Read、Update、Delete</li>
+</ul>
+</li>
+<li>如果一个架构符合REST原则，就称它为RESTful架构。</li>
+</ul>
+<h2 id="7-客户端与服务的交互"><a href="#7-客户端与服务的交互" class="headerlink" title="7. 客户端与服务的交互"></a>7. 客户端与服务的交互</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406140432047.png" alt="image-20230406140432047"></p>
+<h3 id="7-1-请求报文"><a href="#7-1-请求报文" class="headerlink" title="7.1 请求报文"></a>7.1 请求报文</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406140607318.png" alt="image-20230406140607318"></p>
+<h4 id="请求头与请求体"><a href="#请求头与请求体" class="headerlink" title="请求头与请求体"></a>请求头与请求体</h4><p>请求头: 请求头由 key&#x2F;value 对组成，每行为一对，key 和 value 之间通过冒号(:)分割。请求头的作用主要用于通知服务端有关于客户端的请求信息。</p>
+<ul>
+<li>User-Agent: 生成请求的浏览器类型</li>
+<li>Accept: 客户端可识别的响应内容类型列表<ul>
+<li>星号 $\ast$ 用于按范围将类型分组</li>
+<li>$\ast &#x2F; \ast$表示可接受全部类型</li>
+<li>$\text{type}&#x2F;\ast$ 表示可接受 type 类型的所有子类型</li>
+</ul>
+</li>
+<li>Accept-Language: 客户端可接受的自然语言</li>
+<li>Accept-Encoding: 客户端可接受的编码压缩格式</li>
+<li>Accept-Charset: 可接受的字符集</li>
+<li>Host: 请求的主机名，允许多个域名绑定同一 IP 地址</li>
+<li>connection: 连接方式（close 或 keepalive）</li>
+<li>Cookie: 存储在客户端的扩展字段</li>
+<li>Content-Type:标识请求内容的类型</li>
+<li>Content-Length:标识请求内容的长度</li>
+</ul>
+<p>请求体: 请求体主要用于 POST 请求，与 POST 请求方法配套的请求头一般有 Content-Type 和 Content-Length</p>
+<h3 id="7-2-响应报文"><a href="#7-2-响应报文" class="headerlink" title="7.2 响应报文"></a>7.2 响应报文</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406141433436.png" alt="image-20230406141433436"></p>
+<h4 id="响应头与响应体"><a href="#响应头与响应体" class="headerlink" title="响应头与响应体"></a>响应头与响应体</h4><p>状态行：由 HTTP 协议版本、状态码、状态码描述三部分构成，它们之间由空格隔开</p>
+<p>状态码：由 3 位数字组成，第一位标识响应的类型，常用的 5 大类状态码如下：</p>
+<ul>
+<li>1xx：表示服务器已接收了客户端的请求，客户端可以继续发送请求</li>
+<li>2xx：表示服务器已成功接收到请求并进行处理</li>
+<li>3xx：表示服务器要求客户端重定向</li>
+<li>4xx：表示客户端的请求有非法内容</li>
+<li>5xx：标识服务器未能正常处理客户端的请求而出现意外错误</li>
+</ul>
+<p>响应头:</p>
+<ul>
+<li>Location：服务器返回给客户端，用于重定向到新的位置</li>
+<li>Server：包含服务器用来处理请求的软件信息及版本信息Vary：标识不可缓存的请求头列表</li>
+<li>Connection: 连接方式<ul>
+<li>close 是告诉服务端，断开连接，不用等待后续的请求了</li>
+<li>keep-alive 则是告诉服务端，在完成本次请求的响应后，保持连接</li>
+</ul>
+</li>
+<li>Keep-Alive: 300，期望服务端保持连接多长时间（秒）</li>
+</ul>
+<p>响应内容：服务端返回给请求端的文本信息。</p>
+<h3 id="7-3-客户端表述的两种方式"><a href="#7-3-客户端表述的两种方式" class="headerlink" title="7.3 客户端表述的两种方式"></a>7.3 客户端表述的两种方式</h3><p><strong>内容协商（Content negotiation）</strong></p>
+<ul>
+<li><code>ContentNegotiatingViewResolver</code> 是要创建的bean，基于内容协商生成表述，判断的依据有请求头的 Accept，URL请求路径加扩展名（优先）</li>
+<li>然后会转向具体的视图解析器生成不同的视图表述</li>
+<li><code>ContentNegotiationManager</code>（配置的作用）<ul>
+<li>通过 setter 注入到 <code>ContentNegotiatingViewResolver</code> 中</li>
+<li>创建这个 Bean 的方式是继承自 <code>WebMvcConfigerAdapter</code>（基于spring mvc）</li>
+<li>覆盖方法 <code>configureContentNegotiation</code>，配置缺省内容类型等。</li>
+</ul>
+</li>
+</ul>
+<p><strong>消息转换器（Message conversion）</strong></p>
+<ul>
+<li>使用注解 <code>@ResponseBody</code> 或类级 <code>@RestController</code>，作用：指定使用消息转换器</li>
+<li>没有 model 和视图，控制器产生数据，然后消息转换器转换数据之后的资源表述</li>
+<li>spring 自动注册一些消息转换器（<code>HttpMethodConverter</code>），不过类路径下要有对应转换能力的库，如：Jackson Json processor、JAXB库</li>
+<li>请求传入，<code>@RequestBody</code> 以及 <code>HttpMethodConverter</code></li>
+</ul>
+<h3 id="7-4-提供资源以外的其它内容"><a href="#7-4-提供资源以外的其它内容" class="headerlink" title="7.4 提供资源以外的其它内容"></a>7.4 提供资源以外的其它内容</h3><ul>
+<li><code>@ResponseStatus(HttpStatus.CREATED)</code> 指定返回的状态码</li>
+<li>控制器方法返回 <code>ResponseEntity</code> 对象，指定业务对象（负载）、状态码、响应头<ul>
+<li>不用使用 <code>@ResponseBody</code> 注解</li>
+</ul>
+</li>
+<li>异常处理器，<code>@ExceptionHandler</code>（异常类型），加在方法上</li>
+<li>指定响应头信息，通过返回 <code>ResponseEntity</code> 对象的方式<ul>
+<li><code>HttpHeaders</code> 类型<ul>
+<li>注意与发出请求时的类型 <code>MultiValueMap</code> 区别</li>
+</ul>
+</li>
+<li><code>setLocation</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="8-Rest客户端"><a href="#8-Rest客户端" class="headerlink" title="8. Rest客户端"></a>8. Rest客户端</h2><ul>
+<li><code>new RestTemplats()</code></li>
+<li><code>getForObject()</code>, 指定返回类型，自动转换</li>
+<li><code>getForEntity()</code>，返回 <code>ResponseEntity</code>, 有头部信息，<code>getBody()</code>可以转换</li>
+<li><code>put()</code>，传递的对象存在转换问题，String 转成 test&#x2F;plain，MultiValueMap 转成 x-www-form-urlncoded，对象可能转成json，要看 classpass 类路径下有无库</li>
+<li><code>delete()</code>,删除一个资源，一般提供资源路径即可</li>
+<li><code>postForObject()</code>&#x2F;<code>postForEntity()</code>&#x2F;<code>postForLocation()</code><ul>
+<li>因为需要返回值</li>
+<li><code>postForLocation</code>，只需要路径，不需要body，路径信息来源头部 Location 信息</li>
+</ul>
+</li>
+<li><code>exchange()</code>, <strong>可指定请求头信息</strong><ul>
+<li><code>MultiValueMap headers;</code></li>
+<li><code>HttpEntity&lt;Object&gt; requestEntity = new HttpEntity&lt;Object&gt;(headers);</code></li>
+<li><code>ResponseEntity&lt;Spitter&gt; response = rest.exchange()</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="例子代码"><a href="#例子代码" class="headerlink" title="例子代码"></a>例子代码</h4><ul>
+<li><code>@SpringBootApplication</code><ul>
+<li>配置类 <code>@Configuration</code></li>
+<li><code>@ComponentScan</code></li>
+</ul>
+</li>
+<li><code>@RestController</code><ul>
+<li><code>@Controller</code></li>
+<li>请求响应，JSON编解码（序列化）</li>
+</ul>
+</li>
+<li><code>mvn spring-boot:run</code></li>
+<li>健康检查：<a target="_blank" rel="noopener" href="http://localhost:8080/actuator/health">http://localhost:8080/actuator/health</a></li>
+</ul>
+<h2 id="9-现实和挑战"><a href="#9-现实和挑战" class="headerlink" title="9. 现实和挑战"></a>9. 现实和挑战</h2><ul>
+<li>程序规模越来越大、越来越复杂</li>
+<li>客户期望快速频繁交付</li>
+<li>性能和可伸缩性</li>
+<li>弹性，应用程序中某个部分的故障或问题不应该导致整个应用程序崩溃</li>
+<li>小型的、简单的和解耦的服务 &#x3D; 可伸缩的、有弹性的和灵活的应用程序</li>
+</ul>
+<h3 id="9-1-云计算平台"><a href="#9-1-云计算平台" class="headerlink" title="9.1 云计算平台"></a>9.1 云计算平台</h3><ul>
+<li>基础设施即服务（Infrastructure as a Service , IaaS）</li>
+<li>平台即服务（Platform as a Service, PaaS）</li>
+<li>软件即服务（Software as a Service, SaaS）</li>
+<li>函数即服务（Functions as a Service, FaaS），将代码块以“无服务器”（serverless）的形式部署，无须管理任何服务器基础设施</li>
+<li>容器即服务（Container as a Service, CaaS），如亚马逊ECS(Amazon’s Elastic Container Service）</li>
+</ul>
+<h3 id="9-2-微服务开发要考虑的问题"><a href="#9-2-微服务开发要考虑的问题" class="headerlink" title="9.2 微服务开发要考虑的问题"></a>9.2 微服务开发要考虑的问题</h3><ul>
+<li>微服务划分，服务粒度、通信协议、接口设计、配置管理、使用事件解耦微服务</li>
+<li>服务注册、发现和路由</li>
+<li>弹性，负载均衡，断路器模式（熔断），容错</li>
+<li>可伸缩</li>
+<li>日志记录和跟踪</li>
+<li>安全</li>
+<li>构建和部署，基础设施即代码</li>
+</ul>
+<h3 id="9-3-Spring-Cloud的工具集成"><a href="#9-3-Spring-Cloud的工具集成" class="headerlink" title="9.3 Spring Cloud的工具集成"></a>9.3 Spring Cloud的工具集成</h3><ul>
+<li>spring cloud alibaba<ul>
+<li>数据配置，与 Nacos 集成</li>
+<li>服务注册与发现，与 Nacos 集成<ul>
+<li>Spring Cloud Loadbalancer</li>
+<li>Spring Cloud openfeign</li>
+</ul>
+</li>
+<li>限流、熔断，与 Sentinel 集成</li>
+</ul>
+</li>
+<li>Spring Cloud gateway，网关服务</li>
+<li>Spring Cloud Stream，与 RabbitMQ、Kafka 集成</li>
+<li>Spring Cloud Sleuth，与日志聚合工具Papertrail、跟踪工具Zipkin集成</li>
+<li>Spring Cloud Security，与OAuth2集成</li>
+</ul>
+<h3 id="9-4-微服务划分"><a href="#9-4-微服务划分" class="headerlink" title="9.4 微服务划分"></a>9.4 微服务划分</h3><ul>
+<li>可以从数据模型入手，每个域的服务只能访问自己的表</li>
+<li>刚开始粒度可以大一点，不要太细，由粗粒度重构到细粒度是比较容易的</li>
+<li>设计是逐步演化的</li>
+</ul>
+<h3 id="9-5-接口设计"><a href="#9-5-接口设计" class="headerlink" title="9.5 接口设计"></a>9.5 接口设计</h3><ul>
+<li>使用标准 HTTP 动词：GET、PUT、POST、DELETE，映射到 CRUD</li>
+<li>使用 URI 来传达意图</li>
+<li>请求和响应使用 JSON</li>
+<li>使用 HTTP 状态码来传达结果</li>
+</ul>
+<h3 id="9-6-运维实践"><a href="#9-6-运维实践" class="headerlink" title="9.6 运维实践"></a>9.6 运维实践</h3><ul>
+<li>都在源代码库中</li>
+<li>指定 JAR 依赖的版本号</li>
+<li>配置与源代码分开放</li>
+<li>已构建的服务是不可变的，不能再被修改</li>
+<li>微服务应该是无状态的</li>
+<li>并发，通过启动更多的微服务实例横向扩展，多线程是纵向扩展</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/03/21/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-6-K8S/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                        <b>#</b> 服务端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/04/05/Docker-%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E6%9C%BA%E5%88%B6/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%80%E4%B8%AA-Web-App-%E7%9A%84%E5%BC%80%E5%8F%91%E5%92%8C%E5%BF%AB%E9%80%9F%E5%8F%8D%E9%A6%88"><span class="toc-text">1. 一个 Web App 的开发和快速反馈</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-text">2. 开发模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">3. 单体应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-text">4. 微服务架构模式的特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Spring-Boot-%E5%92%8C-Spring-Cloud"><span class="toc-text">5. Spring Boot 和 Spring Cloud</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Spring-Boot"><span class="toc-text">5.1 Spring Boot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Rest%E5%8E%9F%E5%88%99"><span class="toc-text">6. Rest原则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BA%A4%E4%BA%92"><span class="toc-text">7. 客户端与服务的交互</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E8%AF%B7%E6%B1%82%E6%8A%A5%E6%96%87"><span class="toc-text">7.1 请求报文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82%E5%A4%B4%E4%B8%8E%E8%AF%B7%E6%B1%82%E4%BD%93"><span class="toc-text">请求头与请求体</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%93%8D%E5%BA%94%E6%8A%A5%E6%96%87"><span class="toc-text">7.2 响应报文</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%A4%B4%E4%B8%8E%E5%93%8D%E5%BA%94%E4%BD%93"><span class="toc-text">响应头与响应体</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%A1%A8%E8%BF%B0%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="toc-text">7.3 客户端表述的两种方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E6%8F%90%E4%BE%9B%E8%B5%84%E6%BA%90%E4%BB%A5%E5%A4%96%E7%9A%84%E5%85%B6%E5%AE%83%E5%86%85%E5%AE%B9"><span class="toc-text">7.4 提供资源以外的其它内容</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Rest%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="toc-text">8. Rest客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90%E4%BB%A3%E7%A0%81"><span class="toc-text">例子代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E7%8E%B0%E5%AE%9E%E5%92%8C%E6%8C%91%E6%88%98"><span class="toc-text">9. 现实和挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E4%BA%91%E8%AE%A1%E7%AE%97%E5%B9%B3%E5%8F%B0"><span class="toc-text">9.1 云计算平台</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-text">9.2 微服务开发要考虑的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-Spring-Cloud%E7%9A%84%E5%B7%A5%E5%85%B7%E9%9B%86%E6%88%90"><span class="toc-text">9.3 Spring Cloud的工具集成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%88%92%E5%88%86"><span class="toc-text">9.4 微服务划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-%E6%8E%A5%E5%8F%A3%E8%AE%BE%E8%AE%A1"><span class="toc-text">9.5 接口设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-6-%E8%BF%90%E7%BB%B4%E5%AE%9E%E8%B7%B5"><span class="toc-text">9.6 运维实践</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91(7)%20REST%E6%9C%8D%E5%8A%A1%E3%80%81%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%BC%80%E5%8F%91%E4%B8%8E%E9%83%A8%E7%BD%B2 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F03%2F23%2F%25E6%259C%258D%25E5%258A%25A1%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-7-REST%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/03/23/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-7-REST/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

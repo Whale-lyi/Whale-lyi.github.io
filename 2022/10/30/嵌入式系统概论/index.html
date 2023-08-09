@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      嵌入式系统概论 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">嵌入式系统概论</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" title="嵌入式系统概论">
+                    <b>#</b> 嵌入式系统概论
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-嵌入式系统概述"><a href="#1-嵌入式系统概述" class="headerlink" title="1 嵌入式系统概述"></a>1 嵌入式系统概述</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><h4 id="1-1-1-IEEE-的定义"><a href="#1-1-1-IEEE-的定义" class="headerlink" title="1.1.1 IEEE 的定义"></a>1.1.1 IEEE 的定义</h4><blockquote>
+<p>嵌入式系统是用于控制、监视或者辅助操作机器和设备的装置。</p>
+<p>Devices used to control, monitor, or assist the operation of equipment, machinery or plants.</p>
+</blockquote>
+<p>此定义是从应用上考虑的，嵌入式系统是软件和硬件的综合体，还可以涵盖机电等附属装置。</p>
+<h4 id="1-1-2-国内的定义"><a href="#1-1-2-国内的定义" class="headerlink" title="1.1.2 国内的定义"></a>1.1.2 国内的定义</h4><blockquote>
+<p>嵌入式系统是<strong>以应用为中心，以计算机技术为基础，软硬件可裁减，适用于应用系统对功能、可靠性、成本、体积、功耗有严格要求的专用计算机系统</strong>。</p>
+</blockquote>
+<blockquote>
+<p>嵌入式系统就是一个具有特定功能或用途的隐藏在某种设备中的计算机软硬件集合体，没有固定的特征形状。</p>
+</blockquote>
+<h4 id="1-1-3-嵌入式系统三要素"><a href="#1-1-3-嵌入式系统三要素" class="headerlink" title="1.1.3 嵌入式系统三要素"></a>1.1.3 嵌入式系统三要素</h4><p><strong>嵌入性</strong>：嵌入到对象体系中，有对象环境要求</p>
+<p><strong>专用性</strong>：软、硬件按对象要求设计、裁剪</p>
+<p><strong>计算机</strong>：实现对象的智能化功能</p>
+<h4 id="1-1-4-其他的定义"><a href="#1-1-4-其他的定义" class="headerlink" title="1.1.4 其他的定义"></a>1.1.4 其他的定义</h4><blockquote>
+<p>嵌⼊封闭产品中的信息处理系统。</p>
+</blockquote>
+<blockquote>
+<p>看不见的计算机，一般不能被用户编程, 它有一些专用的 I&#x2F;O 设备, 对用户的接口是应用专用的。</p>
+</blockquote>
+<blockquote>
+<p>An embedded system is a computer system contained within some larger device or product with the intent purpose of providing monitoring and control services to that device.</p>
+<p>嵌入式系统是包含在某些较大的设备或产品中的计算机系统，其目的是为该设备提供<strong>监视和控制</strong>服务。</p>
+</blockquote>
+<blockquote>
+<p>Any sort of device which includes a programmable computer but itself is not intended to be a general-purpose computer.</p>
+<p>包括可编程计算机在内但本身<strong>不打算用作通用计算机</strong>的任何设备。</p>
+</blockquote>
+<blockquote>
+<p>包含有计算机，但又不是通用计算机的计算机应用系统。</p>
+</blockquote>
+<h3 id="1-2-特点"><a href="#1-2-特点" class="headerlink" title="1.2 特点"></a>1.2 特点</h3><ul>
+<li>嵌入式系统通常是<strong>形式多样、面向特定应用</strong>的</li>
+<li>嵌入式系统得到<strong>多种类型的处理器和处理器体系结构</strong>的支持</li>
+<li>嵌入式系统通常极其<strong>关注成本</strong></li>
+<li>嵌入式系统有<strong>实时性和可靠性</strong>的要求</li>
+<li>嵌入式系统使用的操作系统一般是<strong>适应多种处理器、可剪裁、轻量型、实时可靠、可固化</strong>的嵌入式操作系统</li>
+<li>嵌入式系统开发需要<strong>专门工具和特殊方法</strong></li>
+</ul>
+<h3 id="1-3-分类"><a href="#1-3-分类" class="headerlink" title="1.3 分类"></a>1.3 分类</h3><h4 id="1-3-1-按嵌入式处理器的位数来分类"><a href="#1-3-1-按嵌入式处理器的位数来分类" class="headerlink" title="1.3.1 按嵌入式处理器的位数来分类"></a>1.3.1 按嵌入式处理器的位数来分类</h4><ul>
+<li><p>4 位嵌入式系统：大量应用</p>
+</li>
+<li><p>8 位嵌入式系统：大量应用</p>
+</li>
+<li><p>16 位嵌入式系统：大量应用</p>
+</li>
+<li><p>32 位嵌入式系统：正成为主流发展趋势</p>
+</li>
+<li><p>64 位嵌入式系统：高度复杂的、高速的嵌入式系统已经开始采用</p>
+</li>
+</ul>
+<h4 id="1-3-2-按应用来分类"><a href="#1-3-2-按应用来分类" class="headerlink" title="1.3.2 按应用来分类"></a>1.3.2 按应用来分类</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030163439013.png" alt="image-20221030163439013"></p>
+<h4 id="1-3-3-按速度分类"><a href="#1-3-3-按速度分类" class="headerlink" title="1.3.3 按速度分类"></a>1.3.3 按速度分类</h4><ul>
+<li>强实时系统，其系统响应时间在毫秒或微秒级。</li>
+<li>⼀般实时系统，其系统响应时间在几秒的数量级上，其实时性的要求比强实时系统要差⼀些。</li>
+<li>弱实时系统，其系统响应时间约为数十秒或更长。这种系统的响应时间可能随系统负载的轻重⽽变化</li>
+</ul>
+<h4 id="1-3-4-按确定性来分类"><a href="#1-3-4-按确定性来分类" class="headerlink" title="1.3.4 按确定性来分类"></a>1.3.4 按确定性来分类</h4><p>根据确定性的强弱，可将嵌入式系统分为硬实时、软实时系统：</p>
+<ul>
+<li><p>硬实时：系统对系统响应时间有严格的要求，如果系统响应时间不能满⾜，就要引起系统崩溃或致命的错误。</p>
+</li>
+<li><p>软实时：系统对系统响应时间有要求，但是如果系统响应时间不能满⾜，不会导致系统出现致命的错误或崩溃。</p>
+</li>
+</ul>
+<h4 id="1-3-5-按嵌入式系统软件复杂程度来分类"><a href="#1-3-5-按嵌入式系统软件复杂程度来分类" class="headerlink" title="1.3.5 按嵌入式系统软件复杂程度来分类"></a>1.3.5 按嵌入式系统软件复杂程度来分类</h4><ul>
+<li>循环轮询系统</li>
+<li>有限状态机系统</li>
+<li>前后台系统</li>
+<li>单处理器多任务系统</li>
+<li>多处理器多任务系统</li>
+</ul>
+<h3 id="1-4-典型应用"><a href="#1-4-典型应用" class="headerlink" title="1.4 典型应用"></a>1.4 典型应用</h3><p>无线感知网络、CPS、IOT</p>
+<ol>
+<li>工控设备</li>
+<li>军用电子设备</li>
+<li>航天／航空</li>
+<li>汽车电子</li>
+<li>信息家电</li>
+<li>通信</li>
+<li>智能玩具</li>
+<li>可穿戴</li>
+</ol>
+<h2 id="2-嵌入式系统、IOT、CPS的基本组成"><a href="#2-嵌入式系统、IOT、CPS的基本组成" class="headerlink" title="2 嵌入式系统、IOT、CPS的基本组成"></a>2 嵌入式系统、IOT、CPS的基本组成</h2><h3 id="2-1-嵌入式系统的组成"><a href="#2-1-嵌入式系统的组成" class="headerlink" title="2.1 嵌入式系统的组成"></a>2.1 嵌入式系统的组成</h3><p>嵌入式系统一般由<strong>嵌入式硬件和软件</strong>组成</p>
+<ul>
+<li><p>硬件以<strong>微处理器</strong>为核心集成存储器和系统专用的<strong>输入&#x2F;输出设备</strong></p>
+</li>
+<li><p>软件包括：<strong>初始化代码及驱动、嵌入式操作系统和应用程序</strong>等，这些软件有机地结合在一起，形成系统特定的一体化软件。</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030164145573.png" alt="image-20221030164145573"></p>
+<h3 id="2-2-IOT的组成"><a href="#2-2-IOT的组成" class="headerlink" title="2.2 IOT的组成"></a>2.2 IOT的组成</h3><p>物联网(IoT)是物理设备、车辆（也称为“连接设备”和“智能设备”）、建筑物和其他嵌入电子设备、软件、传感器、执行器和网络连接的项目的互联网络，使这些对象能够收集和交换数据。</p>
+<h3 id="2-3-CPS的组成"><a href="#2-3-CPS的组成" class="headerlink" title="2.3 CPS的组成"></a>2.3 CPS的组成</h3><p>网络物理系统(CPS，Cyber-physical System)是一种由基于计算机的算法控制或监视的机制，与互联网及其用户紧密集成。</p>
+<p>是计算进程与物理进程的集成</p>
+<ul>
+<li><p>更多地强调嵌⼊式系统与物理学的深度结合</p>
+</li>
+<li><p><strong>CPS&#x3D;ES+Physics</strong></p>
+</li>
+</ul>
+<p>⼈机物融合系统</p>
+<p>深度融合了各类信息技术：传感器、嵌入式计算、云计算、网络通信、软件，使得各种信息化能⼒（3C：计算-Computer、通信-Communication和控制-Control）⾼度协同和⾃治，实现⽣产应⽤系统⾃主、智能、动态、系统化地监视并改变物理世界的性状。</p>
+<h2 id="3-嵌入式系统设计"><a href="#3-嵌入式系统设计" class="headerlink" title="3 嵌入式系统设计"></a>3 嵌入式系统设计</h2><h3 id="3-1-嵌入式系统面临挑战"><a href="#3-1-嵌入式系统面临挑战" class="headerlink" title="3.1 嵌入式系统面临挑战"></a>3.1 嵌入式系统面临挑战</h3><ul>
+<li>需要多少硬件？</li>
+<li>如何满⾜时限要求，如何处理多项功能在时间上的协调⼀致关系？</li>
+<li>如何降低系统的功耗？</li>
+<li>如何设计以保证系统可升级？</li>
+<li>如何保证系统可靠地⼯作？</li>
+</ul>
+<h3 id="3-2-传统开发过程"><a href="#3-2-传统开发过程" class="headerlink" title="3.2 传统开发过程"></a>3.2 传统开发过程</h3><p>传统软硬件设计过程的基本特征：</p>
+<ul>
+<li><p>系统在一开始就被划分为软件和硬件两大部分</p>
+</li>
+<li><p>软件和硬件独立进行行开发设计</p>
+</li>
+<li><p>经常采用“硬件优先”的方法</p>
+</li>
+</ul>
+<p>隐含的一些问题：</p>
+<ul>
+<li><p>软硬件之间的交互受到很大限制：凭经验划分软硬件、软硬件之间的相互性能影响很难评估</p>
+</li>
+<li><p>系统集成相对滞后，NRE 较大，越后期发现的问题可能会导致越严重的开销</p>
+</li>
+</ul>
+<p>因此：设计质量差、设计修改代价高、研制周期不能有保障</p>
+<h3 id="3-3-软硬件协同设计"><a href="#3-3-软硬件协同设计" class="headerlink" title="3.3 软硬件协同设计 -"></a>3.3 软硬件协同设计 -</h3><ul>
+<li><p>硬件&#x2F;软件协同设计是指一种专用系统的设计，该系统由几个专用 IC 组成，这些 IC 与通用处理器上的软件过程配合使用（1994 年）</p>
+</li>
+<li><p>硬件&#x2F;软件协同设计意味着通过并发设计来利用硬件和软件的协同作用，从而达到系统级目标（1997 年）</p>
+</li>
+<li><p>硬件&#x2F;软件协同设计试图通过提供可以告诉设计人员系统是否满足其性能，功耗和尺寸目标的分析方法以及可以使设计人员快速评估许多潜在设计方法的综合方法，来提高嵌入式系统设计的可预测性（2003 年）</p>
+</li>
+<li><p>它从新兴学科（90 年代初）发展为主流技术（今天）</p>
+</li>
+</ul>
+<h3 id="3-4-软硬件划分"><a href="#3-4-软硬件划分" class="headerlink" title="3.4 软硬件划分"></a>3.4 软硬件划分</h3><ul>
+<li><p>嵌⼊式系统的设计涉及硬件与软件部件，设计中必须决定什么功能由硬件实现，什么功能由软件实现。</p>
+</li>
+<li><p>硬件和软件具有双重性</p>
+</li>
+<li><p>软硬件变动对系统的决策造成影响</p>
+</li>
+<li><p>划分和选择需要考虑多种因素</p>
+</li>
+<li><p>硬件和软件的双重性是划分决策的前提</p>
+</li>
+</ul>
+<h4 id="3-4-1-通常由软件实现的部分"><a href="#3-4-1-通常由软件实现的部分" class="headerlink" title="3.4.1 通常由软件实现的部分"></a>3.4.1 通常由软件实现的部分</h4><ul>
+<li>操作系统功能：任务调度、资源管理、设备驱动</li>
+<li>协议栈：TCP&#x2F;IP</li>
+<li>应用软件框架</li>
+<li>除基本系统、物理理接口、基本逻辑电路，许多由硬件实现的功能都可以由软件实现</li>
+</ul>
+<h4 id="3-4-2-双重性部分"><a href="#3-4-2-双重性部分" class="headerlink" title="3.4.2 双重性部分"></a>3.4.2 双重性部分</h4><ul>
+<li>算法：加密&#x2F;解密、编码&#x2F;解码、压缩&#x2F;解压。</li>
+<li>数学运算：浮点运算、FFT。</li>
+</ul>
+<h4 id="3-4-3-软硬件技术对系统结构的影响"><a href="#3-4-3-软硬件技术对系统结构的影响" class="headerlink" title="3.4.3 软硬件技术对系统结构的影响"></a>3.4.3 软硬件技术对系统结构的影响</h4><p>硬软件设计的趋势：融合、渗透</p>
+<ul>
+<li><p>硬件设计的软件化：VHDL、Verilog、HANDL-C</p>
+</li>
+<li><p>软件实现的硬件化：各种算法的 ASIC</p>
+</li>
+</ul>
+<p>对系统设计的影响：协同设计</p>
+<ul>
+<li>增加灵活性</li>
+<li>增加了风险</li>
+</ul>
+<h2 id="4-嵌入式硬件系统基础"><a href="#4-嵌入式硬件系统基础" class="headerlink" title="4 嵌入式硬件系统基础"></a>4 嵌入式硬件系统基础</h2><h3 id="4-1-嵌入式微处理器基础"><a href="#4-1-嵌入式微处理器基础" class="headerlink" title="4.1 嵌入式微处理器基础"></a>4.1 嵌入式微处理器基础</h3><h4 id="4-1-1-冯诺伊曼结构与哈佛结构"><a href="#4-1-1-冯诺伊曼结构与哈佛结构" class="headerlink" title="4.1.1 冯诺伊曼结构与哈佛结构"></a>4.1.1 冯诺伊曼结构与哈佛结构</h4><p><strong>冯诺依曼结构</strong></p>
+<ol>
+<li>存储器保存数据、指令。</li>
+<li>中央处理器（CPU）从内存中获取指令：分离的 CPU 和内存区分可编程计算机。</li>
+<li>CPU 寄存器可提供帮助：程序计数器（PC），指令寄存器（IR），通用寄存器等。</li>
+<li>嵌入式中两个版本的 CPU 都有</li>
+</ol>
+<p><strong>哈佛结构</strong></p>
+<ol>
+<li>Harvard 不能使用自我修改的代码。</li>
+<li>Harvard 允许同时进行两次内存提取。</li>
+<li>大多数 DSP（数据信号处理，Digital Signal Process）使用 Harvard 架构来传输数据：<ul>
+<li>更大的内存带宽</li>
+<li>更可预测的带宽</li>
+</ul>
+</li>
+</ol>
+<h4 id="4-1-2-CISC与RISC"><a href="#4-1-2-CISC与RISC" class="headerlink" title="4.1.2 CISC与RISC"></a>4.1.2 CISC与RISC</h4><ul>
+<li><p>Complex instruction set computer (CISC): 复杂指令集计算机</p>
+<ul>
+<li>多种寻址模式、多种操作</li>
+</ul>
+</li>
+<li><p>Reduced instruction set computer (RISC): 精简指令集计算机</p>
+<ul>
+<li>加载&#x2F;存储、可传递指令</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030173243340.png" alt="image-20221030173243340"></p>
+<h4 id="4-1-3-流水线技术"><a href="#4-1-3-流水线技术" class="headerlink" title="4.1.3 流水线技术"></a>4.1.3 流水线技术</h4><h4 id="4-1-4-分类"><a href="#4-1-4-分类" class="headerlink" title="4.1.4 分类"></a>4.1.4 分类</h4><ul>
+<li><p>嵌入式微处理器种类繁多，按位数可分为4位、8位、16位、32位和64位。</p>
+</li>
+<li><p>根据功能不同，嵌入式微处理器分为四种：</p>
+<ol>
+<li>嵌入式微处理单元(MPU)</li>
+<li>嵌入式微控制器(MCU)</li>
+<li>嵌入式DSP处理器</li>
+<li>嵌入式SoC</li>
+</ol>
+</li>
+</ul>
+<h4 id="4-1-5-选型"><a href="#4-1-5-选型" class="headerlink" title="4.1.5 选型"></a>4.1.5 选型</h4><p><strong>选择微控制器的标准</strong></p>
+<blockquote>
+<p>如何选择一个适合的微服务控制器?<br>嵌入式系统都是实时系统，需要考虑效率</p>
+</blockquote>
+<ol>
+<li><p>有效且经济地满足任务的计算需求</p>
+<ul>
+<li><p>速度，ROM和RAM的数量，I&#x2F;O端口和计时器的数量，大小，包装，功耗</p>
+</li>
+<li><p>容易升级</p>
+</li>
+<li><p>单位成本</p>
+</li>
+</ul>
+</li>
+<li><p>软件开发工具的可用性：</p>
+<ul>
+<li>汇编器，调试器，C编译器，仿真器，模拟器，技术支持(开源框架可能没有多少人维护)</li>
+</ul>
+</li>
+<li><p>微控制器的广泛可用性和可靠来源。</p>
+</li>
+</ol>
+<h6 id="选择微控制器的-10-个步骤"><a href="#选择微控制器的-10-个步骤" class="headerlink" title="选择微控制器的 10 个步骤"></a>选择微控制器的 10 个步骤</h6><ol>
+<li>列出所需的硬件接口（保证物理上，设备可以连接到微处理器上）</li>
+<li>检查软件架构</li>
+<li>选择架构</li>
+<li>确定内存需求</li>
+<li>开始寻找微控制器</li>
+<li>检查成本和功率约束</li>
+<li>检查零件可用性</li>
+<li>选择开发套件</li>
+<li>研究编译器和工具</li>
+<li>开始实验</li>
+</ol>
+<h3 id="4-2-嵌入式系统的存储体系"><a href="#4-2-嵌入式系统的存储体系" class="headerlink" title="4.2 嵌入式系统的存储体系"></a>4.2 嵌入式系统的存储体系</h3><h4 id="4-2-1-存储器系统：存储器系统的层次结构"><a href="#4-2-1-存储器系统：存储器系统的层次结构" class="headerlink" title="4.2.1 存储器系统：存储器系统的层次结构"></a>4.2.1 存储器系统：存储器系统的层次结构</h4><ol>
+<li>平面单空间（Flat single-space）</li>
+<li>分段式（Segmented）</li>
+<li>组切换（Bank-switched）</li>
+<li>多空间存储区（Multiple-space）</li>
+<li>虚拟内存（Virtual）</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>平面单空间内存</th>
+<th>分段内存</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153554918.png"></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153610637.png" alt="image-20221031153610637"></td>
+</tr>
+<tr>
+<td><strong>组切换内存</strong></td>
+<td><strong>多空间内存</strong></td>
+</tr>
+<tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153636127.png" alt="image-20221031153636127"></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153652256.png" alt="image-20221031153652256"></td>
+</tr>
+</tbody></table>
+<h4 id="4-2-2-ROM的种类与选型"><a href="#4-2-2-ROM的种类与选型" class="headerlink" title="4.2.2 ROM的种类与选型"></a>4.2.2 ROM的种类与选型</h4><p>ROM 可以在工厂编程。</p>
+<p>闪存(Flash)是现场可编程 ROM 的主要形式。</p>
+<ul>
+<li>电可擦除，只能块擦除。</li>
+<li>随机访问，但是写入&#x2F;擦除比读取慢得多。</li>
+<li>NOR 闪存更加灵活。</li>
+<li>NAND 闪存更密集。</li>
+</ul>
+<h4 id="4-2-3-Flash的种类与选型"><a href="#4-2-3-Flash的种类与选型" class="headerlink" title="4.2.3 Flash的种类与选型"></a>4.2.3 Flash的种类与选型</h4><ul>
+<li>非易失性存储器：闪存可以在线（in-circuit）编程。</li>
+<li>闪存可以被电擦除和重新编程。</li>
+<li>轻便、紧凑、节能且更便宜。</li>
+</ul>
+<p>分类：</p>
+<ul>
+<li>NOR：字可读取，逐块擦除。</li>
+<li>NAND：按页读取（512-4K字节），逐块擦除。<ul>
+<li>NAND 相对便宜，擦除速度更快，顺序访问时间更短。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-2-4-RAM的种类与选型"><a href="#4-2-4-RAM的种类与选型" class="headerlink" title="4.2.4 RAM的种类与选型"></a>4.2.4 RAM的种类与选型</h4><p>动态RAM(DRAM)密集，需要刷新。</p>
+<ul>
+<li>同步 DRAM 是主要类型。</li>
+<li>SDRAM 使用时钟来提高性能，以流水线方式访问存储器。</li>
+</ul>
+<p>静态RAM(SRAM)更快，密度更低，消耗更多功率。</p>
+<h4 id="4-2-5-Cache"><a href="#4-2-5-Cache" class="headerlink" title="4.2.5 Cache-"></a>4.2.5 Cache-</h4><ul>
+<li>并不是严格的内存架构</li>
+<li>可能经常被程序员忽略</li>
+<li>优化有效使用的关键</li>
+</ul>
+<h3 id="4-3-嵌入式系统总线"><a href="#4-3-嵌入式系统总线" class="headerlink" title="4.3 嵌入式系统总线"></a>4.3 嵌入式系统总线</h3><h4 id="4-3-1-总线结构，常见的总线及特点"><a href="#4-3-1-总线结构，常见的总线及特点" class="headerlink" title="4.3.1 总线结构，常见的总线及特点"></a>4.3.1 总线结构，常见的总线及特点</h4><p><strong>CPU总线</strong></p>
+<ul>
+<li><p>总线允许CPU，内存，设备进行通信：共享的通讯媒体。</p>
+</li>
+<li><p>总线是：</p>
+<ul>
+<li><p>一组电线</p>
+</li>
+<li><p>通信协议</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>微处理器总线</strong></p>
+<ul>
+<li><p>时钟提供同步。</p>
+</li>
+<li><p>读时R&#x2F;W为true(读时R&#x2F;W’为false)。</p>
+</li>
+<li><p>地址是地址线的位捆绑。</p>
+</li>
+<li><p>数据是n位数据线束。</p>
+</li>
+<li><p>当n bit数据就绪时，数据就绪信号发出</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031161002670.png" alt="image-20221031161002670"></p>
+<p><strong>系统总线配置</strong></p>
+<ul>
+<li><p>多个总线允许并行处理：</p>
+<ul>
+<li><p>一条总线上的设备慢。</p>
+</li>
+<li><p>快速设备位于单独的总线上。</p>
+</li>
+</ul>
+</li>
+<li><p>桥连接两条总线</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031221056726.png" alt="image-20221031221056726"></p>
+<p><strong>ARM AMBA bus</strong></p>
+<ul>
+<li><p>两个类别:</p>
+<ul>
+<li><p>AHB是高性能的。</p>
+</li>
+<li><p>APB是低速，低成本的。</p>
+</li>
+</ul>
+</li>
+<li><p>AHB支持流水线，突发传输，拆分事务，多个总线主控。</p>
+</li>
+<li><p>所有设备都是APB上的从设备。</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031221519490.png" alt="image-20221031221519490"></p>
+<h4 id="4-3-2-输入输出编程：忙等IO和中断IO"><a href="#4-3-2-输入输出编程：忙等IO和中断IO" class="headerlink" title="4.3.2 输入输出编程：忙等IO和中断IO"></a>4.3.2 输入输出编程：忙等IO和中断IO</h4><p>peek and poke</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> <span class="hljs-title function_">peek</span><span class="hljs-params">(<span class="hljs-type">char</span> *location)</span> &#123;<br>   <span class="hljs-keyword">return</span> *location;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">poke</span><span class="hljs-params">(<span class="hljs-type">char</span> *location, <span class="hljs-type">char</span> newval)</span> &#123;<br>   (*location) = newval;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-3-2-1-忙等-busy-wait-输出"><a href="#4-3-2-1-忙等-busy-wait-输出" class="headerlink" title="4.3.2.1 忙等(busy&#x2F;wait)输出"></a>4.3.2.1 忙等(busy&#x2F;wait)输出</h5><p>对设备进行编程的最简单方法。使用指令测试设备何时准备就绪：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">current_char = mystring;<br><span class="hljs-keyword">while</span> (*current_char != <span class="hljs-string">&#x27;\0&#x27;</span>) &#123;<br>   poke(OUT_CHAR, *current_char);<br>   <span class="hljs-keyword">while</span> (peek(OUT_STATUS) != <span class="hljs-number">0</span>);<br>   current_char++;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>同步忙等I&#x2F;O</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span> (TRUE) &#123;<br>   <span class="hljs-comment">/* read */</span><br>   <span class="hljs-keyword">while</span> (peek(IN_STATUS) == <span class="hljs-number">0</span>);<br>   achar = (<span class="hljs-type">char</span>)peek(IN_DATA);<br>   <span class="hljs-comment">/* write */</span><br>   poke(OUT_DATA,achar);<br>   poke(OUT_STATUS,<span class="hljs-number">1</span>);<br>   <span class="hljs-keyword">while</span> (peek(OUT_STATUS) != <span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h5 id="4-3-2-2-中断I-O"><a href="#4-3-2-2-中断I-O" class="headerlink" title="4.3.2.2 中断I&#x2F;O"></a>4.3.2.2 中断I&#x2F;O</h5><p>忙等是非常低效的</p>
+<ul>
+<li><p>CPU 在测试设备时不能做其他工作。</p>
+</li>
+<li><p>很难实现同步 I&#x2F;O</p>
+</li>
+</ul>
+<p>中断允许设备更改 CPU 中的控制流</p>
+<ul>
+<li>导致子例程调用以处理设备。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031230125096.png" alt="image-20221031230125096"></p>
+<h4 id="4-3-3-Programming-I-O：Independent-I-O-port-memory-mapped-I-O"><a href="#4-3-3-Programming-I-O：Independent-I-O-port-memory-mapped-I-O" class="headerlink" title="4.3.3 Programming I&#x2F;O：Independent I&#x2F;O port. memory-mapped I&#x2F;O."></a>4.3.3 Programming I&#x2F;O：Independent I&#x2F;O port. memory-mapped I&#x2F;O.</h4><p>通信期间选择控制寄存器或数据缓冲区的三种方法</p>
+<ol>
+<li>独立的 I&#x2F;O 端口：需要专门的指令来完成。</li>
+<li>内存映射的 I&#x2F;O。</li>
+<li>混合解决方案（统一编址）：混合模型包括内存映射的 I&#x2F;O 数据缓冲区和用于控制寄存器的单独的 I&#x2F;O 端口。</li>
+</ol>
+<p>英特尔 x86 提供了输入输出说明。大多数其他 CPU 使用内存映射的 I&#x2F;O。</p>
+<p>I&#x2F;O 指令不排除内存映射的 I&#x2F;O</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031224207967.png" alt="image-20221031224207967"></p>
+<h5 id="4-3-3-1-内存映射的-I-O"><a href="#4-3-3-1-内存映射的-I-O" class="headerlink" title="4.3.3.1 内存映射的 I&#x2F;O"></a>4.3.3.1 内存映射的 I&#x2F;O</h5><p>优点：</p>
+<ol>
+<li>在内存映射的 I&#x2F;O 模式下，设备控制寄存器只是内存中的变量，并且可以与其他变量一样用 C 寻址。因此，可以完全用 C 语言编写 I&#x2F;O 设备驱动程序。</li>
+<li>在这种模式下，不需要特殊的保护机制即可阻止用户进程执行 I&#x2F;O 操作。</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>当前大多数嵌入式处理器都支持内存缓存。缓存设备控制寄存器将导致灾难。为了防止这种情况，必须为硬件提供选择性禁用缓存的功能。这将增加嵌入式系统中硬件和软件的复杂性。</li>
+<li>如果只有一个地址空间，则所有内存模块和所有 I&#x2F;O 设备都必须检查所有内存引用，以便确定要响应的内存引用。这会严重影响系统性能。</li>
+</ol>
+<p><strong>ARM 内存映射的 I&#x2F;O：</strong></p>
+<ol>
+<li>定义设备地址：<code>DEV1 EQU 0x1000</code></li>
+<li>读写代码：</li>
+</ol>
+<figure class="highlight armasm"><table><tr><td class="code"><pre><code class="hljs armasm"><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r1</span>, <span class="hljs-symbol">#DEV1</span> 	<span class="hljs-comment">; set up device adrs</span><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r0</span>, [<span class="hljs-built_in">r1</span>] 	<span class="hljs-comment">; read DEV1</span><br><span class="hljs-keyword">LDR</span> <span class="hljs-built_in">r0</span>, <span class="hljs-number">#8</span> 		<span class="hljs-comment">; set up value to write</span><br><span class="hljs-keyword">STR</span> <span class="hljs-built_in">r0</span>, [<span class="hljs-built_in">r1</span>] 	<span class="hljs-comment">; write value to device</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="5-嵌入式系统软件知识"><a href="#5-嵌入式系统软件知识" class="headerlink" title="5 嵌入式系统软件知识"></a>5 嵌入式系统软件知识</h2><h3 id="5-1嵌入式软件基础知识"><a href="#5-1嵌入式软件基础知识" class="headerlink" title="5.1嵌入式软件基础知识"></a>5.1嵌入式软件基础知识</h3><h4 id="5-1-1嵌入式软件的特点"><a href="#5-1-1嵌入式软件的特点" class="headerlink" title="5.1.1嵌入式软件的特点"></a>5.1.1嵌入式软件的特点</h4><ul>
+<li>内存：<ul>
+<li>有限，影响编程语言的选择以及开发工具的使用（比如编译器优化）。</li>
+</ul>
+</li>
+<li>CPU 处理能力：<ul>
+<li>成本和功耗的考虑，ES 不得不采用保守的设计方案，其中的 CPU 往往只是恰好满足要求。</li>
+</ul>
+</li>
+<li>操作系统：<ul>
+<li>OS（Windows&#x2F;Linux）、RTOS、专有 OS 或裸机</li>
+</ul>
+</li>
+<li>实时行为：<ul>
+<li>实时系统不一定会运行得很快，但一定是可预测的，通常的术语叫做确定性</li>
+<li>实时性的要求对于 OS 的选择和程序设计都有影响</li>
+</ul>
+</li>
+<li>开发流程：<ul>
+<li>ES 往往没有足够的资源进行软件开发。交叉开发对于工具的选择有很大影响。</li>
+<li>开发过程也不同，编辑&#x2F;编译&#x2F;调试的循环是一样的，但执行程序这一步却非常复杂，需要把代码转移到目标机上或者在某种环境下运行。</li>
+</ul>
+</li>
+<li>执行流程：<ul>
+<li>多数嵌入式设备从开机开始就会运行某个程序，该程序会一直运行到系统关机。这个程序可能存储在 ROM，也可能是从非易失性存储器转移到 RAM 中执行。</li>
+</ul>
+</li>
+<li>每一个嵌入式设备都是不同的：<ul>
+<li>可能是技术层面的：不同的 CPU 架构、内存、外设、应用程序和操作系统</li>
+<li>也可能是商业运作层面的，比如手机开发、生产的商业模式就和核磁共振扫描仪完全不同。</li>
+</ul>
+</li>
+<li>嵌入式软件工具和组件：<ul>
+<li>与桌面软件开发一样，嵌入式软件工程师需要运用工具来构建和测试软件。同时，也很可能会引入可重用的软件组件</li>
+</ul>
+</li>
+<li>开发工具：<ul>
+<li>从表面上看，嵌入式软件的开发过程和桌面软件很像：编译代码模块，然后在调试器的控制下执行。然而，并不这么简单，有着显著的不同。</li>
+<li>往往是使用交叉编译器来进行嵌入式软件的开发。</li>
+<li>有时候嵌入式应用中会直接包含小部分的汇编代码：出于对性能的考量。</li>
+<li>嵌入式链接器除了将多个对象模块和函数库例程整合在一起以外，链接器还负责在内存中正确定位代码和数据。嵌入式系统的内存映射十分复杂，对于精确性的要求也十分严格。链接器必需能够灵活地应对这些要求。</li>
+<li>嵌入式调试器并不是一个单一的组件，而是一系列对应不同运行环境的工具。借由在本地或者指令集模拟器中运行代码，代码可以仅在宿主机上运行。调试器也可以和一个目标板相连接（JTAG 或其他方式，如以太网），并执行代码。</li>
+<li>其他一些更有针对性的工具，典型的选项包括分析实时性能、代码执行时设备功耗情况的分析器。</li>
+</ul>
+</li>
+<li>软件组件：<ul>
+<li>最简单和显而易见的可重用的软件组件是库。一些库是由编译器提供的，嵌入式编译器提供的库应当是适合嵌入式环境的：可以重入、可以被存储在 ROM 中。</li>
+<li>其他可用的库，特别是针对 C++ 的库，如标准模板库 STL。这些库可能并不适合嵌入式应用，在使用时要多加小心。</li>
+<li>与硬件交互是难点之一。在 OS 内部设备驱动提供了这样的接口</li>
+<li>ES 的互联性不断提高，需要不同的网络支持，TCP&#x2F;IP 或总线 CAN\I2C，其他网络技术 SNMP、Zigbee、Bluetooth、WiFi 和 USB。最重要的是应该检查有效性，确保符合标准，并能和其他系统互通互联。</li>
+<li>嵌入式设备对于有组织的数据存储是有需求的，比如能够应对电源故障和支持多线程。</li>
+<li>LCD（往往是触摸式的）成本减低让其能够被应用到嵌入式设计中。软件于是迎来了一项挑战：支持复杂的图像和用户界面。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-1-2嵌入式软件的分类"><a href="#5-1-2嵌入式软件的分类" class="headerlink" title="5.1.2嵌入式软件的分类"></a>5.1.2嵌入式软件的分类</h4><ul>
+<li><p>系统软件</p>
+<ul>
+<li>系统软件控制和管理嵌入式系统资源，为嵌入式应用提供支持的各种软件，如设备驱动程序、嵌入式操作系统、嵌入式中间件等。</li>
+</ul>
+</li>
+<li><p>应用软件</p>
+<ul>
+<li>应用软件是嵌入式系统中的上层软件，它定义了嵌入式设备的主要功能和用途，并负责与用户进行交互。应用软件是嵌入式系统功能的体现，如飞行控制软件、手机软件、MP3播放软件、电子地图软件等，一般面向特定的应用领域。</li>
+</ul>
+</li>
+<li><p>支撑软件</p>
+<ul>
+<li>支撑软件是指辅助软件开发的工具软件，如系统分析设计工具、在线仿真工具、交叉编译器、源程序模拟器和配置管理工具等。</li>
+</ul>
+</li>
+</ul>
+<h4 id="5-1-3-嵌入式软件体系结构"><a href="#5-1-3-嵌入式软件体系结构" class="headerlink" title="5.1.3 嵌入式软件体系结构"></a>5.1.3 嵌入式软件体系结构</h4><ol>
+<li>轮询</li>
+<li>有限状态机</li>
+<li>带中断的轮询</li>
+<li>仅有中断</li>
+<li>函数队列调度</li>
+<li>实时操作系统(RTOS)</li>
+</ol>
+<h5 id="轮询"><a href="#轮询" class="headerlink" title="轮询"></a>轮询</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//Round Robin / Control Loop</span><br><span class="hljs-comment">//Everything is a function call from the main loop</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>   <span class="hljs-keyword">while</span>(TRUE) &#123;<br>      <span class="hljs-keyword">if</span> (device_A requires service)<br>         service device_A<br>      <span class="hljs-title function_">if</span> <span class="hljs-params">(device_B requires service)</span><br>         service device_B<br>      <span class="hljs-title function_">if</span> <span class="hljs-params">(device_C requires service)</span><br>         service device_C<br>      ... and so on until all devices have been serviced, then start over again<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>优先级: 无，一切按顺序进行。</li>
+<li>响应时间: 所有任务的总和。</li>
+<li>变更的影响: 重大。改变执行任务时间或添加任务会影响所有其他任务。</li>
+<li>简单性: 没有共享数据问题</li>
+</ol>
+<h5 id="有限状态机"><a href="#有限状态机" class="headerlink" title="有限状态机"></a>有限状态机</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>   <span class="hljs-keyword">switch</span>(state) &#123;<br>      <span class="hljs-keyword">case</span> IDLE:<br>         check_buttons();<br>         LEDisplay_hex(NUM1);<br>         <span class="hljs-keyword">if</span> (BUTTON1 | BUTTON2 | BUTTON3)<br>            state=SHOW;<br>         <span class="hljs-keyword">break</span>;<br>      <span class="hljs-keyword">case</span> SHOW:<br>         NUM1=<span class="hljs-number">0</span>;<br>         <span class="hljs-keyword">if</span> (BUTTON1) NUM1 += <span class="hljs-number">0x0001</span>;<br>         <span class="hljs-keyword">if</span> (BUTTON2) NUM1 += <span class="hljs-number">0x0010</span>;<br>         <span class="hljs-keyword">if</span> (BUTTON3) NUM1 += <span class="hljs-number">0x0100</span>;<br>         state=IDLE;<br>         <span class="hljs-keyword">break</span>;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>与轮询类似，但只有当前状态被执行.</li>
+<li>每个状态决定下一个状态(非顺序执行)。</li>
+<li>优先级: 每个状态确定下一个状态的优先级。</li>
+<li>响应时间: 所有任务的总和。</li>
+<li>变更的影响: 重大。更改任务的执行时间或添加任务会影响所有其他任务。</li>
+<li>简单性: 没有共享数据问题。</li>
+</ol>
+<h5 id="带中断的轮询"><a href="#带中断的轮询" class="headerlink" title="带中断的轮询"></a>带中断的轮询</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">BOOL flag_A = FALSE; <span class="hljs-comment">/* Flag for device_A follow-up processing */</span><br><span class="hljs-comment">/* Interrupt Service Routine for high priority device_A */</span><br>ISR_A(<span class="hljs-type">void</span>) &#123;<br>   ... handle urgent requirements <span class="hljs-keyword">for</span> device_A in the ISR,<br>   then <span class="hljs-built_in">set</span> flag <span class="hljs-keyword">for</span> follow-up processing in the main loop ...<br>   flag_A = TRUE;<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &#123;<br>   <span class="hljs-keyword">while</span>(TRUE) &#123;<br>      <span class="hljs-keyword">if</span> (flag_A)<br>         <span class="hljs-comment">//中断任务优先</span><br>         flag_A = FALSE<br>         <span class="hljs-comment">//... do follow-up processing with data from device_A</span><br>      <span class="hljs-keyword">if</span> (device_B requires service)<br>         service device_B<br>      <span class="hljs-keyword">if</span> (device_C requires service)<br>         service device_C<br>      <span class="hljs-comment">//... and so on until all high and low priority devices have been serviced</span><br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>优先级-中断优先于主循环:优先中断</li>
+<li>响应时间：所有任务的总和以及中断执行时间</li>
+<li>更改的影响：对于中断服务程序而言意义不大。与轮询作为主循环相同。</li>
+<li>共享数据-必须处理与中断服务程序共享的数据</li>
+</ol>
+<h5 id="仅有中断"><a href="#仅有中断" class="headerlink" title="仅有中断"></a>仅有中断</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">SET_VECTOR(P3AD, button_isr);<br>SET_VECTOR(TIMER1, display_isr);<br><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>如果ISR过多，可能会有问题</li>
+<li>如果高优先级的中断执行所需的时间比低优先级的中断所需的时间长，那么某些中断将被错过，或者您需要处理嵌套中断。</li>
+<li>优先级-中断优先</li>
+<li>响应时间:中断执行时间</li>
+<li>变化的影响-对于中断服务程序而言意义不大。</li>
+<li>共享数据-必须处理与中断服务程序共享的数据</li>
+</ol>
+<h5 id="函数队列调度"><a href="#函数队列调度" class="headerlink" title="函数队列调度"></a>函数队列调度</h5><ol>
+<li>函数指针被添加到队列中。</li>
+<li>主循环在队列中循环并执行任务。</li>
+<li>任务或中断将新任务添加到功能队列中。</li>
+<li>最坏的时机</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_TASKS 20</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span><span class="hljs-params">(*FuncPtr)</span><span class="hljs-params">()</span>;<br>FuncPtr tasks[MAX_TASKS]<br><span class="hljs-type">int</span> current_task = <span class="hljs-number">0</span>;<br><span class="hljs-type">void</span> <span class="hljs-title function_">add_task</span><span class="hljs-params">(FuncPtr func)</span> &#123;<br>   <span class="hljs-type">int</span> n;<br>   <span class="hljs-keyword">for</span>(n=current_task+<span class="hljs-number">1</span>;n&lt;MAX_TASKS<span class="hljs-number">-1</span>;n++) &#123;<br>      <span class="hljs-keyword">if</span>(tasks[n]==<span class="hljs-literal">NULL</span>) &#123;<br>         tasks[n]=func;<br>         <span class="hljs-keyword">return</span>;<br>      &#125;<br>   &#125;<br>   <span class="hljs-keyword">for</span>(n=<span class="hljs-number">0</span>;n&lt;current_task;n++) &#123;<br>      <span class="hljs-keyword">if</span>(tasks[n]==<span class="hljs-literal">NULL</span>) &#123;<br>         tasks[n]=func;<br>         <span class="hljs-keyword">return</span>;<br>   &#125;<br>&#125;<br><br>id <span class="hljs-title function_">display_task</span><span class="hljs-params">()</span> &#123;<br>   LEDisplay_hex(NUM1);<br>   add_task(button_task);<br>&#125;<br><span class="hljs-type">void</span> <span class="hljs-title function_">button_task</span><span class="hljs-params">()</span> &#123;<br>   check_buttons();<br>   NUM1=<span class="hljs-number">0</span>;<br>   <span class="hljs-keyword">if</span> (BUTTON1) NUM1 += <span class="hljs-number">0x0001</span>;<br>   <span class="hljs-keyword">if</span> (BUTTON2) NUM1 += <span class="hljs-number">0x0010</span>;<br>   <span class="hljs-keyword">if</span> (BUTTON3) NUM1 += <span class="hljs-number">0x0100</span>;<br>   add_task(display_task);<br>&#125;<br><br>main() &#123;<br>   LEDisplay_init();<br>   LEDisplay_clear();<br>   init_buttons();<br><br>   add_task(button_task);<br><br>   <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>      <span class="hljs-keyword">if</span>(tasks[current_task]==<span class="hljs-literal">NULL</span>) &#123;<br>      ;<br>      &#125;<br>      <span class="hljs-keyword">else</span> &#123;<br>         (*tasks[current_task])();<br>         tasks[current_task]=<span class="hljs-literal">NULL</span>;<br>      &#125;<br>      current_task++;<br>      <span class="hljs-keyword">if</span>(current_task&gt;=MAX_TASKS) current_task=<span class="hljs-number">0</span>;<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>优先级：中断优先。任务按顺序执行</li>
+<li>响应时间：最长任务的执行时间</li>
+<li>变更的影响：低。中断管理优先级功能。队列管理较低的优先级。</li>
+<li>共享数据：必须处理与中断服务程序共享的数据</li>
+</ol>
+<p><strong>函数队列优化</strong></p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 添加时间队列</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span><span class="hljs-params">(*FuncPtr)</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>   <span class="hljs-type">long</span> timer;<br>   <span class="hljs-type">int</span> status;<br>   FuncPtr;<br>&#125; Task;<br><br>Task task_list[MAX_TASKS];<br><br><span class="hljs-comment">// 添加任务优先级</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span><span class="hljs-params">(*FuncPtr)</span>;<br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>   <span class="hljs-type">int</span> priority;<br>   FuncPtr;<br>&#125; Task;<br><br>Task task_list[MAX_TASKS];<br></code></pre></td></tr></table></figure>
+
+<h5 id="抢占式多任务或多线程"><a href="#抢占式多任务或多线程" class="headerlink" title="抢占式多任务或多线程"></a>抢占式多任务或多线程</h5><ol>
+<li>在这种类型的系统中，低级代码段基于计时器(连接到中断)在任务或线程之间切换。这是通常认为系统具有”操作系统”内核的级别。根据所需的功能量，它或多或少地引入了管理在概念上并行运行的多个任务的复杂性。</li>
+<li>要访问共享数据，必须通过某种同步策略来控制，例如消息队列，信号量或非阻塞同步方案。</li>
+<li>由于这些复杂性，组织通常使用实时操作系统(RTOS)，从而使应用程序程序员可以专注于设备功能而不是操作系统服务。</li>
+</ol>
+<h3 id="5-2-嵌入式操作系统基础知识"><a href="#5-2-嵌入式操作系统基础知识" class="headerlink" title="5.2 嵌入式操作系统基础知识"></a>5.2 嵌入式操作系统基础知识</h3><h4 id="5-2-1-RTOS概念、特点、选型原则（商业化RTOS）"><a href="#5-2-1-RTOS概念、特点、选型原则（商业化RTOS）" class="headerlink" title="5.2.1 RTOS概念、特点、选型原则（商业化RTOS）"></a>5.2.1 RTOS概念、特点、选型原则（商业化RTOS）</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h5><p><strong>实时操作系统</strong>（Real-time operating system, RTOS）是指面向实时运行对象，并为其服务的操作系统<br>实时操作系统与一般的操作系统相比，最大的特色就是“实时性”，如果有一个任务需要执行，实时操作系统会马上（在较短时间内）执行该任务，不会有较长的延时。这种特性保证了各个任务的及时执行。</p>
+<h5 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h5><ul>
+<li>可靠性</li>
+<li>可预测性、确定性</li>
+<li>性能</li>
+<li>紧凑性</li>
+<li>可扩展性</li>
+</ul>
+<h5 id="选型原则"><a href="#选型原则" class="headerlink" title="选型原则"></a>选型原则</h5><h4 id="5-2-2-任务管理"><a href="#5-2-2-任务管理" class="headerlink" title="5.2.2 任务管理"></a><strong>5.2.2</strong> 任务管理</h4><h5 id="进程、线程、任务的概念"><a href="#进程、线程、任务的概念" class="headerlink" title="进程、线程、任务的概念"></a>进程、线程、任务的概念</h5><p>进程是程序的执行</p>
+<p>线程则是某一进程中一路单独运行的程序</p>
+<p>任务是指由软件完成的一个活动</p>
+<h5 id="任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）"><a href="#任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）" class="headerlink" title="任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）"></a>任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101150649119.png" alt="image-20221101150649119"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101150737127.png" alt="image-20221101150737127"></p>
+<h5 id="任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）"><a href="#任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）" class="headerlink" title="任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）"></a>任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）</h5><p><strong>抢占式调度</strong></p>
+<ul>
+<li>假设所有线程都有优先级<ul>
+<li>静态分配的(在线程持续时间内恒定)</li>
+<li>动态分配的(可能有所不同)</li>
+</ul>
+</li>
+<li>进一步假设内核跟踪”启用”了哪些线程(能够执行，例如在等待信号量或互斥量或时间到期之前不会被阻塞)。</li>
+<li>抢占式调度：<ul>
+<li>在任何时候，具有最高优先级的已启用线程正在执行。</li>
+<li>每当任何线程更改优先级或启用状态时，内核都可以分派新线程。</li>
+</ul>
+</li>
+</ul>
+<h5 id="实时系统及任务调度（RMS、EDF算法）"><a href="#实时系统及任务调度（RMS、EDF算法）" class="headerlink" title="实时系统及任务调度（RMS、EDF算法）"></a>实时系统及任务调度（RMS、EDF算法）</h5><p><strong>速率单调调度(RMS, Rate Monotonic Scheduling)</strong></p>
+<ul>
+<li>假设使用以下命令定期调用n个任务：<ul>
+<li>周期T1，…，Tn(施加实时约束)</li>
+<li>所有任务都是独立的。</li>
+<li>最坏情况执行时间(WCET)C1，…，Cn：假定没有互斥请锁、信号量或阻塞的I&#x2F;O</li>
+<li>没有优先级限制</li>
+<li>固定优先级</li>
+<li>上下文切换所需的时间可以忽略不计</li>
+<li>抢占式调度</li>
+</ul>
+</li>
+<li>定理：如果任何优先级分配产生可行的时间表，则按时段排序的优先级(最小时段具有最高优先级)也产生可行的时间表。</li>
+<li>就可行性而言，RMS是最佳的</li>
+<li>周期越短，优先级越高</li>
+</ul>
+<p><strong>EDF，Earliest deadline first(1974)</strong></p>
+<ol>
+<li>通过允许任务随时”到达”(准备就绪)来扩展EDD。</li>
+<li>最早截止时间优先(EDF)：给定n个独立任务的集合，它们具有任意的到达时间，任何在任意时刻执行所有到达任务中绝对截止时间最早的任务的算法都是最优的。最大程度地减少<strong>延迟</strong>。</li>
+<li>证明使用类似的互换参数。</li>
+</ol>
+<p>截止时间最小优先级最高</p>
+<p><strong>RMS和EDF哪个好</strong></p>
+<ol>
+<li>RMS优点:调度决策更简单(固定优先级与EDF所需的动态优先级。EDF调度程序必须维护按优先级排序的就绪任务列表。)</li>
+<li>EDF优点:<ol>
+<li>由于EDF是关于最大延迟的最优，也是关于可行性的最优选择。 RMS仅是关于可行性的最优选择。对于不可行的计划，RMS会完全阻止优先级较低的任务，从而导致无限的最大延迟。</li>
+<li>如果RMS无法做到这一点，那么EDF可以充分利用</li>
+<li>EDF实际上减少了抢占，因此减少了上下文切换的开销。</li>
+<li>截止时间可能与周期不同。</li>
+</ol>
+</li>
+</ol>
+<h5 id="任务间通信（共享内存、消息、管道、信号）"><a href="#任务间通信（共享内存、消息、管道、信号）" class="headerlink" title="任务间通信（共享内存、消息、管道、信号）"></a>任务间通信（共享内存、消息、管道、信号）</h5><h5 id="同步与互斥（竞争条件、临界区、互斥、信号量、死锁）"><a href="#同步与互斥（竞争条件、临界区、互斥、信号量、死锁）" class="headerlink" title="同步与互斥（竞争条件、临界区、互斥、信号量、死锁）"></a>同步与互斥（竞争条件、临界区、互斥、信号量、死锁）</h5><ol>
+<li>线程访问共享资源时，它们需要使用互斥对象以确保数据完整性。</li>
+<li>互斥体也可能使调度复杂化。</li>
+</ol>
+<h4 id="5-2-3存储管理"><a href="#5-2-3存储管理" class="headerlink" title="5.2.3存储管理"></a>5.2.3存储管理</h4><p> 嵌入式系统静态和动态内存管理</p>
+<h3 id="5-3-嵌入式系统程序设计"><a href="#5-3-嵌入式系统程序设计" class="headerlink" title="5.3 嵌入式系统程序设计"></a>5.3 嵌入式系统程序设计</h3><h4 id="5-3-1嵌入式软件开发基础知识"><a href="#5-3-1嵌入式软件开发基础知识" class="headerlink" title="5.3.1嵌入式软件开发基础知识"></a>5.3.1嵌入式软件开发基础知识</h4><h4 id="5-3-2嵌入式软件开发环境"><a href="#5-3-2嵌入式软件开发环境" class="headerlink" title="5.3.2嵌入式软件开发环境"></a>5.3.2嵌入式软件开发环境</h4><p>交叉开发（宿主机、目标机）</p>
+<p>编辑器、编译器、链接器、调试器、模拟器</p>
+<p>常用嵌入式开发工具</p>
+<p>集成开发环境</p>
+<p>开发辅助工具</p>
+<h4 id="5-3-3嵌入式软件开发"><a href="#5-3-3嵌入式软件开发" class="headerlink" title="5.3.3嵌入式软件开发"></a>5.3.3嵌入式软件开发</h4><p>Ref: </p>
+<p>嵌入式计算系统设计原理。</p>
+<p>  嵌入式系统导论-CPS方法。</p>
+<h2 id="6-嵌入式实时内核（结合µC-OS-II和freertos）"><a href="#6-嵌入式实时内核（结合µC-OS-II和freertos）" class="headerlink" title="6 嵌入式实时内核（结合µC&#x2F;OS-II和freertos）"></a>6 嵌入式实时内核（结合µC&#x2F;OS-II和freertos）</h2><h3 id="6-1-实时任务调度"><a href="#6-1-实时任务调度" class="headerlink" title="6.1 实时任务调度"></a>6.1 实时任务调度</h3><ul>
+<li>μC&#x2F;OS-II是可抢占实时多任务内核，它总是运⾏就绪任务中优先级最⾼的那⼀个。</li>
+<li>μC&#x2F;OS-II中不⽀持时间⽚轮转法，每个任务的优先级要求不⼀样且是唯⼀的，所以任务调度的⼯作就是：查找准备就绪的最⾼优先级的任务并进⾏上下⽂切换。</li>
+<li>μC&#x2F;OS-II任务调度所花的时间为常数，与应⽤程序中建⽴的任务数⽆关。</li>
+<li>确定哪个任务的优先级最⾼，应该选择哪个任务去运⾏，这部分的⼯作是由调度器（Scheduler）来完成的。<ul>
+<li>任务级的调度是由函数OSSched()完成的；</li>
+<li>中断级的调度是由另⼀个函数OSIntExt()完成的。</li>
+</ul>
+</li>
+</ul>
+<p>FreeRTOS是⼀个实时操作系统，所奉⾏的调度规则：</p>
+<ul>
+<li>⾼优先级抢占低优先级任务，系统永远执⾏最⾼优先级的任务。</li>
+<li>同等优先级的任务轮转调度。</li>
+</ul>
+<h3 id="6-2-中断与时钟"><a href="#6-2-中断与时钟" class="headerlink" title="6.2 中断与时钟"></a>6.2 中断与时钟</h3><p>μC&#x2F;OS-II系统响应中断的过程为：</p>
+<p>系统接收到中断请求后，这时如果CPU处于中断允许状态（即中断是开放的），系统就会中止正在运行的当前任务，而按照中断向量的指向转而去运行中断服务子程序；当中断服务子程序的运行结束后，系统将会根据情况返回到被中止的任务继续运行或者转向运行另一个具有更高优先级别的就绪任务。</p>
+<ol>
+<li>时钟节拍是⼀种特殊的中断；</li>
+<li>μC&#x2F;OS需要⽤户提供周期性信号源，⽤于实现时间延时和确认超时。节拍率应在10到100Hz之间，时钟节拍率越⾼，系统的额外负荷就越重；</li>
+<li>时钟节拍的实际频率取决于⽤户应⽤程序的精度。时钟节拍源可以是专门的硬件定时器，或是来⾃50&#x2F;60Hz交流电源的信号。</li>
+</ol>
+<h3 id="6-3-同步与通信"><a href="#6-3-同步与通信" class="headerlink" title="6.3 同步与通信"></a>6.3 同步与通信</h3><p>所有的通信信号都被看成是事件(event), μC&#x2F;OS-II通过事件控制块(ECB)来管理每⼀个具体事件。</p>
+<p>同步可以通过开关中断实现。互斥使用信号量。</p>
+<p>通信可以使用邮箱和消息队列实现。</p>
+<h3 id="6-4-存储管理（静态、动态）"><a href="#6-4-存储管理（静态、动态）" class="headerlink" title="6.4 存储管理（静态、动态）"></a>6.4 存储管理（静态、动态）</h3><p>μC&#x2F;OS采⽤的是固定分区的存储管理⽅法</p>
+<ul>
+<li>µC&#x2F;OS把连续的⼤块内存按分区来管理，每个分区 包含有整数个⼤⼩相同的块；</li>
+<li>在⼀个系统中可以有多个内存分区，这样，⽤户的应⽤程序就可以从不同的内存分区中得到不同⼤⼩ 的内存块。但是，特定的内存块在释放时必须重新放回它以前所属于的内存分区；</li>
+<li>采⽤这样的内存管理算法，上⾯的内存碎⽚问题就得到了解决。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101160551985.png" alt="image-20221101160551985"></p>
+<p>为了便于管理，在µC&#x2F;OS中使⽤内存控制块MCB（Memory Control Block）来跟踪每⼀个内存分区，系统中的每个内存分区都有它⾃⼰的 MCB。</p>
+<h2 id="7-bsp-bootloader"><a href="#7-bsp-bootloader" class="headerlink" title="7 bsp, bootloader"></a>7 bsp, bootloader</h2><h3 id="7-1-嵌入式系统的启动过程"><a href="#7-1-嵌入式系统的启动过程" class="headerlink" title="7.1 嵌入式系统的启动过程"></a>7.1 嵌入式系统的启动过程</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101161059659.png" alt="image-20221101161059659"></p>
+<h3 id="7-2-bsp，特点，与bios区别"><a href="#7-2-bsp，特点，与bios区别" class="headerlink" title="7.2 bsp，特点，与bios区别"></a>7.2 bsp，特点，与bios区别</h3><h4 id="7-2-1-bsp"><a href="#7-2-1-bsp" class="headerlink" title="7.2.1 bsp"></a>7.2.1 bsp</h4><p>BSP全称“板级⽀持包”（Board Support Packages），就是⼀段启动代码，和计算机主板的BIOS差不多，但提供的功能区别就相差很⼤。</p>
+<h4 id="7-2-2-特点"><a href="#7-2-2-特点" class="headerlink" title="7.2.2 特点"></a>7.2.2 特点</h4><p>硬件相关性</p>
+<ul>
+<li>因为嵌⼊式实时系统的硬件环境具有应⽤相关性，所以，作为⾼层软件与硬件之间的接⼝，BSP必须为操作系统提供操作和控制具体硬件的⽅法。</li>
+</ul>
+<p>操作系统相关性</p>
+<ul>
+<li>不同的操作系统具有各⾃的软件层次结构，因此，不同的操作系统具有特定的硬件接⼝形式</li>
+</ul>
+<h4 id="7-2-3-区别"><a href="#7-2-3-区别" class="headerlink" title="7.2.3 区别"></a>7.2.3 区别</h4><p>BSP是和操作系统绑在⼀起运⾏，尽管BSP的开始部分和BIOS所做的⼯作类似，但是BSP还包含和系统有关的基本驱动。</p>
+<p>BIOS程序是⽤户不能更改，编译编程的，只能对参数进⾏修改设置，但是程序员还可以编程修改BSP，在BSP中任意添加⼀些和系统⽆关的驱动或程序，甚⾄可以把上层开发的统统放到BSP中 。</p>
+<h3 id="7-3-引导模式"><a href="#7-3-引导模式" class="headerlink" title="7.3 引导模式"></a>7.3 引导模式</h3><p>操作系统引导概念：将操作系统装⼊内存并开始执⾏的过程。</p>
+<p>按时间效率和空间效率不同的要求，分为两种模式：</p>
+<ul>
+<li>不需要BootLoader的引导模式：时间效率⾼，系统快速启动，直接在NOR flash或ROM系列⾮易失性存储介质中运⾏，但不满⾜运⾏速度的要求。</li>
+<li>需要BootLoader的引导模式：节省空间，牺牲时间，适⽤于硬件成本低，运⾏速度快，但启动速度 相对慢</li>
+</ul>
+<h3 id="7-4-bootloader及其启动过程"><a href="#7-4-bootloader及其启动过程" class="headerlink" title="7.4 bootloader及其启动过程"></a>7.4 bootloader及其启动过程</h3><p>嵌⼊式系统中的 OS 启动加载程序</p>
+<p>引导加载程序</p>
+<ul>
+<li>包括固化在固件(firmware)中的 boot 代码(可选)，和 Boot Loader两⼤部分</li>
+<li>是系统加电后运⾏的第⼀段软件代码</li>
+</ul>
+<p>相对于操作系统内核来说，它是⼀个硬件抽象层</p>
+<p>BIOS 在完成硬件检测和资源分配后，将硬盘 MBR 中的 Boot Loader 读到系统的 RAM 中，然后将控制权交给 OS Boot Loader</p>
+<p>Boot Loader 的主要运⾏任务就是将内核映象从硬盘上读到 RAM 中，然后跳转到内核的⼊⼝点去运⾏，即开始启动操作系统。</p>
+<h2 id="8-建模"><a href="#8-建模" class="headerlink" title="8 建模"></a>8 建模</h2><p>有限状态机及其应用。</p>
+<p>有限状态机的实现。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" title="嵌入式系统概论">
+                        <b>#</b> 嵌入式系统概论
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1-%E6%A6%82%E8%BF%B0/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">1 嵌入式系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1 定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-IEEE-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.1 IEEE 的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E5%9B%BD%E5%86%85%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.2 国内的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-text">1.1.3 嵌入式系统三要素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-4-%E5%85%B6%E4%BB%96%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.4 其他的定义</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%89%B9%E7%82%B9"><span class="toc-text">1.2 特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%88%86%E7%B1%BB"><span class="toc-text">1.3 分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E6%8C%89%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E4%BD%8D%E6%95%B0%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.1 按嵌入式处理器的位数来分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E6%8C%89%E5%BA%94%E7%94%A8%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.2 按应用来分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-%E6%8C%89%E9%80%9F%E5%BA%A6%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.3 按速度分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-%E6%8C%89%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.4 按确定性来分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-5-%E6%8C%89%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%A4%8D%E6%9D%82%E7%A8%8B%E5%BA%A6%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.5 按嵌入式系统软件复杂程度来分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-text">1.4 典型应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E3%80%81IOT%E3%80%81CPS%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="toc-text">2 嵌入式系统、IOT、CPS的基本组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.1 嵌入式系统的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-IOT%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.2 IOT的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-CPS%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.3 CPS的组成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="toc-text">3 嵌入式系统设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E9%9D%A2%E4%B8%B4%E6%8C%91%E6%88%98"><span class="toc-text">3.1 嵌入式系统面临挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BC%A0%E7%BB%9F%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="toc-text">3.2 传统开发过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%8D%8F%E5%90%8C%E8%AE%BE%E8%AE%A1"><span class="toc-text">3.3 软硬件协同设计 -</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%88%92%E5%88%86"><span class="toc-text">3.4 软硬件划分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-1-%E9%80%9A%E5%B8%B8%E7%94%B1%E8%BD%AF%E4%BB%B6%E5%AE%9E%E7%8E%B0%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-text">3.4.1 通常由软件实现的部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-%E5%8F%8C%E9%87%8D%E6%80%A7%E9%83%A8%E5%88%86"><span class="toc-text">3.4.2 双重性部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8A%80%E6%9C%AF%E5%AF%B9%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">3.4.3 软硬件技术对系统结构的影响</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80"><span class="toc-text">4 嵌入式硬件系统基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80"><span class="toc-text">4.1 嵌入式微处理器基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E5%86%AF%E8%AF%BA%E4%BC%8A%E6%9B%BC%E7%BB%93%E6%9E%84%E4%B8%8E%E5%93%88%E4%BD%9B%E7%BB%93%E6%9E%84"><span class="toc-text">4.1.1 冯诺伊曼结构与哈佛结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-CISC%E4%B8%8ERISC"><span class="toc-text">4.1.2 CISC与RISC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF"><span class="toc-text">4.1.3 流水线技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-4-%E5%88%86%E7%B1%BB"><span class="toc-text">4.1.4 分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-5-%E9%80%89%E5%9E%8B"><span class="toc-text">4.1.5 选型</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84-10-%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-text">选择微控制器的 10 个步骤</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AD%98%E5%82%A8%E4%BD%93%E7%B3%BB"><span class="toc-text">4.2 嵌入式系统的存储体系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">4.2.1 存储器系统：存储器系统的层次结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-ROM%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="toc-text">4.2.2 ROM的种类与选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-Flash%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="toc-text">4.2.3 Flash的种类与选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-4-RAM%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="toc-text">4.2.4 RAM的种类与选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-5-Cache"><span class="toc-text">4.2.5 Cache-</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF"><span class="toc-text">4.3 嵌入式系统总线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-1-%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E6%80%BB%E7%BA%BF%E5%8F%8A%E7%89%B9%E7%82%B9"><span class="toc-text">4.3.1 总线结构，常见的总线及特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-2-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%BF%99%E7%AD%89IO%E5%92%8C%E4%B8%AD%E6%96%ADIO"><span class="toc-text">4.3.2 输入输出编程：忙等IO和中断IO</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-2-1-%E5%BF%99%E7%AD%89-busy-wait-%E8%BE%93%E5%87%BA"><span class="toc-text">4.3.2.1 忙等(busy&#x2F;wait)输出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-2-2-%E4%B8%AD%E6%96%ADI-O"><span class="toc-text">4.3.2.2 中断I&#x2F;O</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-3-Programming-I-O%EF%BC%9AIndependent-I-O-port-memory-mapped-I-O"><span class="toc-text">4.3.3 Programming I&#x2F;O：Independent I&#x2F;O port. memory-mapped I&#x2F;O.</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-3-1-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E7%9A%84-I-O"><span class="toc-text">4.3.3.1 内存映射的 I&#x2F;O</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E7%9F%A5%E8%AF%86"><span class="toc-text">5 嵌入式系统软件知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">5.1嵌入式软件基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">5.1.1嵌入式软件的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-2%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">5.1.2嵌入式软件的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">5.1.3 嵌入式软件体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BD%AE%E8%AF%A2"><span class="toc-text">轮询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-text">有限状态机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%A6%E4%B8%AD%E6%96%AD%E7%9A%84%E8%BD%AE%E8%AF%A2"><span class="toc-text">带中断的轮询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%85%E6%9C%89%E4%B8%AD%E6%96%AD"><span class="toc-text">仅有中断</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%98%9F%E5%88%97%E8%B0%83%E5%BA%A6"><span class="toc-text">函数队列调度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%A2%E5%8D%A0%E5%BC%8F%E5%A4%9A%E4%BB%BB%E5%8A%A1%E6%88%96%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">抢占式多任务或多线程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">5.2 嵌入式操作系统基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-1-RTOS%E6%A6%82%E5%BF%B5%E3%80%81%E7%89%B9%E7%82%B9%E3%80%81%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99%EF%BC%88%E5%95%86%E4%B8%9A%E5%8C%96RTOS%EF%BC%89"><span class="toc-text">5.2.1 RTOS概念、特点、选型原则（商业化RTOS）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99"><span class="toc-text">选型原则</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-2-%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-text">5.2.2 任务管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E3%80%81%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">进程、线程、任务的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E3%80%81%E4%BB%BB%E5%8A%A1%E6%8E%A7%E5%88%B6%E5%9D%97%E3%80%81%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%8A%B6%E6%80%81%E5%8F%8A%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E3%80%81%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%EF%BC%89"><span class="toc-text">任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%EF%BC%88%E5%8F%AF%E6%8A%A2%E5%8D%A0%E8%B0%83%E5%BA%A6%E3%80%81%E4%B8%8D%E5%8F%AF%E6%8A%A2%E5%8D%A0%E8%B0%83%E5%BA%A6%E3%80%81%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%E3%80%81%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC%E7%AE%97%E6%B3%95%E3%80%81%E4%BC%98%E5%85%88%E7%BA%A7%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-text">任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%EF%BC%88RMS%E3%80%81EDF%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-text">实时系统及任务调度（RMS、EDF算法）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%88%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E7%AE%A1%E9%81%93%E3%80%81%E4%BF%A1%E5%8F%B7%EF%BC%89"><span class="toc-text">任务间通信（共享内存、消息、管道、信号）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5%EF%BC%88%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E3%80%81%E4%B8%B4%E7%95%8C%E5%8C%BA%E3%80%81%E4%BA%92%E6%96%A5%E3%80%81%E4%BF%A1%E5%8F%B7%E9%87%8F%E3%80%81%E6%AD%BB%E9%94%81%EF%BC%89"><span class="toc-text">同步与互斥（竞争条件、临界区、互斥、信号量、死锁）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-3%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">5.2.3存储管理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">5.3 嵌入式系统程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">5.3.1嵌入式软件开发基础知识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">5.3.2嵌入式软件开发环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91"><span class="toc-text">5.3.3嵌入式软件开发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AE%9E%E6%97%B6%E5%86%85%E6%A0%B8%EF%BC%88%E7%BB%93%E5%90%88%C2%B5C-OS-II%E5%92%8Cfreertos%EF%BC%89"><span class="toc-text">6 嵌入式实时内核（结合µC&#x2F;OS-II和freertos）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%AE%9E%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="toc-text">6.1 实时任务调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%B8%AD%E6%96%AD%E4%B8%8E%E6%97%B6%E9%92%9F"><span class="toc-text">6.2 中断与时钟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E5%90%8C%E6%AD%A5%E4%B8%8E%E9%80%9A%E4%BF%A1"><span class="toc-text">6.3 同步与通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%EF%BC%88%E9%9D%99%E6%80%81%E3%80%81%E5%8A%A8%E6%80%81%EF%BC%89"><span class="toc-text">6.4 存储管理（静态、动态）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-bsp-bootloader"><span class="toc-text">7 bsp, bootloader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">7.1 嵌入式系统的启动过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-bsp%EF%BC%8C%E7%89%B9%E7%82%B9%EF%BC%8C%E4%B8%8Ebios%E5%8C%BA%E5%88%AB"><span class="toc-text">7.2 bsp，特点，与bios区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-1-bsp"><span class="toc-text">7.2.1 bsp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-2-%E7%89%B9%E7%82%B9"><span class="toc-text">7.2.2 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-3-%E5%8C%BA%E5%88%AB"><span class="toc-text">7.2.3 区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E5%BC%95%E5%AF%BC%E6%A8%A1%E5%BC%8F"><span class="toc-text">7.3 引导模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-bootloader%E5%8F%8A%E5%85%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">7.4 bootloader及其启动过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%BB%BA%E6%A8%A1"><span class="toc-text">8 建模</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F30%2F%25E5%25B5%258C%25E5%2585%25A5%25E5%25BC%258F%25E7%25B3%25BB%25E7%25BB%259F%25E6%25A6%2582%25E8%25AE%25BA%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/30/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

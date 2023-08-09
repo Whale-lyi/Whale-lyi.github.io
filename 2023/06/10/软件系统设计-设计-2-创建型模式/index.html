@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      软件系统设计-设计(2) 创建型模式 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">软件系统设计-设计(2) 创建型模式</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                    <b>#</b> 软件系统设计
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-简单工厂模式-对象"><a href="#1-简单工厂模式-对象" class="headerlink" title="1. 简单工厂模式(对象)"></a>1. 简单工厂模式(对象)</h2><h3 id="1-1-模式动机"><a href="#1-1-模式动机" class="headerlink" title="1.1 模式动机"></a>1.1 模式动机</h3><p>考虑一个简单的软件应用场景，<strong>一个软件系统可以提供多个外观不同</strong>的按钮(如圆形按钮、矩形按钮、菱形按钮等)，这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式</p>
+<h3 id="1-2-模式定义"><a href="#1-2-模式定义" class="headerlink" title="1.2 模式定义"></a>1.2 模式定义</h3><p>简单工厂模式(Simple Factory Pattern)：又称为<strong>静态工厂</strong>方法(Static Factory Method)模式，它属于<strong>类创建型模式</strong>。在简单工厂模式中，可以根据参数的不同返回不同类的实例。简单工厂模式专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类</p>
+<p>工厂角色提供<strong>静态工厂方法</strong>来创建其他类的实例，这样子满足了原则：</p>
+<ol>
+<li>单一职责原则(封装变化)<strong>将对象的创建和使用分离</strong>(创建本质上和使用上强耦合)，将复杂度降低，并将变化的部分和不变的部分分离开。</li>
+<li>但是对开闭原则的支持不太好</li>
+</ol>
+<p>Java一般会提供一个static的方法，这样就不必实例化工厂对象。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/1.png" alt="img" style="zoom: 50%;" />
+
+<h3 id="1-3-模式结构"><a href="#1-3-模式结构" class="headerlink" title="1.3 模式结构"></a>1.3 模式结构</h3><p>简单工厂模式包含如下角色：</p>
+<ol>
+<li>Factory：工厂角色</li>
+<li>Product：抽象产品角色</li>
+<li>ConcreteProduct：具体产品角色</li>
+</ol>
+<h3 id="1-4-模式分析"><a href="#1-4-模式分析" class="headerlink" title="1.4 模式分析"></a>1.4 模式分析</h3><ul>
+<li><strong>将对象的创建和对象本身业务处理分离</strong>可以<strong>降低系统的耦合度</strong>，使得两者修改起来都相对容易。</li>
+<li>在调用工厂类的工厂方法时，由于工厂方法是<strong>静态方法</strong>，使用起来很方便，可通过类名直接调用，而且只需要传入一个简单的参数即可，在实际开发中，还可以在调用时将所传入的参数保存在XML等格式的<strong>配置文件</strong>中，修改参数时无须修改任何Java源代码。</li>
+<li>简单工厂模式最大的问题在于<strong>工厂类的职责相对过重</strong>，增加新的产品需要修改工厂类的判断逻辑，这一点<strong>与开闭原则</strong>是相违背的。</li>
+<li>简单工厂模式的要点在于：<strong>当你需要什么，只需要传入一个正确的参数，就可以获取你所需要的对象，而无须知道其创建细节</strong></li>
+</ul>
+<h3 id="1-5-模式实例与解析"><a href="#1-5-模式实例与解析" class="headerlink" title="1.5 模式实例与解析"></a>1.5 模式实例与解析</h3><p>在某OA系统中，系统根据对比用户在登录时输入的账号和密码以及在数据库中存储的账号和密码是否一致来进行身份验证，如果验证通过，则取出存储在数据库中的用户权限等级(以整数形式存储)，根据不同的权限等级创建不同等级的用户对象，不同等级的用户对象拥有不同的操作权限。现使用简单工厂模式来设计该权限管理模块</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/2.png" alt="img" style="zoom:50%;" />
+
+<h3 id="1-6-模式优缺点"><a href="#1-6-模式优缺点" class="headerlink" title="1.6 模式优缺点"></a>1.6 模式优缺点</h3><p>简单工厂模式的优点</p>
+<ol>
+<li>工厂类含有必要的判断逻辑，可以决定在什么时候创建哪一个产品类的实例，客户端可以免除直接创建产品对象的责任，而仅仅”消费”产品；简单工厂模式通过这种做法<strong>实现了对责任的分割，它提供了专门的工厂类用于创建对象</strong>。</li>
+<li><strong>客户端无须知道所创建的具体产品类的类名，只需要知道具体产品类所对应的参数即可</strong>，对于一些复杂的类名，通过简单工厂模式可以减少使用者的记忆量。</li>
+<li><strong>通过引入配置文件，可以在不修改任何客户端代码的情况下更换和增加新的具体产品类</strong>，在一定程度上提高了系统的灵活性。</li>
+</ol>
+<p>简单工厂模式的缺点</p>
+<ol>
+<li>由于<strong>工厂类集中了所有产品创建逻辑</strong>，一旦不能正常工作，整个系统都要受到影响。</li>
+<li>使用简单工厂模式将会<strong>增加系统中类的个数</strong>，在一定程序上增加了系统的复杂度和理解难度。</li>
+<li><strong>系统扩展困难，一旦添加新产品就不得不修改工厂逻辑，在产品类型较多时</strong>，有可能造成工厂逻辑过于复杂，不利于系统的扩展和维护。只是把分散在系统各个地方的变化汇总到了一起。</li>
+<li>简单工厂模式由于使用了静态工厂方法，造成<strong>工厂角色无法形成基于继承的等级结构</strong>。</li>
+</ol>
+<h3 id="1-7-模式使用环境"><a href="#1-7-模式使用环境" class="headerlink" title="1.7 模式使用环境"></a>1.7 模式使用环境</h3><ul>
+<li><strong>工厂类负责创建的对象比较少</strong>：由于创建的对象较少，不会造成工厂方法中的业务逻辑<strong>太过复杂</strong>(如果扩展使比较少的)</li>
+<li><strong>客户端只知道传入工厂类的参数，对于如何创建对象不关心</strong>：客户端既不需要关心创建细节，甚至连类名都不需要记住，只需要知道类型所对应的参数(比如只知道名称参数)</li>
+</ul>
+<h3 id="1-8-模式应用"><a href="#1-8-模式应用" class="headerlink" title="1.8 模式应用"></a>1.8 模式应用</h3><p>在JDK类库中广泛使用了<strong>简单工厂模式</strong>，如工具类java.text.DateFormat，它用于格式化一个本地日期或者时间。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> DateFormat <span class="hljs-title function_">getDateInstance</span><span class="hljs-params">()</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> DateFormat <span class="hljs-title function_">getDateInstance</span><span class="hljs-params">(<span class="hljs-type">int</span> style)</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> DateFormat <span class="hljs-title function_">getDateInstance</span><span class="hljs-params">(<span class="hljs-type">int</span> style, Locale locale)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>Java加密技术：对称加密和非对称加密，但是变化比较少</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//获取不同加密算法的密钥生成器</span><br><span class="hljs-type">KeyGenerator</span> <span class="hljs-variable">keyGen</span> <span class="hljs-operator">=</span> KeyGenerator.getInstance(<span class="hljs-string">&quot;DESede&quot;</span>);<br><span class="hljs-comment">//创建密码器</span><br><span class="hljs-type">Cipher</span> <span class="hljs-variable">cp</span> <span class="hljs-operator">=</span> Cipher.getInstance(<span class="hljs-string">&quot;DESede&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-9-模式扩展"><a href="#1-9-模式扩展" class="headerlink" title="1.9 模式扩展"></a>1.9 模式扩展</h3><h4 id="简单工厂模式的简化"><a href="#简单工厂模式的简化" class="headerlink" title="简单工厂模式的简化"></a>简单工厂模式的简化</h4><ul>
+<li>在有些情况下工厂类可以由抽象产品角色扮演，一个抽象产品类同时也是子类的工厂，也就是说把静态工厂方法写到抽象产品类中。</li>
+<li>有些情况下，产品本身只提供一两个方法，此时抽象产品可以和简单工厂进行角色合并。</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302144630958.png" alt="image-20230302144630958" style="zoom:80%;" />
+
+<h2 id="2-工厂方法模式-类"><a href="#2-工厂方法模式-类" class="headerlink" title="2. 工厂方法模式(类)"></a>2. 工厂方法模式(类)</h2><h3 id="2-1-简单工厂模式的不足"><a href="#2-1-简单工厂模式的不足" class="headerlink" title="2.1 简单工厂模式的不足"></a>2.1 简单工厂模式的不足</h3><p>在简单工厂模式中，只提供了一个工厂类，该工厂类处于对产品类进行实例化的中心位置，它知道每一个产品对象的创建细节，并决定何时实例化哪一个产品类。**简单工厂模式最大的缺点是当有新产品要加入到系统中时，必须修改工厂类，加入必要的处理逻辑，这违背了”开闭原则”**。</p>
+<p>在简单工厂模式中，所有的产品都是由同一个工厂创建，工厂类职责较重，业务逻辑较为复杂，具体产品与工厂类之间的耦合度高，严重影响了系统的灵活性和扩展性，而工厂方法模式则可以很好地解决这一问题。</p>
+<h3 id="2-2-模式动机"><a href="#2-2-模式动机" class="headerlink" title="2.2 模式动机"></a>2.2 模式动机</h3><p>考虑这样一个系统，按钮工厂类可以返回一个具体的按钮实例，如圆形按钮、矩形按钮、菱形按钮等。在这个系统中，如果需要增加一种新类型的按钮，如椭圆形按钮，那么**除了增加一个新的具体产品类之外，还需要修改工厂类的代码，这就使得整个设计在一定程度上违反了”开闭原则”**。</p>
+<p>现在对该系统进行修改，不再设计一个按钮工厂类来统一负责所有产品的创建，而是<strong>将具体按钮的创建过程交给专门的工厂子类去完成，我们先定义一个抽象的按钮工厂类，再定义具体的工厂类来生成圆形按钮、矩形按钮、菱形按钮等</strong>，它们实现在抽象按钮工厂类中定义的方法。这种抽象化的结果使这种结构<strong>可以在不修改具体工厂类的情况下引进新的产品</strong>，如果出现新的按钮类型，只需要为这种新类型的按钮创建一个具体的工厂类就可以获得该新按钮的实例，这一特点无疑使得工厂方法模式具有超越简单工厂模式的优越性，<strong>更加符合“开闭原则”</strong></p>
+<table>
+<thead>
+<tr>
+<th>简单工厂</th>
+<th>工厂方法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302150010701.png" alt="image-20230302150010701" style="zoom:80%;" /></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302145941669.png" alt="image-20230302145941669" style="zoom:80%;" /></td>
+</tr>
+</tbody></table>
+<h3 id="2-3-模式定义"><a href="#2-3-模式定义" class="headerlink" title="2.3 模式定义"></a>2.3 模式定义</h3><p>工厂方法模式(Factory Method Pattern)又称为工厂模式，也叫<strong>虚拟构造器(Virtual Constructor)模式或者多态工厂(Polymorphic Factory)模式</strong>，它属于<strong>类创建型模式</strong>。</p>
+<p>在工厂方法模式中，<strong>工厂父类</strong>负责定义创建产品对象的公共接口，而<strong>工厂子类</strong>则负责生成具体的产品对象，这样做的目的是将产品类的实例化操作延迟到工厂子类中完成，即通过工厂子类来确定究竟应该实例化哪一个具体产品类。</p>
+<p>工厂方法是以<strong>继承方法</strong>为主，工厂子类是<strong>继承工厂父类</strong>的。</p>
+<p>按钮只有被创建时才需要确定类型(任意对象使用要尽可能在设计时延迟，延迟到必须要进行实例化的时候)，在抽象工厂，我们使用的是抽象产品，而不是具体的某个对象</p>
+<p>工厂方法</p>
+<ol>
+<li>变化的部分：变化的是产品的服务</li>
+<li>不变的部分：对象的使用是不变的</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302150733212.png" alt="image-20230302150733212" style="zoom:80%;" />
+
+<h3 id="2-4-模式分析"><a href="#2-4-模式分析" class="headerlink" title="2.4 模式分析"></a>2.4 模式分析</h3><ol>
+<li><p>工厂方法模式是简单工厂模式的进一步抽象和推广。由于使用了面向对象的多态性，工厂方法模式保持了简单工厂模式的优点，而且克服了它的缺点。<strong>在工厂方法模式中，核心的工厂类不再负责所有产品的创建，而是将具体创建工作交给子类去做</strong>。这个核心类仅仅负责给出具体工厂必须实现的接口，而不负责哪一个产品类被实例化这种细节，这使得<strong>工厂方法模式可以允许系统在不修改工厂角色的情况下引进新产品</strong>。</p>
+</li>
+<li><p>当系统扩展需要添加新的产品对象时，仅仅需要添加一个具体产品对象以及一个具体工厂对象，原有工厂对象不需要进行任何修改，也不需要修改客户端，<strong>很好地符合了”开闭原则”<strong>。而简单工厂模式在添加新产品对象后不得不修改工厂方法，扩展性不好。</strong>工厂方法模式退化(抽象工厂和具体工厂合并)后可以演变成简单工厂模式</strong>。</p>
+</li>
+<li><p>为了提高系统的可扩展性和灵活性，在<strong>定义工厂和产品时都必须使用抽象层</strong>，如果需要更换产品类，只需要更换对应的工厂即可，其他代码不需要进行任何修改。</p>
+</li>
+<li><p>配置文件代码：</p>
+<ul>
+<li>在实际的应用开发中，一般将具体工厂类的实例化过程进行改进，不直接使用new关键字来创建对象，而是将具体类的类名写入<strong>配置文件</strong>中，再通过Java的<strong>反射机制</strong>，读取XML格式的配置文件，根据存储在XML文件中的类名字符串生成对象。</li>
+</ul>
+</li>
+<li><p>Java反射(Java Reflection)：</p>
+<ul>
+<li>是指<strong>在程序运行时获取已知名称的类或已有对象的相关信息的一种机制</strong>，包括类的方法、属性、超类等信息，还包括实例的创建和实例类型的判断等。可通<strong>过Class类的forName()方法</strong>返回与带有给定字符串名的类或接口相关联的Class对象，再通过newInstance()方法创建此对象所表示的类的一个新实例，即<strong>通过一个类名字符串得到类的实例</strong>。</li>
+</ul>
+</li>
+<li><p>实例：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 工具类XMLUtil代码片段：</span><br><span class="hljs-comment">// 创建DOM文档对象</span><br><span class="hljs-type">DocumentBuilderFactory</span> <span class="hljs-variable">dFactory</span> <span class="hljs-operator">=</span> DocumentBuilderFactory.newInstance();<br><span class="hljs-type">DocumentBuilder</span> <span class="hljs-variable">builder</span> <span class="hljs-operator">=</span> dFactory.newDocumentBuilder();<br>Document doc;<br>doc = builder.parse(<span class="hljs-keyword">new</span> <span class="hljs-title class_">File</span>(<span class="hljs-string">&quot;config.xml&quot;</span>));<br><span class="hljs-comment">// 获取包含类名的文本节点</span><br><span class="hljs-type">NodeList</span> <span class="hljs-variable">nl</span> <span class="hljs-operator">=</span> doc.getElementsByTagName(<span class="hljs-string">&quot;className&quot;</span>);<br>Node classNode=nl.item(<span class="hljs-number">0</span>).getFirstChild();<br>String cName=classNode.getNodeValue();<br><span class="hljs-comment">// 通过类名生成实例对象并将其返回</span><br><span class="hljs-type">Class</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> Class.forName(cName);<br><span class="hljs-type">Object</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> c.newInstance();<br><span class="hljs-keyword">return</span> obj;<br><br><span class="hljs-comment">// 修改后的客户类代码片段：</span><br>PayMethodFactory factory;<br>AbstractPay payMethod;<br>factory = (PayMethodFactory)XMLUtil.getBean(); <span class="hljs-comment">//getBean()的返回类型为Object，此处需要进行强制类型转换</span><br>payMethod = factory.getPayMethod();<br>payMethod.pay();<br></code></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="2-5-模式实例与解析"><a href="#2-5-模式实例与解析" class="headerlink" title="2.5 模式实例与解析"></a>2.5 模式实例与解析</h3><p>某系统日志记录器要求支持多种日志记录方式，如文件记录、数据库记录等，且用户可以根据要求动态选择日志记录方式，现使用工厂方法模式设计该系统。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302152423613.png" alt="image-20230302152423613" style="zoom: 50%;" />
+
+<h3 id="2-6-模式优缺点"><a href="#2-6-模式优缺点" class="headerlink" title="2.6 模式优缺点"></a>2.6 模式优缺点</h3><p>工厂方法模式的优点</p>
+<ol>
+<li>在工厂方法模式中，工厂方法用来创建客户所需要的产品，同时还向客户隐藏了哪种具体产品类将被实例化这一细节，<strong>用户只需要关心所需产品对应的工厂，无须关心创建细节，甚至无须知道具体产品类的类名</strong>。</li>
+<li>基于工厂角色和产品角色的多态性设计是工厂方法模式的关键。它能够使<strong>工厂可以自主确定创建何种产品对象，而如何创建这个对象的细节则完全封装在具体工厂内部</strong>。工厂方法模式之所以又被称为多态工厂模式，是因为所有的具体工厂类都具有同一抽象父类。</li>
+<li>使用工厂方法模式的另一个优点是在<strong>系统中加入新产品时，无须修改抽象工厂和抽象产品提供的接口，无须修改客户端，也无须修改其他的具体工厂和具体产品</strong>，而<strong>只要添加一个具体工厂和具体产品就可以了</strong>。这样，系统的可扩展性也就变得非常好，完全符合”开闭原则”。</li>
+</ol>
+<p>工厂方法模式的缺点</p>
+<ol>
+<li>在添加新产品时，<strong>需要编写新的具体产品类，而且还要提供与之对应的具体工厂类，系统中类的个数将成对增加，在一定程度上增加了系统的复杂度</strong>，有更多的类需要编译和运行，会给系统带来一些额外的开销。</li>
+<li>由于考虑到系统的可扩展性，需要引入抽象层，在客户端代码中均使用抽象层进行定义，<strong>增加了系统的抽象性和理解难度</strong>，且在实现时可能需要用到DOM、反射等技术，增加了系统的实现难度。</li>
+</ol>
+<h3 id="2-7-模式适用环境"><a href="#2-7-模式适用环境" class="headerlink" title="2.7 模式适用环境"></a>2.7 模式适用环境</h3><ol>
+<li><strong>一个类不知道它所需要的对象的类</strong>：在工厂方法模式中，客户端不需要知道具体产品类的类名，只需要知道所对应的工厂即可，具体的产品对象由具体工厂类创建；客户端需要知道创建具体产品的工厂类。</li>
+<li><strong>一个类通过其子类来指定创建哪个对象</strong>：在工厂方法模式中，对于抽象工厂类只需要提供一个创建产品的接口，而由其子类来确定具体要创建的对象，利用面向对象的多态性和里氏代换原则，在程序运行时，子类对象将覆盖父类对象，从而使得系统更容易扩展。</li>
+<li><strong>将创建对象的任务委托给多个工厂子类中的某一个，客户端在使用时可以无须关心是哪一个工厂子类创建产品子类，需要时再动态指定</strong>，可将具体工厂类的类名存储在配置文件或数据库中。</li>
+</ol>
+<h2 id="3-抽象工厂模式-对象"><a href="#3-抽象工厂模式-对象" class="headerlink" title="3. 抽象工厂模式(对象)"></a>3. 抽象工厂模式(对象)</h2><h3 id="3-1-概念引入"><a href="#3-1-概念引入" class="headerlink" title="3.1 概念引入"></a>3.1 概念引入</h3><p>在工厂方法模式中具体工厂负责生产具体的产品，每一个具体工厂对应一种具体产品，工厂方法也具有唯一性，一般情况下，一个具体工厂中只有一个工厂方法或者一组重载的工厂方法。但是有时候<strong>我们需要一个工厂可以提供多个产品对象，而不是单一的产品对象。</strong></p>
+<p>为了更清晰地理解工厂方法模式，需要先引入两个概念：</p>
+<ol>
+<li><strong>产品等级结构：产品等级结构即产品的继承结构</strong>，如一个抽象类是电视机，其子类有海尔电视机、海信电视机、TCL电视机，则抽象电视机与具体品牌的电视机之间构成了一个产品等级结构，抽象电视机是父类，而具体品牌的电视机是其子类。</li>
+<li><strong>产品族</strong>：在抽象工厂模式中，<strong>产品族是指由同一个工厂生产的，位于不同产品等级结构中的一组产品</strong>，如海尔电器工厂生产的海尔电视机、海尔电冰箱，海尔电视机位于电视机产品等级结构中，海尔电冰箱位于电冰箱产品等级结构中。</li>
+</ol>
+<p>当系统所提供的工厂所需生产的具体产品并不是一个简单的对象，而是<strong>多个位于不同产品等级结构中属于不同类型的具体产品时</strong>需要使用抽象工厂模式。</p>
+<p>抽象工厂模式是所有形式的工厂模式中最为抽象和最具一般性的一种形态。</p>
+<p>抽象工厂模式与工厂方法模式最大的区别在于，<strong>工厂方法模式针对的是一个产品等级结构，而抽象工厂模式则需要面对多个产品等级结构</strong>，一个工厂等级结构可以负责多个不同产品等级结构中的产品对象的创建。当一个工厂等级结构可以创建出分属于不同产品等级结构的一个产品族中的所有对象时，抽象工厂模式比工厂方法模式更为简单、有效率。</p>
+<h3 id="3-2-模式定义"><a href="#3-2-模式定义" class="headerlink" title="3.2 模式定义"></a>3.2 模式定义</h3><ol>
+<li>抽象工厂模式(Abstract Factory Pattern)：提供一个<strong>创建一系列相关或相互依赖对象的接口</strong>，而<strong>无须指定它们具体的类</strong>。抽象工厂模式又称为<strong>Kit模式</strong>，属于<strong>对象创建型模式</strong>。<ul>
+<li>调用kit很可能是抽象工厂模式。</li>
+<li>判断是类模式还是对象模式：重点是类和对象哪个更为重要</li>
+</ul>
+</li>
+<li><strong>Abstract Factory Pattern</strong>: Provide an interface for creating <strong>families of related or dependent objects</strong> without specifying their concrete classes.</li>
+<li>Frequency of use: high</li>
+</ol>
+<h3 id="3-3-模式结构"><a href="#3-3-模式结构" class="headerlink" title="3.3 模式结构"></a>3.3 模式结构</h3><p>抽象工厂模式包含如下角色：</p>
+<ol>
+<li>AbstractFactory：抽象工厂</li>
+<li>ConcreteFactory：具体工厂</li>
+<li>AbstractProduct：抽象产品</li>
+<li>Product：具体产品</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302153303001.png" alt="image-20230302153303001" style="zoom:80%;" />
+
+<h3 id="3-4-模式优缺点"><a href="#3-4-模式优缺点" class="headerlink" title="3.4 模式优缺点"></a>3.4 模式优缺点</h3><p>抽象工厂模式的优点</p>
+<ol>
+<li>抽象工厂模式<strong>隔离了具体类的生成</strong>，使得客户并不需要知道什么被创建。由于这种隔离，更换一个具体工厂就变得相对容易。所有的具体工厂都实现了抽象工厂中定义的那些公共接口，因此<strong>只需改变具体工厂的实例，就可以在某种程度上改变整个软件系统的行为</strong>。另外，应用抽象工厂模式<strong>可以实现高内聚低耦合的设计目的</strong>，因此抽象工厂模式得到了广泛的应用。</li>
+<li>当一个产品族中的多个对象被设计成一起工作时，它<strong>能够保证客户端始终只使用同一个产品族中的对象</strong>。这对一些需要根据当前环境来决定其行为的软件系统来说，是一种非常实用的设计模式。</li>
+<li><strong>增加新的具体工厂和产品族很方便，无须修改已有系统，符合”开闭原则”</strong></li>
+</ol>
+<p>抽象工厂模式的缺点</p>
+<ol>
+<li>在添加新的产品对象时，<strong>难以扩展抽象工厂来生产新种类的产品</strong>，这是因为在抽象工厂角色中规定了所有可能被创建的产品集合，要支持新种类的产品就意味着要对该接口进行扩展，而这将涉及到对抽象工厂角色及其所有子类的修改，显然会带来较大的不便。</li>
+<li>开闭原则的倾斜性(<strong>增加新的工厂和产品族容易，增加新的产品等级结构麻烦</strong>)</li>
+</ol>
+<h3 id="3-5-模式适用场景"><a href="#3-5-模式适用场景" class="headerlink" title="3.5 模式适用场景"></a>3.5 模式适用场景</h3><ol>
+<li>一个系统<strong>不应当依赖于产品类实例如何被创建、组合和表达的细节</strong>，这对于所有类型的工厂模式都是重要的。</li>
+<li>系统中有<strong>多于一个的产品族</strong>，而每次只使用其中某一产品族。</li>
+<li><strong>属于同一个产品族的产品将在一起使用</strong>，这一约束必须在系统的设计中体现出来。</li>
+<li>系统提供一个产品类的库，<strong>所有的产品以同样的接口出现</strong>，从而<strong>使客户端不依赖于具体实现</strong>。</li>
+</ol>
+<h3 id="3-6-模式扩展"><a href="#3-6-模式扩展" class="headerlink" title="3.6 模式扩展"></a>3.6 模式扩展</h3><h4 id="“开闭原则”的倾斜性"><a href="#“开闭原则”的倾斜性" class="headerlink" title="“开闭原则”的倾斜性"></a>“开闭原则”的倾斜性</h4><p>“开闭原则”要求系统对扩展开放，对修改封闭，通过扩展达到增强其功能的目的。对于涉及到多个产品族与多个产品等级结构的系统，其功能增强包括两方面：</p>
+<ol>
+<li>增加产品族：<strong>对于增加新的产品族，工厂方法模式很好的支持了”开闭原则”，对于新增加的产品族，只需要对应增加一个新的具体工厂即可，对已有代码无须做任何修改</strong>。</li>
+<li>增加新的产品等级结构：**对于增加新的产品等级结构，需要修改所有的工厂角色，包括抽象工厂类，在所有的工厂类中都需要增加生产新产品的方法，不能很好地支持”开闭原则”**。</li>
+</ol>
+<p>抽象工厂模式的这种性质称为”开闭原则”的倾斜性，抽象工厂模式以一种倾斜的方式支持增加新的产品，它为新产品族的增加提供方便，但不能为新的产品等级结构的增加提供这样的方便。</p>
+<h4 id="工厂模式的退化"><a href="#工厂模式的退化" class="headerlink" title="工厂模式的退化"></a>工厂模式的退化</h4><p>当抽象工厂模式中每一个具体工厂类只创建一个产品对象，也就是<strong>只存在一个产品等级结构时，抽象工厂模式退化成工厂方法模式</strong>；<strong>当工厂方法模式中抽象工厂与具体工厂合并，提供一个统一的工厂来创建产品对象，并将创建对象的工厂方法设计为静态方法时，工厂方法模式退化成简单工厂模式</strong>。</p>
+<h2 id="4-建造者模式-对象"><a href="#4-建造者模式-对象" class="headerlink" title="4. 建造者模式(对象)"></a>4. 建造者模式(对象)</h2><h3 id="4-1-模式动机"><a href="#4-1-模式动机" class="headerlink" title="4.1 模式动机"></a>4.1 模式动机</h3><p>无论是在现实世界中还是在软件系统中，都存在一些复杂的对象，它们拥有多个组成部分，如汽车，它包括车轮、方向盘、发送机等各种部件。而对于大多数用户而言，无须知道这些部件的装配细节，也几乎不会使用单独某个部件，而是使用一辆完整的汽车，可以通过建造者模式对其进行设计与描述，<strong>建造者模式可以将部件和其组装过程分开，一步一步创建一个复杂的对象</strong>。用户只需要指定复杂对象的类型就可以得到该对象，而无须知道其内部的具体构造细节。</p>
+<p>在软件开发中，也存在大量类似汽车一样的复杂对象，<strong>它们拥有一系列成员属性，这些成员属性中有些是引用类型的成员对象</strong>。而且在这些复杂对象中，还可能存在一些限制条件，如某些属性没有赋值则复杂对象不能作为一个完整的产品使用；有些属性的赋值必须按照某个顺序，一个属性没有赋值之前，另一个属性可能无法赋值等。</p>
+<p><strong>复杂对象相当于一辆有待建造的汽车，而对象的属性相当于汽车的部件</strong>，建造产品的过程就相当于组合部件的过程。由于组合部件的过程很复杂，因此，这些部件的组合过程往往被”外部化”到一个称作建造者的对象里，<strong>建造者返还给客户端的是一个已经建造完毕的完整产品对象，而用户无须关心该对象所包含的属性以及它们的组装方式</strong>，这就是建造者模式的模式动机。</p>
+<h3 id="4-2-模式定义"><a href="#4-2-模式定义" class="headerlink" title="4.2 模式定义"></a>4.2 模式定义</h3><ul>
+<li>建造者模式(Builder Pattern)：将<strong>一个复杂对象的构建与它的表示分离</strong>，使得<strong>同样的构建过程可以创建不同的表示</strong>。</li>
+<li>Builder Pattern: Separate the construction of a complex object from its representation so that the same construction process can create different representations.</li>
+<li>建造者模式是<strong>一步一步创建一个复杂的对象</strong>，它允许用户只通过指定复杂对象的类型和内容就可以构建它们，用户不需要知道内部的具体构建细节。建造者模式属于对象创建型模式。根据中文翻译的不同，建造者模式又可以称为生成器模式。</li>
+</ul>
+<h3 id="4-3-模式结构"><a href="#4-3-模式结构" class="headerlink" title="4.3 模式结构"></a>4.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307103223798.png" alt="image-20230307103223798" style="zoom:80%;" />
+
+<p>建造者模式包含如下角色：</p>
+<ol>
+<li>Builder：抽象建造者</li>
+<li>ConcreteBuilder：具体建造者</li>
+<li>Director：指挥者</li>
+<li>Product：产品角色</li>
+</ol>
+<h3 id="4-4-模式分析"><a href="#4-4-模式分析" class="headerlink" title="4.4 模式分析"></a>4.4 模式分析</h3><p>一个典型的复杂对象其类代码示例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Product</span>&#123;<br>  <span class="hljs-keyword">private</span> String partA; <span class="hljs-comment">//可以是任意类型</span><br>  <span class="hljs-keyword">private</span> String partB;<br>  <span class="hljs-keyword">private</span> String partC;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>抽象建造者类中定义了产品的创建方法和返回方法，其典型代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Builder</span>&#123;<br>  <span class="hljs-keyword">protected</span> Product product=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Product</span>();<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartA</span><span class="hljs-params">()</span>;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartB</span><span class="hljs-params">()</span>;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">buildPartC</span><span class="hljs-params">()</span>;<br>  <span class="hljs-keyword">public</span> Product <span class="hljs-title function_">getResult</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> product;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>建造者模式的结构中还引入了一个指挥者类Director，该类的作用主要有两个：一方面它<strong>隔离了客户与生产过程</strong>；另一方面它<strong>负责控制产品的生成过程</strong>。指挥者针对抽象建造者编程，客户端只需要知道具体建造者的类型，即可通过指挥者类调用建造者的相关方法，返回一个完整的产品对象。</p>
+<p>指挥者类的代码示例如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Director</span>&#123;<br>  <span class="hljs-keyword">private</span> Builder builder;<br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Director</span><span class="hljs-params">(Builder builder)</span>&#123;<br>    <span class="hljs-built_in">this</span>.builder=builder;<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setBuilder</span><span class="hljs-params">(Builder builder)</span>&#123;<br>    <span class="hljs-built_in">this</span>.builder=builer;<br>  &#125;<br>  <span class="hljs-keyword">public</span> Product <span class="hljs-title function_">construct</span><span class="hljs-params">()</span>&#123;<br>    builder.buildPartA();<br>    builder.buildPartB();<br>    builder.buildPartC();<br>    <span class="hljs-keyword">return</span> builder.getResult();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>客户端类代码片段：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-type">Builder</span> <span class="hljs-variable">builder</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcreteBuilder</span>();<br><span class="hljs-type">Director</span> <span class="hljs-variable">director</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Director</span>(builder);<br><span class="hljs-type">Product</span> <span class="hljs-variable">product</span> <span class="hljs-operator">=</span> director.construct();<br></code></pre></td></tr></table></figure>
+
+<p>在客户端代码中，无须关心产品对象的具体组装过程，<strong>只需确定具体建造者的类型即可</strong>，建造者模式将复杂对象的构建与对象的表现分离开来，这样使得同样的构建过程可以创建出不同的表现</p>
+<h3 id="4-5-建造者模式实例与解析"><a href="#4-5-建造者模式实例与解析" class="headerlink" title="4.5 建造者模式实例与解析"></a>4.5 建造者模式实例与解析</h3><p>建造者模式可以用于描述KFC如何创建套餐：套餐是一个复杂对象，它一般包含主食（如汉堡、鸡肉卷等）和饮料（如果汁、可乐等）等组成部分，不同的套餐有不同的组成部分，而KFC的服务员可以根据顾客的要求，一步一步装配这些组成部分，构造一份完整的套餐，然后返回给顾客。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307105004867.png" alt="image-20230307105004867"  />
+
+<h3 id="4-6-模式优缺点"><a href="#4-6-模式优缺点" class="headerlink" title="4.6 模式优缺点"></a>4.6 模式优缺点</h3><p>建造者模式的优点</p>
+<ol>
+<li>在建造者模式中，<strong>客户端不必知道产品内部组成的细节，将产品本身与产品的创建过程解耦，使得相同的创建过程可以创建不同的产品对象</strong>。</li>
+<li>每一个具体建造者都相对独立，而与其他的具体建造者无关，因此可以很方便地替换具体建造者或增加新的具体建造者，<strong>用户使用不同的具体建造者即可得到不同的产品对象</strong>。</li>
+<li><strong>可以更加精细地控制产品的创建过程</strong>。将复杂产品的创建步骤分解在不同的方法中，使得创建过程更加清晰，也更方便使用程序来控制创建过程。</li>
+<li>**增加新的具体建造者无须修改原有类库的代码，指挥者类针对抽象建造者类编程，系统扩展方便，符合”开闭原则”**。</li>
+</ol>
+<p>建造者模式的缺点</p>
+<ol>
+<li>建造者模式所创建的产品一般具有较多的共同点，其组成部分相似，<strong>如果产品之间的差异性很大，则不适合使用建造者模式</strong>，因此其使用范围受到一定的限制。</li>
+<li>如果产品的内部变化复杂，可能会导致需要定义很多具体建造者类来实现这种变化，导致系统变得<strong>很庞大</strong>。</li>
+</ol>
+<h3 id="4-7-模式适用环境"><a href="#4-7-模式适用环境" class="headerlink" title="4.7 模式适用环境"></a>4.7 模式适用环境</h3><ol>
+<li>需要生成的产品对象有<strong>复杂的内部结构</strong>，这些产品对象通常包含多个成员属性。</li>
+<li>需要生成的产品对象的<strong>属性相互依赖，需要指定其生成顺序</strong>。</li>
+<li><strong>对象的创建过程独立于创建该对象的类。</strong>在建造者模式中引入了指挥者类，将创建过程封装在指挥者类中，而不在建造者类中。</li>
+<li><strong>隔离复杂对象的创建和使用，并使得相同的创建过程可以创建不同的产品</strong>。</li>
+</ol>
+<h3 id="4-8-模式应用"><a href="#4-8-模式应用" class="headerlink" title="4.8 模式应用"></a>4.8 模式应用</h3><p><strong>JavaMail</strong></p>
+<p>一步一步构造一个完整的邮件对象，然后发送</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//由邮件会话对象新建一个邮件消息对象</span><br>MimeMessage message=<span class="hljs-keyword">new</span> <span class="hljs-title class_">MimeMessage</span>(session);<br><span class="hljs-comment">//设置邮件地址</span><br>InternetAddress from=<span class="hljs-keyword">new</span> <span class="hljs-title class_">InternetAddress</span>(<span class="hljs-string">&quot;sunny@test.com&quot;</span>);<br>message.setFrom(from);<span class="hljs-comment">//设置发件人</span><br>InternetAddress to=<span class="hljs-keyword">new</span> <span class="hljs-title class_">InternetAddress</span>(to_mail);<br>message.setRecipient(Message.RecipientType.TO,to);<span class="hljs-comment">//设置</span><br>收件人，并设置其接收类型为TO<br>message.setSubject(to_title);<span class="hljs-comment">//设置主题</span><br>message.setText(to_content);<span class="hljs-comment">//设置信件内容</span><br>message.setSentDate(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<span class="hljs-comment">//设置发信时间</span><br>message.saveChanges();<span class="hljs-comment">//存储邮件信息</span><br>Transport transport=session.getTransport(<span class="hljs-string">&quot;smtp&quot;</span>);<br>transport.connect(<span class="hljs-string">&quot;smtp.test.com&quot;</span>,<span class="hljs-string">&quot;test&quot;</span>,<span class="hljs-string">&quot;test&quot;</span>);<br>transport.sendMessage(message,message.getAllRecipients());<br></code></pre></td></tr></table></figure>
+
+<p><strong>地图或人物</strong></p>
+<p>在很多游戏软件中，地图包括天空、地面、背景等组成部分，人物角色包括人体、服装、装备等组成部分，可以使用建造者模式对其进行设计，通过不同的具体建造者创建不同类型的地图或人物。</p>
+<h3 id="4-9-模式比较"><a href="#4-9-模式比较" class="headerlink" title="4.9 模式比较"></a>4.9 模式比较</h3><p>建造者模式的简化</p>
+<ol>
+<li><strong>省略抽象建造者角色</strong>：如果系统中只需要一个具体建造者的话，可以省略掉抽象建造者。</li>
+<li><strong>省略指挥者角色</strong>：在具体建造者只有一个的情况下，如果抽象建造者角色已经被省略掉，那么还可以省略指挥者角色，让Builder角色扮演指挥者与建造者双重角色</li>
+</ol>
+<p>建造者模式与抽象工厂模式的比较</p>
+<ol>
+<li>与抽象工厂模式相比，建造者模式返回<strong>一个组装好的完整产品</strong>，而抽象工厂模式返回<strong>一系列相关的产品</strong>，这些产品位于不同的产品等级结构，构成了一个产品族。</li>
+<li>在抽象工厂模式中，<strong>客户端实例化工厂类，然后调用工厂方法获取所需产品对象</strong>，而在建造者模式中，<strong>客户端可以不直接调用建造者的相关方法，而是通过指挥者类来指导如何生成对象，包括对象的组装过程和建造步骤，它侧重于一步步构造一个复杂对象，返回一个完整的对象</strong>。</li>
+<li>如果将抽象工厂模式看成汽车配件生产工厂，生产一个产品族的产品，那么建造者模式就是一个汽车组装工厂，通过对部件的组装可以返回一辆完整的汽车。</li>
+</ol>
+<h2 id="5-原型模式-对象"><a href="#5-原型模式-对象" class="headerlink" title="5. 原型模式(对象)"></a>5. 原型模式(对象)</h2><h3 id="5-1-模式动机"><a href="#5-1-模式动机" class="headerlink" title="5.1 模式动机"></a>5.1 模式动机</h3><p>在面向对象系统中，使用原型模式来复制一个对象自身，从而<strong>克隆出多个与原型对象一模一样的对象</strong>。</p>
+<p>在软件系统中，有些对象的创建过程较为复杂，而且有时候需要频繁创建，<strong>原型模式通过给出一个原型对象来指明所要创建的对象的类型，然后用复制这个原型对象的办法创建出更多同类型的对象</strong>，这就是原型模式的意图所在。</p>
+<h3 id="5-2-模式定义"><a href="#5-2-模式定义" class="headerlink" title="5.2 模式定义"></a>5.2 模式定义</h3><p>原型模式(Prototype Pattern)：原型模式是一种对象创建型模式，<strong>用原型实例指定创建对象的种类，并且通过复制这些原型创建新的对象。</strong>原型模式允许一个对象再创建另外一个可定制的对象，无须知道任何创建的细节。</p>
+<p>Prototype Pattern: Specify the kind of objects to create using a prototypical instance, and create new objects by copying this prototype.</p>
+<p>原型模式的基本工作原理是通过将一个原型对象传给那个要发动创建的对象，这个要发动创建的对象通过请求原型对象拷贝原型自己来实现创建过程</p>
+<h3 id="5-3-模式结构"><a href="#5-3-模式结构" class="headerlink" title="5.3 模式结构"></a>5.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307135426191.png" alt="image-20230307135426191" style="zoom:80%;" />
+
+<p>原型模式包含如下角色：</p>
+<ol>
+<li>Prototype：抽象原型类</li>
+<li>ConcretePrototype：具体原型类</li>
+<li>Client：客户类</li>
+</ol>
+<h3 id="5-4-模式分析"><a href="#5-4-模式分析" class="headerlink" title="5.4 模式分析"></a>5.4 模式分析</h3><p>在原型模式结构中定义了一个抽象原型类，所有的Java类都继承自<code>java.lang.Object</code>，而Object类提供一个<code>clone()</code>方法，可以将一个Java对象复制一份。因此在Java中可以直接使用Object提供的clone()方法来实现对象的克隆，Java语言中的原型模式实现很简单。</p>
+<p>能够实现克隆的Java类必须<code>实现一个标识接口Cloneable</code>，表示这个Java类支持复制。如果一个类没有实现这个接口但是调用了clone()方法，Java编译器将抛出一个<code>CloneNotSupportedException</code>异常。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PrototypeDemo</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Cloneable</span>&#123;<br>  <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">clone</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>      object = <span class="hljs-built_in">super</span>.clone();<br>    &#125; <span class="hljs-keyword">catch</span> (CloneNotSupportedException exception) &#123;<br>      System.err.println(<span class="hljs-string">&quot;Not support cloneable&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">return</span> object;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>通常情况下，一个类包含一些成员对象，在使用原型模式克隆对象时，<strong>根据其成员对象是否也克隆，原型模式可以分为两种形式：深克隆和浅克隆</strong>。</p>
+<p>Java语言提供的clone()方法将对象复制了一份并返回给调用者。一般而言，clone()方法满足:</p>
+<ol>
+<li>对任何的对象x，都有<code>x.clone() !=x</code>，即克隆对象与原对象不是同一个对象。</li>
+<li>对任何的对象x，都有<code>x.clone().getClass()==x.getClass()</code>，即克隆对象与原对象的类型一样。</li>
+<li>如果对象x的equals()方法定义恰当，那么<code>x.clone().equals(x)</code>应该成立。</li>
+</ol>
+<h3 id="5-5-原型模式实例与解析"><a href="#5-5-原型模式实例与解析" class="headerlink" title="5.5 原型模式实例与解析"></a>5.5 原型模式实例与解析</h3><h4 id="邮件复制（浅克隆）"><a href="#邮件复制（浅克隆）" class="headerlink" title="邮件复制（浅克隆）"></a>邮件复制（浅克隆）</h4><p>由于邮件对象包含的内容较多（如发送者、接收者、标题、内容、日期、附件等），某系统中现需要提供一个邮件复制功能，对于已经创建好的邮件对象，可以通过复制的方式创建一个新的邮件对象，如果需要改变某部分内容，无须修改原始的邮件对象，只需要修改复制后得到的邮件对象即可。使用原型模式设计该系统。在本实例中使用浅克隆实现邮件复制，即复制邮件(Email)的同时不复制附件(Attachment)。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307143946706.png" alt="image-20230307143946706" style="zoom:80%;" />
+
+<h3 id="5-6-模式优缺点"><a href="#5-6-模式优缺点" class="headerlink" title="5.6 模式优缺点"></a>5.6 模式优缺点</h3><p>原型模式的优点</p>
+<ol>
+<li>当创建新的对象实例较为复杂时，使用原型模式可以<strong>简化对象的创建过程</strong>，通过一个已有实例可以<strong>提高新实例的创建效率</strong>。</li>
+<li>可以<strong>动态增加或减少产品类</strong>。</li>
+<li>原型模式提供了<strong>简化的创建结构</strong>。</li>
+<li>可以使用深克隆的方式<strong>保存对象的状态</strong>。</li>
+</ol>
+<p>原型模式的缺点</p>
+<ol>
+<li><strong>需要为每一个类配备一个克隆方法</strong>，而且这个克隆方法需要对类的功能进行通盘考虑，这对全新的类来说不是很难，但对已有的类进行改造时，不一定是件容易的事，**必须修改其源代码，违背了”开闭原则”**。</li>
+<li>在<strong>实现深克隆时需要编写较为复杂的代码</strong>。</li>
+</ol>
+<h3 id="5-7-模式适用环境"><a href="#5-7-模式适用环境" class="headerlink" title="5.7 模式适用环境"></a>5.7 模式适用环境</h3><ol>
+<li><strong>创建新对象成本较大</strong>，新的对象可以通过原型模式对已有对象进行复制来获得，如果是相似对象，则可以对其属性稍作修改。</li>
+<li>如果<strong>系统要保存对象的状态</strong>，而对象的状态变化很小，或者对象本身占内存不大的时候，也可以使用<strong>原型模式配合备忘录模式</strong>来应用。相反，如果对象的状态变化很大，或者对象占用的内存很大，那么采用状态模式会比原型模式更好。</li>
+<li>需要<strong>避免使用分层次的工厂类来创建分层次的对象</strong>，并且类的实例对象只有一个或很少的几个组合状态，通过复制原型对象得到新实例可能比使用构造函数创建一个新实例更加方便。</li>
+</ol>
+<h3 id="5-8-模式应用"><a href="#5-8-模式应用" class="headerlink" title="5.8 模式应用"></a>5.8 模式应用</h3><p>原型模式应用于很多软件中，如果每次创建一个对象要花大量时间，原型模式是最好的解决方案。<strong>很多软件提供的复制(Ctrl + C)和粘贴(Ctrl + V)操作就是原型模式的应用，复制得到的对象与原型对象是两个类型相同但内存地址不同的对象</strong>，通过原型模式可以大大提高对象的创建效率。</p>
+<p>在Struts2中为了保证线程的安全性，<strong>Action对象的创建使用了原型模式</strong>，访问一个已经存在的Action对象时将通过克隆的方式创建出一个新的对象，从而保证其中定义的变量无须进行加锁实现同步，每一个Action中都有自己的成员变量，避免Struts1因使用单例模式而导致的并发和同步问题。</p>
+<p>在Spring中，用户也可以<strong>采用原型模式来创建新的bean实例</strong>，从而实现每次获取的是通过克隆生成的新实例，对其进行修改时对原有实例对象不造成任何影响。</p>
+<h3 id="5-9-模式扩展"><a href="#5-9-模式扩展" class="headerlink" title="5.9 模式扩展"></a>5.9 模式扩展</h3><h4 id="带原型管理器的原型模式"><a href="#带原型管理器的原型模式" class="headerlink" title="带原型管理器的原型模式"></a>带原型管理器的原型模式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307144524359.png" alt="image-20230307144524359" style="zoom:80%;" />
+
+<h4 id="相似对象的复制"><a href="#相似对象的复制" class="headerlink" title="相似对象的复制"></a>相似对象的复制</h4><p>很多情况下，复制所得到的对象与原型对象并不是完全相同的，它们的某些属性值存在异同。<strong>通过原型模式获得相同对象后可以再对其属性进行修改，从而获取所需对象</strong>。如多个学生对象的信息的区别在于性别、姓名和年龄，而专业、学院、学校等信息都相同，为了简化创建过程，可以通过原型模式来实现相似对象的复制。</p>
+<h2 id="6-单例模式-对象"><a href="#6-单例模式-对象" class="headerlink" title="6. 单例模式(对象)"></a>6. 单例模式(对象)</h2><h3 id="6-1-模式动机"><a href="#6-1-模式动机" class="headerlink" title="6.1 模式动机"></a>6.1 模式动机</h3><p>如何保证一个类只有一个实例并且这个实例易于被访问</p>
+<ol>
+<li>全局变量：可以确保对象随时都可以被访问，但不能防止创建多个对象</li>
+<li>让类自身负责创建和保存它的唯一实例，并保证不能创建其他实例，它还提供一个访问该实例的方法</li>
+</ol>
+<h3 id="6-2-模式定义"><a href="#6-2-模式定义" class="headerlink" title="6.2 模式定义"></a>6.2 模式定义</h3><ul>
+<li><p>单例模式：确保一个类只有一个实例，并提供一个全局访问点来访问这个唯一实例。</p>
+</li>
+<li><p>要点：</p>
+<ul>
+<li>某个类<strong>只能有一个实例</strong></li>
+<li>必须<strong>自行创建这个实例</strong></li>
+<li>必须<strong>自行向整个系统提供这个实例</strong></li>
+</ul>
+</li>
+</ul>
+<h3 id="6-3-模式结构"><a href="#6-3-模式结构" class="headerlink" title="6.3 模式结构"></a>6.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627172507606.png" alt="image-20230627172507606"></p>
+<p>单例模式只包含一个单例角色：</p>
+<ul>
+<li>Singleton(单例)</li>
+</ul>
+<p>单例模式的实现：<strong>私有构造函数</strong></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Singleton</span> &#123;<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Singleton instance=<span class="hljs-literal">null</span>; <span class="hljs-comment">//静态私有成员变量</span><br>    <span class="hljs-comment">//私有构造函数</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">Singleton</span><span class="hljs-params">()</span> &#123;&#125;<br>    <span class="hljs-comment">//静态公有工厂方法，返回唯一实例</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Singleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">if</span>(instance==<span class="hljs-literal">null</span>)<br>    		instance=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Singleton</span>();<br>    	<span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-4-单例模式实例与解析"><a href="#6-4-单例模式实例与解析" class="headerlink" title="6.4 单例模式实例与解析"></a>6.4 单例模式实例与解析</h3><p>某软件公司承接了一个服务器负载均衡(Load Balance)软件的开发工作，该软件运行在一台负载均衡服务器上，可以将并发访问和数据流量分发到服务器集群中的多台设备上进行并发处理，提高了系统的整体处理能力，缩短了响应时间。由于集群中的服务器需要动态删减，且客户端请求需要统一分发，因此需要确保负载均衡器的唯一性，只能有一个负载均衡器来负责服务器的管理和请求的分发，否则将会带来服务器状态的不一致以及请求分配冲突等问题。如何确保负载均衡器的唯一性是该软件成功的关键，试使用单例模式设计服务器负载均衡器。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627172750742.png" alt="image-20230627172750742"></p>
+<h3 id="6-5-饿汉式单例与懒汉式单例"><a href="#6-5-饿汉式单例与懒汉式单例" class="headerlink" title="6.5 饿汉式单例与懒汉式单例"></a>6.5 饿汉式单例与懒汉式单例</h3><h4 id="6-5-1-饿汉式单例-Eager-Singleton"><a href="#6-5-1-饿汉式单例-Eager-Singleton" class="headerlink" title="6.5.1 饿汉式单例(Eager Singleton)"></a>6.5.1 饿汉式单例(Eager Singleton)</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627172921770.png" alt="image-20230627172921770"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EagerSingleton</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">EagerSingleton</span> <span class="hljs-variable">instance</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">EagerSingleton</span>();<br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">EagerSingleton</span><span class="hljs-params">()</span> &#123;&#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> EagerSingleton <span class="hljs-title function_">getInstance</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="6-5-2-懒汉式单例-Lazy-Singleton"><a href="#6-5-2-懒汉式单例-Lazy-Singleton" class="headerlink" title="6.5.2 懒汉式单例(Lazy Singleton)"></a>6.5.2 懒汉式单例(Lazy Singleton)</h4><h5 id="延迟加载"><a href="#延迟加载" class="headerlink" title="延迟加载"></a>延迟加载</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173151750.png" alt="image-20230627173151750"></p>
+<h5 id="锁方法"><a href="#锁方法" class="headerlink" title="锁方法"></a>锁方法</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173318437.png" alt="image-20230627173318437"></p>
+<h5 id="锁代码段"><a href="#锁代码段" class="headerlink" title="锁代码段"></a>锁代码段</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173415062.png" alt="image-20230627173415062"></p>
+<h5 id="双重检查锁定"><a href="#双重检查锁定" class="headerlink" title="双重检查锁定"></a>双重检查锁定</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173603602.png" alt="image-20230627173603602"></p>
+<h4 id="6-5-3-饿汉式单例类与懒汉式单例类的比较"><a href="#6-5-3-饿汉式单例类与懒汉式单例类的比较" class="headerlink" title="6.5.3 饿汉式单例类与懒汉式单例类的比较"></a>6.5.3 饿汉式单例类与懒汉式单例类的比较</h4><ul>
+<li>饿汉式单例类：无须考虑多个线程同时访问的问题；调用速度和反应时间优于懒汉式单例；资源利用效率不及懒汉式单例；系统加载时间可能会比较长</li>
+<li>懒汉式单例类：实现了延迟加载；必须处理好多个线程同时访问的问题；需通过双重检查锁定等机制进行控制，将导致系统性能受到一定影响</li>
+</ul>
+<h4 id="6-5-4-使用静态内部类实现单例模式"><a href="#6-5-4-使用静态内部类实现单例模式" class="headerlink" title="6.5.4 使用静态内部类实现单例模式"></a>6.5.4 使用静态内部类实现单例模式</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173845855.png" alt="image-20230627173845855"></p>
+<h3 id="6-6-模式优缺点"><a href="#6-6-模式优缺点" class="headerlink" title="6.6 模式优缺点"></a>6.6 模式优缺点</h3><p>模式优点：</p>
+<ul>
+<li>提供了对唯一实例的受控访问</li>
+<li>可以节约系统资源，提高系统的性能</li>
+<li>允许可变数目的实例（多例类）</li>
+</ul>
+<p>模式缺点：</p>
+<ul>
+<li>扩展困难（缺少抽象层）</li>
+<li>单例类的职责过重、一定程度上违背单一职责原则</li>
+<li>由于自动垃圾回收机制，可能会导致共享的单例对象的状态丢失</li>
+</ul>
+<h3 id="6-7-模式适用环境"><a href="#6-7-模式适用环境" class="headerlink" title="6.7 模式适用环境"></a>6.7 模式适用环境</h3><ul>
+<li>系统只需要一个实例对象，或者因为资源消耗太大而只允许创建一个对象</li>
+<li>客户调用类的单个实例只允许使用一个公共访问点，除了该公共访问点，不能通过其他途径访问该实例</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/25/Java-8%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                        <b>#</b> 软件系统设计
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/06/11/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-3-%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="toc-text">1. 简单工厂模式(对象)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="toc-text">1.1 模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">1.2 模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">1.3 模式结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="toc-text">1.4 模式分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="toc-text">1.5 模式实例与解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">1.6 模式优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E6%A8%A1%E5%BC%8F%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="toc-text">1.7 模式使用环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-8-%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8"><span class="toc-text">1.8 模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-9-%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="toc-text">1.9 模式扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%AE%80%E5%8C%96"><span class="toc-text">简单工厂模式的简化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F-%E7%B1%BB"><span class="toc-text">2. 工厂方法模式(类)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%B8%8D%E8%B6%B3"><span class="toc-text">2.1 简单工厂模式的不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="toc-text">2.2 模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">2.3 模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="toc-text">2.4 模式分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="toc-text">2.5 模式实例与解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">2.6 模式优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="toc-text">2.7 模式适用环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="toc-text">3. 抽象工厂模式(对象)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A6%82%E5%BF%B5%E5%BC%95%E5%85%A5"><span class="toc-text">3.1 概念引入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">3.2 模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">3.3 模式结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">3.4 模式优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">3.5 模式适用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="toc-text">3.6 模式扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%80%9C%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E2%80%9D%E7%9A%84%E5%80%BE%E6%96%9C%E6%80%A7"><span class="toc-text">“开闭原则”的倾斜性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%80%80%E5%8C%96"><span class="toc-text">工厂模式的退化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="toc-text">4. 建造者模式(对象)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="toc-text">4.1 模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">4.2 模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">4.3 模式结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="toc-text">4.4 模式分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="toc-text">4.5 建造者模式实例与解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">4.6 模式优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="toc-text">4.7 模式适用环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8-%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8"><span class="toc-text">4.8 模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-9-%E6%A8%A1%E5%BC%8F%E6%AF%94%E8%BE%83"><span class="toc-text">4.9 模式比较</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="toc-text">5. 原型模式(对象)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="toc-text">5.1 模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">5.2 模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">5.3 模式结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="toc-text">5.4 模式分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="toc-text">5.5 原型模式实例与解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%82%AE%E4%BB%B6%E5%A4%8D%E5%88%B6%EF%BC%88%E6%B5%85%E5%85%8B%E9%9A%86%EF%BC%89"><span class="toc-text">邮件复制（浅克隆）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">5.6 模式优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="toc-text">5.7 模式适用环境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-8-%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8"><span class="toc-text">5.8 模式应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-9-%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="toc-text">5.9 模式扩展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E5%8E%9F%E5%9E%8B%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">带原型管理器的原型模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="toc-text">相似对象的复制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="toc-text">6. 单例模式(对象)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="toc-text">6.1 模式动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="toc-text">6.2 模式定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">6.3 模式结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="toc-text">6.4 单例模式实例与解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B%E4%B8%8E%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B"><span class="toc-text">6.5 饿汉式单例与懒汉式单例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5-1-%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B-Eager-Singleton"><span class="toc-text">6.5.1 饿汉式单例(Eager Singleton)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5-2-%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B-Lazy-Singleton"><span class="toc-text">6.5.2 懒汉式单例(Lazy Singleton)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD"><span class="toc-text">延迟加载</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%81%E6%96%B9%E6%B3%95"><span class="toc-text">锁方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%94%81%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="toc-text">锁代码段</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81%E5%AE%9A"><span class="toc-text">双重检查锁定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5-3-%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B%E7%B1%BB%E4%B8%8E%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B%E7%B1%BB%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">6.5.3 饿汉式单例类与懒汉式单例类的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5-4-%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="toc-text">6.5.4 使用静态内部类实现单例模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-text">6.6 模式优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="toc-text">6.7 模式适用环境</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1(2)%20%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F06%2F10%2F%25E8%25BD%25AF%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E8%25AE%25BE%25E8%25AE%25A1-%25E8%25AE%25BE%25E8%25AE%25A1-2-%25E5%2588%259B%25E5%25BB%25BA%25E5%259E%258B%25E6%25A8%25A1%25E5%25BC%258F%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/06/10/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-2-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

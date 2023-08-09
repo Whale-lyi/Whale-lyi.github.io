@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      服务端开发(1) Spring 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">服务端开发(1) Spring</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                    <b>#</b> 服务端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="1-Web-App开发"><a href="#1-Web-App开发" class="headerlink" title="1. Web App开发"></a>1. Web App开发</h3><h4 id="1-1-前、后端不分离的开发模式"><a href="#1-1-前、后端不分离的开发模式" class="headerlink" title="1.1 前、后端不分离的开发模式"></a>1.1 前、后端不分离的开发模式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170527653.png" alt="image-20230216170527653" style="zoom: 50%;" />
+
+<h4 id="1-2-前、后端分离的开发模式"><a href="#1-2-前、后端分离的开发模式" class="headerlink" title="1.2 前、后端分离的开发模式"></a>1.2 前、后端分离的开发模式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170540465.png" alt="image-20230216170540465" style="zoom: 67%;" />
+
+<h4 id="1-3-微服务架构-Microservices-Architecture-模式"><a href="#1-3-微服务架构-Microservices-Architecture-模式" class="headerlink" title="1.3 微服务架构(Microservices Architecture)模式"></a>1.3 微服务架构(Microservices Architecture)模式</h4><p>微服务架构时将应用拆分成小业务单元开发和部署，使用轻量级协议通信，通过协同工作实现应用逻辑的架构模式</p>
+<p>微服务的特性：小，且指责单一、独立的进程、轻量级通信机制、独立部署</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170820095.png" alt="image-20230216170820095" style="zoom:80%;" />
+
+<h3 id="2-Spring"><a href="#2-Spring" class="headerlink" title="2. Spring"></a>2. Spring</h3><h4 id="2-1-Spring是Java生态圈的主流开发框架"><a href="#2-1-Spring是Java生态圈的主流开发框架" class="headerlink" title="2.1 Spring是Java生态圈的主流开发框架"></a>2.1 Spring是Java生态圈的主流开发框架</h4><ul>
+<li>轻量级（Lightweight）</li>
+<li>非侵入性（No intrusive）</li>
+<li>容器（Container）</li>
+<li><strong>Inversion of Control 与 Dependency Injection</strong></li>
+<li><strong>AOP(Aspect Oriented Programming)</strong></li>
+<li>持久层（JDBC封装、事务管理、ORM工具整合）</li>
+<li>Web框架（MVC、其它WEB框架整合）</li>
+<li>其他企业服务的封装</li>
+</ul>
+<h4 id="2-2-Spring的核心是提供了一个容器-container"><a href="#2-2-Spring的核心是提供了一个容器-container" class="headerlink" title="2.2 Spring的核心是提供了一个容器(container)"></a>2.2 Spring的核心是提供了一个容器(container)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216171148852.png" alt="image-20230216171148852" style="zoom: 67%;" />
+
+<h4 id="2-3-Spring的衍生"><a href="#2-3-Spring的衍生" class="headerlink" title="2.3 Spring的衍生"></a>2.3 Spring的衍生</h4><p>Spring：核心、基础框架</p>
+<p>Spring Boot：简化基于Spring的开发，自动配置</p>
+<p>Spring Cloud：基于云的、分布式系统开发，相关技术：容器、微服务、DevOps</p>
+<h4 id="2-4-Spring的模块组成"><a href="#2-4-Spring的模块组成" class="headerlink" title="2.4 Spring的模块组成"></a>2.4 Spring的模块组成</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307152941773.png" alt="image-20230307152941773" style="zoom:80%;" />
+
+<h4 id="2-5-Spring的两个核心技术"><a href="#2-5-Spring的两个核心技术" class="headerlink" title="2.5 Spring的两个核心技术"></a>2.5 Spring的两个核心技术</h4><p><strong>DI(Dependency Injection)</strong></p>
+<ul>
+<li>保留抽象接口，让组件(Component)依赖于抽象接口，当组件要与其他实际的对象发生依赖关系时，由抽象接口来注入依赖的实际对象</li>
+</ul>
+<p><strong>AOP(Aspect Oriented Programming)</strong></p>
+<ul>
+<li>通过预编译方式和运行期间动态代理实现程序功能的统一维护的一种技术</li>
+<li>利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发效率</li>
+</ul>
+<h2 id="依赖注入-DI"><a href="#依赖注入-DI" class="headerlink" title="依赖注入(DI)"></a>依赖注入(DI)</h2><h3 id="1-Spring配置方案"><a href="#1-Spring配置方案" class="headerlink" title="1. Spring配置方案"></a>1. Spring配置方案</h3><h4 id="1-1-自动化配置"><a href="#1-1-自动化配置" class="headerlink" title="1.1 自动化配置"></a>1.1 自动化配置</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CDPlayer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">MediaPlayer</span> &#123;<br>    <span class="hljs-keyword">private</span> CompactDisc cd;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">CDPlayer</span><span class="hljs-params">(CompactDisc cd)</span> &#123;<br>        <span class="hljs-built_in">this</span>.cd = cd;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">play</span><span class="hljs-params">()</span> &#123;<br>        cd.play();<br>    &#125;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>组件扫描(component scanning)</li>
+<li>自动装配(autowiring)</li>
+</ul>
+<h5 id="组件扫描"><a href="#组件扫描" class="headerlink" title="组件扫描"></a>组件扫描</h5><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan</span><br></code></pre></td></tr></table></figure>
+
+<p>等价于: <code>&lt;context:component-scan base-package=&quot;soundsystem&quot; /&gt;</code></p>
+<p>可以为 <strong>@ComponentScan</strong> 设置 <strong>basePackages</strong> 属性来显式指定要扫描的基础包。指定时有三种实现方式：</p>
+<ul>
+<li>以字符串的形式来指定: <code>@ComponentScan(basePackages = &#123;&quot;xxx&quot;, &quot;xxx&quot;&#125;)</code> <ul>
+<li>此方式类型不安全(not type-safe)，重构代码后指定的基础包可能会出现错误。</li>
+</ul>
+</li>
+<li>指定为包中所含的类或接口: <code>@ComponentScan(basePackages=&quot;Student.class&quot;)</code>。</li>
+<li>创建一个用来进行扫描的空标记接口(Marker interface)</li>
+</ul>
+<h5 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h5><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>可用于构造器</li>
+<li>用在属性 Setter 方法</li>
+<li><code>@Autowired(required = false)</code><ul>
+<li>将 required 属性设置为 false 时，Spring 会尝试执行自动装配，但是如果没有匹配的 bean 的话，Spring 将会让这个 bean 处于未装配的状态</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-2-JavaConfig"><a href="#1-2-JavaConfig" class="headerlink" title="1.2 JavaConfig"></a>1.2 JavaConfig</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CDPlayerConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> CompactDisc <span class="hljs-title function_">compactDisc</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SgtPeppers</span>();<br>    &#125;<br><br><span class="hljs-comment">//    @Bean</span><br><span class="hljs-comment">//    public CDPlayer cdPlayer(CompactDisc cd) &#123;</span><br><span class="hljs-comment">//        return new CDPlayer(cd);</span><br><span class="hljs-comment">//    &#125;</span><br>    <br>    <span class="hljs-meta">@Bean(name=&quot;myCdPlayer&quot;)</span><br>    <span class="hljs-keyword">public</span> CDPlayer <span class="hljs-title function_">cdPlayer</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 不会实例化多个CompactDisc</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CDPlayer</span>(compactDisc());<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>自动化配置有时会行不通，如第三方库，此时需要我们手动创建 Bean</p>
+<ul>
+<li><p>注入</p>
+<ul>
+<li>调用方法()</li>
+<li>通过方法参数自动装配(其他配置类，其他方式创建的Bean)</li>
+</ul>
+</li>
+<li><p><code>@Bean(name=&quot;xxx&quot;)</code>: 声明一个Bean，并且可以自定义名称</p>
+<ul>
+<li>Bean的默认名称为方法名</li>
+<li>可以通过name字段修改bean的名称</li>
+</ul>
+</li>
+<li><p>注意与业务逻辑和领域代码分开</p>
+</li>
+</ul>
+<h4 id="1-3-XML配置"><a href="#1-3-XML配置" class="headerlink" title="1.3 XML配置"></a>1.3 XML配置</h4><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;compactDisc&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;soundsystem.SgtPeppers&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;cdPlayer&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;soundsystem.CDPlayer&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;compactDisc&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>&lt;bean&gt;&lt;/bean&gt;</code></li>
+<li>不能类型检查</li>
+<li>构造器注入<ul>
+<li><code>&lt;comstructor-arg&gt;</code></li>
+<li>c-命名空间</li>
+<li>注入字面量值</li>
+<li>注入集合</li>
+</ul>
+</li>
+<li>属性注入<ul>
+<li>p-命名空间</li>
+<li>util-命名空间</li>
+</ul>
+</li>
+<li>建议：强依赖使用构造器注入</li>
+</ul>
+<h4 id="1-4-混合配置"><a href="#1-4-混合配置" class="headerlink" title="1.4 混合配置"></a>1.4 混合配置</h4><p>JavaConfig 中的导入</p>
+<ul>
+<li><code>@Import(配置类.class, ...)</code></li>
+<li><code>@ImportResource(xml文件)</code></li>
+</ul>
+<p>XML 中的导入</p>
+<ul>
+<li><code>&lt;import resource=&quot;xml文件&quot; /&gt;</code></li>
+<li><code>&lt;bean class=&quot;配置类&quot; /&gt;</code></li>
+</ul>
+<h4 id="1-5-根配置"><a href="#1-5-根配置" class="headerlink" title="1.5 根配置"></a>1.5 根配置</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan</span><br><span class="hljs-meta">@Import(其他配置类.class)</span><br><span class="hljs-meta">@ImportResource(xml文件)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">BootConfig</span>()&#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-Profile"><a href="#2-Profile" class="headerlink" title="2. @Profile"></a>2. @Profile</h3><p>根据不同环境创造不同的 Bean</p>
+<p>在 Java 配置中，可以使用 @Profile 注解指定某个 bean 属于哪一个 profile</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 类</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@Profile(&quot;dev&quot;)</span><br><br><span class="hljs-comment">// 方法</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@Profile(&quot;prov&quot;)</span><br></code></pre></td></tr></table></figure>
+
+<p>激活</p>
+<ul>
+<li>spring.profiles.default</li>
+<li>spring.profiles.active</li>
+<li><code>@ActiveProfiles(&quot;dev&quot;)</code></li>
+</ul>
+<h3 id="3-Conditonal"><a href="#3-Conditonal" class="headerlink" title="3. @Conditonal"></a>3. @Conditonal</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// MagicConfig.java</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@Conditional(MagicExistsCondition.class)</span><br><span class="hljs-keyword">public</span> MagicBean <span class="hljs-title function_">magicBean</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MagicBean</span>();<br>&#125;<br><br><span class="hljs-comment">// 实现 Condition 接口，重写 match 方法</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MagicExistsCondition</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Condition</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">matches</span><span class="hljs-params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> &#123;<br>        <span class="hljs-type">Environment</span> <span class="hljs-variable">env</span> <span class="hljs-operator">=</span> context.getEnvironment();<br>        <span class="hljs-keyword">return</span> env.containsProperty(<span class="hljs-string">&quot;magic&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-自动装配的歧义性"><a href="#4-自动装配的歧义性" class="headerlink" title="4. 自动装配的歧义性"></a>4. 自动装配的歧义性</h3><ul>
+<li><code>@Component</code> 或 <code>@Bean</code></li>
+<li><code>@Primary</code>: 标识首选的 Bean</li>
+<li>定义时<ol>
+<li><code>@Componet</code>或<code>@Bean</code></li>
+<li><code>@Qualifier(&quot;...&quot;)</code> 自定义限定符，通过使用<code>@Qualifier</code>注解，我们可以消除需要注入哪个bean的问题。</li>
+</ol>
+</li>
+<li>使用时<ol>
+<li><code>@Autowired</code></li>
+<li><code>@Qualifier(&quot;...&quot;)</code> bean名称或自定义限定符，默认Bean名是限定符</li>
+</ol>
+</li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904035342893063">Spring 注解 @Qualifier 详细解析</a></li>
+<li>可以自定义注解，这些注解本身也加了@Qualifier注解<ol>
+<li><code>@Cold</code></li>
+<li><code>@Creamy</code></li>
+</ol>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Qualifier</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Cold&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="5-Bean的作用域"><a href="#5-Bean的作用域" class="headerlink" title="5. Bean的作用域"></a>5. Bean的作用域</h3><p>@Scope 可以与 @Component 和 @Bean 一起使用，指定作用域</p>
+<ul>
+<li>Singleton，单例，在整个应用中，只创建 bean 的一个实例</li>
+<li>Prototype，原型，每次注入或者通过Spring应用上下文获取的时候，都会创建一个新 bean 实例</li>
+<li>Session，会话，在Web应用中，为每个会话创建一个bean实例</li>
+<li>Request，请求，在Web应用中，为每个请求创建一个bean实例</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用会话和请求作用域</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Scope(value=WebApplicationContext.SCOPE_SESSION,</span><br><span class="hljs-meta">       proxyMode=ScopedProxyMode.INTERFACES)</span><br><span class="hljs-keyword">public</span> ShoppingCart <span class="hljs-title function_">cart</span><span class="hljs-params">()</span>&#123;....&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-通过代理注入给单例对象"><a href="#6-通过代理注入给单例对象" class="headerlink" title="6. 通过代理注入给单例对象"></a>6. 通过代理注入给单例对象</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230219235848176.png" alt="image-20230219235848176" style="zoom:67%;" />
+
+<h2 id="面向切面编程-AOP"><a href="#面向切面编程-AOP" class="headerlink" title="面向切面编程(AOP)"></a>面向切面编程(AOP)</h2><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>软件编程方法的发展</p>
+<ul>
+<li>面向过程编程(POP, Procedure Oriented Programming)</li>
+<li>面向对象编程(OOP, Object Oriented Programming)</li>
+<li>面向切面编程(AOP, Aspect Oriented Programming)</li>
+<li>函数式编程(FP, Functional Programming)</li>
+<li>反应式编程(RP, Reactive Programming)</li>
+</ul>
+<h3 id="2-AOP"><a href="#2-AOP" class="headerlink" title="2. AOP"></a>2. AOP</h3><table>
+<thead>
+<tr>
+<th>切入前</th>
+<th>切入后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194342301.png" alt="image-20230228194342301" style="zoom:80%;" /></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194429951.png" alt="image-20230228194429951" style="zoom:80%;" /></td>
+</tr>
+</tbody></table>
+<h4 id="2-1-横切关注点-cross-cutting-concern"><a href="#2-1-横切关注点-cross-cutting-concern" class="headerlink" title="2.1 横切关注点(cross-cutting concern)"></a>2.1 横切关注点(cross-cutting concern)</h4><ul>
+<li>日志</li>
+<li>安全</li>
+<li>事务</li>
+<li>缓存</li>
+</ul>
+<blockquote>
+<p>除了使用 AOP，还可选择</p>
+<ul>
+<li><p>继承(inheritance): 父类添加日志方法</p>
+</li>
+<li><p>委托(delegation): 通过引用日志对象</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="2-2-AOP-图解"><a href="#2-2-AOP-图解" class="headerlink" title="2.2 AOP 图解"></a>2.2 AOP 图解</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194822706.png" alt="image-20230228194822706" style="zoom:80%;" />
+
+<h4 id="2-3-AOP-术语"><a href="#2-3-AOP-术语" class="headerlink" title="2.3 AOP 术语"></a>2.3 AOP 术语</h4><ul>
+<li>通知(Advice)：切面做什么？什么时候做？代表了切面的逻辑。</li>
+<li>切点(Pointcut)：指定通知要切入到代码的哪些位置，切点表达式</li>
+<li>切面(Aspect)：通知 + 切点</li>
+<li>连接点(Join point)：方法(Spring只支持对方法添加通知)、字段修改、构造方法</li>
+<li>引入(Introduction)：(给对象)引入新的行为和状态</li>
+<li>织入(Weaving)：切面应用到目标对象的过程</li>
+</ul>
+<h4 id="2-4-通知-Advice-类型"><a href="#2-4-通知-Advice-类型" class="headerlink" title="2.4 通知(Advice)类型"></a>2.4 通知(Advice)类型</h4><ul>
+<li><code>@Before</code>：在调用目标之前</li>
+<li><code>@After</code>：被切的对象方法执行之后，等于<code>@AfterReturnning</code> + <code>@AfterThrowing</code></li>
+<li><code>@AfterReturning</code>：被切对象方法返回后，有异常但是没有return的话不执行AfterReturning</li>
+<li><code>@AfterThrowing</code>：被切对象方法出现异常之后</li>
+<li><code>@Around</code>：被切对象方法的执行前和执行后，等于<code>@Before</code> + <code>@After</code></li>
+</ul>
+<h4 id="2-5-织入时机"><a href="#2-5-织入时机" class="headerlink" title="2.5 织入时机"></a>2.5 织入时机</h4><ul>
+<li>编译器：编译的时候将Aspect织入进去，需要使用特别的编译器。</li>
+<li>类加载期：需要类加载器的处理</li>
+<li>运行期：Spring所采纳的方式，使用代理对象，只支持方法级别的连接点</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228200339433.png" alt="image-20230228200339433" style="zoom:80%;" />
+
+<h3 id="3-Spring-AOP"><a href="#3-Spring-AOP" class="headerlink" title="3. Spring AOP"></a>3. Spring AOP</h3><ul>
+<li><code>@AspectJ</code> 注解驱动的切面</li>
+<li><code>@EnableAspectJAutoProxy</code> 配置类中，开启AspectJ的自动代理机制</li>
+</ul>
+<h4 id="3-1-定义切面-Aspect"><a href="#3-1-定义切面-Aspect" class="headerlink" title="3.1 定义切面(@Aspect)"></a>3.1 定义切面(<code>@Aspect</code>)</h4><ul>
+<li>加注解的普通POJO</li>
+<li>定义可重用的切点(<code>@Pointcut</code>)</li>
+<li>Around通知(<code>proceedigJoinPoint.proceed()</code>)</li>
+<li>定义参数(<code>args()</code>)</li>
+</ul>
+<h4 id="3-2-AspectJ-切点指示器-pointcut-designator"><a href="#3-2-AspectJ-切点指示器-pointcut-designator" class="headerlink" title="3.2 AspectJ 切点指示器(pointcut designator)"></a>3.2 AspectJ 切点指示器(pointcut designator)</h4><p>例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(</span><br><span class="hljs-meta">	&quot;execution(* soundsystem.CompactDisc.playTrack( int ))&quot; +</span><br><span class="hljs-meta">	&quot;&amp;&amp; args(trackNumber)&quot; +  //获取参数</span><br><span class="hljs-meta">	&quot;&amp;&amp; within(soundsystem.*)&quot; + //限定包路径, 只有该包下面的方法可以使用切面</span><br><span class="hljs-meta">	&quot;&amp;&amp; bean(sgtPeppers)&quot; //限定bean名称，或者： &amp;&amp; !bean(sgtPeppers)</span><br><span class="hljs-meta">)</span><br></code></pre></td></tr></table></figure>
+
+<p>获取参数例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(</span><br><span class="hljs-meta">	&quot;execution(* soundsystem.CompactDisc.playTrack( int )) &quot; +</span><br><span class="hljs-meta">	&quot;&amp;&amp; args(trackNumber)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">trackPlayed</span><span class="hljs-params">(<span class="hljs-type">int</span> trackNumber)</span> &#123;&#125;<br><br><span class="hljs-meta">@Before(&quot;trackPlayed(trackNumber)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">countTrack</span><span class="hljs-params">(<span class="hljs-type">int</span> trackNumber)</span> &#123;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">currentCount</span> <span class="hljs-operator">=</span> getPlayCount(trackNumber);<br>    trackCounts.put(trackNumber, currentCount + <span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注解例子</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;@annotation(innerAuth)&quot;)</span> <span class="hljs-comment">//限定注解</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">innerAround</span><span class="hljs-params">(ProceedingJoinPoint point, InnerAuth innerAuth)</span> &#123; ... &#125;<br><br><span class="hljs-meta">@InnerAuth</span><br><span class="hljs-keyword">public</span> R&lt;Boolean&gt; <span class="hljs-title function_">register</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> SysUser sysUser)</span> &#123; ... &#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="3-3-引入接口-introduction"><a href="#3-3-引入接口-introduction" class="headerlink" title="3.3 引入接口(introduction)"></a>3.3 引入接口(introduction)</h4><ul>
+<li><code>@DeclareParents</code></li>
+<li>增加新的行为、属性</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EncoreableIntroducer</span> &#123;<br>    <span class="hljs-meta">@DeclareParents(value = &quot;concert.Performance+&quot;,//后面的+表示应用到所有实现了该接口的Bean</span><br><span class="hljs-meta">            		defaultImpl = DefaultEncoreable.class)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Encoreable encoreable;<br>&#125;<br><br><span class="hljs-comment">// DefaultEncoreable.java</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefaultEncoreable</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Encoreable</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">performEncore</span><span class="hljs-params">()</span> &#123; ... &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228212114724.png" alt="image-20230228212114724" style="zoom:80%;" />
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/02/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%E5%8F%91-1/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                        <b>#</b> 服务端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/02/26/Docker/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Web-App%E5%BC%80%E5%8F%91"><span class="toc-text">1. Web App开发</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E5%89%8D%E3%80%81%E5%90%8E%E7%AB%AF%E4%B8%8D%E5%88%86%E7%A6%BB%E7%9A%84%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.1 前、后端不分离的开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E5%89%8D%E3%80%81%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E7%9A%84%E5%BC%80%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.2 前、后端分离的开发模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84-Microservices-Architecture-%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.3 微服务架构(Microservices Architecture)模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Spring"><span class="toc-text">2. Spring</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Spring%E6%98%AFJava%E7%94%9F%E6%80%81%E5%9C%88%E7%9A%84%E4%B8%BB%E6%B5%81%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6"><span class="toc-text">2.1 Spring是Java生态圈的主流开发框架</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Spring%E7%9A%84%E6%A0%B8%E5%BF%83%E6%98%AF%E6%8F%90%E4%BE%9B%E4%BA%86%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8-container"><span class="toc-text">2.2 Spring的核心是提供了一个容器(container)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-Spring%E7%9A%84%E8%A1%8D%E7%94%9F"><span class="toc-text">2.3 Spring的衍生</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Spring%E7%9A%84%E6%A8%A1%E5%9D%97%E7%BB%84%E6%88%90"><span class="toc-text">2.4 Spring的模块组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-Spring%E7%9A%84%E4%B8%A4%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF"><span class="toc-text">2.5 Spring的两个核心技术</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5-DI"><span class="toc-text">依赖注入(DI)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Spring%E9%85%8D%E7%BD%AE%E6%96%B9%E6%A1%88"><span class="toc-text">1. Spring配置方案</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E8%87%AA%E5%8A%A8%E5%8C%96%E9%85%8D%E7%BD%AE"><span class="toc-text">1.1 自动化配置</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F"><span class="toc-text">组件扫描</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="toc-text">自动装配</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-JavaConfig"><span class="toc-text">1.2 JavaConfig</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-XML%E9%85%8D%E7%BD%AE"><span class="toc-text">1.3 XML配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-%E6%B7%B7%E5%90%88%E9%85%8D%E7%BD%AE"><span class="toc-text">1.4 混合配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-%E6%A0%B9%E9%85%8D%E7%BD%AE"><span class="toc-text">1.5 根配置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Profile"><span class="toc-text">2. @Profile</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Conditonal"><span class="toc-text">3. @Conditonal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D%E7%9A%84%E6%AD%A7%E4%B9%89%E6%80%A7"><span class="toc-text">4. 自动装配的歧义性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-Bean%E7%9A%84%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">5. Bean的作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%80%9A%E8%BF%87%E4%BB%A3%E7%90%86%E6%B3%A8%E5%85%A5%E7%BB%99%E5%8D%95%E4%BE%8B%E5%AF%B9%E8%B1%A1"><span class="toc-text">6. 通过代理注入给单例对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B-AOP"><span class="toc-text">面向切面编程(AOP)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-AOP"><span class="toc-text">2. AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E6%A8%AA%E5%88%87%E5%85%B3%E6%B3%A8%E7%82%B9-cross-cutting-concern"><span class="toc-text">2.1 横切关注点(cross-cutting concern)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-AOP-%E5%9B%BE%E8%A7%A3"><span class="toc-text">2.2 AOP 图解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-AOP-%E6%9C%AF%E8%AF%AD"><span class="toc-text">2.3 AOP 术语</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E9%80%9A%E7%9F%A5-Advice-%E7%B1%BB%E5%9E%8B"><span class="toc-text">2.4 通知(Advice)类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-%E7%BB%87%E5%85%A5%E6%97%B6%E6%9C%BA"><span class="toc-text">2.5 织入时机</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Spring-AOP"><span class="toc-text">3. Spring AOP</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%AE%9A%E4%B9%89%E5%88%87%E9%9D%A2-Aspect"><span class="toc-text">3.1 定义切面(@Aspect)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-AspectJ-%E5%88%87%E7%82%B9%E6%8C%87%E7%A4%BA%E5%99%A8-pointcut-designator"><span class="toc-text">3.2 AspectJ 切点指示器(pointcut designator)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%BC%95%E5%85%A5%E6%8E%A5%E5%8F%A3-introduction"><span class="toc-text">3.3 引入接口(introduction)</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91(1)%20Spring + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F02%2F16%2F%25E6%259C%258D%25E5%258A%25A1%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-1-Spring%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/02/16/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-1-Spring/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

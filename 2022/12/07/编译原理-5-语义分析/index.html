@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      编译原理(5) 语义分析 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">编译原理(5) 语义分析</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                    <b>#</b> 编译原理
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h1><p>本节课代码见<a target="_blank" rel="noopener" href="https://github.com/courses-at-nju-by-hfwei/2022-compilers-coding">https://github.com/courses-at-nju-by-hfwei/2022-compilers-coding</a></p>
+<h2 id="一、类型系统与类型检查"><a href="#一、类型系统与类型检查" class="headerlink" title="一、类型系统与类型检查"></a>一、类型系统与类型检查</h2><h3 id="1-类型系统"><a href="#1-类型系统" class="headerlink" title="1. 类型系统"></a>1. 类型系统</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151819743.png" alt="image-20221207151819743" style="zoom:80%;" />
+
+<h4 id="1-1-JS-糟糕的类型系统"><a href="#1-1-JS-糟糕的类型系统" class="headerlink" title="1.1 JS 糟糕的类型系统"></a>1.1 JS 糟糕的类型系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151842025.png" alt="image-20221207151842025" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207151856769.png" alt="image-20221207151856769" style="zoom:80%;" />
+
+<h3 id="2-类型检查"><a href="#2-类型检查" class="headerlink" title="2. 类型检查"></a>2. 类型检查</h3><h4 id="2-1-类型检查"><a href="#2-1-类型检查" class="headerlink" title="2.1 类型检查"></a>2.1 类型检查</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152018144.png" alt="image-20221207152018144" style="zoom:80%;" />
+
+<h4 id="2-2-类型转换"><a href="#2-2-类型转换" class="headerlink" title="2.2 类型转换"></a>2.2 类型转换</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152042825.png" alt="image-20221207152042825" style="zoom:80%;" />
+
+<blockquote>
+<p><strong>不要写这样的代码!!!</strong></p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152141192.png" alt="image-20221207152141192" style="zoom:80%;" />
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/c/language/conversion">Conversion @ cppreference.com</a></li>
+</ul>
+<h4 id="2-3-类型综合"><a href="#2-3-类型综合" class="headerlink" title="2.3 类型综合"></a>2.3 类型综合</h4><p>根据子表达式的类型确定表达式的类型</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152444442.png" alt="image-20221207152444442" style="zoom:80%;" />
+
+<h4 id="2-4-类型推导"><a href="#2-4-类型推导" class="headerlink" title="2.4 类型推导"></a>2.4 类型推导</h4><p>根据某语言结构的使用方式确定表达式的类型</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152504821.png" alt="image-20221207152504821" style="zoom:80%;" />
+
+<h3 id="3-数组类型文法"><a href="#3-数组类型文法" class="headerlink" title="3. 数组类型文法"></a>3. 数组类型文法</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152709599.png" alt="image-20221207152709599" style="zoom:80%;" />
+
+<h4 id="3-1-语法分析树"><a href="#3-1-语法分析树" class="headerlink" title="3.1 语法分析树"></a>3.1 语法分析树</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207152729596.png" alt="image-20221207152729596" style="zoom:80%;" />
+
+<h4 id="3-2-Listener"><a href="#3-2-Listener" class="headerlink" title="3.2 Listener"></a>3.2 Listener</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160736411.png" alt="image-20221212160736411" style="zoom:80%;" />
+
+<h4 id="3-3-ParseTreeProperty"><a href="#3-3-ParseTreeProperty" class="headerlink" title="3.3 ParseTreeProperty"></a>3.3 ParseTreeProperty</h4><ul>
+<li>通过 ANTLR4 提供的 <code>ParseTreeProperty&lt;&gt;</code> 来存储 <code>basicType</code> 与 <code>arrayType</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ParseTreeProperty&lt;Type&gt; arrayTypeProperty = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParseTreeProperty</span>&lt;&gt;();<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ParseTreeProperty&lt;Type&gt; basicTypeProperty = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParseTreeProperty</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160750687.png" alt="image-20221212160750687" style="zoom:80%;" />
+
+
+
+<ul>
+<li>赋值语句类型检查，详见代码</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212162801953.png" alt="image-20221212162801953" style="zoom:80%;" />
+
+<h3 id="4-类型声明文法"><a href="#4-类型声明文法" class="headerlink" title="4. 类型声明文法"></a>4. 类型声明文法</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160914001.png" alt="image-20221212160914001" style="zoom:80%;" />
+
+<ul>
+<li>与数组类似，需要保存最左侧的类型</li>
+</ul>
+<h3 id="5-类型系统"><a href="#5-类型系统" class="headerlink" title="5. 类型系统"></a>5. 类型系统</h3><p><a target="_blank" rel="noopener" href="https://youtu.be/SWTWkYbcWU0">https://youtu.be/SWTWkYbcWU0</a></p>
+<h2 id="二、属性文法"><a href="#二、属性文法" class="headerlink" title="二、属性文法"></a>二、属性文法</h2><h3 id="1-属性文法"><a href="#1-属性文法" class="headerlink" title="1. 属性文法"></a>1. 属性文法</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212165143201.png" alt="image-20221212165143201" style="zoom:80%;" />
+
+<p>$\textcolor{red}{\textbf{属性文法}\text{(Attribute Grammar)}:} 为上下文无关文法赋予\textcolor{blue}{\textbf{语义}}$</p>
+<blockquote>
+<p>终结符或非终结符上的属性就可以看作语义</p>
+<p>属性分为两类:</p>
+<ul>
+<li>综合属性</li>
+<li>继承属性</li>
+</ul>
+</blockquote>
+<h4 id="1-1-关键问题"><a href="#1-1-关键问题" class="headerlink" title="1.1 关键问题"></a>1.1 关键问题</h4><p><strong>如何基于上下文无关文法做上下文相关分析?</strong></p>
+<blockquote>
+<p>上下文相关文法分析复杂度太高</p>
+</blockquote>
+<p>关键: <strong>语法分析树</strong>上的<strong>有序</strong>信息流动</p>
+<ul>
+<li>通过 DFS 来遍历</li>
+</ul>
+<h3 id="2-计算属性值"><a href="#2-计算属性值" class="headerlink" title="2. 计算属性值"></a>2. 计算属性值</h3><h4 id="2-1-Offline-方式"><a href="#2-1-Offline-方式" class="headerlink" title="2.1 Offline 方式"></a>2.1 Offline 方式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212170016385.png" alt="image-20221212170016385" style="zoom:80%;" />
+
+<blockquote>
+<p>但因为要先建立语法分析树，实际上遍历了两遍，效率并不高</p>
+</blockquote>
+<h4 id="2-2-语法分析过程中"><a href="#2-2-语法分析过程中" class="headerlink" title="2.2 语法分析过程中"></a>2.2 语法分析过程中</h4><p>在<strong>语法分析过程中</strong>实现属性文法</p>
+<p><strong>基本思想: <strong>一个动作在它</strong>左边的</strong>所有文法符号都<strong>处理</strong>过之后立刻执行</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212170232773.png" alt="image-20221212170232773" style="zoom:80%;" />
+
+<p><strong>时机(Timing)</strong></p>
+<p>语义动作嵌入在什么地方? 这决定了何时执行语义动作。</p>
+<h4 id="2-3-实现迷你计算器"><a href="#2-3-实现迷你计算器" class="headerlink" title="2.3 实现迷你计算器"></a>2.3 实现迷你计算器</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212172137328.png" alt="image-20221212172137328" style="zoom:80%;" />
+
+<blockquote>
+<p>expr 的 value 只依赖于子节点的 value</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr4">@header &#123;<br>package ag;<br>import java.util.*;<br>&#125;<br><br>@parser::members &#123;<br>  Map&lt;String, Integer&gt; memory = new HashMap&lt;&gt;();<br><br>  int eval(int left, int right, int op) &#123;<br>    switch (op) &#123;<br>      case ADD : return left + right;<br>      case SUB : return left - right;<br>      case MUL : return left * right;<br>      case DIV : return left / right;<br>      default : return 0;<br>    &#125;<br>  &#125;<br>&#125;<br><br>prog : stat* EOF ;<br><br>stat : expr         &#123; System.out.println($expr.val); &#125;<br>     | ID &#x27;=&#x27; expr  &#123; memory.put($ID.text, $expr.val); &#125;  // $ID.text -&gt; ID.getText()<br>     ;<br><br>expr returns [int val]<br>    : left = expr op = (&#x27;*&#x27; | &#x27;/&#x27;) right = expr     &#123; $val = eval($left.val, $right.val, $op.type); &#125;<br>    | left = expr op = (&#x27;+&#x27; | &#x27;-&#x27;) right = expr     &#123; $val = eval($left.val, $right.val, $op.type); &#125;<br>    | &#x27;(&#x27; expr &#x27;)&#x27;                                  &#123; $val = $expr.val; &#125;<br>    | ID                                            &#123; String id = $ID.text; $val = memory.getOrDefault(id, 0); &#125;<br>    | INT                                           &#123; $val = $INT.int; &#125;<br>    ;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-4-输出表格文件"><a href="#2-4-输出表格文件" class="headerlink" title="2.4 输出表格文件"></a>2.4 输出表格文件</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212174143821.png" alt="image-20221212174143821" style="zoom:80%;" />
+
+<h3 id="3-SDD"><a href="#3-SDD" class="headerlink" title="3. SDD"></a>3. SDD</h3><h4 id="3-1-SDD"><a href="#3-1-SDD" class="headerlink" title="3.1 SDD"></a>3.1 SDD</h4><p><strong>Definition (语法制导定义 (Syntax-Directed Definition; SDD))</strong></p>
+<p>SDD 是一个上下文无关文法和<strong>属性</strong>及<strong>规则</strong>的结合</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221214141005939.png" alt="image-20221214141005939" style="zoom:80%;" />
+
+<p>要点:</p>
+<ul>
+<li>SDD <strong>唯一确定</strong>了语法分析树上每个<strong>非终结符</strong>节点的属性值</li>
+<li>SDD <strong>没有</strong>规定以什么方式、什么顺序计算这些属性值</li>
+</ul>
+<h4 id="3-2-注释语法分析树"><a href="#3-2-注释语法分析树" class="headerlink" title="3.2 注释语法分析树"></a>3.2 注释语法分析树</h4><p>**注释(annotated)语法分析树: **显示了各个属性值的语法分析树</p>
+<p>ANTLR4 中使用 ParseTreeProperty 存放属性值</p>
+<ul>
+<li><code>ParseTreeProperty&lt;Integer&gt;   put(ctx, ...)  get(ctx, ...)</code></li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219144009716.png" alt="image-20221219144009716" style="zoom:80%;" />
+
+<h4 id="3-3-综合属性"><a href="#3-3-综合属性" class="headerlink" title="3.3 综合属性"></a>3.3 综合属性</h4><h5 id="Definition-综合属性-Synthesized-Attribute"><a href="#Definition-综合属性-Synthesized-Attribute" class="headerlink" title="Definition (综合属性 (Synthesized Attribute))"></a>Definition (综合属性 (Synthesized Attribute))</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219144328213.png" alt="image-20221219144328213" style="zoom:80%;" />
+
+<h5 id="Definition-S-属性定义-S-Attributed-Definition"><a href="#Definition-S-属性定义-S-Attributed-Definition" class="headerlink" title="Definition ($S$ 属性定义 ($S$-Attributed Definition))"></a>Definition ($S$ 属性定义 ($S$-Attributed Definition))</h5><p>如果一个 SDD 的每个属性都是综合属性, 则它是 $S$ 属性定义</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219144737275.png" alt="image-20221219144737275" style="zoom:80%;" />
+
+<ul>
+<li>此类属性值的计算可以在 <em>自顶向下</em> 的 $LL$ 语法分析<strong>过程中</strong>实现</li>
+<li>在 $LL$ 语法分析器中, 递归下降函数 A <strong>返回</strong> 时, 计算相应节点 A 的综合属性值</li>
+</ul>
+<h4 id="3-4-继承属性"><a href="#3-4-继承属性" class="headerlink" title="3.4 继承属性"></a>3.4 继承属性</h4><h5 id="Definition-继承属性-Inherited-Attribute"><a href="#Definition-继承属性-Inherited-Attribute" class="headerlink" title="Definition (继承属性 (Inherited Attribute))"></a>Definition (继承属性 (Inherited Attribute))</h5><p>节点 $N$ 上的<strong>继承属性</strong>只能通过 <strong>$N$ 的父节点、$N$ 本身和 $N$ 的兄弟节点</strong>上的属性来定义。</p>
+<h5 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h5><p>$T$′ 有一个综合属性 $syn$ 与一个继承属性 $inh$</p>
+<ul>
+<li>继承属性 $T$′.$inh$ 用于在表达式中从左向右传递中间计算结果</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219145400168.png" alt="image-20221219145400168" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219145643816.png" alt="image-20221219145643816" style="zoom:80%;" />
+
+<h4 id="3-5-L-属性定义"><a href="#3-5-L-属性定义" class="headerlink" title="3.5 $L$ 属性定义"></a>3.5 $L$ 属性定义</h4><h5 id="Definition-L-属性定义-textcolor-red-L-Attributed-Definition"><a href="#Definition-L-属性定义-textcolor-red-L-Attributed-Definition" class="headerlink" title="Definition ($L$ 属性定义 ($\textcolor{red}{L}$-Attributed Definition))"></a>Definition ($L$ 属性定义 ($\textcolor{red}{L}$-Attributed Definition))</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219145937914.png" alt="image-20221219145937914" style="zoom:80%;" />
+
+<h5 id="例1：非-L-属性定义举例"><a href="#例1：非-L-属性定义举例" class="headerlink" title="例1：非 $L$ 属性定义举例"></a>例1：非 $L$ 属性定义举例</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219150215536.png" alt="image-20221219150215536" style="zoom:80%;" />
+
+<ul>
+<li>$B.i$ 依赖了右兄弟节点的 $C.c$ 属性</li>
+</ul>
+<h5 id="例2：数组类型文法举例"><a href="#例2：数组类型文法举例" class="headerlink" title="例2：数组类型文法举例"></a>例2：数组类型文法举例</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219150436131.png" alt="image-20221219150436131" style="zoom:80%;" />
+
+<ul>
+<li><p>继承属性 $C.b$ 将一个基本类型沿着树向下传播</p>
+</li>
+<li><p>综合属性 $C.t$ 收集最终得到的类型表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219150516491.png" alt="image-20221219150516491" style="zoom:80%;" /></li>
+</ul>
+<h5 id="例3：后缀表示"><a href="#例3：后缀表示" class="headerlink" title="例3：后缀表示"></a>例3：后缀表示</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219151655273.png" alt="image-20221219151655273" style="zoom:80%;" />
+
+<ul>
+<li>(9 − 5) + 2 $\Rightarrow$ 95 − 2 +</li>
+<li>9 − (5 + 2) $\Rightarrow$ 952 + −</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219151759248.png" alt="image-20221219151759248" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219151812012.png" alt="image-20221219151812012" style="zoom:80%;" />
+
+<h5 id="例4：有符号二进制数文法"><a href="#例4：有符号二进制数文法" class="headerlink" title="例4：有符号二进制数文法"></a>例4：有符号二进制数文法</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219152055063.png" alt="image-20221219152055063" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219152127179.png" alt="image-20221219152127179" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219152316587.png" alt="image-20221219152316587" style="zoom:80%;" />
+
+<h3 id="4-SDT"><a href="#4-SDT" class="headerlink" title="4. SDT"></a>4. SDT</h3><h4 id="4-1-语法制导的翻译方案-SDT"><a href="#4-1-语法制导的翻译方案-SDT" class="headerlink" title="4.1 语法制导的翻译方案(SDT)"></a>4.1 语法制导的翻译方案(SDT)</h4><p>Definition (语法制导的翻译方案 (Syntax-Directed Translation Scheme; SDT))</p>
+<p><strong>SDT</strong> 是在其产生式体中嵌入<strong>语义动作</strong>的上下文无关文法。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219152659177.png" alt="image-20221219152659177" style="zoom:80%;" />
+
+<blockquote>
+<p>$Q$ : 如何将带有<strong>语义规则</strong>的 SDD 转换为带有<strong>语义动作</strong>的 SDT</p>
+</blockquote>
+<h4 id="4-2-后缀翻译方案"><a href="#4-2-后缀翻译方案" class="headerlink" title="4.2 后缀翻译方案"></a>4.2 后缀翻译方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219152852152.png" alt="image-20221219152852152" style="zoom:80%;" />
+
+<h4 id="4-3-L-属性定义-与-LL-语法分析"><a href="#4-3-L-属性定义-与-LL-语法分析" class="headerlink" title="4.3 $L$ 属性定义 与 $LL$ 语法分析"></a>4.3 $L$ 属性定义 与 $LL$ 语法分析</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219153015846.png" alt="image-20221219153015846" style="zoom:80%;" />
+
+<p><strong>原则:</strong></p>
+<ol>
+<li><strong>从左到右</strong>处理各个 $X_i$ 符号</li>
+<li>对每个 $X_i$ , 先计算<strong>继承属性</strong>, 后计算<strong>综合属性</strong></li>
+</ol>
+<p>具体如下图所示</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219153132204.png" alt="image-20221219153132204" style="zoom:80%;" />
+
+<p><strong>举例</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219153410001.png" alt="image-20221219153410001" style="zoom:80%;" />
+
+<h4 id="4-4-左递归问题"><a href="#4-4-左递归问题" class="headerlink" title="4.4 左递归问题"></a>4.4 左递归问题</h4><blockquote>
+<p>许多工具是不支持左递归的，会转化为右递归，这会带来一些问题</p>
+<ul>
+<li>因为 ANTLR4 支持直接左递归，暂不考虑</li>
+</ul>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219153929953.png" alt="image-20221219153929953" style="zoom:80%;" />
+
+<ul>
+<li><p>继承属性 $\textcolor{blue}{R.i}$ 用于计算并传递中间结果</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219154145315.png" alt="image-20221219154145315" style="zoom:80%;" />
+</li>
+<li><p>右递归翻译方案</p>
+<ul>
+<li><p><strong>原则: 继承属性在处理文法符号之前, 综合属性在处理文法符号之后</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219154523447.png" alt="image-20221219154523447" style="zoom:80%;" />
+</li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219154606283.png" alt="image-20221219154606283" style="zoom:80%;" />
+</li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219154556836.png" alt="image-20221219154556836" style="zoom:80%;" /></li>
+</ul>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/antlr/antlr4/blob/master/doc/faq/general.md#what-is-the-difference-between-antlr-3-and-4">What is the difference between ANTLR 3 and 4?</a></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219155751002.png" alt="image-20221219155751002" style="zoom:80%;" />
+
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/12/07/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-6-JS%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                        <b>#</b> 编译原理
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/12/09/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-7-Node-js/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90"><span class="toc-text">语义分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F%E4%B8%8E%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">一、类型系统与类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1. 类型系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-JS-%E7%B3%9F%E7%B3%95%E7%9A%84%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1 JS 糟糕的类型系统</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2. 类型检查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%9F%A5"><span class="toc-text">2.1 类型检查</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2"><span class="toc-text">2.2 类型转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E7%B1%BB%E5%9E%8B%E7%BB%BC%E5%90%88"><span class="toc-text">2.3 类型综合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">2.4 类型推导</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E6%96%87%E6%B3%95"><span class="toc-text">3. 数组类型文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E6%A0%91"><span class="toc-text">3.1 语法分析树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-Listener"><span class="toc-text">3.2 Listener</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-ParseTreeProperty"><span class="toc-text">3.3 ParseTreeProperty</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E5%A3%B0%E6%98%8E%E6%96%87%E6%B3%95"><span class="toc-text">4. 类型声明文法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E7%B1%BB%E5%9E%8B%E7%B3%BB%E7%BB%9F"><span class="toc-text">5. 类型系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">二、属性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%B1%9E%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 属性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98"><span class="toc-text">1.1 关键问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="toc-text">2. 计算属性值</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Offline-%E6%96%B9%E5%BC%8F"><span class="toc-text">2.1 Offline 方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E8%BF%87%E7%A8%8B%E4%B8%AD"><span class="toc-text">2.2 语法分析过程中</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E5%AE%9E%E7%8E%B0%E8%BF%B7%E4%BD%A0%E8%AE%A1%E7%AE%97%E5%99%A8"><span class="toc-text">2.3 实现迷你计算器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E8%BE%93%E5%87%BA%E8%A1%A8%E6%A0%BC%E6%96%87%E4%BB%B6"><span class="toc-text">2.4 输出表格文件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-SDD"><span class="toc-text">3. SDD</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-SDD"><span class="toc-text">3.1 SDD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E6%B3%A8%E9%87%8A%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E6%A0%91"><span class="toc-text">3.2 注释语法分析树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E7%BB%BC%E5%90%88%E5%B1%9E%E6%80%A7"><span class="toc-text">3.3 综合属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E7%BB%BC%E5%90%88%E5%B1%9E%E6%80%A7-Synthesized-Attribute"><span class="toc-text">Definition (综合属性 (Synthesized Attribute))</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-S-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89-S-Attributed-Definition"><span class="toc-text">Definition ($S$ 属性定义 ($S$-Attributed Definition))</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-%E7%BB%A7%E6%89%BF%E5%B1%9E%E6%80%A7"><span class="toc-text">3.4 继承属性</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E7%BB%A7%E6%89%BF%E5%B1%9E%E6%80%A7-Inherited-Attribute"><span class="toc-text">Definition (继承属性 (Inherited Attribute))</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BE%E4%BE%8B"><span class="toc-text">举例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-L-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89"><span class="toc-text">3.5 $L$ 属性定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-L-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89-textcolor-red-L-Attributed-Definition"><span class="toc-text">Definition ($L$ 属性定义 ($\textcolor{red}{L}$-Attributed Definition))</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B1%EF%BC%9A%E9%9D%9E-L-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89%E4%B8%BE%E4%BE%8B"><span class="toc-text">例1：非 $L$ 属性定义举例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B2%EF%BC%9A%E6%95%B0%E7%BB%84%E7%B1%BB%E5%9E%8B%E6%96%87%E6%B3%95%E4%B8%BE%E4%BE%8B"><span class="toc-text">例2：数组类型文法举例</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B3%EF%BC%9A%E5%90%8E%E7%BC%80%E8%A1%A8%E7%A4%BA"><span class="toc-text">例3：后缀表示</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B4%EF%BC%9A%E6%9C%89%E7%AC%A6%E5%8F%B7%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%95%B0%E6%96%87%E6%B3%95"><span class="toc-text">例4：有符号二进制数文法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-SDT"><span class="toc-text">4. SDT</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E8%AF%AD%E6%B3%95%E5%88%B6%E5%AF%BC%E7%9A%84%E7%BF%BB%E8%AF%91%E6%96%B9%E6%A1%88-SDT"><span class="toc-text">4.1 语法制导的翻译方案(SDT)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%90%8E%E7%BC%80%E7%BF%BB%E8%AF%91%E6%96%B9%E6%A1%88"><span class="toc-text">4.2 后缀翻译方案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-L-%E5%B1%9E%E6%80%A7%E5%AE%9A%E4%B9%89-%E4%B8%8E-LL-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">4.3 $L$ 属性定义 与 $LL$ 语法分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-%E5%B7%A6%E9%80%92%E5%BD%92%E9%97%AE%E9%A2%98"><span class="toc-text">4.4 左递归问题</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(5)%20%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F07%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-5-%25E8%25AF%25AD%25E4%25B9%2589%25E5%2588%2586%25E6%259E%2590%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/07/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5-%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

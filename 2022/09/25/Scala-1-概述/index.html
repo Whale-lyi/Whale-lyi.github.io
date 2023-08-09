@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Scala(1) 概述 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Scala(1) 概述</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Big-Data/" title="Big Data">
+                    <b>#</b> Big Data
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Big-Data/Scala/" title="Scala">
+                    <b>#</b> Scala
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-Scala-概述"><a href="#1-Scala-概述" class="headerlink" title="1. Scala 概述"></a>1. Scala 概述</h2><h3 id="1-1-Scala简介"><a href="#1-1-Scala简介" class="headerlink" title="1.1 Scala简介"></a>1.1 Scala简介</h3><ul>
+<li><p>Scala —- Java++</p>
+<ul>
+<li>Scala基于JVM，和Java完全兼容，同样具有跨平台、可移植性好、方便的垃圾回收等特性</li>
+<li>Scala比Java更加面向对象</li>
+<li>Scala是一门函数式编程语言</li>
+</ul>
+</li>
+<li><p>Scala更适合大数据的处理</p>
+<ul>
+<li>Scala对集合类型数据处理有非常好的支持</li>
+<li>Spark底层用Scala编写</li>
+</ul>
+</li>
+<li><p>Scala和Java的关系</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917012108881.png" alt="image-20220917012108881"></p>
+<h3 id="1-2-Scala环境搭建"><a href="#1-2-Scala环境搭建" class="headerlink" title="1.2 Scala环境搭建"></a>1.2 Scala环境搭建</h3><p><strong>安装步骤</strong></p>
+<ol>
+<li><p>已安装jdk1.8</p>
+</li>
+<li><p>下载Scala安装文件scala-2.12.16.zip，<a target="_blank" rel="noopener" href="https://scala-lang.org/download/2.12.16.html">https://scala-lang.org/download/2.12.16.html</a></p>
+</li>
+<li><p>解压到D:\scala-2.12.16</p>
+</li>
+<li><p>配置环境变量</p>
+<ul>
+<li><p>添加SCALA_HOME</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917013802834.png" alt="image-20220917013802834"></p>
+</li>
+<li><p>Path添加</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917013709138.png" alt="image-20220917013709138"></p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>测试</strong></p>
+<p>cmd中使用Scala计算两数之和</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917014028760.png" alt="image-20220917014028760"></p>
+<h3 id="1-3-IDEA安装Scala插件"><a href="#1-3-IDEA安装Scala插件" class="headerlink" title="1.3 IDEA安装Scala插件"></a>1.3 IDEA安装Scala插件</h3><p>在插件市场搜索Scala安装</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917014710623.png" alt="image-20220917014710623"></p>
+<h3 id="1-4-Hello-World"><a href="#1-4-Hello-World" class="headerlink" title="1.4 Hello World"></a>1.4 Hello World</h3><h4 id="1-4-1-创建项目"><a href="#1-4-1-创建项目" class="headerlink" title="1.4.1 创建项目"></a>1.4.1 创建项目</h4><p><strong>创建Scala项目</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917015254262.png" alt="image-20220917015254262"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917015404188.png" alt="image-20220917015404188"></p>
+<p><strong>创建Maven项目</strong></p>
+<ol>
+<li><p>先正常创建Maven项目即可</p>
+</li>
+<li><p>默认下，Maven不支持Scala开发，需要引入Scala框架，在项目上点击右键-&gt;Add Framework Support-&gt;选择Scala-&gt;点击OK</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917015942718.png" alt="image-20220917015942718"></p>
+</li>
+<li><p>创建项目的源文件目录并标记为Sources root</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917020202555.png" alt="image-20220917020202555"></p>
+</li>
+</ol>
+<h4 id="1-4-2-创建包和类"><a href="#1-4-2-创建包和类" class="headerlink" title="1.4.2 创建包和类"></a>1.4.2 创建包和类</h4><p>在scala包下创建包和类</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917020450212.png" alt="image-20220917020450212"></p>
+<h4 id="1-4-3-编写代码"><a href="#1-4-3-编写代码" class="headerlink" title="1.4.3 编写代码"></a>1.4.3 编写代码</h4><p>输入main快速生成main方法</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Hello</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        println(<span class="hljs-string">&quot;hello world&quot;</span>)<br>        <span class="hljs-type">System</span>.out.println(<span class="hljs-string">&quot;hello world&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 输出两行hello world</span><br></code></pre></td></tr></table></figure>
+
+<p><code>Java中部分代码也可以在Scala中运行</code></p>
+<h3 id="1-5-语法说明"><a href="#1-5-语法说明" class="headerlink" title="1.5 语法说明"></a>1.5 语法说明</h3><h4 id="1-5-1-Hello-World语法说明"><a href="#1-5-1-Hello-World语法说明" class="headerlink" title="1.5.1 Hello World语法说明"></a>1.5.1 Hello World语法说明</h4><p><strong>object</strong>：关键字，声明一个单例对象(伴生对象)</p>
+<p><strong>main方法</strong>：从外部可以直接调用执行的方法，定义在object中</p>
+<p><strong>定义方法</strong>：<code>def 方法名称(参数名称: 参数类型): 返回值类型 = &#123; 方法体 &#125;</code></p>
+<p>**[]**：表示泛型(与Java要区分)</p>
+<p><strong>Unit</strong>：表示没有返回值(类似Java中的void)</p>
+<p>scala中没有public关键字，如果不声明访问权限，那么就是公共的</p>
+<h4 id="1-5-2-clss和object说明"><a href="#1-5-2-clss和object说明" class="headerlink" title="1.5.2 clss和object说明"></a>1.5.2 clss和object说明</h4><p>Scala是一个完全面向对象的语言，没有静态语法，为了能模仿静态语法，采用<strong>伴生对象单例</strong>的方式调用方法</p>
+<p>Scala无static关键字，由<strong>object实现类似静态方法的功能</strong></p>
+<p>class关键字和Java中相同，用来定义一个类</p>
+<p>伴生对象与类必须同名且在一个文件中，类可以访问伴生对象所有私有属性</p>
+<figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>(<span class="hljs-params">name: <span class="hljs-type">String</span>, age: <span class="hljs-type">Int</span></span>) </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">printInfo</span></span>(): <span class="hljs-type">Unit</span> = &#123;<br>        println(name + <span class="hljs-string">&quot; &quot;</span> + age + <span class="hljs-string">&quot; &quot;</span> + <span class="hljs-type">Student</span>.school)<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">// 引入伴生对象</span><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Student</span> </span>&#123;<br>    <span class="hljs-keyword">val</span> school: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;NJU&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">val</span> alice = <span class="hljs-keyword">new</span> <span class="hljs-type">Student</span>(<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-number">20</span>)<br>        <span class="hljs-keyword">val</span> bob = <span class="hljs-keyword">new</span> <span class="hljs-type">Student</span>(<span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-number">23</span>)<br><br>        alice.printInfo()<br>        bob.printInfo()<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// alice 20 NJU</span><br><span class="hljs-comment">// bob 23 NJU</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-3-Scala程序反编译"><a href="#1-5-3-Scala程序反编译" class="headerlink" title="1.5.3 Scala程序反编译"></a>1.5.3 Scala程序反编译</h4><p><strong>Student.class</strong></p>
+<p>入口类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.whale.scalademo;<br><br><span class="hljs-keyword">import</span> scala.Predef$;<br><span class="hljs-keyword">import</span> scala.reflect.ScalaSignature;<br><br><span class="hljs-meta">@ScalaSignature(bytes = &quot;\006\001\r3Aa\003\007\001&#x27;!A!\004\001B\001B\003%1\004\003\005&#x27;\001\t\005\t\025!\003(\021\025Q\003\001\&quot;\001,\021\025\001\004\001\&quot;\0012\017\025)D\002#\0017\r\025YA\002#\0018\021\025Qc\001\&quot;\0019\021\035IdA1A\005\002iBaa\017\004!\002\023Y\002\&quot;\002\037\007\t\003i$aB*uk\022,g\016\036\006\003\0339\t\021b]2bY\006$W-\\8\013\005=\001\022!B&lt;iC2,&#x27;\&quot;A\t\002\007\r|Wn\001\001\024\005\001!\002CA\013\031\033\0051\&quot;\&quot;A\f\002\013M\034\027\r\\1\n\005e1\&quot;AB!osJ+g-\001\003oC6,\007C\001\017$\035\ti\022\005\005\002\037-5\tqD\003\002!%\0051AH]8pizJ!A\t\f\002\rA\023X\rZ3g\023\t!SE\001\004TiJLgn\032\006\003EY\t1!Y4f!\t)</span>\<span class="hljs-number">002</span>&amp;\<span class="hljs-number">003</span>\<span class="hljs-number">002</span>*-\t\<span class="hljs-number">031</span>\021J\<span class="hljs-number">034</span>;\<span class="hljs-number">002</span>\rqJg.\<span class="hljs-number">033</span>;?)\racf\f\t\<span class="hljs-number">003</span>[\001i\<span class="hljs-number">021</span>\<span class="hljs-number">001</span>\<span class="hljs-number">004</span>\<span class="hljs-number">005</span>\<span class="hljs-number">0065</span>\r\<span class="hljs-number">001</span>\ra\<span class="hljs-number">007</span>\<span class="hljs-number">005</span>\006M\r\<span class="hljs-number">001</span>\raJ\<span class="hljs-number">001</span>\naJLg\<span class="hljs-number">016</span>^%oM&gt;$\022A\r\t\<span class="hljs-number">003</span>+MJ!\<span class="hljs-number">001</span>\<span class="hljs-number">016</span>\f\<span class="hljs-number">003</span>\tUs\<span class="hljs-number">027</span>\<span class="hljs-number">016</span>^\<span class="hljs-number">001</span>\b<span class="hljs-string">&#x27;R,H-\0328u!\tica\005\002\007)Q\ta&#x27;</span>\<span class="hljs-number">001</span>\004tG\<span class="hljs-string">&quot;|w\016\\\013\0027\00591o\0315p_2\004\023\001B7bS:$\&quot;A\r \t\013&#125;R\001\031\001!\002\t\005\024xm\035\t\004+\005[\022B\001\&quot;\027\005\025\t%O]1z\001&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br>  <br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> age;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Student</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span> &#123;&#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printInfo</span><span class="hljs-params">()</span> &#123;<br>    Predef$.MODULE$.println((<span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(<span class="hljs-number">2</span>))<br>                            .append(<span class="hljs-built_in">this</span>.name)<br>                            .append(<span class="hljs-string">&quot; &quot;</span>)<br>                            .append(<span class="hljs-built_in">this</span>.age)<br>                            .append(<span class="hljs-string">&quot; &quot;</span>)<br>                            .append(Student$.MODULE$.school()).toString());<br>  &#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">school</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> Student$.MODULE$.school();<br>  &#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] paramArrayOfString)</span> &#123;<br>    Student$.MODULE$.main(paramArrayOfString);<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>Student$.class</strong></p>
+<p>伴生对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.whale.scalademo;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student$</span> &#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Student$ MODULE$;<br>  <br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String school;<br>  <br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">school</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.school;<br>  &#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">Student</span> <span class="hljs-variable">alice</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-number">20</span>);<br>    <span class="hljs-type">Student</span> <span class="hljs-variable">bob</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(<span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-number">23</span>);<br>    alice.printInfo();<br>    bob.printInfo();<br>  &#125;<br>  <br>  <span class="hljs-keyword">private</span> Student$() &#123;<br>    MODULE$ = <span class="hljs-built_in">this</span>;<br>    <span class="hljs-built_in">this</span>.school = <span class="hljs-string">&quot;NJU&quot;</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-6-关联源码"><a href="#1-6-关联源码" class="headerlink" title="1.6 关联源码"></a>1.6 关联源码</h3><ol>
+<li><p>官网下载源代码文件scala-2.12.16.tar.gz</p>
+</li>
+<li><p>拷贝到scala-2.12.16\lib下，并解压为文件夹</p>
+</li>
+<li><p>IDEA中选择Attach Sources，选择该文件夹</p>
+</li>
+</ol>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220918161000094.png" alt="image-20220918161000094"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/09/14/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Big-Data/" title="Big Data">
+                        <b>#</b> Big Data
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Big-Data/Scala/" title="Scala">
+                        <b>#</b> Scala
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/09/25/Scala-2-%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Scala-%E6%A6%82%E8%BF%B0"><span class="toc-text">1. Scala 概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Scala%E7%AE%80%E4%BB%8B"><span class="toc-text">1.1 Scala简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Scala%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-text">1.2 Scala环境搭建</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-IDEA%E5%AE%89%E8%A3%85Scala%E6%8F%92%E4%BB%B6"><span class="toc-text">1.3 IDEA安装Scala插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Hello-World"><span class="toc-text">1.4 Hello World</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-%E5%88%9B%E5%BB%BA%E9%A1%B9%E7%9B%AE"><span class="toc-text">1.4.1 创建项目</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-2-%E5%88%9B%E5%BB%BA%E5%8C%85%E5%92%8C%E7%B1%BB"><span class="toc-text">1.4.2 创建包和类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-3-%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81"><span class="toc-text">1.4.3 编写代码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-text">1.5 语法说明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-1-Hello-World%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E"><span class="toc-text">1.5.1 Hello World语法说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-2-clss%E5%92%8Cobject%E8%AF%B4%E6%98%8E"><span class="toc-text">1.5.2 clss和object说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-3-Scala%E7%A8%8B%E5%BA%8F%E5%8F%8D%E7%BC%96%E8%AF%91"><span class="toc-text">1.5.3 Scala程序反编译</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E5%85%B3%E8%81%94%E6%BA%90%E7%A0%81"><span class="toc-text">1.6 关联源码</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Scala(1)%20%E6%A6%82%E8%BF%B0 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F09%2F25%2FScala-1-%25E6%25A6%2582%25E8%25BF%25B0%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/09/25/Scala-1-%E6%A6%82%E8%BF%B0/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

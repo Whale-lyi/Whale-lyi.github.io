@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      软件系统设计-架构(7) 微服务架构 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">软件系统设计-架构(7) 微服务架构</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                    <b>#</b> 软件系统设计
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="1-微服务架构基础知识"><a href="#1-微服务架构基础知识" class="headerlink" title="1. 微服务架构基础知识"></a>1. 微服务架构基础知识</h1><p>考其中某一个或某几个特性</p>
+<h2 id="1-1-微服务架构"><a href="#1-1-微服务架构" class="headerlink" title="1.1 微服务架构"></a>1.1 微服务架构</h2><p><strong>概括性描述</strong></p>
+<p>微服务架构是把应用程序<strong>功能性分解</strong>为一组服务的架构风格，每一个服务都是由一组<strong>专注、内聚</strong>的功能职责组成。</p>
+<p><strong>定义</strong></p>
+<p>微服务架构是一种将单体应用拆分为<strong>细粒度</strong>的服务，并使其运行在<strong>独立进程</strong>中，服务之间采用<strong>轻量级通信机制</strong>(如HTTP RESTful API）进行交互的架构风格。这些服务<strong>围绕系统的业务能力构建</strong>，且可以通过全自动的部署机制进行<strong>独立部署</strong>。服务可以进行<strong>分布式管理</strong>，从而支持<strong>不同的编程语言</strong>进行开发和<strong>不同的数据存储技术</strong>进行存储</p>
+<h2 id="1-2-主要特性"><a href="#1-2-主要特性" class="headerlink" title="1.2 主要特性"></a>1.2 主要特性</h2><h3 id="1-2-1-通过服务组件化"><a href="#1-2-1-通过服务组件化" class="headerlink" title="1.2.1 通过服务组件化"></a>1.2.1 通过服务组件化</h3><ul>
+<li>组件：可以独立替换和升级的软件单元</li>
+<li>进程内组件<ul>
+<li>类、对象或库的形式</li>
+<li>一般直接调用、以内存方式进行功能调用(共享内存）</li>
+</ul>
+</li>
+<li>进程外组件<ul>
+<li>微服务架构中的独立服务</li>
+<li>实现组件化的方式是分解成服务</li>
+<li>通过Web服务请求或RPC机制通信</li>
+<li>轻量级消息传递机制(如RabbitMQ）</li>
+<li>产生明确的组件发布接口，封装(区别于文档）</li>
+<li>耦合度低，隔离性好、独立开发、部署</li>
+<li>远程调用性能损耗、合适的API粒度</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-2-围绕业务能力组织"><a href="#1-2-2-围绕业务能力组织" class="headerlink" title="1.2.2 围绕业务能力组织"></a>1.2.2 围绕业务能力组织</h3><ul>
+<li><strong>传统软件系统开发管理通常聚焦在技术层面</strong><ul>
+<li>UI团队、服务逻辑团队、数据库团队…</li>
+<li>跨团队的沟通、交接和预算审批等</li>
+</ul>
+</li>
+<li><strong>采用围绕业务能力的划分方法</strong><ul>
+<li>服务业务领域内的宽栈实现</li>
+<li>团队跨职能、全方位开发技能</li>
+<li>如用户体验、数据库、项目管理…</li>
+</ul>
+</li>
+<li><strong>采用产品开发模式</strong><ul>
+<li>传统：项目模式, 开发-维护，开发完解散</li>
+<li>开发团队负责软件的整个产品周期</li>
+<li>持续关注软件如何帮助用户提升业务能力，实现价值交付</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-3-内聚和解耦"><a href="#1-2-3-内聚和解耦" class="headerlink" title="1.2.3 内聚和解耦"></a>1.2.3 内聚和解耦</h3><ul>
+<li><strong>内聚：单一职责，有各自的领域逻辑</strong></li>
+<li><strong>解耦：微服务间尽量减少直接依赖，独立自治</strong><ul>
+<li>服务边界的确定(划分）有助于澄清和强化分离</li>
+<li>业务功能分解：每个微服务负责独立的业务能力</li>
+<li>领域驱动设计：通用领域划分为多个子域，识别限界上下文(Bounded Context）- 服务边界</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-4-去中心化"><a href="#1-2-4-去中心化" class="headerlink" title="1.2.4 去中心化"></a>1.2.4 去中心化</h3><ul>
+<li><strong>去中心化治理</strong><ul>
+<li>构建微服务时可以有服务自己的技术栈选择</li>
+<li>服务之间只需约定接口，无需关注内部实现</li>
+<li>运维只需了解服务部署规范</li>
+</ul>
+</li>
+<li><strong>去中心化数据存储</strong><ul>
+<li>让每个微服务管理自己的数据库</li>
+<li>或同一数据库技术的不同实例</li>
+<li>或完全不同的数据库系统</li>
+</ul>
+</li>
+<li><strong>去中心化数据管理</strong><ul>
+<li>传统架构采用事务保证数据一致性，分布式微服务架构中数据管理困难</li>
+<li>强调服务间的无事务协作，最终一致性和补偿策略</li>
+<li>需权衡更大一致性的业务损失与修复错误的代价</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-5-基础设施自动化"><a href="#1-2-5-基础设施自动化" class="headerlink" title="1.2.5 基础设施自动化"></a>1.2.5 基础设施自动化</h3><ul>
+<li>依赖自动化的基础设施，降低开发和运维微服务的操作复杂度</li>
+<li>持续部署和交付：编码、管理代码库、集成(构建、测试、打包）、部署、监控和运维</li>
+<li>测试：单元测试、集成测试、组件化测试、契约测试和端到端测试等</li>
+</ul>
+<h3 id="1-2-6-服务设计与演进"><a href="#1-2-6-服务设计与演进" class="headerlink" title="1.2.6 服务设计与演进"></a>1.2.6 服务设计与演进</h3><ul>
+<li><strong>高可用设计</strong><ul>
+<li>容忍服务失败，客户端须尽可能有效地做出响应</li>
+<li>完善的监控和日志记录，架构元素或业务指标、链路追踪</li>
+<li>快速发现不良突发行为并尽早修复</li>
+</ul>
+</li>
+<li><strong>演进式设计</strong><ul>
+<li>传统架构软件变更难以预测且改造成本高昂</li>
+<li>合理设计实现频繁、快速且控制良好的增量变更和演化</li>
+<li>合适的服务解耦，只需重新部署修改的服务</li>
+<li>变更频率不同，拆分(相同，合并）</li>
+<li>架构适应度函数(Architectural fitness function）</li>
+</ul>
+</li>
+</ul>
+<h1 id="2-微服务架构核心设计模式"><a href="#2-微服务架构核心设计模式" class="headerlink" title="2. 微服务架构核心设计模式"></a>2. 微服务架构核心设计模式</h1><p>对某一个问题的理解：上下文，需求约束，模式，模式间的关系…</p>
+<h2 id="2-1-微服务架构拆分模式"><a href="#2-1-微服务架构拆分模式" class="headerlink" title="2.1 微服务架构拆分模式"></a>2.1 微服务架构拆分模式</h2><h3 id="2-1-1-问题：如何将应用拆分为微服务"><a href="#2-1-1-问题：如何将应用拆分为微服务" class="headerlink" title="2.1.1 问题：如何将应用拆分为微服务?"></a>2.1.1 问题：如何将应用拆分为微服务?</h3><h4 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>高内聚：实现一组密切相关的功能</li>
+<li>松耦合：封装内部细节，API交互</li>
+<li>单一职责原则(SRP）</li>
+<li>共同封闭原则(CCP）</li>
+<li>双披萨团队开发</li>
+<li>团队自治</li>
+</ul>
+<h4 id="模式1：根据业务能力进行服务拆分"><a href="#模式1：根据业务能力进行服务拆分" class="headerlink" title="模式1：根据业务能力进行服务拆分"></a>模式1：根据业务能力进行服务拆分</h4><ul>
+<li>为企业产生价值的商业活动<ul>
+<li>保险：承保、理赔管理、账务管理等</li>
+<li>FTGO：供应商、消费者、订单获取和执行、记账管理</li>
+</ul>
+</li>
+<li>业务能力可分解：顶级能力和子能力</li>
+<li>能力层次结构中各级别能力映射到服务中</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>内聚和解耦</li>
+<li>能力与服务的映射具有主观性</li>
+<li>过多的进程间通信导致重新分解或组合</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>根据子域进行服务拆分</li>
+</ul>
+<h4 id="模式2：根据子域进行服务拆分"><a href="#模式2：根据子域进行服务拆分" class="headerlink" title="模式2：根据子域进行服务拆分"></a>模式2：根据子域进行服务拆分</h4><ul>
+<li>领域驱动设计DDD核心：子域和限界上下文</li>
+<li>领域：描述应用程序问题域的术语(包含子领域）</li>
+<li>拆分过程：<ul>
+<li>分析业务</li>
+<li>识别子领域(领域模型）</li>
+<li>子领域模型边界(限界上下文、微服务边界）</li>
+<li>订单获取、餐馆管理、配送、记账等</li>
+</ul>
+</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>高内聚和松耦合</li>
+<li>单独的领域模型来消除上帝类</li>
+<li>领域模型由团队独立开发、支持团队自治</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>根据业务能力进行服务拆分</li>
+</ul>
+<h2 id="2-2-微服务架构通信模式"><a href="#2-2-微服务架构通信模式" class="headerlink" title="2.2 微服务架构通信模式"></a>2.2 微服务架构通信模式</h2><h3 id="2-2-1-问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？"><a href="#2-2-1-问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？" class="headerlink" title="2.2.1 问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？"></a>2.2.1 问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？</h3><h4 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h4><ul>
+<li>微服务，分布式，进程间调用</li>
+<li>服务请求可能面临局部故障(故障&#x2F;停机&#x2F;过载）</li>
+<li>同步通信客户端等待响应被阻塞，蔓延</li>
+</ul>
+<h4 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>处理网络超时&#x2F;无响应服务的能力</li>
+<li>限制客户端向服务器发出请求的数量</li>
+<li>决定如何从失败的远程服务中恢复</li>
+</ul>
+<h4 id="模式：断路器-Circuit-Breaker"><a href="#模式：断路器-Circuit-Breaker" class="headerlink" title="模式：断路器(Circuit Breaker)"></a>模式：断路器(Circuit Breaker)</h4><ul>
+<li>服务客户端应通过代理调用远程服务(类似于电路断路器)</li>
+<li>闭合状态：对程序的请求的直接引起方法调用</li>
+<li>断开状态：对程序的请求会立即返回错误响应</li>
+<li>半断开状态：当连续失败的次数超过阈值时<ul>
+<li>超时期限内，所有调用远程服务的尝试都将立即失败</li>
+<li>超时到期后，断路器允许有限数量的测试请求通过</li>
+<li>如果这些请求成功，断路器将恢复正常运行</li>
+<li>否则，如果出现故障，超时期限将重新开始</li>
+</ul>
+</li>
+</ul>
+<p>结果</p>
+<ul>
+<li>防止不断地尝试执行可能会失败的操作</li>
+<li>使程序能够诊断错误是否已经修正，进而再次尝试调用操作</li>
+</ul>
+<p>相关模式</p>
+<ul>
+<li>API网关模式、服务器端服务发现模式</li>
+</ul>
+<h3 id="2-2-2-问题：服务的客户端-包括API网关或者其它服务）如何在网络上发现服务实例的位置？"><a href="#2-2-2-问题：服务的客户端-包括API网关或者其它服务）如何在网络上发现服务实例的位置？" class="headerlink" title="2.2.2 问题：服务的客户端(包括API网关或者其它服务）如何在网络上发现服务实例的位置？"></a>2.2.2 问题：服务的客户端(包括API网关或者其它服务）如何在网络上发现服务实例的位置？</h3><h4 id="上下文-1"><a href="#上下文-1" class="headerlink" title="上下文"></a>上下文</h4><ul>
+<li>不同微服务之间通常需要进程间调用</li>
+<li>在传统的分布式系统部署下，服务在固定且已知的位置(主机与端口）运行，从而确保各服务可利用 REST 或 RPC 机制进行相互调用</li>
+<li>微服务通常在虚拟化或者容器化环境中运行，服务实例数量和位置动态变化</li>
+</ul>
+<h4 id="需求-2"><a href="#需求-2" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>每一服务实例的特定位置(主机与端口）信息</li>
+<li>服务端实例的具体数量及位置动态变化信息</li>
+<li>虚拟机与容器分配的动态IP地址信息</li>
+<li>服务实例的数量信息的(EC自动伸缩组会根据负载情况随时调整实例数量）</li>
+</ul>
+<h4 id="模式1：应用层服务发现模式"><a href="#模式1：应用层服务发现模式" class="headerlink" title="模式1：应用层服务发现模式"></a>模式1：应用层服务发现模式</h4><ul>
+<li>自注册：服务实例调用服务注册表的注册 API 来注册其网络位置的(服务注册表定期调用心跳 API）</li>
+<li>客户端发现：客户端查询服务注册表以获取服务实例的列表(缓存+负载均衡，提高性能）</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>相较于服务器端服务发现，其活动部件与网络中转数量更少</li>
+<li>需要为应用中使用的每种编程语言&#x2F;框架建立客户端服务发现逻辑，例如Netflix Prana 为非 JVM 客户端提供了一套基于 HTTP 代理的服务发现方案</li>
+<li>客户端与服务注册表相耦合</li>
+<li>开发者负责设置和管理服务注册表，分散精力</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：平台层服务发现模式</li>
+</ul>
+<h4 id="模式2：平台层服务发现模式"><a href="#模式2：平台层服务发现模式" class="headerlink" title="模式2：平台层服务发现模式"></a>模式2：平台层服务发现模式</h4><ul>
+<li>第三方注册：由第三方负责(注册服务器，通常是部署平台的一部分）处理注册，而不是服务本身向服务注册表注册自己。</li>
+<li>服务端发现：客户端无需查询服务注册表，而是向 DNS 名称发出请求，对该 DNS 名称的请求被解析到路由器，路由器查询服务注册表并对请求进行负载均衡。</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>完全交给部署平台，服务端、客户端代码减负</li>
+<li>多语言支持度较高</li>
+<li>存在平台约束</li>
+<li>相较于客户端服务发现，需要更多的网络跳转</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：应用层服务发现模式</li>
+</ul>
+<h3 id="2-2-3-问题：如何处理外部客户端与服务之间的通讯？"><a href="#2-2-3-问题：如何处理外部客户端与服务之间的通讯？" class="headerlink" title="2.2.3 问题：如何处理外部客户端与服务之间的通讯？"></a>2.2.3 问题：如何处理外部客户端与服务之间的通讯？</h3><h4 id="上下文-2"><a href="#上下文-2" class="headerlink" title="上下文"></a>上下文</h4><ul>
+<li>多个版本客户端需要开发多个适配的用户界面</li>
+<li>产品信息通过API访问</li>
+<li>数据分布在多项服务之间</li>
+</ul>
+<h4 id="需求-3"><a href="#需求-3" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>微服务通常提供的是细粒度API，客户端需要同多项服务进行交互</li>
+<li>不同客户端需要不同的数据(桌面浏览器版本通常较复杂）</li>
+<li>不同客户端的网络性能亦有所区别(移动网络速度更慢）。服务器端 Web 应用能够向后端服务发送多条请求，不会影响用户体验，但移动客户端则只能发送少量请求</li>
+<li>服务实例数量与其位置(主机与端口）会发生动态变化</li>
+<li>服务的划分方式会随时间的推移而改变，且不应被客户端所感知</li>
+</ul>
+<h4 id="模式1：API-Gateway模式"><a href="#模式1：API-Gateway模式" class="headerlink" title="模式1：API Gateway模式"></a>模式1：API Gateway模式</h4><ul>
+<li>实现一个服务，外部 API 客户端进入基于微服务应用的入口点(类似于外观模式）</li>
+<li>部分请求会被直接代理&#x2F;路由至对应的服务</li>
+<li>部分请求则需要接入多项服务</li>
+<li>针对不同客户端提供不同的 API</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>确保客户端无法察觉应用程序是如何被拆分为多项微服务的</li>
+<li>确保客户端不受服务实例的位置的影响</li>
+<li>为每套客户端提供最优API</li>
+<li>降低请求&#x2F;往返次数</li>
+<li>将从客户端调用多项服务的逻辑转换为从API网关处调用，从而简化整个客户端</li>
+<li>API组合、协议转换和边缘功能，身份验证等</li>
+<li>问题：复杂性、性能和可扩展性、局部故障等</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>后续模式：断路器模式、服务发现模式</li>
+</ul>
+<h4 id="模式2：后端前置模式"><a href="#模式2：后端前置模式" class="headerlink" title="模式2：后端前置模式"></a>模式2：后端前置模式</h4><ul>
+<li>为每种类型的客户端实现单独的API Gateway</li>
+<li>针对不同客户端提供不同的API</li>
+<li>现成产品或服务、自研</li>
+</ul>
+<p>结果：</p>
+<ul>
+<li>封装应用程序内部结构，减少交互次数</li>
+<li>API组合、协议转换和边缘功能，身份验证等</li>
+<li>解决API Gateway职责不明确问题</li>
+<li>API模块彼此隔离、可独立扩展、减少启动时间</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：API Gateway模式</li>
+</ul>
+<h2 id="2-3-微服务架构部署模式"><a href="#2-3-微服务架构部署模式" class="headerlink" title="2.3 微服务架构部署模式"></a>2.3 微服务架构部署模式</h2><h3 id="2-3-1-问题：如何部署？"><a href="#2-3-1-问题：如何部署？" class="headerlink" title="2.3.1 问题：如何部署？"></a>2.3.1 问题：如何部署？</h3><h4 id="上下文-3"><a href="#上下文-3" class="headerlink" title="上下文"></a>上下文</h4><ul>
+<li>微服务架构包含一组服务</li>
+<li>每个服务都部署为一组服务实例，以实现吞吐量和可用性</li>
+</ul>
+<h4 id="需求-4"><a href="#需求-4" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>服务使用各种语言、框架和框架版本编写</li>
+<li>需要快速构建、独立部署和扩展服务</li>
+<li>服务实例需相互隔离</li>
+<li>需要监控每个服务实例的行为、部署可靠</li>
+<li>需限制服务消耗的资源(CPU和内存）</li>
+<li>尽可能经济高效地部署应用程序</li>
+</ul>
+<h4 id="模式1：单主机部署多个服务实例"><a href="#模式1：单主机部署多个服务实例" class="headerlink" title="模式1：单主机部署多个服务实例"></a>模式1：单主机部署多个服务实例</h4><ul>
+<li>资源需求冲突的风险</li>
+<li>在主机(物理机或虚拟机）上运行不同服务的多个实例。</li>
+<li>有多种方法可以在共享主机上部署服务实例，包括：<ul>
+<li>将每个服务实例部署为一个 JVM 进程。例如，每个服务实例一个 Tomcat 或 Jetty 实例。</li>
+<li>在同一个 JVM 中部署多个服务实例。例如，作为 Web 应用程序或 OSGI 包。</li>
+</ul>
+</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>资源利用率相对较高</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>资源需求冲突的风险</li>
+<li>依赖版本冲突的风险</li>
+<li>难以限制服务实例消耗的资源</li>
+<li>在同一个进程中部署多个服务实例，很难监控每个服务实例的资源消耗，也不可能隔离每个实例</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：单主机部署单个服务实例</li>
+</ul>
+<h4 id="模式2：单主机部署多个服务实例"><a href="#模式2：单主机部署多个服务实例" class="headerlink" title="模式2：单主机部署多个服务实例"></a>模式2：单主机部署多个服务实例</h4><ul>
+<li>在自己的主机上部署单个服务实例</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>服务实例彼此隔离</li>
+<li>不存在资源需求或依赖版本冲突的可能性</li>
+<li>一个服务实例最多只能消耗单个主机的资源</li>
+<li>监控、管理和重新部署每个服务实例非常简单</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>与单主机部署多个服务实例模式相比，资源利用效率可能较低，因为主机更多</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：单主机部署多个服务实例、无服务器部署</li>
+<li>特化模式：将服务部署到虚拟机、将服务部署到容器</li>
+</ul>
+<h4 id="模式3：将服务部署到虚拟机"><a href="#模式3：将服务部署到虚拟机" class="headerlink" title="模式3：将服务部署到虚拟机"></a>模式3：将服务部署到虚拟机</h4><ul>
+<li>将服务打包为虚拟机镜像，并将每个服务实例部署为单独的 VM</li>
+<li>比如 Netflix 部署流水线将每个服务打包为一个 EC2 AMI(包含服务运行所需要的所有内容）</li>
+<li>运行时每个服务实例是该镜像实例化的虚拟机，如 EC2 实例</li>
+<li>EC2 弹性负栽均衡器(Elastic Load Balancer)将请求路由到对应的实例</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>通过增加实例数量来扩展服务很简单。Amazon Autoscaling Groups 可以根据负载自动执行此操作</li>
+<li>VM 封装了用于构建服务的技术细节，例如所有服务都以完全相同的方式启动和停止</li>
+<li>每个服务实例都是隔离的</li>
+<li>VM 对服务实例消耗的 CPU 和内存施加限制</li>
+<li>AWS 等 IaaS 解决方案为部署和管理虚拟机提供了成熟且功能丰富的基础设施，如弹性负载均衡器、自动缩放组</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>资源利用效率较低(整台虚拟机）</li>
+<li>部署速度相对较慢(分钟级）</li>
+<li>系统管理的额外开销(操作系统、运行补丁）</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：将服务部署到容器</li>
+<li>泛化模式：单主机部署单个服务实例</li>
+</ul>
+<h4 id="模式4：将服务部署到容器"><a href="#模式4：将服务部署到容器" class="headerlink" title="模式4：将服务部署到容器"></a>模式4：将服务部署到容器</h4><ul>
+<li>将服务打包为 (Docker) 容器镜像并将每个服务实例部署到容器<ul>
+<li>容器是一种更现代、更轻量级的部署机制，操作系统级的虚拟化机制</li>
+<li>容器由在隔离的沙箱中运行的一个或多个进程组成，多个容器通常在一台机器上运行，容器共享操作系统</li>
+<li>从在容器中运行的进程的角度来看，它就好像在自己的机器上运行一样，有独立IP、可消除端口冲突</li>
+<li>使用 Docker 编排框架指定并协调容器资源，如 Kubernetes、Marathon&#x2F;Mesos、Amazon EC2 Container Service</li>
+</ul>
+</li>
+<li>部署过程：<ul>
+<li>构建Docker镜像：在构建时，部署流水线使用容器镜像构建工具，该工具读取服务代码和镜像描述，以创建容器镜像并将其存储在镜像仓库中。</li>
+<li>运行Docker镜像：在运行时，从镜像仓库中拉取容器镜像，并用于创建容器。</li>
+</ul>
+</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>通过更改容器实例的数量可以直接扩展和缩减服务</li>
+<li>容器封装了用于构建服务的技术细节，所有服务都以完全相同的方式启动和停止</li>
+<li>每个服务实例都是隔离的</li>
+<li>容器对服务实例消耗的 CPU 和内存施加限制</li>
+<li>容器的构建和启动速度非常快<ul>
+<li>将应用程序打包为 Docker 容器比将其打包为 AMI 快 100 倍</li>
+<li>Docker 容器启动速度明显快于 VM(仅启动应用程序进程而非整个操作系统）</li>
+</ul>
+</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>大量的容器镜像管理工作(操作系统补丁、基础设施）</li>
+<li>部署容器的基础设施不如部署虚拟机的基础设施丰富</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：将服务部署到虚拟机</li>
+<li>泛化模式：单主机部署单个服务实例</li>
+</ul>
+<blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230613000504170.png" alt="image-20230613000504170"></p>
+</blockquote>
+<h4 id="模式5：服务部署平台"><a href="#模式5：服务部署平台" class="headerlink" title="模式5：服务部署平台"></a>模式5：服务部署平台</h4><ul>
+<li>使用部署平台作为应用程序部署的自动化基础设施</li>
+<li>提供服务抽象(一组命名的、高度可用的服务实例）<ul>
+<li>Docker 编排框架，包括 Docker swarm 模式和 Kubernetes</li>
+<li>无服务器平台，例如 AWS Lambda</li>
+<li>PaaS，包括 Cloud Foundry 和 AWS Elastic Beanstalk</li>
+</ul>
+</li>
+<li>Docker编排框架将运行Docker的一组计算机转变为资源集群，将容器分配给机器，提供<strong>资源管理、调度、服务管理</strong>功能</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>后续模式：将服务部署到虚拟机、将服务部署容器、无服务器部署</li>
+</ul>
+<blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230613000421999.png" alt="image-20230613000421999"></p>
+</blockquote>
+<h4 id="模式6：无服务器部署"><a href="#模式6：无服务器部署" class="headerlink" title="模式6：无服务器部署"></a>模式6：无服务器部署</h4><ul>
+<li>使用公有云提供的 serverless 部署机制部署服务</li>
+<li>部署细节对用户隐藏，用户和其组织不负责管理低级基础设施(无服务器概念）</li>
+<li>基础设施获取服务代码并运行，根据消耗的资源为每个请求付费</li>
+<li>需打包代码(例如ZIP），将其上传到部署基础设施</li>
+<li>公有云serverless平台：AWS Lambda、Google Cloud Functions、Azure Functions</li>
+<li>开源serverless框架：Apache Openwhisk、Fission on Kubernetes</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>AWS服务集成简单：AWS服务生成事件、AWS API Gateway处理HTTP请求的Lambda函数</li>
+<li>消除系统管理任务：底层系统管理、操作系统或运行时打补丁，专注于开发应用程序</li>
+<li>弹性伸缩：AWS Lambda运行应用程序所需的多个实例以动态处理负载</li>
+<li>基于使用情况的定价：与典型的laaS云不同，AWS Lambda按请求所消耗的资源收费</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>长尾延迟：AWS Lambda动态运行代码，需花费时间配置和启动应用，某些请求具有高延迟(Java服务通常需要至少几秒钟，不适合对延迟敏感的服务）</li>
+<li>基于有限事件与请求的编程模型：不用于长时间运行的服务(使用第三方消息代理的消息服务）</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>替代模式：单主机部署单个服务实例</li>
+</ul>
+<blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230613000438644.png" alt="image-20230613000438644"></p>
+</blockquote>
+<h2 id="2-4-微服务架构可观测性模式"><a href="#2-4-微服务架构可观测性模式" class="headerlink" title="2.4 微服务架构可观测性模式"></a>2.4 微服务架构可观测性模式</h2><h3 id="2-4-0-上下文"><a href="#2-4-0-上下文" class="headerlink" title="2.4.0 上下文"></a>2.4.0 上下文</h3><ul>
+<li>多台机器上、多个服务和服务实例</li>
+<li>请求跨越多服务实例，每个服务通过执行一个或多个操作来处理请求</li>
+<li>以标准化格式将操作信息写入日志文件，跟踪用户行为和代码异常</li>
+<li>服务实例可能无法处理请求但仍在运行</li>
+</ul>
+<h3 id="2-4-1-问题：如何理解用户和应用程序的行为并解决问题？"><a href="#2-4-1-问题：如何理解用户和应用程序的行为并解决问题？" class="headerlink" title="2.4.1 问题：如何理解用户和应用程序的行为并解决问题？"></a>2.4.1 问题：如何理解用户和应用程序的行为并解决问题？</h3><h4 id="模式1：日志聚合模式"><a href="#模式1：日志聚合模式" class="headerlink" title="模式1：日志聚合模式"></a>模式1：日志聚合模式</h4><ul>
+<li>使用集中式日志记录服务聚合来自每个服务实例的日志</li>
+<li>用户可搜索和分析日志</li>
+<li>可配置当某些消息出现在日志中时触发的警报</li>
+<li>实例：AWS Cloud Watch, Logstash (ELK)</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>任何解决方案都应该具有最小的运行时开销</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>处理大量日志需要大量的基础设施</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>分布式追踪、异常跟踪</li>
+</ul>
+<blockquote>
+<p>日志记录的基础设施：</p>
+<ul>
+<li>ELK<ul>
+<li>Elasticsearch：面向文本搜索的NoSQL数据库，用作日志记录服务器</li>
+<li>Logstash：聚合服务日志并将其写入 Elasticsearch 的日志流水线</li>
+<li>Kibana: Elasticsearch的可视化工具</li>
+</ul>
+</li>
+<li>开源日志流水线包括 Fluentd 和 Apache Flume</li>
+<li>商用如 AWS Cloud Watch Logs 等</li>
+</ul>
+</blockquote>
+<h4 id="模式2：审计日志模式"><a href="#模式2：审计日志模式" class="headerlink" title="模式2：审计日志模式"></a>模式2：审计日志模式</h4><ul>
+<li>向业务逻辑中添加审计日志代码</li>
+<li>创建审核日志条目并保存在数据库中</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>了解用户最近执行了哪些操作，帮助支持、确保合规性、安全性和可疑行为等</li>
+</ul>
+<p>优点: </p>
+<ul>
+<li>提供用户操作的记录</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>审计代码与业务逻辑交织，使业务逻辑复杂化</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>后续模式：事件溯源(实施审计的可靠方式）</li>
+</ul>
+<h4 id="模式3：应用程序指标模式"><a href="#模式3：应用程序指标模式" class="headerlink" title="模式3：应用程序指标模式"></a>模式3：应用程序指标模式</h4><ul>
+<li>检测服务以收集有关各个操作的统计信息，在集中式指标服务中聚合指标，提供报告和警报。聚合指标两种模型：<ul>
+<li>push - 服务将指标推送到指标服务</li>
+<li>pull - 指标服务从服务中提取指标</li>
+</ul>
+</li>
+<li>实例：Coda Hale&#x2F;Yammer Java 指标库、Prometheus(普罗米修斯）、AWS Cloud Watch等</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>任何解决方案都应该具有最小的运行时开销</li>
+</ul>
+<p>优点: </p>
+<ul>
+<li>提供对应用程序行为的深入洞察</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>指标代码与业务逻辑交织在一起，使其更加复杂</li>
+<li>聚合指标可能需要大量的基础设施</li>
+</ul>
+<p>相关模式：其他可观测性模式</p>
+<h4 id="模式4：分布式追踪模式"><a href="#模式4：分布式追踪模式" class="headerlink" title="模式4：分布式追踪模式"></a>模式4：分布式追踪模式</h4><ul>
+<li>记录单次请求范围以内的信息</li>
+<li>为每个外部请求分配一个唯一的外部请求 ID</li>
+<li>并在提供可视化和分析的集中式服务器中记录请求如何从一个服务流向下一个服务</li>
+<li>在所有日志消息中包含外部请求 ID</li>
+<li>记录在集中服务中处理外部请求时执行的请求和操作的信息(例如开始时间、结束时间）</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>外部监控只报告总体响应时间和调用次数，无法深入了解各个操作</li>
+<li>任何解决方案都应该具有最小的运行时开销</li>
+<li>请求的日志条目分散在许多日志中</li>
+</ul>
+<p>实例</p>
+<ul>
+<li>Spring Cloud Sleuth - Spring Cloud 应用程序的分布式跟踪</li>
+<li>Open Zipkin - 用于记录和显示跟踪信息的服务</li>
+<li>Open Tracing - 用于分布式跟踪的标准化 API</li>
+</ul>
+<p>优点:</p>
+<ul>
+<li>提供了对系统行为的有用洞察，包括延迟的来源</li>
+<li>使开发人员能够通过在聚合日志中搜索其外部请求 ID 来查看单个请求是如何处理的</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>聚合和存储追踪数据可能需要大量的基础设施</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>日志聚合 - 外部请求 ID 包含在每个日志消息中</li>
+</ul>
+<h4 id="模式5：异常跟踪模式"><a href="#模式5：异常跟踪模式" class="headerlink" title="模式5：异常跟踪模式"></a>模式5：异常跟踪模式</h4><ul>
+<li>向集中式异常跟踪服务报告所有异常，该服务聚合和跟踪异常并通知开发人员。</li>
+<li>实例：Sentry Datadog、PagerDuty</li>
+</ul>
+<p>上下文：</p>
+<ul>
+<li>处理请求时有时会发生错误。发生错误时，服务实例会抛出异常，其中包含错误消息和堆栈跟踪</li>
+</ul>
+<p>需求：</p>
+<ul>
+<li>异常必须由开发人员去重、记录、调查并解决潜在问题</li>
+<li>任何解决方案都应该具有最小的运行时开销</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>更容易查看异常并跟踪其解决方案</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>异常跟踪服务是额外的基础设施</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>日志聚合 - 应记录异常并报告给跟踪服务</li>
+</ul>
+<h3 id="2-4-2-问题：如何检测正在运行的服务实例无法处理请求？"><a href="#2-4-2-问题：如何检测正在运行的服务实例无法处理请求？" class="headerlink" title="2.4.2 问题：如何检测正在运行的服务实例无法处理请求？"></a>2.4.2 问题：如何检测正在运行的服务实例无法处理请求？</h3><h4 id="需求-5"><a href="#需求-5" class="headerlink" title="需求"></a>需求</h4><ul>
+<li>当服务实例失败时应生成警报，请求应该被路由到正常工作的服务实例</li>
+</ul>
+<h4 id="模式：健康检查API模式"><a href="#模式：健康检查API模式" class="headerlink" title="模式：健康检查API模式"></a>模式：健康检查API模式</h4><ul>
+<li>服务具有 &#x2F;health 返回服务健康状况的健康检查 API 端点(实例Spring Boot Actuator），执行检查：<ul>
+<li>服务实例使用的基础设施服务的连接状态</li>
+<li>主机的状态，例如磁盘空间</li>
+<li>应用程序特定逻辑</li>
+</ul>
+</li>
+<li>监控服务、服务注册表或负载均衡可以定期 “ping” 调用端点来检查服务实例的健康状况</li>
+<li>使用 Spring Boot 和 Spring Cloud 作为微服务框架</li>
+<li>提供健康检查端点，由 Spring Boot Actuator 模块实现</li>
+<li>配置调用 &#x2F;health 可扩展健康检查逻辑的 HTTP 端点。</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>定期测试服务实例的健康状况</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>不够全面</li>
+<li>服务实例可能在健康检查之间失败</li>
+</ul>
+<p>相关模式：</p>
+<ul>
+<li>前置模式：服务注册与发现模式、部署相关模式</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/06/12/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-6-%E8%AF%84%E4%BC%B0%E6%9E%B6%E6%9E%84/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                        <b>#</b> 软件系统设计
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/06/27/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-4-%E8%A1%8C%E4%B8%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">1. 微服务架构基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84"><span class="toc-text">1.1 微服务架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E4%B8%BB%E8%A6%81%E7%89%B9%E6%80%A7"><span class="toc-text">1.2 主要特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E9%80%9A%E8%BF%87%E6%9C%8D%E5%8A%A1%E7%BB%84%E4%BB%B6%E5%8C%96"><span class="toc-text">1.2.1 通过服务组件化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E5%9B%B4%E7%BB%95%E4%B8%9A%E5%8A%A1%E8%83%BD%E5%8A%9B%E7%BB%84%E7%BB%87"><span class="toc-text">1.2.2 围绕业务能力组织</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3-%E5%86%85%E8%81%9A%E5%92%8C%E8%A7%A3%E8%80%A6"><span class="toc-text">1.2.3 内聚和解耦</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-4-%E5%8E%BB%E4%B8%AD%E5%BF%83%E5%8C%96"><span class="toc-text">1.2.4 去中心化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-5-%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD%E8%87%AA%E5%8A%A8%E5%8C%96"><span class="toc-text">1.2.5 基础设施自动化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-6-%E6%9C%8D%E5%8A%A1%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%BC%94%E8%BF%9B"><span class="toc-text">1.2.6 服务设计与演进</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E6%A0%B8%E5%BF%83%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">2. 微服务架构核心设计模式</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E6%8B%86%E5%88%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.1 微服务架构拆分模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A6%82%E4%BD%95%E5%B0%86%E5%BA%94%E7%94%A8%E6%8B%86%E5%88%86%E4%B8%BA%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="toc-text">2.1.1 问题：如何将应用拆分为微服务?</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F1%EF%BC%9A%E6%A0%B9%E6%8D%AE%E4%B8%9A%E5%8A%A1%E8%83%BD%E5%8A%9B%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86"><span class="toc-text">模式1：根据业务能力进行服务拆分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F2%EF%BC%9A%E6%A0%B9%E6%8D%AE%E5%AD%90%E5%9F%9F%E8%BF%9B%E8%A1%8C%E6%9C%8D%E5%8A%A1%E6%8B%86%E5%88%86"><span class="toc-text">模式2：根据子域进行服务拆分</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E9%80%9A%E4%BF%A1%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.2 微服务架构通信模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-1-%E9%97%AE%E9%A2%98%EF%BC%9A%E5%90%8C%E6%AD%A5%E9%80%9A%E4%BF%A1%E4%B8%AD%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E7%94%B1%E4%BA%8E%E6%9C%8D%E5%8A%A1%E6%95%85%E9%9A%9C%E6%88%96%E7%BD%91%E7%BB%9C%E4%B8%AD%E6%96%AD%E6%89%80%E5%BC%95%E8%B5%B7%E7%9A%84%E6%95%85%E9%9A%9C%E8%94%93%E5%BB%B6%E5%88%B0%E5%85%B6%E4%BB%96%E6%9C%8D%E5%8A%A1%EF%BC%9F"><span class="toc-text">2.2.1 问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-1"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%EF%BC%9A%E6%96%AD%E8%B7%AF%E5%99%A8-Circuit-Breaker"><span class="toc-text">模式：断路器(Circuit Breaker)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-2-%E9%97%AE%E9%A2%98%EF%BC%9A%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF-%E5%8C%85%E6%8B%ACAPI%E7%BD%91%E5%85%B3%E6%88%96%E8%80%85%E5%85%B6%E5%AE%83%E6%9C%8D%E5%8A%A1%EF%BC%89%E5%A6%82%E4%BD%95%E5%9C%A8%E7%BD%91%E7%BB%9C%E4%B8%8A%E5%8F%91%E7%8E%B0%E6%9C%8D%E5%8A%A1%E5%AE%9E%E4%BE%8B%E7%9A%84%E4%BD%8D%E7%BD%AE%EF%BC%9F"><span class="toc-text">2.2.2 问题：服务的客户端(包括API网关或者其它服务）如何在网络上发现服务实例的位置？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87-1"><span class="toc-text">上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-2"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F1%EF%BC%9A%E5%BA%94%E7%94%A8%E5%B1%82%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式1：应用层服务发现模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F2%EF%BC%9A%E5%B9%B3%E5%8F%B0%E5%B1%82%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式2：平台层服务发现模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-3-%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E5%A4%96%E9%83%A8%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%B8%8E%E6%9C%8D%E5%8A%A1%E4%B9%8B%E9%97%B4%E7%9A%84%E9%80%9A%E8%AE%AF%EF%BC%9F"><span class="toc-text">2.2.3 问题：如何处理外部客户端与服务之间的通讯？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87-2"><span class="toc-text">上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-3"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F1%EF%BC%9AAPI-Gateway%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式1：API Gateway模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F2%EF%BC%9A%E5%90%8E%E7%AB%AF%E5%89%8D%E7%BD%AE%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式2：后端前置模式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E9%83%A8%E7%BD%B2%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.3 微服务架构部署模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%EF%BC%9F"><span class="toc-text">2.3.1 问题：如何部署？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87-3"><span class="toc-text">上下文</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-4"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F1%EF%BC%9A%E5%8D%95%E4%B8%BB%E6%9C%BA%E9%83%A8%E7%BD%B2%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%AE%9E%E4%BE%8B"><span class="toc-text">模式1：单主机部署多个服务实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F2%EF%BC%9A%E5%8D%95%E4%B8%BB%E6%9C%BA%E9%83%A8%E7%BD%B2%E5%A4%9A%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%AE%9E%E4%BE%8B"><span class="toc-text">模式2：单主机部署多个服务实例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F3%EF%BC%9A%E5%B0%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E5%88%B0%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">模式3：将服务部署到虚拟机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F4%EF%BC%9A%E5%B0%86%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E5%88%B0%E5%AE%B9%E5%99%A8"><span class="toc-text">模式4：将服务部署到容器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F5%EF%BC%9A%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E5%B9%B3%E5%8F%B0"><span class="toc-text">模式5：服务部署平台</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F6%EF%BC%9A%E6%97%A0%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2"><span class="toc-text">模式6：无服务器部署</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.4 微服务架构可观测性模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-0-%E4%B8%8A%E4%B8%8B%E6%96%87"><span class="toc-text">2.4.0 上下文</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-1-%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E7%94%A8%E6%88%B7%E5%92%8C%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%A1%8C%E4%B8%BA%E5%B9%B6%E8%A7%A3%E5%86%B3%E9%97%AE%E9%A2%98%EF%BC%9F"><span class="toc-text">2.4.1 问题：如何理解用户和应用程序的行为并解决问题？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F1%EF%BC%9A%E6%97%A5%E5%BF%97%E8%81%9A%E5%90%88%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式1：日志聚合模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F2%EF%BC%9A%E5%AE%A1%E8%AE%A1%E6%97%A5%E5%BF%97%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式2：审计日志模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F3%EF%BC%9A%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8C%87%E6%A0%87%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式3：应用程序指标模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F4%EF%BC%9A%E5%88%86%E5%B8%83%E5%BC%8F%E8%BF%BD%E8%B8%AA%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式4：分布式追踪模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F5%EF%BC%9A%E5%BC%82%E5%B8%B8%E8%B7%9F%E8%B8%AA%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式5：异常跟踪模式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-2-%E9%97%AE%E9%A2%98%EF%BC%9A%E5%A6%82%E4%BD%95%E6%A3%80%E6%B5%8B%E6%AD%A3%E5%9C%A8%E8%BF%90%E8%A1%8C%E7%9A%84%E6%9C%8D%E5%8A%A1%E5%AE%9E%E4%BE%8B%E6%97%A0%E6%B3%95%E5%A4%84%E7%90%86%E8%AF%B7%E6%B1%82%EF%BC%9F"><span class="toc-text">2.4.2 问题：如何检测正在运行的服务实例无法处理请求？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%80%E6%B1%82-5"><span class="toc-text">需求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%EF%BC%9A%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5API%E6%A8%A1%E5%BC%8F"><span class="toc-text">模式：健康检查API模式</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84(7)%20%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F06%2F12%2F%25E8%25BD%25AF%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E8%25AE%25BE%25E8%25AE%25A1-%25E6%259E%25B6%25E6%259E%2584-7-%25E5%25BE%25AE%25E6%259C%258D%25E5%258A%25A1%25E6%259E%25B6%25E6%259E%2584%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/06/12/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-7-%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

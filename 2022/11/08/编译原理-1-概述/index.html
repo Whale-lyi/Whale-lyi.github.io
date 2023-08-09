@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      编译原理(1) 概述 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">编译原理(1) 概述</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                    <b>#</b> 编译原理
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="编译原理概述"><a href="#编译原理概述" class="headerlink" title="编译原理概述"></a>编译原理概述</h1><h3 id="1-什么是编译器"><a href="#1-什么是编译器" class="headerlink" title="1. 什么是编译器"></a>1. 什么是编译器</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107235732055.png" alt="image-20221107235732055"></p>
+<ul>
+<li>通常情况下是由高级语言编译到低级语言，但并不绝对，例如GopherJS</li>
+</ul>
+<h3 id="2-机器语言是如何跑起来的"><a href="#2-机器语言是如何跑起来的" class="headerlink" title="2. 机器语言是如何跑起来的"></a>2. 机器语言是如何跑起来的</h3><p>P1-P8：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1EW411u7th">https://www.bilibili.com/video/BV1EW411u7th</a></p>
+<h3 id="3-语言类应用程序"><a href="#3-语言类应用程序" class="headerlink" title="3. 语言类应用程序"></a>3. 语言类应用程序</h3><ul>
+<li>配置文件解析 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/.properties">.properties</a>)</li>
+<li>CSV 文件 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comma-separated_values#/media/File:CsvDelimited001.svg">Comma-Separated Values</a>)</li>
+<li>JSON 文件 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/JSON#Syntax">JavaScript Object Notation</a>)</li>
+<li>SQL 引擎 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SQL_syntax">Structured Query Language</a>)</li>
+<li>TLA+&#x2F;TLAPS (<a target="_blank" rel="noopener" href="https://github.com/Starydark/PaxosStore-tla/blob/master/theorem%20proving/TPaxos.tla">TPaxos.tla</a>)</li>
+<li>(Java) 字节码解释器</li>
+<li>C&#x2F;C++ 语言编译器</li>
+<li>排版工具 (<a target="_blank" rel="noopener" href="https://github.com/courses-at-nju-by-hfwei/compilers-lectures/blob/master/2021/0-overview/parts/overview.tex">LATEX</a>)</li>
+<li>绘图工具 (<a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/TikZ_package">TikZ</a>, <a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Dot&#x2F;Graphviz</a>)</li>
+<li>L-System (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/L-system#Example_3:_Cantor_set">Cantor Set</a>)</li>
+</ul>
+<h3 id="4-IR-Intermediate-Representation-中间表示"><a href="#4-IR-Intermediate-Representation-中间表示" class="headerlink" title="4. IR: Intermediate Representation (中间表示)"></a>4. IR: Intermediate Representation (中间表示)</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108002915488.png" alt="image-20221108002915488"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003013412.png" alt="image-20221108003013412"></p>
+<p>机器无关的中间表示优化</p>
+<p>前端(<strong>分析</strong>阶段)：分析源语言程序, 收集所有必要的信息</p>
+<p>后端(<strong>综合</strong>阶段)：利用收集到的信息, 生成目标语言程序</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003106641.png" alt="image-20221108003106641"></p>
+<p>在设计实际生产环境中的编译器时, <strong>优化</strong>通常占用了大多数时间</p>
+<h3 id="5-词法、语法、语义和物理定律"><a href="#5-词法、语法、语义和物理定律" class="headerlink" title="5. 词法、语法、语义和物理定律"></a>5. 词法、语法、语义和物理定律</h3><blockquote>
+<p>作为一名程序员，你看到了什么？</p>
+</blockquote>
+<p>position &#x3D; initial + rate ∗ 60</p>
+<ol>
+<li><strong>词法</strong>: 标识符、数字、运算符</li>
+<li><strong>语法</strong>: 包含算术运算的赋值语句</li>
+<li><strong>语义</strong>: position, initial, rate 是数值类型</li>
+<li><strong>物理定律</strong>: 当前位置 &#x3D; 初始位置 + 速度 × 时间</li>
+</ol>
+<p>我们希望编译器可以懂词法、语法、语义，但是作为编译器, 它仅仅看到了一个<strong>字符串</strong></p>
+<h4 id="5-1-词法分析器"><a href="#5-1-词法分析器" class="headerlink" title="5.1 词法分析器"></a>5.1 词法分析器</h4><p>词法分析器 (Lexer&#x2F;Scanner): 将<strong>字符</strong>流转化为<strong>词法单元</strong>(token)流。</p>
+<p><code>&lt;id,1&gt;</code></p>
+<ul>
+<li>id：表示标识符(identifier)的抽象符号</li>
+<li>1：指向符号表中position对应的条目。</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003702784.png" alt="image-20221108003702784" style="zoom:80%;" />
+
+<h4 id="5-2-语法分析器"><a href="#5-2-语法分析器" class="headerlink" title="5.2 语法分析器"></a>5.2 语法分析器</h4><p>语法分析器 (Parser): 构建<strong>词法单元</strong>之间的语法结构, 生成<strong>语法树</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003810281.png" alt="image-20221108003810281" style="zoom:80%;" />
+
+<h4 id="5-3-语义分析器"><a href="#5-3-语义分析器" class="headerlink" title="5.3 语义分析器"></a>5.3 语义分析器</h4><p>语义分析器: 语义检查, 如<strong>类型检查、”先声明后使用”约束检查</strong></p>
+<p>程序设计语言可能允许某些类型转换，这被称为<strong>自动类型转换</strong>(coercion)</p>
+<blockquote>
+<p>假设position、initial和rate已被声明为浮点数类型，而词素60本身形成一个整数。</p>
+<p>语义分析器的类型检查程序发现运算符 * 被用于一个浮点数 rate 和一个整数 60。在这种情况下，这个整数可以被转换成为一个浮点数。</p>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003908957.png" alt="image-20221108003908957" style="zoom:80%;" />
+
+<h4 id="5-4-中间代码生成器"><a href="#5-4-中间代码生成器" class="headerlink" title="5.4 中间代码生成器"></a>5.4 中间代码生成器</h4><p>中间代码生成器: 生成中间代码, 如 <strong>“三地址代码”</strong></p>
+<blockquote>
+<p>“三地址代码”，这种中间表示由一组类似于汇编语言的指令组成，每个指令具有三个运算分量。每个运算分量都像一个寄存器。</p>
+<p>关于三地址指令，有几点是值得专门指出的。</p>
+<p>首先，每个三地址赋值指令的右部最多只有一个运算符。因此这些指令确定了运算完成的顺序。在源程序中，乘法应该在加法之前完成。</p>
+<p>第二，编译器应该生成一个临时名字以存放一个三地址指令计算得到的值。</p>
+<p>第三，有些三地址指令的运算分量的少于三个(比如下面的序列中的第一个和最后一个指令)。</p>
+</blockquote>
+<p>中间代码类似目标代码, 但不含有机器相关信息 (如寄存器、指令格式)</p>
+<p>中间表示应该具有两个重要的性质：</p>
+<ul>
+<li>易于生成</li>
+<li>能够被轻松地翻译为目标机器上的语言。</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004056358.png" alt="image-20221108004056358" style="zoom:80%;" />
+
+<h4 id="5-5-中间代码优化器"><a href="#5-5-中间代码优化器" class="headerlink" title="5.5 中间代码优化器"></a>5.5 中间代码优化器</h4><p>编译时计算、消除冗余临时变量</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004121768.png" alt="image-20221108004121768" style="zoom:80%;" />
+
+<h4 id="5-6-代码生成器"><a href="#5-6-代码生成器" class="headerlink" title="5.6 代码生成器"></a>5.6 代码生成器</h4><p>代码生成器: 生成目标代码, 主要任务包括<strong>指令选择、寄存器分配</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004243070.png" alt="image-20221108004243070" style="zoom:80%;" />
+
+<h4 id="5-7-符号表"><a href="#5-7-符号表" class="headerlink" title="5.7 符号表"></a>5.7 符号表</h4><p>符号表: 收集并管理<strong>变量名&#x2F;函数名</strong>相关的信息</p>
+<ul>
+<li><p>变量名: 类型、寄存器、内存地址、行号</p>
+</li>
+<li><p>函数名: 参数个数、参数类型、返回值类型</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004430799.png" alt="image-20221108004430799"></p>
+<p>符号表：红黑树(RB-Tree)、哈希表(Hashtable)</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004641433.png" alt="image-20221108004641433"></p>
+<ul>
+<li><p>为了方便表达<strong>嵌套结构与作用域</strong>, 可能需要维护多个符号表</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004753885.png" alt="image-20221108004753885"></p>
+</li>
+</ul>
+<h2 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h2><h3 id="龙书："><a href="#龙书：" class="headerlink" title="龙书："></a>龙书：</h3><h4 id="1-1-语言处理器"><a href="#1-1-语言处理器" class="headerlink" title="1.1 语言处理器"></a>1.1 语言处理器</h4><ul>
+<li>解释器(interpreter)是另一种常见的语言处理器。它并不通过翻译的方式生成目标程序。<ul>
+<li>从用户的角度看，解释器直接利用用户提供的输入执行源程序中指定的操作。</li>
+<li>在把用户输入映射成为输出的过程中，由一个编译器产生的机器语言目标程序通常比一个解释器快很多。然而，解释器的错误诊断效果通常比编译器更好，因为它逐个语句地执行源程序。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Java语言处理器结合了编译和解释过程，一个Java源程序首先被<strong>编译成</strong>一个称为<strong>字节码</strong>(bytecode)的中间表示形式。然后由一个虚拟机<strong>对字节码加以解释执行</strong>。</p>
+<p>为了更快地完成输入到输出的处理，有些被称为即时(just in time)编译器的Java编译器在运行中间程序处理输入的前一刻首先把字节码翻译成为机器语言，然后再执行程序</p>
+</blockquote>
+<ul>
+<li><p>一个源程序可能被分割成为多个模块，并存放于独立的文件中。把源程序聚合在一起的任务有时会由一个被称为预处理器(preprocessor)的程序独立完成。预处理器还负责把那些称为宏的缩写形式转换为源语言的语句。</p>
+</li>
+<li><p>一个文件中的代码可能指向另一个文件中的位置，而链接器(linker)能够解决外部内存地址的问题。最后，加载器(loader)把所有的可执行目标文件放到内存中执行。</p>
+</li>
+</ul>
+<h4 id="1-2-一个编译器的结构"><a href="#1-2-一个编译器的结构" class="headerlink" title="1.2 一个编译器的结构"></a>1.2 一个编译器的结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108230106768.png" alt="image-20221108230106768"></p>
+<h3 id="自制编译器："><a href="#自制编译器：" class="headerlink" title="自制编译器："></a>自制编译器：</h3><h4 id="1-可执行文件"><a href="#1-可执行文件" class="headerlink" title="1. 可执行文件"></a>1. 可执行文件</h4><ul>
+<li><p>现代的 Linux 上的可执行文件，通常是指符合 ELF(Executable and Linking Format)这种特定形式的文件。</p>
+<ul>
+<li>ls、cp 这些命令(command)对应的实体文件都是可执行文件，例如 &#x2F;bin&#x2F;ls 和 &#x2F;bin&#x2F;cp 等。</li>
+<li>使用 file 命令能够查看文件是否符合 ELF 的形式。会显示 ELF……executable</li>
+</ul>
+</li>
+<li><p>ELF 文件中包含了**程序(代码)<strong>以及如何运行该程序的</strong>相关信息(元数据)**。程序(代码)就是机器语言(machine language)的列表。</p>
+</li>
+<li><p>GCC 将 C 语言的程序转化为用机器语言(例如 486 的机器语言)描述的程序。<strong>将机器语言的程序按照 ELF 这种特定的文件格式注入文件，得到的就是可执行文件。</strong></p>
+</li>
+</ul>
+<h4 id="2-编译"><a href="#2-编译" class="headerlink" title="2. 编译"></a>2. 编译</h4><blockquote>
+<p>gcc 命令是如何将 hello.c 转换为可执行文件的呢？</p>
+</blockquote>
+<p>C 语言的代码经过预处理、编译、汇编、链接这 4 个阶段的处理，最终生成可执行文件。</p>
+<p><strong>预处理</strong></p>
+<p>先由<strong>预处理器</strong>(preprocessor)对 #include 和 #define 进行处理。</p>
+<ul>
+<li>具体来说，读入头文件，将所有的宏展开，这就是预处理(preprocess)</li>
+<li>预处理的内容近似于 sed 命令和 awk 命令这样的纯文本操作，不考虑 C 语言语法的含义。</li>
+</ul>
+<p><strong>狭义的编译</strong></p>
+<p>编译器对预处理器的输出进行编译，生成<strong>汇编语言</strong>(assemble language)的代码。一般来说，汇编语言的代码的文件扩展名是“.s”。</p>
+<p><strong>汇编</strong></p>
+<p>汇编语言的代码由<strong>汇编器</strong>(assembler)转换为机器语言，这个处理过程称为汇编(assemble)。</p>
+<p>汇编器的输出称为<strong>目标文件</strong>(object file)。一般来说，目标文件的扩展名是“.o”。</p>
+<blockquote>
+<p>Linux 中，目标文件也是 ELF 文件。既然都是 ELF 文件，那么如何区分是目标文件还是可执行文件呢？</p>
+<p>ELF 文件中有用于提示文件种类的标志。例如， 用 file 命令来查看目标文件，会显示 ELF…relocatable，据此就能够将其和可执行文件区分开。</p>
+</blockquote>
+<p><strong>链接</strong></p>
+<p>目标文件本身还不能直接使用，无论是直接运行还是作为<strong>程序库</strong>(library)文件调用都不可以。</p>
+<p>将目标文件转换为最终可以使用的形式的处理称为链接(link)。使用程序库的情况下，会在这个阶段处理程序库的加载</p>
+<h4 id="3-程序运行环境"><a href="#3-程序运行环境" class="headerlink" title="3. 程序运行环境"></a>3. 程序运行环境</h4><p>链接的话题并非仅仅出现在 build 的过程中。如果使用了共享库，那么<strong>在开始运行程序时，链接才会发生</strong>。最近广泛使用的<strong>动态加载</strong>(dynamic load)，就是一种将所有链接处理放到程序运行时进行的手法。</p>
+<p>在 Sun 的 Java VM 等具有代表性的 Java 的运行环境中，为了提高运行速度，采用了 <strong>JIT 编译器</strong>(Just In Time compiler)。JIT 编译器是在程序运行时进行处理，将程序转换为机器语言的编译器。也就是说，Java 语言是在运行时进行编译的。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/30/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                        <b>#</b> 编译原理
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-text">编译原理概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-text">1. 什么是编译器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80%E6%98%AF%E5%A6%82%E4%BD%95%E8%B7%91%E8%B5%B7%E6%9D%A5%E7%9A%84"><span class="toc-text">2. 机器语言是如何跑起来的</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AF%AD%E8%A8%80%E7%B1%BB%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="toc-text">3. 语言类应用程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-IR-Intermediate-Representation-%E4%B8%AD%E9%97%B4%E8%A1%A8%E7%A4%BA"><span class="toc-text">4. IR: Intermediate Representation (中间表示)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%AF%8D%E6%B3%95%E3%80%81%E8%AF%AD%E6%B3%95%E3%80%81%E8%AF%AD%E4%B9%89%E5%92%8C%E7%89%A9%E7%90%86%E5%AE%9A%E5%BE%8B"><span class="toc-text">5. 词法、语法、语义和物理定律</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">5.1 词法分析器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">5.2 语法分析器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">5.3 语义分析器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">5.4 中间代码生成器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-text">5.5 中间代码优化器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-6-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">5.6 代码生成器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-7-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">5.7 符号表</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BE%99%E4%B9%A6%EF%BC%9A"><span class="toc-text">龙书：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-%E8%AF%AD%E8%A8%80%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-text">1.1 语言处理器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-%E4%B8%80%E4%B8%AA%E7%BC%96%E8%AF%91%E5%99%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">1.2 一个编译器的结构</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E7%BC%96%E8%AF%91%E5%99%A8%EF%BC%9A"><span class="toc-text">自制编译器：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8F%AF%E6%89%A7%E8%A1%8C%E6%96%87%E4%BB%B6"><span class="toc-text">1. 可执行文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BC%96%E8%AF%91"><span class="toc-text">2. 编译</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-text">3. 程序运行环境</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(1)%20%E6%A6%82%E8%BF%B0 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F08%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-1-%25E6%25A6%2582%25E8%25BF%25B0%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1-%E6%A6%82%E8%BF%B0/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

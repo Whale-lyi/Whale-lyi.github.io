@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Java 8函数式编程 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Java 8函数式编程</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
+<p>内容来自《Java 8函数式编程》</p>
+</blockquote>
+<h2 id="1-Lambda表达式"><a href="#1-Lambda表达式" class="headerlink" title="1. Lambda表达式"></a>1. Lambda表达式</h2><h3 id="1-1-匿名内部类与Lambda表达式"><a href="#1-1-匿名内部类与Lambda表达式" class="headerlink" title="1.1 匿名内部类与Lambda表达式"></a>1.1 匿名内部类与Lambda表达式</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 匿名内部类</span><br>button.addActionListener(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ActionListener</span>() &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">actionPerformed</span><span class="hljs-params">(ActionEvent event)</span> &#123;<br>    	System.out.println(<span class="hljs-string">&quot;button clicked&quot;</span>);<br>    &#125;<br>&#125;);<br><span class="hljs-comment">// Lambda表达式</span><br>button.addActionListener(event -&gt; System.out.println(<span class="hljs-string">&quot;button clicked&quot;</span>));<br></code></pre></td></tr></table></figure>
+
+<p>匿名内部类：</p>
+<ul>
+<li><p>实现了 ActionListener 接口。这个接口只有一个方法 <code>actionPerformed</code>。匿名内部类实现了该方法。</p>
+</li>
+<li><p>但是匿名内部类不够简便，样板代码，可读性很差，我们<strong>不想传入对象，只想传入行为</strong>。</p>
+</li>
+</ul>
+<p>Lambda 表达式：</p>
+<ul>
+<li><p>上述代码也可以改写为 Lambda 表达式</p>
+</li>
+<li><p>event 是参数名，和上面匿名内部类示例中的是同一个参数。-&gt; 将参数和 Lambda 表达式的主体分开，而主体是用户点击按钮时会运行的一些代码</p>
+</li>
+<li><p>Lambda 表达式中无需指定类型，程序依然可以编译。这是因为 javac 根据程序的上下文(<code>addActionListener</code> 方法的签名)在后台推断出了参数 event 的类型。这意味着如果参数类型不言而明，则无需显式指定。</p>
+</li>
+</ul>
+<blockquote>
+<p>为了增加可读性并迁就我们的习惯，声明参数时也可以包括类型信息，而且有时编译器不一定能根据上下文推断出参数的类型！</p>
+</blockquote>
+<h3 id="1-2-几种Lambda表达式的变体"><a href="#1-2-几种Lambda表达式的变体" class="headerlink" title="1.2 几种Lambda表达式的变体"></a>1.2 几种Lambda表达式的变体</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 1</span><br><span class="hljs-type">Runnable</span> <span class="hljs-variable">noArguments</span> <span class="hljs-operator">=</span> () -&gt; System.out.println(<span class="hljs-string">&quot;Hello World&quot;</span>);<br><span class="hljs-comment">// 2</span><br><span class="hljs-type">ActionListener</span> <span class="hljs-variable">oneArgument</span> <span class="hljs-operator">=</span> event -&gt; System.out.println(<span class="hljs-string">&quot;button clicked&quot;</span>);<br><span class="hljs-comment">// 3</span><br><span class="hljs-type">Runnable</span> <span class="hljs-variable">multiStatement</span> <span class="hljs-operator">=</span> () -&gt; &#123;<br>    System.out.print(<span class="hljs-string">&quot;Hello&quot;</span>);<br>    System.out.println(<span class="hljs-string">&quot;World&quot;</span>);<br>&#125;;<br><span class="hljs-comment">// 4</span><br>BinaryOperator&lt;Long&gt; add = (x, y) -&gt; x + y;<br><span class="hljs-comment">// 5</span><br>BinaryOperator&lt;Long&gt; addExplicit = (Long x, Long y) -&gt; x + y;<br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>使用空括号 () 表示没有参数，实现了 Runnable 接口，该接口也只有一个 run 方法，返回类型为 void</li>
+<li>只包含一个参数，可省略参数的括号</li>
+<li>主体可以是一段代码块，可以用返回或抛出异常来退出，只有一行代码的 Lambda 表达式也可使用大括号</li>
+<li>Lambda 表达式也可以表示包含多个参数的方法，这行代码创建了一个函数，用来计算两个数字相加的结果。变量 add 的类型是 <code>BinaryOperator</code>，它不是两个数字的和，而是将两个数字相加的那行代码</li>
+<li>可以显式声明参数类型，需要使用小括号将参数括起来</li>
+</ol>
+<blockquote>
+<p>目标类型是指 Lambda 表达式所在上下文环境的类型。比如，将 Lambda 表达式赋值给一个局部变量，或传递给一个方法作为参数，局部变量或方法参数的类型就是 Lambda 表达式的目标类型。</p>
+</blockquote>
+<h3 id="1-3-引用值，而不是变量"><a href="#1-3-引用值，而不是变量" class="headerlink" title="1.3 引用值，而不是变量"></a>1.3 引用值，而不是变量</h3><p>在使用匿名内部类时，当你需要引用它所在方法里的变量，需要将变量声明为 final</p>
+<p>Java 8 虽然放松了这一限制，可以引用非 final 变量，但是该变量<strong>在既成事实上必须是 final</strong>。如果坚持用作非终态变量，编译器就会报错。</p>
+<ul>
+<li>既成事实上的 final 是指<strong>只能给该变量赋值一次</strong>。</li>
+<li>换句话说，Lambda 表达式引用的是值，而不是变量。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> getUserName();<br>button.addActionListener(event -&gt; System.out.println(<span class="hljs-string">&quot;hi &quot;</span> + name));<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>如果你试图给该变量多次赋值，然后在 Lambda 表达式中引用它，编译器就会报错：</p>
+<p>local variables referenced from a Lambda expression must be final or effectively final</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> getUserName();<br>name = formatUserName(name);<br>button.addActionListener(event -&gt; System.out.println(<span class="hljs-string">&quot;hi &quot;</span> + name));<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="1-4-函数接口"><a href="#1-4-函数接口" class="headerlink" title="1.4 函数接口"></a>1.4 函数接口</h3><p>函数接口是<strong>只有一个抽象方法的接口</strong>，用作 Lambda 表达式的类型</p>
+<p>例如 Swing 中的 <code>ActionListener</code>, 只有一个抽象方法：<code>actionPerformed</code>，被用来表示行为。该接口也继承自一个不具有任何方法的父接口：<code>EventListener</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ActionListener</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">EventListener</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">actionPerformed</span><span class="hljs-params">(ActionEvent event)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接口中单一方法的命名并不重要，只要<strong>方法签名和 Lambda 表达式的类型匹配</strong>即可。</p>
+<ul>
+<li>这里的函数接口接受一个 <code>ActionEvent</code> 类型的参数，返回空（void）</li>
+</ul>
+<p>JDK 提供了一组核心函数接口会频繁出现，以下罗列一部分</p>
+<table>
+<thead>
+<tr>
+<th>接口</th>
+<th>参数</th>
+<th>返回类型</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Predicate&lt;T&gt;</code></td>
+<td>T</td>
+<td>boolean</td>
+<td>这张唱片已经发行了吗</td>
+</tr>
+<tr>
+<td><code>Consumer&lt;T&gt;</code></td>
+<td>T</td>
+<td>void</td>
+<td>输出一个值</td>
+</tr>
+<tr>
+<td><code>Function&lt;T, R&gt;</code></td>
+<td>T</td>
+<td>R</td>
+<td>获得 Artist 对象的名字</td>
+</tr>
+<tr>
+<td><code>Supplier&lt;T&gt;</code></td>
+<td>None</td>
+<td>T</td>
+<td>工厂方法</td>
+</tr>
+<tr>
+<td><code>UnaryOperator&lt;T&gt;</code></td>
+<td>T</td>
+<td>T</td>
+<td>逻辑非（!）</td>
+</tr>
+<tr>
+<td><code>BinaryOperator&lt;T&gt;</code></td>
+<td>(T, T)</td>
+<td>T</td>
+<td>求两个数的乘积（*）</td>
+</tr>
+</tbody></table>
+<h3 id="1-5-类型推断"><a href="#1-5-类型推断" class="headerlink" title="1.5 类型推断"></a>1.5 类型推断</h3><p>Lambda 表达式中的类型推断，实际上是 Java 7 就引入的目标类型推断的扩展，例如 Java 7 中的菱形操作符</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Map&lt;String, Integer&gt; diamondWordCounts = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;String, Integer&gt;();<br>Map&lt;String, Integer&gt; diamondWordCounts = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
+
+<p>如果将构造函数直接传递给一个方法，也可根据方法签名来推断类型</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 需要java8</span><br>useHashmap(<span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;());<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">useHashmap</span><span class="hljs-params">(Map&lt;String, String&gt; values)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>Java 8 更进一步，可省略 Lambda 表达式中的所有参数类型, javac 根据 Lambda 表达式上下文信息就能推断出参数的正确类型。</p>
+<p>程序依然要经过类型检查来保证运行的安全性，但不用再显式声明类型罢了。这就是所谓的<strong>类型推断</strong>。</p>
+<h4 id="一些示例"><a href="#一些示例" class="headerlink" title="一些示例"></a>一些示例</h4><p>使用 Lambda 表达式检测一个 Integer 是否大于 5。这实际上是一个 Predicate (用来判断真假的函数接口)</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Predicate&lt;Integer&gt; atLeast5 = x -&gt; x &gt; <span class="hljs-number">5</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>Predicate 只有一个泛型类型的参数，Integer 用于其中。</li>
+<li>Lambda 表达式实现了 Predicate 接口，因此它的单一参数被推断为 Integer 类型。</li>
+<li>javac 还可检查 Lambda 表达式的返回值是不是 boolean，这正是 Predicate 方法的返回类型</li>
+</ul>
+<blockquote>
+<p>Predicate 接口的源码，接受一个对象，返回一个布尔值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Predicate</span>&lt;T&gt; &#123;<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">test</span><span class="hljs-params">(T t)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</blockquote>
+<p>BinaryOperator：该接口接受两个参数，返回一个值，参数和值的类型均相同。实例中所用的类型是 Long</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">BinaryOperator&lt;Long&gt; addLongs = (x, y) -&gt; x + y;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>没有泛型，代码则通不过编译</p>
+<p><code>BinaryOperator add = (x, y) -&gt; x + y;</code></p>
+<p>编译器给出的报错信息如下：</p>
+<p><code>Operator &#39;&amp; #x002B;&#39; cannot be applied to java.lang.Object, java.lang.Object.</code></p>
+<p>上面的例子中并没有给出变量 add 的任何泛型信息，给出的正是<strong>原始类型</strong>的定义。因此，编译器认为参数和返回值都是 java.lang.Object 实例。</p>
+</blockquote>
+<h3 id="1-6-练习"><a href="#1-6-练习" class="headerlink" title="1.6 练习"></a>1.6 练习</h3><p>练习答案可在 <a target="_blank" rel="noopener" href="https://github.com/RichardWarburton/java-8-Lambdas-exercises">GitHub</a> 上本书所对应的代码仓库中找到</p>
+<ol>
+<li><p>Java 有一个 ThreadLocal 类，作为容器保存了当前线程里局部变量的值。Java 8 为该类新加了一个工厂方法，接受一个 Lambda 表达式，并产生一个新的 ThreadLocal 对象，而不用使用继承，语法上更加简洁</p>
+<ul>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zebe1989/article/details/82692551">方法为 <code>withInitial(Supplier&lt;? extends S&gt; supplier)</code></a></p>
+</li>
+<li><p><code>public final static ThreadLocal&lt;DateFormat&gt; formatter = withInitial(() -&gt; new SimpleDateFormat(&quot;dd-MMM-yyyy&quot;));</code></p>
+</li>
+</ul>
+</li>
+<li><p>以如下方式重载 check 方法后，还能正确推断出 check(x -&gt; x &gt; 5) 的类型吗？</p>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">interface</span> <span class="hljs-title class_">IntPred</span> &#123;<br>	<span class="hljs-type">boolean</span> <span class="hljs-title function_">test</span><span class="hljs-params">(Integer value)</span>;<br>&#125;<br><br><span class="hljs-type">boolean</span> <span class="hljs-title function_">check</span><span class="hljs-params">(Predicate&lt;Integer&gt; predicate)</span>;<br><span class="hljs-type">boolean</span> <span class="hljs-title function_">check</span><span class="hljs-params">(IntPred predicate)</span>;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>不能，只能二选一，或者更改 Predicate 泛型类型，并且声明 x 的类型</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    System.out.println(check((Integer x) -&gt; x &gt; <span class="hljs-number">5</span>));<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">check</span><span class="hljs-params">(IntPred predicate)</span> &#123;<br>    <span class="hljs-keyword">return</span> predicate.test(<span class="hljs-number">8</span>);<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">check</span><span class="hljs-params">(Predicate&lt;Long&gt; predicate)</span> &#123;<br>    <span class="hljs-keyword">return</span> predicate.test(<span class="hljs-number">3L</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-流"><a href="#2-流" class="headerlink" title="2. 流"></a>2. 流</h2><p>Java 8 对核心类库的改进主要包括集合类的 API 和新引入的流（Stream）。流使程序员得以站在更高的抽象层次上对集合进行操作。</p>
+<h3 id="2-1-从外部迭代到内部迭代"><a href="#2-1-从外部迭代到内部迭代" class="headerlink" title="2.1 从外部迭代到内部迭代"></a>2.1 从外部迭代到内部迭代</h3><h4 id="外部迭代"><a href="#外部迭代" class="headerlink" title="外部迭代"></a>外部迭代</h4><p>在使用集合类时，一个通用的模式是在集合上进行迭代，然后处理返回的每一个元素，一个常用的方式是使用 for 循环，但样板代码模糊了代码的本意，无法流畅传达意图</p>
+<p>就原理来看，for 循环其实是一个封装了迭代的语法糖：</p>
+<ul>
+<li>首先调用 <code>iterator()</code> 方法，产生一个新的 Iterator 对象，进而控制整个迭代过程，这就是<strong>外部迭代</strong>。</li>
+<li>迭代过程通过显式调用 Iterator 对象的 <code>hasNext()</code> 和 <code>next()</code> 方法完成迭代</li>
+<li>然而，外部迭代也有问题，首先，它很难抽象出后面提及的不同操作；此外，它从本质上来讲是一种串行化操作。总体来看，使用 for 循环会将行为和方法混为一谈。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用迭代器计算来自伦敦的艺术家人数</span><br><span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>Iterator&lt;Artist&gt; iterator = allArtists.iterator();<br><span class="hljs-keyword">while</span>(iterator.hasNext()) &#123;<br>	<span class="hljs-type">Artist</span> <span class="hljs-variable">artist</span> <span class="hljs-operator">=</span> iterator.next();<br>    <span class="hljs-keyword">if</span> (artist.isFrom(<span class="hljs-string">&quot;London&quot;</span>)) &#123;<br>    	count++;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230528171811358.png" alt="image-20230528171811358" style="zoom: 67%;" />
+
+<h4 id="内部迭代"><a href="#内部迭代" class="headerlink" title="内部迭代"></a>内部迭代</h4><p>另一种方法就是<strong>内部迭代</strong>。首先要注意 <code>stream()</code> 方法的调用，它和 <code>iterator()</code> 的作用一样, 返回内部迭代中的相应接口：Stream。</p>
+<blockquote>
+<p>Stream 是用函数式编程方式在集合类上进行复杂操作的工具</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">long</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> allArtists.stream()<br>    				   .filter(artist -&gt; artist.isFrom(<span class="hljs-string">&quot;London&quot;</span>))<br>    				   .count()<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>filter</code>: 过滤在这里是指“只保留通过某项测试的对象”。测试由一个函数完成，该函数返回 true 或者 false。<ul>
+<li>由于 Stream API 的函数式编程风格，我们并没有改变集合的内容，而是描述出 Stream 里的内容。</li>
+</ul>
+</li>
+<li><code>count()</code>: 计算给定 Stream 里包含多少个对象。</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230528172558102.png" alt="image-20230528172558102" style="zoom: 67%;" />
+
+<h3 id="2-2-实现机制"><a href="#2-2-实现机制" class="headerlink" title="2.2 实现机制"></a>2.2 实现机制</h3><p>即使代码被分解为两步操作，但实际上只对列表迭代了一次</p>
+<p>通常，在 Java 中调用一个方法，计算机会随即执行操作。但 Stream 里的一些方法却略有不同，它们虽是普通的 Java 方法，但返回的 Stream 对象却不是一个新集合，而是<strong>创建新集合的配方</strong>。</p>
+<ul>
+<li>对于像 <code>filter</code> 这种只描述 Stream，最终不产生新集合的方法叫作<strong>惰性求值</strong>方法<ul>
+<li>返回值是 Stream</li>
+</ul>
+</li>
+<li>像 <code>count</code> 这样最终会从 Stream 产生值的方法叫作<strong>及早求值</strong>方法<ul>
+<li>返回值是另一个值或为空</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">allArtists.stream()<br>          .filter(artist -&gt; &#123;<br>              System.out.println(artist.getName());<br>              <span class="hljs-keyword">return</span> artist.isFrom(<span class="hljs-string">&quot;London&quot;</span>);<br>          &#125;);<br>		<span class="hljs-comment">//.count()  取消注释就会输出艺术家的名字</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>这段代码并未做什么实际性的工作，filter 只刻画出了 Stream，但没有产生新的集合。</p>
+<ul>
+<li>由于使用了惰性求值，没有输出艺术家的名字</li>
+<li>加入一个拥有终止操作的流，如 <code>count()</code> ，艺术家的名字就会被输出</li>
+</ul>
+</li>
+<li><p>使用这些操作的理想方式就是形成一个<strong>惰性求值的链</strong>，最后用<strong>一个及早求值</strong>的操作返回想要的结果</p>
+</li>
+</ul>
+<blockquote>
+<p>整个过程和建造者模式有共通之处。建造者模式使用一系列操作设置属性和配置，最后调用一个 build 方法，这时，对象才被真正创建。</p>
+</blockquote>
+<h3 id="2-3-常用的流操作"><a href="#2-3-常用的流操作" class="headerlink" title="2.3 常用的流操作"></a>2.3 常用的流操作</h3><h4 id="collect-toList"><a href="#collect-toList" class="headerlink" title="collect(toList())"></a>collect(toList())</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;String&gt; collected = Stream.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>)<br>							   .collect(Collectors.toList());<br>assertEquals(Arrays.asList(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;c&quot;</span>), collected);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>of</code>方法使用一组初始值生成新的 Stream</li>
+<li><code>collect(toList())</code>方法由 Stream 里的值生成一个列表，是一个及早求值操作</li>
+</ul>
+<blockquote>
+<p>这个例子也展示了本节中所有示例代码的通用格式。首先由列表生成一个 Stream，然后进行一些 Stream 上的操作，继而是 collect 操作，由 Stream 生成列表，最后使用断言判断结果是否和预期一致</p>
+</blockquote>
+<h4 id="map"><a href="#map" class="headerlink" title="map"></a>map</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;String&gt; collected = Stream.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;hello&quot;</span>)<br>							   .map(string -&gt; string.toUpperCase())<br>							   .collect(toList());<br>assertEquals(asList(<span class="hljs-string">&quot;A&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;HELLO&quot;</span>), collected);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>如果有一个函数可以将一种类型的值转换成另外一种类型，map 操作就可以使用该函数，将一个流中的值转换成一个新的流<ul>
+<li><strong>参数和返回值不必属于同一种类型</strong></li>
+<li>但是 Lambda 表达式必须是 Function 接口的一个实例，Function 接口是只包含一个参数的普通函数接口</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230529204931993.png" alt="image-20230529204931993" style="zoom:80%;" />
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230529202907182.png" alt="image-20230529202907182"></p>
+<h4 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;String&gt; beginningWithNumbers<br>    = Stream.of(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;1abc&quot;</span>, <span class="hljs-string">&quot;abc1&quot;</span>)<br>			.filter(value -&gt; isDigit(value.charAt(<span class="hljs-number">0</span>)))<br>			.collect(toList());<br>assertEquals(asList(<span class="hljs-string">&quot;1abc&quot;</span>), beginningWithNumbers);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>filter 接受一个函数作为参数，该函数用 Lambda 表达式表示</li>
+<li>经过过滤，Stream 中符合条件的，即 Lambda 表达式值为 true 的元素被保留下来</li>
+<li>该 Lambda 表达式的函数接口正是前面章节中介绍过的 Predicate</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230529205054570.png" alt="image-20230529205054570"></p>
+<h4 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h4><p>假设有一个包含多个列表的流，现在希望得到所有数字的序列</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;Integer&gt; together = Stream.of(asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>), asList(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>))<br>                               .flatMap(numbers -&gt; numbers.stream())<br>                               .collect(toList());<br>assertEquals(asList(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>), together);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>flatMap 方法可用 Stream 替换值，然后将多个 Stream 连接成一个 Stream</li>
+<li>调用 stream 方法，将每个列表转换成 Stream 对象，其余部分由 flatMap 方法处理。<ul>
+<li>flatMap 方法的相关函数接口为 Function 接口，只是方法的返回值限定为 Stream 类型</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230529205319762.png" alt="image-20230529205319762"></p>
+<h4 id="max和min"><a href="#max和min" class="headerlink" title="max和min"></a>max和min</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;Track&gt; tracks = asList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">Track</span>(<span class="hljs-string">&quot;Bakai&quot;</span>, <span class="hljs-number">524</span>),<br>							<span class="hljs-keyword">new</span> <span class="hljs-title class_">Track</span>(<span class="hljs-string">&quot;Violets for Your Furs&quot;</span>, <span class="hljs-number">378</span>),<br>							<span class="hljs-keyword">new</span> <span class="hljs-title class_">Track</span>(<span class="hljs-string">&quot;Time Was&quot;</span>, <span class="hljs-number">451</span>));<br><span class="hljs-type">Track</span> <span class="hljs-variable">shortestTrack</span><br>    <span class="hljs-operator">=</span> tracks.stream()<br>			.min(Comparator.comparing(track -&gt; track.getLength()))<br>			.get();<br>assertEquals(tracks.get(<span class="hljs-number">1</span>), shortestTrack);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><p>为了让 Stream 对象按照曲目长度进行排序，需要传给它一个 Comparator 对象。Java 8 提 供了一个新的静态方法 comparing，使用它可以方便地实现一个比较器</p>
+<ul>
+<li>comparing 方法接受一个函数并返回另一个函数</li>
+</ul>
+</li>
+<li><p>此外，还可以调用空 Stream 的 max 方法，返回 Optional 对象</p>
+<ul>
+<li>Optional 对象代表一个可能存在也可能不存在的值。如果 Stream 为空，那么该值不存在，如果不为空，则该值存在</li>
+<li>通过调用 get 方法可以取出 Optional 对象中的值</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>max 和 min 方法都属于更通用的一种编程模式: reduce 模式</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">accumulator</span> <span class="hljs-operator">=</span> initialValue;<br><span class="hljs-keyword">for</span>(Object element : collection) &#123;<br>	accumulator = combine(accumulator, element);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+</blockquote>
+<h4 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h4><blockquote>
+<p>reduce 操作可以实现从一组值中生成一个值。在上述例子中用到的 count、min 和 max 方 法，因为常用而被纳入标准库中。事实上，这些方法都是 reduce 操作。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> Stream.of(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>)<br>				  .reduce(<span class="hljs-number">0</span>, (acc, element) -&gt; acc + element);<br>assertEquals(<span class="hljs-number">10</span>, count);<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>以 0 作为起点: 一个空 Stream 的求和结果，每一步都将 Stream 中的元素累加至 accumulator，遍历至 Stream 中的最后一个元素时，accumulator 的值就是所有元素的和。</li>
+<li>Lambda 表达式就是 reducer，它执行求和操作<ul>
+<li>有两个参数：传入 Stream 中的当前元素和 acc，acc 是累加器，保存着当前的累加结果。</li>
+<li>返回值是最新的 acc</li>
+<li>reducer 的类型是 BinaryOperator</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230530215003705.png" alt="image-20230530215003705"></p>
+<p>也可以将 reduce 操作展开</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">BinaryOperator&lt;Integer&gt; accumulator = (acc, element) -&gt; acc + element;<br><span class="hljs-type">int</span> <span class="hljs-variable">count</span> <span class="hljs-operator">=</span> accumulator.apply(<br>				accumulator.apply(<br>					accumulator.apply(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>),<br>				<span class="hljs-number">2</span>),<br>			<span class="hljs-number">3</span>);<br></code></pre></td></tr></table></figure>
+
+<p><code>reduce</code>方法还有一种形式，它接受三个参数：初始值<code>identity</code>、累加器<code>accumulator</code>和组合器<code>combiner</code>。这种形式的<code>reduce</code>方法用于并行处理流时，可以在多个部分上并行累积结果，然后再将这些部分的结果合并为一个最终结果。</p>
+<h3 id="2-4-高阶函数"><a href="#2-4-高阶函数" class="headerlink" title="2.4 高阶函数"></a>2.4 高阶函数</h3><p>高阶函数是指接受另外一个函数作为参数，或返回一个函数的函数</p>
+<ul>
+<li>可以通过函数签名辨认：函数的<strong>参数列表里包含函数接口</strong>或者该函数<strong>返回一个函数接口</strong></li>
+</ul>
+<p>map 是一个高阶函数，因为它的 mapper 参数是一个函数。事实上，本章介绍的 Stream 接口中几乎所有的函数都是高阶函数。</p>
+<p>之前的排序例子中还用到了 comparing 函数，它接受一个函数作为参数，获取相应的值，同时返回一个 Comparator。Comparator 可能会被误认为是一个对象，但它有且只有一个抽象方法，所以实际上是一个函数接口</p>
+<h3 id="2-5-正确使用Lambda表达式"><a href="#2-5-正确使用Lambda表达式" class="headerlink" title="2.5 正确使用Lambda表达式"></a>2.5 正确使用Lambda表达式</h3><p>本章介绍的概念能够帮助用户写出更简单的代码，因为这些概念描述了数据上的操作，明确了要达成<strong>什么转化</strong>，而不是说明<strong>如何转化</strong>。这种方式写出的代码，潜在的缺陷更少，更直接地表达了程序员的意图。</p>
+<p>明确要达成什么转化，而不是说明如何转化的另外一层含义在于<strong>写出的函数没有副作用</strong>。这一点非常重要，这样<strong>只通过函数的返回值就能充分理解函数的全部作用</strong></p>
+<p>没有副作用的函数不会改变程序或外界的状态</p>
+<ul>
+<li>向控制台输出信息、给变量赋值都是副作用</li>
+</ul>
+<p>鼓励用户使用 Lambda 表达式获取值而不是变量。获取值使用户更容易写出没有副作用的代码。</p>
+<p>无论何时，将 Lambda 表达式传给 Stream 上的高阶函数，都应该尽量避免副作用。唯一的例外是 forEach 方法，它是一个终结方法。</p>
+<h3 id="2-6-要点回顾"><a href="#2-6-要点回顾" class="headerlink" title="2.6 要点回顾"></a>2.6 要点回顾</h3><ul>
+<li>内部迭代将更多控制权交给了集合类。</li>
+<li>和 Iterator 类似，Stream 是一种内部迭代方式。</li>
+<li>将 Lambda 表达式和 Stream 上的方法结合起来，可以完成很多常见的集合操作。</li>
+</ul>
+<h3 id="2-7-练习"><a href="#2-7-练习" class="headerlink" title="2.7 练习"></a>2.7 练习</h3><ol>
+<li>编写一个函数，接受艺术家列表作为参数，返回一个字符串列表，其中包含艺术家的姓名和国籍；</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> List&lt;String&gt; <span class="hljs-title function_">getNamesAndOrigins</span><span class="hljs-params">(List&lt;Artist&gt; artists)</span> &#123;<br>    <span class="hljs-keyword">return</span> artists.stream()<br>                  .flatMap(artist -&gt; Stream.of(artist.getName(), artist.getNationality()))<br>                  .collect(toList());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>在一个字符串列表中，找出包含最多小写字母的字符串。对于空列表，返回 <code>Optional&lt;String&gt;</code> 对象</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span> <span class="hljs-title function_">countLowercaseLetters</span><span class="hljs-params">(String string)</span> &#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-type">int</span>) string<br>            .chars()<br>            .filter(Character::isLowerCase)<br>            .count();<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Optional&lt;String&gt; <span class="hljs-title function_">mostLowercaseString</span><span class="hljs-params">(List&lt;String&gt; strings)</span> &#123;<br>    <span class="hljs-keyword">return</span> strings<br>            .stream()<br>            .max(Comparator.comparing(StringExercises::countLowercaseLetters));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>只用 reduce 和 Lambda 表达式写出实现 Stream 上的 map 操作的代码，如果不想返回 Stream，可以返回一个 List。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;I, O&gt; List&lt;O&gt; <span class="hljs-title function_">map</span><span class="hljs-params">(Stream&lt;I&gt; stream, Function&lt;I, O&gt; mapper)</span> &#123;<br>    <span class="hljs-keyword">return</span> stream.reduce(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;O&gt;(), (acc, x) -&gt; &#123;<br>        List&lt;O&gt; newAcc = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(acc);<br>        newAcc.add(mapper.apply(x));<br>        <span class="hljs-keyword">return</span> newAcc;<br>    &#125;, (List&lt;O&gt; left, List&lt;O&gt; right) -&gt; &#123;<br>        List&lt;O&gt; newLeft = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(left);<br>        newLeft.addAll(right);<br>        <span class="hljs-keyword">return</span> newLeft;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>只用 reduce 和 Lambda 表达式写出实现 Stream 上的 filter 操作的代码，如果不想返回 Stream，可以返回一个 List。</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;I&gt; List&lt;I&gt; <span class="hljs-title function_">filter</span><span class="hljs-params">(Stream&lt;I&gt; stream, Predicate&lt;I&gt; predicate)</span> &#123;<br>    <span class="hljs-keyword">return</span> stream.reduce(<span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;I&gt;(), (acc, x) -&gt; &#123;<br>        List&lt;I&gt; newAcc = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(acc);<br>        <span class="hljs-keyword">if</span> (predicate.test(x)) &#123;<br>            newAcc.add(x);<br>        &#125;<br>        <span class="hljs-keyword">return</span> newAcc;<br>    &#125;, (List&lt;I&gt; left, List&lt;I&gt; right) -&gt; &#123;<br>        List&lt;I&gt; newLeft = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>&lt;&gt;(left);<br>        newLeft.addAll(right);<br>        <span class="hljs-keyword">return</span> newLeft;<br>    &#125;);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-类库"><a href="#3-类库" class="headerlink" title="3. 类库"></a>3. 类库</h2><h3 id="3-1-在代码中使用Lambda表达式"><a href="#3-1-在代码中使用Lambda表达式" class="headerlink" title="3.1 在代码中使用Lambda表达式"></a>3.1 在代码中使用Lambda表达式</h3><p>在 slf4j 和 log4j 等几种常用的日志系统中，有一些记录日志的方法，当日志级别不低于某个固定级别时就会开始记录日志。</p>
+<ul>
+<li>例如<code>void debug(String message) </code>，当级别为 debug 时，就开始记录日志消息</li>
+</ul>
+<p>但频繁计算消息是否应该记录日志会对系统性能产生影响：可以通过 if 语句预先判断</p>
+<ul>
+<li><code>if (logger.isDebugEnabled()) &#123;...&#125;</code></li>
+</ul>
+<p>但使用 Lambda 表达式可以进一步简化日志代码</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Logger</span> <span class="hljs-variable">logger</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Logger</span>();<br>logger.debug(() -&gt; <span class="hljs-string">&quot;Look at this: &quot;</span> + expensiveOperation());<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">debug</span><span class="hljs-params">(Supplier&lt;String&gt; message)</span> &#123;<br>    <span class="hljs-keyword">if</span> (isDebugEnabled()) &#123;<br>    	debug(message.get()); <span class="hljs-comment">// 调用 get() 方法，相当于调用传入的 Lambda 表达式</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-2-基本类型"><a href="#3-2-基本类型" class="headerlink" title="3.2 基本类型"></a>3.2 基本类型</h3><p>装箱类型是对象，在内存中存在额外开销。</p>
+<ul>
+<li>比如整型在内存中占用 4 字节，整型对象却要占用 16 字节，这一情况在数组上更加严重。</li>
+<li>将基本类型转换为装箱类型，称为装箱，反之则称为拆箱，两者都需要额外的计算开销。</li>
+</ul>
+<p>为了减小这些性能开销，Stream 类的某些方法对基本类型和装箱类型做了区分，在 Java 8 中，仅对整型、长整型和双浮点型做了特殊处理</p>
+<p>对基本类型做特殊处理的方法在命名上有明确的规范</p>
+<ol>
+<li>如果方法返回类型为基本类型，则在基本类型前加 To，如<code>ToLongFunction</code></li>
+<li>如果参数是基本类型，则不加前缀只需类型名即可，如<code>LongFunction</code></li>
+<li>如果高阶函数使用基本类型，则在操作后加后缀 To 再加基本类型，如<code>mapToLong</code></li>
+</ol>
+<p>这些基本类型都有与之对应的 Stream，以基本类型名为前缀，如 LongStream</p>
+<blockquote>
+<p>事实上，<code>mapToLong</code>方法返回的不是一个一般的 Stream，而是一个特殊处理的 Stream。</p>
+<p>在这个特殊的 Stream 中，map 方法的实现方式也不同，它接受一个 <code>LongUnaryOperator</code> 函数，将一个长整型值映射成另一个长整型值。通过一些高阶函数装箱方法，如<code>mapToObj</code>，也可以从一个基本类型的 Stream 得到一个装箱后的 Stream，如<code>Stream&lt;Long&gt;</code>。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printTrackLengthStatistics</span><span class="hljs-params">(Album album)</span> &#123;<br>    <span class="hljs-type">IntSummaryStatistics</span> <span class="hljs-variable">trackLengthStats</span><br>            <span class="hljs-operator">=</span> album.getTracks()<br>                   .mapToInt(track -&gt; track.getLength())<br>                   .summaryStatistics();<br><br>    System.out.printf(<span class="hljs-string">&quot;Max: %d, Min: %d, Ave: %f, Sum: %d&quot;</span>,<br>                      trackLengthStats.getMax(),<br>                      trackLengthStats.getMin(),<br>                      trackLengthStats.getAverage(),<br>                      trackLengthStats.getSum());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-重载解析"><a href="#3-3-重载解析" class="headerlink" title="3.3 重载解析"></a>3.3 重载解析</h3><p>Lambda 表达式作为参数时，其类型由它的目标类型推导得出，推导过程遵循如下规则：</p>
+<ul>
+<li>如果只有一个可能的目标类型，由相应函数接口里的参数类型推导得出</li>
+<li>如果有多个可能的目标类型，由<strong>最具体</strong>的类型推导得出</li>
+<li>如果有多个可能的目标类型且<strong>最具体的类型不明确</strong>，则需<strong>人为指定</strong>类型<ul>
+<li>可以对 Lambda 表达式进行强转</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-4-FunctionalInterface"><a href="#3-4-FunctionalInterface" class="headerlink" title="3.4 @FunctionalInterface"></a>3.4 @FunctionalInterface</h3><p>Java 中有一些接口，虽然只含一个方法，但并不是为了使用 Lambda 表达式来实现的。有些对象内部可能保存着某种状态，使用带有一个方法的接口纯属巧合。例如 java.lang.Comparable 和 java.io.Closeable。</p>
+<p>和<code>Closeable</code>和<code>Comparable</code>接口不同，为了提高 Stream 对象可操作性而引入的各种新接口，都需要有 Lambda 表达式可以实现它。它们存在的意义在于将代码块作为数据打包起来。因此，它们都添加了<code>@FunctionalInterface</code>注解。</p>
+<p>该注释会强制 javac 检查一个接口是否符合函数接口的标准。如果该注释添加给一个枚举类型、类或另一个注释，或者接口包含不止一个抽象方法，javac 就会报错。重构代码时，使用它能很容易发现问题。</p>
+<h3 id="3-5-二进制接口的兼容性"><a href="#3-5-二进制接口的兼容性" class="headerlink" title="3.5 二进制接口的兼容性"></a>3.5 二进制接口的兼容性</h3>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/05/09/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-4-%E8%AE%BE%E8%AE%A1%E6%9E%B6%E6%9E%84/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/06/10/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-2-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">1. Lambda表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%8C%BF%E5%90%8D%E5%86%85%E9%83%A8%E7%B1%BB%E4%B8%8ELambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">1.1 匿名内部类与Lambda表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%87%A0%E7%A7%8DLambda%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%8F%98%E4%BD%93"><span class="toc-text">1.2 几种Lambda表达式的变体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%BC%95%E7%94%A8%E5%80%BC%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%8F%98%E9%87%8F"><span class="toc-text">1.3 引用值，而不是变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="toc-text">1.4 函数接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="toc-text">1.5 类型推断</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%A4%BA%E4%BE%8B"><span class="toc-text">一些示例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E7%BB%83%E4%B9%A0"><span class="toc-text">1.6 练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B5%81"><span class="toc-text">2. 流</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%8E%E5%A4%96%E9%83%A8%E8%BF%AD%E4%BB%A3%E5%88%B0%E5%86%85%E9%83%A8%E8%BF%AD%E4%BB%A3"><span class="toc-text">2.1 从外部迭代到内部迭代</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E8%BF%AD%E4%BB%A3"><span class="toc-text">外部迭代</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E8%BF%AD%E4%BB%A3"><span class="toc-text">内部迭代</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-text">2.2 实现机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B5%81%E6%93%8D%E4%BD%9C"><span class="toc-text">2.3 常用的流操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#collect-toList"><span class="toc-text">collect(toList())</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#map"><span class="toc-text">map</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#filter"><span class="toc-text">filter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#flatMap"><span class="toc-text">flatMap</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#max%E5%92%8Cmin"><span class="toc-text">max和min</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#reduce"><span class="toc-text">reduce</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-text">2.4 高阶函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%AD%A3%E7%A1%AE%E4%BD%BF%E7%94%A8Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">2.5 正确使用Lambda表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E8%A6%81%E7%82%B9%E5%9B%9E%E9%A1%BE"><span class="toc-text">2.6 要点回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E7%BB%83%E4%B9%A0"><span class="toc-text">2.7 练习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%B1%BB%E5%BA%93"><span class="toc-text">3. 类库</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%9C%A8%E4%BB%A3%E7%A0%81%E4%B8%AD%E4%BD%BF%E7%94%A8Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3.1 在代码中使用Lambda表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="toc-text">3.2 基本类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%87%8D%E8%BD%BD%E8%A7%A3%E6%9E%90"><span class="toc-text">3.3 重载解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-FunctionalInterface"><span class="toc-text">3.4 @FunctionalInterface</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="toc-text">3.5 二进制接口的兼容性</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Java%208%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F05%2F25%2FJava-8%25E5%2587%25BD%25E6%2595%25B0%25E5%25BC%258F%25E7%25BC%2596%25E7%25A8%258B%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/05/25/Java-8%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,1262 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      软件系统设计-架构(2) 质量属性 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">软件系统设计-架构(2) 质量属性</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                    <b>#</b> 软件系统设计
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-软件架构-Software-Architecture"><a href="#1-软件架构-Software-Architecture" class="headerlink" title="1. 软件架构 Software Architecture"></a>1. 软件架构 Software Architecture</h2><ul>
+<li><strong>软件架构</strong>是系统的一个或多个结构，包含了软件<strong>元素</strong>、这些<strong>组件</strong>的外部可见<strong>属性</strong>以及他们之间的<strong>关系</strong>。<br>Software Architecture is the structure or structures of the system, which comprise software elements, the externally visible properties of these components, and the relationship among them.(In pratice书中的定义)</li>
+<li>单独的盒式模型不是架构，而是一个起点<br>Box-and-line drawings alone are not architecture, but a starting point.</li>
+<li>架构包含了组件的行为 Architecture includes behaviour of components.</li>
+</ul>
+<h3 id="1-1-架构扮演的角色-Role-of-Architecture"><a href="#1-1-架构扮演的角色-Role-of-Architecture" class="headerlink" title="1.1 架构扮演的角色 Role of Architecture"></a>1.1 架构扮演的角色 Role of Architecture</h3><ul>
+<li>架构是代表<strong>如何实现需求</strong>的决策的<strong>首批人工制品之一</strong>。作为早期设计决策的体现，架构代表了那些<strong>最难</strong>更改的设计决策，因此值得<strong>最仔细的考虑</strong><br>An architecture is one of the first artefacts that represents decision on how requirements are to be achieved. As the manifestation of early design decisions, the architecture represents those design decisions that are hardest to change and hence deserve the most careful consideration.</li>
+<li>“架构”是实现成功的产品线工程的关键制品，它是对一系列类似系统的规范开发方法，与独立开发每个系统相比，其工作量、费用和风险更少。<br>An architecture is the key artefact in achieving successful product line engineering, the disciplined development of a family of similar system with less effort, expense, and risk than developing each system independently.</li>
+<li>当有人开始在系统上工作时，架构通常是首先要检查的设计工件<br>An architecture is usually the first design artefact to be examined when someone starts working on a system.</li>
+<li>软件架构为<strong>维护和修改</strong>决策提供了参考<strong>框架</strong><br>Software architecture provides a framework of reference for maintenance and modification decisions.</li>
+</ul>
+<h3 id="1-2-为什么软件架构是重要的-Why-is-software-architecture-important"><a href="#1-2-为什么软件架构是重要的-Why-is-software-architecture-important" class="headerlink" title="1.2 为什么软件架构是重要的 Why is software architecture important?"></a>1.2 为什么软件架构是重要的 Why is software architecture important?</h3><ol>
+<li>软件架构提供了<strong>沟通的工具</strong><br>Software architecture provides a vehicle for communication<ul>
+<li>软件架构是一个可以确定和谈判利益冲突的参考框架<br>It is a frame of reference in which competing interests may be identified and negotiated<ul>
+<li>和用户<strong>讨论需求</strong> Negotiating requirements with users</li>
+<li><strong>保证</strong>客户获取到过程和成本的<strong>信息</strong> Keeping customer informed of progress, cost etc.</li>
+<li><strong>实现管理决策</strong>和分配 Implementing management decisions and allocations.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>软件架构表现了<strong>最早期的决策集合</strong><br>Software architecture manifests the earliest set of design decisions<ul>
+<li>约束着实现和开发者 It constraints the implementation and developers<ul>
+<li>实现必须要<strong>符合架构</strong> Implementation must conform to architecture</li>
+<li><strong>资源分配的决策</strong>约束着单独模块的实现 Resource allocation decisions constrain implementations of individual components</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>表现了早期的设计决策 Manifestation of early design decisions<ul>
+<li>软件架构决定了开发和维护工作的<strong>组织结构</strong><br>Software architecture dictates organisational structure for development &amp; maintenance efforts, e.g.<ul>
+<li>划分为<strong>团队</strong> Division into teams</li>
+<li><strong>预算</strong>，计划单位 Units for budgeting, planning</li>
+<li><strong>工作分解结构</strong>的基础 Basis of <strong>W</strong>ork <strong>B</strong>reakdown <strong>S</strong>tructure</li>
+<li><strong>文档</strong>的组织 Organisation for documentation</li>
+<li><strong>CM</strong>库的组织 Organisation for CM libraries</li>
+<li><strong>集成</strong>的基础 Basis of integration</li>
+<li><strong>测试</strong>计划、测试的基础 Basis of test plans, testing</li>
+<li>运维的<strong>基础</strong> Basis of maintenance</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>架构促进&#x2F;阻碍<strong>质量属性的实现</strong>，比如灵活性、安全性、易用性<br>Architecture facilitates&#x2F;hinders achievement of quality attributes, e.g., modifiability, security, usability etc.</li>
+<li>架构会影响质量，但由于涉及许多其他因素，可能<strong>无法保证</strong>质量<br>Architecture influences qualities, but may not guarantee them as there are a number of other factors involved.</li>
+<li>架构引发有关<strong>潜在变更</strong>的讨论(系统的80％的工作是<strong>部署后</strong>的工作)<br>An architecture invokes discussion about potential change ( 80% of effort for a system is post-deployment effort)</li>
+<li>架构将<strong>更改</strong>分为三种类型 Architecture categorise changes into three types:<ul>
+<li><strong>本地</strong>: 信号组件修改 Local: signal component modification</li>
+<li><strong>非本地</strong>: 几个组件修改 Non-local: several component modification.</li>
+<li><strong>架构</strong>: 修改系统的基本结构，通信和协调机制 Architectural: modification of the system’s basic structure, communication, and coordination mechanism</li>
+</ul>
+</li>
+<li>架构是一种<strong>可迁移</strong>和<strong>可重用</strong>的抽象: <strong>一对多映射</strong>(一种架构，许多系统)<br>Architecture is a transferable and reusable abstraction one-to-many mapping (one architecture, many systems)</li>
+<li>架构是<strong>产品通用性</strong>的基础。整个产品线共享一个架构<br>Architecture is the basis for product commonality. A whole product line shares a single architecture</li>
+<li>可以通过架构集成独立开发的组件来开发系统(基于Component的软件工程-CBSE)<br>Systems can be developed by integrating independently developed components via architecture ((Component-Based Software Engineering - CBSE)</li>
+</ol>
+<h3 id="1-3-软件架构过程-Software-Architecture-Process"><a href="#1-3-软件架构过程-Software-Architecture-Process" class="headerlink" title="1.3 软件架构过程 Software Architecture Process"></a>1.3 软件架构过程 Software Architecture Process</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501151308634.png" alt="image-20230501151308634" style="zoom:80%;" />
+
+<ol>
+<li>通过StackHolder获取到ASRs(架构攸关的需求)</li>
+<li>通过分析得到Prioritized Quality Attribute Scenarios(高优先级质量属性解决方案)和Requirements，Constraints(需求和约束)</li>
+<li>将上述部分，结合模式和策略，综合可以得到架构的设计</li>
+<li>根据架构的设计得到由模式决定的候选视图的示意图，之后完成文档化</li>
+<li>选择、组合视图，将文档进行进一步的评估，这一部分需要StackHolders的参与、也需要Prioritized Quality Attribute Scenarios和文档等作为参考。</li>
+</ol>
+<h4 id="1-3-1-移动手机系统架构-Mobile-Phone-System-Architecture"><a href="#1-3-1-移动手机系统架构-Mobile-Phone-System-Architecture" class="headerlink" title="1.3.1 移动手机系统架构 Mobile Phone System Architecture"></a>1.3.1 移动手机系统架构 Mobile Phone System Architecture</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201139387.png" alt="image-20230502201139387" style="zoom:80%;" />
+
+<h4 id="1-3-2-洗衣机架构-Washing-Machine-Architecture"><a href="#1-3-2-洗衣机架构-Washing-Machine-Architecture" class="headerlink" title="1.3.2 洗衣机架构 Washing Machine Architecture"></a>1.3.2 洗衣机架构 Washing Machine Architecture</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201152983.png" alt="image-20230502201152983" style="zoom:80%;" />
+
+<h3 id="1-4-讨论-Discussion"><a href="#1-4-讨论-Discussion" class="headerlink" title="1.4 讨论 Discussion"></a>1.4 讨论 Discussion</h3><ol>
+<li>科学和工程有什么不同？What is Difference between Science and Engineering? <ul>
+<li>科学的研究是研究这个世界既有的部分</li>
+<li>工程是研究的是人类创造新的世界(是不是因为人才产生的)</li>
+</ul>
+</li>
+<li>软件和硬件有什么不同？What is Difference between ‘Software’ and ‘Hardware’?<ul>
+<li>软件是不可见的: 软件是虚拟的，而硬件是实体的。</li>
+<li>软件制作出来就是为了被修改和改变的(软件的演化是他的本质属性)</li>
+</ul>
+</li>
+<li>架构和设计有什么不同？What is Difference between Architecture and Design?<ul>
+<li>所有的架构都是软件设计，但是不是所有的软件设计都是架构</li>
+<li>架构是设计过程的一个过程。</li>
+<li>其他观点<ul>
+<li>架构是更高层的设计，是为了修改的</li>
+<li>架构是设计决策的组合</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>架构和结构有什么不同？What is Difference between Architecture and Structure?<ul>
+<li>架构定义了组件(Component)的接口，Component之间如何交流以及如何相互依赖，Component的职责。</li>
+<li>架构提供了设计的更高层抽象视角，隐藏设计的复杂性和实现，更强调非功能性需求。</li>
+<li>【标准】架构是包括结构信息的，因为结构是一种静态的、逻辑的、是关于系统如何构成。但是架构除了包含结构，还会增加组件的相互之间的关系接口，还会定义一些动态的行为(一个组件可能和谁进行交互)</li>
+</ul>
+</li>
+<li>为什么要在架构中使用抽象？Why Abstraction in Architecture?<ul>
+<li>更高层的视角，更关注本身的结构而不是本身的实现。</li>
+<li><strong>降低</strong>架构设计时的系统复杂度，可以屏蔽和<strong>隐藏</strong>一些细节。</li>
+</ul>
+</li>
+</ol>
+<h2 id="2-需求-Requirements"><a href="#2-需求-Requirements" class="headerlink" title="2. 需求 Requirements"></a>2. 需求 Requirements</h2><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201209993.png" alt="image-20230502201209993" style="zoom:80%;" />
+
+<p>需求中往往存在有开发人员和用户的矛盾，我们需要将这一个部分进行转化</p>
+<h3 id="2-1-功能性需求-Functional-Requirements"><a href="#2-1-功能性需求-Functional-Requirements" class="headerlink" title="2.1 功能性需求 Functional Requirements"></a>2.1 功能性需求 Functional Requirements</h3><ol>
+<li>功能性需求定义了<strong>系统必须做什么</strong>并且强调了<strong>系统如何提供价值</strong>给涉众<br>Functional requirements state what the system must do and address how the system provides value to the stakeholders.</li>
+<li>功能性需求意味着<strong>系统的行为</strong><br>Functional requirements means the behaviour of the system.</li>
+<li>功能是系统<strong>完成其预期工作</strong>的能力，例如，使学生能够在线注册<br>Functionality is the ability of the system to do the work for which it was intended, e.g., enable students to enrol online.</li>
+<li>通过使用<strong>任意数量的可能结构</strong>来实现功能<br>Functionality may be achieved through the use of any<br>number of possible structures.</li>
+<li>功能在很大程度上与结构无关，因为它可以作为单个整体系统存在而没有任何内部结构<br>Functionality is <strong>largely independent of structure</strong>, because it could exist as a single monolithic system without any internal structure.</li>
+</ol>
+<h3 id="2-2-质量需求-Quality-Requirements"><a href="#2-2-质量需求-Quality-Requirements" class="headerlink" title="2.2 质量需求 Quality Requirements"></a>2.2 质量需求 Quality Requirements</h3><ol>
+<li>质量需求是系统应<strong>在其功能需求之上</strong>提供的整个系统的<strong>理想特性</strong>(又称质量属性)<br>Quality requirements are desirable characteristics of the overall system (aka. quality attributes) that system should provide on the top of its functional requirements.</li>
+<li>质量需求是功能要求或整个产品的<strong>资格</strong><br>Quality requirements are qualifications of the functional requirements or of the overall product.</li>
+<li>如果质量属性很重要，则软件架构将<strong>功能分配</strong>(映射)限制在各种<strong>结构</strong>上。<br>Software architecture constrains the allocation (mapping) of the functionality onto various structures if quality attributes are important.</li>
+</ol>
+<h4 id="2-2-1-非功能性需求-Non-functional-Requirements"><a href="#2-2-1-非功能性需求-Non-functional-Requirements" class="headerlink" title="2.2.1 非功能性需求 Non-functional Requirements"></a>2.2.1 非功能性需求 Non-functional Requirements</h4><ol>
+<li><p><strong>非功能</strong>需求或<strong>架构</strong>需求是用于<strong>质量属性</strong>的替代术语<br>Non-functional requirements or architectural requirements are alternative terms used for quality attributes.</p>
+</li>
+<li><p>无法在实现功能后再去满足非功能性需求(不能事后追加质量)</p>
+<p>It is not possible to get the functionality right and then try to accommodate non-functional requirements (NO retro-fitting quality).</p>
+<blockquote>
+<p>在任何设计决策中都必须考虑非功能性需求，而不是在完成功能后再去改造系统或设备，以满足非功能性要求</p>
+</blockquote>
+</li>
+<li><p>在任何设计决策中都必须考虑非功能性要求<br>Non-functional requirements must be taken into account during any design decision.</p>
+</li>
+<li><p>非功能性需求分为两大类: There are two broad categories ot non-functional requirements:</p>
+<ol>
+<li>在执行过程中<strong>可观察</strong>(<strong>外部</strong>): 系统满足其行为要求的程度如何？ 例如性能，安全性，可用性，可用性等。<br>Observable (External) during execution: How well a system satisties its behavioural requirements? e.g., performance, security, availability, usability etc.</li>
+<li>执行期间<strong>不可观察</strong>(<strong>内部</strong>): 系统的维护，集成或测试有多容易？ 例如，可修改性，可移植性，可重用性，可测试性等。<br>Not observable (Internal) during execution: How easily a system can be maintained, integrated, or tested? e.g., modifiability, portability, reusability, testability etc.</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>约束是限定的边界，之后的架构是在这个边界内找到最优的解。</p>
+</blockquote>
+<h4 id="2-2-2-质量属性-Quality-Attributes"><a href="#2-2-2-质量属性-Quality-Attributes" class="headerlink" title="2.2.2 质量属性 Quality Attributes"></a>2.2.2 质量属性 Quality Attributes</h4><ol>
+<li><strong>开发完成后</strong>，质量<strong>不能</strong>添加到软件密集型系统中<br>Quality isn’t something that can be added to a software intensive system after development finishes.</li>
+<li>在<strong>软件开发的所有阶段</strong>都需要解决质量问题<br>Quality concerns need to be addressed during ALL phases of the software development.</li>
+<li>业务目标确定系统必须具备的质量<br>Business goals determine qualities that a system must posses.</li>
+<li>质量属性<strong>高于系统功能</strong>，而系统功能是系统能力，服务和行为的基本表述<br>Quality attributes are over and above of system’s functionality, which is the basic statement of the system’s capabilities, services, and behaviours.</li>
+<li>功能通常在开发计划中占据<strong>首要位置</strong><br>Functionality usually takes the front seat in the development plan.</li>
+<li>但是，系统通常会被<strong>重新设计</strong>，因为它们<strong>缺乏所需的质量水平</strong>，即难以维护，移植或扩展<br>However, systems are usually redesigned because they lack desired level of quality, i.e. difficult to maintain, port, or scale.</li>
+<li>软件架构限制了各种质量属性的实现，例如性能，安全性，可用性等<br>Software architecture constrains the achievement of various quality attributes, e.g., performance, security, usability etc.</li>
+<li>这就是为什么软件架构被认为是解决质量问题的最合适的层次<br>That is why software architecture is considered the most appropriate level of addressing the quality Issues.</li>
+<li>没有质量属性完全依赖于<strong>设计</strong>，也不依赖于<strong>实施或部署</strong><br>No quality attribute is entirely dependent on design, nor is it dependent on implementation or deployment.</li>
+</ol>
+<h4 id="2-2-3-确定质量属性-Specifying-Quality-Attributes"><a href="#2-2-3-确定质量属性-Specifying-Quality-Attributes" class="headerlink" title="2.2.3 确定质量属性 Specifying Quality Attributes"></a>2.2.3 确定质量属性 Specifying Quality Attributes</h4><ol>
+<li>要在架构级别对其进行<strong>评估</strong>，必须对质量属性进行<strong>精确定义</strong><br>Precise definition of a quality attribute is necessary to evaluate it at the architecture level.</li>
+<li>质量属性<strong>场景</strong>用于定义所需的质量属性<br>Quality attribute scenarios are used to define the desired quality attribute.</li>
+<li>场景是具有一定结构的简单描述。<br>Scenarios are simple descriptions with certain structure. Two main classes of scenarlos are:<ol>
+<li><strong>通用场景</strong>是与<strong>系统无关</strong>的场景，用于指导质量属性要求的规范<br>General scenarios are system independent scenarios to guide the specification of quality attribute requirements.</li>
+<li><strong>具体场景</strong>是系统<strong>特定</strong>的场景，用于指导特定系统的质量属性要求的规范。它们是通用场景的<strong>实例</strong><br>Concrete scenarios are system specific scenarios to guide the specification of quality attribute requirements for a particular system. They are instances ot general scenarios.</li>
+</ol>
+</li>
+</ol>
+<blockquote>
+<p>这个场景(scenarios)就是4+1视图中的1(Use Case)</p>
+</blockquote>
+<h4 id="2-2-4-通用场景-General-Scenarios"><a href="#2-2-4-通用场景-General-Scenarios" class="headerlink" title="2.2.4 通用场景 General Scenarios"></a>2.2.4 通用场景 General Scenarios</h4><ol>
+<li>通用场景提供了一个<strong>框架</strong>，用于生成<strong>大量</strong>通用的，独立于系统的，质量属性特定的场景<br>General scenarios provide a framework for generating a large number of generic, system-independent, quality attribute specific scenarios.</li>
+<li>每种场景都可能但不一定与我们所关注的系统相关<br>Each scenario is potentially but not necessarily relevant to the system We are concerned with.</li>
+<li>为了使通用场景对特定系统有用，我们必须使它们<strong>特定于系统</strong><br>To make the general scenario useful for a particular system, We must make them system specific.</li>
+<li>将通用场景系统具体化意味着将其<strong>转换</strong>为特定系统的具体术语<br>Making a general scenario system specific means translating it into concrete terms for the particular system.</li>
+</ol>
+<h4 id="2-2-5-质量属性场景建模-Modeling-Quality-Attribute-Scenarios-重要"><a href="#2-2-5-质量属性场景建模-Modeling-Quality-Attribute-Scenarios-重要" class="headerlink" title="2.2.5 质量属性场景建模 Modeling Quality Attribute Scenarios 重要"></a>2.2.5 质量属性场景建模 Modeling Quality Attribute Scenarios 重要</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501162310334.png" alt="image-20230501162310334" style="zoom:80%;" />
+
+<ol>
+<li><p><strong>刺激(Stimulus)</strong>: 到达系统时需要考虑的<strong>条件</strong><br>Stimulus: A condition that needs to be considered when it arrives at a system.</p>
+</li>
+<li><p><strong>刺激源(Source of Stimulus)</strong>: 产生刺激的<strong>实体</strong>(人，系统或任何执行器)<br>Source of Stimulus: An entity (human, system, or any actuator) that generates the stimulus.</p>
+<blockquote>
+<p>可能是输入、消息等等，对当前的状态有一个变化。</p>
+</blockquote>
+</li>
+<li><p><strong>响应(Response)</strong>: 刺激措施到来之后开展的<strong>活动</strong><br>Response: The activity undertaken after the arrival of the stimulus.</p>
+</li>
+<li><p><strong>响应度量(Response Measure)</strong>: 对刺激的响应应以某种方式进行<strong>测量</strong>，以便可以<strong>测试</strong>需求<br>Response Measure: The response to the stimulus should be measurable in some fashion so that the requirement can be testable.</p>
+<blockquote>
+<p>多长时间系统有反馈</p>
+</blockquote>
+</li>
+<li><p><strong>环境(Environment)</strong>: 发生刺激时系统的状况，例如过载，运行等<br>Environment: A system’s condition when a stimulus occurs, e.g. overloaded, running etc.</p>
+</li>
+<li><p><strong>工件(Artifact)</strong>: 需求适用的<strong>整个</strong>系统或系统的一部分<br>Artifact: The whole system or the portion of the system to which the requirement applies.</p>
+<blockquote>
+<p>可能是一个软件制品</p>
+</blockquote>
+</li>
+</ol>
+<blockquote>
+<p>只有定义好这6个元素，就能锁定架构的一个场景，之后可以用来进行架构的设计</p>
+<p>刺激和响应发生在一个环境中: 系统正常运行、系统过载、系统受到攻击、系统网络等出现了故障。</p>
+</blockquote>
+<h4 id="2-2-6-策略-Tactics-原子级别的最小的决定"><a href="#2-2-6-策略-Tactics-原子级别的最小的决定" class="headerlink" title="2.2.6 策略 Tactics (原子级别的最小的决定)"></a>2.2.6 策略 Tactics (原子级别的最小的决定)</h4><ol>
+<li><p>风格或模式应用策略来提供承诺的收益<br>Style or pattern applies tactics to provide the promised benefit.</p>
+</li>
+<li><p>策略是影响质量属性响应<strong>控制</strong>的<strong>设计决策</strong>，例如冗余<br>A tactic is a design decision, .e.g. redundancy, that influences the control of a quality attribute response.</p>
+</li>
+<li><p>策略的<strong>集合</strong>称为体系结构策略<br>A collection of tactics is called an architectural strategy.</p>
+</li>
+<li><p>系统设计包括一组设计决策，其中一些决策可帮助控制<strong>质量</strong>属性响应；其他确保系统<strong>功能</strong>的实现<br>A system design consists of a collection of design decisions: some of these decisions help control the quality attribute response; others ensure achievement of system functionality.</p>
+</li>
+<li><p>像模式一样，策略也可以由其他策略组成，例如，冗余可以由数据冗余，计算冗余组成。设计人员根据需求选择一个或另一个<br>Like patterns, tactics may also be composed of other tactics, e.g., redundancy may be composed of redundancy of data, redundancy of computation-Designer chooses one or other depending upon requirements.</p>
+</li>
+<li><p>策略可以用作<strong>策略层次结构</strong> Tactics can be used as hierarchy of tactics.</p>
+<blockquote>
+<p>这句话的意思是，策略可以按照层次结构来使用。也就是说，可以将不同的策略分层，按照优先级或者重要性来组织。这样可以更好地管理和使用策略。– New Bing</p>
+</blockquote>
+</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501164956678.png" alt="image-20230501164956678" style="zoom:80%;" />
+
+<h4 id="2-2-7-质量设计决策-Quality-Design-Decisions"><a href="#2-2-7-质量设计决策-Quality-Design-Decisions" class="headerlink" title="2.2.7 质量设计决策 Quality Design Decisions"></a>2.2.7 质量设计决策 Quality Design Decisions</h4><ul>
+<li>架构是设计决策的集合。Architecture is a collection of design decisions. </li>
+<li>七类设计决策(可能重叠) Seven categories of design decisions (may overlap):<ol>
+<li><strong>职责分配</strong> Allocation of responsibilities: 将大的职责进行分配</li>
+<li><strong>协调模型</strong> Coordination model: 各部分之间的沟通、交互</li>
+<li><strong>数据模型</strong> Data model: 数据格式、存储方式(缓存等)</li>
+<li><strong>资源管理</strong> Management of resources: CPU、网络、内存、<strong>时间(部分时间敏感的场景)等资源</strong></li>
+<li><strong>架构元素之间的映射</strong> Mapping among architecture elements: 架构元素如何映射到软件的实现上</li>
+<li><strong>绑定时间决策</strong> Binding time decisions: <ul>
+<li>系统的变化在什么时间点前需要固定下来，也就是这个时间前，系统还是可以变化的，但是这个时间之后就不可以变化了</li>
+<li>比如选择安装环境是需要在一个时间点前完成的，技术是否添加、编译时间、初始化时间，运行时绑定，但运行时是弹性最大的</li>
+<li>实际上我们希望绑定时间越往后越好，但是也就要付出相应的代价。</li>
+</ul>
+</li>
+<li><strong>技术选择</strong> Choice of technology: 前面的部分都确定后，我们可以选择技术栈相对比较局限，解空间已经被压缩了</li>
+</ol>
+</li>
+</ul>
+<h4 id="2-2-8-质量属性"><a href="#2-2-8-质量属性" class="headerlink" title="2.2.8 质量属性"></a>2.2.8 质量属性</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501165533669.png" alt="image-20230501165533669" style="zoom:80%;" />
+
+<h3 id="2-3-约束-Constraints"><a href="#2-3-约束-Constraints" class="headerlink" title="2.3 约束 Constraints"></a>2.3 约束 Constraints</h3><ul>
+<li>约束是具有<strong>零自由度</strong>的设计决策<br>A constraint is a design decision with <strong>ZERO</strong> degrees of freedom.</li>
+<li>约束是已经做出的<strong>预先</strong>指定的设计决策<br>Constraints are pre-specified design decisions that have been already made.</li>
+<li>通过<strong>接受</strong>设计决策并将其与其他受影响的设计决策进行<strong>协调</strong>来满足约束条件<br>Constraints are satisfied by accepting the design decision and reconciling it with other affected design decisions.</li>
+</ul>
+<h2 id="3-质量属性和策略-Quality-Attributes-Tactics"><a href="#3-质量属性和策略-Quality-Attributes-Tactics" class="headerlink" title="3. 质量属性和策略 Quality Attributes &amp; Tactics"></a>3. 质量属性和策略 Quality Attributes &amp; Tactics</h2><h3 id="3-1-可用性-Availability"><a href="#3-1-可用性-Availability" class="headerlink" title="3.1 可用性 Availability"></a>3.1 可用性 Availability</h3><ul>
+<li><p>可用性是应用程序的<strong>关键</strong>需求 Key requirement for most IT applications</p>
+</li>
+<li><p>度量方式: 以<strong>所需</strong>的可用<strong>时间</strong>比例来衡量<br>Measured by the proportion of the required time it is useable, e.g.</p>
+<ul>
+<li>营业时间内100％可用<br>100% available during business hours</li>
+<li>每周计划的停机时间不超过2个小时-24x7x52(100％可用性)<br>No more than 2 hours scheduled downtime per week - 24x7x52 (100% availability)</li>
+</ul>
+</li>
+<li><p>相关性: 与应用程序的<strong>可靠性</strong>有关 Related to an application’s reliability</p>
+<ul>
+<li>不可靠的应用程序的可用性较差<br>Unreliable applications suffer poor availability</li>
+<li>可用性、可靠性不同: <ul>
+<li>可用性是指可以使用，但是不保证正确</li>
+<li>可靠性是指可以稳定正确的使用</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>可用性损失的时间由以下因素决定: Period of loss of availability determined by:</p>
+<ul>
+<li><strong>发现</strong>故障的时间 Time to detect failure</li>
+<li><strong>纠正</strong>故障的时间 Time to correct failure</li>
+<li><strong>重启</strong>应用的时间 Time to restart application</li>
+</ul>
+<blockquote>
+<p>例子(时间序): 发生故障-检测到故障-纠正故障-重启应用，这三个代表的是not available的时间(N&#x2F;A)</p>
+<p>提高可用性的方案:</p>
+<ol>
+<li>尽可能降低N&#x2F;A的时间<ul>
+<li>机器尽可能缩短failure到detect时间</li>
+<li>机器尽可能缩短correct到restart的时间</li>
+</ul>
+</li>
+<li>尽可能提高Available的时间</li>
+</ol>
+</blockquote>
+</li>
+<li><p>高可用性策略 Strategies for high availability</p>
+<ul>
+<li>消除<strong>单点故障</strong> Eliminate single points of failure</li>
+<li><strong>复制</strong>和<strong>故障转移</strong> Replication and failover</li>
+<li>自动<strong>检测</strong>并<strong>重启</strong> Automatic detection and restart</li>
+</ul>
+</li>
+<li><p>可恢复性 Recoverability (e.g., a database)</p>
+<ul>
+<li>在应用程序或系统出现故障后，可以重新建立<strong>性能级别</strong>并<strong>恢复</strong>受影响的数据的能力<br>The capability to re-establish performance levels and recover affected data after an application or system failure.</li>
+</ul>
+</li>
+<li><p>可将<strong>可用性</strong>计算为在<strong>指定的时间间隔</strong>内它将在所需范围内<strong>提供指定服务</strong>的概率<br>Availability can be calculated as the probability that it will provide the specified services within required bounds over a specified time interval.</p>
+<ul>
+<li><strong>MTBF</strong>(平均无故障时间, mean time between failures)</li>
+<li><strong>MTTR</strong>(平均维修时间, mean time to repair)</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230613165243754.png" alt="image-20230613165243754"></p>
+</li>
+<li><p>计算可用性时，可能不考虑<strong>计划内的停机时间</strong><br>Scheduled downtimes may not be considered when calculating availability.</p>
+</li>
+</ul>
+<h4 id="3-1-1-Outage-Failure-Fault-Error"><a href="#3-1-1-Outage-Failure-Fault-Error" class="headerlink" title="3.1.1 Outage, Failure, Fault, Error"></a>3.1.1 Outage, Failure, Fault, Error</h4><ul>
+<li>可用性是指通过<strong>减少</strong>故障来最大程度地减少服务<strong>中断</strong>时间<br>Availability is about minimizing the service <strong>outage</strong> time by mitigating faults.</li>
+<li><strong>引起 Failure 的原因</strong>称为 <strong>Fault</strong><br>A failure’s cause is called a fault.</li>
+<li>当系统无法交付该系统期望的服务时，将发生Failure<br>A failure occurs when a system cannot deliver a service that is expected of that system.</li>
+<li>Failure是系统状态的<strong>可观察</strong>特征<br>A failure is an observable characteristics of a system’s state.</li>
+<li>系统任何部分中的 Fault 都有可能导致 Failure。系统可以从 Failure 中修复或恢复<br>A fault in any part of a system has a potential to cause a failure; a system can be repaired or recovered from a failure.</li>
+<li>发生 Fault 与 Failure 之间的<strong>中间状态</strong>称为 Error<br>Intermediate states between the occurrence of a fault and a ftailure are called errors.</li>
+<li>名词辨别<ul>
+<li>Outage: 系统不可用的情况，scheduled downTime就是一种Outage。</li>
+<li>Failure: 系统不可用失效</li>
+<li>Fault: 是系统导致Failure的原因，Fault不会立即导致Failure</li>
+<li>Error: 在Fault发生与Failure的中间状态</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-1-2-服务水平协议-Service-Level-Agreement"><a href="#3-1-2-服务水平协议-Service-Level-Agreement" class="headerlink" title="3.1.2 服务水平协议 Service-Level Agreement"></a>3.1.2 服务水平协议 Service-Level Agreement</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201241584.png" alt="image-20230502201241584"></p>
+<p>Amazon EC2’s SLA:</p>
+<ul>
+<li><p>AWS将通过商业上合理的努力来使 Amazon EC2 在服务年度内的年度正常运行率至少达到99.95％。如果 Amazon EC2 不符合年度正常运行时间百分比承诺，您将有资格获得服务信用<br>AWS will use commercially reasonable efforts to make Amazon EC2 available with an Annual Uptime Percentage of at least 99.95% during the Service Year. In the event Amazon EC2 does not meet the Annual Uptime Percentage commitment, you will be eligible to receive a Service Credit.</p>
+</li>
+<li><p>99.95%的是99.9%的一半</p>
+</li>
+</ul>
+<h4 id="3-1-3-对于Failure的计划-Planning-for-Failure"><a href="#3-1-3-对于Failure的计划-Planning-for-Failure" class="headerlink" title="3.1.3 对于Failure的计划 Planning for Failure"></a>3.1.3 对于Failure的计划 Planning for Failure</h4><ul>
+<li>危害分析 Hazard analysis: 对Failure进行分类<ul>
+<li>灾难性的&#x2F;危险 Catastrophic&#x2F;Hazardous</li>
+<li>主要的&#x2F;次要的 Major&#x2F;Minor</li>
+<li>没有影响 No effect</li>
+</ul>
+</li>
+<li>故障树分析: Fault tree analysis:<ul>
+<li>分级处理 Failure</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501171827036.png" alt="image-20230501171827036" style="zoom:80%;" />
+
+<ul>
+<li>故障模式，影响和严重性分析<br>Failure Mode, Effects, and Criticality Analysis(FMECA)<ul>
+<li>FMECA依靠过去类似系统的故障历史<br>FMECA relies on the history of failure of similar systems in the past.</li>
+<li>$5 * 10^{-5} &#x3D; 1 * 10^{-3} * 5%$</li>
+</ul>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501172010947.png" alt="image-20230501172010947" style="zoom:80%;" />
+
+<h4 id="3-1-4-可用性通用场景-Availability-General-Scenario"><a href="#3-1-4-可用性通用场景-Availability-General-Scenario" class="headerlink" title="3.1.4 可用性通用场景 Availability General Scenario"></a>3.1.4 可用性通用场景 Availability General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501172132423.png" alt="image-20230501172132423" style="zoom:80%;" />
+
+<ol>
+<li>source: 可能是内部的，也可能是外部的，可能是人、设施、硬件等等，无论是哪一类都会引起可用性的问题，都能发出一个刺激</li>
+<li>Stiumulus: Failure，不正确的时间、不正确响应(超过边界)</li>
+<li>工件: 在进程中、交流通道中等等</li>
+<li>环境: 各种不同的系统环境，正常的错误的等等</li>
+<li>反应: 错误发生后一些的可能反应，recover是correct的时间</li>
+<li>反应度量: 时间上、可用性的描述(多长时间，可以用多少)</li>
+</ol>
+<h4 id="3-1-5-可用性示例场景-Availability-Sample-Scenario"><a href="#3-1-5-可用性示例场景-Availability-Sample-Scenario" class="headerlink" title="3.1.5 可用性示例场景 Availability Sample Scenario"></a>3.1.5 可用性示例场景 Availability Sample Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501173053221.png" alt="image-20230501173053221" style="zoom: 67%;" />
+
+<ol>
+<li>Source没有收到Heartbeat认为出现了一个Failure</li>
+<li>将Stimulus发送给正在处理的进程</li>
+<li>进程会通知Operation(人和服务器，来检查是否可以运行)</li>
+<li>最后会发送一个回复</li>
+<li>整体发生在一个正常运转的环境中</li>
+</ol>
+<h4 id="3-1-6-可用性策略-Availability-Tactics"><a href="#3-1-6-可用性策略-Availability-Tactics" class="headerlink" title="3.1.6 可用性策略 Availability Tactics"></a>3.1.6 可用性策略 Availability Tactics</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501173240504.png" alt="image-20230501173240504" style="zoom:80%;" />
+
+<blockquote>
+<ul>
+<li>这个树说明了对于可用性可以采用哪些手段来解决: 很重要</li>
+<li>每一个树的分支代表了我们考虑的时间点: 尽可能的延长可用时间</li>
+<li>不同的检测服务可用的手段<ul>
+<li>主动发送心跳: Heart Beat<ul>
+<li>资源的损耗有一次通讯</li>
+<li>可以同时承担更多的业务(定期更新状态)</li>
+<li>自动化检测，更为定时的服务</li>
+<li>单向更为安全</li>
+</ul>
+</li>
+<li>被动接受检测: Ping&#x2F;Echo 或 Minotor<ul>
+<li>资源损耗有两次通讯</li>
+<li>更加灵活自助，根据自己的情况进行检测</li>
+<li>双向确认</li>
+</ul>
+</li>
+<li>TimeStamp<ul>
+<li>收到一系列的消息应该在时间上有先后顺序</li>
+<li>进行常识的信息的检查，如果和常识不符合那么可能是出现了问题</li>
+</ul>
+</li>
+<li>自检: 检查一下自己是否有问题</li>
+</ul>
+</li>
+<li>Preparation and Repair<ul>
+<li>Active Redundancy 冗余部分是都在工作的，如果没有发现问题时，我们只接受Primary的输入，而Secondary的输入会被抛弃，有明显的downTime</li>
+<li>Passive Redundancy: Primary同步到Secondary上，而如果Primary挂掉了，则启用Secondary，并快速操作(从上一个状态)，不一定有明显的DownTime，一般选择使用Passive的方式</li>
+<li>Spare: 组合在一起使用</li>
+<li>Rollback: 回滚解决不一致的问题</li>
+<li>Retry</li>
+<li>Ignore Faulty Behavior</li>
+<li>Degradation: 服务降级，比如Windows的安全模式，让目前已经发生的问题不再影响系统的修复</li>
+<li>Reconfiguration</li>
+</ul>
+</li>
+<li>Reintroduction: <ul>
+<li>shadow</li>
+<li>State Retry Resynchronized</li>
+<li>Escalating Restart</li>
+<li>Non-Stop Forwarding</li>
+</ul>
+</li>
+<li>Denial of Service: Dos攻击: 大量无效的请求将资源耗尽以阻止提供正常的服务</li>
+<li>上述的操作可能不仅仅涉及到一个质量属性</li>
+</ul>
+</blockquote>
+<h5 id="3-1-6-1-Fault-探测-Fault-Detection"><a href="#3-1-6-1-Fault-探测-Fault-Detection" class="headerlink" title="3.1.6.1 Fault 探测 Fault Detection"></a>3.1.6.1 Fault 探测 Fault Detection</h5><ul>
+<li><strong>Ping&#x2F;Echo</strong><ul>
+<li>一个组件发出ping命令，并期望在预定时间内在另一个组件上产生回波<br>One component issues a ping and expects, an echo from another component within a pre-detined time.</li>
+<li>Ping&#x2F;Echo可以在负责一项任务的一组组件中使用<br>Ping&#x2F;Echo can be used within a group of components responsible for one task.</li>
+</ul>
+</li>
+<li><strong>心跳 Heartbeat(dead man time)</strong><ul>
+<li>一个组件定期发出心跳消息(也可以携带数据)，而另一个组件侦听该消息<br>One component emits a heartbeat message (can also carry data) periodically and another component listens for it.</li>
+<li>如果心跳失败，则假定发起组件已失败，并通知故障纠正组件<br>If the heartbeat fails, the originating component is assumed to have failed and a fault correction component is notified.</li>
+</ul>
+</li>
+<li><strong>异常 Exception</strong><ul>
+<li>识别故障的一种方法是遇到异常<br>One method for recognising faults is to encounter an exception.</li>
+<li>异常处理程序通常在引入异常的同一过程中执行<br>The exception handler typically executes in the same process that introduces the exception.</li>
+</ul>
+</li>
+<li>ping和心跳策略在不同的进程中运行，异常策略在单个进程中运行<br>The ping and heartbeat tactics operate among distinct processes, and the exception tactic operates within a single process.</li>
+</ul>
+<h5 id="3-1-6-2-Fault-恢复-Fault-Recovery"><a href="#3-1-6-2-Fault-恢复-Fault-Recovery" class="headerlink" title="3.1.6.2 Fault 恢复 Fault Recovery"></a>3.1.6.2 Fault 恢复 Fault Recovery</h5><ul>
+<li><strong>表决 Voting</strong><ul>
+<li>在冗余处理器上运行的进程每个都接受等效输入并计算一个简单值，该值将发送给投票者<br>Processes running on redundant processors each take equivalent input and compute a simple value that is sent to a voter.</li>
+<li>如果投票器检测到单个进程的异常行为，它将使其失败。<br>If the voter detects deviant behaviour from a single process, it fails it.</li>
+</ul>
+</li>
+<li><strong>主动冗余 Active redundancy</strong><ul>
+<li>所有冗余组件均以并行方式响应事件-所有组件均处于相同状态<br>All redundant components respond to events in parallel - there are all in the same state.</li>
+<li>仅使用了一个组件的响应，其余组件则被丢弃<br>The response from only one component is used, and the rest are discarded.</li>
+<li>发生故障时，通常不存在停机时间，因为备份是最新的，唯一的切换时间是恢复时间<br>When a failure occurs, the downtime is usually non-existent as backup is current and the only switching time is the recovery time.</li>
+</ul>
+</li>
+<li><strong>被动冗余 Passive redundancy</strong><ul>
+<li>一个组件(主要)响应事件，并通知其他组件(次要)它们必须进行的状态更新<br>One component (primary) responds to events and informs the other components (secondary) of state updates they must make.</li>
+<li>发生故障时，系统必须首先确保备份状态足够新，然后才能恢复服务<br>When a failure occurs, the system must first ensure that the backup state is sufficiently recent before resuming services.</li>
+</ul>
+</li>
+<li><strong>备件 Spare</strong><ul>
+<li>备用备用计算平台配置为替换许多不同的故障组件<br>A standby spare computing platform is configured to replace many different failed components.</li>
+</ul>
+</li>
+<li><strong>影子操作 Shadow operation</strong><ul>
+<li>先前发生故障的组件可能会在“影子模式”下运行一小段时间，以确保它可以模仿工作组件的行为，然后再将其恢复正常工作<br>A previously failed component may be run in “shadow mode” for a short time to make sure that it mimics the behaviour of the working components before restoring it to service.</li>
+</ul>
+</li>
+<li><strong>状态重新同步 State re-synchronisation</strong><ul>
+<li>被动和主动冗余策略要求要恢复的组件在恢复服务之前对其状态进行升级<br>The passive and active redundancy tactics require the component being restored to have its state upgraded before its return to service.</li>
+</ul>
+</li>
+<li><strong>检查点&#x2F;回滚 Checkpoint&#x2F;Rollback</strong><ul>
+<li>检查点记录的是定期或响应特定事件而创建的一致状态<br>A checkpoint is recording of a consistent state created either periodically or in response to specific events.</li>
+</ul>
+</li>
+<li><strong>从服务中删除 Removal from service</strong><ul>
+<li>该策略将系统的某个组件从运行中移除，以进行一些活动以防止预期的故障<br>This tactic removes a component of the system from operation to undergo some activities to prevent anticipated failure.</li>
+</ul>
+</li>
+<li><strong>事务 Transaction</strong><ul>
+<li>事务是几个连续步骤的捆绑，这样就可以一次撤消整个捆绑<br>A transaction is the bundling of several sequential steps such that the entire bundle can be undone at once.</li>
+</ul>
+</li>
+<li><strong>过程监控器 Process monitor</strong><ul>
+<li>一旦检测到进程中的故障，监视进程就可以检测到不良进程并为其创建新实例，并按照备用策略将其初始化为适当的状态<br>Once a fault in a process has been detected, a monitoring process can detect the non-performing process and create a new instance of it, initialised to some appropriate state as in the spare tactic.</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-1-7-可用性设计和分析的检查列表-Checklist-for-Availability-Design-Analysis"><a href="#3-1-7-可用性设计和分析的检查列表-Checklist-for-Availability-Design-Analysis" class="headerlink" title="3.1.7 可用性设计和分析的检查列表 Checklist for Availability Design &amp; Analysis"></a>3.1.7 可用性设计和分析的检查列表 Checklist for Availability Design &amp; Analysis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502010221233.png" alt="image-20230502010221233" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502010246494.png" alt="image-20230502010246494" style="zoom:80%;" />
+
+<blockquote>
+<img src="https://spricoder.oss-cn-shanghai.aliyuncs.com/2021-Software-System-Design/img/lec13/60.png" style="zoom: 67%;" />
+</blockquote>
+<h3 id="3-2-互操作性-Interoperability"><a href="#3-2-互操作性-Interoperability" class="headerlink" title="3.2 互操作性 Interoperability"></a>3.2 互操作性 Interoperability</h3><ul>
+<li><strong>互操作性</strong>是指两个或多个系统可以在特定上下文中<strong>通过接口</strong>有用地<strong>交换</strong>有意义的信息的程度<br>Interoperability is about the degree to which two or more systems can usefully exchange meaningful information via interfaces in a particular context.<ul>
+<li><strong>交换</strong>数据的能力(<strong>语法</strong>互操作性)<br>Ability to exchange data (syntactic interoperability)</li>
+<li>能够正确<strong>解释</strong>数据(<strong>语义</strong>互操作性)<br>Ability to correctly interpret the data (semantic interoperability)</li>
+</ul>
+</li>
+<li>互操作性需要确定与<strong>谁，什么以及在什么情况</strong>下(上下文)<br>Interoperability needs to identify with whom, with what, and under what circumstances (the context). </li>
+<li>互动 Interface<ul>
+<li>夏琳说金告诉她特雷弗听说希瑟想参加你的聚会<br>Charlene said that Kim told her that Trevor heard that Heather wants to come to your party.</li>
+</ul>
+</li>
+<li>互操作性的两个重要方面 Two important aspects of interoperability:<ul>
+<li><strong>发现</strong>: 服务的使用者必须发现服务的<strong>位置，身份和接口</strong><br>Discovery: the consumer of a service must discover the location, identity, and the interface of the service.</li>
+<li><strong>处理回应</strong>: Handling of the response:<ul>
+<li>向请求者<strong>报告</strong>并做出<strong>响应</strong> reports back to the requester with response.</li>
+<li>将其响应<strong>发送</strong>到另一个系统 sends its response on to another system.</li>
+<li>向任何感兴趣的各方<strong>广播</strong>其响应 broadcasts its response to any interested parties.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-1-互操作性的通用场景-Interoperability-General-Scenario"><a href="#3-2-1-互操作性的通用场景-Interoperability-General-Scenario" class="headerlink" title="3.2.1 互操作性的通用场景 Interoperability General Scenario"></a>3.2.1 互操作性的通用场景 Interoperability General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014009007.png" alt="image-20230502014009007" style="zoom:80%;" />
+
+<h4 id="3-2-2-互操作性示例场景-Interoperability-Sample-Scenario"><a href="#3-2-2-互操作性示例场景-Interoperability-Sample-Scenario" class="headerlink" title="3.2.2 互操作性示例场景 Interoperability Sample Scenario"></a>3.2.2 互操作性示例场景 Interoperability Sample Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014204116.png" alt="image-20230502014204116" style="zoom:80%;" />
+
+<h4 id="3-2-3-互操作性的策略-Interoperability-Tactics"><a href="#3-2-3-互操作性的策略-Interoperability-Tactics" class="headerlink" title="3.2.3 互操作性的策略 Interoperability Tactics"></a>3.2.3 互操作性的策略 Interoperability Tactics</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014217912.png" alt="image-20230502014217912" style="zoom:80%;" />
+
+<ul>
+<li>定位 Locate<ul>
+<li><strong>发现</strong>服务: 通过搜索已知目录服务来找到服务<br>Discovery service: locate a service through searching a known directory service.<ul>
+<li>多级间接 multiple levels of indirection</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>管理接口 Manage interfaces<ul>
+<li><strong>编排</strong>: 使用控制机制来协调，管理和排序特定服务的调用<br>Orchestrate: uses a control mechanism to coordinate and manage and sequence the invocation of particular services.</li>
+<li><strong>定制接口</strong>: 向接口添加或删除功能<br>Tailor interface: adds or removes capabilities to an interface.</li>
+</ul>
+</li>
+<li>Orchestrate: 请求，一个请求会涉及到多个Service，我们需要按照一定顺序进行处理请求</li>
+</ul>
+<h4 id="3-2-4-互操作性的检查列表-Checklist-for-Interoperability-Design-Analysis"><a href="#3-2-4-互操作性的检查列表-Checklist-for-Interoperability-Design-Analysis" class="headerlink" title="3.2.4 互操作性的检查列表 Checklist for Interoperability Design &amp; Analysis"></a>3.2.4 互操作性的检查列表 Checklist for Interoperability Design &amp; Analysis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014645621.png" alt="image-20230502014645621" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014703290.png" alt="image-20230502014703290" style="zoom:80%;" />
+
+<h3 id="3-3-可修改性-Modifiability"><a href="#3-3-可修改性-Modifiability" class="headerlink" title="3.3 可修改性 Modifiability"></a>3.3 可修改性 Modifiability</h3><ul>
+<li>可修改性涉及<strong>更改</strong>以及进行更改<strong>的时间或金钱成本</strong>，包括这种可更改性影响其他功能或质量属性的程度<br>Modifiability deal with change and the cost in time or money of making a change, including the extent to which this modifiability affects other functions or quality attributes.</li>
+<li>为变更做<strong>准备</strong>是有代价的，而<strong>进行</strong>变更则要付出代价<br>There is a cost of prepraring for change as well as a cost of making a change.</li>
+<li>计划可修改性的四个问题 Four questions to plan for modifiability<ol>
+<li>有什么可以改变的？What can change?</li>
+<li>变化的<strong>可能性</strong>是多少？What is the likelihood of the change?</li>
+<li><strong>何时</strong>进行更改，谁进行更改？When is the change made and who makes it?</li>
+<li>变更的<strong>成本</strong>是多少？What is the cost of the change?</li>
+</ol>
+</li>
+<li>如果更改少于预期，则可能不需要昂贵的修改机制<br>If fewer changes than expected come in, then an expensive modification mechanism may not be warranted.</li>
+<li>计算公式: N $\ast$ 没有机制的情况下进行更改的成本 &lt;&#x3D; 安装机制的成本 + (N $\ast$ 使用机制进行更改的成本)</li>
+<li>降低的成本可以用于提高可修改性</li>
+</ul>
+<h4 id="3-3-1-可修改性的通用场景-Modifiability-General-Scenario"><a href="#3-3-1-可修改性的通用场景-Modifiability-General-Scenario" class="headerlink" title="3.3.1 可修改性的通用场景 Modifiability General Scenario"></a>3.3.1 可修改性的通用场景 Modifiability General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502142540597.png" alt="image-20230502142540597" style="zoom:80%;" />
+
+<h4 id="3-3-2-可修改性的样本场景-Modifiability-Sample-Scenario"><a href="#3-3-2-可修改性的样本场景-Modifiability-Sample-Scenario" class="headerlink" title="3.3.2 可修改性的样本场景 Modifiability Sample Scenario"></a>3.3.2 可修改性的样本场景 Modifiability Sample Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502142635756.png" alt="image-20230502142635756" style="zoom:80%;" />
+
+<h4 id="3-3-3-可修改性的策略-Modifiability-Tactics"><a href="#3-3-3-可修改性的策略-Modifiability-Tactics" class="headerlink" title="3.3.3 可修改性的策略 Modifiability Tactics"></a>3.3.3 可修改性的策略 Modifiability Tactics</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502180141602.png" alt="image-20230502180141602" style="zoom:80%;" />
+
+<ul>
+<li>减小模块大小 Reduce Size of a Module:<ul>
+<li><strong>拆分模块</strong>: 如果要修改的模块包含<strong>大量功能</strong>，则修改成本可能会很高(尽可能的控制包的大小)<br>Split module: If the module being modified includes a great deal of capabilities, the modification costs will likely be high.</li>
+</ul>
+</li>
+<li>增加一致性 Increase Cohesion:<ul>
+<li><strong>增加语义一致性</strong>: 如果模块中的职责 A 和 B <strong>目的不同</strong>，则应通过创建新模块或将职责移至现有模块将它们放置在不同的模块中<br>Increase semantic coherence: If the responsibilities A and B in a module do not serve the same purpose, they should be placed in different modules by creating a new module or moving a responsibility to an existing module.</li>
+</ul>
+</li>
+<li>减少耦合 Reduce Coupling: <ul>
+<li><strong>封装</strong>为模块引入了显式<strong>接口</strong>，并减少了对一个模块的更改<strong>传播</strong>到其他模块的可能性<br>Encapsulation introduces an explicit interface to a module, and reduces the probability that a change to one module propagates to other modules.</li>
+<li>使用<strong>中介</strong>打破<strong>依赖</strong>: 所有的组件都要通过中间的组件进行通信，使用反模式等方法解决<br>Use an intermediary breaks a dependency.</li>
+<li>当两个模块受到相同更改的影响时，请进行<strong>重构</strong>: 不同于代码重构<br>Refactor when two modules are affected by the same change.</li>
+</ul>
+</li>
+<li><strong>延迟绑定</strong>: 在生命周期的<strong>不同阶段</strong>绑定某些参数的值，而不是最初定义它们的阶段。<br>Defer binding: Binds the value of some parameters at a different phase in the life cycle than the one in which they are initially defined.</li>
+</ul>
+<h4 id="3-3-4-Checklist-for-Modifiability-Design-and-Analsis"><a href="#3-3-4-Checklist-for-Modifiability-Design-and-Analsis" class="headerlink" title="3.3.4 Checklist for Modifiability Design and Analsis"></a>3.3.4 Checklist for Modifiability Design and Analsis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502181331259.png" alt="image-20230502181331259" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502181359531.png" alt="image-20230502181359531" style="zoom:80%;" />
+
+<h3 id="3-4-性能-Performance"><a href="#3-4-性能-Performance" class="headerlink" title="3.4 性能 Performance"></a>3.4 性能 Performance</h3><ul>
+<li>性能是关于<strong>时间</strong>和软件系统满足时序要求的能力 (单位时间内能做多少事情)<br>Performance is about time and the software system’s ability to meet timing requirements. </li>
+<li>所有系统都有性能要求，即使未明确表示也是如此<br>All systems have pertormance requirements, even it they are not explicitl y expressed.</li>
+<li>响应时间的两个基本因素 Two basic contributors to the response time<ol>
+<li>处理时间(系统<strong>正在</strong>响应时)<br>processing time (when the system is working to response)</li>
+<li>阻塞时间(系统<strong>无法</strong>响应时)<br>blocked time (when the system is unable to response)</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-4-1-性能的通用场景-Performance-General-Scenario"><a href="#3-4-1-性能的通用场景-Performance-General-Scenario" class="headerlink" title="3.4.1 性能的通用场景 Performance General Scenario"></a>3.4.1 性能的通用场景 Performance General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201358249.png" alt="image-20230502201358249" style="zoom:80%;" />
+
+<h4 id="3-4-2-性能的样本场景-Performance-Sample-Scenario"><a href="#3-4-2-性能的样本场景-Performance-Sample-Scenario" class="headerlink" title="3.4.2 性能的样本场景 Performance Sample Scenario"></a>3.4.2 性能的样本场景 Performance Sample Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502202540659.png" alt="image-20230502202540659" style="zoom:80%;" />
+
+<h4 id="3-4-3-性能的策略-Tactics-for-Performance"><a href="#3-4-3-性能的策略-Tactics-for-Performance" class="headerlink" title="3.4.3 性能的策略 Tactics for Performance"></a>3.4.3 性能的策略 Tactics for Performance</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502202644408.png" alt="image-20230502202644408" style="zoom:80%;" />
+
+<ul>
+<li>在<strong>需求</strong>方面 On the demand side<ul>
+<li>管理<strong>采样率</strong>(降低采样频率)<br>Manage sampling rate (reducing sampling frequency)</li>
+<li>限制事件响应: 当离散事件到达系统的速度太快而无法处理时，必须将事件<strong>排队</strong>，直到可以处理它们为止<br>Limit event response: When discrete events arrive at the system too rapidly to be processed, the events must be queued until they can be processed.</li>
+<li>如果不是所有事件都同样重要，则对事件进行<strong>优先级</strong>排序<br>Prioritize events if not all events are equally important.</li>
+<li>通过使用<strong>中介</strong>来增加处理事件流的资源，从而减少开销<br>Reduce overhead by using intermediaries to increase the resources in processing an event stream</li>
+</ul>
+</li>
+<li>在<strong>资源</strong>方面 On the resource side<ul>
+<li>增加<strong>资源</strong>(更快的处理器，更多的内存，更快的网络…)<br>Increase resources(faster processor, additional memory, faster network…)</li>
+<li>如果可以<strong>并行</strong>处理请求，请引入并发<br>Introduce concurrency if requests can be processed in parallel.</li>
+<li>维护多个计算副本: 使用负载均衡器将新工作分配给可用的<strong>副本</strong>服务器之一<br>Maintain multiple copies of computations: Use load balancer to assign new work to one of the available duplicate servers.</li>
+<li>维护数据的多个副本: Maintain multiple copies of data:<ul>
+<li>缓存 caching</li>
+<li>数据复制 data replication</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-4-4-Checklist-for-Performance-Design-and-Analysis"><a href="#3-4-4-Checklist-for-Performance-Design-and-Analysis" class="headerlink" title="3.4.4 Checklist for Performance Design and Analysis"></a>3.4.4 Checklist for Performance Design and Analysis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203334412.png" alt="image-20230502203334412" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203358242.png" alt="image-20230502203358242" style="zoom:80%;" />
+
+<h3 id="3-5-安全性-Security"><a href="#3-5-安全性-Security" class="headerlink" title="3.5 安全性 Security"></a>3.5 安全性 Security</h3><ul>
+<li><strong>安全性</strong>是衡量系统<strong>保护</strong>数据和信息免遭<strong>未授权访问</strong>的能力，同时仍提供对授权人员和系统的访问权限。<br>Security measures system’s ability to protect data and information from unauthorized access while still providing access to people and systems that are authorized.</li>
+<li>安全性的三个特征 Three characteristics of security: (CIA)<ol>
+<li>机密性：保护数据和服务免受<strong>未经授权的访问</strong>。<br>Confidentiality: Data and services are protected from unauthorized access.</li>
+<li>完整性: 数据和服务不会受到<strong>未经授权</strong>的操纵<br>Integrity: Data and services are not subject to unauthorized manipulation.</li>
+<li>可用性: 系统将可供<strong>合法使用</strong><br>Availability: The system will be available for legitimate use.</li>
+</ol>
+</li>
+</ul>
+<h4 id="3-5-1-安全性的通用场景-Security-General-Scenario"><a href="#3-5-1-安全性的通用场景-Security-General-Scenario" class="headerlink" title="3.5.1 安全性的通用场景 Security General Scenario"></a>3.5.1 安全性的通用场景 Security General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203735211.png" alt="image-20230502203735211" style="zoom:80%;" />
+
+<h4 id="3-5-2-安全性的样本场景-Security-Sample-Scenario"><a href="#3-5-2-安全性的样本场景-Security-Sample-Scenario" class="headerlink" title="3.5.2 安全性的样本场景 Security Sample Scenario"></a>3.5.2 安全性的样本场景 Security Sample Scenario</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203808913.png" alt="image-20230502203808913"></p>
+<h4 id="3-5-3-安全性的策略-Security-Tactics"><a href="#3-5-3-安全性的策略-Security-Tactics" class="headerlink" title="3.5.3 安全性的策略 Security Tactics"></a>3.5.3 安全性的策略 Security Tactics</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203843719.png" alt="image-20230502203843719" style="zoom:80%;" />
+
+<ul>
+<li>通过将系统内的网络流量或服务请求模式与一组签名或已知模式进行比较来检测<strong>入侵</strong><br>Detect intrusion by comparing network traffic or service request patterns within a system to a set of signatures or known patterns.</li>
+<li>检测服务<strong>拒绝</strong> Detect service denial</li>
+<li>使用校验和或哈希值验证<strong>消息的完整性</strong><br>Verify message integrity using checksums or hash values.</li>
+<li>识别参与者-系统的任何<strong>外部</strong>输入的<strong>来源</strong><br>Identify actors - source of any external input to the system.</li>
+<li><strong>验证</strong>参与者或他们所声称的角色<br>Authenticate actors who or what they purport to be.</li>
+<li><strong>授权</strong>有权访问和修改数据或服务的行为者<br>Authorize actors who have the rights to access and modify either data or services.</li>
+<li><strong>限制</strong>对计算资源的<strong>访问</strong><br>Limit access to computing resouces.</li>
+<li>通过最小化系统的攻击面来<strong>限制暴露</strong><br>Limit exposure by minimizing the attack surface of a system.</li>
+<li><strong>加密</strong>数据。Encrypt data.</li>
+<li>正在进行攻击时，撤消对<strong>敏感资源</strong>的访问<br>Revoke access to sensitive resources when an attack is underway.</li>
+<li>Authenticate: 认证，Authorize: 授权。</li>
+</ul>
+<h4 id="3-5-4-安全性的检查列表-Checklist-for-Security-Design-and-Analysis"><a href="#3-5-4-安全性的检查列表-Checklist-for-Security-Design-and-Analysis" class="headerlink" title="3.5.4 安全性的检查列表 Checklist for Security Design and Analysis"></a>3.5.4 安全性的检查列表 Checklist for Security Design and Analysis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503174500263.png" alt="image-20230503174500263" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503174533139.png" alt="image-20230503174533139" style="zoom:80%;" />
+
+<h3 id="3-6-可测试性-Testability"><a href="#3-6-可测试性-Testability" class="headerlink" title="3.6 可测试性 Testability"></a>3.6 可测试性 Testability</h3><ul>
+<li>可测试性是指可以使软件通过(通常基于执行)测试来证明其错误的难易程度。<br>Testability refers to ease with which software can be made to demonstrate its faults through (stypically execution-based) testing.</li>
+<li>为了使系统能够正确测试，必须有可能控制每个组件的输入，然后观察其输出。<br>For a system to be properly testable, it must be possible to control each component’s inputs and then to observe its outputs.</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180645224.png" alt="image-20230503180645224"></p>
+<h4 id="3-6-1-可测试性的通用场景-Testability-General-Scenario"><a href="#3-6-1-可测试性的通用场景-Testability-General-Scenario" class="headerlink" title="3.6.1 可测试性的通用场景 Testability General Scenario"></a>3.6.1 可测试性的通用场景 Testability General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180658761.png" alt="image-20230503180658761" style="zoom:80%;" />
+
+<h4 id="3-6-2-可测试性的样本场景-Testability-Sample-Scenario"><a href="#3-6-2-可测试性的样本场景-Testability-Sample-Scenario" class="headerlink" title="3.6.2 可测试性的样本场景 Testability Sample Scenario"></a>3.6.2 可测试性的样本场景 Testability Sample Scenario</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180914829.png" alt="image-20230503180914829"></p>
+<h4 id="3-6-3-可测试性的策略-Testability-Tactcs"><a href="#3-6-3-可测试性的策略-Testability-Tactcs" class="headerlink" title="3.6.3 可测试性的策略 Testability Tactcs"></a>3.6.3 可测试性的策略 Testability Tactcs</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180953929.png" alt="image-20230503180953929" style="zoom:80%;" />
+
+<ul>
+<li><strong>控制和观察系统状态</strong>: 维护某种状态信息，允许测试人员为该状态信息分配一个值，和&#x2F;或使测试人员可以按需访问该信息。<br>Control and observe system state: Maintain some sort of state information, allow testers to assign a value to that state information, and&#x2F;or make that information accessible to testers on demand.<ul>
+<li><strong>专用接口</strong>使您可以控制或捕获组件的值<br>Specialized interfaces allow you to control or capture values for a component.</li>
+<li><strong>记录&#x2F;回放</strong>导致故障的状态，然后复现故障<br>Record&#x2F;playback the state that caused a fault and re-create the fault.</li>
+<li><strong>沙盒</strong>将系统的实例与现实世界隔离开来，可以进行实验以消除其后果<br>Sandboxing isolates an instance of the system from the real world to enable experimentation to undo its consequences.</li>
+</ul>
+</li>
+<li><strong>限制复杂度</strong>: 复杂的软件更难测试，因为它的操作状态空间很大，并且在大状态空间中重新创建精确状态更加困难。<br>Limit complexity: Complex software is harder to test, because its operating state space is very large and more difficult to re-create an exact state in a large state space.<ul>
+<li>限制结构的<strong>复杂性</strong>，避免、减少或解决组件之间的<strong>依赖</strong>关系；隔离和封装对外部环境的依赖关系。<br>Limit structural complexity avoiding, reducing or resolving dependencies between components; isolating and encapsulating dependencies on external environment.<ul>
+<li>限制一个类派生自的类的数量<br>Limit the number of classes from which a class is derived.</li>
+<li>限制继承<strong>树的深度</strong>和类的孩子数量<br>Limit the depth of the inheritance tree and the number of children of a class.</li>
+<li>限制<strong>多态</strong>和<strong>动态调用</strong> Limit polymorphism and dynamic calls.</li>
+</ul>
+</li>
+<li>限制<strong>不确定性</strong>-限制<strong>行为复杂性</strong> Limit nondeterminism - limiting behavioral complexity.<ul>
+<li>非确定性系统更难测试。Nondeterminism systems are harder to test.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-6-4-可测试性的检查列表-Checklist-for-Testability-Design-and-Analysis"><a href="#3-6-4-可测试性的检查列表-Checklist-for-Testability-Design-and-Analysis" class="headerlink" title="3.6.4 可测试性的检查列表 Checklist for Testability Design and Analysis"></a>3.6.4 可测试性的检查列表 Checklist for Testability Design and Analysis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503182000928.png" alt="image-20230503182000928" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503182027715.png" alt="image-20230503182027715" style="zoom:80%;" />
+
+<h3 id="3-7-易用性-Usability"><a href="#3-7-易用性-Usability" class="headerlink" title="3.7 易用性 Usability"></a>3.7 易用性 Usability</h3><ul>
+<li>易用性与用户完成所需任务的<strong>难易程度</strong>以及系统提供的用户<strong>支持</strong>的类型有关。<br>Usability is concerned with h how easy it is for the user to accomplish a desired task and the kind of user support the system provides.</li>
+<li>易用性包括以下几个方面: Usability comprises the following aspects:<ul>
+<li><strong>学习</strong>系统功能 Learning system features</li>
+<li><strong>高效</strong>使用系统 Using a system efficiently</li>
+<li>最小化<strong>错误的影响</strong> Minimizing the impact of errors</li>
+<li>使系统<strong>适应</strong>用户需求 Adapting the system to user’s needs</li>
+<li>增强信心和<strong>满意度</strong> Increasing confidence and satistaction</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-7-1-易用性的通用场景-Usability-General-Scenario"><a href="#3-7-1-易用性的通用场景-Usability-General-Scenario" class="headerlink" title="3.7.1 易用性的通用场景 Usability General Scenario"></a>3.7.1 易用性的通用场景 Usability General Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193042483.png" alt="image-20230503193042483" style="zoom:80%;" />
+
+<h4 id="3-7-2-易用性的样本场景-Usbility-Sample-Scenario"><a href="#3-7-2-易用性的样本场景-Usbility-Sample-Scenario" class="headerlink" title="3.7.2 易用性的样本场景 Usbility Sample Scenario"></a>3.7.2 易用性的样本场景 Usbility Sample Scenario</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193105081.png" alt="image-20230503193105081" style="zoom:80%;" />
+
+<h4 id="3-7-3-易用性的策略-Usability-Tactics"><a href="#3-7-3-易用性的策略-Usability-Tactics" class="headerlink" title="3.7.3 易用性的策略 Usability Tactics"></a>3.7.3 易用性的策略 Usability Tactics</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193129199.png" alt="image-20230503193129199" style="zoom:80%;" />
+
+<ul>
+<li>支持<strong>用户主动性</strong>: 支持用户纠正错误或提高效率。<br>Support user initiative: support the user in either correcting errors or being more efficient.<ul>
+<li><strong>取消</strong> Cancel</li>
+<li><strong>撤消</strong>: 系统必须维持足够数量的系统状态，以便可以恢复更早的状态<br>Undo: System must maintain a sufficient amount of system state so that an earlier state may be restored.</li>
+<li>用户启动长时间运行的操作时<strong>暂停&#x2F;恢复</strong><br>Pause&#x2F;resume when a user has initiated a long-running operation</li>
+<li>将较低级别的对象<strong>聚合</strong>到一个<strong>组</strong>中，以便可以将操作应用于该组<br>Aggregate the lower-level objects into a single group, so that the operation may be applied to the group.</li>
+</ul>
+</li>
+<li>支持<strong>系统主动性</strong>: 确定系统用来预测其自身行为或用户意图的模型。<br>Support system initiative: Identify the models the system uses to predict either its own behavior or the user’s intention.<ul>
+<li>维护<strong>任务模型</strong>: 确定<strong>上下文</strong>，以便系统可以了解用户正在尝试的内容并提供帮助<br>Maintain task model: Determine context so the system can have some idea of what the user is attempting and provide assistance.</li>
+<li>维护<strong>用户模型</strong>: 代表用户的关于<strong>系统的知识</strong>，根据用户行为训练出用户的模型<br>Maintain user model: Represent the user’s knowledge of system.</li>
+<li>维护<strong>系统模型</strong>: 确定预期的<strong>系统行为</strong>，以便可以向用户提供适当的反馈<br>Maintain system model: Determine expected system behavior so that appropriate feedback can be given to the user.</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-7-4-Checklist-for-Usbility-Design-and-Analysis"><a href="#3-7-4-Checklist-for-Usbility-Design-and-Analysis" class="headerlink" title="3.7.4 Checklist for Usbility Design and Analysis"></a>3.7.4 Checklist for Usbility Design and Analysis</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193849811.png" alt="image-20230503193849811" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193906777.png" alt="image-20230503193906777" style="zoom:80%;" />
+
+<h3 id="3-8-更多的能力-X-ability"><a href="#3-8-更多的能力-X-ability" class="headerlink" title="3.8 更多的能力 X-ability"></a>3.8 更多的能力 X-ability</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503194537890.png" alt="image-20230503194537890" style="zoom:80%;" />
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-1-%E6%A6%82%E8%BF%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" title="软件系统设计">
+                        <b>#</b> 软件系统设计
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/05/08/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-3-%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84-Software-Architecture"><span class="toc-text">1. 软件架构 Software Architecture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%9E%B6%E6%9E%84%E6%89%AE%E6%BC%94%E7%9A%84%E8%A7%92%E8%89%B2-Role-of-Architecture"><span class="toc-text">1.1 架构扮演的角色 Role of Architecture</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%98%AF%E9%87%8D%E8%A6%81%E7%9A%84-Why-is-software-architecture-important"><span class="toc-text">1.2 为什么软件架构是重要的 Why is software architecture important?</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%BF%87%E7%A8%8B-Software-Architecture-Process"><span class="toc-text">1.3 软件架构过程 Software Architecture Process</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E7%A7%BB%E5%8A%A8%E6%89%8B%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84-Mobile-Phone-System-Architecture"><span class="toc-text">1.3.1 移动手机系统架构 Mobile Phone System Architecture</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E6%B4%97%E8%A1%A3%E6%9C%BA%E6%9E%B6%E6%9E%84-Washing-Machine-Architecture"><span class="toc-text">1.3.2 洗衣机架构 Washing Machine Architecture</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%AE%A8%E8%AE%BA-Discussion"><span class="toc-text">1.4 讨论 Discussion</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9C%80%E6%B1%82-Requirements"><span class="toc-text">2. 需求 Requirements</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%8A%9F%E8%83%BD%E6%80%A7%E9%9C%80%E6%B1%82-Functional-Requirements"><span class="toc-text">2.1 功能性需求 Functional Requirements</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%B4%A8%E9%87%8F%E9%9C%80%E6%B1%82-Quality-Requirements"><span class="toc-text">2.2 质量需求 Quality Requirements</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E9%9D%9E%E5%8A%9F%E8%83%BD%E6%80%A7%E9%9C%80%E6%B1%82-Non-functional-Requirements"><span class="toc-text">2.2.1 非功能性需求 Non-functional Requirements</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7-Quality-Attributes"><span class="toc-text">2.2.2 质量属性 Quality Attributes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E7%A1%AE%E5%AE%9A%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7-Specifying-Quality-Attributes"><span class="toc-text">2.2.3 确定质量属性 Specifying Quality Attributes</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-General-Scenarios"><span class="toc-text">2.2.4 通用场景 General Scenarios</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-5-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1-Modeling-Quality-Attribute-Scenarios-%E9%87%8D%E8%A6%81"><span class="toc-text">2.2.5 质量属性场景建模 Modeling Quality Attribute Scenarios 重要</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-6-%E7%AD%96%E7%95%A5-Tactics-%E5%8E%9F%E5%AD%90%E7%BA%A7%E5%88%AB%E7%9A%84%E6%9C%80%E5%B0%8F%E7%9A%84%E5%86%B3%E5%AE%9A"><span class="toc-text">2.2.6 策略 Tactics (原子级别的最小的决定)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-7-%E8%B4%A8%E9%87%8F%E8%AE%BE%E8%AE%A1%E5%86%B3%E7%AD%96-Quality-Design-Decisions"><span class="toc-text">2.2.7 质量设计决策 Quality Design Decisions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-8-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7"><span class="toc-text">2.2.8 质量属性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%BA%A6%E6%9D%9F-Constraints"><span class="toc-text">2.3 约束 Constraints</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7%E5%92%8C%E7%AD%96%E7%95%A5-Quality-Attributes-Tactics"><span class="toc-text">3. 质量属性和策略 Quality Attributes &amp; Tactics</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8F%AF%E7%94%A8%E6%80%A7-Availability"><span class="toc-text">3.1 可用性 Availability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-Outage-Failure-Fault-Error"><span class="toc-text">3.1.1 Outage, Failure, Fault, Error</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E6%9C%8D%E5%8A%A1%E6%B0%B4%E5%B9%B3%E5%8D%8F%E8%AE%AE-Service-Level-Agreement"><span class="toc-text">3.1.2 服务水平协议 Service-Level Agreement</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-%E5%AF%B9%E4%BA%8EFailure%E7%9A%84%E8%AE%A1%E5%88%92-Planning-for-Failure"><span class="toc-text">3.1.3 对于Failure的计划 Planning for Failure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-4-%E5%8F%AF%E7%94%A8%E6%80%A7%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Availability-General-Scenario"><span class="toc-text">3.1.4 可用性通用场景 Availability General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-5-%E5%8F%AF%E7%94%A8%E6%80%A7%E7%A4%BA%E4%BE%8B%E5%9C%BA%E6%99%AF-Availability-Sample-Scenario"><span class="toc-text">3.1.5 可用性示例场景 Availability Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-6-%E5%8F%AF%E7%94%A8%E6%80%A7%E7%AD%96%E7%95%A5-Availability-Tactics"><span class="toc-text">3.1.6 可用性策略 Availability Tactics</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-6-1-Fault-%E6%8E%A2%E6%B5%8B-Fault-Detection"><span class="toc-text">3.1.6.1 Fault 探测 Fault Detection</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-6-2-Fault-%E6%81%A2%E5%A4%8D-Fault-Recovery"><span class="toc-text">3.1.6.2 Fault 恢复 Fault Recovery</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-7-%E5%8F%AF%E7%94%A8%E6%80%A7%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%88%86%E6%9E%90%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Availability-Design-Analysis"><span class="toc-text">3.1.7 可用性设计和分析的检查列表 Checklist for Availability Design &amp; Analysis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-Interoperability"><span class="toc-text">3.2 互操作性 Interoperability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Interoperability-General-Scenario"><span class="toc-text">3.2.1 互操作性的通用场景 Interoperability General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%A4%BA%E4%BE%8B%E5%9C%BA%E6%99%AF-Interoperability-Sample-Scenario"><span class="toc-text">3.2.2 互操作性示例场景 Interoperability Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Interoperability-Tactics"><span class="toc-text">3.2.3 互操作性的策略 Interoperability Tactics</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Interoperability-Design-Analysis"><span class="toc-text">3.2.4 互操作性的检查列表 Checklist for Interoperability Design &amp; Analysis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7-Modifiability"><span class="toc-text">3.3 可修改性 Modifiability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Modifiability-General-Scenario"><span class="toc-text">3.3.1 可修改性的通用场景 Modifiability General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Modifiability-Sample-Scenario"><span class="toc-text">3.3.2 可修改性的样本场景 Modifiability Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-3-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Modifiability-Tactics"><span class="toc-text">3.3.3 可修改性的策略 Modifiability Tactics</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-4-Checklist-for-Modifiability-Design-and-Analsis"><span class="toc-text">3.3.4 Checklist for Modifiability Design and Analsis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%80%A7%E8%83%BD-Performance"><span class="toc-text">3.4 性能 Performance</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-1-%E6%80%A7%E8%83%BD%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Performance-General-Scenario"><span class="toc-text">3.4.1 性能的通用场景 Performance General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-%E6%80%A7%E8%83%BD%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Performance-Sample-Scenario"><span class="toc-text">3.4.2 性能的样本场景 Performance Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-%E6%80%A7%E8%83%BD%E7%9A%84%E7%AD%96%E7%95%A5-Tactics-for-Performance"><span class="toc-text">3.4.3 性能的策略 Tactics for Performance</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-4-Checklist-for-Performance-Design-and-Analysis"><span class="toc-text">3.4.4 Checklist for Performance Design and Analysis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E5%AE%89%E5%85%A8%E6%80%A7-Security"><span class="toc-text">3.5 安全性 Security</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-1-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Security-General-Scenario"><span class="toc-text">3.5.1 安全性的通用场景 Security General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-2-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Security-Sample-Scenario"><span class="toc-text">3.5.2 安全性的样本场景 Security Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-3-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Security-Tactics"><span class="toc-text">3.5.3 安全性的策略 Security Tactics</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-4-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Security-Design-and-Analysis"><span class="toc-text">3.5.4 安全性的检查列表 Checklist for Security Design and Analysis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7-Testability"><span class="toc-text">3.6 可测试性 Testability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-1-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Testability-General-Scenario"><span class="toc-text">3.6.1 可测试性的通用场景 Testability General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-2-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Testability-Sample-Scenario"><span class="toc-text">3.6.2 可测试性的样本场景 Testability Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-3-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Testability-Tactcs"><span class="toc-text">3.6.3 可测试性的策略 Testability Tactcs</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-6-4-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Testability-Design-and-Analysis"><span class="toc-text">3.6.4 可测试性的检查列表 Checklist for Testability Design and Analysis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E6%98%93%E7%94%A8%E6%80%A7-Usability"><span class="toc-text">3.7 易用性 Usability</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-1-%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Usability-General-Scenario"><span class="toc-text">3.7.1 易用性的通用场景 Usability General Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-2-%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Usbility-Sample-Scenario"><span class="toc-text">3.7.2 易用性的样本场景 Usbility Sample Scenario</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-3-%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Usability-Tactics"><span class="toc-text">3.7.3 易用性的策略 Usability Tactics</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-7-4-Checklist-for-Usbility-Design-and-Analysis"><span class="toc-text">3.7.4 Checklist for Usbility Design and Analysis</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-8-%E6%9B%B4%E5%A4%9A%E7%9A%84%E8%83%BD%E5%8A%9B-X-ability"><span class="toc-text">3.8 更多的能力 X-ability</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84(2)%20%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F05%2F01%2F%25E8%25BD%25AF%25E4%25BB%25B6%25E7%25B3%25BB%25E7%25BB%259F%25E8%25AE%25BE%25E8%25AE%25A1-%25E6%259E%25B6%25E6%259E%2584-2-%25E8%25B4%25A8%25E9%2587%258F%25E5%25B1%259E%25E6%2580%25A7%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/05/01/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-2-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

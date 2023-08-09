@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      服务端开发(5) Docker 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">服务端开发(5) Docker</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                    <b>#</b> 服务端开发
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-容器"><a href="#1-容器" class="headerlink" title="1. 容器"></a>1. 容器</h2><h3 id="1-1-什么是容器"><a href="#1-1-什么是容器" class="headerlink" title="1.1 什么是容器"></a>1.1 什么是容器</h3><p>容器是另外一种轻量级的虚拟化，容器是共用主机内核，利用内核的虚拟化技术隔离出一个独立的运行环境，拥有独立的一个文件系统，网络空间，进程空间视图等</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314195622248.png" alt="image-20230314195622248" style="zoom:80%;" />
+
+<h3 id="1-2-容器与虚拟机"><a href="#1-2-容器与虚拟机" class="headerlink" title="1.2 容器与虚拟机"></a>1.2 容器与虚拟机</h3><p>从虚拟化层看容器，<strong>轻量级、高性能</strong>是核心价值</p>
+<ul>
+<li><p>容器是在Linux内核实现的轻量级资源隔离机制</p>
+</li>
+<li><p>虚拟机是操作系统级别的资源隔离，容器本质上是进程级的资源隔离</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314195912283.png" alt="image-20230314195912283" style="zoom:80%;" /></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314195927526.png" alt="image-20230314195927526" style="zoom:80%;" /></td>
+</tr>
+</tbody></table>
+<h2 id="2-Docker"><a href="#2-Docker" class="headerlink" title="2. Docker"></a>2. Docker</h2><p>只能运行在 Linux 环境，即使在 windows 系统提供了 Docker Desktop，底层也是运行在 Linux 虚拟机中的</p>
+<h3 id="2-1-Windows下的两类容器"><a href="#2-1-Windows下的两类容器" class="headerlink" title="2.1 Windows下的两类容器"></a>2.1 Windows下的两类容器</h3><p>Windows Container</p>
+<p>Linux Container</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314202011156.png" alt="image-20230314202011156" style="zoom:80%;" />
+
+<h3 id="2-2-Docker-的三部分"><a href="#2-2-Docker-的三部分" class="headerlink" title="2.2 Docker 的三部分"></a>2.2 Docker 的三部分</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314202234086.png" alt="image-20230314202234086" style="zoom:80%;" />
+
+<h3 id="2-3-Docker-基本命令"><a href="#2-3-Docker-基本命令" class="headerlink" title="2.3 Docker 基本命令"></a>2.3 Docker 基本命令</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker<br>docker container --<span class="hljs-built_in">help</span><br>docker --version<br>docker version<br>docker info<br>docker image <span class="hljs-built_in">ls</span><br>docker pull<br></code></pre></td></tr></table></figure>
+
+<h4 id="搜索镜像"><a href="#搜索镜像" class="headerlink" title="搜索镜像"></a>搜索镜像</h4><p>docker search mongo</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314204426093.png" alt="image-20230314204426093" style="zoom:80%;" />
+
+<h4 id="docker-run-命令"><a href="#docker-run-命令" class="headerlink" title="docker run 命令"></a>docker run 命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run hello-world<br>-d: 后台运行容器，并返回容器ID<br>-i: 以交互模式运行容器，通常与 -t 同时使用<br>-t: 为容器重新分配一个伪输入终端，通常与 -i 同时使用<br>-p: 指定（发布）端口映射，格式为：主机(宿主)端口:容器端口   <br>-P: 随机端口映射，容器内部端口随机映射到主机的高端口<br>--name=<span class="hljs-string">&quot;nginx-lb&quot;</span>: 为容器指定一个名称<br>-e username=<span class="hljs-string">&quot;ritchie&quot;</span>: 设置环境变量<br>--env-file=c:/temp1/t1.txt: 从指定文件读入环境变量<br>--expose=2000-2002: 开放（暴露）一个端口或一组端口；<br>--<span class="hljs-built_in">link</span> my-mysql:taozs : 添加链接到另一个容器<br>-v c:/temp1:/data: 绑定一个卷(volume)<br>--<span class="hljs-built_in">rm</span> 退出时自动删除容器<br>-w: 指定容器内的工作目录<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> -it -p 8080:80 nginx<br><span class="hljs-comment"># 可以通过宿主机的8080端口访问容器的80端口</span><br></code></pre></td></tr></table></figure>
+
+<p><strong>busybox镜像</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> -it busybox sh<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> /etc/hosts<br><span class="hljs-built_in">cat</span> /proc/version<br><span class="hljs-built_in">uname</span> -a<br></code></pre></td></tr></table></figure>
+
+<h4 id="练习：gcc"><a href="#练习：gcc" class="headerlink" title="练习：gcc"></a>练习：gcc</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> -v E:\WorkSpace\Server\gcc-hw:/hw -w /hw –it --name=server nercury/cmake-cpp:gcc-5.2<br>docker run --<span class="hljs-built_in">rm</span> -v E:\WorkSpace\Server\gcc-hw:/hw -w /hw –it --name=client nercury/cmake-cpp:gcc-5.2<br></code></pre></td></tr></table></figure>
+
+<h4 id="练习：-mysql的启动和访问"><a href="#练习：-mysql的启动和访问" class="headerlink" title="练习： mysql的启动和访问"></a>练习： mysql的启动和访问</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker pull mysql:5.7<br>docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=exampledb20 -d mysql:5.7<br>docker run -it --<span class="hljs-built_in">rm</span> --<span class="hljs-built_in">link</span> my-mysql:server mysql:5.7 mysql –hserver -uroot -pexampledb20 <span class="hljs-comment"># 客户端</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-数据卷"><a href="#2-4-数据卷" class="headerlink" title="2.4 数据卷"></a>2.4 数据卷</h3><p>Docker-managed volume（docker管理卷）</p>
+<p>Bind mount volume（绑定挂载卷）</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314211833037.png" alt="image-20230314211833037" style="zoom:80%;" />
+
+<p>volumes: Docker 管理宿主机文件系统的一部分，默认位于 &#x2F;var&#x2F;lib&#x2F;docker&#x2F;volumes</p>
+<p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker volume <span class="hljs-built_in">ls</span><br>docker volume create my_volume<br><span class="hljs-comment"># 使用</span><br>docker run -v my_volume:/data -it --<span class="hljs-built_in">rm</span> busybox sh<br><span class="hljs-comment"># 进入命令行后 /data 下的内容就永久存储在 my_volume</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-5-容器网络"><a href="#2-5-容器网络" class="headerlink" title="2.5 容器网络"></a>2.5 容器网络</h3><p>none网络，–net&#x3D;none</p>
+<p>host网络，–net&#x3D;host</p>
+<p>bridge网络，–net&#x3D;bridge ， docker0 的 linux bridge</p>
+<ul>
+<li>创建的容器默认搭在桥上，不同容器可以通信，并可以路由到宿主机及外部网络</li>
+</ul>
+<p>container模式，–net&#x3D;container:NAME_or_ID</p>
+<ul>
+<li>使两个容器使用完全相同的网络，可以共享 localhost</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314211920219.png" alt="image-20230314211920219" style="zoom:80%;" />
+
+<p>命令：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker network <span class="hljs-built_in">ls</span><br>docker network create my_network<br>docker network inspect my_network <span class="hljs-comment"># 查看网络详细信息</span><br></code></pre></td></tr></table></figure>
+
+<figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;Name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;my_network&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;44348fb303ee38682ffa76afe17d9cc919ef29dc9de0d83689802952a82f94ac&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Created&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;2023-03-16T11:46:54.154057664Z&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Scope&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;local&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Driver&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;bridge&quot;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;EnableIPv6&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;IPAM&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;Driver&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;default&quot;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;Options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-attr">&quot;Config&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>                <span class="hljs-punctuation">&#123;</span><br>                    <span class="hljs-attr">&quot;Subnet&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;172.18.0.0/16&quot;</span><span class="hljs-punctuation">,</span><br>                    <span class="hljs-attr">&quot;Gateway&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;172.18.0.1&quot;</span><br>                <span class="hljs-punctuation">&#125;</span><br>            <span class="hljs-punctuation">]</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Internal&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Attachable&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Ingress&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;ConfigFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>            <span class="hljs-attr">&quot;Network&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;&quot;</span><br>        <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;ConfigOnly&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Containers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Options&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>        <span class="hljs-attr">&quot;Labels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h4><p>首先创建两台容器，使用自己创建的网络(172.18.0.1，网关)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> -it --name=first --net=my_network busybox sh <span class="hljs-comment"># 搭载在刚刚创建的网络</span><br>docker run --<span class="hljs-built_in">rm</span> -it --name=second --net=my_network busybox sh <span class="hljs-comment"># 创建第二个容器</span><br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>First</th>
+<th>Second</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316195016589.png" alt="image-20230316195016589" style="zoom:80%;" /></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316195107330.png" alt="image-20230316195107330" style="zoom:80%;" /></td>
+</tr>
+</tbody></table>
+<p>这两个容器可以 ping 通</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316195254960.png" alt="image-20230316195254960" style="zoom:80%;" />
+
+<p>再创建一个容器，使用默认的bridge网络</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker run --<span class="hljs-built_in">rm</span> -it --name=third busybox sh<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>Third</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316195400824.png" alt="image-20230316195400824" style="zoom:80%;" /></td>
+</tr>
+</tbody></table>
+<p>显然无法ping通上面两个容器</p>
+<p>可以给这个容器再加一个”网卡”，搭载在创建的网络上</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker network connect my_network 562ff5169a <span class="hljs-comment"># 容器id</span><br></code></pre></td></tr></table></figure>
+
+<p>在不同的网络中有各自的ip</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316195801223.png" alt="image-20230316195801223" style="zoom:80%;" />
+
+<p>现在就可以ping通了</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316195831410.png" alt="image-20230316195831410" style="zoom:80%;" />
+
+<h2 id="3-容器镜像构建与编排"><a href="#3-容器镜像构建与编排" class="headerlink" title="3. 容器镜像构建与编排"></a>3. 容器镜像构建与编排</h2><h3 id="3-1-由-Dockerfile-构建镜像"><a href="#3-1-由-Dockerfile-构建镜像" class="headerlink" title="3.1 由 Dockerfile 构建镜像"></a>3.1 由 Dockerfile 构建镜像</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316201145944.png" alt="image-20230316201145944" style="zoom:80%;" />
+
+
+
+<figure class="highlight dockerfile"><table><tr><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-comment"># 基础镜像</span><br><span class="hljs-keyword">FROM</span> python:<span class="hljs-number">3.9</span><br><br><span class="hljs-comment"># 元数据</span><br><span class="hljs-keyword">LABEL</span><span class="language-bash"> maintainer=tzs919@163.com</span><br><br><span class="hljs-comment"># 在基础镜像的基础上执行的linux命令</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">mkdir</span> -p /home/docker/code/app \</span><br><span class="language-bash">    &amp;&amp; <span class="hljs-built_in">mkdir</span> -p /root/.pip</span><br>    <br><span class="hljs-comment"># 拷贝命令，从当前上下文拷贝到目标容器的子目录下</span><br><span class="hljs-comment"># 上下文：Dockerfile所在的目录上下文</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> pip.conf /root/.pip/</span><br><br><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /home/docker/code/app</span><br><br><span class="hljs-comment"># 第二个点为WORKDIR</span><br><span class="hljs-comment"># 如果有不需要的文件或目录可以添加到.dockerignore</span><br><span class="hljs-keyword">COPY</span><span class="language-bash"> . .</span><br><br><span class="hljs-keyword">RUN</span><span class="language-bash"> pip install -r requirements.txt</span><br><br><span class="hljs-comment"># 指定环境变量</span><br><span class="hljs-keyword">ENV</span> MYNAME=<span class="hljs-string">&quot;taozhaosheng&quot;</span>\<br>    APP_PORT=<span class="hljs-number">80</span><br><br><span class="hljs-keyword">VOLUME</span><span class="language-bash"> /data</span><br><br><span class="hljs-comment"># 对外暴露端口号</span><br><span class="hljs-keyword">EXPOSE</span> $APP_PORT<br><br><span class="hljs-comment"># 容器启动后要执行的第一个程序</span><br><span class="hljs-comment">#CMD [&quot;uwsgi&quot;,&quot;--ini&quot;,&quot;uwsgi.ini&quot;]</span><br><span class="hljs-keyword">CMD</span><span class="language-bash"> [<span class="hljs-string">&quot;python&quot;</span>,<span class="hljs-string">&quot;manage.py&quot;</span>,<span class="hljs-string">&quot;runserver&quot;</span>,<span class="hljs-string">&quot;0.0.0.0:80&quot;</span>]</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="Dockerfile文件的指令"><a href="#Dockerfile文件的指令" class="headerlink" title="Dockerfile文件的指令"></a>Dockerfile文件的指令</h4><ul>
+<li><code>FROM</code>：指定基础镜像，必须为第一个命令</li>
+<li><code>RUN</code>：构建镜像时执行的命令</li>
+<li><code>ADD</code>：将本地文件添加到容器中，tar类型文件会自动解压</li>
+<li><code>COPY</code>：功能类似ADD，但是不会自动解压文件</li>
+<li><code>CMD</code>：构建容器后调用，也就是在容器启动时才进行调用</li>
+<li><code>ENTRYPOINT</code>：配置容器，使其可执行化。配合CMD可省去“application”，只使用参数，用于<code>docker run</code>时根据不同参数执行不同功能</li>
+<li><code>LABEL</code>：用于为镜像添加元数据</li>
+<li><code>ENV</code>：设置环境变量</li>
+<li><code>EXPOSE</code>：指定与外界交互的端口，容器内的端口号，<code>docker run</code>时加 -P 则会映射一个随机号（宿主机）</li>
+<li><code>VOLUME</code>：用于指定持久化目录，docker run时如果没有指定挂载目录，会创建一个volume</li>
+<li><code>WORKDIR</code>：工作目录，类似于cd命令</li>
+<li><code>USER</code>：指定运行容器时的用户名或UID</li>
+<li><code>ARG</code>：用于指定传递给构建运行时的变量</li>
+<li><code>ONBUILD</code>：用于设置镜像触发器</li>
+</ul>
+<h4 id="构建镜像"><a href="#构建镜像" class="headerlink" title="构建镜像"></a>构建镜像</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 生成镜像</span><br><span class="hljs-comment"># 最后一个点为 context</span><br>docker build -t mysite:latest .<br><span class="hljs-comment"># 运行容器</span><br>docker run -d --name=mysite -p 8081:80 mysite:latest<br></code></pre></td></tr></table></figure>
+
+<p>访问<a target="_blank" rel="noopener" href="http://localhost:8081/admin/">http://localhost:8081/admin/</a></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/8081-admin.jpg" alt="8081-admin"></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">docker <span class="hljs-built_in">exec</span> -it mysite bash <span class="hljs-comment"># 通过shell与容器交互</span><br>docker container inspect mysite <span class="hljs-comment"># 查看容器详细信息</span><br></code></pre></td></tr></table></figure>
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316204413073.png" alt="image-20230316204413073" style="zoom:80%;" />
+
+<h4 id="Docker-build"><a href="#Docker-build" class="headerlink" title="Docker build"></a>Docker build</h4><ul>
+<li><code>docker build [OPTIONS] PATH | URL | -</code></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26904830">如何编写最佳的Dockerfile</a>：<ul>
+<li>.dockerignore文件</li>
+<li>容器只运行单个应用</li>
+<li>将多个RUN指令合并为一个</li>
+<li>基础镜像的标签不要用latest</li>
+<li>每个RUN指令后删除多余文件</li>
+<li>选择合适的基础镜像(alpine版本最好)</li>
+<li>设置 WORKDIR 和 CMD</li>
+</ul>
+</li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/386986915">Docker 健康检查 HEALTHCHECK 的使用方法</a></li>
+</ul>
+<h3 id="3-2-镜像分层"><a href="#3-2-镜像分层" class="headerlink" title="3.2 镜像分层"></a>3.2 镜像分层</h3><p>写时复制(COW，Copy-On-Write)</p>
+<p>docker history &lt;image name&gt; 查看镜像的层</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230315231523381.png" alt="image-20230315231523381" style="zoom:80%;" />
+
+<p>将所有的 RUN 指令合并为一个</p>
+<ul>
+<li>Dockerfile 中的<strong>每个指令</strong>都会创建一个新的镜像层</li>
+<li>镜像层将被缓存和复用</li>
+<li>当 Dockerfile 的指令修改了，复制的文件变化了，或者构建镜像时指定的变量不同了，对应的镜像层缓存就会失效</li>
+<li>某一层的镜像缓存失效之后，它之后的镜像层缓存都会失效</li>
+<li>镜像层是不可变的，如果我们在某一层中添加一个文件，然后在下一层中删除它，则镜像中依然会包含该文件(只是这个文件在 Docker 容器中不可见了)</li>
+</ul>
+<p>优化：<strong>把变化最少的部分放在Dockerfile的前面</strong>，这样可以充分利用镜像缓存</p>
+<ul>
+<li>例如将 <code>RUN pip install -r requirements.txt</code> 放在 <code>COPY . .</code> 之前</li>
+</ul>
+<h3 id="3-3-服务编排工具，docker-compose"><a href="#3-3-服务编排工具，docker-compose" class="headerlink" title="3.3 服务编排工具，docker-compose"></a>3.3 服务编排工具，docker-compose</h3><p>Compose 项目是 Docker 官方的开源项目，负责实现对 Docker 容器集群的快速编排</p>
+<p>一个单独的 docker-compose.yml 模板文件（YAML 格式）来定义一组相关联的应用容器为一个项目 （project）</p>
+<p>Compose 的默认管理对象是项目，通过子命令对项目中的一组容器进行便捷地生命周期管理</p>
+<p>Compose 中有两个重要的概念</p>
+<ul>
+<li>服务(service)：一个应用的容器（可能会有多个容器），实际上可以包括若干运行相同镜像的容器实例</li>
+<li>项目(project)：由一组关联的应用容器组成的一个完整业务单元，在 docker-compose.yml 文件中定义</li>
+</ul>
+<p>使用微服务架构的系统一般包含若干个微服务，每个微服务一般部署多个实例。如果每个服务都要手动启停，那么效率低，维护量大</p>
+<h4 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46545831/article/details/112995427">Docker-compose指令详解</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/93459395">Docker三剑客之docker-compose</a></p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">version:</span> <span class="hljs-string">&#x27;3.6&#x27;</span><br><span class="hljs-attr">services:</span><br>  <span class="hljs-attr">fluentd:</span><br>    <span class="hljs-attr">build:</span><br>      <span class="hljs-attr">context:</span> <span class="hljs-string">./fluentd</span><br>    <span class="hljs-attr">environment:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ES_HOST=elasticsearch</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">ES_PORT=9200</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;24224:24224&quot;</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">elasticsearch</span><br><br>  <span class="hljs-attr">flask:</span><br>    <span class="hljs-attr">build:</span><br>      <span class="hljs-attr">context:</span> <span class="hljs-string">./container</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;8090:80&quot;</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">fluentd</span><br>    <span class="hljs-attr">logging:</span><br>      <span class="hljs-attr">driver:</span> <span class="hljs-string">fluentd</span><br>      <span class="hljs-attr">options:</span><br>        <span class="hljs-attr">fluentd-address:</span> <span class="hljs-string">localhost:24224</span><br>        <span class="hljs-attr">tag:</span> <span class="hljs-string">docker.flask</span><br><br>  <span class="hljs-attr">elasticsearch:</span><br>      <span class="hljs-attr">image:</span> <span class="hljs-string">docker.elastic.co/elasticsearch/elasticsearch:6.3.2</span><br>      <span class="hljs-attr">environment:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">cluster.name=docker-cluster</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">bootstrap.memory_lock=true</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;ES_JAVA_OPTS=-Xms512m -Xmx512m&quot;</span><br>      <span class="hljs-attr">ulimits:</span><br>        <span class="hljs-attr">memlock:</span><br>          <span class="hljs-attr">soft:</span> <span class="hljs-number">-1</span><br>          <span class="hljs-attr">hard:</span> <span class="hljs-number">-1</span><br>      <span class="hljs-attr">ports:</span><br>        <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;9200:9200&quot;</span><br>  <br>  <span class="hljs-attr">kibana:</span><br>    <span class="hljs-attr">image:</span> <span class="hljs-string">docker.elastic.co/kibana/kibana:6.3.2</span><br>    <span class="hljs-attr">ports:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">&quot;5601:5601&quot;</span><br>    <span class="hljs-attr">depends_on:</span><br>      <span class="hljs-bullet">-</span> <span class="hljs-string">elasticsearch</span><br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316210453332.png" alt="image-20230316210453332"></p>
+<blockquote>
+<h4 id="YAML-文件"><a href="#YAML-文件" class="headerlink" title="YAML 文件"></a>YAML 文件</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230316210159136.png" alt="image-20230316210159136" style="zoom:80%;" />
+</blockquote>
+<h4 id="docker-compose常用命令"><a href="#docker-compose常用命令" class="headerlink" title="docker-compose常用命令"></a>docker-compose常用命令</h4><ul>
+<li>docker-compose –help</li>
+<li>docker-compose up -d<ul>
+<li>该命令十分强大，它将尝试自动完成包括构建镜像，（重新）创建服务，启动服务，并关联服务相关容器的一系列操作</li>
+</ul>
+</li>
+<li>docker-compose ps、docker-compose ps –services</li>
+<li>docker-compose images</li>
+<li>docker-compose stop<ul>
+<li>终止整个服务集合</li>
+</ul>
+</li>
+<li>docker-compose stop nginx<ul>
+<li>终止指定的服务（这有个点就是启动的时候会先启动 depends_on 中的容器，关闭的时候不会影响到depends_on中的）</li>
+</ul>
+</li>
+<li>docker-compose logs -f [services…]<ul>
+<li>查看容器的输出日志</li>
+</ul>
+</li>
+<li>docker-compose build  [SERVICE…]</li>
+<li>docker-compose rm nginx<ul>
+<li>移除指定的容器</li>
+</ul>
+</li>
+<li>docker-compose up -d –scale flask&#x3D;3  organizationservice&#x3D;2<ul>
+<li>设置指定服务运行的容器个数</li>
+</ul>
+</li>
+</ul>
+<h4 id="ports、expose、links、depends-on"><a href="#ports、expose、links、depends-on" class="headerlink" title="ports、expose、links、depends_on"></a>ports、expose、links、depends_on</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/382779508">docker-compose的ports、expose、links、depends_on使用技巧</a></p>
+<h4 id="docker-compose-yml格式参考"><a href="#docker-compose-yml格式参考" class="headerlink" title="docker-compose.yml格式参考"></a>docker-compose.yml格式参考</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230327160829434.png" alt="image-20230327160829434"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/03/11/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-4-Spring-Security/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" title="服务端开发">
+                        <b>#</b> 服务端开发
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/03/15/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%BC%80%E5%8F%91-3-%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%9A%84%E7%89%A9%E7%90%86%E5%AE%9E%E7%8E%B0/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%B9%E5%99%A8"><span class="toc-text">1. 容器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%B9%E5%99%A8"><span class="toc-text">1.1 什么是容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%B9%E5%99%A8%E4%B8%8E%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">1.2 容器与虚拟机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Docker"><span class="toc-text">2. Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Windows%E4%B8%8B%E7%9A%84%E4%B8%A4%E7%B1%BB%E5%AE%B9%E5%99%A8"><span class="toc-text">2.1 Windows下的两类容器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Docker-%E7%9A%84%E4%B8%89%E9%83%A8%E5%88%86"><span class="toc-text">2.2 Docker 的三部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Docker-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-text">2.3 Docker 基本命令</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%90%9C%E7%B4%A2%E9%95%9C%E5%83%8F"><span class="toc-text">搜索镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-run-%E5%91%BD%E4%BB%A4"><span class="toc-text">docker run 命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9Agcc"><span class="toc-text">练习：gcc</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%83%E4%B9%A0%EF%BC%9A-mysql%E7%9A%84%E5%90%AF%E5%8A%A8%E5%92%8C%E8%AE%BF%E9%97%AE"><span class="toc-text">练习： mysql的启动和访问</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%95%B0%E6%8D%AE%E5%8D%B7"><span class="toc-text">2.4 数据卷</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C"><span class="toc-text">2.5 容器网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-text">示例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E6%9E%84%E5%BB%BA%E4%B8%8E%E7%BC%96%E6%8E%92"><span class="toc-text">3. 容器镜像构建与编排</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%94%B1-Dockerfile-%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="toc-text">3.1 由 Dockerfile 构建镜像</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Dockerfile%E6%96%87%E4%BB%B6%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-text">Dockerfile文件的指令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F"><span class="toc-text">构建镜像</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Docker-build"><span class="toc-text">Docker build</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82"><span class="toc-text">3.2 镜像分层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%9C%8D%E5%8A%A1%E7%BC%96%E6%8E%92%E5%B7%A5%E5%85%B7%EF%BC%8Cdocker-compose"><span class="toc-text">3.3 服务编排工具，docker-compose</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-compose-yml"><span class="toc-text">docker-compose.yml</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#YAML-%E6%96%87%E4%BB%B6"><span class="toc-text">YAML 文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-compose%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">docker-compose常用命令</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ports%E3%80%81expose%E3%80%81links%E3%80%81depends-on"><span class="toc-text">ports、expose、links、depends_on</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#docker-compose-yml%E6%A0%BC%E5%BC%8F%E5%8F%82%E8%80%83"><span class="toc-text">docker-compose.yml格式参考</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91(5)%20Docker + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F03%2F14%2F%25E6%259C%258D%25E5%258A%25A1%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-5-Docker%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/03/14/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-5-Docker/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

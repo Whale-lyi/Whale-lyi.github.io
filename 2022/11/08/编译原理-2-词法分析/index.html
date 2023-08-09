@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      编译原理(2) 词法分析 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">编译原理(2) 词法分析</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                    <b>#</b> 编译原理
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h1><h2 id="一、词法分析器生成器-ANTLR-v4"><a href="#一、词法分析器生成器-ANTLR-v4" class="headerlink" title="一、词法分析器生成器 ANTLR v4"></a>一、词法分析器生成器 ANTLR v4</h2><h3 id="1-输入与输出"><a href="#1-输入与输出" class="headerlink" title="1. 输入与输出"></a>1. 输入与输出</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108235621687.png" alt="image-20221108235621687" style="zoom:80%;" />
+
+<h3 id="2-词法分析器的三种设计方法"><a href="#2-词法分析器的三种设计方法" class="headerlink" title="2. 词法分析器的三种设计方法"></a>2. 词法分析器的三种设计方法</h3><p>由易到难</p>
+<ul>
+<li><p>词法分析器生成器:ANTLR</p>
+<ul>
+<li>输入规约(.g4)，自动生成词法分析器(lexer.java)</li>
+<li>src –&gt; lexer –&gt; string of tokens</li>
+</ul>
+</li>
+<li><p>手写词法分析器</p>
+</li>
+<li><p>自动化词法分析器</p>
+</li>
+</ul>
+<blockquote>
+<p>生产环境下的编译器 (如 gcc) 通常选择<strong>手写词法分析器</strong></p>
+</blockquote>
+<h3 id="3-ANTLR4"><a href="#3-ANTLR4" class="headerlink" title="3. ANTLR4"></a>3. ANTLR4</h3><h4 id="3-1-输入与输出"><a href="#3-1-输入与输出" class="headerlink" title="3.1 输入与输出"></a>3.1 输入与输出</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108235911855.png" alt="image-20221108235911855" style="zoom:80%;" />
+
+<h4 id="3-2-冲突解决规则"><a href="#3-2-冲突解决规则" class="headerlink" title="3.2 冲突解决规则"></a>3.2 冲突解决规则</h4><p>ANTLR v4 中两大<strong>冲突解决</strong>规则</p>
+<ul>
+<li><strong>最前优先匹配</strong>: 关键字 vs. 标识符</li>
+<li><strong>最长优先匹配</strong>: &gt;&#x3D;, ifhappy, thenext, 1.23</li>
+</ul>
+<h4 id="3-3-词法单元的规约"><a href="#3-3-词法单元的规约" class="headerlink" title="3.3 词法单元的规约"></a>3.3 词法单元的规约</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109000228279.png" alt="image-20221109000228279"></p>
+<p>我们需要词法单元的<strong>形式化</strong>规约</p>
+<blockquote>
+<p>id: 字母开头的字母&#x2F;数字串</p>
+<p>id 定义了一个集合, 我们称之为<strong>语言 (Language)</strong></p>
+<p>它使用了字母与数字等符号集合, 我们称之为<strong>字母表 (Alphabet)</strong></p>
+<p>该语言中的每个元素 (即, 标识符) 称为<strong>串 (String)</strong></p>
+</blockquote>
+<h5 id="Definition-字母表"><a href="#Definition-字母表" class="headerlink" title="Definition (字母表)"></a>Definition (字母表)</h5><p>字母表 $\Sigma$ 是一个有限的符号集合。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109000640673.png" alt="image-20221109000640673" style="zoom: 80%;" />
+
+<h5 id="Definition-串"><a href="#Definition-串" class="headerlink" title="Definition (串)"></a>Definition (串)</h5><p>字母表 $\Sigma$ 上的串 ($s$) 是由 $\Sigma$ 中符号构成的一个<strong>有穷</strong>序列。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109000729588.png" alt="image-20221109000729588" style="zoom:80%;" />
+
+<h5 id="Definition-串上的-“连接”-运算"><a href="#Definition-串上的-“连接”-运算" class="headerlink" title="Definition (串上的 “连接” 运算)"></a>Definition (串上的 “连接” 运算)</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109000814846.png" alt="image-20221109000814846" style="zoom:80%;" />
+
+<h5 id="Definition-串上的-“指数”-运算"><a href="#Definition-串上的-“指数”-运算" class="headerlink" title="Definition (串上的 “指数” 运算)"></a>Definition (串上的 “指数” 运算)</h5><p>也是连接</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109000844290.png" alt="image-20221109000844290" style="zoom:80%;" />
+
+<h5 id="Definition-语言"><a href="#Definition-语言" class="headerlink" title="Definition (语言)"></a>Definition (语言)</h5><p>语言是给定字母表 $\Sigma$ 上一个任意的<strong>可数的</strong>串集合。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109160847077.png" alt="image-20221109160847077" style="zoom:80%;" />
+
+<p><strong>语言是串的集合</strong></p>
+<p>因此, 我们可以通过集合操作<strong>构造</strong>新的语言。</p>
+<h4 id="3-4-语言的集合操作"><a href="#3-4-语言的集合操作" class="headerlink" title="3.4 语言的集合操作"></a>3.4 语言的集合操作</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109161009360.png" alt="image-20221109161009360" style="zoom:80%;" />
+
+<p>$L^* &#x3D; (L^0) ∪ (L^1) ∪ (L^2) ∪ (L^3)$…</p>
+<p>$L^+ &#x3D; (L^1) ∪ (L^2) ∪ (L^3)$…</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109161535054.png" alt="image-20221109161535054" style="zoom:80%;" />
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115163150026.png" alt="image-20221115163150026"></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109161603205.png" alt="image-20221109161603205" style="zoom:80%;" />
+
+<h4 id="3-5-正则表达式"><a href="#3-5-正则表达式" class="headerlink" title="3.5 正则表达式"></a>3.5 正则表达式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109153140556.png" alt="image-20221109153140556" style="zoom:80%;" />
+
+<h5 id="Definition-正则表达式"><a href="#Definition-正则表达式" class="headerlink" title="Definition (正则表达式)"></a>Definition (正则表达式)</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109153528379.png" alt="image-20221109153528379" style="zoom:80%;" />
+
+<h5 id="Definition-正则表达式对应的正则语言"><a href="#Definition-正则表达式对应的正则语言" class="headerlink" title="Definition (正则表达式对应的正则语言)"></a>Definition (正则表达式对应的正则语言)</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109163520346.png" alt="image-20221109163520214" style="zoom:80%;" />
+
+<p><strong>举例</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109163813902.png" alt="image-20221109163813902" style="zoom:80%;" />
+
+<h5 id="正则语法"><a href="#正则语法" class="headerlink" title="正则语法"></a>正则语法</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109170417873.png" alt="image-20221109170417873" style="zoom:80%;" />
+
+<p>antlr中 . 可以匹配换行</p>
+<p>antlr中使用~[abc]而不是[^abc]</p>
+<p>注意转义</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221109170509879.png" alt="image-20221109170509879"></p>
+<blockquote>
+<p>$(0|(1(01^*0)^∗1))^∗$ 匹配所有3的倍数(二进制表示)</p>
+<p><a target="_blank" rel="noopener" href="https://regex101.com/r/ED4qgC/1">https://regex101.com/r/ED4qgC/1</a></p>
+</blockquote>
+<h2 id="二、手写词法分析器"><a href="#二、手写词法分析器" class="headerlink" title="二、手写词法分析器"></a>二、手写词法分析器</h2><p><strong>代码见：</strong><a target="_blank" rel="noopener" href="https://github.com/courses-at-nju-by-hfwei/2022-compilers-coding">https://github.com/courses-at-nju-by-hfwei/2022-compilers-coding</a></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115165313782.png" alt="image-20221115165313782"></p>
+<h3 id="1-分支与循环"><a href="#1-分支与循环" class="headerlink" title="1. 分支与循环"></a>1. 分支与循环</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115171159071.png" alt="image-20221115171159071"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 遍历所有Token</span><br><span class="hljs-type">Token</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> lexer.nextToken();<br><span class="hljs-keyword">while</span> (token != Token.EOF) &#123;<br>    <span class="hljs-keyword">if</span> (token != Token.WS) &#123;<br>        System.out.println(token);<br>    &#125;<br>    token = lexer.nextToken();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-状态转移图"><a href="#2-状态转移图" class="headerlink" title="2. 状态转移图"></a>2. 状态转移图</h3><h4 id="2-1-用于识别-ws-的状态转移图"><a href="#2-1-用于识别-ws-的状态转移图" class="headerlink" title="2.1 用于识别 ws 的状态转移图"></a>2.1 用于识别 ws 的状态转移图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115172525171.png" alt="image-20221115172525171" style="zoom:80%;" />
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 后面的示例省略nextToken中的分支代码</span><br><span class="hljs-keyword">public</span> Token <span class="hljs-title function_">nextToken</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">if</span> (Character.isWhitespace(peek)) &#123;<br>      	<span class="hljs-keyword">return</span> WS();<br>    &#125;<br>&#125;<br><span class="hljs-keyword">private</span> Token <span class="hljs-title function_">WS</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">while</span> (Character.isWhitespace(peek)) &#123;<br>      	advance();<br>    &#125;<br>    <span class="hljs-keyword">return</span> Token.WS;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-2-用于识别-id-的状态转移图"><a href="#2-2-用于识别-id-的状态转移图" class="headerlink" title="2.2 用于识别 id 的状态转移图"></a>2.2 用于识别 id 的状态转移图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115172813225.png" alt="image-20221115172813225" style="zoom:80%;" />
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Token <span class="hljs-title function_">ID</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">sb</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>    <span class="hljs-keyword">do</span> &#123;<br>      	sb.append(peek);<br>      	advance();<br>    &#125; <span class="hljs-keyword">while</span> (Character.isLetterOrDigit(peek));<br>	<span class="hljs-comment">// 判断是不是保留字</span><br>    <span class="hljs-type">Token</span> <span class="hljs-variable">token</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.kwTable.getKeyword(sb.toString());<br>    <span class="hljs-keyword">if</span> (token == <span class="hljs-literal">null</span>) &#123;<br>      	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.ID, sb.toString());<br>    &#125;<br>    <span class="hljs-keyword">return</span> token;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-3-用于识别-int-的状态转移图"><a href="#2-3-用于识别-int-的状态转移图" class="headerlink" title="2.3 用于识别 int 的状态转移图"></a>2.3 用于识别 int 的状态转移图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115173217304.png" alt="image-20221115173217304" style="zoom:80%;" />
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Token <span class="hljs-title function_">INT</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">sb</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>    <span class="hljs-keyword">do</span> &#123;<br>      	sb.append(peek);<br>     	advance();<br>    &#125; <span class="hljs-keyword">while</span> (Character.isDigit(peek));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.INT, sb.toString());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-4-用于识别-relop-的状态转移图"><a href="#2-4-用于识别-relop-的状态转移图" class="headerlink" title="2.4 用于识别 relop 的状态转移图"></a>2.4 用于识别 relop 的状态转移图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115173556563.png" alt="image-20221115173556563" style="zoom:80%;" />
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;=&#x27;</span>) &#123;<br>  	advance();<br>  	<span class="hljs-keyword">return</span> Token.EQ;<br>&#125;<br><br><span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;&gt;&#x27;</span>) &#123;<br>  	advance();<br>  	<span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;=&#x27;</span>) &#123;<br>    	advance();<br>    	<span class="hljs-keyword">return</span> Token.GE;<br>  	&#125;<br>  	<span class="hljs-keyword">return</span> Token.GT;<br>&#125;<br><br><span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;&lt;&#x27;</span>) &#123;<br>  	advance();<br>  	<span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;=&#x27;</span>) &#123;<br>    	advance();<br>    	<span class="hljs-keyword">return</span> Token.LE;<br>  	&#125;<br>  	<span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;&gt;&#x27;</span>) &#123;<br>    	advance();<br>    	<span class="hljs-keyword">return</span> Token.NE;<br>  	&#125;<br>  	<span class="hljs-keyword">return</span> Token.GT;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="2-5-错误处理"><a href="#2-5-错误处理" class="headerlink" title="2.5 错误处理"></a>2.5 错误处理</h4><p>识别字符串 $s$ 中符合某种词法单元模式的前缀词素(<code>nextToken()</code>)</p>
+<p><strong>关键点：</strong>合并 22, 12, 9, 0, 根据<em>下一个字符</em>即可判定词法单元的类型。否则, 调用错误处理模块(对应 other), 报告<em>该字符有误</em>, 并忽略该字符</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// unknown tokens (characters)</span><br><span class="hljs-type">Token</span> <span class="hljs-variable">unknown</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.UNKNOWN, Character.toString(peek));<br>advance();<br><span class="hljs-keyword">return</span> unknown;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115173952384.png" alt="image-20221115173952384"></p>
+<h4 id="2-6-用于识别-num-的状态转移图"><a href="#2-6-用于识别-num-的状态转移图" class="headerlink" title="2.6 用于识别 num 的状态转移图"></a>2.6 用于识别 num 的状态转移图</h4><h5 id="2-6-1-分为三个部分"><a href="#2-6-1-分为三个部分" class="headerlink" title="2.6.1 分为三个部分"></a>2.6.1 分为三个部分</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115174022886.png" alt="image-20221115174022886" style="zoom:80%;" />
+
+<h5 id="2-6-2-完整"><a href="#2-6-2-完整" class="headerlink" title="2.6.2 完整"></a>2.6.2 完整</h5><p>num: 整数部分[. 可选的小数部分][E[可选的 +-] 可选的指数部分]</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115174225767.png" alt="image-20221115174225767" style="zoom:80%;" />
+
+<p><strong>关键点</strong>: 合并 22, 12, 9, 0, 根据<em>下一个字符</em>即可判定词法单元的类型。否则, 调用错误处理模块 (对应 other), 报告<em>该字符有误</em>, 忽略该字符。</p>
+<p>注意, 在 real 与 sci 中, 有时需要<strong>回退</strong>, 寻找最长匹配。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> Token <span class="hljs-title function_">NUMBER</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">intStr</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>    intStr.append(peek);<br>    advance();<br><br>    <span class="hljs-type">int</span> <span class="hljs-variable">intPos</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">realPos</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1</span>;<br><br>    <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">realStr</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br>    <span class="hljs-type">StringBuilder</span> <span class="hljs-variable">sciStr</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>();<br><br>    <span class="hljs-type">int</span> <span class="hljs-variable">state</span> <span class="hljs-operator">=</span> <span class="hljs-number">13</span>;<br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>        <span class="hljs-keyword">switch</span> (state) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">13</span>:<br>                intPos = pos;<br>                <span class="hljs-keyword">if</span> (Character.isDigit(peek)) &#123;<br>                    intStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">13</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;.&#x27;</span>) &#123;<br>                    realStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">14</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;E&#x27;</span> || peek == <span class="hljs-string">&#x27;e&#x27;</span>) &#123;<br>                    sciStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">16</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.INT, intStr.toString());<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">14</span>:<br>                <span class="hljs-keyword">if</span> (Character.isDigit(peek)) &#123;<br>                    realStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">15</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-built_in">this</span>.reset(intPos);<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.INT, intStr.toString());<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">15</span>:<br>                realPos = pos;<br>                <span class="hljs-keyword">if</span> (Character.isDigit(peek)) &#123;<br>                    realStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">15</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;E&#x27;</span> || peek == <span class="hljs-string">&#x27;e&#x27;</span>) <br>                    sciStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">16</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.REAL, intStr.append(realStr).toString());<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">16</span>:<br>                <span class="hljs-keyword">if</span> (peek == <span class="hljs-string">&#x27;+&#x27;</span> || peek == <span class="hljs-string">&#x27;-&#x27;</span>) &#123;<br>                    sciStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">17</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (Character.isDigit(peek)) &#123;<br>                    sciStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">18</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-built_in">this</span>.reset(realPos);<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.REAL, intStr.append(realStr).toString());<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">17</span>:<br>                <span class="hljs-keyword">if</span> (Character.isDigit(peek)) &#123;<br>                    sciStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">18</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-built_in">this</span>.reset(realPos);<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.REAL, intStr.append(realStr).toString());<br>                &#125;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">18</span>:<br>                <span class="hljs-keyword">if</span> (Character.isDigit(peek)) &#123;<br>                    sciStr.append(peek);<br>                    advance();<br>                    state = <span class="hljs-number">18</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <span class="hljs-keyword">else</span> &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Token</span>(TokenType.SCI, intStr.append(realStr).append(sciStr).toString());<br>                &#125;<br>            <span class="hljs-keyword">default</span>:<br>                System.err.println(<span class="hljs-string">&quot;Unreachable&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="三、自动机理论与词法分析器生成器"><a href="#三、自动机理论与词法分析器生成器" class="headerlink" title="三、自动机理论与词法分析器生成器"></a>三、自动机理论与词法分析器生成器</h2><h3 id="1-自动机"><a href="#1-自动机" class="headerlink" title="1. 自动机"></a>1. 自动机</h3><p>(Automaton 单数; Automata 复数)</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231221748.png" alt="image-20221115231221748" style="zoom:80%;" />
+
+<ul>
+<li><p>两大要素：<strong>状态集</strong> $S$ 以及<strong>状态转移函数</strong> $\delta$</p>
+</li>
+<li><p>根据<strong>表达&#x2F;计算能力</strong>的强弱, 自动机可以分为不同层次</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231515551.png" alt="image-20221115231515551" style="zoom:80%;" />
+
+<h3 id="2-目标：正则表达式-RE-词法分析器"><a href="#2-目标：正则表达式-RE-词法分析器" class="headerlink" title="2. 目标：正则表达式 RE &#x3D;&#x3D;&gt; 词法分析器"></a>2. 目标：正则表达式 RE &#x3D;&#x3D;&gt; 词法分析器</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231625992.png" alt="image-20221115231625992" style="zoom:80%;" />
+
+<blockquote>
+<p>终点固然令人向往, 这一路上的风景更是美不胜收</p>
+</blockquote>
+<h4 id="2-1-Definition-NFA-Nondeterministic-Finite-Automaton"><a href="#2-1-Definition-NFA-Nondeterministic-Finite-Automaton" class="headerlink" title="2.1 Definition (NFA (Nondeterministic Finite Automaton))"></a>2.1 Definition (NFA (Nondeterministic Finite Automaton))</h4><ul>
+<li><p>非确定性有穷自动机 $\mathcal{A}$ 是一个五元组 $\textcolor{red}{\mathcal{A} &#x3D; (\Sigma, S, s_0, \delta, F)}$:</p>
+<ol>
+<li><p>字母表 $\Sigma (\epsilon \notin \Sigma)$</p>
+</li>
+<li><p><strong>有穷</strong>的状态集合 $S$</p>
+</li>
+<li><p><strong>唯一</strong>的初始状态 $s_0 \in S$</p>
+</li>
+<li><p>状态转移<strong>函数</strong> $\delta$</p>
+<p>$\delta: S \times (\Sigma \cup { \textcolor{blue}{\epsilon} }) \rightarrow \textcolor{blue}{2^S} $</p>
+</li>
+<li><p>接受状态集合 $F \subseteq S$</p>
+</li>
+</ol>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115234212017.png" alt="image-20221115234212017" style="zoom:80%;" />
+
+<blockquote>
+<p>非确定性的来源：$\delta: S \times (\Sigma \cup { \textcolor{blue}{\epsilon} }) \rightarrow \textcolor{blue}{2^S} $</p>
+<ul>
+<li><p>$\epsilon$: 没有新来的字符也可能转移状态</p>
+</li>
+<li><p>接受同一个字符可能转移到不同的状态</p>
+</li>
+</ul>
+<p>$2^S$ 表示 $S$ 的所有子集, 包括空集</p>
+</blockquote>
+<ul>
+<li><strong>约定：</strong>所有没有对应出边的字符默认指向一个不存在的 <strong>“空状态”</strong> $\emptyset$</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115232743665.png" alt="image-20221115232743665" style="zoom:80%;" />
+
+<ul>
+<li>提出</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115232932323.png" alt="image-20221115232932323" style="zoom:80%;" />
+
+<blockquote>
+<p>“*which introduced the idea of <strong>nondeterministic machines</strong>, which has proved to be an enormously valuable concept.*”</p>
+</blockquote>
+<ul>
+<li>(非确定性)有穷自动机是一类极其简单的<strong>计算</strong>装置</li>
+<li>它可以<strong>识别</strong> (接受&#x2F;拒绝) $\Sigma$ 上的字符串</li>
+</ul>
+<h4 id="2-2-Definition-接受-Accept"><a href="#2-2-Definition-接受-Accept" class="headerlink" title="2.2 Definition (接受 (Accept))"></a>2.2 Definition (接受 (Accept))</h4><ul>
+<li><p>(非确定性)有穷自动机 $\mathcal{A}$ 接受字符串 $x$, 当且仅当<strong>存在</strong>一条从开始状态 $s_0$ 到<strong>某个</strong>接受状态 $f ∈ F$、标号为 $x$ 的路径。</p>
+</li>
+<li><p>因此 $\mathcal{A}$ 定义了一种<strong>语言</strong> $L(\mathcal{A})$: 它能接受的所有字符串构成的集合</p>
+<blockquote>
+<p>若该语言与某一 RE 定义的语言相等, 则表示该 RE 与该 NFA 等价</p>
+</blockquote>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115234754835.png" alt="image-20221115234754835" style="zoom:80%;" />
+
+<h4 id="2-3-关于自动机-mathcal-A-的两个基本问题"><a href="#2-3-关于自动机-mathcal-A-的两个基本问题" class="headerlink" title="2.3 关于自动机 $\mathcal{A}$ 的两个基本问题"></a>2.3 关于自动机 $\mathcal{A}$ 的两个基本问题</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115234935877.png" alt="image-20221115234935877" style="zoom:80%;" />
+
+<ul>
+<li><p>例1</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115235112210.png" alt="image-20221115235112210" style="zoom:80%;" />
+
+<ul>
+<li><p>$aaa \in \mathcal{A}$: 接受</p>
+</li>
+<li><p>$aab \in \mathcal{A}$: 不接受</p>
+</li>
+<li><p>$\textcolor{red}{L(\mathcal{A})} &#x3D; L((aa^{\ast} | bb^{\ast}))$</p>
+</li>
+</ul>
+</li>
+<li><p>例2</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115235502815.png" alt="image-20221115235502815" style="zoom:80%;" />
+
+<ul>
+<li>$1011 \in L(\mathcal{A})$: 不接受</li>
+<li>$0011 \in L(\mathcal{A})$: 接受</li>
+<li>$L(\mathcal{A}) &#x3D; {包含偶数个 1 或偶数个 0 的 01 串}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-Definition-DFA-Deterministic-Finite-Automaton"><a href="#2-4-Definition-DFA-Deterministic-Finite-Automaton" class="headerlink" title="2.4 Definition (DFA (Deterministic Finite Automaton))"></a>2.4 Definition (DFA (Deterministic Finite Automaton))</h4><ul>
+<li><p>确定性有穷自动机 $\mathcal{A}$ 是一个五元组 $\textcolor{red}{\mathcal{A} &#x3D; (\Sigma, S, s_0, \delta, F)}$:</p>
+<ol>
+<li><p>字母表 $\Sigma (\epsilon \notin \Sigma)$</p>
+</li>
+<li><p><strong>有穷</strong>的状态集合 $S$</p>
+</li>
+<li><p><strong>唯一</strong>的初始状态 $s_0 \in S$</p>
+</li>
+<li><p>状态转移<strong>函数</strong> $\delta$</p>
+<p>$\delta: S \times \textcolor{blue}{\Sigma} \rightarrow \textcolor{blue}{S} $</p>
+</li>
+<li><p>接受状态集合 $F \subseteq S$</p>
+</li>
+</ol>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116000025625.png" alt="image-20221116000025625" style="zoom:80%;" />
+</li>
+<li><p><strong>约定</strong>: 所有没有对应出边的字符默认指向一个不存在的 <strong>“死状态”</strong></p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116000213842.png" alt="image-20221116000213842" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116000313618.png" alt="image-20221116000313618" style="zoom:80%;" />
+
+<blockquote>
+<p>上面的确定性自动机和非确定性自动机是等价的</p>
+</blockquote>
+<h4 id="2-5-归纳"><a href="#2-5-归纳" class="headerlink" title="2.5 归纳"></a>2.5 归纳</h4><ul>
+<li>NFA 简洁易于理解, 便于描述语言 $\textcolor{blue}{L(\mathcal{A})}$</li>
+<li>DFA 易于判断 $\textcolor{blue}{x \in L(\mathcal{A})}$, 适合产生词法分析器</li>
+<li>用 NFA 描述语言, 用 DFA 实现词法分析器</li>
+<li>$\textcolor{red}{RE \Rightarrow NFA \Rightarrow DFA \Rightarrow 词法分析器}$</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115231625992.png" alt="image-20221115231625992" style="zoom:80%;" />
+
+<h3 id="3-RE-Rightarrow-NFA"><a href="#3-RE-Rightarrow-NFA" class="headerlink" title="3. RE $\Rightarrow$ NFA"></a>3. RE $\Rightarrow$ NFA</h3><ul>
+<li><p>$r \Rightarrow N(r)$</p>
+</li>
+<li><p>要求：$\textcolor{red}{L(N(r)) &#x3D; L(r)}$</p>
+</li>
+<li><p>从 RE 到 NFA: <strong>Thompson 构造法</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116142610957.png" alt="image-20221116142610957" style="zoom:80%;" />
+</li>
+<li><p>Thompson 构造法的基本思想: <strong>按结构归纳</strong></p>
+</li>
+</ul>
+<h4 id="3-1-Definition-正则表达式"><a href="#3-1-Definition-正则表达式" class="headerlink" title="3.1 Definition (正则表达式)"></a>3.1 Definition (正则表达式)</h4><ul>
+<li><p>给定字母表 $\Sigma$ , $\Sigma$ 上的正则表达式<strong>由且仅由</strong>以下规则定义:</p>
+<ol>
+<li>$\epsilon$ 是正则表达式</li>
+<li>$\forall a \in \Sigma$, $a$ 是正则表达式</li>
+<li>如果 $s$ 是正则表达式, 则 $(s)$ 是正则表达式</li>
+<li>如果 $s$ 和 $t$ 是正则表达式, 则 $s|t, st, s^{*}$ 也是正则表达式</li>
+</ol>
+</li>
+<li><p>$\epsilon$ 是正则表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144106907.png" alt="image-20221116144106907" style="zoom:80%;" />
+</li>
+<li><p>$a \in \Sigma$ 是正则表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144202213.png" alt="image-20221116144202213" style="zoom:80%;" />
+</li>
+<li><p>如果 $s$ 是正则表达式, 则 $(s)$ 是正则表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144239653.png" alt="image-20221116144239653" style="zoom:80%;" />
+</li>
+<li><p>如果 $s$, $t$ 是正则表达式, 则 $s|t$ 是正则表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144408101.png" alt="image-20221116144408101" style="zoom:80%;" />
+
+<ul>
+<li>如果 $N(s)$ 或 $N(t)$ 的开始状态或接受状态不唯一, 怎么办?<ul>
+<li>根据<strong>归纳假设</strong>, $N(s)$ 与 $N(t)$ 的开始状态与接受状态均<strong>唯一</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>如果 $s$, $t$ 是正则表达式, 则 $st$ 是正则表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144528037.png" alt="image-20221116144528037" style="zoom:80%;" />
+
+<ul>
+<li>根据<strong>归纳假设</strong>, $N(s)$ 与 $N(t)$ 的开始状态与接受状态均<strong>唯一</strong></li>
+</ul>
+</li>
+<li><p>如果 $s$ 是正则表达式, 则 $s^{*}$ 是正则表达式</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116144724260.png" alt="image-20221116144724260" style="zoom:80%;" />
+
+<ul>
+<li>根据<strong>归纳假设</strong>, $N(s)$ 的开始状态与接受状态均<strong>唯一</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="3-2-N-r-的性质以及-Thompson-构造法复杂度分析"><a href="#3-2-N-r-的性质以及-Thompson-构造法复杂度分析" class="headerlink" title="3.2 $N(r)$ 的性质以及 Thompson 构造法复杂度分析"></a>3.2 $N(r)$ 的性质以及 Thompson 构造法复杂度分析</h4><ul>
+<li><p>$N(r)$ 的开始状态与接收状态均<strong>唯一</strong></p>
+</li>
+<li><p>开始状态没有入边, 接收状态没有出边</p>
+</li>
+<li><p>$N(r)$ 的<strong>状态数</strong> $|S| \le 2 \times |r|$</p>
+<p>($|r|: r$ 中运算符与运算分量的总和)</p>
+</li>
+<li><p>每个状态最多有两个 $\epsilon$-入边与两个 $\epsilon$-出边</p>
+</li>
+<li><p>$\forall a \in \Sigma$, 每个状态最多有一个 $a$-入边与一个 $a$-出边</p>
+</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116165020990.png" alt="image-20221116165020990" style="zoom:80%;" />
+
+<h3 id="4-NFA-Rightarrow-DFA"><a href="#4-NFA-Rightarrow-DFA" class="headerlink" title="4. NFA $\Rightarrow$ DFA"></a>4. NFA $\Rightarrow$ DFA</h3><ul>
+<li><p>$N \Rightarrow D$</p>
+</li>
+<li><p>要求: $\textcolor{red}{L(D) &#x3D; L(N)}$</p>
+</li>
+<li><p>从 NFA 到 DFA 的转换: <strong>子集构造法</strong>(Subset&#x2F;Powerset Construction)</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116165300828.png" alt="image-20221116165300828" style="zoom:80%;" />
+</li>
+<li><p><strong>思想: 用 DFA 模拟 NFA</strong></p>
+</li>
+</ul>
+<h4 id="4-1-用-DFA-模拟-NFA"><a href="#4-1-用-DFA-模拟-NFA" class="headerlink" title="4.1 用 DFA 模拟 NFA"></a>4.1 用 DFA 模拟 NFA</h4><p>$\textcolor{blue}{L(\mathcal{A}) &#x3D; L((a|b)^{*}abb)}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170259111.png" alt="image-20221116170259111" style="zoom:80%;" />
+
+<ul>
+<li><p>过程</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170337732.png" alt="image-20221116170337732" style="zoom:80%;" /></li>
+</ul>
+<h4 id="4-2-epsilon-闭包"><a href="#4-2-epsilon-闭包" class="headerlink" title="4.2 $\epsilon$-闭包"></a>4.2 $\epsilon$-闭包</h4><ul>
+<li><p>从状态 $s$ 开始, 只通过 $\epsilon$-转移可达的状态集合</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170523291.png" alt="image-20221116170523291" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170532028.png" alt="image-20221116170532028" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170546504.png" alt="image-20221116170546504" style="zoom:80%;" />
+</li>
+<li><p><strong>闭包(Closure): $f$-closure($T$)</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172358836.png" alt="image-20221116172358836" style="zoom:80%;" /></li>
+</ul>
+<h4 id="4-3-子集构造法-N-Rightarrow-D-的原理"><a href="#4-3-子集构造法-N-Rightarrow-D-的原理" class="headerlink" title="4.3 子集构造法($N \Rightarrow D$)的原理"></a>4.3 子集构造法($N \Rightarrow D$)的原理</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116170833733.png" alt="image-20221116170833733" style="zoom:80%;" />
+
+<h4 id="4-4-子集构造法的复杂度分析"><a href="#4-4-子集构造法的复杂度分析" class="headerlink" title="4.4 子集构造法的复杂度分析"></a>4.4 子集构造法的复杂度分析</h4><p>$(|S_{N}| &#x3D; n)$</p>
+<ul>
+<li><p>$|S_{D}| &#x3D; \Theta (2^{n})$</p>
+</li>
+<li><p>最坏情况下, $|S_{D}| &#x3D; \Omega (2^{n})$</p>
+</li>
+<li><p>最坏情况举例</p>
+<ul>
+<li><p>$L_{n} &#x3D; (a|b)^{*}a(a|b)^{n-1}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172141260.png" alt="image-20221116172141260" style="zoom:80%;" />
+</li>
+<li><p>当 n &#x3D; 4</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172204829.png" alt="image-20221116172204829" style="zoom:80%;" /></li>
+</ul>
+</li>
+</ul>
+<h3 id="5-DFA-最小化"><a href="#5-DFA-最小化" class="headerlink" title="5. DFA 最小化"></a>5. DFA 最小化</h3><p>$\textcolor{blue}{L(\mathcal{A}) &#x3D; L((a|b)^{*}abb)}$</p>
+<ul>
+<li><p>子集构造法得到的 DFA</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172537563.png" alt="image-20221116172537563" style="zoom:80%;" />
+</li>
+<li><p>最小化后的 DFA</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172557173.png" alt="image-20221116172557173" style="zoom:80%;" />
+</li>
+<li><p><strong>DFA 最小化算法</strong>基本思想: <strong>等价</strong>的状态可以合并</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116172644918.png" alt="image-20221116172644918" style="zoom:80%;" />
+
+<blockquote>
+<p><em>“With Robert E. Tarjan, for fundamental achievements in the design and analysis of algorithms and data structures” — Turing Award, 1986</em></p>
+</blockquote>
+</li>
+</ul>
+<h4 id="5-1-如何定义等价状态"><a href="#5-1-如何定义等价状态" class="headerlink" title="5.1 如何定义等价状态"></a>5.1 如何定义等价状态</h4><blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116220414892.png" alt="image-20221116220414892" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116220456076.png" alt="image-20221116220456076" style="zoom:80%;" />
+
+<p>按照错误定义可得: $A \sim C \sim E$</p>
+<p>但是, 接收状态与非接收状态必定不等价</p>
+<p>空串 $\epsilon$ <strong>区分</strong>了这两类状态</p>
+</blockquote>
+<ul>
+<li><p><strong>正确定义</strong>：</p>
+<p>$s \sim t \iff \forall a \in \Sigma. \left((s \stackrel{a}{\rightarrow} s’) \land (t \stackrel{a}{\rightarrow} t’)\right) \implies (\textcolor{red}{s’ \sim t’})$</p>
+<p>$s \nsim t \iff \exists a \in \Sigma. (s \stackrel{a}{\rightarrow} s’) \land (t \stackrel{a}{\rightarrow} t’) \land (\textcolor{red}{s’ \nsim t’})$</p>
+</li>
+</ul>
+<h4 id="5-2-合并-or-划分"><a href="#5-2-合并-or-划分" class="headerlink" title="5.2 合并 or 划分"></a>5.2 合并 or 划分</h4><h5 id="5-2-1-合并"><a href="#5-2-1-合并" class="headerlink" title="5.2.1 合并"></a>5.2.1 合并</h5><ul>
+<li><p>$s \sim t \iff \forall a \in \Sigma. \left((s \stackrel{a}{\rightarrow} s’) \land (t \stackrel{a}{\rightarrow} t’)\right) \implies (\textcolor{red}{s’ \sim t’})$</p>
+</li>
+<li><p>基于该定义, 不断<strong>合并</strong>等价的状态, 直到无法合并为止</p>
+</li>
+<li><p><strong>但是, 这是一个递归定义, 从哪里开始呢</strong></p>
+<blockquote>
+<p>Q: 所有的接收状态都是等价的吗？</p>
+<p>A: 当然不</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116225047710.png" alt="image-20221116225047710" style="zoom:80%;" />
+</blockquote>
+</li>
+<li><p>缺少基础情况, 不知从何下手</p>
+</li>
+<li><p><strong>划分, 而非合并</strong></p>
+</li>
+</ul>
+<h5 id="5-2-2-划分"><a href="#5-2-2-划分" class="headerlink" title="5.2.2 划分"></a>5.2.2 划分</h5><ul>
+<li>$s \nsim t \iff \exists a \in \Sigma. (s \stackrel{a}{\rightarrow} s’) \land (t \stackrel{a}{\rightarrow} t’) \land (\textcolor{red}{s’ \nsim t’})$<ul>
+<li>从哪里开始呢?</li>
+</ul>
+</li>
+<li>$\Pi &#x3D; \set{F, S \setminus F}$<ul>
+<li><strong>接收状态与非接收状态必定不等价</strong></li>
+<li>空串 $\epsilon$ <strong>区分</strong>了这两类状态</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Definition (字符串 $x$ 区分状态 $s$ 与 $t$)</p>
+<ul>
+<li>如果分别从 $s$ 与 $t$ 出发, 沿着标号为 $x$ 的路径到达的两个状态中只有一个是接受状态, 则称 $x$ <strong>区分</strong>了状态 $s$ 与 $t$。</li>
+</ul>
+<p>Definition (可区分的 (Distinguishable))</p>
+<ul>
+<li>如果存在某个能区分状态 $s$ 与 $t$ 的字符串, 则称 $s$ 与 $t$ 是可区分的。</li>
+</ul>
+</blockquote>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116230131399.png" alt="image-20221116230131399" style="zoom:80%;" />
+
+<ul>
+<li><p>划分步骤</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221117131345963.png" alt="image-20221117131345963" style="zoom: 67%;" />
+</li>
+<li><p><strong>合并</strong>等价状态 $A \sim C$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116230509789.png" alt="image-20221116230509789" style="zoom:80%;" /></li>
+</ul>
+<blockquote>
+<p>Q: 合并后是否一定还是 DFA? 初始状态、接受状态是哪些?</p>
+<p>A: 是, 包含原来初始状态与接收状态的状态</p>
+</blockquote>
+<h4 id="5-3-算法总览"><a href="#5-3-算法总览" class="headerlink" title="5.3 算法总览"></a>5.3 算法总览</h4><p>DFA 最小化<strong>等价状态划分</strong>方法</p>
+<ul>
+<li><p>$\Pi &#x3D; \set{F, S \setminus F}$</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116230748683.png" alt="image-20221116230748683" style="zoom:80%;" />
+</li>
+<li><p>直到再也无法<strong>划分</strong>为止 (<strong>不动点!</strong>)</p>
+</li>
+<li><p>然后, 将同一等价类里的状态<strong>合并</strong></p>
+</li>
+</ul>
+<p><strong>注意</strong></p>
+<ul>
+<li>这是 <strong>DFA</strong> 最小化算法, 要保证状态图完整</li>
+<li>要先检查是否需要补 “死状态” $\emptyset$</li>
+</ul>
+<blockquote>
+<p>如何分析 DFA 最小化算法的复杂度?</p>
+<p>为什么 DFA 最小化算法是正确的?</p>
+<p>最小化 DFA 是唯一的吗?</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DFA_minimization">DFA Minimization @ wiki</a></p>
+</blockquote>
+<h3 id="6-DFA-Rightarrow-词法分析器"><a href="#6-DFA-Rightarrow-词法分析器" class="headerlink" title="6. DFA $\Rightarrow$ 词法分析器"></a>6. DFA $\Rightarrow$ 词法分析器</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124164547540.png" alt="image-20221124164547540" style="zoom:80%;" />
+
+<ul>
+<li>最前优先匹配: $abb$ (比如<strong>关键字</strong>)</li>
+<li>最长优先匹配: $aabbb$</li>
+</ul>
+<h4 id="6-1-根据正则表达式构造相应的-NFA"><a href="#6-1-根据正则表达式构造相应的-NFA" class="headerlink" title="6.1 根据正则表达式构造相应的 NFA"></a>6.1 根据正则表达式构造相应的 NFA</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124164702365.png" alt="image-20221124164702365" style="zoom:80%;" />
+
+<p>合并这三个 NFA, 构造 $a|abb|a^*b^+$ 对应的 NFA</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124164820073.png" alt="image-20221124164820073" style="zoom:80%;" />
+
+<h4 id="6-2-使用子集构造法将-NFA-转化为等价的-DFA"><a href="#6-2-使用子集构造法将-NFA-转化为等价的-DFA" class="headerlink" title="6.2 使用子集构造法将 NFA 转化为等价的 DFA"></a>6.2 使用子集构造法将 NFA 转化为等价的 DFA</h4><ul>
+<li><strong>并消除 “死状态”</strong></li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124164922855.png" alt="image-20221124164922855" style="zoom:80%;" />
+
+<ul>
+<li>注意：要保留各个 NFA 的<strong>接受状态</strong>信息, 并采用<strong>最前优先匹配</strong>原则</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124170335679.png" alt="image-20221124170335679" style="zoom:80%;" />
+
+<ul>
+<li>$\forall a \in \Sigma.\delta(\emptyset, a) &#x3D; \emptyset$<ul>
+<li>需要<strong>消除</strong> “死状态”, 避免词法分析器徒劳消耗输入流</li>
+</ul>
+</li>
+</ul>
+<p>模拟运行该 DFA, <strong>直到无法继续为止</strong> (<em>输入结束或状态无转移</em>);</p>
+<ul>
+<li><p>假设此时状态为 $s$</p>
+<ul>
+<li><p>若 $s$ 为接受状态, 则识别成功;</p>
+</li>
+<li><p>否则, <strong>回溯</strong> (<em>包括状态与输入流</em>) 至最近一次经过的接受状态, 识别成功;</p>
+</li>
+<li><p>若没有经过任何接受状态, 则<strong>报错</strong> (<em>忽略第一个字符</em>)</p>
+</li>
+<li><p>无论成功还是失败, 都从<strong>初始状态</strong>开始继续识别下一个词法单元</p>
+</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>$x &#x3D; a$ 输入结束; 接受; 识别出 $a$</p>
+<p>$x &#x3D; abba$ 状态无转移; 回溯成功; 识别出 $abb$</p>
+<p>$x &#x3D; aaaa$ 输入结束; 回溯成功; 识别出 $a$</p>
+<p>$x &#x3D; cabb$ 状态无转移; 回溯失败; 报错 $c$</p>
+</blockquote>
+<h4 id="6-3-特定于词法分析器的-DFA-最小化方法"><a href="#6-3-特定于词法分析器的-DFA-最小化方法" class="headerlink" title="6.3 特定于词法分析器的 DFA 最小化方法"></a>6.3 特定于词法分析器的 DFA 最小化方法</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124164922855.png" alt="image-20221124164922855" style="zoom:80%;" />
+
+<ul>
+<li>初始划分需要考虑不同的<strong>词法单元</strong><ul>
+<li>不能直接把所有终止状态分为一类</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>$\Pi_0 &#x3D; \set{\set{0137,7}, \textcolor{red}{\set{247}, \set{8, 58}, \set{68}}, \textcolor{green}{\set{\emptyset}}}$</p>
+<p>$\Pi_1 &#x3D; \set{\textcolor{blue}{\set{0137}, \set{7}}, \set{247}, \textcolor{blue}{\set{8}, \set{58}}, \set{68}}$</p>
+</blockquote>
+<h3 id="7-DFA-Rightarrow-RE"><a href="#7-DFA-Rightarrow-RE" class="headerlink" title="7. DFA $\Rightarrow$ RE"></a>7. DFA $\Rightarrow$ RE</h3><ul>
+<li>$D \Longrightarrow r$</li>
+<li>要求: $\textcolor{red}{L(r) &#x3D; L(D)}$</li>
+</ul>
+<h4 id="考虑下图-DFA"><a href="#考虑下图-DFA" class="headerlink" title="考虑下图 DFA"></a>考虑下图 DFA</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128162254029.png" alt="image-20221128162254029" style="zoom:80%;" />
+
+<ul>
+<li>字符串 $x$ 对应于有向图中的路径</li>
+<li>求有向图中所有 (从初始状态到接受状态的) 路径</li>
+<li>$\textcolor{red}{但是, 如果有向图中含有\textbf{环}, 则存在无穷多条路径}$<ul>
+<li>不要怕, 我们有 <strong>Kleene 闭包(*)</strong></li>
+</ul>
+</li>
+</ul>
+<h4 id="Floyd-Warshall-弗洛伊德算法"><a href="#Floyd-Warshall-弗洛伊德算法" class="headerlink" title="Floyd-Warshall(弗洛伊德算法)"></a>Floyd-Warshall(弗洛伊德算法)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128163359324.png" alt="image-20221128163359324" style="zoom:80%;" />
+
+<h4 id="如何初始化"><a href="#如何初始化" class="headerlink" title="如何初始化"></a>如何初始化</h4><ul>
+<li><p>$R^{-1}_{ij}:$ 从节点 $i$ 到节点 $j$ 、且<strong>不经过中间节点</strong>的所有路径</p>
+</li>
+<li><p>可以分为四种情况</p>
+<ol>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128163754963.png" alt="image-20221128163754963" style="zoom:80%;" /></li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128163803715.png" alt="image-20221128163803715" style="zoom:80%;" /></li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128163815739.png" alt="image-20221128163815739" style="zoom:80%;" /></li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128163832278.png" alt="image-20221128163832278" style="zoom:80%;" /></li>
+</ol>
+</li>
+<li><p>关于 $\textcolor{red}{\emptyset}$ (注意: 它不是正则表达式) 的规定</p>
+<ul>
+<li>$\emptyset r &#x3D; r\emptyset &#x3D; \emptyset$</li>
+<li>$\emptyset\mid r &#x3D; r$</li>
+</ul>
+</li>
+</ul>
+<h4 id="r-的最终结果是什么"><a href="#r-的最终结果是什么" class="headerlink" title="$r$ 的最终结果是什么"></a>$r$ 的最终结果是什么</h4><ul>
+<li>求有向图中所有 (从初始状态到接受状态的) 路径</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164117771.png" alt="image-20221128164117771" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164145771.png" alt="image-20221128164145771" style="zoom:80%;" />
+
+<ul>
+<li><p>应用到初始的 DFA</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164252370.png" alt="image-20221128164252370" style="zoom:80%;" />
+
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164304111.png" alt="image-20221128164304111" style="zoom:80%;" />
+
+<ol>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164344214.png" alt="image-20221128164344214" style="zoom:80%;" /></li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164357884.png" alt="image-20221128164357884" style="zoom:80%;" /></li>
+<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221128164415452.png" alt="image-20221128164415452" style="zoom:80%;" /></li>
+</ol>
+</li>
+</ul>
+<h2 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h2><h3 id="龙书"><a href="#龙书" class="headerlink" title="龙书"></a>龙书</h3><h4 id="2-6-词法分析"><a href="#2-6-词法分析" class="headerlink" title="2.6 词法分析"></a>2.6 词法分析</h4><p>构成一个词法单元的输入字符序列称为<em>词素</em>(lexem)，词法分析器使得语法分析器不需要考虑词法单元的词素表示方式。</p>
+<p>词法分析器使用一个表来保存字符串，从而解决了如下两个问题：</p>
+<ul>
+<li><em>单一表示</em>。一个字符串表可以将编译器的其余部分和表中字符串的具体表示隔离开，因为编译器后面的步骤可以只使用指向表中字符串的指针或引用。操作引用要比操作字符串本身更加高效。</li>
+<li><em>保留字</em>。要实现保留字，可以在初始化时在字符串表中加入保留的字符串以及它们对应的词法单元。当词法分析器读到一个可以组成标识符的字符串或词素时，它首先检查这个字符串表中是否有这个词素。如是，它就返回表中的词法单元，否则返回带有终结符号 id 的词法单元。</li>
+</ul>
+<h4 id="3-1-词法分析器的作用"><a href="#3-1-词法分析器的作用" class="headerlink" title="3.1 词法分析器的作用"></a>3.1 词法分析器的作用</h4><p>词法分析器的主要任务是读入源程序的输入字符、将它们组成词素，生成并输出一个词法单元序列，每个词法单元对应于一个词素。</p>
+<p>在某些情况下，词法分析器会从符号表中读取有关标识符种类的信息，以确定向语法分析器传送哪个词法单元。</p>
+<p>词法分析器在编译器中负责读取源程序，因此它还会完成一些识别词素之外的其他任务。</p>
+<ul>
+<li>任务之一是过滤掉源程序中的注释和空白（空格、换行符、制表符以及在输入中用于分隔词法单元的其他字符）；</li>
+<li>另一个任务是将编译器生成的错误消息与源程序的位置联系起来。</li>
+</ul>
+<p>有时，词法分析器可以分成两个级联的处理阶段</p>
+<ul>
+<li><strong>扫描阶段</strong>主要负责完成一些不需要生成词法单元的简单处理，比如删除注释和将多个连续的空白字符压缩成一个字符。</li>
+<li><strong>词法分析阶段</strong>是较为复杂的部分,它处理扫描阶段的输出并生成词法单元。</li>
+</ul>
+<h5 id="3-1-1-词法分析及语法分析"><a href="#3-1-1-词法分析及语法分析" class="headerlink" title="3.1.1 词法分析及语法分析"></a>3.1.1 词法分析及语法分析</h5><p>把编译过程的分析部分划分为词法分析和语法分析阶段有如下几个原因：</p>
+<ul>
+<li><p>最重要的考虑是简化编译器的设计</p>
+<ul>
+<li>将词法分析和语法分析分离通常使我们至少可以简化其中的一项任务</li>
+</ul>
+</li>
+<li><p>提高编译器的效率</p>
+<ul>
+<li>把词法分析器独立出来使我们能够使用专用于词法分析任务、不进行语法分析的技术</li>
+<li>可以使用专门的用于读取输入字符的缓冲技术来显著提高编译器的速度</li>
+</ul>
+</li>
+<li><p>增强编译器的可移植性</p>
+<ul>
+<li>输入设备相关的特殊性可以被限制在词法分析器中</li>
+</ul>
+</li>
+</ul>
+<h5 id="3-1-2-词法单元、模式和词素"><a href="#3-1-2-词法单元、模式和词素" class="headerlink" title="3.1.2 词法单元、模式和词素"></a>3.1.2 词法单元、模式和词素</h5><p><strong>词法单元</strong>由一个词法单元名和一个可选的属性值组成。</p>
+<ul>
+<li>词法单元名是一个表示某种词法单位的抽象符号，比如一个特定的关键字，或者代表一个标识符的输入字符序列。</li>
+<li>词法单元名字是由语法分析器处理的输入符号。我们将使用词法单元的名字来引用一个词法单元。</li>
+</ul>
+<p><strong>模式</strong>描述了一个词法单元的词素可能具有的形式。</p>
+<ul>
+<li>当词法单元是一个关键字时，它的模式就是组成这个关键字的字符序列。</li>
+<li>对于标识符和其他词法单元，模式是一个更加复杂的结构，它可以和很多符号串匹配</li>
+</ul>
+<p><strong>词素</strong>是源程序中的一个字符序列</p>
+<ul>
+<li>它和某个词法单元的模式匹配，并被词法分析器识别为该词法单元的一个实例。</li>
+</ul>
+<blockquote>
+<p>在C语句 <code>printf(&quot;Total= % d\n&quot;,score);</code> 中</p>
+<p>printf和score都是和词法单元id的模式匹配的词素，而“Total &#x3D;% d\n”则是一个和 literal 匹配的词素。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221111153545862.png" alt="image-20221111153545862"></p>
+</blockquote>
+<p>在很多程序设计语言中，下面的类别覆盖了大部分或所有的词法单元:</p>
+<ul>
+<li>每个关键字有一个词法单元。一个关键字的模式就是该关键字本身</li>
+<li>表示运算符的词法单元。它可以表示单个运算符，也可以像上图中的comparison表示一类运算符</li>
+<li>一个表示所有标识符的词法单元</li>
+<li>一个或多个表示常量的词法单元，比如数字和字面值字符串</li>
+<li>每一个标点符号有一个词法单元，比如左右括号、逗号和分号</li>
+</ul>
+<h5 id="3-1-3-词法单元的属性"><a href="#3-1-3-词法单元的属性" class="headerlink" title="3.1.3 词法单元的属性"></a>3.1.3 词法单元的属性</h5><p>如果有多个词素可以和一个模式匹配，那么词法分析器必须向编译器的后续阶段提供有关被匹配词素的附加信息。</p>
+<blockquote>
+<p>例如，0和1都能和词法单元number的模式匹配，但是对于代码生成器而言，至关重要的是知道在源程序中找到了哪个词素。</p>
+<p>因此，在很多情况下，词法分析器不仅仅向语法分析器返回一个词法单元名字，还会返回一个描述该词法单元的词素的属性值</p>
+<p>词法单元的名字将影响语法分析过程中的决定，而这个属性则会影响语法分析之后对这个词法单元的翻译。</p>
+</blockquote>
+<p>我们假设一个词法单元至多有一个相关的属性值，这个属性值可能是一个<strong>组合了多种信息的结构化数据</strong>。</p>
+<p>最重要的例子是词法单元id,我们通常会将很多信息和它关联。一般来说，和一个标识符有关的信息：例如它的词素、类型、它第一次出现的位置（在发出一个有关该标识符的错误消息时需要使用这个信息）<strong>都保存在符号表中</strong>。因此，<strong>一个标识符的属性值是一个指向符号表中该标识符对应条目的指针。</strong></p>
+<blockquote>
+<p>例如Fortran语句 <code>E = M * C ** 2</code> 中的词法单元名字和相关的属性值可写成如下的名字-属性对序列：</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221112141117200.png" alt="image-20221112141117200"></p>
+<p>在某些对中，特别是运算符、标点符号和关键字的对中，不需要有属性值</p>
+<p>该例中，词法单元number有一个整数属性值。在实践中，编译器将<strong>保存一个代表该常量的字符串</strong>，并将一个<strong>指向该字符串的指针</strong>作为number的属性值。</p>
+</blockquote>
+<h5 id="3-1-4-词法错误"><a href="#3-1-4-词法错误" class="headerlink" title="3.1.4 词法错误"></a>3.1.4 词法错误</h5><p>假设出现所有词法单元的模式都无法和剩余输入的某个前缀相匹配的情况，此时词法分析器就不能继续处理输入。当出现这种情况时，最简单的错误恢复策略是<strong>“恐慌模式”</strong>恢复。 我们从剩余的输入中不断删除字符，直到词法分析器能够在剩余输入的开头发现一个正确的词法单元为止。</p>
+<p>这个恢复技术可能会给语法分析器带来混乱。但是在交互计算环境中，这个技术已经足够了。</p>
+<p>可能采取的其他错误恢复动作包括：</p>
+<ul>
+<li>从剩余的输入中删除一个字符。</li>
+<li>向剩余的输入中插入一个遗漏的字符。</li>
+<li>用一个字符来替换另一个字符。</li>
+<li>交换两个相邻的字符</li>
+</ul>
+<blockquote>
+<p>这些变换可以在试图修复错误输入时进行。最简单的策略是看一下<strong>是否可以通过一次变换将剩余输入的某个前缀变成一个合法的词素</strong>。</p>
+<p>这种策略还是有道理的，因为在实践中，大多数词法错误只涉及<strong>一个字符</strong>。另外一种更加通用的改正策略是计算出最少需要多少次变换才能够把一个源程序转换成为一个只包含合法词素的程序。但是在实践中发现这种方法的代价太高，不值得使用。</p>
+</blockquote>
+<h4 id="3-2-输入缓冲"><a href="#3-2-输入缓冲" class="headerlink" title="3.2 输入缓冲"></a>3.2 输入缓冲</h4><p>我们常常需要查看一个词素之后的若干字符才能够确定是否找到了正确的词素，比如，我们只有读取到一个非字母或数字的字符之后才能确定我们已经到达一个标识符的末尾</p>
+<p>在C语言中，像 - 、&#x3D; 或 ＜ 这样的单字符运算符也有可 能是-&gt;、&#x3D;&#x3D;或 &lt;&#x3D; 这样的双字符运算符的开始字符</p>
+<h5 id="3-2-1-缓冲区对"><a href="#3-2-1-缓冲区对" class="headerlink" title="3.2.1 缓冲区对"></a>3.2.1 缓冲区对</h5><p>通过两个交替读入的缓冲区来减少用于处理单个输入字符的时间开销。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221112143331856.png" alt="image-20221112143331856"></p>
+<p>每个缓冲区的容量都是 N 个字符，通常 N 是一个磁盘块的大小，如4096字节。我们可以使用系统读取命令一次将 N 个字符读入到缓冲区中，而不是每读入一个字符调用一次系统读取命令。如果输入文件中的剩余字符不足N个，那么就会有一个特殊字符(EOF)来标记源文件的结束。</p>
+<p>程序为输入维护了两个指针:</p>
+<ul>
+<li><code>lexemeBegin</code>指针：该指针指向当前词素的开始处。当前我们正试图确定这个词素的结尾。</li>
+<li><code>forward</code>指针：它一直向前扫描，直到发现某个模式被匹配为止。</li>
+</ul>
+<p>一旦确定了下一个词素，<code>forward</code>指针将指向该词素结尾的字符。词法分析器将这个词素作为某个返回给语法分析器的词法单元的属性值记录下来。然后使<code>lexemeBegin</code>指针指向刚刚找到的词素之后的第一个字符。</p>
+<p>将<code>forward</code>指针前移要求我们首先检査是否已经到达某个缓冲区的末尾。如果是，我们必须将 N 个新字符读到另一个缓冲区中，且将<code>forward</code>指针指向这个新载入字符的缓冲区的头部。只要我们从不需要越过实际的词素向前看很远，以至于这个词素的长度加上我们向前看的距离大于 N, 我们就决不会在识别这个词素之前覆盖掉这个尚在缓冲区中的词素。</p>
+<h5 id="3-2-2-哨兵标记"><a href="#3-2-2-哨兵标记" class="headerlink" title="3.2.2 哨兵标记"></a>3.2.2 哨兵标记</h5><p>如果我们采用上一节中描述的方案，那么在每次向前移动<code>forward</code>指针时，我们都必须检査是否到达了缓冲区的末尾。若是，那么我们必须加载另一个缓冲区。</p>
+<p>因此每读入一个字符, 我们需要做两次测试：</p>
+<ul>
+<li>一次是检査是否到达缓冲区的末尾</li>
+<li>另一次是确定读入的字符是什么(可能是一个多路分支选择语句)。</li>
+</ul>
+<p>如果我们扩展每个缓冲区，使它们在末尾包含一个“哨兵” (sentinel)字符，我们就可以把对缓冲区末端的测试和对当前字符的测试合二为一。这个哨兵字符必须是一个不会在源程序中出现的特殊字符，一个自然的选择就是字符EOF</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221112144545736.png" alt="image-20221112144545736"></p>
+<ul>
+<li>请注意，EOF仍然可以用来标记整个输入的结尾。任何不是出现在某个缓冲区末尾的EOF都表示到达了输入的结尾</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221112144649129.png" alt="image-20221112144649129"></p>
+<h4 id="3-3-词法单元的规约-1"><a href="#3-3-词法单元的规约-1" class="headerlink" title="3.3 词法单元的规约"></a>3.3 词法单元的规约</h4><h5 id="3-3-1-串和语言"><a href="#3-3-1-串和语言" class="headerlink" title="3.3.1 串和语言"></a>3.3.1 串和语言</h5><blockquote>
+<p>串的各部分的术语</p>
+<ol>
+<li>串 $s$ 的前缀(prefix)是从 $s$ 的尾部删除 0 个或多个符号后得到的串。例如,ban、banana 和 $\epsilon$ 是banana的前缀</li>
+<li>串 $s$ 的后缀(suffix)是从 $s$ 的开始处删除 0 个或多个符号后得到的串。例如，nana、banana 和 $\epsilon$ 是banana的后缀。</li>
+<li>串 $s$ 的子串(substring)是删除 $s$ 的某个前缀和某个后缀之后得到的串。例如，bnana、nan和 $\epsilon$ 是banana的子串。</li>
+<li>串 $s$ 的真(true)前缀、真后缀、真子串分别是 $s$ 的既不等于 $\epsilon$ 也不等于 $s$ 本身的前缀、后缀和子串</li>
+<li>串 $s$ 的子序列(subsequence)是从 $s$ 中删除 0 个或多个符号后得到的串，这些被删除的符号可能不相邻。例如，baan是banana的一个子序列</li>
+</ol>
+</blockquote>
+<h5 id="3-3-3-正则表达式"><a href="#3-3-3-正则表达式" class="headerlink" title="3.3.3 正则表达式"></a>3.3.3 正则表达式</h5><p>可以用一个正则表达式定义的语言叫做<em>正则集合</em>(regular set)。如果两个正则表达式 $r$ 和 $s$ 表示相同的语言，则称 $r$ 和 $s$ <em>等价</em>(equivalent)，记作 $r$ &#x3D; $s$ .</p>
+<ul>
+<li>例如 (a|b) &#x3D; (b|a)</li>
+</ul>
+<p>正则表达式遵守一些代数定律，每个定律都断言两个具有不同形式的表达式等价</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115164950975.png" alt="image-20221115164950975"></p>
+<h3 id="自制编译器"><a href="#自制编译器" class="headerlink" title="自制编译器"></a>自制编译器</h3><h4 id="抽象语法树和节点"><a href="#抽象语法树和节点" class="headerlink" title="抽象语法树和节点"></a>抽象语法树和节点</h4><p>语法树和语法是完全对应的，所以例如 C 语言的终结符分号以及表达式两端的括号等都包含在真实的语法树中。</p>
+<p>但是，保存分号和括号基本没有实际的意义，因此实际上大部分情况下会生成一开始就省略分号、括号等的抽象语法树。也就是说，解析器会跳过语法树，直接生成抽象语法树。</p>
+<p>无论语法树还是抽象语法树，都是树形的数据结构，因此和普通的树结构相同，由称为节点（node）的数据结构组合而成。用 Java 来写的话，一个节点可以用一个节点对象来表示。</p>
+<h4 id="解析器生成器"><a href="#解析器生成器" class="headerlink" title="解析器生成器"></a>解析器生成器</h4><p>生成扫描器的程序称为扫描器生成器（scanner generator），生成解析器的程序称为解析器生成器（parser generator）。只需指定需要解析的语法，扫描器生成器和解析器生成器就能生成解析相应语法的代码。</p>
+<p>扫描器生成器都大体类似，解析器生成器则有若干个种类。现在具有代表性的解析器生成器可分为 <strong>LL 解析器生成器和 LALR 解析器生成器</strong>两类。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221112161342539.png" alt="image-20221112161342539"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221112161400838.png" alt="image-20221112161400838"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1-%E6%A6%82%E8%BF%B0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
+                        <b>#</b> 编译原理
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-1-%E6%A6%82%E8%BF%B0/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">词法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8-ANTLR-v4"><span class="toc-text">一、词法分析器生成器 ANTLR v4</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="toc-text">1. 输入与输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E8%AE%BE%E8%AE%A1%E6%96%B9%E6%B3%95"><span class="toc-text">2. 词法分析器的三种设计方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ANTLR4"><span class="toc-text">3. ANTLR4</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%BE%93%E5%85%A5%E4%B8%8E%E8%BE%93%E5%87%BA"><span class="toc-text">3.1 输入与输出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E5%86%B2%E7%AA%81%E8%A7%A3%E5%86%B3%E8%A7%84%E5%88%99"><span class="toc-text">3.2 冲突解决规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E8%AF%8D%E6%B3%95%E5%8D%95%E5%85%83%E7%9A%84%E8%A7%84%E7%BA%A6"><span class="toc-text">3.3 词法单元的规约</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E5%AD%97%E6%AF%8D%E8%A1%A8"><span class="toc-text">Definition (字母表)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E4%B8%B2"><span class="toc-text">Definition (串)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E4%B8%B2%E4%B8%8A%E7%9A%84-%E2%80%9C%E8%BF%9E%E6%8E%A5%E2%80%9D-%E8%BF%90%E7%AE%97"><span class="toc-text">Definition (串上的 “连接” 运算)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E4%B8%B2%E4%B8%8A%E7%9A%84-%E2%80%9C%E6%8C%87%E6%95%B0%E2%80%9D-%E8%BF%90%E7%AE%97"><span class="toc-text">Definition (串上的 “指数” 运算)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E8%AF%AD%E8%A8%80"><span class="toc-text">Definition (语言)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-%E8%AF%AD%E8%A8%80%E7%9A%84%E9%9B%86%E5%90%88%E6%93%8D%E4%BD%9C"><span class="toc-text">3.4 语言的集合操作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3.5 正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">Definition (正则表达式)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%AF%B9%E5%BA%94%E7%9A%84%E6%AD%A3%E5%88%99%E8%AF%AD%E8%A8%80"><span class="toc-text">Definition (正则表达式对应的正则语言)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%AF%AD%E6%B3%95"><span class="toc-text">正则语法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%89%8B%E5%86%99%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">二、手写词法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E6%94%AF%E4%B8%8E%E5%BE%AA%E7%8E%AF"><span class="toc-text">1. 分支与循环</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%9B%BE"><span class="toc-text">2. 状态转移图</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB-ws-%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%9B%BE"><span class="toc-text">2.1 用于识别 ws 的状态转移图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB-id-%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%9B%BE"><span class="toc-text">2.2 用于识别 id 的状态转移图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB-int-%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%9B%BE"><span class="toc-text">2.3 用于识别 int 的状态转移图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB-relop-%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%9B%BE"><span class="toc-text">2.4 用于识别 relop 的状态转移图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-text">2.5 错误处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-%E7%94%A8%E4%BA%8E%E8%AF%86%E5%88%AB-num-%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB%E5%9B%BE"><span class="toc-text">2.6 用于识别 num 的状态转移图</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-6-1-%E5%88%86%E4%B8%BA%E4%B8%89%E4%B8%AA%E9%83%A8%E5%88%86"><span class="toc-text">2.6.1 分为三个部分</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-6-2-%E5%AE%8C%E6%95%B4"><span class="toc-text">2.6.2 完整</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%87%AA%E5%8A%A8%E6%9C%BA%E7%90%86%E8%AE%BA%E4%B8%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">三、自动机理论与词法分析器生成器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%8A%A8%E6%9C%BA"><span class="toc-text">1. 自动机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%AE%E6%A0%87%EF%BC%9A%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F-RE-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 目标：正则表达式 RE &#x3D;&#x3D;&gt; 词法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-Definition-NFA-Nondeterministic-Finite-Automaton"><span class="toc-text">2.1 Definition (NFA (Nondeterministic Finite Automaton))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Definition-%E6%8E%A5%E5%8F%97-Accept"><span class="toc-text">2.2 Definition (接受 (Accept))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E5%85%B3%E4%BA%8E%E8%87%AA%E5%8A%A8%E6%9C%BA-mathcal-A-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">2.3 关于自动机 $\mathcal{A}$ 的两个基本问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Definition-DFA-Deterministic-Finite-Automaton"><span class="toc-text">2.4 Definition (DFA (Deterministic Finite Automaton))</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-%E5%BD%92%E7%BA%B3"><span class="toc-text">2.5 归纳</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-RE-Rightarrow-NFA"><span class="toc-text">3. RE $\Rightarrow$ NFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-Definition-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3.1 Definition (正则表达式)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-N-r-%E7%9A%84%E6%80%A7%E8%B4%A8%E4%BB%A5%E5%8F%8A-Thompson-%E6%9E%84%E9%80%A0%E6%B3%95%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-text">3.2 $N(r)$ 的性质以及 Thompson 构造法复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-NFA-Rightarrow-DFA"><span class="toc-text">4. NFA $\Rightarrow$ DFA</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E7%94%A8-DFA-%E6%A8%A1%E6%8B%9F-NFA"><span class="toc-text">4.1 用 DFA 模拟 NFA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-epsilon-%E9%97%AD%E5%8C%85"><span class="toc-text">4.2 $\epsilon$-闭包</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E6%B3%95-N-Rightarrow-D-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-text">4.3 子集构造法($N \Rightarrow D$)的原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E6%B3%95%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-text">4.4 子集构造法的复杂度分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-DFA-%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-text">5. DFA 最小化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E7%AD%89%E4%BB%B7%E7%8A%B6%E6%80%81"><span class="toc-text">5.1 如何定义等价状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E5%90%88%E5%B9%B6-or-%E5%88%92%E5%88%86"><span class="toc-text">5.2 合并 or 划分</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2-1-%E5%90%88%E5%B9%B6"><span class="toc-text">5.2.1 合并</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#5-2-2-%E5%88%92%E5%88%86"><span class="toc-text">5.2.2 划分</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88"><span class="toc-text">5.3 算法总览</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-DFA-Rightarrow-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">6. DFA $\Rightarrow$ 词法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-%E6%A0%B9%E6%8D%AE%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%9E%84%E9%80%A0%E7%9B%B8%E5%BA%94%E7%9A%84-NFA"><span class="toc-text">6.1 根据正则表达式构造相应的 NFA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-%E4%BD%BF%E7%94%A8%E5%AD%90%E9%9B%86%E6%9E%84%E9%80%A0%E6%B3%95%E5%B0%86-NFA-%E8%BD%AC%E5%8C%96%E4%B8%BA%E7%AD%89%E4%BB%B7%E7%9A%84-DFA"><span class="toc-text">6.2 使用子集构造法将 NFA 转化为等价的 DFA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-%E7%89%B9%E5%AE%9A%E4%BA%8E%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84-DFA-%E6%9C%80%E5%B0%8F%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-text">6.3 特定于词法分析器的 DFA 最小化方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-DFA-Rightarrow-RE"><span class="toc-text">7. DFA $\Rightarrow$ RE</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%80%83%E8%99%91%E4%B8%8B%E5%9B%BE-DFA"><span class="toc-text">考虑下图 DFA</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Floyd-Warshall-%E5%BC%97%E6%B4%9B%E4%BC%8A%E5%BE%B7%E7%AE%97%E6%B3%95"><span class="toc-text">Floyd-Warshall(弗洛伊德算法)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">如何初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#r-%E7%9A%84%E6%9C%80%E7%BB%88%E7%BB%93%E6%9E%9C%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">$r$ 的最终结果是什么</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%BE%99%E4%B9%A6"><span class="toc-text">龙书</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-6-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">2.6 词法分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">3.1 词法分析器的作用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-1-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90%E5%8F%8A%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">3.1.1 词法分析及语法分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-2-%E8%AF%8D%E6%B3%95%E5%8D%95%E5%85%83%E3%80%81%E6%A8%A1%E5%BC%8F%E5%92%8C%E8%AF%8D%E7%B4%A0"><span class="toc-text">3.1.2 词法单元、模式和词素</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-3-%E8%AF%8D%E6%B3%95%E5%8D%95%E5%85%83%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-text">3.1.3 词法单元的属性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-1-4-%E8%AF%8D%E6%B3%95%E9%94%99%E8%AF%AF"><span class="toc-text">3.1.4 词法错误</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E8%BE%93%E5%85%A5%E7%BC%93%E5%86%B2"><span class="toc-text">3.2 输入缓冲</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-1-%E7%BC%93%E5%86%B2%E5%8C%BA%E5%AF%B9"><span class="toc-text">3.2.1 缓冲区对</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-2-2-%E5%93%A8%E5%85%B5%E6%A0%87%E8%AE%B0"><span class="toc-text">3.2.2 哨兵标记</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E8%AF%8D%E6%B3%95%E5%8D%95%E5%85%83%E7%9A%84%E8%A7%84%E7%BA%A6-1"><span class="toc-text">3.3 词法单元的规约</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-%E4%B8%B2%E5%92%8C%E8%AF%AD%E8%A8%80"><span class="toc-text">3.3.1 串和语言</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-3-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">3.3.3 正则表达式</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%88%B6%E7%BC%96%E8%AF%91%E5%99%A8"><span class="toc-text">自制编译器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91%E5%92%8C%E8%8A%82%E7%82%B9"><span class="toc-text">抽象语法树和节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E6%9E%90%E5%99%A8%E7%94%9F%E6%88%90%E5%99%A8"><span class="toc-text">解析器生成器</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(2)%20%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F08%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-2-%25E8%25AF%258D%25E6%25B3%2595%25E5%2588%2586%25E6%259E%2590%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

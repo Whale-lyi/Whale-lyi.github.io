@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      6.S081 Lab(1) Utilities 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">6.S081 Lab(1) Utilities</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/MIT/" title="MIT">
+                    <b>#</b> MIT
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/MIT/6-S081/" title="6.S081">
+                    <b>#</b> 6.S081
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <p><strong>课程主页</strong>：<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2021/schedule.html">https://pdos.csail.mit.edu/6.828/2021/schedule.html</a></p>
+<h2 id="Lab0-Tools"><a href="#Lab0-Tools" class="headerlink" title="Lab0 Tools"></a>Lab0 Tools</h2><p>虚拟机使用<strong>VMware Workstation 16 Player</strong>，系统采用<strong>ubuntu20.04</strong></p>
+<p>安装必要工具</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu <br></code></pre></td></tr></table></figure>
+
+<p>测试安装</p>
+<ul>
+<li><p>你应当可以编译并运行xv6（按住Ctrl+a  x退出）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># in the xv6 directory</span><br>$ make qemu<br><span class="hljs-comment"># ... lots of output ...</span><br>init: starting sh<br>$<br></code></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Lab1-Xv6-and-Unix-utilities"><a href="#Lab1-Xv6-and-Unix-utilities" class="headerlink" title="Lab1 Xv6 and Unix utilities"></a>Lab1 Xv6 and Unix utilities</h2><h3 id="1-1-Boot-xv6-easy"><a href="#1-1-Boot-xv6-easy" class="headerlink" title="1.1 Boot xv6 (easy)"></a>1.1 Boot xv6 (easy)</h3><p>clone仓库并切换到util分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ git <span class="hljs-built_in">clone</span> git://g.csail.mit.edu/xv6-labs-2021<br>$ <span class="hljs-built_in">cd</span> xv6-labs-2021<br>$ git checkout util<br></code></pre></td></tr></table></figure>
+
+<p>提交代码, -a 表示不需要git add 直接提交</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># -a 表示不需要git add 直接提交</span><br>$ git commit -am <span class="hljs-string">&#x27;my solution for util lab exercise 1&#x27;</span><br></code></pre></td></tr></table></figure>
+
+<p>查看代码变动</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 展示和上次提交代码不同的地方</span><br>$ git diff<br><span class="hljs-comment"># 展示和初始时不同的地方</span><br>$ git diff origin/util<br></code></pre></td></tr></table></figure>
+
+<p>启动qemu</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ make qemu<br></code></pre></td></tr></table></figure>
+
+<p>查看可执行程序</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">ls</span><br>.              1 1 1024<br>..             1 1 1024<br>README         2 2 2059<br>xargstest.sh   2 3 93<br><span class="hljs-built_in">cat</span>            2 4 24256<br><span class="hljs-built_in">echo</span>           2 5 23080<br>forktest       2 6 13272<br>grep           2 7 27560<br>init           2 8 23816<br><span class="hljs-built_in">kill</span>           2 9 23024<br><span class="hljs-built_in">ln</span>             2 10 22880<br><span class="hljs-built_in">ls</span>             2 11 26448<br><span class="hljs-built_in">mkdir</span>          2 12 23176<br><span class="hljs-built_in">rm</span>             2 13 23160<br>sh             2 14 41976<br>stressfs       2 15 24016<br>usertests      2 16 148456<br>grind          2 17 38144<br><span class="hljs-built_in">wc</span>             2 18 25344<br>zombie         2 19 22408<br>console        3 20 0<br></code></pre></td></tr></table></figure>
+
+<p>xv6没有ps命令，但按Ctrl-p，内核会打印每个进程的信息。如果现在尝试，会看到两行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">1 <span class="hljs-built_in">sleep</span>  init<br>2 <span class="hljs-built_in">sleep</span>  sh<br></code></pre></td></tr></table></figure>
+
+<p>退出可按住Ctrl-a，再输入x</p>
+<p>通过<code>make grade</code>获取成绩，<code>make handin</code>提交lab</p>
+<h3 id="1-2-sleep-easy"><a href="#1-2-sleep-easy" class="headerlink" title="1.2 sleep (easy)"></a>1.2 sleep (easy)</h3><p>user中创建sleep.c</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    <span class="hljs-keyword">if</span>(argc &lt; <span class="hljs-number">2</span>) &#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;Please enter a number!\n&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br>    sleep(atoi(argv[<span class="hljs-number">1</span>]));<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>添加到Makefile中</p>
+<figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">UPROGS=\<br>        $U/_cat\<br>        $U/_echo\<br>        $U/_forktest\<br>        $U/_grep\<br>        $U/_init\<br>        $U/_kill\<br>        $U/_ln\<br>        $U/_ls\<br>        $U/_mkdir\<br>        $U/_rm\<br>        $U/_sh\<br>        $U/_stressfs\<br>        $U/_usertests\<br>        $U/_grind\<br>        $U/_wc\<br>        $U/_zombie\<br>        $U/_sleep\<br></code></pre></td></tr></table></figure>
+
+<p>测试</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ ./grade-lab-util <span class="hljs-built_in">sleep</span><br>make: “kernel/kernel”已是最新。<br>== Test <span class="hljs-built_in">sleep</span>, no arguments == <span class="hljs-built_in">sleep</span>, no arguments: OK (2.1s) <br>== Test <span class="hljs-built_in">sleep</span>, returns == <span class="hljs-built_in">sleep</span>, returns: OK (0.6s) <br>== Test <span class="hljs-built_in">sleep</span>, makes syscall == <span class="hljs-built_in">sleep</span>, makes syscall: OK (0.9s) <br></code></pre></td></tr></table></figure>
+
+<h3 id="1-3-pingpong-easy"><a href="#1-3-pingpong-easy" class="headerlink" title="1.3 pingpong (easy)"></a>1.3 pingpong (easy)</h3><p>添加到Makefile</p>
+<p>user中添加pingpong.c</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> READEND 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> WRITEEND 1</span><br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>	<span class="hljs-type">int</span> p1[<span class="hljs-number">2</span>];<br>	<span class="hljs-type">int</span> p2[<span class="hljs-number">2</span>];<br>	<span class="hljs-type">int</span> pid;<br>	<span class="hljs-type">char</span> buf[<span class="hljs-number">1</span>];<br><br>	pipe(p1);<br>	pipe(p2);<br><br>	pid = fork();<br><br>	<span class="hljs-keyword">if</span>(pid &lt; <span class="hljs-number">0</span>) &#123;<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>	&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (pid == <span class="hljs-number">0</span>) &#123;<br>		close(p1[WRITEEND]);<br>		close(p2[READEND]);<br>		read(p1[READEND], buf, <span class="hljs-number">1</span>);<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: received ping\n&quot;</span>, getpid());<br>		write(p2[WRITEEND], buf, <span class="hljs-number">1</span>);<br>		close(p1[READEND]);<br>		close(p2[WRITEEND]);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>	&#125; <span class="hljs-keyword">else</span> &#123;<br>		close(p1[READEND]);<br>		close(p2[WRITEEND]);<br>		write(p1[WRITEEND], <span class="hljs-string">&quot; &quot;</span>, <span class="hljs-number">1</span>);<br>		read(p2[READEND], buf, <span class="hljs-number">1</span>);<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d: received pong\n&quot;</span>, getpid());<br>		close(p1[WRITEEND]);<br>		close(p2[READEND]);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用两个管道进行双向的数据传输，子进程要先等待父进程写才能读，之后父进程要等子进程写才能读</p>
+<h3 id="1-4-primes-moderate-hard"><a href="#1-4-primes-moderate-hard" class="headerlink" title="1.4 primes (moderate)&#x2F;(hard)"></a>1.4 primes (moderate)&#x2F;(hard)</h3><p>素数筛法：将一组数feed到一个进程里，先print出最小的一个数，这是一个素数，然后用其他剩下的数依次尝试整除这个素数，如果可以整除，则将其drop，不能整除则将其feed到下一个进程中，直到最后打印出所有的素数。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220815203942525.png" alt="image-20220815203942525"></p>
+<p>解决思路：采用递归，每次先尝试从左pipe中读取一个数，如果读不到说明已经到达终点，exit，否则再创建一个右pipe并fork一个子进程，将筛选后的数feed进这个右pipe。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> READEND 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> WRITEEND 1</span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">child</span><span class="hljs-params">(<span class="hljs-type">int</span> *p)</span>;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    <span class="hljs-type">int</span> p[<span class="hljs-number">2</span>];<br>    pipe(p);<br><br>    <span class="hljs-keyword">if</span>(fork() == <span class="hljs-number">0</span>) &#123;<br>        child(p);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        close(p[READEND]);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">2</span>; i &lt;= <span class="hljs-number">35</span>; i++) &#123;<br>            write(p[WRITEEND], &amp;i, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br>        &#125;   <br>        close(p[WRITEEND]);<br>        wait(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">child</span><span class="hljs-params">(<span class="hljs-type">int</span>* p)</span> &#123;<br>    <span class="hljs-type">int</span> pr[<span class="hljs-number">2</span>];<br>    <span class="hljs-type">int</span> n;<br><br>    close(p[WRITEEND]);<br>    <span class="hljs-keyword">if</span>(read(p[READEND], &amp;n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>)) == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125; <br>    <br>    pipe(pr);<br><br>    <span class="hljs-keyword">if</span>(fork() == <span class="hljs-number">0</span>) &#123;<br>        child(pr);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        close(pr[READEND]);<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;prime %d\n&quot;</span>, n);<br>        <span class="hljs-type">int</span> prime = n;<br>        <span class="hljs-keyword">while</span>(read(p[READEND], &amp;n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>))) &#123;<br>            <span class="hljs-keyword">if</span>(n % prime != <span class="hljs-number">0</span>) &#123;<br>                write(pr[WRITEEND], &amp;n, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>));<br>            &#125;<br>        &#125;<br>        close(pr[WRITEEND]);<br>        wait(<span class="hljs-number">0</span>);<br>    &#125;<br><br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-find-moderate"><a href="#1-5-find-moderate" class="headerlink" title="1.5 find (moderate)"></a>1.5 find (moderate)</h4><p>模仿 ls.c 即可</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/fs.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/stat.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/fcntl.h&quot;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">find</span><span class="hljs-params">(<span class="hljs-type">char</span> *path, <span class="hljs-type">char</span>* file)</span>;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    <span class="hljs-keyword">if</span>(argc != <span class="hljs-number">3</span>) &#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: You need pass in only 2 argument&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br>    &#125;<br><br>    <span class="hljs-type">char</span> *target_path = argv[<span class="hljs-number">1</span>];<br>    <span class="hljs-type">char</span> *target_file = argv[<span class="hljs-number">2</span>];<br>    find(target_path, target_file);<br>    <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">find</span><span class="hljs-params">(<span class="hljs-type">char</span> *path, <span class="hljs-type">char</span>* file)</span> &#123;<br>    <span class="hljs-type">char</span> buf[<span class="hljs-number">512</span>], *p;<br>    <span class="hljs-type">int</span> fd;<br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">dirent</span> <span class="hljs-title">de</span>;</span><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">stat</span> <span class="hljs-title">st</span>;</span><br><br>    <span class="hljs-keyword">if</span>((fd = open(path, <span class="hljs-number">0</span>)) &lt; <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: cannot open %s\n&quot;</span>, path);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">if</span>(fstat(fd, &amp;st) &lt; <span class="hljs-number">0</span>)&#123;<br>        <span class="hljs-built_in">fprintf</span>(<span class="hljs-number">2</span>, <span class="hljs-string">&quot;find: cannot stat %s\n&quot;</span>, path);<br>        close(fd);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">switch</span>(st.type)&#123;<br>        <span class="hljs-keyword">case</span> T_FILE:<br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(path + <span class="hljs-built_in">strlen</span>(path) - <span class="hljs-built_in">strlen</span>(file), file) == <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s\n&quot;</span>, path);<br>            &#125;<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">case</span> T_DIR:<br>            <span class="hljs-keyword">if</span>(<span class="hljs-built_in">strlen</span>(path) + <span class="hljs-number">1</span> + DIRSIZ + <span class="hljs-number">1</span> &gt; <span class="hljs-keyword">sizeof</span> buf)&#123;<br>                <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;find: path too long\n&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            <span class="hljs-built_in">strcpy</span>(buf, path);  <br>            p = buf + <span class="hljs-built_in">strlen</span>(buf);<br>            *p++ = <span class="hljs-string">&#x27;/&#x27;</span>;<br>            <span class="hljs-keyword">while</span>(read(fd, &amp;de, <span class="hljs-keyword">sizeof</span>(de)) == <span class="hljs-keyword">sizeof</span>(de))&#123;<br>                <span class="hljs-keyword">if</span>(de.inum == <span class="hljs-number">0</span>)<br>                    <span class="hljs-keyword">continue</span>;<br>                <span class="hljs-comment">// 获取完整路径名</span><br>                memmove(p, de.name, DIRSIZ);<br>                p[DIRSIZ] = <span class="hljs-number">0</span>;<br>                <span class="hljs-keyword">if</span>(stat(buf, &amp;st) &lt; <span class="hljs-number">0</span>)&#123;<br>                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;find: cannot stat %s\n&quot;</span>, buf);<br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br>                <span class="hljs-comment">// 递归时不要进入.和..</span><br>                <span class="hljs-keyword">if</span> ((<span class="hljs-built_in">strcmp</span>(de.name, <span class="hljs-string">&quot;.&quot;</span>) != <span class="hljs-number">0</span>) &amp;&amp; (<span class="hljs-built_in">strcmp</span>(de.name, <span class="hljs-string">&quot;..&quot;</span>) != <span class="hljs-number">0</span>)) &#123;<br>                    find(buf, file);<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    close(fd);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="1-6-xargs-mederate"><a href="#1-6-xargs-mederate" class="headerlink" title="1.6 xargs (mederate)"></a>1.6 xargs (mederate)</h3><p>实现将标准输入作为参数一起输入到<code>xargs</code>后面跟的命令中，比如</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">$ <span class="hljs-built_in">echo</span> hello too | xargs <span class="hljs-built_in">echo</span> <span class="hljs-built_in">bye</span><br><span class="hljs-built_in">bye</span> hello too<br></code></pre></td></tr></table></figure>
+
+<p>如果标准输入有多行，那么也要执行多次命令</p>
+<p>使用<code>fork</code>起一个子进程，在子进程中用<code>exec</code>执行相应的命令。父进程<code>wait</code>。对标准输入每次读一个char，若读到<code>\n</code>需要执行命令。</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/types.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;user/user.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;kernel/param.h&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> MAX_LEN 100</span><br>   <br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>	<span class="hljs-type">char</span> *command = argv[<span class="hljs-number">1</span>];<br>	<span class="hljs-type">char</span> bf;<br>	<span class="hljs-type">char</span> paramv[MAXARG][MAX_LEN]; <span class="hljs-comment">// arguments</span><br>	<span class="hljs-type">char</span> *m[MAXARG];<br>   <br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>		<span class="hljs-type">int</span> count = argc - <span class="hljs-number">1</span>;  <span class="hljs-comment">// # of current arguments</span><br>		<span class="hljs-built_in">memset</span>(paramv, <span class="hljs-number">0</span>, MAXARG * MAX_LEN);<br>		<span class="hljs-comment">// copy the parameter of command</span><br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt; argc; i++) &#123;<br>			<span class="hljs-built_in">strcpy</span>(paramv[i - <span class="hljs-number">1</span>], argv[i]);<br>		&#125;<br>   <br>		<span class="hljs-type">int</span> cursor = <span class="hljs-number">0</span>; <span class="hljs-comment">// cursor pointing the char position in single_arg</span><br>		<span class="hljs-type">int</span> flag = <span class="hljs-number">0</span>; <span class="hljs-comment">// flag indicating whether thers is argument preceding space</span><br>		<span class="hljs-type">int</span> read_result;<br>   <br>		<span class="hljs-keyword">while</span> (((read_result = read(<span class="hljs-number">0</span>, &amp;bf, <span class="hljs-number">1</span>))) &gt; <span class="hljs-number">0</span> &amp;&amp; bf != <span class="hljs-string">&#x27;\n&#x27;</span>) &#123;<br>			<span class="hljs-keyword">if</span> (bf == <span class="hljs-string">&#x27; &#x27;</span> &amp;&amp; flag == <span class="hljs-number">1</span>) &#123;<br>				count++;<br>				<span class="hljs-comment">// reset flag and p</span><br>				cursor = <span class="hljs-number">0</span>;<br>				flag = <span class="hljs-number">0</span>;<br>			&#125;<br>			<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (bf != <span class="hljs-string">&#x27; &#x27;</span>) &#123;<br>				paramv[count][cursor++] = bf;<br>				flag = <span class="hljs-number">1</span>;<br>			&#125;<br>		&#125;<br>		<br>		<span class="hljs-keyword">if</span> (read_result &lt;= <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-comment">// encounters EOF of input</span><br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		<span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; MAXARG - <span class="hljs-number">1</span>; i++) &#123;<br>			m[i] = paramv[i];<br>		&#125;<br>		m[MAXARG - <span class="hljs-number">1</span>] = <span class="hljs-number">0</span>;  <span class="hljs-comment">// 参数最后0结尾</span><br>		<span class="hljs-keyword">if</span> (fork() == <span class="hljs-number">0</span>) &#123;<br>			exec(command, m);<br>			<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>		&#125; <span class="hljs-keyword">else</span> &#123;<br>			wait((<span class="hljs-type">int</span> *) <span class="hljs-number">0</span>);<br>		&#125;<br>	&#125;<br>	<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>到这里lab1就全部完成了！</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221020170416506.png" alt="image-20221020170416506"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/17/Ubuntu20-04%E4%B8%ADVSCode%E9%85%8D%E7%BD%AEC-C-%E7%8E%AF%E5%A2%83/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/MIT/" title="MIT">
+                        <b>#</b> MIT
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/MIT/6-S081/" title="6.S081">
+                        <b>#</b> 6.S081
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/10/20/6-S081-Lab-2-System-calls/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lab0-Tools"><span class="toc-text">Lab0 Tools</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lab1-Xv6-and-Unix-utilities"><span class="toc-text">Lab1 Xv6 and Unix utilities</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Boot-xv6-easy"><span class="toc-text">1.1 Boot xv6 (easy)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-sleep-easy"><span class="toc-text">1.2 sleep (easy)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-pingpong-easy"><span class="toc-text">1.3 pingpong (easy)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-primes-moderate-hard"><span class="toc-text">1.4 primes (moderate)&#x2F;(hard)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-find-moderate"><span class="toc-text">1.5 find (moderate)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-xargs-mederate"><span class="toc-text">1.6 xargs (mederate)</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + 6.S081%20Lab(1)%20Utilities + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F20%2F6-S081-Lab-1-Utilities%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/20/6-S081-Lab-1-Utilities/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      计算机操作系统(1) 计算机操作系统概述 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">计算机操作系统(1) 计算机操作系统概述</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                    <b>#</b> 计算机操作系统
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="第一章-计算机操作系统概述"><a href="#第一章-计算机操作系统概述" class="headerlink" title="第一章 计算机操作系统概述"></a>第一章 计算机操作系统概述</h1><h2 id="1-1-计算机系统"><a href="#1-1-计算机系统" class="headerlink" title="1.1 计算机系统"></a>1.1 计算机系统</h2><h3 id="1-1-1-计算机系统概述"><a href="#1-1-1-计算机系统概述" class="headerlink" title="1.1.1 计算机系统概述"></a>1.1.1 计算机系统概述</h3><h4 id="电子计算机"><a href="#电子计算机" class="headerlink" title="电子计算机"></a>电子计算机</h4><p>电子数字计算机，是一种能够自行<strong>按照已设定的程序</strong>进行<strong>数据处理</strong>的电子设备</p>
+<p>电子数字计算机，是软件与硬件相结合、面向系统、侧重应用的自动化求解工具</p>
+<h4 id="冯诺依曼结构"><a href="#冯诺依曼结构" class="headerlink" title="冯诺依曼结构"></a>冯诺依曼结构</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915144230717.png" alt="image-20220915144230717" style="zoom:80%;" />
+
+<p>1945年6月冯·诺伊曼等发表了著名的“101页报告”，指出计算机分为运算器、逻辑控制器、存储器、输入设备和输出设备五大部件，发展至今，大多数机器结构并未突破冯·诺依曼结构。</p>
+<h4 id="计算机发展历史"><a href="#计算机发展历史" class="headerlink" title="计算机发展历史"></a>计算机发展历史</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915144320055.png" alt="image-20220915144320055" style="zoom:80%;" />
+
+<h4 id="计算机系统的组成"><a href="#计算机系统的组成" class="headerlink" title="计算机系统的组成"></a>计算机系统的组成</h4><ul>
+<li>计算机系统：包括硬件子系统和软件子系统</li>
+<li>硬件：借助电、磁、光、机械等原理构成的各种物理部件的有机组合，是系统工作的实体<ul>
+<li>CPU，主存储器，I&#x2F;O控制系统，外围设备</li>
+</ul>
+</li>
+<li>软件：各种程序和文件，用于指挥计算机系统按指定的要求进行协同工作<ul>
+<li>包括系统软件、支撑软件和应用软件</li>
+<li>关键系统软件是：操作系统与语言处理程序</li>
+</ul>
+</li>
+</ul>
+<h4 id="计算机系统的用户视图"><a href="#计算机系统的用户视图" class="headerlink" title="计算机系统的用户视图"></a>计算机系统的用户视图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915144440410.png" alt="image-20220915144440410" style="zoom:80%;" />
+
+<h3 id="1-1-2-计算机硬件系统"><a href="#1-1-2-计算机硬件系统" class="headerlink" title="1.1.2 计算机硬件系统"></a>1.1.2 计算机硬件系统</h3><h4 id="计算机硬件系统的组成"><a href="#计算机硬件系统的组成" class="headerlink" title="计算机硬件系统的组成"></a>计算机硬件系统的组成</h4><ul>
+<li>中央处理器<ul>
+<li>运算单元</li>
+<li>控制单元</li>
+</ul>
+</li>
+<li>主存储器</li>
+<li>外围设备<ul>
+<li>输入设备</li>
+<li>输出设备</li>
+<li>存储设备</li>
+<li>网络通信设备</li>
+</ul>
+</li>
+<li>总线</li>
+</ul>
+<h4 id="存储程序计算机"><a href="#存储程序计算机" class="headerlink" title="存储程序计算机"></a>存储程序计算机</h4><ul>
+<li>冯·诺伊曼等人在1946年总结并明确提出，被称为冯·诺伊曼计算机模型</li>
+<li>存储程序计算机在体系结构上主要特点<ul>
+<li>以运算单元为中心，控制流由指令流产生</li>
+<li>采用存储程序原理，面向主存组织数据流</li>
+<li>主存是按地址访问、线性编址的空间</li>
+<li>指令由操作码和地址码组成</li>
+<li>数据以二进制编码</li>
+</ul>
+</li>
+</ul>
+<h4 id="存储程序计算机的结构"><a href="#存储程序计算机的结构" class="headerlink" title="存储程序计算机的结构"></a>存储程序计算机的结构</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915145542231.png" alt="image-20220915145542231" style="zoom:80%;" />
+
+<h4 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h4><ul>
+<li>总线（Bus）是计算机各种功能部件之间传送信息的公共通信干线，它是CPU、内存、输入输出设备传递信息的公用通道</li>
+<li>计算机的各个部件通过总线相连接，外围设备通过相应的接口电路再与总线相连接，从而形成了计算机硬件系统</li>
+</ul>
+<h4 id="总线的组成"><a href="#总线的组成" class="headerlink" title="总线的组成"></a>总线的组成</h4><ul>
+<li>总线是传输各类通信信号的线路</li>
+<li>按照所传输的信息种类，总线包括：<ul>
+<li>一组控制线</li>
+<li>一组数据线</li>
+<li>一组地址线</li>
+</ul>
+</li>
+</ul>
+<h4 id="总线类型"><a href="#总线类型" class="headerlink" title="总线类型"></a>总线类型</h4><ul>
+<li>内部总线：用于CPU芯片内部连接各元件</li>
+<li>系统总线：用于连接CPU、存储器和各种I&#x2F;O模块等主要部件</li>
+<li>通信总线：用于计算机系统之间通信</li>
+</ul>
+<h4 id="系统总线实例-南北桥"><a href="#系统总线实例-南北桥" class="headerlink" title="系统总线实例: 南北桥"></a>系统总线实例: 南北桥</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915152426064.png" alt="image-20220915152426064" style="zoom:80%;" />
+
+<h4 id="片上系统-SoC"><a href="#片上系统-SoC" class="headerlink" title="片上系统(SoC)"></a>片上系统(SoC)</h4><ul>
+<li>片上系统(SoC, System on a Chip)</li>
+<li>在单个芯片上集成一个完整的系统，对所有或部分必要的电子电路进行包分组的技术</li>
+<li>所谓完整的系统一般包括中央处理器(CPU)、存储器、以及外围电路等</li>
+<li>SoC是与其它技术并行发展的，如绝缘硅(SOI)，它可以提供增强的时钟频率，从而降低微芯片的功耗</li>
+</ul>
+<h4 id="中央处理器-CPU"><a href="#中央处理器-CPU" class="headerlink" title="中央处理器(CPU)"></a>中央处理器(CPU)</h4><p>中央处理器是计算机的运算核心(Core)和控制单元(Control Unit)，主要包括：</p>
+<ul>
+<li>运算逻辑部件: 一个或多个运算器</li>
+<li>寄存器部件: 包括通用寄存器、控制与状态寄存器，以及高速缓冲存储器(Cache)</li>
+<li>控制部件: 实现各部件间联系的数据、控制及状态的内部总线；负责对指令译码、发出为完成每条指令所要执行操作的控制信号、实现数据传输等功能的部件</li>
+</ul>
+<h4 id="处理器与寄存器"><a href="#处理器与寄存器" class="headerlink" title="处理器与寄存器"></a>处理器与寄存器</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915154154788.png" alt="image-20220915154154788" style="zoom:80%;" />
+
+<h4 id="存储器的组织层次"><a href="#存储器的组织层次" class="headerlink" title="存储器的组织层次"></a>存储器的组织层次</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915154421311.png" alt="image-20220915154421311" style="zoom: 67%;" />
+
+<ul>
+<li>L1 Cache与CPU同频，与寄存器一样连接在内部总线，访问速度也与寄存器同步，可用来存储最关键的数据，对CPU性能影响最大</li>
+<li>L2 Cache多用在CPU现场，连接在内部总线上，考虑实现成本也可连接在系统总线上，用于存储最频繁访问的主存储器数据，加快处理速度</li>
+<li>L3 Cache一般用于存放游戏数据，或多媒体计算机&#x2F;虚拟现实系统的数据</li>
+</ul>
+<h4 id="外围设备及其分类"><a href="#外围设备及其分类" class="headerlink" title="外围设备及其分类"></a>外围设备及其分类</h4><ul>
+<li>输入&#x2F;输出设备</li>
+<li>存储设备</li>
+<li>网络设备(机机通信设备)</li>
+</ul>
+<h4 id="I-O控制方式"><a href="#I-O控制方式" class="headerlink" title="I&#x2F;O控制方式"></a>I&#x2F;O控制方式</h4><ul>
+<li>轮询: CPU忙式控制I&#x2F;O，CPU执行内存数据交换</li>
+<li>中断: CPU启动I&#x2F;O设备，设备进行I&#x2F;O，设备中断CPU以善后，CPU执行内存数据交换</li>
+<li>DMA: CPU启动DMA，DMA独立进行I&#x2F;O和内存数据交换，DMA中断CPU以善后，并行程度更高</li>
+</ul>
+<h3 id="1-1-3-计算机软件系统"><a href="#1-1-3-计算机软件系统" class="headerlink" title="1.1.3 计算机软件系统"></a>1.1.3 计算机软件系统</h3><h4 id="计算机软件系统的组成"><a href="#计算机软件系统的组成" class="headerlink" title="计算机软件系统的组成"></a>计算机软件系统的组成</h4><ul>
+<li>系统软件: 操作系统、实用程序、语言处理程序、数据库管理系统、专用文件系统<ul>
+<li>操作系统实施对各种软硬件资源的管理控制</li>
+<li>实用程序为方便用户所设，如文本编辑工具、调试工具等</li>
+<li>语言处理程序把把用汇编语言&#x2F;高级语言编写的程序，翻译成可执行的机器语言程序</li>
+</ul>
+</li>
+<li>支撑软件: 接口软件、工具软件、环境数据库<ul>
+<li>支持用户操作计算机的环境，提供软件开发工具</li>
+<li>也可以看作是系统软件的一部分</li>
+</ul>
+</li>
+<li>应用软件: 用户按其需要自行编写的专用程序</li>
+</ul>
+<h4 id="软件扩充计算机系统功能"><a href="#软件扩充计算机系统功能" class="headerlink" title="软件扩充计算机系统功能"></a>软件扩充计算机系统功能</h4><ul>
+<li>操作系统为程序员增加了一个叫做系统调用的访问集合，它们屏蔽了程序访问硬件的细节</li>
+<li>系统调用加上允许用户使用的机器指令子集，构成了一个扩展的机器指令集，使程序员的编程可以侧重于CPU的计算和具体任务的解决</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915195804272.png" alt="image-20220915195804272"></p>
+<h4 id="软件开发的不同层次"><a href="#软件开发的不同层次" class="headerlink" title="软件开发的不同层次"></a>软件开发的不同层次</h4><ul>
+<li>计算机硬件系统：机器语言</li>
+<li>操作系统之资源管理：机器语言+广义指令（扩充了硬件资源管理）</li>
+<li>操作系统之文件系统：机器语言+系统调用（扩充了信息资源管理）</li>
+<li>数据库管理系统：+数据库语言（扩充了功能更强的信息资源管理）</li>
+<li>语言处理程序：面向问题的语言</li>
+</ul>
+<h4 id="计算机程序的解译执行过程"><a href="#计算机程序的解译执行过程" class="headerlink" title="计算机程序的解译执行过程"></a>计算机程序的解译执行过程</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915195853406.png" alt="image-20220915195853406"></p>
+<p>可执行程序是指在操作系统环境下可执行的程序</p>
+<p>图中给出的是裸机上计算机程序的解译执行过程，现代计算机系统在实现上往往是基于虚拟机的，即基于一个汇编指令集合提供计算功能。这种情况下，目标代码变成了单纯的汇编指令，而汇编程序的功能则变成了程序优化</p>
+<h2 id="1-2-计算机操作系统"><a href="#1-2-计算机操作系统" class="headerlink" title="1.2 计算机操作系统"></a>1.2 计算机操作系统</h2><h3 id="1-2-1-计算机操作技术的发展"><a href="#1-2-1-计算机操作技术的发展" class="headerlink" title="1.2.1 计算机操作技术的发展"></a>1.2.1 计算机操作技术的发展</h3><h4 id="手工操作阶段"><a href="#手工操作阶段" class="headerlink" title="手工操作阶段"></a>手工操作阶段</h4><ul>
+<li><p>开关表示，按钮控制，亮灯显示</p>
+<ul>
+<li>问题: 手工操作速度与电子计算速度不匹配</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915201607061.png" alt="image-20220915201607061" style="zoom:80%;" />
+</li>
+<li><p>装入程序的引进</p>
+<ul>
+<li>引入卡片和纸带描述程序指令和数据</li>
+<li>引入装入程序(Loader)<ul>
+<li>自动化执行程序装入，必要时进行地址转换</li>
+<li>通常存放在ROM中</li>
+</ul>
+</li>
+<li>计算机开机后自动导入主存，装入程序从纸带机或卡片机上读取程序和数据，然后循环装入程序</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915201841585.png" alt="image-20220915201841585" style="zoom:80%;" />
+</li>
+<li><p>引入汇编语言</p>
+<ul>
+<li><p>实现机器指令的符号化</p>
+</li>
+<li><p>对计算机的操作变为汇编和执行两个阶段</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915202348248.png" alt="image-20220915202348248" style="zoom:80%;" /></li>
+</ul>
+</li>
+<li><p>引入高级语言</p>
+<ul>
+<li><p>操作扩展为编译、链接、执行</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915202455494.png" alt="image-20220915202455494" style="zoom:80%;" /></li>
+</ul>
+</li>
+</ul>
+<h4 id="半自动化控制方式"><a href="#半自动化控制方式" class="headerlink" title="半自动化控制方式"></a>半自动化控制方式</h4><ul>
+<li>简单批处理系统的操作控制<ul>
+<li>引入<strong>作业控制语言</strong>，用户编写<strong>作业说明书</strong>，描述一次对计算机求解作业控制的过程</li>
+<li>操作员控制计算机成批输入作业，然后排队执行</li>
+<li>这一方式明显缩短了手工操作时间，提高了计算机系统的使用效率</li>
+</ul>
+</li>
+<li>简单批处理系统的操作进展<ul>
+<li>初步的资源管理程序出现，屏蔽了硬件处理细节</li>
+<li>I&#x2F;O中断技术已使CPU与外围设备具备了并行工作的能力，支持了概念上多道程序设计实现的可能性</li>
+<li>磁带设备出现<ul>
+<li>卡片与纸带等机械输入方式得以提高</li>
+<li>磁盘文件系统形成</li>
+<li>I&#x2F;O效率还是无法支撑多道程序切换</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="操作系统与自动化操作控制"><a href="#操作系统与自动化操作控制" class="headerlink" title="操作系统与自动化操作控制"></a>操作系统与自动化操作控制</h4><ul>
+<li>I&#x2F;O机械速度与CPU电子速度不匹配的矛盾<ul>
+<li>“设备在慢慢输,CPU在等”</li>
+</ul>
+</li>
+<li>在程序执行过程中能否同时输入作业，重叠时间<ul>
+<li>需要多道程序同时执行</li>
+<li>程序切换需要高速的外存储设备</li>
+</ul>
+</li>
+<li>磁盘设备出现<ul>
+<li>计算机操作系统从此出现，实现了对计算机系统的自动化控制</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-2-操作系统及其分类"><a href="#1-2-2-操作系统及其分类" class="headerlink" title="1.2.2 操作系统及其分类"></a>1.2.2 操作系统及其分类</h3><h4 id="操作系统的概念"><a href="#操作系统的概念" class="headerlink" title="操作系统的概念"></a>操作系统的概念</h4><p>OS是计算机系统最基础的系统软件，它统一管理软硬件资源、控制程序执行，改善人机界面，合理组织计算机工作流程，为用户使用计算机提供良好的运行环境</p>
+<p><strong>OS是计算机系统的公共软件基础设施，所有应用程序共用OS服务，且OS内核是反应式reactive机制(中断驱动的)</strong></p>
+<h4 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h4><p>操作系统是方便用户、管理和控制计算机软硬件资源的系统程序集合，在整个计算机系统中具有承上启下的地位</p>
+<ul>
+<li>从用户角度看，OS管理计算机系统的各种资源，扩充硬件的功能，控制程序的执行</li>
+<li>从人机交互看，OS是用户与机器的接口，提供良好的人机界面，方便用户使用计算机</li>
+<li>从系统结构看，OS是一个大型软件系统，其功能复杂，体系庞大，采用层次式、模块化的程序结构</li>
+</ul>
+<h4 id="操作系统的组成"><a href="#操作系统的组成" class="headerlink" title="操作系统的组成"></a>操作系统的组成</h4><ul>
+<li>进程调度子系统</li>
+<li>进程通信子系统</li>
+<li>内存管理子系统</li>
+<li>设备管理子系统</li>
+<li>文件管理子系统</li>
+<li>网络通信子系统</li>
+<li>作业控制子系统</li>
+</ul>
+<h4 id="操作系统的类型"><a href="#操作系统的类型" class="headerlink" title="操作系统的类型"></a>操作系统的类型</h4><p>从操作控制方式看</p>
+<ul>
+<li>多道批处理操作系统，脱机控制方式<ul>
+<li>把批中的作业预先输入作业队列中，由操作系统按照作业说明书的要求来调度和控制作业执行，大幅减少人工干预，形成自动转接和连续处理的作业流</li>
+<li>最先采用多道程序设计技术，根据预先设定的调度策略选择若干作业并发地执行</li>
+</ul>
+</li>
+<li>分时操作系统，交互式控制方式<ul>
+<li>多个联机用户同时使用一个计算机系统，在各自终端上进行交互式会话，程序、数据和命令均在会话过程中提供，以问答方式控制程序运行</li>
+<li>系统把处理器的时间划分成时间片轮流分配给各个联机终端，若时间片用完则产生时钟中断，将控制权转至操作系统并重新进行调度</li>
+</ul>
+</li>
+<li>实时操作系统<ul>
+<li>当外部事件或数据产生时，能够及时对其予以接受并以足够快的速度进行处理</li>
+<li>可以提供及时响应和高可靠性</li>
+</ul>
+</li>
+</ul>
+<p>从应用领域看</p>
+<ul>
+<li>服务器操作系统</li>
+<li>并行操作系统</li>
+<li>网络操作系统</li>
+<li>分布式操作系统</li>
+<li>个人机操作系统</li>
+<li>手机操作系统</li>
+<li>嵌入式操作系统</li>
+<li>传感器操作系统</li>
+</ul>
+<h2 id="1-3-深入观察操作系统"><a href="#1-3-深入观察操作系统" class="headerlink" title="1.3 深入观察操作系统"></a>1.3 深入观察操作系统</h2><h3 id="1-3-1-资源管理的角度"><a href="#1-3-1-资源管理的角度" class="headerlink" title="1.3.1 资源管理的角度"></a>1.3.1 资源管理的角度</h3><h4 id="计算机系统的资源"><a href="#计算机系统的资源" class="headerlink" title="计算机系统的资源"></a>计算机系统的资源</h4><ul>
+<li>硬件资源: 处理器、内存、外设</li>
+<li>信息资源: 数据、程序</li>
+</ul>
+<h4 id="管理计算机系统的软硬件资源"><a href="#管理计算机系统的软硬件资源" class="headerlink" title="管理计算机系统的软硬件资源"></a>管理计算机系统的软硬件资源</h4><p>问题:</p>
+<ul>
+<li>处理器资源：哪个驻留主存的程序占有处理器运行？</li>
+<li>内存资源：程序&#x2F;数据在主存中如何分布？</li>
+<li>设备管理：如何在各个正在运行的程序之间分配、去配和协调使用设备？</li>
+<li>信息资源管理：如何访问文件信息？</li>
+<li>信号量资源：如何管理进程之间的通信？</li>
+</ul>
+<h4 id="屏蔽资源使用的底层细节"><a href="#屏蔽资源使用的底层细节" class="headerlink" title="屏蔽资源使用的底层细节"></a>屏蔽资源使用的底层细节</h4><ul>
+<li>驱动程序：最底层的、直接控制和监视各类硬件(或文件、通信)资源的系统程序部分</li>
+<li>职责是隐藏底层硬件的具体细节，并向上层使用者提供一个抽象的、通用的接口，简化上层程序的开发</li>
+<li>比如说：打印一段文字或一个文件，既不需知道文件信息存储在硬盘上的细节，也不必知道具体打印机类型和控制细节</li>
+</ul>
+<h4 id="资源的共享方式"><a href="#资源的共享方式" class="headerlink" title="资源的共享方式"></a>资源的共享方式</h4><ul>
+<li>独占使用方式<ul>
+<li>如: 打印机在一个时间段内只能被一个进程独立使用</li>
+<li><strong>资源分配方式</strong><ul>
+<li>静态分配: 进程运行前一次性拿到全部独占资源<ul>
+<li>资源使用率低</li>
+</ul>
+</li>
+<li>动态分配: 使用资源前临时申请<ul>
+<li>可能产生竞争资源的死锁</li>
+</ul>
+</li>
+<li>资源抢占式分配: 操作系统可以根据需求剥夺正在被使用的资源<ul>
+<li>被抢夺资源的进程需要执行回滚，实现代价大</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>并发使用方式<ul>
+<li>如: 一个文件可以同时被多个进程一起读</li>
+</ul>
+</li>
+</ul>
+<h4 id="资源管理技术"><a href="#资源管理技术" class="headerlink" title="资源管理技术"></a>资源管理技术</h4><p><strong>复用、虚拟和抽象</strong>是三种基本的资源管理技术</p>
+<ul>
+<li>复用技术可以创建虚拟资源以解决物理资源数量不足的问题，包括空分复用共享和时分复用共享</li>
+<li>虚拟技术是对资源进行转化、模拟或整合，把一个或多个物理资源转变成一个或多个逻辑上的对应物</li>
+<li>操作系统可以对物理资源进行抽象，任何一种特定的硬件资源都有一个接口和一组复杂的基本操作<ul>
+<li>资源抽象是指通过编制软件来屏蔽硬件资源的物理特性和实现细节，简化对硬件资源的操作、控制和使用</li>
+</ul>
+</li>
+</ul>
+<h4 id="三个基础抽象"><a href="#三个基础抽象" class="headerlink" title="三个基础抽象"></a>三个基础抽象</h4><p>基于资源，现代操作系统引入了三个核心概念: <strong>进程、虚存、文件</strong>，形成了三个最基础的抽象</p>
+<ul>
+<li><strong>进程抽象</strong>–是对已进入主存正在运行的程序在处理器上操作的状态集的抽象<ul>
+<li>操作系统提供进程调度和上下文切换功能</li>
+</ul>
+</li>
+<li><strong>虚存抽象</strong>–是对物理主存的抽象，进程可获得一个硕大的连续地址空间来存放可执行程序和数据，可使用虚拟地址来引用物理主存单元</li>
+<li><strong>文件抽象</strong>–是对设备(磁盘)的抽象，通过将文件中的字节映射到存储设备的物理块中来实现文件抽象</li>
+</ul>
+<h3 id="1-3-2-程序控制的角度"><a href="#1-3-2-程序控制的角度" class="headerlink" title="1.3.2 程序控制的角度"></a>1.3.2 程序控制的角度</h3><h4 id="多道程序设计"><a href="#多道程序设计" class="headerlink" title="多道程序设计"></a>多道程序设计</h4><ul>
+<li>CPU速度与I&#x2F;O速度不匹配的矛盾非常突出</li>
+<li>多道程序设计(multiprogramming)允许多个程序同时进入计算机系统的主存，通过竞争处理器资源获得交替执行</li>
+<li>是操作系统的核心功能，中断技术和硬盘为其实现提供了支撑</li>
+</ul>
+<h4 id="多道程序设计的特点"><a href="#多道程序设计的特点" class="headerlink" title="多道程序设计的特点"></a>多道程序设计的特点</h4><ul>
+<li>CPU与外部设备充分并行</li>
+<li>外部设备之间充分并行</li>
+<li>发挥CPU的使用效率</li>
+<li>提高单位时间的算题量</li>
+<li>但是，单道程序的运算时间会增加</li>
+</ul>
+<h4 id="多道程序系统的实现"><a href="#多道程序系统的实现" class="headerlink" title="多道程序系统的实现"></a>多道程序系统的实现</h4><ul>
+<li>为进入内存执行的程序建立管理实体：<strong>进程</strong></li>
+<li>OS应能管理与控制进程程序的执行</li>
+<li>OS协调管理各类资源在进程间的使用<ul>
+<li>处理器的管理和调度</li>
+<li>主存储器的管理和调度</li>
+<li>其他资源的管理和调度</li>
+</ul>
+</li>
+</ul>
+<h4 id="多道程序系统的实现要点"><a href="#多道程序系统的实现要点" class="headerlink" title="多道程序系统的实现要点"></a>多道程序系统的实现要点</h4><ul>
+<li>如何使用资源：运行程序执行硬件提供的陷入指令调用操作系统提供的服务例程(如何陷入操作系统)</li>
+<li>如何复用CPU：调度程序(在CPU空闲时让其他程序运行)</li>
+<li>如何使CPU与I&#x2F;O设备充分并行：硬件的设备控制器与通道(专用的I&#x2F;O处理器)独立完成I&#x2F;O</li>
+<li>如何让正在运行的程序让出CPU：中断(中断正在执行的程序，引入OS处理)</li>
+</ul>
+<h3 id="1-3-3-操作控制计算机的角度"><a href="#1-3-3-操作控制计算机的角度" class="headerlink" title="1.3.3 操作控制计算机的角度"></a>1.3.3 操作控制计算机的角度</h3><h4 id="计算机操作控制方式"><a href="#计算机操作控制方式" class="headerlink" title="计算机操作控制方式"></a>计算机操作控制方式</h4><ul>
+<li><p>OS规定了合理操作计算机的工作流程</p>
+</li>
+<li><p>OS的操作接口—-系统程序</p>
+<ul>
+<li>为用户提供操作控制计算的所有服务</li>
+</ul>
+</li>
+<li><p>OS的两类作业级接口</p>
+<ul>
+<li>脱机作业控制方式: 作业控制语言</li>
+<li>联机作业控制方式: 操作控制命令</li>
+</ul>
+</li>
+</ul>
+<h4 id="脱机作业控制方式"><a href="#脱机作业控制方式" class="headerlink" title="脱机作业控制方式"></a>脱机作业控制方式</h4><ul>
+<li>OS：提供作业说明语言</li>
+<li>用户：编写作业说明书，确定作业加工控制的步骤，并于程序&#x2F;数据一并提交</li>
+<li>操作员：通过控制台成批输入作业</li>
+<li>OS：通过作业控制程序自动控制、解释作业说明书，使得作业能够自动执行</li>
+<li>例：批处理OS的作业控制方式、UNIX的Shell程序、DOS的bat文件</li>
+</ul>
+<h4 id="联机作业控制方式"><a href="#联机作业控制方式" class="headerlink" title="联机作业控制方式"></a>联机作业控制方式</h4><ul>
+<li>计算机：提供<strong>终端</strong>(键盘&#x2F;显示器)</li>
+<li>用户：登陆系统</li>
+<li>OS：提供<strong>命令解释程序</strong></li>
+<li>用户：联机输入<strong>操作控制命令</strong>，直接控制作业步的执行</li>
+<li>例：分时OS的交互控制方式</li>
+</ul>
+<h4 id="命令解释程序"><a href="#命令解释程序" class="headerlink" title="命令解释程序"></a>命令解释程序</h4><ul>
+<li>命令解释程序：接受和执行一条用户提出的对作业的加工处理命令</li>
+<li>当一个新的批作业被启动，或新的交互型用户登录进系统时，系统就自动地执行命令解释程序，负责读入控制卡或命令行，作出相应解释，并予以执行</li>
+<li>会话语言：可编程的命令解释程序，例如Shell</li>
+<li>图形化的命令控制方式</li>
+<li>多通道交互的命令控制方式</li>
+</ul>
+<h4 id="命令解释程序的处理过程"><a href="#命令解释程序的处理过程" class="headerlink" title="命令解释程序的处理过程"></a>命令解释程序的处理过程</h4><ul>
+<li>OS启动命令解释程序，输出命令提示符，等待键盘中断&#x2F;行结束符&#x2F;鼠标点击&#x2F;多通道模式识别</li>
+<li>每当用户输入一条命令(暂存在命令缓冲区)并按回车换行时，申请中断</li>
+<li>CPU响应后，将控制权交给命令解释程序，接着读入命令缓冲区内容，分析命令、接受参数，执行处理代码</li>
+</ul>
+<h4 id="前台命令与后台命令"><a href="#前台命令与后台命令" class="headerlink" title="前台命令与后台命令"></a>前台命令与后台命令</h4><ul>
+<li>前台命令执行结束后，再次输出命令提示符，等待下一条命令</li>
+<li>后台命令处理启动后，即可接收下条命令</li>
+</ul>
+<h3 id="1-3-4-人机交互的角度"><a href="#1-3-4-人机交互的角度" class="headerlink" title="1.3.4 人机交互的角度"></a>1.3.4 人机交互的角度</h3><h3 id="1-3-5-程序接口的角度"><a href="#1-3-5-程序接口的角度" class="headerlink" title="1.3.5 程序接口的角度"></a>1.3.5 程序接口的角度</h3><h4 id="操作系统的程序接口"><a href="#操作系统的程序接口" class="headerlink" title="操作系统的程序接口"></a>操作系统的程序接口</h4><ul>
+<li>操作系统的程序接口：操作系统为程序运行扩充的编程接口</li>
+<li>系统调用：操作系统实现的完成某种特定功能的过程；为所有运行程序提供访问操作系统的接口</li>
+<li>POSIX支持</li>
+</ul>
+<h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><p>程序的运行空间分为内核空间和用户空间，程序各自按不同的特权运行</p>
+<p>系统调用把应用程序的访问请求传送至内核，调用相应的服务例程完成所需处理，再将处理结果返回给应用程序</p>
+<h4 id="系统调用的作用"><a href="#系统调用的作用" class="headerlink" title="系统调用的作用"></a>系统调用的作用</h4><ul>
+<li>内核可以基于权限和规则对资源访问进行裁决，保证系统的安全性</li>
+<li>系统调用对资源进行抽象，提供一致性接口，避免用户在使用资源时发生错误，且使编程效率大大提高</li>
+</ul>
+<h4 id="系统调用的实现机制"><a href="#系统调用的实现机制" class="headerlink" title="系统调用的实现机制"></a>系统调用的实现机制</h4><ul>
+<li>陷入处理机制：计算机系统中控制和实现系统调用的机制</li>
+<li>陷入指令：也称访管指令，或异常中断指令，计算机系统为实现系统调用而引起处理器中断的指令</li>
+<li>每个系统调用都事先规定了编号，称为<strong>功能号</strong>，并在约定寄存器中规定了传递给内部处理程序的参数</li>
+</ul>
+<h4 id="系统调用的实现要点"><a href="#系统调用的实现要点" class="headerlink" title="系统调用的实现要点"></a>系统调用的实现要点</h4><ul>
+<li>编写系统调用处理程序</li>
+<li>设计一张系统调用入口地址表，每个入口地址指向一个系统调用的处理程序，并包含系统调用自带参数的个数</li>
+<li>陷入处理机制需开辟现场保护区，以保存发生系统调用时的处理器现场</li>
+</ul>
+<h4 id="系统调用的实现流程"><a href="#系统调用的实现流程" class="headerlink" title="系统调用的实现流程"></a>系统调用的实现流程</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919105348293.png" alt="image-20220919105348293" style="zoom: 80%;" />
+
+<p>按号定位的前提</p>
+<ul>
+<li>各数据结构的尺寸相同</li>
+<li>各数据结构按号连续排列</li>
+</ul>
+<h4 id="传递参数的方法"><a href="#传递参数的方法" class="headerlink" title="传递参数的方法"></a>传递参数的方法</h4><ul>
+<li>陷入指令自带参数，可以规定陷入指令之后的若干单元存放参数，叫做直接参数；或者在指令之后紧邻的单元中存放参数的地址，叫做间接参数</li>
+<li>通过CPU的通用寄存器传递参数，该方法不适用于传递大量参数，可以在主存的某个区或表中存放参数，将其首地址送入寄存器，实现参数传递</li>
+<li>在主存中开辟专用堆栈区传递参数</li>
+</ul>
+<h4 id="Linux系统调用执行流程"><a href="#Linux系统调用执行流程" class="headerlink" title="Linux系统调用执行流程"></a>Linux系统调用执行流程</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919110641932.png" alt="image-20220919110641932" style="zoom:67%;" />
+
+<h4 id="应用程序、库函数、系统调用的调用关系链"><a href="#应用程序、库函数、系统调用的调用关系链" class="headerlink" title="应用程序、库函数、系统调用的调用关系链"></a>应用程序、库函数、系统调用的调用关系链</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919110743072.png" alt="image-20220919110743072" style="zoom: 50%;" />
+
+<p><strong>例：read系统调用的执行步骤</strong></p>
+<p><code>int read(int fd, char *buf, int n)</code></p>
+<p><code>read</code> 从文件描述符 <code>fd</code> 读 n 字节的内容写入 <code>buf</code>，返回值是成功读取的字节数。</p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919111236909.png" alt="image-20220919111236909" style="zoom:67%;" />
+
+<h4 id="CPU进程间切换"><a href="#CPU进程间切换" class="headerlink" title="CPU进程间切换"></a>CPU进程间切换</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919111438839.png" alt="image-20220919111438839" style="zoom:67%;" />
+
+<h4 id="模式切换"><a href="#模式切换" class="headerlink" title="模式切换"></a>模式切换</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919111530279.png" alt="image-20220919111530279" style="zoom: 80%;" />
+
+<h3 id="1-3-6-系统结构的角度"><a href="#1-3-6-系统结构的角度" class="headerlink" title="1.3.6 系统结构的角度"></a>1.3.6 系统结构的角度</h3><h4 id="操作系统软件的结构设计"><a href="#操作系统软件的结构设计" class="headerlink" title="操作系统软件的结构设计"></a>操作系统软件的结构设计</h4><ul>
+<li>OS构件：内核、进程、线程、管程等</li>
+<li>设计概念：模块化、层次化、虚拟化</li>
+<li>内核设计时OS设计中最为复杂的部分</li>
+</ul>
+<h4 id="操作系统内核"><a href="#操作系统内核" class="headerlink" title="操作系统内核"></a>操作系统内核</h4><ul>
+<li><p><strong>单内核</strong>：内核中各部件杂然混居的形态，始于1960年代，广泛使用；如Unix&#x2F;Linux，及Windows(自称采用混合内核的CS结构)</p>
+</li>
+<li><p><strong>微内核</strong>：1980年代始，强调结构性部件与功能性部件的分离，大部分OS研究都集中在此</p>
+</li>
+<li><p><strong>混合内核</strong>：微内核和单内核的折中，较多组件在核心态中运行，以获得更快的执行速度</p>
+</li>
+<li><p><strong>外内核</strong>：尽可能减少内核的软件抽象化和传统微内核的消息传递机制，使得开发者专注于硬件的抽象化；部分嵌入式系统使用</p>
+</li>
+</ul>
+<h4 id="操作系统实现的一种层次式结构"><a href="#操作系统实现的一种层次式结构" class="headerlink" title="操作系统实现的一种层次式结构"></a>操作系统实现的一种层次式结构</h4><table>
+<thead>
+<tr>
+<th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919113717873.png" alt="image-20220919113717873" style="zoom: 50%;" /></th>
+<th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220919113735045.png" alt="image-20220919113735045" style="zoom: 50%;" /></th>
+</tr>
+</thead>
+</table>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-2-%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                        <b>#</b> 计算机操作系统
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-2-%E5%A4%84%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">第一章 计算机操作系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1 计算机系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">1.1.1 计算机系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%B5%E5%AD%90%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-text">电子计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%AF%E8%AF%BA%E4%BE%9D%E6%9B%BC%E7%BB%93%E6%9E%84"><span class="toc-text">冯诺依曼结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8F%91%E5%B1%95%E5%8E%86%E5%8F%B2"><span class="toc-text">计算机发展历史</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">计算机系统的组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%94%A8%E6%88%B7%E8%A7%86%E5%9B%BE"><span class="toc-text">计算机系统的用户视图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1.2 计算机硬件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">计算机硬件系统的组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%A8%8B%E5%BA%8F%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-text">存储程序计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%A8%8B%E5%BA%8F%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">存储程序计算机的结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF"><span class="toc-text">总线</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">总线的组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BA%BF%E7%B1%BB%E5%9E%8B"><span class="toc-text">总线类型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF%E5%AE%9E%E4%BE%8B-%E5%8D%97%E5%8C%97%E6%A1%A5"><span class="toc-text">系统总线实例: 南北桥</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%87%E4%B8%8A%E7%B3%BB%E7%BB%9F-SoC"><span class="toc-text">片上系统(SoC)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%AD%E5%A4%AE%E5%A4%84%E7%90%86%E5%99%A8-CPU"><span class="toc-text">中央处理器(CPU)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E5%99%A8%E4%B8%8E%E5%AF%84%E5%AD%98%E5%99%A8"><span class="toc-text">处理器与寄存器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%82%E6%AC%A1"><span class="toc-text">存储器的组织层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%96%E5%9B%B4%E8%AE%BE%E5%A4%87%E5%8F%8A%E5%85%B6%E5%88%86%E7%B1%BB"><span class="toc-text">外围设备及其分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#I-O%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-text">I&#x2F;O控制方式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.1.3 计算机软件系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">计算机软件系统的组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%89%A9%E5%85%85%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%8A%9F%E8%83%BD"><span class="toc-text">软件扩充计算机系统功能</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9A%84%E4%B8%8D%E5%90%8C%E5%B1%82%E6%AC%A1"><span class="toc-text">软件开发的不同层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E8%A7%A3%E8%AF%91%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B"><span class="toc-text">计算机程序的解译执行过程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.2 计算机操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95"><span class="toc-text">1.2.1 计算机操作技术的发展</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%8B%E5%B7%A5%E6%93%8D%E4%BD%9C%E9%98%B6%E6%AE%B5"><span class="toc-text">手工操作阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8A%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-text">半自动化控制方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E6%93%8D%E4%BD%9C%E6%8E%A7%E5%88%B6"><span class="toc-text">操作系统与自动化操作控制</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-2-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%8F%8A%E5%85%B6%E5%88%86%E7%B1%BB"><span class="toc-text">1.2.2 操作系统及其分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">操作系统的概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">操作系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">操作系统的组成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-text">操作系统的类型</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-%E6%B7%B1%E5%85%A5%E8%A7%82%E5%AF%9F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="toc-text">1.3 深入观察操作系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-1-%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-text">1.3.1 资源管理的角度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%B5%84%E6%BA%90"><span class="toc-text">计算机系统的资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%A1%E7%90%86%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%BD%AF%E7%A1%AC%E4%BB%B6%E8%B5%84%E6%BA%90"><span class="toc-text">管理计算机系统的软硬件资源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%8F%E8%94%BD%E8%B5%84%E6%BA%90%E4%BD%BF%E7%94%A8%E7%9A%84%E5%BA%95%E5%B1%82%E7%BB%86%E8%8A%82"><span class="toc-text">屏蔽资源使用的底层细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E7%9A%84%E5%85%B1%E4%BA%AB%E6%96%B9%E5%BC%8F"><span class="toc-text">资源的共享方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF"><span class="toc-text">资源管理技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E5%9F%BA%E7%A1%80%E6%8A%BD%E8%B1%A1"><span class="toc-text">三个基础抽象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-2-%E7%A8%8B%E5%BA%8F%E6%8E%A7%E5%88%B6%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-text">1.3.2 程序控制的角度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">多道程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">多道程序设计的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">多道程序系统的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9"><span class="toc-text">多道程序系统的实现要点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-3-%E6%93%8D%E4%BD%9C%E6%8E%A7%E5%88%B6%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-text">1.3.3 操作控制计算机的角度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-text">计算机操作控制方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%B1%E6%9C%BA%E4%BD%9C%E4%B8%9A%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-text">脱机作业控制方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E6%9C%BA%E4%BD%9C%E4%B8%9A%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-text">联机作业控制方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%A3%E9%87%8A%E7%A8%8B%E5%BA%8F"><span class="toc-text">命令解释程序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A7%A3%E9%87%8A%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%A4%84%E7%90%86%E8%BF%87%E7%A8%8B"><span class="toc-text">命令解释程序的处理过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E5%8F%B0%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%90%8E%E5%8F%B0%E5%91%BD%E4%BB%A4"><span class="toc-text">前台命令与后台命令</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-4-%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-text">1.3.4 人机交互的角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-5-%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-text">1.3.5 程序接口的角度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A8%8B%E5%BA%8F%E6%8E%A5%E5%8F%A3"><span class="toc-text">操作系统的程序接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-text">系统调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">系统调用的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-text">系统调用的实现机制</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E8%A6%81%E7%82%B9"><span class="toc-text">系统调用的实现要点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B"><span class="toc-text">系统调用的实现流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E9%80%92%E5%8F%82%E6%95%B0%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">传递参数的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">Linux系统调用执行流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E3%80%81%E5%BA%93%E5%87%BD%E6%95%B0%E3%80%81%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%9A%84%E8%B0%83%E7%94%A8%E5%85%B3%E7%B3%BB%E9%93%BE"><span class="toc-text">应用程序、库函数、系统调用的调用关系链</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU%E8%BF%9B%E7%A8%8B%E9%97%B4%E5%88%87%E6%8D%A2"><span class="toc-text">CPU进程间切换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%BC%8F%E5%88%87%E6%8D%A2"><span class="toc-text">模式切换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-6-%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-text">1.3.6 系统结构的角度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-text">操作系统软件的结构设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%86%85%E6%A0%B8"><span class="toc-text">操作系统内核</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%AE%9E%E7%8E%B0%E7%9A%84%E4%B8%80%E7%A7%8D%E5%B1%82%E6%AC%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="toc-text">操作系统实现的一种层次式结构</span></a></li></ol></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(1)%20%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F10%2F%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F-1-%25E6%25A6%2582%25E8%25BF%25B0%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-1-%E6%A6%82%E8%BF%B0/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

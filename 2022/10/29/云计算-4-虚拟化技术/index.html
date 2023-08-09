@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      云计算(4) 虚拟化技术 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">云计算(4) 虚拟化技术</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                    <b>#</b> 云计算
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="四、虚拟化技术"><a href="#四、虚拟化技术" class="headerlink" title="四、虚拟化技术"></a>四、虚拟化技术</h1><h2 id="1-基本概念"><a href="#1-基本概念" class="headerlink" title="1 基本概念"></a>1 基本概念</h2><ul>
+<li>虚拟化是云计算的核心技术，但不是其专用技术</li>
+<li>虚拟化的本质就是通过添加一个<strong>虚拟化层</strong>将原先的物理设备进行逻辑化，转化成一个文件夹或文件，实现软硬件的解耦。</li>
+<li>“虚拟化技术”的两种理解方式：抽象 vs. 拆分<ul>
+<li>分布式集群管理 -&gt; 抽象成一个独立的虚拟设备</li>
+<li>一个功能强大的设备拆分成多个虚拟设备<ul>
+<li>核心思想是利用软件或固件管理程序构成虚拟化层，<code>把物理资源映射为虚拟资源</code>。在虚拟资源上可以<code>安装和部署多个虚拟机</code>，实现<code>多用户共享物理资源</code>。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-1-计算机系统的虚拟化"><a href="#1-1-计算机系统的虚拟化" class="headerlink" title="1.1 计算机系统的虚拟化"></a>1.1 计算机系统的虚拟化</h3><ul>
+<li>由位于下层的软件模块，通过向上一层软件模块提供一个<code>与它原先所期待的运行环境完全一致的接口</code>的方法，抽象出一个虚拟的软件或硬件接口，使得上层软件可以直接运行在虚拟的环境上。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928141658132.png" alt="image-20220928141658132"></p>
+<h2 id="2-服务器虚拟化层级"><a href="#2-服务器虚拟化层级" class="headerlink" title="2 服务器虚拟化层级"></a>2 服务器虚拟化层级</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928142113805.png" alt="image-20220928142113805"></p>
+<h3 id="2-1-服务器虚拟化技术的发展及代表产品"><a href="#2-1-服务器虚拟化技术的发展及代表产品" class="headerlink" title="2.1 服务器虚拟化技术的发展及代表产品"></a>2.1 服务器虚拟化技术的发展及代表产品</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028174335742.png" alt="image-20221028174335742"></p>
+<h3 id="2-2-硬件级虚拟化"><a href="#2-2-硬件级虚拟化" class="headerlink" title="2.2 硬件级虚拟化"></a>2.2 硬件级虚拟化</h3><h4 id="2-2-1-系统虚拟化"><a href="#2-2-1-系统虚拟化" class="headerlink" title="2.2.1 系统虚拟化"></a>2.2.1 系统虚拟化</h4><ul>
+<li><p><strong>添加一个称为虚拟化层的软件，管理客户操作系统，使其能够独立于主机操作系统同时运行在同一个 硬件上</strong></p>
+<ul>
+<li>Hypervisor</li>
+<li>Virtual Machine Monitor（VMM，虚拟机监视器）</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005140516166.png" alt="image-20221005140516166"></p>
+</li>
+<li><p>1974年，Popek和Goldberg定义虚拟机可以看作物理机的一种&#x3D;&#x3D;高效&#x3D;&#x3D;&#x3D;&#x3D;隔离&#x3D;&#x3D;的&#x3D;&#x3D;复制&#x3D;&#x3D;。</p>
+<ul>
+<li><p>三个要求</p>
+<ul>
+<li>运行在该虚拟硬件环境中的程序性能损失应该较低(高效)</li>
+<li>系统资源应该处于VMM的完全控制之中(隔离–资源受控)</li>
+<li>为程序提供与原始硬件机器基本一致的环境(复制–同质)</li>
+</ul>
+</li>
+<li><p>硬件仿真(裸机虚拟化)</p>
+<ul>
+<li>例：高性能服务器上使用vSphere管理虚拟机</li>
+</ul>
+</li>
+<li><p>寄居虚拟化</p>
+<ul>
+<li>例：个人笔记本使用VirtualBox管理虚拟机</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-2-优势"><a href="#2-2-2-优势" class="headerlink" title="2.2.2 优势"></a>2.2.2 优势</h4><ul>
+<li><code>封装性</code><ul>
+<li>以虚拟机为粒度的封装使得虚拟机运行环境的保存非常便捷<ul>
+<li>虚拟机快照（某个时间点的状态抓取下来并保存）</li>
+<li>虚拟机克隆（从一个虚拟机的执行环境复制出一个或多个相同的虚拟机）</li>
+<li>虚拟机挂起和恢复（暂停一个运行中的虚拟机，将其运行环境保存在磁盘上；将保存在磁盘上的虚拟机运行环境恢复到内存中）</li>
+</ul>
+</li>
+<li>使得保存、部署更加方便，从而使得软件开发、测试和调试更加便捷；降低IT管理和维护成本</li>
+</ul>
+</li>
+<li><code>多实例</code><ul>
+<li>提高计算机性能利用率，降低计算机资源消耗<ul>
+<li>不同的服务器有不同的繁忙和空闲时段，将多个物理服务器合并到少数服务器上以虚拟机运行，使用更少的服务器获得同样的整体性能，通过虚拟机的忙闲交错大大提高资源利用率；节约物理资源、人力资源、软件资源成本。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>隔离</code><ul>
+<li>虚拟机中的应用程序可以在自己的操作系统中独立地运行，不影响其他工作负载<ul>
+<li>提高安全性：适用于测试场景；适合作为安全软件公司的蜜罐</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>硬件无关性</code><ul>
+<li>屏蔽硬件差异，无缝跨硬件迁移；云计算环境中虚拟机迁移是非常重要的；【复现老旧硬件接口】</li>
+</ul>
+</li>
+<li><code>特权功能</code><ul>
+<li>在虚拟化层添加特权功能的优点：不能被客户机绕过、更容易实现</li>
+<li>事件记录和回放—-入侵检测、病毒检测等</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-3-可与不可"><a href="#2-2-3-可与不可" class="headerlink" title="2.2.3 可与不可"></a>2.2.3 可与不可</h4><p>可虚拟化架构 VS 不可虚拟化架构：是否能够虚拟化出满足 “同质、高效、资源受控” 的虚拟机</p>
+<ul>
+<li>两个或两个以上的特权级：分隔应用软件与系统软件</li>
+<li>特权指令：管理和操作关键系统资源的指令，只有在最高特权级才能执行</li>
+<li>敏感指令：操作特权资源的指令<ul>
+<li>修改虚拟机运行模式或者物理机状态</li>
+<li>读写敏感的寄存器或内存，如时钟或中断寄存器</li>
+<li>访问存储保护系统、内存系统或地址重定位系统</li>
+</ul>
+</li>
+<li>客户机操作系统的敏感指令都是特权指令才能够实现高效的虚拟化—-陷入VMM</li>
+</ul>
+<p><strong>虚拟化的硬件对象：CPU，内存，I&#x2F;O 设备（硬盘、网卡、鼠标、键盘等）</strong></p>
+<h4 id="2-2-4-CPU虚拟化"><a href="#2-2-4-CPU虚拟化" class="headerlink" title="2.2.4 CPU虚拟化"></a>2.2.4 CPU虚拟化</h4><ul>
+<li>任意时刻一个物理CPU只能运行一个虚拟CPU</li>
+<li>每个客户操作系统可以使用一个或多个虚拟CPU</li>
+<li>各个操作系统之间虚拟CPU运行相互隔离，互不影响</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028160515257.png" alt="image-20221028160515257" style="zoom:67%;" />
+
+<p><strong>调度</strong>：调度问题指 VMM 决定当前哪个虚拟 CPU 在物理 CPU 上运行，保证隔离、公平和性能。</p>
+<p><strong>执行</strong>：虚拟 CPU 正确运行是保证虚拟机指令正确运行，实现技术包括模拟执行和监控执行。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028160608688.png" alt="image-20221028160608688"></p>
+<p><strong>三种类型:</strong></p>
+<ol>
+<li><p><code>基于软件的完全虚拟化</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028161301898.png" alt="image-20221028161301898"></p>
+</li>
+<li><p><code>基于硬件辅助的虚拟化</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028161326302.png" alt="image-20221028161326302"></p>
+</li>
+<li><p><code>改操作系统的类虚拟化</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028174908847.png" alt="image-20221028174908847"></p>
+<ul>
+<li>类虚拟化的三大优势：<ul>
+<li>通过消减冗余代码、减少地址空间切换和跨特全级切换、减少内存复制等，优化虚拟化的性能开销</li>
+<li>一定程度上消除了虚拟层和上层操作系统间的语义鸿沟：操作系统内部运行状态能够被VMM获得</li>
+<li>使得硬件抽象层的抽象高度更加灵活，为实现各种不同功能的硬件抽象探索出了可行的路径。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="2-2-5-内存虚拟化"><a href="#2-2-5-内存虚拟化" class="headerlink" title="2.2.5 内存虚拟化"></a>2.2.5 内存虚拟化</h4><ul>
+<li><p>内存虚拟化：内存虚拟化技术把物理内存统一管理，包装成多个虚拟的物理内存提供给若干虚拟机使用，每个虚拟机拥有各自独立的内存空间。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028175141720.png" alt="image-20221028175141720"></p>
+</li>
+<li><p>在没有虚拟化的操作系统中看到的内存：直接是机器地址的物理空间</p>
+</li>
+<li><p>虚拟化后，VMM要让客户操作系统看到“假的”物理空间，两件事：</p>
+<ol>
+<li>维护客户机物理地址和宿主机器的机器地址之间的映射</li>
+<li>截获虚拟机对客户机物理地址的访问，并根据所记录的映射关系，转换成机器地址</li>
+</ol>
+</li>
+</ul>
+<p><strong>三种类型</strong></p>
+<ol>
+<li><p><code>基于软件的完全虚拟化</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028175332059.png" alt="image-20221028175332059"></p>
+</li>
+<li><p><code>基于硬件辅助的虚拟化</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028175354411.png" alt="image-20221028175354411"></p>
+</li>
+<li><p><code>改操作系统的类虚拟化</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028175408820.png" alt="image-20221028175408820"></p>
+</li>
+</ol>
+<h4 id="2-2-6-I-O虚拟化"><a href="#2-2-6-I-O虚拟化" class="headerlink" title="2.2.6 I&#x2F;O虚拟化"></a>2.2.6 I&#x2F;O虚拟化</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005143610078.png" alt="image-20221005143610078"></p>
+<h3 id="2-3-操作系统级虚拟化"><a href="#2-3-操作系统级虚拟化" class="headerlink" title="2.3 操作系统级虚拟化"></a>2.3 操作系统级虚拟化</h3><ul>
+<li><strong>可以看作是“寄居虚拟化”的一种</strong><ul>
+<li>虽然没有Hypervisor&#x2F;VMM</li>
+<li>但是需要主机操作系统，在主机操作系统中插入一个虚拟化层<ul>
+<li>在同一个操作系统内核内，运行多个虚拟机；虚拟机可以访问</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>虚拟执行环境(Virtual Execution Environment)&#x2F;虚拟专用系统(Virtual Private System)&#x2F;容器(Container)</li>
+<li>优点<ul>
+<li>最小的启动&#x2F;停止开销&#x2F;资源需求低&#x2F;可扩展性强</li>
+<li>可同步虚拟机与宿主操作系统环境状态的变化</li>
+<li>允许虚拟机中进程访问尽可能多的主机资源</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>同一个容器中的操作系统级虚拟机必须使用相同的客户操作系统</li>
+<li>资源隔离性较差</li>
+</ul>
+</li>
+<li><strong>虚拟机 VS. 容器</strong></li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005150707841.png" alt="image-20221005150707841"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028180121858.png" alt="image-20221028180121858"></p>
+<h3 id="2-4-Docker"><a href="#2-4-Docker" class="headerlink" title="2.4 Docker"></a>2.4 Docker</h3><ul>
+<li><p>架构</p>
+<ul>
+<li>服务端(引擎)，包括守护进程，接收和处理客户端请求、联系后端仓库、创建镜像、容器；</li>
+<li>客户端，提交相关请求，如获取镜像、创建容器、运行容器等；</li>
+<li>后端仓库，用来存储和管理相关资源，一些基本的镜像和库，有官方公共的仓库，也可以自行建立私有仓库。</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005150952959.png" alt="image-20221005150952959"></p>
+</li>
+</ul>
+<h3 id="2-5-不同层级虚拟化技术对比"><a href="#2-5-不同层级虚拟化技术对比" class="headerlink" title="2.5 不同层级虚拟化技术对比"></a>2.5 不同层级虚拟化技术对比</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005151139973.png" alt="image-20221005151139973"></p>
+<h2 id="3-云数据中心的虚拟化"><a href="#3-云数据中心的虚拟化" class="headerlink" title="3 云数据中心的虚拟化"></a>3 云数据中心的虚拟化</h2><p>为什么要虚拟化？</p>
+<ul>
+<li>一台物理设备一个用户 vs. 一台物理设备多个用户：提升资源共享与复用的效率，降低成本</li>
+<li>固定大小与位置的存储空间 vs. 灵活扩展和空间分布的空间：提升可扩展性，提升存储资源使用效率</li>
+<li>为了实现服务器、存储虚拟化，要求网络也要能够方便、灵活地调整：随着虚拟机的迁移一起迁移</li>
+</ul>
+<h3 id="3-1-服务器虚拟化"><a href="#3-1-服务器虚拟化" class="headerlink" title="3.1 服务器虚拟化"></a>3.1 服务器虚拟化</h3><ul>
+<li><strong>虚拟机和容器共存，容器的地位不断提升，目前与虚拟机相当</strong></li>
+<li><strong>高效率的unikernel技术</strong><ul>
+<li>unikernel是使用库操作系统（LibOS）构建的专用的、单一地址空间机器镜像。</li>
+<li>LibOS库操作系统：在应用程序层中实施访问控制和隔离，用户应用无需在用户模式和内核模式间切换，直接访问硬件；然而多个应用程序同时运行时隔离性不好。</li>
+<li>可使用操作系统虚拟化（虚拟机监控器VMM）克服硬件资源隔离缺陷：LibOS通过VMM驱动物理硬件，像虚拟机一样运行。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005153822512.png" alt="image-20221005153822512"></p>
+<h3 id="3-2-存储虚拟化"><a href="#3-2-存储虚拟化" class="headerlink" title="3.2 存储虚拟化"></a>3.2 存储虚拟化</h3><ul>
+<li><p><strong>概念</strong>：存储虚拟化将系统中分散且异构的存储资源整合起来，形成一个统一的连续编址的逻辑存储空间</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005153933717.png" alt="image-20221005153933717"></p>
+</li>
+<li><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005154007370.png" alt="image-20221005154007370"></p>
+</li>
+<li><p><strong>具体实现</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005154043004.png" alt="image-20221005154043004"></p>
+</li>
+<li><p><strong>示例</strong>：VMware的vSphere提出了虚拟文件系统VMFS，允许来自多个不同主机服务器的并发访问，即允许多个物理主机同时读写同一个存储器。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005154143381.png" alt="image-20221005154143381"></p>
+</li>
+</ul>
+<h3 id="3-3-网络虚拟化"><a href="#3-3-网络虚拟化" class="headerlink" title="3.3 网络虚拟化"></a>3.3 网络虚拟化</h3><ul>
+<li><p>由于云计算技术的使用，云数据中心的业务集中度、服务的客户数量远远超过传统数据中心，对网络的高带宽、低拥塞的要求更高</p>
+<ul>
+<li>传统数据中心问题1：L2层网络拥塞、丢包严重，需要L3层协议保证重传，效率低</li>
+<li>传统数据中心问题2：二层以太网络采用生成树协议保证数据包在互连交换机回路传递，产生大量冗余。</li>
+</ul>
+</li>
+<li><p>云数据中心对网络的需求</p>
+<ul>
+<li>提高数据传输效率：应对数据同步、备份、虚拟机迁移等的大流量</li>
+<li>提高管理效率：采用统一的交换网络减少布线、维护和扩容的成本</li>
+</ul>
+</li>
+<li><p><strong>在不改变传统数据中心网络设计的物理拓扑和布线方式前提下，引入网络虚拟化技术加以解决</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005154358772.png" alt="image-20221005154358772"></p>
+</li>
+<li><p>示例：VMware网络虚拟化技术</p>
+<ul>
+<li>虚拟网卡：每个虚拟机可以配置一个或多个虚拟网卡</li>
+<li>虚拟交换机：工作原理与物理交换机一样，满足虚拟机网卡互连</li>
+<li>分布式虚拟交换机：跨主机的虚拟交换机，保证跨主机迁移时网络配置保持一致</li>
+<li>端口组：使用同一种策略设置的一组端口，虚拟环境特有的概念</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005154521468.png" alt="image-20221005154521468"></p>
+</li>
+</ul>
+<h2 id="4-云环境中的虚拟机迁移"><a href="#4-云环境中的虚拟机迁移" class="headerlink" title="4 云环境中的虚拟机迁移"></a>4 云环境中的虚拟机迁移</h2><ul>
+<li><p>云计算环境中虚拟机迁移的需求</p>
+<ul>
+<li>云计算中心物理服务器负载处于动态变化中，当无法提供额外物理资源而为了负载平衡，可将占 用热门物理资源的虚拟机迁移到其他物理服务器</li>
+<li>物理服务器定期升级的需要，升级前将虚拟机迁移到其他物理服务器，等升级完成再迁移回来</li>
+</ul>
+</li>
+<li><p>分类</p>
+<ul>
+<li>物理机到虚拟机 P2V</li>
+<li>虚拟机到虚拟机 V2V</li>
+<li>虚拟机到物理机 V2P</li>
+</ul>
+</li>
+<li><p><strong><code>云计算中关注的重点：实时迁移(Live Migration)</code></strong></p>
+<ul>
+<li>保持虚拟机运行的同时，将其从一个计算机迁移到另一个计算机，并在目的计算机恢复运行</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028212907878.png" alt="image-20221028212907878"></p>
+<p>虚拟机迁移的具体内容</p>
+<ul>
+<li><p>内存迁移—-最困难的地方</p>
+<ul>
+<li>第一阶段：Push；第二阶段：Stop-and-Copy；第三阶段：Pull</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027003411378.png" alt="image-20221027003411378"></p>
+</li>
+<li><p>网络迁移</p>
+<ul>
+<li>虚拟机所有网络设备，包括协议状态（如TCP连接状态）以及IP地址都要随之一起迁移；通过发送并修改相关配置实现</li>
+</ul>
+</li>
+<li><p>存储设备迁移</p>
+<ul>
+<li>迁移数据存储需要占用大量时间和网络带宽，通常的解决办法是以共享的方式共享数据和文件系统，而非真正迁移</li>
+<li>目前大多数集群使用NAS（Network Attached Storage，网络连接存储）作为存储设备共享数据</li>
+</ul>
+</li>
+</ul>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-3-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
+                        <b>#</b> 云计算
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-5-OpenStack/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF"><span class="toc-text">四、虚拟化技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">1 基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">1.1 计算机系统的虚拟化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E5%B1%82%E7%BA%A7"><span class="toc-text">2 服务器虚拟化层级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E7%9A%84%E5%8F%91%E5%B1%95%E5%8F%8A%E4%BB%A3%E8%A1%A8%E4%BA%A7%E5%93%81"><span class="toc-text">2.1 服务器虚拟化技术的发展及代表产品</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A1%AC%E4%BB%B6%E7%BA%A7%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">2.2 硬件级虚拟化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E7%B3%BB%E7%BB%9F%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">2.2.1 系统虚拟化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E4%BC%98%E5%8A%BF"><span class="toc-text">2.2.2 优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-3-%E5%8F%AF%E4%B8%8E%E4%B8%8D%E5%8F%AF"><span class="toc-text">2.2.3 可与不可</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-4-CPU%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">2.2.4 CPU虚拟化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-5-%E5%86%85%E5%AD%98%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">2.2.5 内存虚拟化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-6-I-O%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">2.2.6 I&#x2F;O虚拟化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E7%BA%A7%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">2.3 操作系统级虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Docker"><span class="toc-text">2.4 Docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%B8%8D%E5%90%8C%E5%B1%82%E7%BA%A7%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF%E5%AF%B9%E6%AF%94"><span class="toc-text">2.5 不同层级虚拟化技术对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%9A%84%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">3 云数据中心的虚拟化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">3.1 服务器虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%AD%98%E5%82%A8%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">3.2 存储虚拟化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E7%BD%91%E7%BB%9C%E8%99%9A%E6%8B%9F%E5%8C%96"><span class="toc-text">3.3 网络虚拟化</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BA%91%E7%8E%AF%E5%A2%83%E4%B8%AD%E7%9A%84%E8%99%9A%E6%8B%9F%E6%9C%BA%E8%BF%81%E7%A7%BB"><span class="toc-text">4 云环境中的虚拟机迁移</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%91%E8%AE%A1%E7%AE%97(4)%20%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F29%2F%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597-4-%25E8%2599%259A%25E6%258B%259F%25E5%258C%2596%25E6%258A%2580%25E6%259C%25AF%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-4-%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

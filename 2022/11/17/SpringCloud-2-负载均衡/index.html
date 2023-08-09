@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      SpringCloud(2) 负载均衡 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">SpringCloud(2) 负载均衡</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/SpringCloud/" title="SpringCloud">
+                    <b>#</b> SpringCloud
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h1><h2 id="1-Ribbon"><a href="#1-Ribbon" class="headerlink" title="1 Ribbon"></a>1 Ribbon</h2><ul>
+<li>在2020年前的SpringCloud版本是采用Ribbon作为负载均衡实现，但是2020年的版本之后SpringCloud把Ribbon移除了，进而用自己编写的LoadBalancer替代。</li>
+</ul>
+<h3 id="1-1-Ribbon入门介绍"><a href="#1-1-Ribbon入门介绍" class="headerlink" title="1.1 Ribbon入门介绍"></a>1.1 Ribbon入门介绍</h3><ul>
+<li><p>入门介绍</p>
+<ul>
+<li><p>Spring Cloud Ribbon是基于Netflix Ribbon实现的一套<strong>客户端负载均衡的工具。</strong></p>
+</li>
+<li><p>简单的说，Ribbon是Netflix发布的开源项目，主要功能是提供<strong>客户端的软件负载均衡算法和服务调用</strong>。Ribbon客户端组件提供一系列完善的配置项如连接超时，重试等。</p>
+</li>
+<li><p>简单的说，就是在配置文件中列出Load Balancer(简称LB)后面所有的机器，Ribbon会自动的帮助你基于某种规则(如简单轮询，随机连接等)去连接这些机器。我们很容易使用Ribbon实现自定义的负载均衡算法。</p>
+</li>
+<li><p>Ribbon目前也进入维护模式。未来可能被Spring Cloud LoadBalacer替代。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>LB负载均衡(Load Balance)是什么</strong></p>
+<ul>
+<li><p>简单的说就是将用户的请求平摊的分配到多个服务上，从而达到系统的HA (高可用)。</p>
+</li>
+<li><p>常见的负载均衡有软件Nginx，LVS，硬件F5等。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Ribbon本地负载均衡客户端VS Nginx服务端负载均衡区别</strong></p>
+<ul>
+<li>Nginx是服务器负载均衡，客户端所有请求都会交给nginx，然后由nginx实现转发请求。即负载均衡是由服务端实现的。</li>
+<li>Ribbon本地负载均衡，在调用微服务接口时候，会在注册中心上获取注册信息服务列表之后缓存到JVM本地，从而在本地实现RPC远程服务调用技术。</li>
+</ul>
+</li>
+<li><p><strong>集中式LB</strong></p>
+<ul>
+<li>即在服务的消费方和提供方之间使用独立的LB设施(可以是硬件，如F5, 也可以是软件，如nginx)，由该设施负责把访问请求通过某种策略转发至服务的提供方</li>
+</ul>
+</li>
+<li><p><strong>进程内LB</strong></p>
+<ul>
+<li><p>将LB逻辑集成到消费方，消费方从服务注册中心获知有哪些地址可用，然后自己再从这些地址中选择出一个合适的服务器。</p>
+</li>
+<li><p>Ribbon就属于进程内LB，它只是一个类库，集成于消费方进程，消费方通过它来获取到服务提供方的地址。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>一句话</strong></p>
+<ul>
+<li>负载均衡 + RestTemplate调用</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-2-Ribbon的负载均衡和Rest调用"><a href="#1-2-Ribbon的负载均衡和Rest调用" class="headerlink" title="1.2 Ribbon的负载均衡和Rest调用"></a>1.2 Ribbon的负载均衡和Rest调用</h3><ul>
+<li><strong>架构说明</strong><ul>
+<li>Ribbon其实就是一个软负载均衡的客户端组件，它可以和其他所需请求的客户端结合使用，和Eureka结合只是其中的一个实例。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220727210326832.png" alt="image-20220727210326832"></p>
+<ul>
+<li><p>Ribbon在工作时分成两步: </p>
+<ul>
+<li>第一步先选择EurekaServer ,它优先选择在同一个区域内负载较少的server。</li>
+<li>第二步再根据用户指定的策略，在从server取到的服务注册列表中选择一个地址。</li>
+</ul>
+<p>其中Ribbon提供了多种策略: 比如轮询、随机和根据响应时间加权。</p>
+</li>
+<li><p>POM</p>
+<ul>
+<li><p>先前工程项目没有引入spring-cloud-starter-ribbon也可以使用ribbon。</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-netflix-ribbon<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p>这是因为spring-cloud-starter-netflix-eureka-client自带了spring-cloud-starter-ribbon引用。</p>
+</li>
+</ul>
+</li>
+<li><p>RestTemplate的调用</p>
+</li>
+</ul>
+<h3 id="1-3-Ribbon负载规则替换"><a href="#1-3-Ribbon负载规则替换" class="headerlink" title="1.3 Ribbon负载规则替换"></a>1.3 Ribbon负载规则替换</h3><ul>
+<li><p><strong>Ribbon默认自带的负载规则</strong></p>
+<ul>
+<li><p>IRule: 根据特定算法中从服务列表中选取一个要访问的服务</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220728111338080.png" alt="image-20220728111338080"></p>
+</li>
+<li><p><code>RoundRobinRule</code>: 轮询</p>
+</li>
+<li><p><code>RandomRule</code>: 随机</p>
+</li>
+<li><p><code>RetryRule</code>: 先按照<code>RoundRobinRule</code>的策略获取服务，如果获取服务失败则在指定时间内会进行重试，获取可用的服务</p>
+</li>
+<li><p><code>WeightedResponseTimeRule</code>: 对<code>RoundRobinRule</code>的扩展，响应速度越快的实例选择权重越大，越容易被选择</p>
+</li>
+<li><p><code>BestAvailableRule</code>: 会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务</p>
+</li>
+<li><p><code>AvailabilityFilteringRule</code>: 先过滤掉故障实例，再选择并发较小的实例</p>
+</li>
+<li><p><code>ZoneAvoidanceRule</code>: 默认规则，复合判断server所在区域的性能和server的可用性选择服务器</p>
+</li>
+</ul>
+</li>
+<li><p><strong>Ribbon负载规则替换</strong></p>
+<ul>
+<li><p>修改cloud-consumer-order80</p>
+</li>
+<li><p>注意配置细节</p>
+<ul>
+<li>官方文档明确给出了警告: </li>
+<li>这个自定义配置类不能放在<code>@ComponentScan</code>所扫描的当前包下以及子包下，否则我们自定义的这个配置类就会被所有的Ribbon客户端所共享，达不到特殊化定制的目的了。</li>
+<li>(<strong>也就是说不要将Ribbon配置类与主启动类同包</strong>)</li>
+</ul>
+</li>
+<li><p>新建package - com.whale.myrule</p>
+</li>
+<li><p>在com.whale.myrule下新建MySelfRule规则类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MySelfRule</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> IRule <span class="hljs-title function_">myRule</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RandomRule</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>主启动类添加@RibbonClient</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@SpringBootApplication</span><br><span class="hljs-meta">@EnableEurekaClient</span><br><span class="hljs-meta">@RibbonClient(name = &quot;CLOUD-PAYMENT-SERVICE&quot;, configuration = MySelfRule.class)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CustomerOrder80</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        SpringApplication.run(CustomerOrder80.class, args);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="1-4-Ribbon默认负载轮询算法原理"><a href="#1-4-Ribbon默认负载轮询算法原理" class="headerlink" title="1.4 Ribbon默认负载轮询算法原理"></a>1.4 Ribbon默认负载轮询算法原理</h3><p><strong>默认负载轮询算法: rest接口第几次请求数 % 服务器集群总数量 &#x3D; 实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始</strong>。</p>
+<h3 id="1-5-Ribbon之手写轮询算法"><a href="#1-5-Ribbon之手写轮询算法" class="headerlink" title="1.5 Ribbon之手写轮询算法"></a>1.5 Ribbon之手写轮询算法</h3><ul>
+<li><p>7001&#x2F;7002集群启动</p>
+</li>
+<li><p>8001&#x2F;8002微服务改造- controller</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(value = &quot;/lb&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">getPaymentLB</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> serverPort;<span class="hljs-comment">//返回服务接口</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>80订单微服务改造</p>
+<ul>
+<li><p>ApplicationContextConfig去掉注解@LoadBalanced，OrderMain80去掉注解@RibbonClient</p>
+</li>
+<li><p>创建LoadBalancer接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">LoadBalancer</span>&#123;<br>    ServiceInstance <span class="hljs-title function_">instances</span><span class="hljs-params">(List&lt;ServiceInstance&gt; serviceInstances)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>MyLB实现LoadBalancer接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><span class="hljs-comment">//需要跟主启动类同包，或者在其子孙包下。</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyLB</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">LoadBalancer</span><br>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">AtomicInteger</span> <span class="hljs-variable">atomicInteger</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicInteger</span>(<span class="hljs-number">0</span>);<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getAndIncrement</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-type">int</span> current;<br>        <span class="hljs-type">int</span> next;<br><br>        <span class="hljs-keyword">do</span> &#123;<br>            current = <span class="hljs-built_in">this</span>.atomicInteger.get();<br>            next = current &gt;= <span class="hljs-number">2147483647</span> ? <span class="hljs-number">0</span> : current + <span class="hljs-number">1</span>;<br>        &#125;<span class="hljs-keyword">while</span>(!<span class="hljs-built_in">this</span>.atomicInteger.compareAndSet(current,next));<br>        System.out.println(<span class="hljs-string">&quot;*****第几次访问，次数next: &quot;</span>+next);<br>        <span class="hljs-keyword">return</span> next;<br>    &#125;<br><br>    <span class="hljs-comment">//负载均衡算法: rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标  ，每次服务重启动后rest接口计数从1开始。</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> ServiceInstance <span class="hljs-title function_">instances</span><span class="hljs-params">(List&lt;ServiceInstance&gt; serviceInstances)</span><br>    &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">index</span> <span class="hljs-operator">=</span> getAndIncrement() % serviceInstances.size();<br><br>        <span class="hljs-keyword">return</span> serviceInstances.get(index);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>OrderController</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderController</span> &#123;<br><br>    <span class="hljs-comment">//public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">PAYMENT_URL</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://CLOUD-PAYMENT-SERVICE&quot;</span>;<br><br>    ...<br><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> LoadBalancer loadBalancer;<br><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> DiscoveryClient discoveryClient;<br><br>    ...<br><br>    <span class="hljs-meta">@GetMapping(value = &quot;/consumer/payment/lb&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getPaymentLB</span><span class="hljs-params">()</span><br>    &#123;<br>        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="hljs-string">&quot;CLOUD-PAYMENT-SERVICE&quot;</span>);<br><br>        <span class="hljs-keyword">if</span>(instances == <span class="hljs-literal">null</span> || instances.size() &lt;= <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br><br>        <span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">serviceInstance</span> <span class="hljs-operator">=</span> loadBalancer.instances(instances);<br>        <span class="hljs-type">URI</span> <span class="hljs-variable">uri</span> <span class="hljs-operator">=</span> serviceInstance.getUri();<br><br>        <span class="hljs-keyword">return</span> restTemplate.getForObject(uri+<span class="hljs-string">&quot;/payment/lb&quot;</span>,String.class);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>测试 不停地刷新<a target="_blank" rel="noopener" href="http://localhost/consumer/payment/lb%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B08001/8002%E4%BA%A4%E6%9B%BF%E5%87%BA%E7%8E%B0%E3%80%82">http://localhost/consumer/payment/lb，可以看到8001/8002交替出现。</a></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-LoadBalancer"><a href="#2-LoadBalancer" class="headerlink" title="2 LoadBalancer"></a>2 LoadBalancer</h2><h3 id="2-1-负载均衡"><a href="#2-1-负载均衡" class="headerlink" title="2.1 负载均衡"></a>2.1 负载均衡</h3><p>实际上，在添加<code>@LoadBalanced</code>注解之后，会启用拦截器对我们发起的服务调用请求进行拦截(注意这里是针对我们发起的请求进行拦截)，叫做<code>LoadBalancerInterceptor</code>，它实现<code>ClientHttpRequestInterceptor</code>接口: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ClientHttpRequestInterceptor</span> &#123;<br>    ClientHttpResponse <span class="hljs-title function_">intercept</span><span class="hljs-params">(HttpRequest request, <span class="hljs-type">byte</span>[] body, ClientHttpRequestExecution execution)</span> <span class="hljs-keyword">throws</span> IOException;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>主要是对<code>intercept</code>方法的实现: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> ClientHttpResponse <span class="hljs-title function_">intercept</span><span class="hljs-params">(<span class="hljs-keyword">final</span> HttpRequest request, <span class="hljs-keyword">final</span> <span class="hljs-type">byte</span>[] body, <span class="hljs-keyword">final</span> ClientHttpRequestExecution execution)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-type">URI</span> <span class="hljs-variable">originalUri</span> <span class="hljs-operator">=</span> request.getURI();<br>    <span class="hljs-type">String</span> <span class="hljs-variable">serviceName</span> <span class="hljs-operator">=</span> originalUri.getHost();<br>    Assert.state(serviceName != <span class="hljs-literal">null</span>, <span class="hljs-string">&quot;Request URI does not contain a valid hostname: &quot;</span> + originalUri);<br>    <span class="hljs-keyword">return</span> (ClientHttpResponse)<span class="hljs-built_in">this</span>.loadBalancer.execute(serviceName, <span class="hljs-built_in">this</span>.requestFactory.createRequest(request, body, execution));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以打个断点看看实际是怎么在执行的，可以看到服务端会在发起请求时执行这些拦截器。</p>
+<p>那么这个拦截器做了什么事情呢，首先我们要明确，我们给过来的请求地址，并不是一个有效的主机名称，而是服务名称，那么怎么才能得到真正需要访问的主机名称呢，肯定是得找Eureka获取的。</p>
+<p>我们来看看<code>loadBalancer.execute()</code>做了什么，它的具体实现为<code>BlockingLoadBalancerClient</code>: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//从上面给进来了服务的名称和具体的请求实体</span><br><span class="hljs-keyword">public</span> &lt;T&gt; T <span class="hljs-title function_">execute</span><span class="hljs-params">(String serviceId, LoadBalancerRequest&lt;T&gt; request)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">hint</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.getHint(serviceId);<br>    LoadBalancerRequestAdapter&lt;T, DefaultRequestContext&gt; lbRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LoadBalancerRequestAdapter</span>(request, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultRequestContext</span>(request, hint));<br>    Set&lt;LoadBalancerLifecycle&gt; supportedLifecycleProcessors = <span class="hljs-built_in">this</span>.getSupportedLifecycleProcessors(serviceId);<br>    supportedLifecycleProcessors.forEach((lifecycle) -&gt; &#123;<br>        lifecycle.onStart(lbRequest);<br>    &#125;);<br>  	<span class="hljs-comment">//可以看到在这里会调用choose方法自动获取对应的服务实例信息</span><br>    <span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">serviceInstance</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.choose(serviceId, lbRequest);<br>    <span class="hljs-keyword">if</span> (serviceInstance == <span class="hljs-literal">null</span>) &#123;<br>        supportedLifecycleProcessors.forEach((lifecycle) -&gt; &#123;<br>            lifecycle.onComplete(<span class="hljs-keyword">new</span> <span class="hljs-title class_">CompletionContext</span>(Status.DISCARD, lbRequest, <span class="hljs-keyword">new</span> <span class="hljs-title class_">EmptyResponse</span>()));<br>        &#125;);<br>      	<span class="hljs-comment">//没有发现任何此服务的实例就抛异常(之前的测试中可能已经遇到了)</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;No instances available for &quot;</span> + serviceId);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      	<span class="hljs-comment">//成功获取到对应服务的实例，这时就可以发起HTTP请求获取信息了</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.execute(serviceId, serviceInstance, lbRequest);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>所以，实际上在进行负载均衡的时候，会向Eureka发起请求，选择一个可用的对应服务，然后会返回此服务的主机地址等信息</p>
+<h3 id="2-2-自定义负载均衡策略"><a href="#2-2-自定义负载均衡策略" class="headerlink" title="2.2 自定义负载均衡策略"></a>2.2 自定义负载均衡策略</h3><p>LoadBalancer默认提供了两种负载均衡策略: </p>
+<ul>
+<li>RandomLoadBalancer - 随机分配策略</li>
+<li><strong>(默认)</strong> RoundRobinLoadBalancer - 轮询分配策略</li>
+</ul>
+<p>现在我们希望修改默认的负载均衡策略，可以进行指定，比如我们现在希望用户服务采用随机分配策略，我们需要先创建随机分配策略的配置类(不用加<code>@Configuration</code>): </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoadBalancerConfig</span> &#123;<br>  	<span class="hljs-comment">//将官方提供的 RandomLoadBalancer 注册为Bean</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ReactorLoadBalancer&lt;ServiceInstance&gt; <span class="hljs-title function_">randomLoadBalancer</span><span class="hljs-params">(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory)</span>&#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RandomLoadBalancer</span>(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着我们需要为对应的服务指定负载均衡策略，直接使用注解即可: </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@LoadBalancerClient(value = &quot;userservice&quot;,      //指定为 userservice 服务，只要是调用此服务都会使用我们指定的策略</span><br><span class="hljs-meta">                    configuration = LoadBalancerConfig.class)</span>   <span class="hljs-comment">//指定我们刚刚定义好的配置类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BeanConfig</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span><br>    RestTemplate <span class="hljs-title function_">template</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>接着我们在<code>BlockingLoadBalancerClient</code>中添加断点，观察是否采用我们指定的策略进行请求</p>
+<p>发现访问userservice服务的策略已经更改为我们指定的策略了。</p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/16/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-2-HTML/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/SpringCloud/" title="SpringCloud">
+                        <b>#</b> SpringCloud
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/18/SpringCloud-3-%E6%9C%8D%E5%8A%A1%E8%B0%83%E7%94%A8/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-text">负载均衡</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Ribbon"><span class="toc-text">1 Ribbon</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Ribbon%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.1 Ribbon入门介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Ribbon%E7%9A%84%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8CRest%E8%B0%83%E7%94%A8"><span class="toc-text">1.2 Ribbon的负载均衡和Rest调用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-Ribbon%E8%B4%9F%E8%BD%BD%E8%A7%84%E5%88%99%E6%9B%BF%E6%8D%A2"><span class="toc-text">1.3 Ribbon负载规则替换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Ribbon%E9%BB%98%E8%AE%A4%E8%B4%9F%E8%BD%BD%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86"><span class="toc-text">1.4 Ribbon默认负载轮询算法原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-Ribbon%E4%B9%8B%E6%89%8B%E5%86%99%E8%BD%AE%E8%AF%A2%E7%AE%97%E6%B3%95"><span class="toc-text">1.5 Ribbon之手写轮询算法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-LoadBalancer"><span class="toc-text">2 LoadBalancer</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1"><span class="toc-text">2.1 负载均衡</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%87%AA%E5%AE%9A%E4%B9%89%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="toc-text">2.2 自定义负载均衡策略</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + SpringCloud(2)%20%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F17%2FSpringCloud-2-%25E8%25B4%259F%25E8%25BD%25BD%25E5%259D%2587%25E8%25A1%25A1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/17/SpringCloud-2-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
