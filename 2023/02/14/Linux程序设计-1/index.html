@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-09 14:53:19
+          2023-08-18 15:56:02
         </span>
         
               <span class="post-categories">
@@ -426,21 +426,6 @@
 </ul>
 </li>
 </ul>
-<h4 id="Some-Basic-Linux-Commands"><a href="#Some-Basic-Linux-Commands" class="headerlink" title="Some Basic Linux Commands"></a>Some Basic Linux Commands</h4><ul>
-<li>passwd：更改密码</li>
-<li>mkpasswd：生成随机密码</li>
-<li>date，cal：找出今天的日期并显示日历</li>
-<li>who，finger：找出还有谁在系统上处于活动状态</li>
-<li>clear：清除屏幕</li>
-<li>echo：在屏幕上写一条消息</li>
-<li>write、wall、talk、mesg<ol>
-<li>write：给其他用户发信息</li>
-<li>wall：write all, 给所有登录到系统的用户发信息</li>
-<li>talk：建立聊天session</li>
-<li>mesg：可以屏蔽用户发来的信息</li>
-</ol>
-</li>
-</ul>
 <h3 id="3-2-Working-with-Files-and-Directories"><a href="#3-2-Working-with-Files-and-Directories" class="headerlink" title="3.2 Working with Files and Directories"></a>3.2 Working with Files and Directories</h3><ul>
 <li>什么是文件？<ul>
 <li>数据的集合</li>
@@ -499,18 +484,113 @@
 <p><a target="_blank" rel="noopener" href="http://www.pathname.com/fhs">Linux Filesystem Hierarchy Standard</a></p>
 </blockquote>
 <h4 id="Basic-Commands"><a href="#Basic-Commands" class="headerlink" title="Basic Commands"></a>Basic Commands</h4><ul>
-<li>pwd：当前目录</li>
-<li>cd：更改目录</li>
-<li>mkdir：创建目录</li>
-<li>rmdir：删除目录</li>
-<li>ls：列出目录的内容，-l，-a(显示隐藏文件, 形如<code>.*</code>)，-R(递归打印所有的子目录中的文件)选项</li>
-<li>touch：更新文件的访问, 修改时间</li>
-<li>cp：复制文件</li>
-<li>mv：移动并重命名文件</li>
-<li>ln：链接文件</li>
-<li>rm：删除文件</li>
-<li>cat：打印文件内容</li>
-<li>more&#x2F;less：逐页显示文件，more不可以回退，less可以回退</li>
+<li><p>passwd：更改密码</p>
+</li>
+<li><p>mkpasswd：生成随机密码</p>
+</li>
+<li><p>date，cal：找出今天的日期并显示日历</p>
+</li>
+<li><p>who，finger：找出还有谁在系统上处于活动状态</p>
+</li>
+<li><p>clear：清除屏幕</p>
+</li>
+<li><p>echo：在屏幕上写一条消息</p>
+</li>
+<li><p>write、wall、talk、mesg</p>
+<ul>
+<li>write：给其他用户发信息</li>
+<li>wall：write all, 给所有登录到系统的用户发信息</li>
+<li>talk：建立聊天session</li>
+<li>mesg：可以屏蔽用户发来的信息</li>
+</ul>
+</li>
+<li><p>pwd：当前目录</p>
+</li>
+<li><p>cd：更改目录</p>
+</li>
+<li><p>mkdir：创建目录</p>
+</li>
+<li><p>rmdir：删除目录</p>
+</li>
+<li><p>ls：列出目录的内容，-l，-a(显示隐藏文件, 形如<code>.*</code>)，-R(递归打印所有的子目录中的文件)选项，-i</p>
+</li>
+<li><p>touch：更新文件的访问, 修改时间</p>
+</li>
+<li><p>cp：复制文件</p>
+</li>
+<li><p>mv：移动并重命名文件</p>
+</li>
+<li><p>ln：链接文件</p>
+</li>
+<li><p>rm：删除文件</p>
+</li>
+<li><p>cat：打印文件内容</p>
+</li>
+<li><p>more&#x2F;less：逐页显示文件，more不可以回退，less可以回退</p>
+</li>
+<li><p>ps：报告进程状态</p>
+</li>
+<li><p>pstree：显示进程树</p>
+</li>
+<li><p>jobs, fg, bg, ctrl-z：作业控制</p>
+<ul>
+<li>bg: 后台执行</li>
+<li>fg: 前台执行</li>
+<li>ctrl-z: 暂停进程, 可通过fg, bg恢复</li>
+</ul>
+</li>
+<li><p>kill：杀死进程</p>
+</li>
+<li><p>nohup：运行命令，忽略挂起信号</p>
+</li>
+<li><p>nice，renice：修改进程优先级</p>
+</li>
+<li><p>top：查看进程的cpu占用</p>
+</li>
+<li><p>文件操作</p>
+<ul>
+<li>列出目录内容: ls, (dir, vdir 与ls功能类似)</li>
+<li>创建特殊文件: mkdir, mknod, mkfifo<ul>
+<li>mknod: 创建设备文件</li>
+<li>mkfifo: 创建管道</li>
+</ul>
+</li>
+<li>文件操作: cp, mv, rm</li>
+<li>修改文件属性: chmod, chown, chgrp, touch<ul>
+<li>chown: 改文件拥有者、用户组</li>
+<li>chgrp: 更改用户组</li>
+</ul>
+</li>
+<li>查找文件: (locate), find<ul>
+<li>locate: 功能和 find 类似</li>
+</ul>
+</li>
+<li>字符串匹配: grep(egrep)<ul>
+<li>grep: 在文本文件中搜索字符串</li>
+<li>egrep: grep 扩展</li>
+</ul>
+</li>
+<li>其它: pwd, cd, ar, file, tar, more, less, head, tail, cat<ul>
+<li>ar: 打包库文件</li>
+<li>file: 显示文件类型</li>
+<li>more, less: 一页页显示</li>
+<li>head, tail: 显示文件头部、尾部</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>进程操作：ps, kill, jobs, fg, bg, nice</p>
+</li>
+<li><p>其它</p>
+<ul>
+<li>who, whoami, passwd, su, uname, …<ul>
+<li>whoami: 当前用户名</li>
+<li>uname: 显示内核信息</li>
+</ul>
+</li>
+<li>man</li>
+</ul>
+</li>
 </ul>
 <h4 id="File-Permission"><a href="#File-Permission" class="headerlink" title="File Permission"></a>File Permission</h4><ul>
 <li><p>文件权限可帮助保护文件免受其他用户侵害</p>
@@ -612,20 +692,6 @@
 </ol>
 </li>
 </ul>
-<h4 id="Basic-Commands-1"><a href="#Basic-Commands-1" class="headerlink" title="Basic Commands"></a>Basic Commands</h4><ul>
-<li>ps：报告进程状态</li>
-<li>pstree：显示进程树</li>
-<li>jobs, fg, bg, ctrl-z：作业控制<ul>
-<li>bg: 后台执行</li>
-<li>fg: 前台执行</li>
-<li>ctrl-z: 暂停进程, 可通过fg, bg恢复</li>
-</ul>
-</li>
-<li>kill：杀死进程</li>
-<li>nohup：运行命令，忽略挂起信号</li>
-<li>nice，renice：修改进程优先级</li>
-<li>top：查看进程的cpu占用</li>
-</ul>
 <h4 id="Daemons"><a href="#Daemons" class="headerlink" title="Daemons"></a>Daemons</h4><p>“守护进程”一词指的是一个永不停止的进程，通常是控制诸如打印机队列之类的系统资源或执行网络服务的系统进程。</p>
 <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303103555052.png" alt="image-20230303103555052" style="zoom:80%;" />
 
@@ -691,50 +757,7 @@
 
 <h4 id="Programmer’s-Viewpoint"><a href="#Programmer’s-Viewpoint" class="headerlink" title="Programmer’s Viewpoint"></a>Programmer’s Viewpoint</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303105118990.png" alt="image-20230303105118990" style="zoom:80%;" />
 
-<h2 id="5-Linux-System-Basic"><a href="#5-Linux-System-Basic" class="headerlink" title="5. Linux System Basic"></a>5. Linux System Basic</h2><h3 id="5-1-基本命令"><a href="#5-1-基本命令" class="headerlink" title="5.1 基本命令"></a>5.1 基本命令</h3><ul>
-<li>文件操作<ul>
-<li>列出目录内容: ls, (dir, vdir 与ls功能类似)</li>
-<li>创建特殊文件: mkdir, mknod, mkfifo<ul>
-<li>mknod: 创建设备文件</li>
-<li>mkfifo: 创建管道</li>
-</ul>
-</li>
-<li>文件操作: cp, mv, rm</li>
-<li>修改文件属性: chmod, chown, chgrp, touch<ul>
-<li>chown: 改文件拥有者、用户组</li>
-<li>chgrp: 更改用户组</li>
-</ul>
-</li>
-<li>查找文件: (locate), find<ul>
-<li>locate: 功能和 find 类似</li>
-</ul>
-</li>
-<li>字符串匹配: grep(egrep)<ul>
-<li>grep: 在文本文件中搜索字符串</li>
-<li>egrep: grep 扩展</li>
-</ul>
-</li>
-<li>其它: pwd, cd, ar, file, tar, more, less, head, tail, cat<ul>
-<li>ar: 打包库文件</li>
-<li>file: 显示文件类型</li>
-<li>more, less: 一页页显示</li>
-<li>head, tail: 显示文件头部、尾部</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>进程操作：ps, kill, jobs, fg, bg, nice</li>
-<li>其它<ul>
-<li>who, whoami, passwd, su, uname, …<ul>
-<li>whoami: 当前用户名</li>
-<li>uname: 显示内核信息</li>
-</ul>
-</li>
-<li>man</li>
-</ul>
-</li>
-</ul>
-<h3 id="5-2-重定向"><a href="#5-2-重定向" class="headerlink" title="5.2 重定向"></a>5.2 重定向</h3><ul>
+<h2 id="5-Linux-System-Basic"><a href="#5-Linux-System-Basic" class="headerlink" title="5. Linux System Basic"></a>5. Linux System Basic</h2><h3 id="5-1-重定向"><a href="#5-1-重定向" class="headerlink" title="5.1 重定向"></a>5.1 重定向</h3><ul>
 <li><p>标准输入、标准输出、标准错误</p>
 <ul>
 <li>对应的文件描述符：0, 1, 2</li>
@@ -758,7 +781,7 @@
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt; abc.txt<br><span class="hljs-built_in">cat</span> 文件名<br><br><span class="hljs-comment"># 这里的文件名作为cat参数存在</span><br><span class="hljs-comment"># 类似于C语言中，main(int argc, char** argv)</span><br><span class="hljs-comment"># 当argc等于0，在system.in中读，再system.out打印</span><br><span class="hljs-comment"># 当cat后面加上参数，就读出文件内容，输出在屏幕上</span><br><span class="hljs-comment"># cat &lt; 文件名，这里是重定向</span><br><span class="hljs-comment"># 执行流程完全不一样，仍然是走else分支</span><br></code></pre></td></tr></table></figure>
 
-<h3 id="5-3-管道"><a href="#5-3-管道" class="headerlink" title="5.3 管道"></a>5.3 管道</h3><ul>
+<h3 id="5-2-管道"><a href="#5-2-管道" class="headerlink" title="5.2 管道"></a>5.2 管道</h3><ul>
 <li>一个进程的输出作为另一个进程的输入</li>
 <li>存在一个管道文件，这个文件作为输入传递给后面的命令</li>
 <li>例:<ul>
@@ -768,7 +791,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="5-4-环境变量"><a href="#5-4-环境变量" class="headerlink" title="5.4 环境变量"></a>5.4 环境变量</h3><ul>
+<h3 id="5-3-环境变量"><a href="#5-3-环境变量" class="headerlink" title="5.3 环境变量"></a>5.3 环境变量</h3><ul>
 <li>环境变量<ul>
 <li>操作环境的参数</li>
 <li>查看和设置环境变量：echo, env, set<ul>
@@ -786,7 +809,7 @@
 </ul>
 </li>
 </ul>
-<h3 id="5-5-高级命令与正则表达式"><a href="#5-5-高级命令与正则表达式" class="headerlink" title="5.5 高级命令与正则表达式"></a>5.5 高级命令与正则表达式</h3><ul>
+<h3 id="5-4-高级命令与正则表达式"><a href="#5-4-高级命令与正则表达式" class="headerlink" title="5.4 高级命令与正则表达式"></a>5.4 高级命令与正则表达式</h3><ul>
 <li>find: 查找磁盘上的文件<ul>
 <li>可以使用通配符, 可以通过文件大小查找, 可以使用逻辑表达式</li>
 <li>可以对找到的每一个文件执行一个命令</li>
@@ -820,7 +843,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-09 14:53:19
+              2023-08-18 15:56:02
             </span>
             
                   <span class="post-categories">
@@ -860,7 +883,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-What-is-Linux"><span class="toc-text">1. What is Linux?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-GNU-Linux"><span class="toc-text">1.1 GNU &amp; Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-So-Special-for-Linux"><span class="toc-text">What is So Special for Linux?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Linux-Installation"><span class="toc-text">2. Linux Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Installing-Linux"><span class="toc-text">2.1 Installing Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Partitioning-Theory"><span class="toc-text">2.2 Partitioning Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MBR"><span class="toc-text">MBR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GPT"><span class="toc-text">GPT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-File-System"><span class="toc-text">2.3 File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Disk-Partitioning"><span class="toc-text">2.4 Disk Partitioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Linux-Startup-Flow"><span class="toc-text">2.5 Linux Startup Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Input-Output-System-BIOS"><span class="toc-text">Basic Input Output System(BIOS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EFI"><span class="toc-text">EFI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boot-loader"><span class="toc-text">Boot loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB-Grand-Unified-Boot-Loader"><span class="toc-text">GRUB(Grand Unified Boot Loader)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Using-the-System"><span class="toc-text">3. Using the System</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Basic-Knowledge"><span class="toc-text">3.1 Basic Knowledge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-Software-on-Linux"><span class="toc-text">Installing Software on Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-user-and-Multi-tasking"><span class="toc-text">Multi-user and Multi-tasking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Virtual-Terminal"><span class="toc-text">Virtual Terminal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-Commands"><span class="toc-text">Linux Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Command-Syntax"><span class="toc-text">Command Syntax</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Some-Basic-Linux-Commands"><span class="toc-text">Some Basic Linux Commands</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Working-with-Files-and-Directories"><span class="toc-text">3.2 Working with Files and Directories</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Types"><span class="toc-text">File Types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Directory-Structure"><span class="toc-text">Directory Structure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Main-Directories-in-Linux"><span class="toc-text">Main Directories in Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Permission"><span class="toc-text">File Permission</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Changing-Permissions"><span class="toc-text">Changing Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Default-File-Permissions"><span class="toc-text">Default File Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Editing-Files"><span class="toc-text">Editing Files</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Working-with-Processes"><span class="toc-text">3.3 Working with Processes</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-and-Stopping-a-Process"><span class="toc-text">Starting and Stopping a Process</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands-1"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daemons"><span class="toc-text">Daemons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Linux-Documentation"><span class="toc-text">3.4 Linux Documentation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-Find-Help"><span class="toc-text">How to Find Help?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-man-command"><span class="toc-text">The man command</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-info-command"><span class="toc-text">The info command</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Linux-UNIX-Overview"><span class="toc-text">4. Linux&#x2F;UNIX Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Programmer%E2%80%99s-Viewpoint"><span class="toc-text">Programmer’s Viewpoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Linux-System-Basic"><span class="toc-text">5. Linux System Basic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4"><span class="toc-text">5.1 基本命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">5.2 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%AE%A1%E9%81%93"><span class="toc-text">5.3 管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">5.4 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">5.5 高级命令与正则表达式</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-What-is-Linux"><span class="toc-text">1. What is Linux?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-GNU-Linux"><span class="toc-text">1.1 GNU &amp; Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-So-Special-for-Linux"><span class="toc-text">What is So Special for Linux?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Linux-Installation"><span class="toc-text">2. Linux Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Installing-Linux"><span class="toc-text">2.1 Installing Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Partitioning-Theory"><span class="toc-text">2.2 Partitioning Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MBR"><span class="toc-text">MBR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GPT"><span class="toc-text">GPT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-File-System"><span class="toc-text">2.3 File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Disk-Partitioning"><span class="toc-text">2.4 Disk Partitioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Linux-Startup-Flow"><span class="toc-text">2.5 Linux Startup Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Input-Output-System-BIOS"><span class="toc-text">Basic Input Output System(BIOS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EFI"><span class="toc-text">EFI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boot-loader"><span class="toc-text">Boot loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB-Grand-Unified-Boot-Loader"><span class="toc-text">GRUB(Grand Unified Boot Loader)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Using-the-System"><span class="toc-text">3. Using the System</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Basic-Knowledge"><span class="toc-text">3.1 Basic Knowledge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-Software-on-Linux"><span class="toc-text">Installing Software on Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-user-and-Multi-tasking"><span class="toc-text">Multi-user and Multi-tasking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Virtual-Terminal"><span class="toc-text">Virtual Terminal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-Commands"><span class="toc-text">Linux Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Command-Syntax"><span class="toc-text">Command Syntax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Working-with-Files-and-Directories"><span class="toc-text">3.2 Working with Files and Directories</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Types"><span class="toc-text">File Types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Directory-Structure"><span class="toc-text">Directory Structure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Main-Directories-in-Linux"><span class="toc-text">Main Directories in Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Permission"><span class="toc-text">File Permission</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Changing-Permissions"><span class="toc-text">Changing Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Default-File-Permissions"><span class="toc-text">Default File Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Editing-Files"><span class="toc-text">Editing Files</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Working-with-Processes"><span class="toc-text">3.3 Working with Processes</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-and-Stopping-a-Process"><span class="toc-text">Starting and Stopping a Process</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daemons"><span class="toc-text">Daemons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Linux-Documentation"><span class="toc-text">3.4 Linux Documentation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-Find-Help"><span class="toc-text">How to Find Help?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-man-command"><span class="toc-text">The man command</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-info-command"><span class="toc-text">The info command</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Linux-UNIX-Overview"><span class="toc-text">4. Linux&#x2F;UNIX Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Programmer%E2%80%99s-Viewpoint"><span class="toc-text">Programmer’s Viewpoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Linux-System-Basic"><span class="toc-text">5. Linux System Basic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">5.1 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%AE%A1%E9%81%93"><span class="toc-text">5.2 管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">5.3 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">5.4 高级命令与正则表达式</span></a></li></ol></li></ol>
       
     </div>
   </div>
