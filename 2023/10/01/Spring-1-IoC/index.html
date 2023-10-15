@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-10-16 00:14:00
+          2023-10-16 00:18:20
         </span>
         
               <span class="post-categories">
@@ -272,7 +272,7 @@
 <p><strong>周期方法</strong></p>
 <p>概念：当IoC容器实例化和销毁组件对象的时候进行调用的方法</p>
 <p>声明：方法命名随意，但是要求方法必须是 <strong>public void 无形参列表</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BeanOne</span> &#123;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 初始化逻辑</span><br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BeanTwo</span> &#123;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cleanup</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 释放资源逻辑</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BeanOne</span> &#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">init</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 初始化逻辑</span><br>  &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BeanTwo</span> &#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cleanup</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 释放资源逻辑</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <p>配置</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;beanOne&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;examples.BeanOne&quot;</span> <span class="hljs-attr">init-method</span>=<span class="hljs-string">&quot;init&quot;</span> /&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;beanTwo&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;examples.BeanTwo&quot;</span> <span class="hljs-attr">destroy-method</span>=<span class="hljs-string">&quot;cleanup&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
@@ -288,12 +288,13 @@
 <li><code>Class&lt;?&gt; getObjectType()</code>: 返回 <code>getObject()</code> 方法返回的对象类型，如果事先不知道类型，则返回<code>null</code></li>
 </ul>
 <p>使用场景</p>
-<ul>
-<li>代理类的创建</li>
-</ul>
-<ol start="2">
-<li>第三方框架整合</li>
-<li>复杂对象实例化等</li>
+<ol>
+<li><p>代理类的创建</p>
+</li>
+<li><p>第三方框架整合</p>
+</li>
+<li><p>复杂对象实例化等</p>
+</li>
 </ol>
 <p>示例</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 实现FactoryBean接口时需要指定泛型</span><br><span class="hljs-comment">// 泛型类型就是当前工厂要生产的对象的类型</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HappyFactoryBean</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">FactoryBean</span>&lt;HappyMachine&gt; &#123;<br><br>    <span class="hljs-keyword">private</span> String machineName;<br>        <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> HappyMachine <span class="hljs-title function_">getObject</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-comment">// 方法内部模拟创建、设置一个对象的复杂过程</span><br>        <span class="hljs-type">HappyMachine</span> <span class="hljs-variable">happyMachine</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HappyMachine</span>();<br>        happyMachine.setMachineName(<span class="hljs-built_in">this</span>.machineName);<br>        <span class="hljs-keyword">return</span> happyMachine;<br>    &#125;<br>    <br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Class&lt;?&gt; getObjectType() &#123;<br>        <span class="hljs-comment">// 返回要生产的对象的类型</span><br>        <span class="hljs-keyword">return</span> HappyMachine.class;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
@@ -306,7 +307,7 @@
 
 <blockquote>
 <p>FactoryBean和BeanFactory区别</p>
-<p>**FactoryBean **是 Spring 中一种特殊的 bean，可以在 getObject() 工厂方法自定义的逻辑创建Bean！是一种能够生产其他 Bean 的 Bean。FactoryBean 在容器启动时被创建，而在实际使用时则是通过调用 getObject() 方法来得到其所生产的 Bean。因此，FactoryBean 可以自定义任何所需的初始化逻辑，生产出一些定制化的 bean。</p>
+<p><strong>FactoryBean</strong> 是 Spring 中一种特殊的 bean，可以在 getObject() 工厂方法自定义的逻辑创建Bean！是一种能够生产其他 Bean 的 Bean。FactoryBean 在容器启动时被创建，而在实际使用时则是通过调用 getObject() 方法来得到其所生产的 Bean。因此，FactoryBean 可以自定义任何所需的初始化逻辑，生产出一些定制化的 bean。</p>
 <ul>
 <li>一般情况下，整合第三方框架，都是通过定义FactoryBean实现！！！</li>
 </ul>
@@ -318,10 +319,10 @@
 </blockquote>
 <h2 id="2-注解方式"><a href="#2-注解方式" class="headerlink" title="2. 注解方式"></a>2. 注解方式</h2><h3 id="2-1-Bean注解标记和扫描"><a href="#2-1-Bean注解标记和扫描" class="headerlink" title="2.1 Bean注解标记和扫描"></a>2.1 Bean注解标记和扫描</h3><p>Spring提供了以下注解, 功能上没有区别</p>
 <ul>
-<li>@Component: 泛化的注解, 表示容器中的一个组件</li>
-<li>@Repository</li>
-<li>@Service</li>
-<li>@Controller</li>
+<li><code>@Component</code>: 泛化的注解, 表示容器中的一个组件</li>
+<li><code>@Repository</code></li>
+<li><code>@Service</code></li>
+<li><code>@Controller</code></li>
 </ul>
 <p><strong>配置文件确定扫描范围</strong></p>
 <ol>
@@ -381,6 +382,7 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 引入外部配置文件--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">context:property-placeholder</span> <span class="hljs-attr">location</span>=<span class="hljs-string">&quot;application.properties&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 
 <p>使用 <code>@Value</code> 注解读取配置</p>
+<p><a target="_blank" rel="noopener" href="https://www.baeldung.com/spring-value-annotation">https://www.baeldung.com/spring-value-annotation</a></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 情况1: <span class="hljs-doctag">@Value</span>(&quot;str&quot;) 直接注入常量</span><br><span class="hljs-comment"> * 情况2: $&#123;key&#125; 取外部配置key对应的值!</span><br><span class="hljs-comment"> * 情况3: $&#123;key:defaultValue&#125; 没有key,可以给与默认值</span><br><span class="hljs-comment"> * 情况4: #&#123;someBean.someValue&#125; 从其他bean取值</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Value(&quot;$&#123;catalog:hahaha&#125;&quot;)</span><br><span class="hljs-keyword">private</span> String name; <span class="hljs-comment">//hahaha</span><br></code></pre></td></tr></table></figure>
 
 <h3 id="2-4-Resource"><a href="#2-4-Resource" class="headerlink" title="2.4 @Resource"></a>2.4 @Resource</h3><p>也可用于依赖注入，与 <code>@Autowired</code> 区别如下：</p>
@@ -458,7 +460,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-10-16 00:14:00
+              2023-10-16 00:18:20
             </span>
             
                   <span class="post-categories">
