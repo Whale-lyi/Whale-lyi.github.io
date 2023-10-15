@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-10-16 00:05:32
+          2023-10-16 00:14:00
         </span>
         
               <span class="post-categories">
@@ -198,35 +198,21 @@
 </ul>
 <p>基于<strong>静态工厂方法</strong>的实例化</p>
 <ul>
-<li><p>组件类中需要有静态工厂方法</p>
-</li>
-<li><pre><code class="java">public class ClientService &#123;
-  private static ClientService clientService = new ClientService();
-  private ClientService() &#123;&#125;
+<li>组件类中需要有静态工厂方法</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ClientService</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">ClientService</span> <span class="hljs-variable">clientService</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClientService</span>();<br>    <span class="hljs-keyword">private</span> <span class="hljs-title function_">ClientService</span><span class="hljs-params">()</span> &#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> ClientService <span class="hljs-title function_">createInstance</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">return</span> clientService;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-  public static ClientService createInstance() &#123;
-    return clientService;
-  &#125;
-&#125;
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>- ```xml<br>  &lt;bean id=&quot;clientService&quot;<br>  	  class=&quot;examples.ClientService&quot;<br>  	  factory-method=&quot;createInstance&quot;/&gt;<br></code></pre></td></tr></table></figure>
-</code></pre>
-</li>
-<li><p>factory-method: 指定静态工厂方法，<strong>该方法必须是static方法</strong></p>
-</li>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;clientService&quot;</span></span><br><span class="hljs-tag">  	  <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;examples.ClientService&quot;</span></span><br><span class="hljs-tag">  	  <span class="hljs-attr">factory-method</span>=<span class="hljs-string">&quot;createInstance&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>factory-method: 指定静态工厂方法，<strong>该方法必须是static方法</strong></li>
 </ul>
 <p>基于<strong>实例工厂方法</strong>的实例化</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefaultServiceLocator</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">ClientServiceImpl</span> <span class="hljs-variable">clientService</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ClientServiceImpl</span>();<br><br>    <span class="hljs-keyword">public</span> ClientService <span class="hljs-title function_">createClientServiceInstance</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">return</span> clientService;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 将工厂类进行ioc配置 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;serviceLocator&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;examples.DefaultServiceLocator&quot;</span>/&gt;</span><br><br><span class="hljs-comment">&lt;!-- 根据工厂对象的实例工厂方法进行实例化组件对象 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;clientService&quot;</span></span><br><span class="hljs-tag">  	  <span class="hljs-attr">factory-bean</span>=<span class="hljs-string">&quot;serviceLocator&quot;</span></span><br><span class="hljs-tag">  	  <span class="hljs-attr">factory-method</span>=<span class="hljs-string">&quot;createClientServiceInstance&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li><pre><code class="java">public class DefaultServiceLocator &#123;
-
-  private static ClientServiceImpl clientService = new ClientServiceImpl();
-
-  public ClientService createClientServiceInstance() &#123;
-    return clientService;
-  &#125;
-&#125;
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>- ```xml<br>  &lt;!-- 将工厂类进行ioc配置 --&gt;<br>  &lt;bean id=&quot;serviceLocator&quot; class=&quot;examples.DefaultServiceLocator&quot;/&gt;<br>  <br>  &lt;!-- 根据工厂对象的实例工厂方法进行实例化组件对象 --&gt;<br>  &lt;bean id=&quot;clientService&quot;<br>  	  factory-bean=&quot;serviceLocator&quot;<br>  	  factory-method=&quot;createClientServiceInstance&quot;/&gt;<br></code></pre></td></tr></table></figure>
-</code></pre>
-</li>
 <li><p>factory-bean: 指定当前容器中工厂Bean的名称。</p>
 </li>
 <li><p>factory-method: 指定实例工厂方法名。<strong>实例方法必须是非static的</strong></p>
@@ -234,42 +220,22 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310020013837.png" alt="img"></p>
 <h3 id="1-2-Bean依赖注入配置"><a href="#1-2-Bean依赖注入配置" class="headerlink" title="1.2 Bean依赖注入配置"></a>1.2 Bean依赖注入配置</h3><p>基于<strong>构造函数</strong>的依赖注入</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 场景1: 多参数，可以按照相应构造函数的**顺序**注入数据 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x.y.UserService&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- value直接注入基本类型值 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span>  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;18&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span>  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;赵伟风&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span>  <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;userDao&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 被引用类bean声明 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x.y.UserDao&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 场景2: 多参数，可以按照相应构造函数的**名称**注入数据 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x.y.UserService&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;赵伟风&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;userDao&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;age&quot;</span>  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;18&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x.y.UserDao&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 场景3: 多参数，可以按照相应构造函数的**角标**注入数据 </span><br><span class="hljs-comment">         index从0开始 构造函数(0,1,2....)      --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userService&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x.y.UserService&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;1&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;赵伟风&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;2&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;userDao&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;0&quot;</span>  <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;18&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;userDao&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;x.y.UserDao&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
 <ul>
-<li><pre><code class="xml">&lt;!-- 场景1: 多参数，可以按照相应构造函数的**顺序**注入数据 --&gt;
-&lt;beans&gt;
-  &lt;bean id=&quot;userService&quot; class=&quot;x.y.UserService&quot;&gt;
-    &lt;!-- value直接注入基本类型值 --&gt;
-    &lt;constructor-arg  value=&quot;18&quot;/&gt;
-    &lt;constructor-arg  value=&quot;赵伟风&quot;/&gt;
-    &lt;constructor-arg  ref=&quot;userDao&quot;/&gt;
-  &lt;/bean&gt;
-  &lt;!-- 被引用类bean声明 --&gt;
-  &lt;bean id=&quot;userDao&quot; class=&quot;x.y.UserDao&quot;/&gt;
-&lt;/beans&gt;
-
-&lt;!-- 场景2: 多参数，可以按照相应构造函数的**名称**注入数据 --&gt;
-&lt;beans&gt;
-  &lt;bean id=&quot;userService&quot; class=&quot;x.y.UserService&quot;&gt;
-    &lt;constructor-arg name=&quot;name&quot; value=&quot;赵伟风&quot;/&gt;
-    &lt;constructor-arg name=&quot;userDao&quot; ref=&quot;userDao&quot;/&gt;
-    &lt;constructor-arg name=&quot;age&quot;  value=&quot;18&quot;/&gt;
-  &lt;/bean&gt;
-  &lt;bean id=&quot;userDao&quot; class=&quot;x.y.UserDao&quot;/&gt;
-&lt;/beans&gt;
-
-&lt;!-- 场景3: 多参数，可以按照相应构造函数的**角标**注入数据 
-           index从0开始 构造函数(0,1,2....)      --&gt;
-&lt;beans&gt;
-    &lt;bean id=&quot;userService&quot; class=&quot;x.y.UserService&quot;&gt;
-    &lt;constructor-arg index=&quot;1&quot; value=&quot;赵伟风&quot;/&gt;
-    &lt;constructor-arg index=&quot;2&quot; ref=&quot;userDao&quot;/&gt;
-    &lt;constructor-arg index=&quot;0&quot;  value=&quot;18&quot;/&gt;
-  &lt;/bean&gt;
-  &lt;bean id=&quot;userDao&quot; class=&quot;x.y.UserDao&quot;/&gt;
-&lt;/beans&gt;
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>- constructor-arg：可以引用构造参数<br><br>  - name属性指定参数名<br>  - index属性指定参数角标<br>  - value属性指定普通属性值<br>  - ref引用其他bean的标识<br><br>基于**Setter方法**的依赖注入<br><br>- ```xml<br>  &lt;bean id=&quot;simpleMovieLister&quot; class=&quot;examples.SimpleMovieLister&quot;&gt;<br>    &lt;!-- setter方法，注入movieFinder对象的标识id<br>         name = 属性名  ref = 引用bean的id值    --&gt;<br>    &lt;property name=&quot;movieFinder&quot; ref=&quot;movieFinder&quot; /&gt;<br>  <br>    &lt;!-- setter方法，注入基本数据类型movieName<br>         name = 属性名 value = 基本类型值        --&gt;<br>    &lt;property name=&quot;movieName&quot; value=&quot;消失的她&quot;/&gt;<br>  &lt;/bean&gt;<br>  <br>  &lt;bean id=&quot;movieFinder&quot; class=&quot;examples.MovieFinder&quot;/&gt;<br></code></pre></td></tr></table></figure>
-</code></pre>
+<li><p>constructor-arg：可以引用构造参数</p>
+<ul>
+<li>name属性指定参数名</li>
+<li>index属性指定参数角标</li>
+<li>value属性指定普通属性值</li>
+<li>ref引用其他bean的标识</li>
+</ul>
 </li>
+</ul>
+<p>基于<strong>Setter方法</strong>的依赖注入</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;simpleMovieLister&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;examples.SimpleMovieLister&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- setter方法，注入movieFinder对象的标识id</span><br><span class="hljs-comment">         name = 属性名  ref = 引用bean的id值    --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;movieFinder&quot;</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;movieFinder&quot;</span> /&gt;</span><br>    <span class="hljs-comment">&lt;!-- setter方法，注入基本数据类型movieName</span><br><span class="hljs-comment">         name = 属性名 value = 基本类型值        --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;movieName&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;消失的她&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;movieFinder&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;examples.MovieFinder&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
 <li><p>property：可以给setter方法对应的属性赋值</p>
 <ul>
 <li>name: <strong>set方法标识</strong></li>
@@ -492,7 +458,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-10-16 00:05:32
+              2023-10-16 00:14:00
             </span>
             
                   <span class="post-categories">
