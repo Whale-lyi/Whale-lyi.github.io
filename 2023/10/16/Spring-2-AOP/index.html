@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-10-19 14:07:18
+          2023-10-21 15:05:40
         </span>
         
               <span class="post-categories">
@@ -180,15 +180,157 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="1-代理模式"><a href="#1-代理模式" class="headerlink" title="1. 代理模式"></a>1. 代理模式</h2><blockquote>
-<p>代理在开发中实现的方式具体有两种：<a target="_blank" rel="noopener" href="https://whalefall.top/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-3-%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/#5-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1">静态代理</a>，动态代理</p>
-<p>静态代理虽然实现了解耦，但由于硬编码，不具备灵活性。例如各个模块都需要日志功能，要声明多个静态代理类，产生大量重复代码。因此要使用动态代理技术</p>
-</blockquote>
-<p>动态代理分类</p>
+        <h2 id="1-AOP思想及术语"><a href="#1-AOP思想及术语" class="headerlink" title="1. AOP思想及术语"></a>1. AOP思想及术语</h2><p>见<a target="_blank" rel="noopener" href="https://whalefall.top/2023/02/16/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-1-Spring/#%E9%9D%A2%E5%90%91%E5%88%87%E9%9D%A2%E7%BC%96%E7%A8%8B-AOP">服务端开发</a></p>
+<h2 id="2-Spring-AOP基于注解方式实现"><a href="#2-Spring-AOP基于注解方式实现" class="headerlink" title="2. Spring AOP基于注解方式实现"></a>2. Spring AOP基于注解方式实现</h2><h3 id="2-1-Spring-AOP底层技术"><a href="#2-1-Spring-AOP底层技术" class="headerlink" title="2.1 Spring AOP底层技术"></a>2.1 Spring AOP底层技术</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310191643921.png" alt="img"></p>
+<p>动态代理见<a target="_blank" rel="noopener" href="https://whalefall.top/2023/10/19/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/#3-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86">Java动态代理</a></p>
 <ul>
-<li>JDK动态代理：JDK原生的实现方式，需要<strong>被代理的目标类实现接口</strong>！会根据目标类的接口动态生成一个代理对象！代理对象和目标对象有相同的接口</li>
-<li>cglib：通过<strong>继承被代理的目标类实现代理</strong>，所以不需要目标类实现接口</li>
+<li>JDK 动态代理：JDK原生的实现方式，需要被代理的目标类必须实现接口。因为这个技术要求代理对象和目标对象实现同样的接口</li>
+<li>cglib：通过继承被代理的目标类实现代理，所以不需要目标类实现接口</li>
+<li>AspectJ：早期的AOP实现的框架，Spring AOP借用了AspectJ中的AOP注解</li>
 </ul>
+<h3 id="2-2-示例"><a href="#2-2-示例" class="headerlink" title="2.2 示例"></a>2.2 示例</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// @Aspect表示这个类是一个切面类</span><br><span class="hljs-meta">@Aspect</span><br><span class="hljs-comment">// @Component注解保证这个切面类能够放入IOC容器</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogAspect</span> &#123;        <br>    <span class="hljs-comment">// @Before注解：声明当前方法是前置通知方法</span><br>    <span class="hljs-comment">// value属性：指定切入点表达式，由切入点表达式控制当前通知方法要作用在哪一个目标方法上</span><br>    <span class="hljs-meta">@Before(value = &quot;execution(public int com.atguigu.proxy.CalculatorPureImpl.add(int,int))&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printLogBeforeCore</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;[AOP前置通知] 方法开始了&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">@AfterReturning(value = &quot;execution(public int com.atguigu.proxy.CalculatorPureImpl.add(int,int))&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printLogAfterSuccess</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;[AOP返回通知] 方法成功返回了&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">@AfterThrowing(value = &quot;execution(public int com.atguigu.proxy.CalculatorPureImpl.add(int,int))&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printLogAfterException</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;[AOP异常通知] 方法抛异常了&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-meta">@After(value = &quot;execution(public int com.atguigu.proxy.CalculatorPureImpl.add(int,int))&quot;)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printLogFinallyEnd</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;[AOP后置通知] 方法最终结束了&quot;</span>);<br>    &#125;   <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>开启 aspectj 注解支持</p>
+<ol>
+<li>XML方式: <code>&lt;aop:aspectj-autoproxy /&gt;</code></li>
+<li>配置类方式: <code>@EnableAspectJAutoProxy</code></li>
+</ol>
+<p>编写测试类及运行结果</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//@SpringJUnitConfig(locations = &quot;classpath:spring-aop.xml&quot;)</span><br><span class="hljs-meta">@SpringJUnitConfig(value = &#123;MyConfig.class&#125;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AopTest</span> &#123;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> Calculator calculator;<br><br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testCalculator</span><span class="hljs-params">()</span>&#123;<br>        calculator.add(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310201502163.png" alt="image-20231020150244112"></p>
+<h3 id="2-3-获取通知细节信息"><a href="#2-3-获取通知细节信息" class="headerlink" title="2.3 获取通知细节信息"></a>2.3 获取通知细节信息</h3><p><strong>JoinPoint接口</strong></p>
+<p>需要获取方法签名、传入的实参等信息时，可以在通知方法声明JoinPoint类型的形参</p>
+<ul>
+<li>JoinPoint 接口通过 <code>getSignature()</code> 方法获取目标方法的签名（方法声明时的完整信息）</li>
+<li>通过目标方法签名对象获取方法名</li>
+<li>通过 JoinPoint 对象获取外界调用目标方法时传入的实参列表组成的数组</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(value = &quot;execution(public int top.whalefall.CalculatorPureImpl.add(int, int))&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printBeforeCore</span><span class="hljs-params">(JoinPoint joinPoint)</span> &#123;<br>    <span class="hljs-comment">// 1. 通过JoinPoint对象获取目标方法签名对象</span><br>    <span class="hljs-type">Signature</span> <span class="hljs-variable">signature</span> <span class="hljs-operator">=</span> joinPoint.getSignature();<br><br>    <span class="hljs-comment">// 2. 通过方法的签名对象获取目标方法的详细信息</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span> signature.getName();<br>    System.out.println(<span class="hljs-string">&quot;methodName = &quot;</span> + methodName);<br><br>    <span class="hljs-type">int</span> <span class="hljs-variable">modifiers</span> <span class="hljs-operator">=</span> signature.getModifiers();<br>    System.out.println(<span class="hljs-string">&quot;modifiers = &quot;</span> + modifiers);<br><br>    <span class="hljs-type">String</span> <span class="hljs-variable">declaringTypeName</span> <span class="hljs-operator">=</span> signature.getDeclaringTypeName();<br>    System.out.println(<span class="hljs-string">&quot;declaringTypeName = &quot;</span> + declaringTypeName);<br><br>    <span class="hljs-comment">// 3. 通过JoinPoint对象获取外界调用目标方法时传入的实参列表</span><br>    Object[] args = joinPoint.getArgs();<br>    System.out.println(<span class="hljs-string">&quot;[AOP前置通知]&quot;</span> + methodName + <span class="hljs-string">&quot;方法开始了, 参数列表: &quot;</span> + Arrays.asList(args));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310202052311.png" alt="image-20231020205220248"></p>
+<blockquote>
+<p>注: 这里显示的是接口的方法签名</p>
+</blockquote>
+<p><strong>方法返回值</strong></p>
+<p>在返回通知中，通过 <code>@AfterReturning</code> 注解的 returning 属性获取目标方法的返回值</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AfterReturning(value = &quot;execution(public int top.whalefall.CalculatorPureImpl.add(int, int))&quot;,</span><br><span class="hljs-meta">                returning = &quot;targetMethodReturnValue&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printLogAfterSuccess</span><span class="hljs-params">(JoinPoint joinPoint, Object targetMethodReturnValue)</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span> joinPoint.getSignature().getName();<br>    System.out.println(<span class="hljs-string">&quot;[AOP返回通知]&quot;</span> + methodName + <span class="hljs-string">&quot;方法成功返回了, 返回值是: &quot;</span> + targetMethodReturnValue);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310202107167.png" alt="image-20231020210702117"></p>
+<p><strong>异常对象捕获</strong></p>
+<p>在异常通知中，通过 <code>@AfterThrowing</code> 注解的throwing属性获取目标方法抛出的异常对象</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@AfterThrowing(value = &quot;execution(public int top.whalefall.CalculatorPureImpl.add(int, int))&quot;,</span><br><span class="hljs-meta">               throwing = &quot;targetMethodException&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printLogAfterException</span><span class="hljs-params">(JoinPoint joinPoint, Throwable targetMethodException)</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span> joinPoint.getSignature().getName();<br>    System.out.println(<span class="hljs-string">&quot;[AOP异常通知]&quot;</span> + methodName + <span class="hljs-string">&quot;方法抛异常了, 异常类型是: &quot;</span> + targetMethodException.getClass().getName());<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310202120891.png" alt="image-20231020212030852"></p>
+<h3 id="2-4-切点表达式"><a href="#2-4-切点表达式" class="headerlink" title="2.4 切点表达式"></a>2.4 切点表达式</h3><p><strong>切点表达式语法</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310210026505.png" alt="img"></p>
+<ul>
+<li>第一位：execution() 固定开头</li>
+<li>第二位：方法访问修饰符</li>
+<li>第三位：方法返回值<ul>
+<li>注：execution(* *) 是错误语法</li>
+<li>execution(*) &#x3D;&#x3D; 只要不考虑 返回值 或者 访问修饰符 相当于全部不考虑了</li>
+</ul>
+</li>
+<li>第四位：指定包的地址<ul>
+<li><code>*</code>: 任意一层的任意命名</li>
+<li><code>..</code>: 任意层, 任意命名, 不能用作包开头</li>
+<li>任何包使用 <code>*..</code></li>
+</ul>
+</li>
+<li>第五位：指定类名称<ul>
+<li><code>*</code>: 任意类名</li>
+<li>部分任意: <code>com..service.impl.*Impl</code></li>
+<li><code>*..*</code>: 任意包任意类</li>
+</ul>
+</li>
+<li>第六位：指定方法名称<ul>
+<li>语法与类名一致</li>
+<li>任意访问修饰符, 任意类的任意方法: <code>* *..*.*</code></li>
+</ul>
+</li>
+<li>第七位：方法参数<ul>
+<li>模糊值: 任意参数 有 或者 没有 (..)</li>
+<li>第一个参数是字符串的方法 (String..)</li>
+<li>最后一个参数是字符串 (..String)</li>
+<li>字符串开头, int结尾 (String..int)</li>
+<li>包含int类型 (..int..)</li>
+</ul>
+</li>
+</ul>
+<p><strong>重用切点表达式</strong></p>
+<p>同一类内部引用</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(&quot;execution(public int top.whalefall.CalculatorPureImpl.add(int, int))&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">declarePointCut</span><span class="hljs-params">()</span> &#123;&#125;<br><br><span class="hljs-meta">@Before(value = &quot;declarePointCut()&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printBeforeCore</span><span class="hljs-params">(JoinPoint joinPoint)</span> &#123;...&#125;<br></code></pre></td></tr></table></figure>
+
+<p>不同类中引用</p>
+<p>只需要添加类的全限定符 + 方法名即可</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Before(value = &quot;top.whalefall.LogAspect.declarPointCut()&quot;)</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">roundAdvice</span><span class="hljs-params">(ProceedingJoinPoint joinPoint)</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>建议将切点表达式统一存储到一个类中进行集中管理和维护</p>
+</blockquote>
+<h3 id="2-5-环绕通知"><a href="#2-5-环绕通知" class="headerlink" title="2.5 环绕通知"></a>2.5 环绕通知</h3><p><code>@Around</code> &#x3D;&#x3D; <code>@Before</code> + <code>@After</code> &#x3D;&#x3D; <code>@Before</code> + <code>@AfterReturning</code> + <code>@AfterThrowing</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(value = &quot;execution(public int top.whalefall.CalculatorPureImpl.sub(int, int))&quot;)</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">manageTransaction</span><span class="hljs-params">(ProceedingJoinPoint joinPoint)</span> &#123;<br>    <span class="hljs-type">Logger</span> <span class="hljs-variable">log</span> <span class="hljs-operator">=</span> LogManager.getLogger(LogAspect.class);<br>    <span class="hljs-comment">// 通过ProceedingJoinPoint对象获取外界调用目标方法时传入的实参数组</span><br>    Object[] args = joinPoint.getArgs();<br>    <span class="hljs-comment">// 通过ProceedingJoinPoint对象获取目标方法的签名对象</span><br>    <span class="hljs-type">Signature</span> <span class="hljs-variable">signature</span> <span class="hljs-operator">=</span> joinPoint.getSignature();<br>    <span class="hljs-comment">// 通过签名对象获取目标方法的方法名</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">methodName</span> <span class="hljs-operator">=</span> signature.getName();<br>    <span class="hljs-comment">// 声明变量用来存储目标方法的返回值</span><br>    <span class="hljs-type">Object</span> <span class="hljs-variable">targetMethodReturnValue</span> <span class="hljs-operator">=</span> <span class="hljs-literal">null</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-comment">// 在目标方法执行前：开启事务（模拟）</span><br>        log.info(<span class="hljs-string">&quot;[AOP 环绕通知] 开启事务，方法名：&quot;</span> + methodName + <span class="hljs-string">&quot;，参数列表：&quot;</span> + Arrays.asList(args));<br>        <span class="hljs-comment">// 通过ProceedingJoinPoint对象调用目标方法</span><br>        <span class="hljs-comment">// 目标方法的返回值一定要返回给外界调用者</span><br>        targetMethodReturnValue = joinPoint.proceed(args);<br>        <span class="hljs-comment">// 在目标方法成功返回后：提交事务（模拟）</span><br>        log.info(<span class="hljs-string">&quot;[AOP 环绕通知] 提交事务，方法名：&quot;</span> + methodName + <span class="hljs-string">&quot;，方法返回值：&quot;</span> + targetMethodReturnValue);<br>    &#125;<span class="hljs-keyword">catch</span> (Throwable e)&#123;<br>        <span class="hljs-comment">// 在目标方法抛异常后：回滚事务（模拟）</span><br>        log.info(<span class="hljs-string">&quot;[AOP 环绕通知] 回滚事务，方法名：&quot;</span> + methodName + <span class="hljs-string">&quot;，异常：&quot;</span> + e.getClass().getName());<br>    &#125;<span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-comment">// 在目标方法最终结束后：释放数据库连接</span><br>        log.info(<span class="hljs-string">&quot;[AOP 环绕通知] 释放数据库连接，方法名：&quot;</span> + methodName);<br>    &#125;<br>    <span class="hljs-keyword">return</span> targetMethodReturnValue;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310211438004.png" alt="image-20231021143809949"></p>
+<h3 id="2-6-切面优先级设置"><a href="#2-6-切面优先级设置" class="headerlink" title="2.6 切面优先级设置"></a>2.6 切面优先级设置</h3><p>相同目标方法上同时存在多个切面时，切面的优先级控制切面的内外嵌套顺序。</p>
+<ul>
+<li>优先级高的切面：外面</li>
+<li>优先级低的切面：里面</li>
+</ul>
+<p>使用 <code>@Order</code> 注解可以控制切面的优先级(用在类上)：</p>
+<ul>
+<li><code>@Order(较小的数)</code>：优先级高</li>
+<li><code>@Order(较大的数)</code>：优先级低</li>
+</ul>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310211449489.png" alt="img" style="zoom: 50%;" />
+
+<blockquote>
+<p>如果目标类有接口, Spring自动选择使用jdk动态代理</p>
+<p>如果目标类没有接口, Spring自动选择cglib动态代理</p>
+</blockquote>
+<h2 id="3-Spring-AOP基于XML方式实现"><a href="#3-Spring-AOP基于XML方式实现" class="headerlink" title="3. Spring AOP基于XML方式实现"></a>3. Spring AOP基于XML方式实现</h2><p>配置文件</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 配置目标类的bean --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;calculatorPure&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.atguigu.aop.imp.CalculatorPureImpl&quot;</span>/&gt;</span><br><span class="hljs-comment">&lt;!-- 配置切面类的bean --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;logAspect&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;com.atguigu.aop.aspect.LogAspect&quot;</span>/&gt;</span><br><span class="hljs-comment">&lt;!-- 配置AOP --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">aop:config</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 配置切入点表达式 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:pointcut</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;logPointCut&quot;</span> <span class="hljs-attr">expression</span>=<span class="hljs-string">&quot;execution(* *..*.*(..))&quot;</span>/&gt;</span><br>    <span class="hljs-comment">&lt;!-- aop:aspect标签：配置切面 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- ref属性：关联切面类的bean --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">aop:aspect</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;logAspect&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- aop:before标签：配置前置通知 --&gt;</span><br>        <span class="hljs-comment">&lt;!-- method属性：指定前置通知的方法名 --&gt;</span><br>        <span class="hljs-comment">&lt;!-- pointcut-ref属性：引用切入点表达式 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:before</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;printLogBeforeCore&quot;</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;logPointCut&quot;</span>/&gt;</span><br>        <br>        <span class="hljs-comment">&lt;!-- aop:after-returning标签：配置返回通知 --&gt;</span><br>        <span class="hljs-comment">&lt;!-- returning属性：指定通知方法中用来接收目标方法返回值的参数名 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-returning</span></span><br><span class="hljs-tag">                <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;printLogAfterCoreSuccess&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;logPointCut&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">returning</span>=<span class="hljs-string">&quot;targetMethodReturnValue&quot;</span>/&gt;</span><br>        <br>        <span class="hljs-comment">&lt;!-- aop:after-throwing标签：配置异常通知 --&gt;</span><br>        <span class="hljs-comment">&lt;!-- throwing属性：指定通知方法中用来接收目标方法抛出异常的异常对象的参数名 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after-throwing</span></span><br><span class="hljs-tag">                <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;printLogAfterCoreException&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;logPointCut&quot;</span></span><br><span class="hljs-tag">                <span class="hljs-attr">throwing</span>=<span class="hljs-string">&quot;targetMethodException&quot;</span>/&gt;</span><br>    <br>        <span class="hljs-comment">&lt;!-- aop:after标签：配置后置通知 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">aop:after</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;printLogCoreFinallyEnd&quot;</span> <span class="hljs-attr">pointcut-ref</span>=<span class="hljs-string">&quot;logPointCut&quot;</span>/&gt;</span><br>    <br>        <span class="hljs-comment">&lt;!-- aop:around标签：配置环绕通知 --&gt;</span><br>        <span class="hljs-comment">&lt;!--&lt;aop:around method=&quot;……&quot; pointcut-ref=&quot;logPointCut&quot;/&gt;--&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">aop:aspect</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">aop:config</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="4-Spring-AOP对获取Bean的影响"><a href="#4-Spring-AOP对获取Bean的影响" class="headerlink" title="4. Spring AOP对获取Bean的影响"></a>4. Spring AOP对获取Bean的影响</h2><table>
+<thead>
+<tr>
+<th>有无接口</th>
+<th>实现类个数</th>
+<th>有无切面</th>
+<th>根据接口获取bean</th>
+<th>根据类获取bean</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>有</td>
+<td>1</td>
+<td>无</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>有</td>
+<td>多个</td>
+<td>无</td>
+<td>不可以</td>
+<td>可以</td>
+</tr>
+<tr>
+<td>有</td>
+<td>1</td>
+<td>有</td>
+<td>可以</td>
+<td>不可以，<strong>容器中的是代理类的对象</strong></td>
+</tr>
+<tr>
+<td>无</td>
+<td>1</td>
+<td>有</td>
+<td></td>
+<td>可以，cglib通过继承生成的代理类</td>
+</tr>
+</tbody></table>
 
       </div>
       
@@ -204,7 +346,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-10-19 14:07:18
+              2023-10-21 15:05:40
             </span>
             
                   <span class="post-categories">
@@ -244,7 +386,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="toc-text">1. 代理模式</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-AOP%E6%80%9D%E6%83%B3%E5%8F%8A%E6%9C%AF%E8%AF%AD"><span class="toc-text">1. AOP思想及术语</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Spring-AOP%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0"><span class="toc-text">2. Spring AOP基于注解方式实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Spring-AOP%E5%BA%95%E5%B1%82%E6%8A%80%E6%9C%AF"><span class="toc-text">2.1 Spring AOP底层技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A4%BA%E4%BE%8B"><span class="toc-text">2.2 示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%8E%B7%E5%8F%96%E9%80%9A%E7%9F%A5%E7%BB%86%E8%8A%82%E4%BF%A1%E6%81%AF"><span class="toc-text">2.3 获取通知细节信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%88%87%E7%82%B9%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">2.4 切点表达式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E7%8E%AF%E7%BB%95%E9%80%9A%E7%9F%A5"><span class="toc-text">2.5 环绕通知</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E5%88%87%E9%9D%A2%E4%BC%98%E5%85%88%E7%BA%A7%E8%AE%BE%E7%BD%AE"><span class="toc-text">2.6 切面优先级设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Spring-AOP%E5%9F%BA%E4%BA%8EXML%E6%96%B9%E5%BC%8F%E5%AE%9E%E7%8E%B0"><span class="toc-text">3. Spring AOP基于XML方式实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Spring-AOP%E5%AF%B9%E8%8E%B7%E5%8F%96Bean%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">4. Spring AOP对获取Bean的影响</span></a></li></ol>
       
     </div>
   </div>
