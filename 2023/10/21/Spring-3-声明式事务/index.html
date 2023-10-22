@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      Spring(3) 声明式事务 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Spring(3) 声明式事务</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-10-23 00:52:04
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/Spring/" title="Spring">
+                    <b>#</b> Spring
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-声明式事务概念"><a href="#1-声明式事务概念" class="headerlink" title="1. 声明式事务概念"></a>1. 声明式事务概念</h2><p><strong>编程式事务</strong>指通过编写代码的方式直接控制事务的提交和回滚。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> ...; <br><br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">// 开启事务：关闭事务的自动提交</span><br>    conn.setAutoCommit(<span class="hljs-literal">false</span>);<br>    <span class="hljs-comment">// 提交事务</span><br>    conn.commit();<br>&#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>    <span class="hljs-comment">// 回滚事务</span><br>    conn.rollBack();<br>&#125;<span class="hljs-keyword">finally</span>&#123;<br>    <span class="hljs-comment">// 释放数据库连接</span><br>    conn.close();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>细节没有被屏蔽：具体操作过程中，所有细节都需要程序员自己来完成，比较繁琐。</li>
+<li>代码复用性不高：如果没有有效抽取出来，每次实现功能都需要自己编写代码，代码就没有得到复用。</li>
+</ul>
+<p><strong>声明式事务</strong>是指使用注解或 XML 配置的方式来控制事务的提交和回滚。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310221516616.png" alt="image-20231022151604444"></p>
+<p>Spring声明式事务对应依赖</p>
+<ul>
+<li>spring-tx: 包含声明式事务实现的基本规范（事务管理器规范接口和事务增强等等）</li>
+<li>spring-jdbc: 包含DataSource方式事务管理器实现类DataSourceTransactionManager</li>
+<li>spring-orm: 包含其他持久层框架的事务管理器实现类例如：Hibernate&#x2F;Jpa等</li>
+</ul>
+<p>Spring声明式事务对应事务管理器接口</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310221519594.png" alt="img"></p>
+<p><code>org.springframework.jdbc.datasource.DataSourceTransactionManager</code>可用于整合 <code>JDBC</code>方式、<code>JdbcTemplate</code>方式、<code>Mybatis</code>方式的事务实现</p>
+<p><code>DataSourceTransactionManager</code>类中的主要方法：</p>
+<ul>
+<li><code>doBegin()</code>：开启事务</li>
+<li><code>doSuspend()</code>：挂起事务</li>
+<li><code>doResume()</code>：恢复挂起的事务</li>
+<li><code>doCommit()</code>：提交事务</li>
+<li><code>doRollback()</code>：回滚事务</li>
+</ul>
+<h2 id="2-基于注解的声明式事务"><a href="#2-基于注解的声明式事务" class="headerlink" title="2. 基于注解的声明式事务"></a>2. 基于注解的声明式事务</h2><h3 id="2-1-使用方法"><a href="#2-1-使用方法" class="headerlink" title="2.1 使用方法"></a>2.1 使用方法</h3><p>配置类上添加 <code>@EnableTransactionManagement</code>, 实例化 <code>TransactionManager</code> 组件</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;top.whalefall&quot;)</span><br><span class="hljs-meta">@PropertySource(&quot;classpath:jdbc.properties&quot;)</span><br><span class="hljs-meta">@EnableTransactionManagement</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DataSourceConfig</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> DataSource <span class="hljs-title function_">dataSource</span><span class="hljs-params">(<span class="hljs-meta">@Value(&quot;$&#123;whale.url&#125;&quot;)</span>String url,</span><br><span class="hljs-params">                                 <span class="hljs-meta">@Value(&quot;$&#123;whale.driver&#125;&quot;)</span>String driver,</span><br><span class="hljs-params">                                 <span class="hljs-meta">@Value(&quot;$&#123;whale.username&#125;&quot;)</span>String username,</span><br><span class="hljs-params">                                 <span class="hljs-meta">@Value(&quot;$&#123;whale.password&#125;&quot;)</span>String password)</span>&#123;<br>        <span class="hljs-type">DruidDataSource</span> <span class="hljs-variable">dataSource</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DruidDataSource</span>();<br>        dataSource.setDriverClassName(driver);<br>        dataSource.setUrl(url);<br>        dataSource.setUsername(username);<br>        dataSource.setPassword(password);<br><br>        <span class="hljs-keyword">return</span> dataSource;<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> JdbcTemplate <span class="hljs-title function_">jdbcTemplate</span><span class="hljs-params">(DataSource dataSource)</span> &#123;<br>        <span class="hljs-type">JdbcTemplate</span> <span class="hljs-variable">jdbcTemplate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">JdbcTemplate</span>();<br>        jdbcTemplate.setDataSource(dataSource);<br>        <span class="hljs-keyword">return</span> jdbcTemplate;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 装配事务管理实现对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> dataSource</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> TransactionManager <span class="hljs-title function_">transactionManager</span><span class="hljs-params">(DataSource dataSource)</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataSourceTransactionManager</span>(dataSource);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>使用声明事务注解 <code>@Transactional</code></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">changeInfo</span><span class="hljs-params">()</span>&#123;<br>    studentDao.updateAgeById(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>); <span class="hljs-comment">// 被回滚</span><br>    System.out.println(<span class="hljs-string">&quot;-----------&quot;</span>); <span class="hljs-comment">// 这行会执行</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>/<span class="hljs-number">0</span>;<br>    studentDao.updateNameById(<span class="hljs-string">&quot;test1&quot;</span>,<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>将 <code>@Transactional</code> 标记在类上会作用在类中所有方法，设置的事务属性也会延续影响到方法执行时的事务属性</p>
+<p>对一个方法来说，离它最近的 <code>@Transactional</code> 注解中的事务属性设置生效</p>
+</blockquote>
+<h3 id="2-2-事务属性"><a href="#2-2-事务属性" class="headerlink" title="2.2 事务属性"></a>2.2 事务属性</h3><p><strong>只读</strong></p>
+<p><code>@Transactional(readOnly = true)</code></p>
+<p><strong>超时时间</strong></p>
+<p><code>@Transactional(timeout = 3)</code></p>
+<ul>
+<li>单位为秒，默认为 -1，永不超时</li>
+<li>超时会执行回滚</li>
+</ul>
+<p><strong>事务异常</strong></p>
+<p><code>@Transactional(rollbackFor = Exception.class, noRollbackFor = FileNotFoundException.class)</code></p>
+<ul>
+<li>默认只针对运行时异常回滚，编译时异常不回滚</li>
+<li><code>rollbackFor</code>: 指定哪些异常类才会回滚，默认是 <code>RuntimeException and Error</code> 异常方可回滚</li>
+<li><code>noRollbackFor</code>: 指定哪些异常不会回滚, 默认没有指定, 如果指定, 应该在 <code>rollbackFor</code> 的范围内</li>
+</ul>
+<p><strong>事务隔离级别</strong></p>
+<p><code>@Transactional(isolation = Isolation.REPEATABLE_READ)</code></p>
+<ul>
+<li>isolation: 设置事务的隔离级别, mysql默认是repeatable read</li>
+</ul>
+<p>数据库事务的隔离级别是指在多个事务并发执行时，数据库系统为了保证数据一致性所遵循的规定。常见的隔离级别包括：</p>
+<ol>
+<li>读未提交（Read Uncommitted）：事务可以读取未被提交的数据，容易产生脏读、不可重复读和幻读等问题。实现简单但不太安全，一般不用。</li>
+<li>读已提交（Read Committed）：事务只能读取已经提交的数据，可以避免脏读问题，但可能引发不可重复读和幻读。</li>
+<li>可重复读（Repeatable Read）：在一个事务中，相同的查询将返回相同的结果集，不管其他事务对数据做了什么修改。可以避免脏读和不可重复读，但仍有幻读的问题。</li>
+<li>串行化（Serializable）：最高的隔离级别，完全禁止了并发，只允许一个事务执行完毕之后才能执行另一个事务。可以避免以上所有问题，但效率较低，不适用于高并发场景。</li>
+</ol>
+<p><strong>事务传播行为</strong></p>
+<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310230038490.png" alt="img" style="zoom:67%;" />
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">MethodA</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    MethodB();<br>    <span class="hljs-comment">// ...</span><br>&#125;<br><br><span class="hljs-comment">//在被调用的子方法中设置传播行为，代表如何处理调用的事务！ 是加入，还是新事务等！</span><br><span class="hljs-meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">MethodB</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@Transactional</code> 注解通过 <code>propagation</code> 属性设置事务的传播行为</p>
+<ul>
+<li>它的默认值是 <code>Propagation propagation() default Propagation.REQUIRED;</code></li>
+<li>可选值由 <code>org.springframework.transaction.annotation.Propagation</code> 枚举类提供<ul>
+<li><code>Propagation.REQUIRED</code>：如果当前存在事务，则加入当前事务，否则创建一个新事务。</li>
+</ul>
+<ol start="2">
+<li><code>Propagation.REQUIRES_NEW</code>：创建一个新事务，并在新事务中执行。如果当前存在事务，则挂起当前事务，即使新事务抛出异常，也不会影响当前事务。</li>
+<li><code>Propagation.NESTED</code>：如果当前存在事务，则在该事务中嵌套一个新事务，如果没有事务，则与Propagation.REQUIRED一样。</li>
+<li><code>Propagation.SUPPORTS</code>：如果当前存在事务，则加入该事务，否则以非事务方式执行。</li>
+<li><code>Propagation.NOT_SUPPORTED</code>：以非事务方式执行，如果当前存在事务，挂起该事务。</li>
+<li><code>Propagation.MANDATORY</code>：必须在一个已有的事务中执行，否则抛出异常。</li>
+<li><code>Propagation.NEVER</code>：必须在没有事务的情况下执行，否则抛出异常。</li>
+</ol>
+</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong></p>
+<p>在<strong>同一个类</strong>中，对于 <code>@Transactional</code> 注解的方法调用，事务传播行为<strong>不会生效</strong>。这是因为 Spring 框架中使用代理模式实现了事务机制，在同一个类中的方法调用并不经过代理，而是通过对象的方法调用，因此 <code>@Transactional</code> 注解的设置不会被代理捕获，也就不会产生任何事务传播行为的效果。</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/10/19/Java%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-10-23 00:52:04
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/Spring/" title="Spring">
+                        <b>#</b> Spring
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%A6%82%E5%BF%B5"><span class="toc-text">1. 声明式事务概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%9F%BA%E4%BA%8E%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1"><span class="toc-text">2. 基于注解的声明式事务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">2.1 使用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BA%8B%E5%8A%A1%E5%B1%9E%E6%80%A7"><span class="toc-text">2.2 事务属性</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Spring(3)%20%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F10%2F21%2FSpring-3-%25E5%25A3%25B0%25E6%2598%258E%25E5%25BC%258F%25E4%25BA%258B%25E5%258A%25A1%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/10/21/Spring-3-%E5%A3%B0%E6%98%8E%E5%BC%8F%E4%BA%8B%E5%8A%A1/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
