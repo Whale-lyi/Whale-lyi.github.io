@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-10-25 00:35:24
+          2023-10-25 23:16:14
         </span>
         
               <span class="post-categories">
@@ -180,7 +180,58 @@
           
       </div>
       <div class="markdown-body">
-        
+        <h2 id="1-对一映射"><a href="#1-对一映射" class="headerlink" title="1. 对一映射"></a>1. 对一映射</h2><blockquote>
+<p>关键词: <code>association</code>标签&#x2F;<code>javaType</code>属性&#x2F;<code>property</code>属性</p>
+</blockquote>
+<p>设计实体类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Customer</span> &#123;<br>    <span class="hljs-keyword">private</span> Integer customerId;<br>    <span class="hljs-keyword">private</span> String customerName;<br>    <span class="hljs-keyword">private</span> List&lt;Order&gt; orderList;<span class="hljs-comment">// 对多关系</span><br>&#125;  <br><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Order</span> &#123;<br>    <span class="hljs-keyword">private</span> Integer orderId;<br>    <span class="hljs-keyword">private</span> String orderName;<br>    <span class="hljs-keyword">private</span> Customer customer;<span class="hljs-comment">// 对一关系</span><br>&#125;  <br></code></pre></td></tr></table></figure>
+
+<p>OrderMapper接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">OrderMapper</span> &#123;<br>	Order <span class="hljs-title function_">selectOrderWithCustomer</span><span class="hljs-params">(Integer orderId)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>OrderMapper.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectOrderWithCustomerResultMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;order&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;order_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderId&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;order_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderName&quot;</span>/&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 使用association标签配置“对一”关联关系 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- property属性：在Order类中对一的一端进行引用时使用的属性名 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- javaType属性：一的一端类的全类名 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">association</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;customer&quot;</span> <span class="hljs-attr">javaType</span>=<span class="hljs-string">&quot;customer&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 配置Customer类的属性和字段名之间的对应关系 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;customer_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;customerId&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;customer_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;customerName&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">association</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- Order selectOrderWithCustomerById(Integer orderId);--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectOrderWithCustomerById&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;selectOrderWithCustomerResultMap&quot;</span>&gt;</span><br>    select order_id, order_name, c.customer_id, customer_name<br>    from t_order o<br>    left join ssmdb.t_customer c<br>        on o.customer_id = c.customer_id<br>    where o.order_id=#&#123;orderId&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>经测试，将查询语句中的字段添加上表名不影响结果，例如将 <code>order_id</code> 改为 <code>o.order_id</code></p>
+<p>配置文件中的 <code>&lt;setting name=&quot;mapUnderscoreToCamelCase&quot; value=&quot;true&quot;/&gt;</code> 也不影响结果</p>
+</blockquote>
+<p>测试结果</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310252026637.png" alt="image-20231025202642558"></p>
+<h2 id="2-对多映射"><a href="#2-对多映射" class="headerlink" title="2. 对多映射"></a>2. 对多映射</h2><blockquote>
+<p>关键词: <code>collection</code>标签&#x2F;<code>ofType</code>属性&#x2F;<code>property</code>属性</p>
+</blockquote>
+<p>CustomerMapper接口</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Customer <span class="hljs-title function_">selectCustomerWithOrderListById</span><span class="hljs-params">(Integer customerId)</span>;<br></code></pre></td></tr></table></figure>
+
+<p>CustomerMapper.xml</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectCustomerWithOrderListResultMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;customer&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;customer_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;customerId&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;customer_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;customerName&quot;</span>/&gt;</span><br>    <span class="hljs-comment">&lt;!-- collection标签：映射“对多”的关联关系 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- property属性：在Customer类中，关联“多”的一端的属性名 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- ofType属性：集合属性中元素的类型 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">collection</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderList&quot;</span> <span class="hljs-attr">ofType</span>=<span class="hljs-string">&quot;order&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;order_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderId&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;order_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderName&quot;</span>/&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">collection</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- Customer selectCustomerWithOrderListById(Integer customerId);--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectCustomerWithOrderListById&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;selectCustomerWithOrderListResultMap&quot;</span>&gt;</span><br>    select c.customer_id, c.customer_name, o.order_id, o.order_name<br>    from t_customer c<br>    left join ssmdb.t_order o<br>        on c.customer_id = o.customer_id<br>    where c.customer_id = #&#123;customerId&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>测试结果</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310252303723.png" alt="image-20231025230346652"></p>
+<h2 id="3-多表映射优化"><a href="#3-多表映射优化" class="headerlink" title="3. 多表映射优化"></a>3. 多表映射优化</h2><table>
+<thead>
+<tr>
+<th align="left">设置名</th>
+<th align="left">描述</th>
+<th align="left">有效值</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><code>autoMappingBehavior</code></td>
+<td align="left">指定 MyBatis 应如何自动映射列到字段或属性。NONE 表示关闭自动映射；PARTIAL 只会自动映射没有定义嵌套结果映射的字段。 FULL 会自动映射任何复杂的结果集（无论是否嵌套）。</td>
+<td align="left">NONE, PARTIAL, FULL</td>
+<td align="left">PARTIAL</td>
+</tr>
+</tbody></table>
+<p>将 <code>autoMappingBehavior</code> 设置为full, 进行多表resultMap映射的时候，可以省略符合列和属性命名映射规则（列名&#x3D;属性名，或者开启驼峰映射也可以自定映射）的result标签</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--开启resultMap自动映射 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">setting</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;autoMappingBehavior&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;FULL&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>省略 <code>result</code> 标签</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectCustomerWithOrderListResultMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;customer&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;customer_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;customerId&quot;</span>/&gt;</span><br>	<span class="hljs-comment">&lt;!-- &lt;result column=&quot;customer_name&quot; property=&quot;customerName&quot;/&gt;--&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">collection</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderList&quot;</span> <span class="hljs-attr">ofType</span>=<span class="hljs-string">&quot;order&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;order_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;orderId&quot;</span>/&gt;</span><br>		<span class="hljs-comment">&lt;!-- &lt;result column=&quot;order_name&quot; property=&quot;orderName&quot;/&gt;--&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">collection</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+
       </div>
       
         <div class="prev-or-next">
@@ -195,7 +246,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-10-25 00:35:24
+              2023-10-25 23:16:14
             </span>
             
                   <span class="post-categories">
@@ -218,11 +269,33 @@
           </div>
           <div class="post-foot-prev">
             
+              <a href="/2023/10/25/MyBatis-3-%E5%8A%A8%E6%80%81%E8%AF%AD%E5%8F%A5/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
           </div>
         </div>
       
     </div>
     
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AF%B9%E4%B8%80%E6%98%A0%E5%B0%84"><span class="toc-text">1. 对一映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AF%B9%E5%A4%9A%E6%98%A0%E5%B0%84"><span class="toc-text">2. 对多映射</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%A4%9A%E8%A1%A8%E6%98%A0%E5%B0%84%E4%BC%98%E5%8C%96"><span class="toc-text">3. 多表映射优化</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
 
     
   </div>
