@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      MyBatis(4) 缓存 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">MyBatis(4) 缓存</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-10-29 00:54:23
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/MyBatis/" title="MyBatis">
+                    <b>#</b> MyBatis
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-一级缓存"><a href="#1-一级缓存" class="headerlink" title="1. 一级缓存"></a>1. 一级缓存</h2><p>一级缓存是<code>SqlSession</code>级别的，通过同一个<code>SqlSession</code>查询的数据会被缓存，下次查询相同的数据，就会从缓存中直接获取，不会从数据库重新访问</p>
+<p>使一级缓存失效的四种情况:</p>
+<ul>
+<li>不同的<code>SqlSession</code>对应不同的一级缓存  </li>
+<li>同一个<code>SqlSession</code>但是查询条件不同</li>
+<li>同一个<code>SqlSession</code>两次查询期间执行了任何一次<strong>增删改</strong>操作</li>
+<li>同一个<code>SqlSession</code>两次查询期间手动清空了缓存</li>
+</ul>
+<p>一级缓存是<strong>默认开启</strong>的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cacheTest</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">orderMapper</span> <span class="hljs-operator">=</span> session.getMapper(OrderMapper.class);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order1</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order1);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order2</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order2);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310272206039.png" alt="image-20231027220655955"></p>
+<p>当两次查询中间执行一次插入操作, 一级缓存失效</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cacheTest</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">orderMapper</span> <span class="hljs-operator">=</span> session.getMapper(OrderMapper.class);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order1</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order1);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Order</span>(<span class="hljs-literal">null</span>, <span class="hljs-string">&quot;o5&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Customer</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;c01&quot;</span>, <span class="hljs-literal">null</span>));<br>    orderMapper.insertOrder(order);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order2</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order2);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310281653397.png" alt="image-20231028165357327"></p>
+<h2 id="2-二级缓存"><a href="#2-二级缓存" class="headerlink" title="2. 二级缓存"></a>2. 二级缓存</h2><p>二级缓存是<code>SqlSessionFactory</code>级别，通过同一个<code>SqlSessionFactory</code>创建的<code>SqlSession</code>查询的结果会被缓存；此后若再次执行相同的查询语句，结果就会从缓存中获取</p>
+<p>二级缓存开启的条件:</p>
+<ul>
+<li>在核心配置文件中，设置全局配置属性cacheEnabled&#x3D;”true”，默认为true，不需要设置</li>
+<li>在映射文件中添加标签<code>&lt;cache /&gt;</code></li>
+<li>二级缓存必须在<code>SqlSession</code>关闭或提交之后有效</li>
+<li>查询的数据所转换的实体类类型必须实现序列化的接口</li>
+</ul>
+<p>测试类</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testTwoCache</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-type">InputStream</span> <span class="hljs-variable">is</span> <span class="hljs-operator">=</span> Resources.getResourceAsStream(<span class="hljs-string">&quot;mybatis-config.xml&quot;</span>);<br>        <span class="hljs-type">SqlSessionFactory</span> <span class="hljs-variable">sqlSessionFactory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(is);<br><br>        <span class="hljs-type">SqlSession</span> <span class="hljs-variable">sqlSession1</span> <span class="hljs-operator">=</span> sqlSessionFactory.openSession(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">mapper1</span> <span class="hljs-operator">=</span> sqlSession1.getMapper(OrderMapper.class);<br>        System.out.println(mapper1.selectOrderWithCustomerById(<span class="hljs-number">1</span>));<br>        sqlSession1.close();<br><br>        <span class="hljs-type">SqlSession</span> <span class="hljs-variable">sqlSession2</span> <span class="hljs-operator">=</span> sqlSessionFactory.openSession(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">mapper2</span> <span class="hljs-operator">=</span> sqlSession2.getMapper(OrderMapper.class);<br>        System.out.println(mapper2.selectOrderWithCustomerById(<span class="hljs-number">1</span>));<br>        sqlSession2.close();<br>    &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在 OrderMapper.xml 中添加 <code>&lt;cache/&gt;</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310282030660.png" alt="image-20231028203039622"></p>
+<p>Order, Customer类实现 <code>Serializable</code> 接口</p>
+<p>测试结果</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310282028453.png" alt="image-20231028202841386"></p>
+<h3 id="2-1-MyBatis缓存查询的顺序"><a href="#2-1-MyBatis缓存查询的顺序" class="headerlink" title="2.1 MyBatis缓存查询的顺序"></a>2.1 MyBatis缓存查询的顺序</h3><ul>
+<li>先查询二级缓存，因为二级缓存中可能会有其他程序已经查出来的数据，可以拿来直接使用  </li>
+<li>如果二级缓存没有命中，再查询一级缓存  </li>
+<li>如果一级缓存也没有命中，则查询数据库  </li>
+<li>SqlSession关闭之后，一级缓存中的数据会写入二级缓存</li>
+</ul>
+<h2 id="3-整合第三方缓存EHCache"><a href="#3-整合第三方缓存EHCache" class="headerlink" title="3. 整合第三方缓存EHCache"></a>3. 整合第三方缓存EHCache</h2><p><strong>通过第三方实现二级缓存</strong></p>
+<p>添加依赖</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- Mybatis核心 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.5.13<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- junit测试 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-jupiter-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.10.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- MySQL驱动 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-j<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- log4j2日志 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.21.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.21.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- log4j2适配slf4j --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-slf4j-impl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.21.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- slf4j-api --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.slf4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>slf4j-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.7.36<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- Mybatis EHCache整合包 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis.caches<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-ehcache<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>创建EHCache的配置文件ehcache.xml</p>
+<ul>
+<li>名字必须叫<code>ehcache.xml</code></li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span> ?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">ehcache</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:noNamespaceSchemaLocation</span>=<span class="hljs-string">&quot;http://ehcache.org/ehcache.xsd&quot;</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 磁盘保存路径 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">diskStore</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;D:\ehcache&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">defaultCache</span></span><br><span class="hljs-tag">            <span class="hljs-attr">maxElementsInMemory</span>=<span class="hljs-string">&quot;1000&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">maxElementsOnDisk</span>=<span class="hljs-string">&quot;10000000&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">eternal</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">overflowToDisk</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">timeToIdleSeconds</span>=<span class="hljs-string">&quot;120&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">timeToLiveSeconds</span>=<span class="hljs-string">&quot;120&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">diskExpiryThreadIntervalSeconds</span>=<span class="hljs-string">&quot;120&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">memoryStoreEvictionPolicy</span>=<span class="hljs-string">&quot;LRU&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">defaultCache</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ehcache</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>在核心配置文件中，设置全局配置属性cacheEnabled&#x3D;”true”，默认为true，不需要设置</p>
+</blockquote>
+<p>mapper文件配置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--默认的二级缓存--&gt;</span><br><span class="hljs-comment">&lt;!-- &lt;cache/&gt; --&gt;</span><br><br><span class="hljs-comment">&lt;!--使用EhcacheCache缓存--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">cache</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;org.mybatis.caches.ehcache.EhcacheCache&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>配置文件说明</p>
+<table>
+<thead>
+<tr>
+<th align="left">属性名</th>
+<th>是否必须</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">maxElementsInMemory</td>
+<td>是</td>
+<td>在内存中缓存的element的最大数目</td>
+</tr>
+<tr>
+<td align="left">maxElementsOnDisk</td>
+<td>是</td>
+<td>在磁盘上缓存的element的最大数目，若是0表示无穷大</td>
+</tr>
+<tr>
+<td align="left">eternal</td>
+<td>是</td>
+<td>设定缓存的elements是否永远不过期。 如果为true，则缓存的数据始终有效, 如果为false那么还要根据timeToIdleSeconds、timeToLiveSeconds判断</td>
+</tr>
+<tr>
+<td align="left">overflowToDisk</td>
+<td>是</td>
+<td>设定当内存缓存溢出的时候是否将过期的element缓存到磁盘上</td>
+</tr>
+<tr>
+<td align="left">timeToIdleSeconds</td>
+<td>否</td>
+<td>当缓存在EhCache中的数据前后两次访问的时间超过timeToIdleSeconds的属性取值时, 这些数据便会删除，默认值是0,也就是可闲置时间无穷大</td>
+</tr>
+<tr>
+<td align="left">timeToLiveSeconds</td>
+<td>否</td>
+<td>缓存element的有效生命期，默认是0.,也就是element存活时间无穷大</td>
+</tr>
+<tr>
+<td align="left">diskSpoolBufferSizeMB</td>
+<td>否</td>
+<td>DiskStore(磁盘缓存)的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区</td>
+</tr>
+<tr>
+<td align="left">diskPersistent</td>
+<td>否</td>
+<td>在VM重启的时候是否启用磁盘保存EhCache中的数据，默认是false</td>
+</tr>
+<tr>
+<td align="left">diskExpiryThreadIntervalSeconds</td>
+<td>否</td>
+<td>磁盘缓存的清理线程运行间隔，默认是120秒。每个120s, 相应的线程会进行一次EhCache中数据的清理工作</td>
+</tr>
+<tr>
+<td align="left">memoryStoreEvictionPolicy</td>
+<td>否</td>
+<td>当内存缓存达到最大，有新的element加入的时候，移除缓存中element的策略。 默认是LRU(最近最少使用)，可选的有LFU(最不常使用)和FIFO(先进先出)</td>
+</tr>
+</tbody></table>
+<p>测试结果</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310282352842.png" alt="image-20231028235227770"></p>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/10/26/MyBatis-Param%E5%88%86%E6%9E%90/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-10-29 00:54:23
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/MyBatis/" title="MyBatis">
+                        <b>#</b> MyBatis
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/10/29/MyBatis-5-%E6%8F%92%E4%BB%B6-%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-text">1. 一级缓存</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98"><span class="toc-text">2. 二级缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-MyBatis%E7%BC%93%E5%AD%98%E6%9F%A5%E8%AF%A2%E7%9A%84%E9%A1%BA%E5%BA%8F"><span class="toc-text">2.1 MyBatis缓存查询的顺序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%95%B4%E5%90%88%E7%AC%AC%E4%B8%89%E6%96%B9%E7%BC%93%E5%AD%98EHCache"><span class="toc-text">3. 整合第三方缓存EHCache</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+            <i class="iconfont icon-github"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + MyBatis(4)%20%E7%BC%93%E5%AD%98 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F10%2F27%2FMyBatis-4-%25E7%25BC%2593%25E5%25AD%2598%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/10/27/MyBatis-4-%E7%BC%93%E5%AD%98/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>
