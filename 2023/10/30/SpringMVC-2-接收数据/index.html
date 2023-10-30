@@ -11,9 +11,9 @@
   
   <title>
     
-      Category 
+      SpringMVC(2) 接收数据 
       
-       : Backend
+      
       |
     
      Whale&#39;s Blog
@@ -109,32 +109,124 @@
 
 
       <div class="flex-container">
-        <!-- 标签详情页，展示某个标签下的文章列表，url形式：https://yoursite/tags/某个标签/ -->
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
 
-<div class="container category-details">
-  <div class="content-title">
-    <h2>
-      <span>Backend</span>
-    </h2>
-  </div>
+
+  <!-- LaTex Display -->
+
   
-    <div class="post-list">
-      <div class="post-item" title="SpringMVC">
-        <span class="time-m-d">2022-08-01</span>
-        <a href="/2022/08/01/SpringMVC/">
-          <span>SpringMVC</span>
-        </a>
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">SpringMVC(2) 接收数据</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-10-30 15:36:40
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/backend/" title="backend">
+                    <b>#</b> backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/backend/SpringMVC/" title="SpringMVC">
+                    <b>#</b> SpringMVC
+                  </a>
+                </span>
+                
+              </span>
+          
       </div>
+      <div class="markdown-body">
+        
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/10/30/SpringMVC-1-%E6%A0%B8%E5%BF%83%E7%BB%84%E4%BB%B6/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-10-30 15:36:40
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/backend/" title="backend">
+                        <b>#</b> backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/backend/SpringMVC/" title="SpringMVC">
+                        <b>#</b> SpringMVC
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
     </div>
-  
-  <nav class="post-navigation">
     
-      <a href="/categories/Backend/"><i class="iconfont icon-angleleft"></i></a>
+
     
-    <span class="page-num">2 / 2</span>
-    
-  </nav>
-</div>
+  </div>
+
 
         
 <div class="footer">
@@ -402,6 +494,24 @@
 
 
         
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + SpringMVC(2)%20%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F10%2F30%2FSpringMVC-2-%25E6%258E%25A5%25E6%2594%25B6%25E6%2595%25B0%25E6%258D%25AE%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/10/30/SpringMVC-2-%E6%8E%A5%E6%94%B6%E6%95%B0%E6%8D%AE/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
   
   
 <script src="/js/shares.js"></script>
