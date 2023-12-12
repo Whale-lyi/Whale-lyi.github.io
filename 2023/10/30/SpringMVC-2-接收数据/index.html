@@ -162,7 +162,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-11-01 20:19:12
+          2023-12-12 17:05:13
         </span>
         
               <span class="post-categories">
@@ -200,7 +200,7 @@
 <ul>
 <li>在<code>@RequestMapping</code>注解指定 URL 地址时，通过使用通配符，匹配多个类似的地址</li>
 <li><code>/*</code>: 只能匹配URL地址中的一层，如果想准确匹配两层，重复两次即可，如代码示例</li>
-<li><code>/**</code>: 可以匹配URL地址中的任意层</li>
+<li><code>/**</code>: 可以匹配URL地址中的任意层, 在使用<code>**</code>时，只能使用<code>/**/xxx</code>的方式</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@RequestMapping(&quot;/product/*/*&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">show</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;product show!&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -234,7 +234,150 @@
 <p>目前浏览器只支持get和post，若在form表单提交时，为method设置了其他请求方式的字符串(put或delete)，则按照默认的请求方式get处理</p>
 <p>若要发送put和delete请求，则需要通过spring提供的过滤器<code>HiddenHttpMethodFilter</code></p>
 </blockquote>
-<h2 id="2-接收参数"><a href="#2-接收参数" class="headerlink" title="2. 接收参数"></a>2. 接收参数</h2>
+<ol start="6">
+<li><strong><code>@RequestMapping</code>注解的 params 属性</strong></li>
+</ol>
+<p>params属性是一个字符串类型的数组，可以通过四种表达式设置请求参数和请求映射的匹配关系</p>
+<ul>
+<li><p>“param”：要求请求映射所匹配的请求必须携带param请求参数</p>
+</li>
+<li><p>“!param”：要求请求映射所匹配的请求必须不能携带param请求参数</p>
+</li>
+<li><p>“param&#x3D;value”：要求请求映射所匹配的请求必须携带param请求参数且param&#x3D;value</p>
+</li>
+<li><p>“param!&#x3D;value”：要求请求映射所匹配的请求必须携带param请求参数但是param!&#x3D;value</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(</span><br><span class="hljs-meta">        value = &#123;&quot;/testRequestMapping&quot;, &quot;/test&quot;&#125;</span><br><span class="hljs-meta">        ,method = &#123;RequestMethod.GET, RequestMethod.POST&#125;</span><br><span class="hljs-meta">        ,params = &#123;&quot;username&quot;,&quot;password!=123456&quot;&#125;</span><br><span class="hljs-meta">)</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>若当前请求满足 <code>@RequestMapping</code> 注解的 value 和 method 属性，但是不满足 params 属性，此时页面会报错400</p>
+</blockquote>
+<ol start="7">
+<li><strong><code>@RequestMapping</code>注解的headers属性</strong></li>
+</ol>
+<p>headers属性是一个字符串类型的数组，可以通过四种表达式设置请求头信息和请求映射的匹配关系</p>
+<ul>
+<li><p>“header”：要求请求映射所匹配的请求必须携带header请求头信息</p>
+</li>
+<li><p>“!header”：要求请求映射所匹配的请求必须不能携带header请求头信息</p>
+</li>
+<li><p>“header&#x3D;value”：要求请求映射所匹配的请求必须携带header请求头信息且header&#x3D;value</p>
+</li>
+<li><p>“header!&#x3D;value”：要求请求映射所匹配的请求必须携带header请求头信息且header!&#x3D;value</p>
+</li>
+</ul>
+<blockquote>
+<p>若当前请求满足 <code>@RequestMapping</code> 注解的 value 和 method 属性，但是不满足 headers 属性，此时页面显示404错误，即资源未找到</p>
+</blockquote>
+<h2 id="2-接收参数"><a href="#2-接收参数" class="headerlink" title="2. 接收参数"></a>2. 接收参数</h2><h3 id="2-1-param-和-json-参数比较"><a href="#2-1-param-和-json-参数比较" class="headerlink" title="2.1 param 和 json 参数比较"></a>2.1 param 和 json 参数比较</h3><ol>
+<li><p>参数编码：  </p>
+<p> param 类型的参数会被编码为 ASCII 码。而 JSON 类型的参数会被编码为 UTF-8。</p>
+</li>
+<li><p>参数顺序：  </p>
+<p> param 类型的参数没有顺序限制。但是，JSON 类型的参数是有序的。JSON 采用键值对的形式进行传递，其中键值对是有序排列的。</p>
+</li>
+<li><p>数据类型：  </p>
+<p> param 类型的参数仅支持字符串类型、数值类型和布尔类型等简单数据类型。而 JSON 类型的参数则支持更复杂的数据类型，如数组、对象等。</p>
+</li>
+<li><p>嵌套性：  </p>
+<p> param 类型的参数不支持嵌套。但是，JSON 类型的参数支持嵌套，可以传递更为复杂的数据结构。</p>
+</li>
+</ol>
+<p>常见的做法是：在 GET 请求中采用 param 类型的参数，而在 POST 请求中采用 JSON 类型的参数传递。</p>
+<h3 id="2-2-param-参数接收"><a href="#2-2-param-参数接收" class="headerlink" title="2.2 param 参数接收"></a>2.2 param 参数接收</h3><p>只要形参数名和类型与传递参数相同，即可自动接收</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 前端请求: http://localhost:8080/param/value?name=xx&amp;age=18</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> * 可以利用形参列表, 直接接收前端传递的param参数!</span><br><span class="hljs-comment"> *    要求: 参数名 = 形参名   类型相同</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@GetMapping(value=&quot;/value&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">setupForm</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;name = &quot;</span> + name + <span class="hljs-string">&quot;, age = &quot;</span> + age);<br>    <span class="hljs-keyword">return</span> name + age;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@RequestParam</code> 注解</p>
+<ul>
+<li><code>value</code>：指定为形参赋值的请求参数的参数名</li>
+<li><code>required</code>：设置是否必须传输此请求参数，默认值为true</li>
+<li><code>defaultValue</code>：不管required属性值为true或false，当value所指定的请求参数没有传输或传输的值为””时，则使用默认值为形参赋值</li>
+</ul>
+<p>**特殊情况: **</p>
+<ol>
+<li>一名多值: 多选框，提交的数据的时候一个key对应多个值，可以使用集合进行接收<br>如果使用一个字符串变量，接收到的是使用逗号拼接的结果</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 前端请求: http://localhost:8080/param/mul?hbs=吃&amp;hbs=喝</span><br><span class="hljs-comment"> *</span><br><span class="hljs-comment"> *  一名多值,可以使用集合接收即可!但是需要使用<span class="hljs-doctag">@RequestParam</span>注解指定</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@GetMapping(value=&quot;/mul&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">mulForm</span><span class="hljs-params">(<span class="hljs-meta">@RequestParam</span> List&lt;String&gt; hbs)</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;hbs = &quot;</span> + hbs);<br>    <span class="hljs-keyword">return</span> hbs;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>实体接收: 要求属性名必须等于参数名</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(value = &quot;/user&quot;, method = RequestMethod.POST)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">addUser</span><span class="hljs-params">(User user)</span> &#123;<br>    <span class="hljs-comment">// 在这里可以使用 user 对象的属性来接收请求参数</span><br>    System.out.println(<span class="hljs-string">&quot;user = &quot;</span> + user);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;success&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-路径参数接收"><a href="#2-3-路径参数接收" class="headerlink" title="2.3 路径参数接收"></a>2.3 路径参数接收</h3><p><code>@PathVariable</code> 注解</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">  * 动态路径设计: /user/&#123;动态部分&#125;/&#123;动态部分&#125;   动态部分使用&#123;&#125;包含即可! &#123;&#125;内部动态标识!</span><br><span class="hljs-comment">  * 形参列表取值: <span class="hljs-doctag">@PathVariable</span> Long id  如果形参名 = &#123;动态标识&#125; 自动赋值!</span><br><span class="hljs-comment">  * 			<span class="hljs-doctag">@PathVariable</span>(&quot;动态标识&quot;) Long id  如果形参名 != &#123;动态标识&#125; 可以通过指定动态标识赋值!</span><br><span class="hljs-comment">  *</span><br><span class="hljs-comment">  * 访问测试:  /user/1/root  -&gt; id = 1  uname = root</span><br><span class="hljs-comment">  */</span><br><span class="hljs-meta">@GetMapping(&quot;/user/&#123;id&#125;/&#123;name&#125;&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">getUser</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable</span> Long id, </span><br><span class="hljs-params">                      <span class="hljs-meta">@PathVariable(&quot;name&quot;)</span> String uname)</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;id = &quot;</span> + id + <span class="hljs-string">&quot;, uname = &quot;</span> + uname);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;user_detail&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-4-JSON参数接收"><a href="#2-4-JSON参数接收" class="headerlink" title="2.4 JSON参数接收"></a>2.4 JSON参数接收</h3><p><code>@RequestBody</code> 注解</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping(&quot;/person&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">addPerson</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Person person)</span> &#123;<br>  <span class="hljs-comment">// 在这里可以使用 person 对象来操作 JSON 数据中包含的属性</span><br>  <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;success&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>注意：springmvc handlerAdpater要配置json转化器, 配置类需要明确</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//<span class="hljs-doctag">TODO:</span> SpringMVC对应组件的配置类 [声明SpringMVC需要的组件信息]</span><br><br><span class="hljs-comment">//<span class="hljs-doctag">TODO:</span> 导入handlerMapping和handlerAdapter的三种方式</span><br><span class="hljs-comment">//1.自动导入handlerMapping和handlerAdapter [推荐]</span><br><span class="hljs-comment">//2.可以不添加, springmvc会检查是否配置handlerMapping和handlerAdapter, 没有配置默认加载</span><br><span class="hljs-comment">//3.使用@Bean方式配置handlerMapper和handlerAdapter</span><br><span class="hljs-meta">@EnableWebMvc</span>  <span class="hljs-comment">//json数据处理,必须使用此注解,因为他会加入json处理器</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(basePackages = &quot;com.atguigu.controller&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringMvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>pom 添加 jackson 依赖</p>
+<h2 id="3-接收-Cookie-数据"><a href="#3-接收-Cookie-数据" class="headerlink" title="3. 接收 Cookie 数据"></a>3. 接收 Cookie 数据</h2><p><code>@CookieValue</code> 注解</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs cookie">JSESSIONID=415A4AC178C59DACE0B2C9CA727CDD84<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/demo&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handle</span><span class="hljs-params">(<span class="hljs-meta">@CookieValue(&quot;JSESSIONID&quot;)</span> String cookie)</span> &#123; <br>  <span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@CookieValue</code> 注解一共有三个属性：value、required、defaultValue，用法同<code>@RequestParam</code></p>
+<h2 id="4-接受请求头数据"><a href="#4-接受请求头数据" class="headerlink" title="4. 接受请求头数据"></a>4. 接受请求头数据</h2><p><code>@RequestHeader</code> 注解</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs header">Host                    localhost:8080<br>Accept                  text/html,application/xhtml+xml,application/xml;q=0.9<br>Accept-Language         fr,en-gb;q=0.7,en;q=0.3<br>Accept-Encoding         gzip,deflate<br>Accept-Charset          ISO-8859-1,utf-8;q=0.7,*;q=0.7<br>Keep-Alive              300<br></code></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(&quot;/demo&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">handle</span><span class="hljs-params">(<span class="hljs-meta">@RequestHeader(&quot;Accept-Encoding&quot;)</span> String encoding, </span><br><span class="hljs-params">    			   <span class="hljs-meta">@RequestHeader(&quot;Keep-Alive&quot;)</span> <span class="hljs-type">long</span> keepAlive)</span> &#123; <br>	<span class="hljs-comment">//...</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>@RequestHeader</code> 注解一共有三个属性：value、required、defaultValue，用法同<code>@RequestParam</code></p>
+<h2 id="5-原生-API-对象操作"><a href="#5-原生-API-对象操作" class="headerlink" title="5. 原生 API 对象操作"></a>5. 原生 API 对象操作</h2><p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-framework/reference/web/webmvc/mvc-controller/ann-methods/arguments.html">官方文档</a></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 如果想要获取请求或者响应对象,或者会话等,可以直接在形参列表传入,并且不分先后顺序!</span><br><span class="hljs-comment"> * 注意: 接收原生对象,并不影响参数接收!</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@GetMapping(&quot;api&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">api</span><span class="hljs-params">(HttpSession session , HttpServletRequest request,</span><br><span class="hljs-params">                  HttpServletResponse response)</span>&#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">method</span> <span class="hljs-operator">=</span> request.getMethod();<br>    System.out.println(<span class="hljs-string">&quot;method = &quot;</span> + method);<br>    <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> request.getParameter(<span class="hljs-string">&quot;username&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;api&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="6-共享域对象操作"><a href="#6-共享域对象操作" class="headerlink" title="6. 共享域对象操作"></a>6. 共享域对象操作</h2><h3 id="6-1-属性-共享-域作用回顾"><a href="#6-1-属性-共享-域作用回顾" class="headerlink" title="6.1 属性(共享)域作用回顾"></a>6.1 属性(共享)域作用回顾</h3><p>在 JavaWeb 中，共享域指的是在 Servlet 中存储数据，以便在同一 Web 应用程序的多个组件中进行共享和访问。常见的共享域有四种：<code>ServletContext</code>、<code>HttpSession</code>、<code>HttpServletRequest</code>、<code>PageContext</code>。</p>
+<ol>
+<li><code>ServletContext</code> 共享域：<code>ServletContext</code> 对象可以在整个 Web 应用程序中共享数据，是最大的共享域。一般可以用于保存整个 Web 应用程序的全局配置信息，以及所有用户都共享的数据。在 <code>ServletContext</code> 中保存的数据是线程安全的。</li>
+<li><code>HttpSession</code> 共享域：<code>HttpSession</code> 对象可以在同一用户发出的多个请求之间共享数据，但只能在同一个会话中使用。比如，可以将用户登录状态保存在 <code>HttpSession</code> 中，让用户在多个页面间保持登录状态。</li>
+<li><code>HttpServletRequest</code> 共享域：<code>HttpServletRequest</code> 对象可以在同一个请求的多个处理器方法之间共享数据。比如，可以将请求的参数和属性存储在 <code>HttpServletRequest</code> 中，让处理器方法之间可以访问这些数据。</li>
+<li><code>PageContext</code> 共享域：<code>PageContext</code> 对象是在 JSP 页面Servlet 创建时自动创建的。它可以在 JSP 的各个作用域中共享数据，包括<code>pageScope</code>、<code>requestScope</code>、<code>sessionScope</code>、<code>applicationScope</code> 等作用域。</li>
+</ol>
+<p>共享域的作用是提供了方便实用的方式在同一 Web 应用程序的多个组件之间传递数据，并且可以将数据保存在不同的共享域中，根据需要进行选择和使用。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312121705479.png" alt="img"></p>
+<h3 id="6-2-Request级别属性-共享-域"><a href="#6-2-Request级别属性-共享-域" class="headerlink" title="6.2 Request级别属性(共享)域"></a>6.2 Request级别属性(共享)域</h3><ol>
+<li>使用 Model 类型的形参</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@RequestMapping(&quot;/attr/request/model&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testAttrRequestModel</span><span class="hljs-params">(Model model)</span> &#123;<br>    <span class="hljs-comment">// 我们将数据存入模型，SpringMVC 会帮我们把模型数据存入请求域</span><br>    <span class="hljs-comment">// 存入请求域这个动作也被称为暴露到请求域</span><br>    model.addAttribute(<span class="hljs-string">&quot;requestScopeMessageModel&quot;</span>,<span class="hljs-string">&quot;i am very happy[model]&quot;</span>);<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;target&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>使用 ModelMap 类型的形参</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@RequestMapping(&quot;/attr/request/model/map&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testAttrRequestModelMap</span><span class="hljs-params">(ModelMap modelMap)</span> &#123;<br>    <span class="hljs-comment">// 我们将数据存入模型，SpringMVC 会帮我们把模型数据存入请求域</span><br>    <span class="hljs-comment">// 存入请求域这个动作也被称为暴露到请求域</span><br>    modelMap.addAttribute(<span class="hljs-string">&quot;requestScopeMessageModelMap&quot;</span>,<span class="hljs-string">&quot;i am very happy[model map]&quot;</span>);<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;target&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li>使用 Map 类型的形参</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@RequestMapping(&quot;/attr/request/map&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testAttrRequestMap</span><span class="hljs-params">(Map&lt;String, Object&gt; map)</span> &#123;<br>    <span class="hljs-comment">// 我们将数据存入模型，SpringMVC 会帮我们把模型数据存入请求域</span><br>    <span class="hljs-comment">// 存入请求域这个动作也被称为暴露到请求域</span><br>    map.put(<span class="hljs-string">&quot;requestScopeMessageMap&quot;</span>, <span class="hljs-string">&quot;i am very happy[map]&quot;</span>);<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;target&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="4">
+<li>使用原生 request 对象</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@RequestMapping(&quot;/attr/request/original&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testAttrOriginalRequest</span><span class="hljs-params">(HttpServletRequest request)</span> &#123;<br>    request.setAttribute(<span class="hljs-string">&quot;requestScopeMessageOriginal&quot;</span>, <span class="hljs-string">&quot;i am very happy[original]&quot;</span>);<br>    <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;target&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ol start="5">
+<li>使用 ModelAndView 对象</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * ModelAndView有Model和View的功能</span><br><span class="hljs-comment"> * Model主要用于向请求域共享数据</span><br><span class="hljs-comment"> * View主要用于设置视图，实现页面跳转</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@RequestMapping(&quot;/attr/request/mav&quot;)</span><br><span class="hljs-keyword">public</span> ModelAndView <span class="hljs-title function_">testAttrByModelAndView</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 1.创建ModelAndView对象</span><br>    <span class="hljs-type">ModelAndView</span> <span class="hljs-variable">modelAndView</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ModelAndView</span>();<br>    <span class="hljs-comment">// 2.存入模型数据</span><br>    modelAndView.addObject(<span class="hljs-string">&quot;requestScopeMessageMAV&quot;</span>, <span class="hljs-string">&quot;i am very happy[mav]&quot;</span>);<br>    <span class="hljs-comment">// 3.设置视图名称</span><br>    modelAndView.setViewName(<span class="hljs-string">&quot;target&quot;</span>);<br>    <br>    <span class="hljs-keyword">return</span> modelAndView;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>Model、ModelMap、Map的关系</strong></p>
+<p>Model、ModelMap、Map类型的参数其实本质上都是 <code>BindingAwareModelMap</code> 类型的</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Model</span>&#123;&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ModelMap</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">LinkedHashMap</span>&lt;String, Object&gt; &#123;&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ExtendedModelMap</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ModelMap</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Model</span> &#123;&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BindingAwareModelMap</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">ExtendedModelMap</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="6-3-Session级别属性-共享-域"><a href="#6-3-Session级别属性-共享-域" class="headerlink" title="6.3 Session级别属性(共享)域"></a>6.3 Session级别属性(共享)域</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(&quot;/attr/session&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testAttrSession</span><span class="hljs-params">(HttpSession session)</span> &#123;<br>    <span class="hljs-comment">//直接对session对象操作,即对会话范围操作!</span><br>    session.setAttribute(<span class="hljs-string">&quot;testSessionScope&quot;</span>, <span class="hljs-string">&quot;hello,session&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;target&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="6-4-Application级别属性-共享-域"><a href="#6-4-Application级别属性-共享-域" class="headerlink" title="6.4 Application级别属性(共享)域"></a>6.4 Application级别属性(共享)域</h3><p>SpringMVC 会在初始化容器的时候，将 <code>servletContext</code> 对象存储到 IoC 容器中</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br><span class="hljs-keyword">private</span> ServletContext servletContext;<br><br><span class="hljs-meta">@RequestMapping(&quot;/attr/application&quot;)</span><br><span class="hljs-meta">@ResponseBody</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">attrApplication</span><span class="hljs-params">()</span> &#123;<br>    servletContext.setAttribute(<span class="hljs-string">&quot;appScopeMsg&quot;</span>, <span class="hljs-string">&quot;i am hungry...&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;target&quot;</span>;<br>&#125;<br><br><span class="hljs-comment">// 或者通过session获取</span><br><span class="hljs-meta">@RequestMapping(&quot;/testApplication&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testApplication</span><span class="hljs-params">(HttpSession session)</span>&#123;<br>	<span class="hljs-type">ServletContext</span> <span class="hljs-variable">application</span> <span class="hljs-operator">=</span> session.getServletContext();<br>    application.setAttribute(<span class="hljs-string">&quot;testApplicationScope&quot;</span>, <span class="hljs-string">&quot;hello,application&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;success&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="7-解决获取请求参数的乱码问题"><a href="#7-解决获取请求参数的乱码问题" class="headerlink" title="7. 解决获取请求参数的乱码问题"></a>7. 解决获取请求参数的乱码问题</h2><p>解决获取请求参数的乱码问题，可以使用 SpringMVC 提供的编码过滤器<code>CharacterEncodingFilter</code>，但是必须在 web.xml 中进行注册</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--配置springMVC的编码过滤器--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">filter</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-class</span>&gt;</span>org.springframework.web.filter.CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-class</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>encoding<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>UTF-8<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">init-param</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-name</span>&gt;</span>forceResponseEncoding<span class="hljs-tag">&lt;/<span class="hljs-name">param-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">param-value</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">param-value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">init-param</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">filter-mapping</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">filter-name</span>&gt;</span>CharacterEncodingFilter<span class="hljs-tag">&lt;/<span class="hljs-name">filter-name</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/*<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">filter-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注：</p>
+<p>SpringMVC中处理编码的过滤器一定要配置到其他过滤器之前，否则无效</p>
+</blockquote>
+
       </div>
       
         <div class="prev-or-next">
@@ -249,7 +392,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-11-01 20:19:12
+              2023-12-12 17:05:13
             </span>
             
                   <span class="post-categories">
@@ -289,7 +432,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE"><span class="toc-text">1. 访问路径设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0"><span class="toc-text">2. 接收参数</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%E8%AE%BE%E7%BD%AE"><span class="toc-text">1. 访问路径设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0"><span class="toc-text">2. 接收参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-param-%E5%92%8C-json-%E5%8F%82%E6%95%B0%E6%AF%94%E8%BE%83"><span class="toc-text">2.1 param 和 json 参数比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-param-%E5%8F%82%E6%95%B0%E6%8E%A5%E6%94%B6"><span class="toc-text">2.2 param 参数接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%B7%AF%E5%BE%84%E5%8F%82%E6%95%B0%E6%8E%A5%E6%94%B6"><span class="toc-text">2.3 路径参数接收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-JSON%E5%8F%82%E6%95%B0%E6%8E%A5%E6%94%B6"><span class="toc-text">2.4 JSON参数接收</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%8E%A5%E6%94%B6-Cookie-%E6%95%B0%E6%8D%AE"><span class="toc-text">3. 接收 Cookie 数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8E%A5%E5%8F%97%E8%AF%B7%E6%B1%82%E5%A4%B4%E6%95%B0%E6%8D%AE"><span class="toc-text">4. 接受请求头数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8E%9F%E7%94%9F-API-%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C"><span class="toc-text">5. 原生 API 对象操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%85%B1%E4%BA%AB%E5%9F%9F%E5%AF%B9%E8%B1%A1%E6%93%8D%E4%BD%9C"><span class="toc-text">6. 共享域对象操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%B1%9E%E6%80%A7-%E5%85%B1%E4%BA%AB-%E5%9F%9F%E4%BD%9C%E7%94%A8%E5%9B%9E%E9%A1%BE"><span class="toc-text">6.1 属性(共享)域作用回顾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-Request%E7%BA%A7%E5%88%AB%E5%B1%9E%E6%80%A7-%E5%85%B1%E4%BA%AB-%E5%9F%9F"><span class="toc-text">6.2 Request级别属性(共享)域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-Session%E7%BA%A7%E5%88%AB%E5%B1%9E%E6%80%A7-%E5%85%B1%E4%BA%AB-%E5%9F%9F"><span class="toc-text">6.3 Session级别属性(共享)域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-Application%E7%BA%A7%E5%88%AB%E5%B1%9E%E6%80%A7-%E5%85%B1%E4%BA%AB-%E5%9F%9F"><span class="toc-text">6.4 Application级别属性(共享)域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%A7%A3%E5%86%B3%E8%8E%B7%E5%8F%96%E8%AF%B7%E6%B1%82%E5%8F%82%E6%95%B0%E7%9A%84%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98"><span class="toc-text">7. 解决获取请求参数的乱码问题</span></a></li></ol>
       
     </div>
   </div>
