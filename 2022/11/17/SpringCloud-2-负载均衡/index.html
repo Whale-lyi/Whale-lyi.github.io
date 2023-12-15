@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -268,24 +264,17 @@
 </li>
 <li><p><code>RoundRobinRule</code>: 轮询</p>
 </li>
-<li><p><code>RandomRule</code>: 随机</p>
-</li>
-<li><p><code>RetryRule</code>: 先按照<code>RoundRobinRule</code>的策略获取服务，如果获取服务失败则在指定时间内会进行重试，获取可用的服务</p>
-</li>
-<li><p><code>WeightedResponseTimeRule</code>: 对<code>RoundRobinRule</code>的扩展，响应速度越快的实例选择权重越大，越容易被选择</p>
-</li>
-<li><p><code>BestAvailableRule</code>: 会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务</p>
-</li>
-<li><p><code>AvailabilityFilteringRule</code>: 先过滤掉故障实例，再选择并发较小的实例</p>
-</li>
-<li><p><code>ZoneAvoidanceRule</code>: 默认规则，复合判断server所在区域的性能和server的可用性选择服务器</p>
-</li>
+<li><code>RandomRule</code>: 随机</li>
+<li><code>RetryRule</code>: 先按照<code>RoundRobinRule</code>的策略获取服务，如果获取服务失败则在指定时间内会进行重试，获取可用的服务</li>
+<li><code>WeightedResponseTimeRule</code>: 对<code>RoundRobinRule</code>的扩展，响应速度越快的实例选择权重越大，越容易被选择</li>
+<li><code>BestAvailableRule</code>: 会先过滤掉由于多次访问故障而处于断路器跳闸状态的服务，然后选择一个并发量最小的服务</li>
+<li><code>AvailabilityFilteringRule</code>: 先过滤掉故障实例，再选择并发较小的实例</li>
+<li><code>ZoneAvoidanceRule</code>: 默认规则，复合判断server所在区域的性能和server的可用性选择服务器</li>
 </ul>
 </li>
 <li><p><strong>Ribbon负载规则替换</strong></p>
 <ul>
-<li><p>修改cloud-consumer-order80</p>
-</li>
+<li>修改cloud-consumer-order80</li>
 <li><p>注意配置细节</p>
 <ul>
 <li>官方文档明确给出了警告: </li>
@@ -306,11 +295,11 @@
 </ul>
 </li>
 </ul>
-<h3 id="1-4-Ribbon默认负载轮询算法原理"><a href="#1-4-Ribbon默认负载轮询算法原理" class="headerlink" title="1.4 Ribbon默认负载轮询算法原理"></a>1.4 Ribbon默认负载轮询算法原理</h3><p><strong>默认负载轮询算法: rest接口第几次请求数 % 服务器集群总数量 &#x3D; 实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始</strong>。</p>
+<h3 id="1-4-Ribbon默认负载轮询算法原理"><a href="#1-4-Ribbon默认负载轮询算法原理" class="headerlink" title="1.4 Ribbon默认负载轮询算法原理"></a>1.4 Ribbon默认负载轮询算法原理</h3><p><strong>默认负载轮询算法: rest接口第几次请求数 % 服务器集群总数量 = 实际调用服务器位置下标，每次服务重启动后rest接口计数从1开始</strong>。</p>
 <h3 id="1-5-Ribbon之手写轮询算法"><a href="#1-5-Ribbon之手写轮询算法" class="headerlink" title="1.5 Ribbon之手写轮询算法"></a>1.5 Ribbon之手写轮询算法</h3><ul>
-<li><p>7001&#x2F;7002集群启动</p>
+<li><p>7001/7002集群启动</p>
 </li>
-<li><p>8001&#x2F;8002微服务改造- controller</p>
+<li><p>8001/8002微服务改造- controller</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@GetMapping(value = &quot;/lb&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">getPaymentLB</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> serverPort;<span class="hljs-comment">//返回服务接口</span><br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>80订单微服务改造</p>
@@ -326,22 +315,19 @@
 <li><p>OrderController</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderController</span> &#123;<br><br>    <span class="hljs-comment">//public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">PAYMENT_URL</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://CLOUD-PAYMENT-SERVICE&quot;</span>;<br><br>    ...<br><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> LoadBalancer loadBalancer;<br><br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> DiscoveryClient discoveryClient;<br><br>    ...<br><br>    <span class="hljs-meta">@GetMapping(value = &quot;/consumer/payment/lb&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">getPaymentLB</span><span class="hljs-params">()</span><br>    &#123;<br>        List&lt;ServiceInstance&gt; instances = discoveryClient.getInstances(<span class="hljs-string">&quot;CLOUD-PAYMENT-SERVICE&quot;</span>);<br><br>        <span class="hljs-keyword">if</span>(instances == <span class="hljs-literal">null</span> || instances.size() &lt;= <span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>        &#125;<br><br>        <span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">serviceInstance</span> <span class="hljs-operator">=</span> loadBalancer.instances(instances);<br>        <span class="hljs-type">URI</span> <span class="hljs-variable">uri</span> <span class="hljs-operator">=</span> serviceInstance.getUri();<br><br>        <span class="hljs-keyword">return</span> restTemplate.getForObject(uri+<span class="hljs-string">&quot;/payment/lb&quot;</span>,String.class);<br><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
-<li><p>测试 不停地刷新<a target="_blank" rel="noopener" href="http://localhost/consumer/payment/lb%EF%BC%8C%E5%8F%AF%E4%BB%A5%E7%9C%8B%E5%88%B08001/8002%E4%BA%A4%E6%9B%BF%E5%87%BA%E7%8E%B0%E3%80%82">http://localhost/consumer/payment/lb，可以看到8001/8002交替出现。</a></p>
+<li><p>测试 不停地刷新<a target="_blank" rel="noopener" href="http://localhost/consumer/payment/lb，可以看到8001/8002交替出现。">http://localhost/consumer/payment/lb，可以看到8001/8002交替出现。</a></p>
 </li>
 </ul>
 </li>
 </ul>
 <h2 id="2-LoadBalancer"><a href="#2-LoadBalancer" class="headerlink" title="2 LoadBalancer"></a>2 LoadBalancer</h2><h3 id="2-1-负载均衡"><a href="#2-1-负载均衡" class="headerlink" title="2.1 负载均衡"></a>2.1 负载均衡</h3><p>实际上，在添加<code>@LoadBalanced</code>注解之后，会启用拦截器对我们发起的服务调用请求进行拦截(注意这里是针对我们发起的请求进行拦截)，叫做<code>LoadBalancerInterceptor</code>，它实现<code>ClientHttpRequestInterceptor</code>接口: </p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">ClientHttpRequestInterceptor</span> &#123;<br>    ClientHttpResponse <span class="hljs-title function_">intercept</span><span class="hljs-params">(HttpRequest request, <span class="hljs-type">byte</span>[] body, ClientHttpRequestExecution execution)</span> <span class="hljs-keyword">throws</span> IOException;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>主要是对<code>intercept</code>方法的实现: </p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> ClientHttpResponse <span class="hljs-title function_">intercept</span><span class="hljs-params">(<span class="hljs-keyword">final</span> HttpRequest request, <span class="hljs-keyword">final</span> <span class="hljs-type">byte</span>[] body, <span class="hljs-keyword">final</span> ClientHttpRequestExecution execution)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-type">URI</span> <span class="hljs-variable">originalUri</span> <span class="hljs-operator">=</span> request.getURI();<br>    <span class="hljs-type">String</span> <span class="hljs-variable">serviceName</span> <span class="hljs-operator">=</span> originalUri.getHost();<br>    Assert.state(serviceName != <span class="hljs-literal">null</span>, <span class="hljs-string">&quot;Request URI does not contain a valid hostname: &quot;</span> + originalUri);<br>    <span class="hljs-keyword">return</span> (ClientHttpResponse)<span class="hljs-built_in">this</span>.loadBalancer.execute(serviceName, <span class="hljs-built_in">this</span>.requestFactory.createRequest(request, body, execution));<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>我们可以打个断点看看实际是怎么在执行的，可以看到服务端会在发起请求时执行这些拦截器。</p>
 <p>那么这个拦截器做了什么事情呢，首先我们要明确，我们给过来的请求地址，并不是一个有效的主机名称，而是服务名称，那么怎么才能得到真正需要访问的主机名称呢，肯定是得找Eureka获取的。</p>
 <p>我们来看看<code>loadBalancer.execute()</code>做了什么，它的具体实现为<code>BlockingLoadBalancerClient</code>: </p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//从上面给进来了服务的名称和具体的请求实体</span><br><span class="hljs-keyword">public</span> &lt;T&gt; T <span class="hljs-title function_">execute</span><span class="hljs-params">(String serviceId, LoadBalancerRequest&lt;T&gt; request)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">hint</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.getHint(serviceId);<br>    LoadBalancerRequestAdapter&lt;T, DefaultRequestContext&gt; lbRequest = <span class="hljs-keyword">new</span> <span class="hljs-title class_">LoadBalancerRequestAdapter</span>(request, <span class="hljs-keyword">new</span> <span class="hljs-title class_">DefaultRequestContext</span>(request, hint));<br>    Set&lt;LoadBalancerLifecycle&gt; supportedLifecycleProcessors = <span class="hljs-built_in">this</span>.getSupportedLifecycleProcessors(serviceId);<br>    supportedLifecycleProcessors.forEach((lifecycle) -&gt; &#123;<br>        lifecycle.onStart(lbRequest);<br>    &#125;);<br>  	<span class="hljs-comment">//可以看到在这里会调用choose方法自动获取对应的服务实例信息</span><br>    <span class="hljs-type">ServiceInstance</span> <span class="hljs-variable">serviceInstance</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.choose(serviceId, lbRequest);<br>    <span class="hljs-keyword">if</span> (serviceInstance == <span class="hljs-literal">null</span>) &#123;<br>        supportedLifecycleProcessors.forEach((lifecycle) -&gt; &#123;<br>            lifecycle.onComplete(<span class="hljs-keyword">new</span> <span class="hljs-title class_">CompletionContext</span>(Status.DISCARD, lbRequest, <span class="hljs-keyword">new</span> <span class="hljs-title class_">EmptyResponse</span>()));<br>        &#125;);<br>      	<span class="hljs-comment">//没有发现任何此服务的实例就抛异常(之前的测试中可能已经遇到了)</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalStateException</span>(<span class="hljs-string">&quot;No instances available for &quot;</span> + serviceId);<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>      	<span class="hljs-comment">//成功获取到对应服务的实例，这时就可以发起HTTP请求获取信息了</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.execute(serviceId, serviceInstance, lbRequest);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>所以，实际上在进行负载均衡的时候，会向Eureka发起请求，选择一个可用的对应服务，然后会返回此服务的主机地址等信息</p>
 <h3 id="2-2-自定义负载均衡策略"><a href="#2-2-自定义负载均衡策略" class="headerlink" title="2.2 自定义负载均衡策略"></a>2.2 自定义负载均衡策略</h3><p>LoadBalancer默认提供了两种负载均衡策略: </p>
 <ul>
@@ -350,10 +336,8 @@
 </ul>
 <p>现在我们希望修改默认的负载均衡策略，可以进行指定，比如我们现在希望用户服务采用随机分配策略，我们需要先创建随机分配策略的配置类(不用加<code>@Configuration</code>): </p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LoadBalancerConfig</span> &#123;<br>  	<span class="hljs-comment">//将官方提供的 RandomLoadBalancer 注册为Bean</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ReactorLoadBalancer&lt;ServiceInstance&gt; <span class="hljs-title function_">randomLoadBalancer</span><span class="hljs-params">(Environment environment, LoadBalancerClientFactory loadBalancerClientFactory)</span>&#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RandomLoadBalancer</span>(loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>接着我们需要为对应的服务指定负载均衡策略，直接使用注解即可: </p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@LoadBalancerClient(value = &quot;userservice&quot;,      //指定为 userservice 服务，只要是调用此服务都会使用我们指定的策略</span><br><span class="hljs-meta">                    configuration = LoadBalancerConfig.class)</span>   <span class="hljs-comment">//指定我们刚刚定义好的配置类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BeanConfig</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span><br>    RestTemplate <span class="hljs-title function_">template</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>接着我们在<code>BlockingLoadBalancerClient</code>中添加断点，观察是否采用我们指定的策略进行请求</p>
 <p>发现访问userservice服务的策略已经更改为我们指定的策略了。</p>
 
@@ -720,5 +704,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

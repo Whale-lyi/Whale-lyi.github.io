@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -191,7 +187,7 @@
 <p><strong>演进过程</strong>:</p>
 <p>   主机系统与集中计算: 仅规定了计费使用的模式，没有IT资源管理方面的考虑。</p>
 <p>-&gt; <code>效用计算</code>: 考虑购买主机成本高，将IT资源包装成可以度量的服务提供给用户。</p>
-<p>-&gt; 客户机&#x2F;服务器模式: (IBM: 设备放在IBM内部，通过网络远程使用)</p>
+<p>-&gt; 客户机/服务器模式: (IBM: 设备放在IBM内部，通过网络远程使用)</p>
 <p>-&gt; 集群计算</p>
 <p>-&gt; <code>服务计算</code>(软件即服务SaaS): 将所有应用程序都作为服务提供，而不是购买软件。</p>
 <ul>
@@ -327,10 +323,8 @@
 </li>
 </ul>
 <h2 id="7-云计算的开源方法论"><a href="#7-云计算的开源方法论" class="headerlink" title="7 云计算的开源方法论"></a>7 云计算的开源方法论</h2><ul>
-<li><p>云计算时代，开源不仅是一种开放源代码的具体产品，更是一种方法论、一种构造大规模复杂软件的协作方式。</p>
-</li>
-<li><p>开源的可以是各行各业的技术或产品</p>
-</li>
+<li>云计算时代，开源不仅是一种开放源代码的具体产品，更是一种方法论、一种构造大规模复杂软件的协作方式。</li>
+<li>开源的可以是各行各业的技术或产品</li>
 <li><p>开源软件 —— 一种版权持有人为任何人和任何目的提供学习、修改和分发权力，并公布源代码的计算机软件</p>
 <ol>
 <li>许可证不应限制任何个人或团体奖包含该开源软件的广义作品进行销售或赠予</li>
@@ -420,15 +414,15 @@
 </ul>
 <h3 id="9-3-缺陷与未来"><a href="#9-3-缺陷与未来" class="headerlink" title="9.3 缺陷与未来"></a>9.3 缺陷与未来</h3><ul>
 <li>虽然是最成功的商业计算模型，但不是完美的，仍有缺陷<ul>
-<li>从平台角度看—-没有统一的标准</li>
-<li>从计算角度看—-针对松耦合的数据处理</li>
-<li>从数据角度看—-管理和分析商业数据</li>
-<li>从资源集成角度看—-必须集中到云中</li>
-<li>从信息安全角度看—-暴露、丢失的风险</li>
+<li>从平台角度看——没有统一的标准</li>
+<li>从计算角度看——针对松耦合的数据处理</li>
+<li>从数据角度看——管理和分析商业数据</li>
+<li>从资源集成角度看——必须集中到云中</li>
+<li>从信息安全角度看——暴露、丢失的风险</li>
 </ul>
 </li>
 <li>然而这些恰是网格的优势所在</li>
-<li>未来：云格计算—-结合的基准是SOA</li>
+<li>未来：云格计算——结合的基准是SOA</li>
 </ul>
 
       </div>
@@ -794,5 +788,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

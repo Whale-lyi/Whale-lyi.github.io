@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -189,6 +185,7 @@
 <li>用户和操作系统之间的接口</li>
 <li>作为核外程序而存在</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -196,13 +193,15 @@
 <th>作为核外程序而存在</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230306124606364.png" alt="image-20230306124606364" style="zoom:80%;" /></td>
 <td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230306124706409.png" alt="image-20230306124706409" style="zoom:80%;" /></td>
 </tr>
-</tbody></table>
-<h3 id="1-1-各种不同的Shell"><a href="#1-1-各种不同的Shell" class="headerlink" title="1.1 各种不同的Shell"></a>1.1 各种不同的Shell</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230306124806455.png" alt="image-20230306124806455" style="zoom:80%;" />
-
+</tbody>
+</table>
+</div>
+<h3 id="1-1-各种不同的Shell"><a href="#1-1-各种不同的Shell" class="headerlink" title="1.1 各种不同的Shell"></a>1.1 各种不同的Shell</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230306124806455.png" alt="image-20230306124806455" style="zoom:80%;" /></p>
 <h3 id="1-2-Shell-的双重角色"><a href="#1-2-Shell-的双重角色" class="headerlink" title="1.2 Shell 的双重角色"></a>1.2 Shell 的双重角色</h3><ul>
 <li>命令解释程序<ul>
 <li>Linux的开机启动过程；进程树</li>
@@ -217,24 +216,19 @@
 </li>
 </ul>
 <h2 id="2-脚本"><a href="#2-脚本" class="headerlink" title="2. 脚本"></a>2. 脚本</h2><h3 id="2-1-使用命令行"><a href="#2-1-使用命令行" class="headerlink" title="2.1 使用命令行"></a>2.1 使用命令行</h3><p>脚本是能在命令行直接输入的，但仅会执行一次</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313132013304.png" alt="image-20230313132013304" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313132013304.png" alt="image-20230313132013304" style="zoom:80%;" /></p>
 <h3 id="2-2-编写脚本文件"><a href="#2-2-编写脚本文件" class="headerlink" title="2.2 编写脚本文件"></a>2.2 编写脚本文件</h3><p>脚本文件</p>
 <ul>
 <li>注释</li>
 <li>退出码(exit code)</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313132145225.png" alt="image-20230313132145225" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313132145225.png" alt="image-20230313132145225" style="zoom:80%;" /></p>
 <h3 id="2-3-执行脚本文件"><a href="#2-3-执行脚本文件" class="headerlink" title="2.3 执行脚本文件"></a>2.3 执行脚本文件</h3><p>方法一：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sh script_file <br></code></pre></td></tr></table></figure>
-
 <p>方法二：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x script_file(<span class="hljs-built_in">chown</span>, <span class="hljs-built_in">chgrp</span> optionally)<br>./script_file<br></code></pre></td></tr></table></figure>
-
 <p>方法三：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> script_file<br>. script_file<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>方法一二原理相同：新启bash进程执行脚本</p>
 <p>方法三使用当前bash进程执行脚本</p>
@@ -247,7 +241,7 @@
 </ul>
 <p>Alias</p>
 <ul>
-<li>alias&#x2F;unaliascommand</li>
+<li>alias/unaliascommand</li>
 </ul>
 <p>环境变量</p>
 <ul>
@@ -288,29 +282,21 @@
 </li>
 </ul>
 <blockquote>
-<p>&#x3D;两侧不能加空格</p>
+<p>=两侧不能加空格</p>
 <p>变量没有类型，或者可以认为是字符串</p>
 </blockquote>
 <h4 id="Read用法"><a href="#Read用法" class="headerlink" title="Read用法"></a>Read用法</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br><span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;Enter your name: &quot;</span>       <span class="hljs-comment"># 参数-n的作用是不换行，echo默认是换行</span><br><span class="hljs-built_in">read</span> name                         <span class="hljs-comment">#从键盘输入</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello <span class="hljs-variable">$name</span>, welcome to my program&quot;</span><br><span class="hljs-built_in">exit</span> 0                            <span class="hljs-comment">#退出shell程序。</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;Enter your name:&quot;</span> name   <span class="hljs-comment">#-p参数，允许在read命令行中直接指定一个提示</span><br><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;Enter a number:&quot;</span> number<br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$number</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br><span class="hljs-comment"># 5s内输入</span><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">read</span> -t 5 -p <span class="hljs-string">&quot;please enter your name:&quot;</span> name<br><span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello <span class="hljs-variable">$name</span>， welcome to my script&quot;</span><br><span class="hljs-keyword">else</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;sorry, too slow&quot;</span><br><span class="hljs-keyword">fi</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br><span class="hljs-comment"># 只读取一个字符</span><br><span class="hljs-built_in">read</span> -n1 -p <span class="hljs-string">&quot;Do you want to continue [Y/N] ?&quot;</span> answer<br><span class="hljs-keyword">case</span> <span class="hljs-variable">$answer</span> <span class="hljs-keyword">in</span><br>Y|y)<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;fine, continue&quot;</span>;;<br>N|n)<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;ok, good bye&quot;</span>;;<br>*)<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;error choice&quot;</span>;;<br><span class="hljs-keyword">esac</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br><span class="hljs-comment"># 不显示输入</span><br><span class="hljs-built_in">read</span> -s -p <span class="hljs-string">&quot;Enter your password: &quot;</span> pass<br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;your password is <span class="hljs-variable">$pass</span>&quot;</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br>count=1<br><span class="hljs-built_in">cat</span> viewFile.sh| <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line<br><span class="hljs-keyword">do</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Scount:<span class="hljs-variable">$line</span>&quot;</span><br>  count=$((<span class="hljs-variable">$count</span> + <span class="hljs-number">1</span>))<br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Total Count:<span class="hljs-variable">$count</span>&quot;</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
-<h4 id="引号的用法"><a href="#引号的用法" class="headerlink" title="引号的用法"></a>引号的用法</h4><p>单引号内的所有字符都保持它本身字符的意思，而不会被bash进行解释，例如，$就是$本身而不再是bash的变量引用符；<code>\</code>就是<code>\</code>本身而不再是bash的转义字符。</p>
-<p>除了<code>$</code>、`&#96;（不是单引号）和 \ 外，双引号内的所有字符将保持字符本身的含义而不被bash解释</p>
+<h4 id="引号的用法"><a href="#引号的用法" class="headerlink" title="引号的用法"></a>引号的用法</h4><p>单引号内的所有字符都保持它本身字符的意思，而不会被bash进行解释，例如，\$就是\$本身而不再是bash的变量引用符；<code>\</code>就是<code>\</code>本身而不再是bash的转义字符。</p>
+<p>除了<code>$</code>、``（不是单引号）和  外，双引号内的所有字符将保持字符本身的含义而不被bash解释</p>
 <h3 id="3-2-环境变量"><a href="#3-2-环境变量" class="headerlink" title="3.2 环境变量"></a>3.2 环境变量</h3><p>Shell环境提供的变量。通常使用大写字母做名字</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313143814653.png" alt="image-20230313143814653" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313143814653.png" alt="image-20230313143814653" style="zoom:80%;" /></p>
 <h3 id="3-3-参数变量和内部变量"><a href="#3-3-参数变量和内部变量" class="headerlink" title="3.3 参数变量和内部变量"></a>3.3 参数变量和内部变量</h3><p>调用脚本程序时如果带有参数，对应的参数和额外产生的一些变量。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313143945908.png" alt="image-20230313143945908" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313143945908.png" alt="image-20230313143945908" style="zoom:80%;" /></p>
 <h2 id="4-语句"><a href="#4-语句" class="headerlink" title="4. 语句"></a>4. 语句</h2><h3 id="4-1-条件测试"><a href="#4-1-条件测试" class="headerlink" title="4.1 条件测试"></a>4.1 条件测试</h3><p>退出码</p>
 <p>test命令：<code>test expression</code> 或 <code>[ expression ]</code></p>
 <p>test命令支持的条件测试</p>
@@ -320,41 +306,28 @@
 <li>与文件有关的条件测试</li>
 <li>逻辑操作</li>
 </ol>
-<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313144119488.png" alt="image-20230313144119488" style="zoom:80%;" />
-
-<h4 id="算术比较"><a href="#算术比较" class="headerlink" title="算术比较"></a>算术比较</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313144151627.png" alt="image-20230313144151627" style="zoom:80%;" />
-
-<h4 id="与文件有关的条件测试"><a href="#与文件有关的条件测试" class="headerlink" title="与文件有关的条件测试"></a>与文件有关的条件测试</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230824083.png" alt="image-20230412230824083" style="zoom:80%;" />
-
-<h4 id="逻辑操作"><a href="#逻辑操作" class="headerlink" title="逻辑操作"></a>逻辑操作</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412231419320.png" alt="image-20230412231419320" style="zoom:80%;" />
-
+<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313144119488.png" alt="image-20230313144119488" style="zoom:80%;" /></p>
+<h4 id="算术比较"><a href="#算术比较" class="headerlink" title="算术比较"></a>算术比较</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230313144151627.png" alt="image-20230313144151627" style="zoom:80%;" /></p>
+<h4 id="与文件有关的条件测试"><a href="#与文件有关的条件测试" class="headerlink" title="与文件有关的条件测试"></a>与文件有关的条件测试</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230824083.png" alt="image-20230412230824083" style="zoom:80%;" /></p>
+<h4 id="逻辑操作"><a href="#逻辑操作" class="headerlink" title="逻辑操作"></a>逻辑操作</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412231419320.png" alt="image-20230412231419320" style="zoom:80%;" /></p>
 <h3 id="4-2-if语句"><a href="#4-2-if语句" class="headerlink" title="4.2 if语句"></a>4.2 if语句</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [expression]<br><span class="hljs-keyword">then</span><br>	statements<br><span class="hljs-keyword">elif</span> [expression]<br><span class="hljs-keyword">then</span><br>	statements<br><span class="hljs-keyword">elif</span>...<br><span class="hljs-keyword">else</span><br>	statements<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>紧凑模式：使用 ; 分割</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [ -f ~/.bashrc ]; <span class="hljs-keyword">then</span><br>	. ~/.bashrc<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="4-3-case语句"><a href="#4-3-case语句" class="headerlink" title="4.3 case语句"></a>4.3 case语句</h3><ul>
 <li>双分号</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">case</span> str <span class="hljs-keyword">in</span><br>  str1 | str2) statements;;<br>  str3 | str4) statements;;<br>  *) statements;<br><span class="hljs-keyword">esac</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Is this morning? Please answer yes or no.&quot;</span><br><span class="hljs-built_in">read</span> answer<br><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$answer</span>&quot;</span> <span class="hljs-keyword">in</span><br>  <span class="hljs-built_in">yes</span> | y | Yes | YES) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Good morning!&quot;</span>;;<br>  no | n | No | NO) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Good afternoon!&quot;</span>;;<br>  *) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Sorry, answer not recognized.&quot;</span>;;<br><span class="hljs-keyword">esac</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-4-for语句"><a href="#4-4-for语句" class="headerlink" title="4.4 for语句"></a>4.4 for语句</h3><ul>
 <li>适用于对一系列字符串循环处理</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">for</span> var <span class="hljs-keyword">in</span> list<br><span class="hljs-keyword">do</span><br>	statements<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">ls</span> f*.sh); <span class="hljs-keyword">do</span><br>	lpr <span class="hljs-variable">$file</span><br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-5-while语句"><a href="#4-5-while语句" class="headerlink" title="4.5 while语句"></a>4.5 while语句</h3><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">while</span> [expression]<br><span class="hljs-keyword">do</span><br>	statements<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">quit=n<br><span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$quit</span>&quot;</span> != <span class="hljs-string">&quot;y&quot;</span>]; <span class="hljs-keyword">do</span><br>	<span class="hljs-built_in">read</span> menu_choice<br>	<span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$menu_choice</span>&quot;</span> <span class="hljs-keyword">in</span><br>		a) do_something;;<br>		b) do_anotherthing;;<br>		q|Q) quit=y;;<br>		*) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Sorry, choice not recognized.&quot;</span>;;<br>	<span class="hljs-keyword">esac</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">a=0<br><span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$a</span>&quot;</span> -le <span class="hljs-string">&quot;<span class="hljs-variable">$LIMIT</span>&quot;</span> ]; <span class="hljs-keyword">do</span><br>	a=$((<span class="hljs-variable">$a</span>+<span class="hljs-number">1</span>))<br>	<span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$a</span>&quot;</span> gt 2 ]; <span class="hljs-keyword">then</span><br>		<span class="hljs-built_in">break</span>  <span class="hljs-comment"># Skip entire rest of loop.</span><br>	<span class="hljs-keyword">fi</span><br>	<span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;<span class="hljs-variable">$a</span>&quot;</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p><strong>$(())整数运算，否则会看作字符串</strong></p>
 </li>
@@ -363,9 +336,7 @@
 </ul>
 <h3 id="4-6-select语句"><a href="#4-6-select语句" class="headerlink" title="4.6 select语句"></a>4.6 select语句</h3><p>生成菜单列表</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br>clear<br><span class="hljs-keyword">select</span> item <span class="hljs-keyword">in</span> Continue Finish<br><span class="hljs-keyword">do</span><br>	<span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$item</span>&quot;</span> <span class="hljs-keyword">in</span><br>        Continue) ;;<br>        Finish) <span class="hljs-built_in">break</span> ;;<br>        *) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Wrong choice! Please select again!&quot;</span> ;;<br>	<span class="hljs-keyword">esac</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412233820317.png" alt="image-20230412233820317" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412233820317.png" alt="image-20230412233820317" style="zoom:80%;" /></p>
 <h3 id="4-7-命令表和语句块"><a href="#4-7-命令表和语句块" class="headerlink" title="4.7 命令表和语句块"></a>4.7 命令表和语句块</h3><h4 id="命令表"><a href="#命令表" class="headerlink" title="命令表"></a>命令表</h4><p>命令组合</p>
 <ul>
 <li><p>分号串联：command1 ; command2 ; …</p>
@@ -378,22 +349,18 @@
 </li>
 </ul>
 <h4 id="语句块"><a href="#语句块" class="headerlink" title="语句块"></a>语句块</h4><figure class="highlight sh"><table><tr><td class="code"><pre><code class="hljs sh">&#123;<br>    statement1<br>    statement2<br>    ...<br>&#125;<br>或<br>&#123;statement1; statement2 ; ... ;&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-8-函数"><a href="#4-8-函数" class="headerlink" title="4.8 函数"></a>4.8 函数</h3><p>定义时不带参数</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-function"><span class="hljs-title">func</span></span>()<br>&#123;<br>	statements<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>局部变量: local关键字</li>
 <li>函数的调用: func para1 para2 …</li>
 <li>返回值: return</li>
 </ul>
 <p>例子</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235748650.png" alt="image-20230412235748650" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235756115.png" alt="image-20230412235756115" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235748650.png" alt="image-20230412235748650" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235756115.png" alt="image-20230412235756115" style="zoom:80%;" /></p>
 <h2 id="5-其他"><a href="#5-其他" class="headerlink" title="5. 其他"></a>5. 其他</h2><h3 id="5-1-杂项命令"><a href="#5-1-杂项命令" class="headerlink" title="5.1 杂项命令"></a>5.1 杂项命令</h3><ul>
-<li>break: 从for&#x2F;while&#x2F;until循环退出 </li>
+<li>break: 从for/while/until循环退出 </li>
 <li>continue: 跳到下一个循环继续执行</li>
 <li>exit n: 以退出码”n”退出脚本运行</li>
 <li>return: 函数返回</li>
@@ -410,12 +377,10 @@
 <li><p><code>$PWD 与 $(pwd)</code></p>
 </li>
 </ul>
-<h3 id="5-3-算术扩展"><a href="#5-3-算术扩展" class="headerlink" title="5.3 算术扩展"></a>5.3 算术扩展</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230818160959917.png" alt="image-20230818160959917" style="zoom:80%;" />
-
+<h3 id="5-3-算术扩展"><a href="#5-3-算术扩展" class="headerlink" title="5.3 算术扩展"></a>5.3 算术扩展</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230818160959917.png" alt="image-20230818160959917" style="zoom:80%;" /></p>
 <h3 id="5-4-参数扩展"><a href="#5-4-参数扩展" class="headerlink" title="5.4 参数扩展"></a>5.4 参数扩展</h3><p>问题：批处理 1_tmp, 2_tmp, …</p>
 <p>方法:</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><code class="hljs sh"><span class="hljs-meta">#! /bin/sh</span><br>i=1<br><span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$i</span>&quot;</span> -ne 10 ]; <span class="hljs-keyword">do</span><br>	<span class="hljs-built_in">touch</span> <span class="hljs-string">&quot;<span class="hljs-variable">$&#123;i&#125;</span>_tmp&quot;</span><br>	i=$((<span class="hljs-variable">$i</span>+<span class="hljs-number">1</span>))<br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
 <p>参数扩展更复杂的形式</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413000143071.png" alt="image-20230413000143071"></p>
 <h3 id="5-5-即时文档"><a href="#5-5-即时文档" class="headerlink" title="5.5 即时文档"></a>5.5 即时文档</h3><ul>
@@ -789,5 +754,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,8 +180,7 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="1-模板方法模式-类"><a href="#1-模板方法模式-类" class="headerlink" title="1. 模板方法模式(类)"></a>1. 模板方法模式(类)</h2><h3 id="1-1-模式动机"><a href="#1-1-模式动机" class="headerlink" title="1.1 模式动机"></a>1.1 模式动机</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612093800218.png" alt="image-20230612093800218" style="zoom:80%;" />
-
+        <h2 id="1-模板方法模式-类"><a href="#1-模板方法模式-类" class="headerlink" title="1. 模板方法模式(类)"></a>1. 模板方法模式(类)</h2><h3 id="1-1-模式动机"><a href="#1-1-模式动机" class="headerlink" title="1.1 模式动机"></a>1.1 模式动机</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612093800218.png" alt="image-20230612093800218" style="zoom:80%;" /></p>
 <ol>
 <li>模板方法模式是<strong>基于继承</strong>的代码复用基本技术，模板方法模式的结构和用法也是面向对象设计的核心之一。在模板方法模式中，可以<strong>将相同的代码放在父类中，而将不同的方法实现放在不同的子类中</strong>。</li>
 <li>在模板方法模式中，我们需要准备一个抽象类，<strong>将部分逻辑以具体方法以及具体构造函数的形式实现</strong>，<strong>然后声明一些抽象方法来让子类实现剩余的逻辑。不同的子类可以以不同的方式实现这些抽象方法，从而对剩余的逻辑有不同的实现</strong>，这就是模板方法模式的用意。模板方法模式体现了面向对象的诸多重要思想，是一种使用频率较高的模式。</li>
@@ -194,8 +189,7 @@
 <li>模板方法模式(Template Method Pattern)：定义一个操作中<strong>算法的骨架</strong>，而将一些步骤<strong>延迟到子类</strong>中，模板方法使得子类<strong>可以不改变一个算法的结构即可重定义该算法的某些特定步骤</strong>。模板方法是一种<strong>类行为型</strong>模式。</li>
 <li>Template Method Pattern: Define <strong>the skeleton of an algorithm</strong> in an operation, <strong>deferring some steps to subclasses</strong>. Template Method <strong>lets subclasses redefine certain steps</strong> of an algorithm <strong>without changing the algorithm’s structure</strong>.</li>
 </ol>
-<h3 id="1-3-模式结构"><a href="#1-3-模式结构" class="headerlink" title="1.3 模式结构"></a>1.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612094432867.png" alt="image-20230612094432867" style="zoom:80%;" />
-
+<h3 id="1-3-模式结构"><a href="#1-3-模式结构" class="headerlink" title="1.3 模式结构"></a>1.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612094432867.png" alt="image-20230612094432867" style="zoom:80%;" /></p>
 <p>模板方法模式包含如下角色：</p>
 <ol>
 <li>AbstractClass: 抽象类</li>
@@ -203,7 +197,7 @@
 </ol>
 <h3 id="1-4-模式分析"><a href="#1-4-模式分析" class="headerlink" title="1.4 模式分析"></a>1.4 模式分析</h3><ol>
 <li>模板方法模式是一种类的行为型模式，在它的结构图中<strong>只有类之间的继承关系，没有对象关联关系</strong>。</li>
-<li>在模板方法模式的使用过程中，要求开发抽象类和开发具体子类的设计师之间进行协作。一个设计师负责给出<strong>一个算法的轮廓和骨架</strong>，另一些设计师则<strong>负责给出这个算法的各个逻辑步骤</strong>。实现这些具体逻辑步骤的方法称为**基本方法(Primitive Method)<strong>，而将这些基本法方法汇总起来的方法称为</strong>模板方法(Template Method)**，模板方法模式的名字从此而来。</li>
+<li>在模板方法模式的使用过程中，要求开发抽象类和开发具体子类的设计师之间进行协作。一个设计师负责给出<strong>一个算法的轮廓和骨架</strong>，另一些设计师则<strong>负责给出这个算法的各个逻辑步骤</strong>。实现这些具体逻辑步骤的方法称为<strong>基本方法(Primitive Method)</strong>，而将这些基本法方法汇总起来的方法称为<strong>模板方法(Template Method)</strong>，模板方法模式的名字从此而来。</li>
 <li>模板方法：一个模板方法是<strong>定义在抽象类中的、把基本操作方法组合在一起</strong>形成一个总算法或一个总行为的方法。</li>
 <li>基本方法：基本方法是<strong>实现算法各个步骤的方法</strong>，是模板方法的组成部分。<ol>
 <li>抽象方法(Abstract Method)</li>
@@ -214,28 +208,23 @@
 <li>钩子方法(Hook Method)</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">template</span><span class="hljs-params">()</span>&#123;<br>   open();<br>   display();<br>   <span class="hljs-keyword">if</span>(isPrint())&#123;<br>      print();<br>   &#125;<br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">isPrint</span><span class="hljs-params">()</span>&#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="6">
+<ol>
 <li>典型的抽象类代码如下所示：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractClass</span>&#123;<br>   	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">templateMethod</span><span class="hljs-params">()</span> &#123;  <span class="hljs-comment">//模板方法</span><br>      	primitiveOperation1();<br>      	primitiveOperation2();<br>      	primitiveOperation3();<br>   	&#125;<br>   	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation1</span><span class="hljs-params">()</span> &#123;    <span class="hljs-comment">//基本方法—具体方法</span><br>   		<span class="hljs-comment">//实现代码</span><br>   	&#125;<br>   	<span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation2</span><span class="hljs-params">()</span>;    <span class="hljs-comment">//基本方法—抽象方法</span><br>   	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation3</span><span class="hljs-params">()</span> &#123;&#125;    <span class="hljs-comment">//基本方法—钩子方法</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="7">
+<ol>
 <li>典型的具体子类代码如下所示：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteClass</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractClass</span> &#123;<br>   	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation2</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//实现代码</span><br>    &#125;<br>   	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">primitiveOperation3</span><span class="hljs-params">()</span> &#123;<br>   		<span class="hljs-comment">//实现代码, 覆盖空方法</span><br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="8">
+<ol>
 <li>在模板方法模式中，由于面向对象的多态性，子类对象在运行时将覆盖父类对象，子类中定义的方法也将覆盖父类中定义的方法，因此程序在运行时，<strong>具体子类的基本方法将覆盖父类中定义的基本方法，子类的钩子方法也将覆盖父类的钩子方法</strong>，从而可以<strong>通过在子类中实现的钩子方法对父类方法的执行进行约束，实现子类对父类行为的反向控制</strong>。</li>
 </ol>
 <h3 id="1-5-模板方法模式实例与解析"><a href="#1-5-模板方法模式实例与解析" class="headerlink" title="1.5 模板方法模式实例与解析"></a>1.5 模板方法模式实例与解析</h3><p>实例一：银行业务办理流程</p>
 <p>在银行办理业务时，一般都包含几个基本步骤，首先需要取号排队，然后办理具体业务，最后需要对银行工作人员进行评分。无论具体业务是取款、存款还是转账，其基本流程都一样。现使用模板方法模式模拟银行业务办理流程。模板方法模式</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612094805890.png" alt="image-20230612094805890" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612094805890.png" alt="image-20230612094805890" style="zoom:80%;" /></p>
 <p>实例二：数据库操作模板</p>
 <p>对数据库的操作一般包括连接、打开、使用、关闭等步骤，在数据库操作模板类中我们定义了<code>connDB()</code>、<code>openDB()</code>、<code>useDB()</code>、<code>closeDB()</code> 四个方法分别对应这四个步骤。对于不同类型的数据库（如SQL Server和Oracle），其操作步骤都一致，只是连接数据库 <code>connDB()</code> 方法有所区别，现使用模板方法模式对其进行设计。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612094835824.png" alt="image-20230612094835824" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612094835824.png" alt="image-20230612094835824" style="zoom:80%;" /></p>
 <h3 id="1-6-模式优缺点"><a href="#1-6-模式优缺点" class="headerlink" title="1.6 模式优缺点"></a>1.6 模式优缺点</h3><p>模板方法模式的<strong>优点</strong></p>
 <ol>
 <li>模板方法模式<strong>在一个类中抽象地定义算法</strong>，而<strong>由它的子类实现细节的处理</strong>。</li>
@@ -258,12 +247,11 @@
 <li>Java单元测试工具JUnit中的TestCase类的设计：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">runBare</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>   setUp();<br>   <span class="hljs-keyword">try</span> &#123;<br>      runTest();<br>   &#125;<br>   <span class="hljs-keyword">finally</span> &#123;<br>      tearDown();<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="1-9-模式扩展"><a href="#1-9-模式扩展" class="headerlink" title="1.9 模式扩展"></a>1.9 模式扩展</h3><h4 id="关于继承的讨论"><a href="#关于继承的讨论" class="headerlink" title="关于继承的讨论"></a>关于继承的讨论</h4><ol>
 <li>模板方法模式鼓励我们<strong>恰当使用继承</strong>，此模式可以用来改写一些拥有相同功能的相关类，<strong>将可复用的一般性的行为代码移到父类里面</strong>，而将特殊化的行为代码移到子类里面。这也进一步说明，虽然继承复用存在一些问题，但是在某些情况下还是可以给开发人员带来方便，<strong>模板方法模式就是体现继承优势的模式之一</strong>。</li>
 </ol>
 <h4 id="好莱坞原则"><a href="#好莱坞原则" class="headerlink" title="好莱坞原则"></a>好莱坞原则</h4><ol>
-<li>在模板方法模式中，子类不显式调用父类的方法，而是通过覆盖父类的方法来实现某些具体的业务逻辑，<strong>父类控制对子类的调用</strong>，这种机制被称为<strong>好莱坞原则</strong>(Hollywood Principle)，好莱坞原则的定义为：“**不要给我们打电话，我们会给你打电话(Don‘t call us, we’ll call you)**”。</li>
+<li>在模板方法模式中，子类不显式调用父类的方法，而是通过覆盖父类的方法来实现某些具体的业务逻辑，<strong>父类控制对子类的调用</strong>，这种机制被称为<strong>好莱坞原则</strong>(Hollywood Principle)，好莱坞原则的定义为：“<strong>不要给我们打电话，我们会给你打电话(Don‘t call us, we’ll call you)</strong>”。</li>
 <li>在模板方法模式中，好莱坞原则体现在：<strong>子类不需要调用父类，而通过父类来调用子类，将某些步骤的实现写在子类中，由父类来控制整个过程</strong>。</li>
 </ol>
 <h4 id="钩子方法的使用"><a href="#钩子方法的使用" class="headerlink" title="钩子方法的使用"></a>钩子方法的使用</h4><ol>
@@ -293,12 +281,10 @@
 </li>
 </ol>
 <h2 id="2-命令模式-对象"><a href="#2-命令模式-对象" class="headerlink" title="2. 命令模式(对象)"></a>2. 命令模式(对象)</h2><h3 id="2-1-模式动机"><a href="#2-1-模式动机" class="headerlink" title="2.1 模式动机"></a>2.1 模式动机</h3><p>命令模式可以<strong>对发送者和接收者完全解耦</strong>，发送者与接收者之间<strong>没有直接引用关系，发送请求的对象只需要知道如何发送请求，而不必知道如何完成请求</strong>。这就是命令模式的模式动机。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314112052652.png" alt="image-20230314112052652" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314112052652.png" alt="image-20230314112052652" style="zoom:80%;" /></p>
 <h3 id="2-2-模式定义"><a href="#2-2-模式定义" class="headerlink" title="2.2 模式定义"></a>2.2 模式定义</h3><p>命令模式(Command Pattern)：<strong>将一个请求封装为一个对象</strong>，从而使我们可用<strong>不同的请求对客户进行参数化</strong>；<strong>对请求排队或者记录请求日志，以及支持可撤销的操作</strong>。命令模式是一种<strong>对象行为型模式</strong>，其别名为动作(Action)模式或事务(Transaction)模式。</p>
 <p>Command Pattern: Encapsulate a request as an object, thereby letting you parameterize clients with different requests, queue or log requests, and support undoable operations.</p>
-<h3 id="2-3-模式结构"><a href="#2-3-模式结构" class="headerlink" title="2.3 模式结构"></a>2.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314112241809.png" alt="image-20230314112241809" style="zoom:80%;" />
-
+<h3 id="2-3-模式结构"><a href="#2-3-模式结构" class="headerlink" title="2.3 模式结构"></a>2.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314112241809.png" alt="image-20230314112241809" style="zoom:80%;" /></p>
 <p>命令模式包含如下角色：</p>
 <ol>
 <li>Command: 抽象命令类</li>
@@ -314,28 +300,21 @@
 <li>命令模式<strong>使请求本身成为一个对象</strong>，这个对象和其他对象一样可以被存储和传递。</li>
 <li>命令模式的关键在于<strong>引入了抽象命令接口</strong>，且<strong>发送者针对抽象命令接口编程</strong>，只有实现了抽象命令接口的<strong>具体命令才能与接收者相关联</strong>。</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314114539376.png" alt="image-20230314114539376" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314114539376.png" alt="image-20230314114539376" style="zoom:80%;" /></p>
 <p>典型的抽象命令类代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Command</span>&#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的调用者代码</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Invoker</span>&#123;<br>  <span class="hljs-keyword">private</span> Command command;<br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Invoker</span><span class="hljs-params">(Command command)</span>&#123;<br>    <span class="hljs-built_in">this</span>.command=command;<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setCommand</span><span class="hljs-params">(Command command)</span>&#123;<br>    <span class="hljs-built_in">this</span>.command=command;<br>  &#125;<br>  <span class="hljs-comment">//业务方法，用于调用命令类的方法</span><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">call</span><span class="hljs-params">()</span>&#123;<br>    command.execute();<br>  &#125;<br>&#125; <br></code></pre></td></tr></table></figure>
-
 <p>典型的具体命令类代码</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteCommand</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Command</span> &#123;<br>  <span class="hljs-keyword">private</span> Receiver receiver;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">execute</span><span class="hljs-params">()</span> &#123;<br>    receiver.action();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的请求接收者代码</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Receiver</span> &#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">action</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">//具体操作</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="2-5-命令模式实例与解析"><a href="#2-5-命令模式实例与解析" class="headerlink" title="2.5 命令模式实例与解析"></a>2.5 命令模式实例与解析</h3><p><strong>电视机遥控器</strong></p>
 <p>电视机是请求的接收者，遥控器是请求的发送者，遥控器上有一些按钮，不同的按钮对应电视机的不同操作。抽象命令角色由一个命令接口来扮演，有三个具体的命令类实现了抽象命令接口，这三个具体命令类分别代表三种操作：打开电视机、关闭电视机和切换频道。显然，电视机遥控器就是一个典型的命令模式应用实例。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314114828230.png" alt="image-20230314114828230" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314114828230.png" alt="image-20230314114828230" style="zoom:80%;" /></p>
 <p><strong>功能键设置</strong></p>
 <p>为了用户使用方便，某系统提供了一系列功能键，用户可以自定义功能键的功能，如功能键 FunctionButton 可以用于退出系统(SystemExitClass)，也可以用于打开帮助界面 (DisplayHelpClass)。用户可以通过修改配置文件来改变功能键的用途，现使用命令模式来设计该系统，使得功能键类与功能类之间解耦，相同的功能键可以对应不同的功能。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314115051773.png" alt="image-20230314115051773" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314115051773.png" alt="image-20230314115051773" style="zoom:80%;" /></p>
 <h3 id="2-6-模式优缺点"><a href="#2-6-模式优缺点" class="headerlink" title="2.6 模式优缺点"></a>2.6 模式优缺点</h3><p>命令模式的优点</p>
 <ol>
 <li>降低系统的耦合度。</li>
@@ -353,19 +332,17 @@
 <li>系统<strong>需要支持命令的撤销(Undo)操作和恢复(Redo)操作</strong>。</li>
 <li>系统<strong>需要将一组操作组合在一起</strong>，即支持宏命令。</li>
 </ol>
-<h3 id="2-8-模式应用"><a href="#2-8-模式应用" class="headerlink" title="2.8 模式应用"></a>2.8 模式应用</h3><p>Java语言使用命令模式实现AWT&#x2F;Swing GUI的**委派事件模型 (Delegation Event Model, DEM)**。</p>
+<h3 id="2-8-模式应用"><a href="#2-8-模式应用" class="headerlink" title="2.8 模式应用"></a>2.8 模式应用</h3><p>Java语言使用命令模式实现AWT/Swing GUI的<strong>委派事件模型 (Delegation Event Model, DEM)</strong>。</p>
 <ul>
-<li>在AWT&#x2F;Swing中，Frame、Button等<strong>界面组件</strong>是<strong>请求发送者</strong>，而AWT提供的<strong>事件监听器接口和事件适配器类</strong>是<strong>抽象命令接口</strong>，<strong>用户可以自己</strong>写抽象命令接口的子类来实现事件处理，即实现<strong>具体命令类</strong>，而在具体命令类中可以调用业务处理方法来实现该事件的处理。对于界面组件而言，只需要了解命令接口即可，无须关心接口的实现，组件类并不关心实际操作，而操作由用户来实现。</li>
+<li>在AWT/Swing中，Frame、Button等<strong>界面组件</strong>是<strong>请求发送者</strong>，而AWT提供的<strong>事件监听器接口和事件适配器类</strong>是<strong>抽象命令接口</strong>，<strong>用户可以自己</strong>写抽象命令接口的子类来实现事件处理，即实现<strong>具体命令类</strong>，而在具体命令类中可以调用业务处理方法来实现该事件的处理。对于界面组件而言，只需要了解命令接口即可，无须关心接口的实现，组件类并不关心实际操作，而操作由用户来实现。</li>
 </ul>
 <p>很多系统都提供了宏命令功能，如<strong>UNIX平台下的Shell编程</strong>，可以将多条命令封装在一个命令对象中，只需要一条简单的命令即可执行一个命令序列，这也是命令模式的应用实例之一。</p>
-<h3 id="2-9-模式扩展"><a href="#2-9-模式扩展" class="headerlink" title="2.9 模式扩展"></a>2.9 模式扩展</h3><h4 id="撤销操作的实现"><a href="#撤销操作的实现" class="headerlink" title="撤销操作的实现"></a>撤销操作的实现</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314151619323.png" alt="image-20230314151619323" style="zoom:80%;" />
-
+<h3 id="2-9-模式扩展"><a href="#2-9-模式扩展" class="headerlink" title="2.9 模式扩展"></a>2.9 模式扩展</h3><h4 id="撤销操作的实现"><a href="#撤销操作的实现" class="headerlink" title="撤销操作的实现"></a>撤销操作的实现</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314151619323.png" alt="image-20230314151619323" style="zoom:80%;" /></p>
 <h4 id="宏命令"><a href="#宏命令" class="headerlink" title="宏命令"></a>宏命令</h4><ol>
 <li>宏命令又称为<strong>组合命令</strong>，它是<strong>命令模式和组合模式</strong>联用的产物。</li>
 <li>宏命令也是一个具体命令，不过它包含了对其他命令对象的引用，<strong>在调用宏命令的execute()方法时，将递归调用它所包含的每个成员命令的execute()方法</strong>，一个宏命令的成员对象可以是简单命令，还可以继续是宏命令。执行一个宏命令将执行多个具体命令，从而实现对命令的批处理。</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314151824589.png" alt="image-20230314151824589" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314151824589.png" alt="image-20230314151824589" style="zoom:80%;" /></p>
 <h2 id="3-迭代器模式-对象"><a href="#3-迭代器模式-对象" class="headerlink" title="3. 迭代器模式(对象)"></a>3. 迭代器模式(对象)</h2><h3 id="3-1-模式动机"><a href="#3-1-模式动机" class="headerlink" title="3.1 模式动机"></a>3.1 模式动机</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627221420555.png" alt="image-20230627221420555"></p>
 <ul>
 <li>电视机 &lt;-&gt; 存储电视频道的集合 &lt;-&gt; 聚合类(Aggregate Classes)</li>
@@ -394,16 +371,12 @@
 </ul>
 <p>典型的抽象迭代器代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Iterator</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">first</span><span class="hljs-params">()</span>; <span class="hljs-comment">//将游标指向第一个元素</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">next</span><span class="hljs-params">()</span>; <span class="hljs-comment">//将游标指向下一个元素</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">hasNext</span><span class="hljs-params">()</span>; <span class="hljs-comment">//判断是否存在下一个元素</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">currentItem</span><span class="hljs-params">()</span>; <span class="hljs-comment">//获取游标指向的当前元素</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的具体迭代器代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteIterator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Iterator</span> &#123;<br>    <span class="hljs-keyword">private</span> ConcreteAggregate objects; <span class="hljs-comment">//维持一个对具体聚合对象的引用，以便于访问存储在聚合对象中的数据</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> cursor; <span class="hljs-comment">//定义一个游标，用于记录当前访问位置</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ConcreteIterator</span><span class="hljs-params">(ConcreteAggregate objects)</span> &#123;<br>    	<span class="hljs-built_in">this</span>.objects=objects;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">first</span><span class="hljs-params">()</span> &#123; ...... &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">next</span><span class="hljs-params">()</span> &#123; ...... &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">hasNext</span><span class="hljs-params">()</span> &#123; ...... &#125;<br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">currentItem</span><span class="hljs-params">()</span> &#123; ...... &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的抽象聚合类代码:</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Aggregate</span> &#123;<br>	Iterator <span class="hljs-title function_">createIterator</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的具体聚合类代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteAggregate</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Aggregate</span> &#123;<br>    ......<br>    <span class="hljs-keyword">public</span> Iterator <span class="hljs-title function_">createIterator</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcreteIterator</span>(<span class="hljs-built_in">this</span>);<br>    &#125;<br>    ......<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="3-4-模式分析"><a href="#3-4-模式分析" class="headerlink" title="3.4 模式分析"></a>3.4 模式分析</h3><ul>
 <li>如果需要<strong>增加一个新的具体聚合类</strong>，只需增加一个新的聚合子类和一个新的具体迭代器类即可，原有类库代码无须修改，<strong>符合开闭原则</strong></li>
 <li>如果需要<strong>更换一个迭代器</strong>，只需要增加一个新的具体迭代器类作为抽象迭代器类的子类，重新实现遍历方法即可，原有迭代器代码无须修改，也<strong>符合开闭原则</strong></li>
@@ -415,7 +388,7 @@
 </ul>
 <h4 id="白箱聚集-vs-黑箱聚集"><a href="#白箱聚集-vs-黑箱聚集" class="headerlink" title="白箱聚集 vs. 黑箱聚集"></a>白箱聚集 vs. 黑箱聚集</h4><ul>
 <li>白箱聚集：聚集对象为所有对象提供同一个接口(宽接口)<ul>
-<li>迭代子可以从外部控制聚集元素的迭代，控制的仅仅是一个游标—游标(Cursor)&#x2F;外禀(Extrinsic)迭代子</li>
+<li>迭代子可以从外部控制聚集元素的迭代，控制的仅仅是一个游标—游标(Cursor)/外禀(Extrinsic)迭代子</li>
 </ul>
 </li>
 </ul>
@@ -448,9 +421,7 @@
 <li>JDK中的AbstractList</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> java.util;<br>......<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">AbstractList</span>&lt;E&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractCollection</span>&lt;E&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title class_">List</span>&lt;E&gt; &#123;<br>	......<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Itr</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Iterator</span>&lt;E&gt; &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">cursor</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>        ......<br>    &#125;<br>    ......<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//使用内部类实现的商品数据类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductList</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">AbstractObjectList</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ProductList</span><span class="hljs-params">(List products)</span> &#123;<br>    	<span class="hljs-built_in">super</span>(products);<br>    &#125;<br>    <span class="hljs-keyword">public</span> AbstractIterator <span class="hljs-title function_">createIterator</span><span class="hljs-params">()</span> &#123;<br>    	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ProductIterator</span>();<br>    &#125;<br>    <span class="hljs-comment">//商品迭代器：具体迭代器，内部类实现</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ProductIterator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">AbstractIterator</span> &#123;<br>        <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> cursor1;<br>        <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> cursor2;<br>        <span class="hljs-comment">//省略其他代码</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>结构</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627223238811.png" alt="image-20230627223238811"></p>
 <p>实现</p>
@@ -459,13 +430,12 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> java.util;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Collection</span>&lt;E&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Iterable</span>&lt;E&gt; &#123;<br>    ......<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">add</span><span class="hljs-params">(Object c)</span>;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">addAll</span><span class="hljs-params">(Collection c)</span>;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Object o)</span>;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">removeAll</span><span class="hljs-params">(Collection c)</span>;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">remainAll</span><span class="hljs-params">(Collection c)</span>;<br>    Iterator <span class="hljs-title function_">iterator</span><span class="hljs-params">()</span>;<br>    ......<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>java.util.Iterator</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> java.util;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Iterator</span>&lt;E&gt; &#123;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">hasNext</span><span class="hljs-params">()</span>;<br>    E <span class="hljs-title function_">next</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">remove</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> java.util;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Iterator</span>&lt;E&gt; &#123;<br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">hasNext</span><span class="hljs-params">()</span>;<br>    E <span class="hljs-title function_">next</span><span class="hljs-params">()</span>;<br>    <span class="hljs-keyword">void</span> <span class="hljs-title function_">remove</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>实例</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> Java java.util.*;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IteratorDemo</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">process</span><span class="hljs-params">(Collection c)</span> &#123;<br>        <span class="hljs-type">Iterator</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> c.iterator(); <span class="hljs-comment">//创建迭代器对象</span><br>        <span class="hljs-comment">//通过迭代器遍历聚合对象</span><br>        <span class="hljs-keyword">while</span>(i.hasNext()) &#123;<br>        	System.out.println(i.next().toString());<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String args[])</span> &#123;<br>        Collection persons;<br>        persons = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>(); <span class="hljs-comment">//创建一个ArrayList类型的聚合对象</span><br>        persons.add(<span class="hljs-string">&quot;张无忌&quot;</span>);<br>        persons.add(<span class="hljs-string">&quot;小龙女&quot;</span>);<br>        persons.add(<span class="hljs-string">&quot;令狐冲&quot;</span>);<br>        persons.add(<span class="hljs-string">&quot;韦小宝&quot;</span>);<br>        persons.add(<span class="hljs-string">&quot;袁紫衣&quot;</span>);<br>        persons.add(<span class="hljs-string">&quot;小龙女&quot;</span>);<br>        process(persons);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="4-观察者模式-对象"><a href="#4-观察者模式-对象" class="headerlink" title="4. 观察者模式(对象)"></a>4. 观察者模式(对象)</h2><h3 id="4-1-模式动机"><a href="#4-1-模式动机" class="headerlink" title="4.1 模式动机"></a>4.1 模式动机</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612085531412.png" alt="image-20230612085531412" style="zoom:80%;" />
-
+<h2 id="4-观察者模式-对象"><a href="#4-观察者模式-对象" class="headerlink" title="4. 观察者模式(对象)"></a>4. 观察者模式(对象)</h2><h3 id="4-1-模式动机"><a href="#4-1-模式动机" class="headerlink" title="4.1 模式动机"></a>4.1 模式动机</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612085531412.png" alt="image-20230612085531412" style="zoom:80%;" /></p>
 <ul>
 <li>建立一种<strong>对象与对象之间的依赖关系，一个对象发生改变时将自动通知其他对象，其他对象将相应做出反应</strong>。<ul>
 <li>发生改变的对象称为<strong>观察目标</strong></li>
@@ -476,11 +446,10 @@
 </ul>
 <h3 id="4-2-模式定义"><a href="#4-2-模式定义" class="headerlink" title="4.2 模式定义"></a>4.2 模式定义</h3><ol>
 <li>观察者模式(Observer Pattern)：定义对象间的一种<strong>一对多依赖关系</strong>，使得<strong>每当一个对象状态发生改变</strong>时，其<strong>相关依赖对象皆得到通知并被自动更新</strong>。</li>
-<li>观察者模式又叫做<strong>发布-订阅</strong>（Publish&#x2F;Subscribe）模式、<strong>模型-视图</strong>（Model&#x2F;View）模式、<strong>源-监听器</strong>（Source&#x2F;Listener）模式或<strong>从属者</strong>（Dependents）模式。观察者模式是一种<strong>对象行为型</strong>模式。</li>
+<li>观察者模式又叫做<strong>发布-订阅</strong>（Publish/Subscribe）模式、<strong>模型-视图</strong>（Model/View）模式、<strong>源-监听器</strong>（Source/Listener）模式或<strong>从属者</strong>（Dependents）模式。观察者模式是一种<strong>对象行为型</strong>模式。</li>
 <li>Observer Pattern: Define a <strong>one-to-many dependency</strong> between objects so that when <strong>one  object changes state, all its dependents are notified  and updated automatically</strong>.</li>
 </ol>
-<h3 id="4-3-模式结构"><a href="#4-3-模式结构" class="headerlink" title="4.3 模式结构"></a>4.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612085646353.png" alt="image-20230612085646353" style="zoom:80%;" />
-
+<h3 id="4-3-模式结构"><a href="#4-3-模式结构" class="headerlink" title="4.3 模式结构"></a>4.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612085646353.png" alt="image-20230612085646353" style="zoom:80%;" /></p>
 <ul>
 <li>观察者模式包含如下角色：<ul>
 <li>Subject: 目标</li>
@@ -493,7 +462,7 @@
 <h3 id="4-4-模式分析"><a href="#4-4-模式分析" class="headerlink" title="4.4 模式分析"></a>4.4 模式分析</h3><ul>
 <li>观察者模式描述了<strong>如何建立对象与对象之间的依赖关系</strong>，如何构造满足这种需求的系统。</li>
 <li>这一模式中的关键对象是观察目标和观察者，<strong>一个目标可以有任意数目的与之相依赖的观察者，一旦目标的状态发生改变，所有的观察者都将得到通知</strong>。</li>
-<li>作为对这个通知的响应，每个观察者都将即时更新自己的状态，以与目标状态同步，这种交互也称为**发布-订阅 (publish-subscribe)**。</li>
+<li>作为对这个通知的响应，每个观察者都将即时更新自己的状态，以与目标状态同步，这种交互也称为<strong>发布-订阅 (publish-subscribe)</strong>。</li>
 </ul>
 <p><strong>松耦合</strong></p>
 <ul>
@@ -512,7 +481,6 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612090525324.png" alt="image-20230612090525324"></p>
 <p>代码实现</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CurrentConditions</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Observer</span>, DisplayElement &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">float</span> temperature;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">float</span> humidity;<br>    <span class="hljs-keyword">private</span> Subject weatherData;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">CurrentConditions</span><span class="hljs-params">(Subject weatherSubject)</span> &#123;<br>        <span class="hljs-built_in">this</span>.weatherData = weatherSubject;<br>        weatherData.registerObserver(<span class="hljs-built_in">this</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">display</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;Current Conditions: &quot;</span> + temperature + <span class="hljs-string">&quot;F degrees and &quot;</span> + humidity + <span class="hljs-string">&quot;% humidity&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">(<span class="hljs-type">float</span> t, <span class="hljs-type">float</span> h)</span> &#123;<br>        <span class="hljs-built_in">this</span>.temperature = t;<br>        <span class="hljs-built_in">this</span>.humidity = h;<br>        display();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-6-模式优缺点"><a href="#4-6-模式优缺点" class="headerlink" title="4.6 模式优缺点"></a>4.6 模式优缺点</h3><p>观察者模式的优点</p>
 <ol>
 <li>观察者模式可以<strong>实现表示层和数据逻辑层的分离</strong>，并定义了稳定的消息更新传递机制，抽象了更新接口，使得可以有各种各样不同的表示层作为具体观察者角色。</li>
@@ -534,8 +502,8 @@
 <li><strong>需要在系统中创建一个触发链</strong>，A对象的行为将影响B对象，B对象的行为将影响C对象……，可以使用观察者模式创建一种<strong>链式触发机制</strong>。</li>
 </ol>
 <h3 id="4-8-模式应用"><a href="#4-8-模式应用" class="headerlink" title="4.8 模式应用"></a>4.8 模式应用</h3><ol>
-<li>JDK1.1版本及以后的各个版本中，事件处理模型采用基于观察者模式的**委派事件模型(Delegation Event Model, DEM)**。<ol>
-<li>在DEM中，事件的发布者称为**事件源(Event Source)<strong>，而订阅者叫做</strong>事件监听器(Event Listener)<strong>，在这个过程中还可以通过</strong>事件对象(Event Object)**来传递与事件相关的信息，可以在事件监听者的实现类中实现事件处理，因此事件监听对象又可以称为事件处理对象。</li>
+<li>JDK1.1版本及以后的各个版本中，事件处理模型采用基于观察者模式的<strong>委派事件模型(Delegation Event Model, DEM)</strong>。<ol>
+<li>在DEM中，事件的发布者称为<strong>事件源(Event Source)</strong>，而订阅者叫做<strong>事件监听器(Event Listener)</strong>，在这个过程中还可以通过<strong>事件对象(Event Object)</strong>来传递与事件相关的信息，可以在事件监听者的实现类中实现事件处理，因此事件监听对象又可以称为事件处理对象。</li>
 <li><strong>事件源对象、事件监听对象(事件处理对象)和事件对象</strong>构成了Java事件处理模型的三要素。</li>
 </ol>
 </li>
@@ -545,11 +513,9 @@
 <h3 id="4-9-模式扩展"><a href="#4-9-模式扩展" class="headerlink" title="4.9 模式扩展"></a>4.9 模式扩展</h3><h4 id="Java语言提供的对观察者模式的支持"><a href="#Java语言提供的对观察者模式的支持" class="headerlink" title="Java语言提供的对观察者模式的支持"></a>Java语言提供的对观察者模式的支持</h4><ul>
 <li>在JDK的java.util包中，提供了<strong>Observable类</strong>以及<strong>Observer接口</strong>，它们构成了Java语言对观察者模式的支持。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612091826405.png" alt="image-20230612091826405" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612091826405.png" alt="image-20230612091826405" style="zoom:80%;" /></p>
 <ul>
-<li><p>Observer接口:<code>void update(Observable o, Object arg);</code></p>
-</li>
+<li>Observer接口:<code>void update(Observable o, Object arg);</code></li>
 <li><p>Observable类</p>
 <ul>
 <li><code>Observable()</code></li>
@@ -574,13 +540,11 @@
 <li>当目标和观察者间的依赖关系特别复杂时, 可能需要一个维护这些关系的对象。我们称这样的对象为更改管理器（Change Manager）。</li>
 <li>它的目的是尽量减少观察者反映其目标的状态变化所需的工作量。例如, 如果一个操作涉及到对几个相互依赖的目标进行改动, 就必须保证仅在所有目标都已更改完毕后，才一次性地通知它们的观察者, 而不是每个目标都通知观察者。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612092416439.png" alt="image-20230612092416439" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612092416439.png" alt="image-20230612092416439" style="zoom:80%;" /></p>
 <h4 id="MVC模式"><a href="#MVC模式" class="headerlink" title="MVC模式"></a>MVC模式</h4><ul>
-<li>MVC模式是一种架构模式，它包含三个角色：<strong>模型(Model)，视图(View)和控制器(Controller)<strong>。观察者模式可以用来实现MVC模式，观察者模式中的</strong>观察目标</strong>就是MVC模式中的<strong>模型(Model)<strong>，而</strong>观察者</strong>就是MVC中的<strong>视图</strong>(View)，控制器(Controller)充当两者之间的中介者(Mediator)。<strong>当模型层的数据发生改变时，视图层将自动改变其显示内容</strong>。</li>
+<li>MVC模式是一种架构模式，它包含三个角色：<strong>模型(Model)，视图(View)和控制器(Controller)</strong>。观察者模式可以用来实现MVC模式，观察者模式中的<strong>观察目标</strong>就是MVC模式中的<strong>模型(Model)</strong>，而<strong>观察者</strong>就是MVC中的<strong>视图</strong>(View)，控制器(Controller)充当两者之间的中介者(Mediator)。<strong>当模型层的数据发生改变时，视图层将自动改变其显示内容</strong>。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612092529510.png" alt="image-20230612092529510" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612092529510.png" alt="image-20230612092529510" style="zoom:80%;" /></p>
 <h3 id="4-10-小结"><a href="#4-10-小结" class="headerlink" title="4.10 小结"></a>4.10 小结</h3><ol>
 <li>观察者模式定义对象间的一种一对多依赖关系，使得每当一个对象状态发生改变时，其相关依赖对象皆得到通知并被自动更新。观察者模式又叫做发布-订阅模式、模型-视图模式、源-监听器模式或从属者模式。观察者模式是一种对象行为型模式。</li>
 <li>观察者模式包含四个角色：<ol>
@@ -604,8 +568,7 @@
 </li>
 <li>在JDK的java.util包中，提供了Observable类以及Observer接口，它们构成了Java语言对观察者模式的支持。</li>
 </ol>
-<h2 id="5-中介者模式-对象"><a href="#5-中介者模式-对象" class="headerlink" title="5. 中介者模式(对象)"></a>5. 中介者模式(对象)</h2><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612092658438.png" alt="image-20230612092658438" style="zoom:80%;" />
-
+<h2 id="5-中介者模式-对象"><a href="#5-中介者模式-对象" class="headerlink" title="5. 中介者模式(对象)"></a>5. 中介者模式(对象)</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612092658438.png" alt="image-20230612092658438" style="zoom:80%;" /></p>
 <h3 id="5-1-模式动机"><a href="#5-1-模式动机" class="headerlink" title="5.1 模式动机"></a>5.1 模式动机</h3><ol>
 <li>在用户与用户直接聊天的设计方案中，用户对象之间存在很强的关联性，将导致系统出现如下问题：<ol>
 <li><strong>系统结构复杂</strong>：对象之间存在大量的相互关联和调用，若有一个对象发生变化，则需要跟踪和该对象关联的其他所有对象，并进行适当处理。</li>
@@ -643,22 +606,18 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Mediator</span> &#123;<br>   <span class="hljs-keyword">protected</span> ArrayList colleagues;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">register</span><span class="hljs-params">(Colleague colleague)</span> &#123;<br>      colleagues.add(colleague);<br>   &#125;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>典型的具体中介者类代码：</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteMediator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Mediator</span> &#123;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span> &#123;<br>      ......<br>      ((Colleague)(colleagues.get(<span class="hljs-number">0</span>))).method1();<br>      ......<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>典型的抽象同事类代码：</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Colleague</span>&#123;<br>   <span class="hljs-keyword">protected</span> Mediator mediator;<br>   <span class="hljs-keyword">public</span> <span class="hljs-title function_">Colleague</span><span class="hljs-params">(Mediator mediator)</span>&#123;<br>      <span class="hljs-built_in">this</span>.mediator=mediator;<br>   &#125;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method1</span><span class="hljs-params">()</span>;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method2</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>典型的具体同事类代码：</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteColleague</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Colleague</span>&#123;<br>   <span class="hljs-keyword">public</span> <span class="hljs-title function_">ConcreteColleague</span><span class="hljs-params">(Mediator mediator)</span>&#123;<br>      <span class="hljs-built_in">super</span>(mediator);<br>   &#125;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method1</span><span class="hljs-params">()</span>&#123;<br>      ......<br>   &#125;<br>   <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method2</span><span class="hljs-params">()</span>&#123;<br>      mediator.operation1();<br>   &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="5-5-中介者模式实例与解析"><a href="#5-5-中介者模式实例与解析" class="headerlink" title="5.5 中介者模式实例与解析"></a>5.5 中介者模式实例与解析</h3><p><strong>实例：虚拟聊天室</strong></p>
 <p>某论坛系统欲增加一个虚拟聊天室，允许论坛会员通过该聊天室进行信息交流，普通会员(CommonMember)可以给其他会员发送文本信息，钻石会员(DiamondMember)既可以给其他会员发送文本信息，还可以发送图片信息。该聊天室可以对不雅字符进行过滤，如“日”等字符；还可以对发送的图片大小进行控制。用中介者模式设计该虚拟聊天室。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612093348250.png" alt="image-20230612093348250"></p>
@@ -718,12 +677,10 @@
 </ol>
 <h2 id="6-状态模式-对象"><a href="#6-状态模式-对象" class="headerlink" title="6. 状态模式(对象)"></a>6. 状态模式(对象)</h2><h3 id="6-1-模式动机"><a href="#6-1-模式动机" class="headerlink" title="6.1 模式动机"></a>6.1 模式动机</h3><p>在很多情况下，<strong>一个对象的行为取决于一个或多个动态变化的属性</strong>，这样的属性叫做<strong>状态</strong>，这样的对象叫做<strong>有状态的(stateful)对象</strong>，这样的对象状态是从事先定义好的一系列值中取出的。当一个这样的对象与外部事件产生互动时，其内部状态就会改变，从而使得系统的行为也随之发生变化。</p>
 <p>在UML中可以使用<strong>状态图</strong>来描述对象状态的变化。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307114008550.png" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307114008550.png" style="zoom: 67%;" /></p>
 <h3 id="6-2-模式定义"><a href="#6-2-模式定义" class="headerlink" title="6.2 模式定义"></a>6.2 模式定义</h3><p>状态模式(State Pattern)：<strong>允许一个对象在其内部状态改变时改变它的行为</strong>，对象看起来似乎修改了它的类。其别名为状态对象(Objects for States)，状态模式是一种对象行为型模式。</p>
 <p>State Pattern: Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.</p>
-<h3 id="6-3-模式结构"><a href="#6-3-模式结构" class="headerlink" title="6.3 模式结构"></a>6.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307115128774.png" alt="image-20230307115128774" style="zoom:80%;" />
-
+<h3 id="6-3-模式结构"><a href="#6-3-模式结构" class="headerlink" title="6.3 模式结构"></a>6.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307115128774.png" alt="image-20230307115128774" style="zoom:80%;" /></p>
 <p>状态模式包含如下角色：</p>
 <ol>
 <li>Context: 环境类</li>
@@ -739,15 +696,11 @@
 <li>状态模式描述了<strong>对象状态的变化</strong>以及<strong>对象如何在每一种状态下表现出不同的行为</strong>。</li>
 <li>状态模式的关键是<strong>引入了一个抽象类来专门表示对象的状态</strong>，这个类我们叫做<strong>抽象状态类</strong>，而对象的每一种具体状态类都继承了该类，并在<strong>不同具体状态类中实现了不同状态的行为，包括各种状态之间的转换</strong>。</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307115352857.png" alt="image-20230307115352857" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307115352857.png" alt="image-20230307115352857" style="zoom:80%;" /></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span>(state==<span class="hljs-string">&quot;空闲&quot;</span>)&#123;<br>    <span class="hljs-keyword">if</span>(预订房间)&#123;<br>        <span class="hljs-comment">// 预订操作;</span><br>        state=<span class="hljs-string">&quot;已预订&quot;</span>;<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(住进房间)&#123;<br>        <span class="hljs-comment">// 入住操作;</span><br>        state=<span class="hljs-string">&quot;已入住&quot;</span>;<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(state==<span class="hljs-string">&quot;已预订&quot;</span>)&#123;<br>    <span class="hljs-keyword">if</span>(住进房间)&#123;<br>        <span class="hljs-comment">// 入住操作;</span><br>        state=<span class="hljs-string">&quot;已入住&quot;</span>;<br>    &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(取消预订)&#123;<br>        <span class="hljs-comment">// 取消操作;</span><br>        state=<span class="hljs-string">&quot;空闲&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>使用状态模式重构</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307151033908.png" alt="image-20230307151033908" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307151033908.png" alt="image-20230307151033908" style="zoom:80%;" /></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//重构之后的“空闲状态类”示例代码</span><br><span class="hljs-keyword">if</span>(预订房间)&#123;<br>  <span class="hljs-comment">// 预订操作;</span><br>  context.setState(<span class="hljs-keyword">new</span> 已预订状态类());<br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(住进房间)&#123;<br>  <span class="hljs-comment">// 入住操作;</span><br>  context.setState(<span class="hljs-keyword">new</span> 已入住状态类());<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>在状态模式结构中需要理解<strong>环境类与抽象状态类</strong>的作用：</p>
 <ol>
 <li>环境类实际上就是<strong>拥有状态的对象</strong>，环境类有时候可以充当<strong>状态管理器(State Manager)的角色，可以在环境类中对状态进行切换操作</strong>。</li>
@@ -760,8 +713,7 @@
 <li>如果积分大于等于100分但小于1000分，则为高手状态，用户可以发表留言、回复留言，还可以下载文件，而且用户在发表留言时可以获取双倍积分。如果积分小于100分，则转换为新手状态；如果积分大于等于1000分，则转换为专家状态；如果下载文件后积分小于0，则不能下载该文件。</li>
 <li>如果积分大于等于1000分，则为专家状态，用户可以发表留言、回复留言和下载文件，用户除了在发表留言时可以获取双倍积分外，下载文件只扣除所需积分的一半。如果积分小于100分，则转换为新手状态；如果积分小于1000分，但大于等于100，则转换为高手状态；如果下载文件后积分小于0，则不能下载该文件。</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307151649799.png" alt="image-20230307151649799" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307151649799.png" alt="image-20230307151649799" style="zoom:80%;" /></p>
 <h3 id="6-6-模式优缺点"><a href="#6-6-模式优缺点" class="headerlink" title="6.6 模式优缺点"></a>6.6 模式优缺点</h3><p>状态模式的优点</p>
 <ol>
 <li><strong>封装了转换规则</strong>。</li>
@@ -777,7 +729,7 @@
 <li>状态模式<strong>对“开闭原则”的支持并不太好</strong>，对于可以切换状态的状态模式，增加新的状态类需要修改那些负责状态转换的源代码，否则无法切换到新增状态；而且修改某个状态类的行为也需修改对应类的源代码。</li>
 </ol>
 <h3 id="6-7-模式适用环境"><a href="#6-7-模式适用环境" class="headerlink" title="6.7 模式适用环境"></a>6.7 模式适用环境</h3><ol>
-<li>对象的<strong>行为依赖于它的状态(属性)<strong>并且</strong>可以根据它的状态改变而改变它的相关行为</strong>。</li>
+<li>对象的<strong>行为依赖于它的状态(属性)</strong>并且<strong>可以根据它的状态改变而改变它的相关行为</strong>。</li>
 <li>代码中包含大量与<strong>对象状态有关的条件语句</strong>，这些条件语句的出现，会导致代码的可维护性和灵活性变差，不能方便地增加和删除状态，使客户类与类库之间的耦合增强。在这些条件语句中包含了对象的行为，而且这些条件对应于对象的各种状态。</li>
 </ol>
 <h3 id="6-8-模式应用"><a href="#6-8-模式应用" class="headerlink" title="6.8 模式应用"></a>6.8 模式应用</h3><ol>
@@ -787,7 +739,7 @@
 <h3 id="6-9-模式扩展"><a href="#6-9-模式扩展" class="headerlink" title="6.9 模式扩展"></a>6.9 模式扩展</h3><h4 id="共享状态"><a href="#共享状态" class="headerlink" title="共享状态"></a>共享状态</h4><p>在有些情况下<strong>多个环境对象需要共享同一个状态</strong>，如果希望在系统中实现多个环境对象实例共享一个或多个状态对象，那么<strong>需要将这些状态对象定义为环境的静态成员对象</strong>。</p>
 <h4 id="简单状态模式与可切换状态的状态模式"><a href="#简单状态模式与可切换状态的状态模式" class="headerlink" title="简单状态模式与可切换状态的状态模式"></a>简单状态模式与可切换状态的状态模式</h4><ol>
 <li><strong>简单状态模式</strong>：简单状态模式是指<strong>状态都相互独立，状态之间无须进行转换的状态模式</strong>，这是最简单的一种状态模式。对于这种状态模式，每个状态类都封装与状态相关的操作，而无须关心状态的切换，可以在客户端直接实例化状态类，然后将状态对象设置到环境类中。<strong>如果是这种简单的状态模式，它遵循“开闭原则”，在客户端可以针对抽象状态类进行编程</strong>，而将具体状态类写到配置文件中，同时增加新的状态类对原有系统也不造成任何影响。</li>
-<li><strong>可切换状态的状态模式</strong>：大多数的状态模式都是<strong>可以切换状态的状态模式</strong>，在实现状态切换时，在具体状态类内部需要调用环境类<strong>Context的setState()<strong>方法进行状态的转换操作，在具体状态类中可以调用到环境类的方法，因此状态类与环境类之间通常还存在关联关系或者依赖关系。通过在状态类中引用环境类的对象来回调环境类的setState()方法实现状态的切换。在这种可以切换状态的状态模式中，</strong>增加新的状态类可能需要修改其他某些状态类甚至环境类的源代码</strong>，否则系统无法切换到新增状态。</li>
+<li><strong>可切换状态的状态模式</strong>：大多数的状态模式都是<strong>可以切换状态的状态模式</strong>，在实现状态切换时，在具体状态类内部需要调用环境类<strong>Context的setState()</strong>方法进行状态的转换操作，在具体状态类中可以调用到环境类的方法，因此状态类与环境类之间通常还存在关联关系或者依赖关系。通过在状态类中引用环境类的对象来回调环境类的setState()方法实现状态的切换。在这种可以切换状态的状态模式中，<strong>增加新的状态类可能需要修改其他某些状态类甚至环境类的源代码</strong>，否则系统无法切换到新增状态。</li>
 </ol>
 <h2 id="7-策略模式-对象"><a href="#7-策略模式-对象" class="headerlink" title="7. 策略模式(对象)"></a>7. 策略模式(对象)</h2><h3 id="7-1-模式描述"><a href="#7-1-模式描述" class="headerlink" title="7.1 模式描述"></a>7.1 模式描述</h3><p>策略模式定义了一系列算法，将每个算法封装在一起，并使它们可替换。策略使算法可以独立于使用该算法的客户端而变化</p>
 <ol>
@@ -795,20 +747,18 @@
 <li>实际开发的时候，可能是由多个设计模式组合成的</li>
 <li>我们可能需要一个算法族，希望彼此是可以替换的</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302010414510.png" alt="image-20230302010414510" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302010414510.png" alt="image-20230302010414510" style="zoom:80%;" /></p>
 <h3 id="7-2-模式动机"><a href="#7-2-模式动机" class="headerlink" title="7.2 模式动机"></a>7.2 模式动机</h3><ul>
 <li>例如：存在许多用于将文本流分成行的算法。将所有这样的算法硬连接到类中是不可取的。<ul>
 <li>不满足开闭原则，每次修改都要反复检查每一个条件语句</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302010708842.png" alt="image-20230302010708842" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302010708842.png" alt="image-20230302010708842" style="zoom:80%;" /></p>
 <h3 id="7-3-应用场景"><a href="#7-3-应用场景" class="headerlink" title="7.3 应用场景"></a>7.3 应用场景</h3><p>在以下情况下使用策略模式</p>
 <ol>
 <li>许多相关的类仅在<strong>行为</strong>上有所不同，策略提供了一种使用其中一种行为配置类的方法</li>
-<li>您需要<strong>算法的不同变体</strong>。例如，您可能定义了反映不同空间&#x2F;时间权衡的算法。将这些变体实现为算法的类层次结构时，可以使用策略。</li>
+<li>您需要<strong>算法的不同变体</strong>。例如，您可能定义了反映不同空间/时间权衡的算法。将这些变体实现为算法的类层次结构时，可以使用策略。</li>
 <li>一种算法使用客户端不应该知道的数据。使用策略模式<strong>可避免暴露复杂的、特定于算法的数据结构</strong></li>
 <li>一个类定义了许多行为，这些行为在其操作中显示为多个条件语句。代替许多条件，将相关的条件分支移到他们自己的<strong>策略类</strong>中。</li>
 </ol>
@@ -1194,5 +1144,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

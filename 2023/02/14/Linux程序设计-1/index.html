@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -190,17 +186,16 @@
 <li>受欢迎</li>
 <li>支持大多数可用平台</li>
 </ol>
-<h3 id="1-1-GNU-Linux"><a href="#1-1-GNU-Linux" class="headerlink" title="1.1 GNU &amp; Linux"></a>1.1 GNU &amp; Linux</h3><p>GNU&#x2F;Linux System</p>
+<h3 id="1-1-GNU-amp-Linux"><a href="#1-1-GNU-amp-Linux" class="headerlink" title="1.1 GNU &amp; Linux"></a>1.1 GNU &amp; Linux</h3><p>GNU/Linux System</p>
 <ul>
 <li>Linux kernel</li>
-<li>GNU software&#x2F;library</li>
+<li>GNU software/library</li>
 </ul>
 <p>Distributions(发行版)：</p>
 <ul>
 <li>Ubuntu, Debian, Mint, Red Hat, Fodore, SuSe, Mandrake, Redflag…</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214155540587.png" alt="image-20230214155540587" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214155540587.png" alt="image-20230214155540587" style="zoom:80%;" /></p>
 <h4 id="What-is-So-Special-for-Linux"><a href="#What-is-So-Special-for-Linux" class="headerlink" title="What is So Special for Linux?"></a>What is So Special for Linux?</h4><ul>
 <li>大多数软件(包括Linux内核)均为 GPL 版(<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/GNU_General_Public_License">GNU General Public License</a>)</li>
 <li>称为”<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/Copyleft">copyleft</a>“(而不是”copyright”)<ol>
@@ -243,16 +238,15 @@
 </ul>
 </li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162131763.png" alt="image-20230214162131763" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162131763.png" alt="image-20230214162131763" style="zoom:80%;" /></p>
 <blockquote>
 <p>上图中表示是一个双系统，所以同时有windows和linux</p>
 <ol>
 <li>hda：磁盘的第一个扇区包含 MBR 和分区表(早期的都是 MBR 组织的，后面使用了 GPT (使用GUID分区表))</li>
 <li>hda1：第一个主分区包含Windows 95文件系统</li>
 <li>hda2：第二主分区是扩展分区，拥有三个逻辑分区</li>
-<li>hda5：第一个逻辑分区包含一个Linux文件系统，该文件系统将被安装为&#x2F;</li>
-<li>hda6：第二个逻辑分区包含一个Linux文件系统，该文件系统将挂载为&#x2F;home</li>
+<li>hda5：第一个逻辑分区包含一个Linux文件系统，该文件系统将被安装为/</li>
+<li>hda6：第二个逻辑分区包含一个Linux文件系统，该文件系统将挂载为/home</li>
 <li>hda7：第三个逻辑分区拥有一个Linux交换空间</li>
 </ol>
 </blockquote>
@@ -267,8 +261,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162723879.png" alt="image-20230214162723879" style="zoom:80%;" />
-
+<h4 id="GPT"><a href="#GPT" class="headerlink" title="GPT"></a>GPT</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162723879.png" alt="image-20230214162723879" style="zoom:80%;" /></p>
 <ul>
 <li>保留的 MBR 是为了在较老的机器上也能读取到磁盘上的信息</li>
 <li>GPT 是 MBR 不够用了才会选择使用</li>
@@ -288,19 +281,18 @@
 </ul>
 <h3 id="2-4-Disk-Partitioning"><a href="#2-4-Disk-Partitioning" class="headerlink" title="2.4 Disk Partitioning"></a>2.4 Disk Partitioning</h3><ul>
 <li>至少要创建<ul>
-<li>根目录(&#x2F;)，750MB(建议1.5G或更高)，需要指定一个主分区</li>
+<li>根目录(/)，750MB(建议1.5G或更高)，需要指定一个主分区</li>
 <li>交换分区(swap)，大小等于内存量,用于虚拟内存</li>
 </ul>
 </li>
-<li>推荐：&#x2F;boot(16MB)，用于启动，常存放boot loader</li>
-<li>可能需要&#x2F;想要创建其他分区：&#x2F;usr，&#x2F;usr&#x2F;local，&#x2F;var，&#x2F;tmp，&#x2F;opt，&#x2F;home<ul>
-<li>例如可以将 &#x2F;home 指定一个主分区，那么向 home 文件夹存放数据会存放到对应的分区，形成挂载结构</li>
+<li>推荐：/boot(16MB)，用于启动，常存放boot loader</li>
+<li>可能需要/想要创建其他分区：/usr，/usr/local，/var，/tmp，/opt，/home<ul>
+<li>例如可以将 /home 指定一个主分区，那么向 home 文件夹存放数据会存放到对应的分区，形成挂载结构</li>
 </ul>
 </li>
 <li>Linux下的默认分区程序是fdisk，发行版可以添加自己的分区程序</li>
 </ul>
-<h3 id="2-5-Linux-Startup-Flow"><a href="#2-5-Linux-Startup-Flow" class="headerlink" title="2.5 Linux Startup Flow"></a>2.5 Linux Startup Flow</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230217103017442.png" alt="image-20230217103017442" style="zoom:80%;" />
-
+<h3 id="2-5-Linux-Startup-Flow"><a href="#2-5-Linux-Startup-Flow" class="headerlink" title="2.5 Linux Startup Flow"></a>2.5 Linux Startup Flow</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230217103017442.png" alt="image-20230217103017442" style="zoom:80%;" /></p>
 <blockquote>
 <p>BIOS 通过查找硬盘，启动boot loader</p>
 <p>init 是第一个启动的应用程序，是个用户态程序</p>
@@ -312,7 +304,7 @@
 </li>
 <li>MBR<ul>
 <li>包含一个”boot loader”和分区表</li>
-<li>传统上由 LILO&#x2F;GRUB 设置</li>
+<li>传统上由 LILO/GRUB 设置</li>
 </ul>
 </li>
 <li>Boot loader<ul>
@@ -321,7 +313,7 @@
 </ul>
 </li>
 <li>初始化过程<ul>
-<li>配置文件 &#x2F;etc&#x2F;inittab</li>
+<li>配置文件 /etc/inittab</li>
 <li>运行水平</li>
 </ul>
 </li>
@@ -337,8 +329,7 @@
 <li>加载启动设备的 MBR 并执行</li>
 </ul>
 <h4 id="EFI"><a href="#EFI" class="headerlink" title="EFI"></a>EFI</h4><p>增强版的BIOS, 支持GPT，支持更多的设备</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230217103757283.png" alt="image-20230217103757283" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230217103757283.png" alt="image-20230217103757283" style="zoom:80%;" /></p>
 <h4 id="Boot-loader"><a href="#Boot-loader" class="headerlink" title="Boot loader"></a>Boot loader</h4><ul>
 <li>引导加载程序加载并启动Linux内核<ol>
 <li>可以将启动参数传递给Linux内核，例如设备信息</li>
@@ -351,24 +342,22 @@
 <li>GRUB：Grand Unified Boot Loader</li>
 </ol>
 </li>
-<li>除非使用其他引导加载程序，否则通常在&#x2F;dev&#x2F;hda中进行配置。</li>
+<li>除非使用其他引导加载程序，否则通常在/dev/hda中进行配置。</li>
 </ul>
 <h4 id="GRUB-Grand-Unified-Boot-Loader"><a href="#GRUB-Grand-Unified-Boot-Loader" class="headerlink" title="GRUB(Grand Unified Boot Loader)"></a>GRUB(Grand Unified Boot Loader)</h4><ul>
-<li>程序存储在 MBR (第一阶段) 和 &#x2F;boot&#x2F;grub (第1.5和第二阶段) 中</li>
+<li>程序存储在 MBR (第一阶段) 和 /boot/grub (第1.5和第二阶段) 中</li>
 <li>了解文件系统结构；无需像LILO一样激活配置</li>
-<li>配置文件：&#x2F;boot&#x2F;grub&#x2F;grub.cfg<ul>
+<li>配置文件：/boot/grub/grub.cfg<ul>
 <li>最重要就是配置内核和init文件的位置</li>
 </ul>
 </li>
 <li>通过grub-install安装在MBR中</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs grub.cfg">title Ubuntu, kernel 2.6.20-16-generic<br>root (hd0,1)<br>kernel /boot/vmlinuz-2.6.20-16-generic root=UUID=3f784cd9-516f-4808-a601-b19356f6bdea ro quiet splash locale=zh_CN vga=0x318 // 内核与参数<br>initrd /boot/initrd.img-2.6.20-16-generic // init程序<br><br>// 配置 windows<br>title Microsoft Windows XP<br>Professional<br>root	(hd0, 0) // 0号磁盘0号分区<br>savedefault<br>makeactive<br>chainloader +1 // 找新的引导程序，windows有自己的<br></code></pre></td></tr></table></figure>
-
 <h2 id="3-Using-the-System"><a href="#3-Using-the-System" class="headerlink" title="3. Using the System"></a>3. Using the System</h2><h3 id="3-1-Basic-Knowledge"><a href="#3-1-Basic-Knowledge" class="headerlink" title="3.1 Basic Knowledge"></a>3.1 Basic Knowledge</h3><h4 id="Installing-Software-on-Linux"><a href="#Installing-Software-on-Linux" class="headerlink" title="Installing Software on Linux"></a>Installing Software on Linux</h4><ul>
 <li>From a tarball</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译源代码安装软件：automake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br>./configure<br>make<br>su - <span class="hljs-comment"># 只有make install需要切换root权限</span><br>make install <span class="hljs-comment"># 将编译后的二进制码安装到系统</span><br><br><span class="hljs-comment"># cmake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake ..	<span class="hljs-comment"># cmake后面跟application目录，..即上级目录</span><br>make VERBOSE=1	<span class="hljs-comment"># VERBOSE参数可选，仅多打印一些东西</span><br>su -<br>make install<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>yum + rpm (red hat系列使用rpm安装包)<ul>
 <li>RPM: RPM Package Management<ul>
@@ -450,7 +439,7 @@
 <li>字符型设备文件(character special file)</li>
 <li>块型设备文件(block special file)<ul>
 <li><strong>special files：代表硬件或逻辑设备</strong></li>
-<li>位于 &#x2F;dev 目录</li>
+<li>位于 /dev 目录</li>
 </ul>
 </li>
 <li>网络接口(socket)</li>
@@ -480,75 +469,48 @@
 </li>
 <li>没有驱动器号，例如A:，C:，…</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143200633.png" alt="image-20230227143200633" style="zoom:80%;" />
-
-<h4 id="Main-Directories-in-Linux"><a href="#Main-Directories-in-Linux" class="headerlink" title="Main Directories in Linux"></a>Main Directories in Linux</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143638153.png" alt="image-20230227143638153" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143200633.png" alt="image-20230227143200633" style="zoom:80%;" /></p>
+<h4 id="Main-Directories-in-Linux"><a href="#Main-Directories-in-Linux" class="headerlink" title="Main Directories in Linux"></a>Main Directories in Linux</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143638153.png" alt="image-20230227143638153" style="zoom:80%;" /></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="http://www.pathname.com/fhs">Linux Filesystem Hierarchy Standard</a></p>
 </blockquote>
 <h4 id="Basic-Commands"><a href="#Basic-Commands" class="headerlink" title="Basic Commands"></a>Basic Commands</h4><ul>
-<li><p>passwd：更改密码</p>
-</li>
-<li><p>mkpasswd：生成随机密码</p>
-</li>
-<li><p>date，cal：找出今天的日期并显示日历</p>
-</li>
-<li><p>who，finger：找出还有谁在系统上处于活动状态</p>
-</li>
-<li><p>clear：清除屏幕</p>
-</li>
-<li><p>echo：在屏幕上写一条消息</p>
-</li>
-<li><p>write、wall、talk、mesg</p>
-<ul>
+<li>passwd：更改密码</li>
+<li>mkpasswd：生成随机密码</li>
+<li>date，cal：找出今天的日期并显示日历</li>
+<li>who，finger：找出还有谁在系统上处于活动状态</li>
+<li>clear：清除屏幕</li>
+<li>echo：在屏幕上写一条消息</li>
+<li>write、wall、talk、mesg<ul>
 <li>write：给其他用户发信息</li>
 <li>wall：write all, 给所有登录到系统的用户发信息</li>
 <li>talk：建立聊天session</li>
 <li>mesg：可以屏蔽用户发来的信息</li>
 </ul>
 </li>
-<li><p>pwd：当前目录</p>
-</li>
-<li><p>cd：更改目录</p>
-</li>
-<li><p>mkdir：创建目录</p>
-</li>
-<li><p>rmdir：删除目录</p>
-</li>
-<li><p>ls：列出目录的内容，-l，-a(显示隐藏文件, 形如<code>.*</code>)，-R(递归打印所有的子目录中的文件)选项，-i</p>
-</li>
-<li><p>touch：更新文件的访问, 修改时间</p>
-</li>
-<li><p>cp：复制文件</p>
-</li>
-<li><p>mv：移动并重命名文件</p>
-</li>
-<li><p>ln：链接文件</p>
-</li>
-<li><p>rm：删除文件</p>
-</li>
-<li><p>cat：打印文件内容</p>
-</li>
-<li><p>more&#x2F;less：逐页显示文件，more不可以回退，less可以回退</p>
-</li>
-<li><p>ps：报告进程状态</p>
-</li>
-<li><p>pstree：显示进程树</p>
-</li>
-<li><p>jobs, fg, bg, ctrl-z：作业控制</p>
-<ul>
+<li>pwd：当前目录</li>
+<li>cd：更改目录</li>
+<li>mkdir：创建目录</li>
+<li>rmdir：删除目录</li>
+<li>ls：列出目录的内容，-l，-a(显示隐藏文件, 形如<code>.*</code>)，-R(递归打印所有的子目录中的文件)选项，-i</li>
+<li>touch：更新文件的访问, 修改时间</li>
+<li>cp：复制文件</li>
+<li>mv：移动并重命名文件</li>
+<li>ln：链接文件</li>
+<li>rm：删除文件</li>
+<li>cat：打印文件内容</li>
+<li>more/less：逐页显示文件，more不可以回退，less可以回退</li>
+<li>ps：报告进程状态</li>
+<li>pstree：显示进程树</li>
+<li>jobs, fg, bg, ctrl-z：作业控制<ul>
 <li>bg: 后台执行</li>
 <li>fg: 前台执行</li>
 <li>ctrl-z: 暂停进程, 可通过fg, bg恢复</li>
 </ul>
 </li>
-<li><p>kill：杀死进程</p>
-</li>
-<li><p>nohup：运行命令，忽略挂起信号</p>
-</li>
-<li><p>nice，renice：修改进程优先级</p>
-</li>
+<li>kill：杀死进程</li>
+<li>nohup：运行命令，忽略挂起信号</li>
+<li>nice，renice：修改进程优先级</li>
 <li><p>top：查看进程的cpu占用</p>
 </li>
 <li><p>文件操作</p>
@@ -583,10 +545,8 @@
 </li>
 </ul>
 </li>
-<li><p>进程操作：ps, kill, jobs, fg, bg, nice</p>
-</li>
-<li><p>其它</p>
-<ul>
+<li>进程操作：ps, kill, jobs, fg, bg, nice</li>
+<li>其它<ul>
 <li>who, whoami, passwd, su, uname, …<ul>
 <li>whoami: 当前用户名</li>
 <li>uname: 显示内核信息</li>
@@ -609,32 +569,32 @@
 <li><p>三个权限：</p>
 <ol>
 <li>读取(r)：读取文件内容或目录内容</li>
-<li>写(w)：更改文件内容或在目录中创建&#x2F;删除文件</li>
+<li>写(w)：更改文件内容或在目录中创建/删除文件</li>
 <li>执行(x)：以程序执行文件或使用目录作为活动目录</li>
 </ol>
 </li>
 <li><p><code>ls -l</code></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227153229304.png" alt="image-20230227153229304" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227153229304.png" alt="image-20230227153229304" style="zoom:80%;" /></p>
+</li>
 </ul>
 <h4 id="Changing-Permissions"><a href="#Changing-Permissions" class="headerlink" title="Changing Permissions"></a>Changing Permissions</h4><ul>
 <li><p><code>chmod &lt;who operator what&gt; filename</code></p>
 <ul>
 <li><p>who:</p>
 <ul>
-<li><code>u</code> &#x3D; owner of file</li>
-<li><code>g</code> &#x3D; group</li>
-<li><code>o</code> &#x3D; other users on the system</li>
-<li><code>a</code> &#x3D; all(u + g + o)</li>
+<li><code>u</code> = owner of file</li>
+<li><code>g</code> = group</li>
+<li><code>o</code> = other users on the system</li>
+<li><code>a</code> = all(u + g + o)</li>
 </ul>
 </li>
 <li><p>operator:</p>
 <ul>
-<li><p><code>+</code> &#x3D; add permission</p>
+<li><p><code>+</code> = add permission</p>
 </li>
-<li><p><code>-</code> &#x3D; remove permission</p>
+<li><p><code>-</code> = remove permission</p>
 </li>
-<li><p><code>=</code> &#x3D; clear permissions and set to mode specified</p>
-</li>
+<li><code>=</code> = clear permissions and set to mode specified</li>
 </ul>
 </li>
 <li><p>what: <code>r, w, x</code></p>
@@ -644,9 +604,9 @@
 <li><p><code>chmod &lt;number&gt; file</code></p>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227154029252.png" alt="image-20230227154029252" style="zoom:80%;" />
-
-<h4 id="Default-File-Permissions"><a href="#Default-File-Permissions" class="headerlink" title="Default File Permissions"></a>Default File Permissions</h4><table>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227154029252.png" alt="image-20230227154029252" style="zoom:80%;" /></p>
+<h4 id="Default-File-Permissions"><a href="#Default-File-Permissions" class="headerlink" title="Default File Permissions"></a>Default File Permissions</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>类型</th>
@@ -654,9 +614,10 @@
 <th>数字权限</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>File</td>
-<td>-rw-r–r–</td>
+<td>-rw-r—r—</td>
 <td>644</td>
 </tr>
 <tr>
@@ -664,7 +625,9 @@
 <td>drwxr-xr-x</td>
 <td>755</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="Editing-Files"><a href="#Editing-Files" class="headerlink" title="Editing Files"></a>Editing Files</h4><ul>
 <li>vi、emacs、gedit</li>
 </ul>
@@ -675,8 +638,7 @@
 <li>An address space with one or more threads executing within that address space, and the required system resources for those threads. (susv3)</li>
 <li>正在运行的程序就是进程的一个示例</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303101357067.png" alt="image-20230303101357067" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303101357067.png" alt="image-20230303101357067" style="zoom:80%;" /></p>
 <ul>
 <li>shell是一个读取命令并启动适当进程的进程<ul>
 <li><code>echo $$</code></li>
@@ -697,8 +659,7 @@
 </li>
 </ul>
 <h4 id="Daemons"><a href="#Daemons" class="headerlink" title="Daemons"></a>Daemons</h4><p>“守护进程”一词指的是一个永不停止的进程，通常是控制诸如打印机队列之类的系统资源或执行网络服务的系统进程。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303103555052.png" alt="image-20230303103555052" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303103555052.png" alt="image-20230303103555052" style="zoom:80%;" /></p>
 <h3 id="3-4-Linux-Documentation"><a href="#3-4-Linux-Documentation" class="headerlink" title="3.4 Linux Documentation"></a>3.4 Linux Documentation</h3><h4 id="How-to-Find-Help"><a href="#How-to-Find-Help" class="headerlink" title="How to Find Help?"></a>How to Find Help?</h4><ul>
 <li><code>man</code></li>
 <li><code>info</code></li>
@@ -708,7 +669,7 @@
 </ul>
 <h4 id="The-man-command"><a href="#The-man-command" class="headerlink" title="The man command"></a>The man command</h4><ul>
 <li>使用 man 命令，您可以阅读命令的手册页</li>
-<li>手册页存储在 &#x2F;usr&#x2F;man</li>
+<li>手册页存储在 /usr/man</li>
 <li>手册页包括：<ol>
 <li>名称：命令名称和在线说明</li>
 <li>概要：命令的语法</li>
@@ -737,7 +698,7 @@
 </ul>
 <h4 id="The-info-command"><a href="#The-info-command" class="headerlink" title="The info command"></a>The info command</h4><ul>
 <li>用于阅读文档的程序，有时可以代替手册页</li>
-<li>有关信息的信息存储在 &#x2F;usr&#x2F;info</li>
+<li>有关信息的信息存储在 /usr/info</li>
 <li>一些信息命令：<ol>
 <li>space：下一屏文字</li>
 <li>delete：上一屏文字</li>
@@ -749,7 +710,7 @@
 </ol>
 </li>
 </ul>
-<h2 id="4-Linux-UNIX-Overview"><a href="#4-Linux-UNIX-Overview" class="headerlink" title="4. Linux&#x2F;UNIX Overview"></a>4. Linux&#x2F;UNIX Overview</h2><ul>
+<h2 id="4-Linux-UNIX-Overview"><a href="#4-Linux-UNIX-Overview" class="headerlink" title="4. Linux/UNIX Overview"></a>4. Linux/UNIX Overview</h2><ul>
 <li>早期的UNIX<ul>
 <li>一个简单的文件系统</li>
 <li>一个进程子系统和一个Shell</li>
@@ -757,10 +718,8 @@
 </li>
 <li>内核和核外程序</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303104322848.png" alt="image-20230303104322848" style="zoom:80%;" />
-
-<h4 id="Programmer’s-Viewpoint"><a href="#Programmer’s-Viewpoint" class="headerlink" title="Programmer’s Viewpoint"></a>Programmer’s Viewpoint</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303105118990.png" alt="image-20230303105118990" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303104322848.png" alt="image-20230303104322848" style="zoom:80%;" /></p>
+<h4 id="Programmer’s-Viewpoint"><a href="#Programmer’s-Viewpoint" class="headerlink" title="Programmer’s Viewpoint"></a>Programmer’s Viewpoint</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303105118990.png" alt="image-20230303105118990" style="zoom:80%;" /></p>
 <h2 id="5-Linux-System-Basic"><a href="#5-Linux-System-Basic" class="headerlink" title="5. Linux System Basic"></a>5. Linux System Basic</h2><h3 id="5-1-重定向"><a href="#5-1-重定向" class="headerlink" title="5.1 重定向"></a>5.1 重定向</h3><ul>
 <li><p>标准输入、标准输出、标准错误</p>
 <ul>
@@ -784,7 +743,6 @@
 </li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt; abc.txt<br><span class="hljs-built_in">cat</span> 文件名<br><br><span class="hljs-comment"># 这里的文件名作为cat参数存在</span><br><span class="hljs-comment"># 类似于C语言中，main(int argc, char** argv)</span><br><span class="hljs-comment"># 当argc等于0，在system.in中读，再system.out打印</span><br><span class="hljs-comment"># 当cat后面加上参数，就读出文件内容，输出在屏幕上</span><br><span class="hljs-comment"># cat &lt; 文件名，这里是重定向</span><br><span class="hljs-comment"># 执行流程完全不一样，仍然是走else分支</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="5-2-管道"><a href="#5-2-管道" class="headerlink" title="5.2 管道"></a>5.2 管道</h3><ul>
 <li>一个进程的输出作为另一个进程的输入</li>
 <li>存在一个管道文件，这个文件作为输入传递给后面的命令</li>
@@ -823,7 +781,7 @@
 <li>sed: 用于做替换<ul>
 <li>可以把文本文件里的一段内容替换为其他内容</li>
 <li><code>sed &#39;s/\([0-9A-Za-z_]\&#123;1,\&#125;\)\[ \&#123;0,\&#125;\]\[ \&#123;0,\&#125;\]/*\1\[\]/g&#39; code1.cpp</code><ul>
-<li>‘s&#x2F;…&#x2F;…&#x2F;g’</li>
+<li>‘s/…/…/g’</li>
 <li>将第一个省略号内容替换为第二个省略号内容</li>
 <li>g表示每行全部都匹配, 不加每行最多匹配一次</li>
 </ul>
@@ -887,7 +845,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-What-is-Linux"><span class="toc-text">1. What is Linux?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-GNU-Linux"><span class="toc-text">1.1 GNU &amp; Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-So-Special-for-Linux"><span class="toc-text">What is So Special for Linux?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Linux-Installation"><span class="toc-text">2. Linux Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Installing-Linux"><span class="toc-text">2.1 Installing Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Partitioning-Theory"><span class="toc-text">2.2 Partitioning Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MBR"><span class="toc-text">MBR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GPT"><span class="toc-text">GPT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-File-System"><span class="toc-text">2.3 File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Disk-Partitioning"><span class="toc-text">2.4 Disk Partitioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Linux-Startup-Flow"><span class="toc-text">2.5 Linux Startup Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Input-Output-System-BIOS"><span class="toc-text">Basic Input Output System(BIOS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EFI"><span class="toc-text">EFI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boot-loader"><span class="toc-text">Boot loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB-Grand-Unified-Boot-Loader"><span class="toc-text">GRUB(Grand Unified Boot Loader)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Using-the-System"><span class="toc-text">3. Using the System</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Basic-Knowledge"><span class="toc-text">3.1 Basic Knowledge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-Software-on-Linux"><span class="toc-text">Installing Software on Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-user-and-Multi-tasking"><span class="toc-text">Multi-user and Multi-tasking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Virtual-Terminal"><span class="toc-text">Virtual Terminal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-Commands"><span class="toc-text">Linux Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Command-Syntax"><span class="toc-text">Command Syntax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Working-with-Files-and-Directories"><span class="toc-text">3.2 Working with Files and Directories</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Types"><span class="toc-text">File Types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Directory-Structure"><span class="toc-text">Directory Structure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Main-Directories-in-Linux"><span class="toc-text">Main Directories in Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Permission"><span class="toc-text">File Permission</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Changing-Permissions"><span class="toc-text">Changing Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Default-File-Permissions"><span class="toc-text">Default File Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Editing-Files"><span class="toc-text">Editing Files</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Working-with-Processes"><span class="toc-text">3.3 Working with Processes</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-and-Stopping-a-Process"><span class="toc-text">Starting and Stopping a Process</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daemons"><span class="toc-text">Daemons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Linux-Documentation"><span class="toc-text">3.4 Linux Documentation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-Find-Help"><span class="toc-text">How to Find Help?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-man-command"><span class="toc-text">The man command</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-info-command"><span class="toc-text">The info command</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Linux-UNIX-Overview"><span class="toc-text">4. Linux&#x2F;UNIX Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Programmer%E2%80%99s-Viewpoint"><span class="toc-text">Programmer’s Viewpoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Linux-System-Basic"><span class="toc-text">5. Linux System Basic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">5.1 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%AE%A1%E9%81%93"><span class="toc-text">5.2 管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">5.3 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">5.4 高级命令与正则表达式</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-What-is-Linux"><span class="toc-text">1. What is Linux?</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-GNU-amp-Linux"><span class="toc-text">1.1 GNU &amp; Linux</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#What-is-So-Special-for-Linux"><span class="toc-text">What is So Special for Linux?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Linux-Installation"><span class="toc-text">2. Linux Installation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Installing-Linux"><span class="toc-text">2.1 Installing Linux</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Partitioning-Theory"><span class="toc-text">2.2 Partitioning Theory</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MBR"><span class="toc-text">MBR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GPT"><span class="toc-text">GPT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-File-System"><span class="toc-text">2.3 File System</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Disk-Partitioning"><span class="toc-text">2.4 Disk Partitioning</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-Linux-Startup-Flow"><span class="toc-text">2.5 Linux Startup Flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Input-Output-System-BIOS"><span class="toc-text">Basic Input Output System(BIOS)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EFI"><span class="toc-text">EFI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Boot-loader"><span class="toc-text">Boot loader</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GRUB-Grand-Unified-Boot-Loader"><span class="toc-text">GRUB(Grand Unified Boot Loader)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Using-the-System"><span class="toc-text">3. Using the System</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Basic-Knowledge"><span class="toc-text">3.1 Basic Knowledge</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Installing-Software-on-Linux"><span class="toc-text">Installing Software on Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Multi-user-and-Multi-tasking"><span class="toc-text">Multi-user and Multi-tasking</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Virtual-Terminal"><span class="toc-text">Virtual Terminal</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-Commands"><span class="toc-text">Linux Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Command-Syntax"><span class="toc-text">Command Syntax</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Working-with-Files-and-Directories"><span class="toc-text">3.2 Working with Files and Directories</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Types"><span class="toc-text">File Types</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Directory-Structure"><span class="toc-text">Directory Structure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Main-Directories-in-Linux"><span class="toc-text">Main Directories in Linux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Commands"><span class="toc-text">Basic Commands</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#File-Permission"><span class="toc-text">File Permission</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Changing-Permissions"><span class="toc-text">Changing Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Default-File-Permissions"><span class="toc-text">Default File Permissions</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Editing-Files"><span class="toc-text">Editing Files</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Working-with-Processes"><span class="toc-text">3.3 Working with Processes</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Starting-and-Stopping-a-Process"><span class="toc-text">Starting and Stopping a Process</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daemons"><span class="toc-text">Daemons</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-Linux-Documentation"><span class="toc-text">3.4 Linux Documentation</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-Find-Help"><span class="toc-text">How to Find Help?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-man-command"><span class="toc-text">The man command</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-info-command"><span class="toc-text">The info command</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-Linux-UNIX-Overview"><span class="toc-text">4. Linux&#x2F;UNIX Overview</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Programmer%E2%80%99s-Viewpoint"><span class="toc-text">Programmer’s Viewpoint</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Linux-System-Basic"><span class="toc-text">5. Linux System Basic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%87%8D%E5%AE%9A%E5%90%91"><span class="toc-text">5.1 重定向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%AE%A1%E9%81%93"><span class="toc-text">5.2 管道</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="toc-text">5.3 环境变量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E9%AB%98%E7%BA%A7%E5%91%BD%E4%BB%A4%E4%B8%8E%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">5.4 高级命令与正则表达式</span></a></li></ol></li></ol>
       
     </div>
   </div>
@@ -1196,5 +1154,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

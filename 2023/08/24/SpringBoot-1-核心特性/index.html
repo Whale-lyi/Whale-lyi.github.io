@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -188,18 +184,15 @@
 <p>本文使用的 SpringBoot 版本为 3.0.5, 最小需要 jdk17</p>
 </blockquote>
 <h2 id="快速入门"><a href="#快速入门" class="headerlink" title="快速入门"></a>快速入门</h2><h3 id="创建项目"><a href="#创建项目" class="headerlink" title="创建项目"></a>创建项目</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 所有springboot项目都必须继承自 spring-boot-starter-parent --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">parent</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.0.5<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">parent</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="打包"><a href="#打包" class="headerlink" title="打包"></a>打包</h3><p><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/getting-started.html#getting-started.first-application.executable-jar">官方文档</a></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- SpringBoot应用打包插件 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">build</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">plugins</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">plugin</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">plugin</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">plugins</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">build</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>使用 <code>mvn package</code> 打包后，通过 <code>java -jar</code> 即可运行</p>
 <h3 id="简化配置"><a href="#简化配置" class="headerlink" title="简化配置"></a>简化配置</h3><p>通过书写配置文件 <code>application.properties/yml</code> 完成配置</p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html">官方支持的配置</a></li>
 </ul>
 <h3 id="依赖管理机制"><a href="#依赖管理机制" class="headerlink" title="依赖管理机制"></a>依赖管理机制</h3><ul>
-<li><p>导入场景启动器的依赖时不需要声明版本号</p>
-<ul>
+<li>导入场景启动器的依赖时不需要声明版本号<ul>
 <li>原因：每个boot项目都有一个父项目<code>spring-boot-starter-parent</code><ul>
 <li><code>spring-boot-starter-parent</code>的父项目是<code>spring-boot-dependencies</code>(版本仲裁中心)</li>
 </ul>
@@ -221,13 +214,11 @@
 <li><p>第三方的jar包自行声明版本</p>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/1679294529375-4ee1cd26-8ebc-4abf-bff9-f8775e10c927.png" alt="img" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/1679294529375-4ee1cd26-8ebc-4abf-bff9-f8775e10c927.png" alt="img" style="zoom:80%;" /></p>
 <h3 id="自动配置机制"><a href="#自动配置机制" class="headerlink" title="自动配置机制"></a>自动配置机制</h3><ul>
 <li><p>默认的包扫描规则</p>
 <ul>
-<li><p>SpringBoot只会扫描主程序所在的包及其下面的子包，自动的component-scan功能</p>
-</li>
+<li>SpringBoot只会扫描主程序所在的包及其下面的子包，自动的component-scan功能</li>
 <li><p>自定义扫描路径</p>
 <ul>
 <li><code>@SpringBootApplication(scanBasePackages = &quot;com.atguigu&quot;)</code></li>
@@ -238,10 +229,8 @@
 </li>
 <li><p>配置默认值</p>
 <ul>
-<li><p><strong>配置文件</strong>的所有配置项是和某个<strong>类的对象值</strong>进行一一绑定的。</p>
-</li>
-<li><p>绑定了配置文件中每一项值的类：<strong>属性配置类</strong>。</p>
-</li>
+<li><strong>配置文件</strong>的所有配置项是和某个<strong>类的对象值</strong>进行一一绑定的。</li>
+<li>绑定了配置文件中每一项值的类：<strong>属性配置类</strong>。</li>
 <li><p>比如：</p>
 <ul>
 <li><code>ServerProperties</code>绑定了所有Tomcat服务器有关的配置</li>
@@ -253,10 +242,8 @@
 </li>
 <li><p>按需加载自动配置</p>
 <ul>
-<li><p>场景启动器除了会导入相关功能依赖，导入一个<code>spring-boot-starter</code>，是所有<code>starter</code>的<code>starter</code></p>
-</li>
-<li><p><code>spring-boot-starter</code>导入了一个包 <code>spring-boot-autoconfigure</code>。包中囊括了所有场景的<code>AutoConfiguration</code><strong>自动配置类</strong></p>
-</li>
+<li>场景启动器除了会导入相关功能依赖，导入一个<code>spring-boot-starter</code>，是所有<code>starter</code>的<code>starter</code></li>
+<li><code>spring-boot-starter</code>导入了一个包 <code>spring-boot-autoconfigure</code>。包中囊括了所有场景的<code>AutoConfiguration</code><strong>自动配置类</strong></li>
 <li><p>虽然全场景的自动配置都在 <code>spring-boot-autoconfigure</code>这个包，但并不是全都开启的</p>
 <ul>
 <li>导入哪个场景就开启哪个自动配置</li>
@@ -638,5 +625,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -192,9 +188,7 @@
 <li>注意：where标签不能将其中内容后面多余的and或or去掉</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- List&lt;Employee&gt; selectEmployeeByCondition(Employee employee); --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployeeByCondition&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;employee&quot;</span>&gt;</span><br>    select emp_id, emp_name, emp_salary from t_emp<br>    <span class="hljs-comment">&lt;!-- where标签会自动去掉“标签体内前面多余的and/or” --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">where</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 使用if标签，让我们可以有选择的加入SQL语句的片段。这个SQL语句片段是否要加入整个SQL语句，就看if标签判断的结果是否为true --&gt;</span><br>        <span class="hljs-comment">&lt;!-- 在if标签的test属性中，可以访问实体类的属性，不可以访问数据库表的字段 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empName != null and empName != &#x27;&#x27;&quot;</span>&gt;</span><br>            <span class="hljs-comment">&lt;!-- 在if标签内部，需要访问接口的参数时还是正常写#&#123;&#125; --&gt;</span><br>            or emp_name = #&#123;empName&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empSalary <span class="hljs-symbol">&amp;gt;</span> 2000&quot;</span>&gt;</span><br>            or emp_salary &gt; #&#123;empSalary&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">         第一种情况：所有条件都满足 WHERE emp_name=? or emp_salary&gt;?</span><br><span class="hljs-comment">         第二种情况：部分条件满足 WHERE emp_salary&gt;?</span><br><span class="hljs-comment">         第三种情况：所有条件都不满足 没有where子句</span><br><span class="hljs-comment">         --&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">where</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h2 id="2-set"><a href="#2-set" class="headerlink" title="2. set"></a>2. set</h2><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- void updateEmployeeDynamic(Employee employee) --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">update</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;updateEmployeeDynamic&quot;</span>&gt;</span><br>    update t_emp<br>    <span class="hljs-comment">&lt;!-- set emp_name = #&#123;empName&#125;, emp_salary = #&#123;empSalary&#125; --&gt;</span><br>    <span class="hljs-comment">&lt;!-- 使用set标签动态管理set子句，并且动态去掉两端多余的逗号 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">set</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empName != null&quot;</span>&gt;</span><br>            emp_name = #&#123;empName&#125;,<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empSalary <span class="hljs-symbol">&amp;lt;</span> 3000&quot;</span>&gt;</span><br>            emp_salary = #&#123;empSalary&#125;,<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">set</span>&gt;</span><br>    where emp_id=#&#123;empId&#125;<br>    <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">         第一种情况：所有条件都满足 SET emp_name=?, emp_salary=?</span><br><span class="hljs-comment">         第二种情况：部分条件满足 SET emp_salary=?</span><br><span class="hljs-comment">         第三种情况：所有条件都不满足 update t_emp where emp_id=?</span><br><span class="hljs-comment">            没有set子句的update语句会导致SQL语法错误</span><br><span class="hljs-comment">     --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">update</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h2 id="3-trim"><a href="#3-trim" class="headerlink" title="3. trim"></a>3. trim</h2><p>使用trim标签控制条件部分两端是否包含某些字符</p>
 <ul>
 <li>prefix属性：指定要动态添加的前缀</li>
@@ -203,7 +197,6 @@
 <li>suffixOverrides属性：指定要动态去掉的后缀，使用”|”分隔有可能的多个值</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- List&lt;Employee&gt; selectEmployeeByConditionByTrim(Employee employee) --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployeeByConditionByTrim&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;com.atguigu.mybatis.entity.Employee&quot;</span>&gt;</span><br>    select emp_id, emp_name, emp_age, emp_salary, emp_gender<br>    from t_emp<br>    <br>    <span class="hljs-comment">&lt;!-- prefix属性指定要动态添加的前缀 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- suffix属性指定要动态添加的后缀 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- prefixOverrides属性指定要动态去掉的前缀，使用“|”分隔有可能的多个值 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- suffixOverrides属性指定要动态去掉的后缀，使用“|”分隔有可能的多个值 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- 当前例子用where标签实现更简洁，但是trim标签更灵活，可以用在任何有需要的地方 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">trim</span> <span class="hljs-attr">prefix</span>=<span class="hljs-string">&quot;where&quot;</span> <span class="hljs-attr">suffixOverrides</span>=<span class="hljs-string">&quot;and|or&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empName != null&quot;</span>&gt;</span><br>            emp_name=#&#123;empName&#125; and<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empSalary <span class="hljs-symbol">&amp;gt;</span> 3000&quot;</span>&gt;</span><br>            emp_salary&gt;#&#123;empSalary&#125; and<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empAge <span class="hljs-symbol">&amp;lt;</span>= 20&quot;</span>&gt;</span><br>            emp_age=#&#123;empAge&#125; or<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">if</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empGender==&#x27;male&#x27;&quot;</span>&gt;</span><br>            emp_gender=#&#123;empGender&#125;<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">if</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">trim</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h2 id="4-choose-when-otherwise"><a href="#4-choose-when-otherwise" class="headerlink" title="4. choose, when, otherwise"></a>4. choose, when, otherwise</h2><p>在多个分支条件中，仅执行一个。</p>
 <ul>
 <li>从上到下依次执行条件判断</li>
@@ -213,7 +206,6 @@
 <li>when至少要有一个，otherwise最多只能有一个</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- List&lt;Employee&gt; selectEmployeeByConditionByChoose(Employee employee) --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployeeByConditionByChoose&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;com.atguigu.mybatis.entity.Employee&quot;</span>&gt;</span><br>    select emp_id, emp_name, emp_salary from t_emp<br>    where<br>    <span class="hljs-tag">&lt;<span class="hljs-name">choose</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">when</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empName != null&quot;</span>&gt;</span>emp_name=#&#123;empName&#125;<span class="hljs-tag">&lt;/<span class="hljs-name">when</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">when</span> <span class="hljs-attr">test</span>=<span class="hljs-string">&quot;empSalary <span class="hljs-symbol">&amp;lt;</span> 3000&quot;</span>&gt;</span>emp_salary <span class="hljs-symbol">&amp;lt;</span> 3000<span class="hljs-tag">&lt;/<span class="hljs-name">when</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">otherwise</span>&gt;</span>1=1<span class="hljs-tag">&lt;/<span class="hljs-name">otherwise</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">choose</span>&gt;</span><br>    <br>    <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">     第一种情况：第一个when满足条件 where emp_name=?</span><br><span class="hljs-comment">     第二种情况：第二个when满足条件 where emp_salary &lt; 3000</span><br><span class="hljs-comment">     第三种情况：两个when都不满足 where 1=1 执行了otherwise</span><br><span class="hljs-comment">     --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h2 id="5-foreach"><a href="#5-foreach" class="headerlink" title="5. foreach"></a>5. foreach</h2><p>collection属性：要遍历的集合</p>
 <p>item属性：遍历集合的过程中能得到每一个具体对象，在item属性中设置一个名字，将来通过这个名字引用遍历出来的对象</p>
 <p>separator属性：指定当foreach标签的标签体重复拼接字符串时，各个标签体字符串之间的分隔符</p>
@@ -227,30 +219,24 @@
 </li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 批量插入 --&gt;</span><br><span class="hljs-comment">&lt;!--int insertMoreByList(@Param(&quot;emps&quot;) List&lt;Emp&gt; emps);--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">insert</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insertMoreByList&quot;</span>&gt;</span><br>    insert into t_emp<br>    <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;emps&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;emp&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;,&quot;</span> <span class="hljs-attr">open</span>=<span class="hljs-string">&quot;values&quot;</span> <span class="hljs-attr">index</span>=<span class="hljs-string">&quot;myIndex&quot;</span>&gt;</span><br>        (null, #&#123;emp.empName&#125;, #&#123;emp.age&#125;, #&#123;emp.sex&#125;, #&#123;emp.email&#125;, #&#123;myIndex&#125;)<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">insert</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- 批量删除 --&gt;</span><br><span class="hljs-comment">&lt;!--int deleteMoreByArray(@Param(&quot;eids&quot;) Integer[] eids);--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">delete</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;deleteMoreByArray&quot;</span>&gt;</span><br>    delete from t_emp where<br>    <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;eids&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;eid&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;or&quot;</span>&gt;</span><br>        eid = #&#123;eid&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span><br>    <span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">        delete from t_emp where eid in</span><br><span class="hljs-comment">        &lt;foreach collection=&quot;eids&quot; item=&quot;eid&quot; separator=&quot;,&quot; open=&quot;(&quot; close=&quot;)&quot;&gt;</span><br><span class="hljs-comment">            #&#123;eid&#125;</span><br><span class="hljs-comment">        &lt;/foreach&gt;</span><br><span class="hljs-comment">    --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">delete</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p><strong>关于foreach标签的collection属性</strong></p>
 <p>如果没有给接口中List类型的参数使用<code>@Param</code>注解指定一个具体的名字，那么在collection属性中默认可以使用collection或list来引用这个list集合。这一点可以通过异常信息看出来：</p>
 <p><code>Parameter &#39;orderIds&#39; not found. Available parameters are [arg0, collection, list]</code></p>
 <p>数组类型可用的参数名为 [array, arg0]</p>
-</blockquote>
-<blockquote>
 <p><strong>批量更新时需要注意</strong></p>
 <p>上面批量插入的例子本质上是一条SQL语句，而实现批量更新则需要多条SQL语句拼起来，用分号分开。也就是一次性发送多条SQL语句让数据库执行。此时需要在数据库连接信息的URL地址中设置：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs .properties">dev.url=jdbc:mysql://localhost:3306/mybatis-db?allowMultiQueries=true<br></code></pre></td></tr></table></figure>
-
 <p>对应的foreach标签如下：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs XML"><span class="hljs-comment">&lt;!-- int updateEmployeeBatch(@Param(&quot;empList&quot;) List&lt;Employee&gt; empList) --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">update</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;updateEmployeeBatch&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">foreach</span> <span class="hljs-attr">collection</span>=<span class="hljs-string">&quot;empList&quot;</span> <span class="hljs-attr">item</span>=<span class="hljs-string">&quot;emp&quot;</span> <span class="hljs-attr">separator</span>=<span class="hljs-string">&quot;;&quot;</span>&gt;</span><br>        update t_emp set emp_name = #&#123;emp.empName&#125; where emp_id = #&#123;emp.empId&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">foreach</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">update</span>&gt;</span><br></code></pre></td></tr></table></figure>
 </blockquote>
 <h2 id="6-sql片段"><a href="#6-sql片段" class="headerlink" title="6. sql片段"></a>6. sql片段</h2><p>提取重复的 SQL 片段</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 使用sql标签抽取重复出现的SQL片段 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">sql</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;mySelectSql&quot;</span>&gt;</span><br>    select emp_id, emp_name, emp_age, emp_salary, emp_gender from t_emp<br><span class="hljs-tag">&lt;/<span class="hljs-name">sql</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>引用已提取的SQL片段</p>
 <ul>
 <li>直接嵌入到sql语句中即可</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 使用include标签引用声明的SQL片段 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">include</span> <span class="hljs-attr">refid</span>=<span class="hljs-string">&quot;mySelectSql&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
 
       </div>
       
@@ -615,5 +601,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -185,8 +181,7 @@
       </div>
       <div class="markdown-body">
         <h2 id="1-Scala-概述"><a href="#1-Scala-概述" class="headerlink" title="1. Scala 概述"></a>1. Scala 概述</h2><h3 id="1-1-Scala简介"><a href="#1-1-Scala简介" class="headerlink" title="1.1 Scala简介"></a>1.1 Scala简介</h3><ul>
-<li><p>Scala —- Java++</p>
-<ul>
+<li>Scala —— Java++<ul>
 <li>Scala基于JVM，和Java完全兼容，同样具有跨平台、可移植性好、方便的垃圾回收等特性</li>
 <li>Scala比Java更加面向对象</li>
 <li>Scala是一门函数式编程语言</li>
@@ -244,12 +239,11 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220917020450212.png" alt="image-20220917020450212"></p>
 <h4 id="1-4-3-编写代码"><a href="#1-4-3-编写代码" class="headerlink" title="1.4.3 编写代码"></a>1.4.3 编写代码</h4><p>输入main快速生成main方法</p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Hello</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        println(<span class="hljs-string">&quot;hello world&quot;</span>)<br>        <span class="hljs-type">System</span>.out.println(<span class="hljs-string">&quot;hello world&quot;</span>)<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// 输出两行hello world</span><br></code></pre></td></tr></table></figure>
-
 <p><code>Java中部分代码也可以在Scala中运行</code></p>
 <h3 id="1-5-语法说明"><a href="#1-5-语法说明" class="headerlink" title="1.5 语法说明"></a>1.5 语法说明</h3><h4 id="1-5-1-Hello-World语法说明"><a href="#1-5-1-Hello-World语法说明" class="headerlink" title="1.5.1 Hello World语法说明"></a>1.5.1 Hello World语法说明</h4><p><strong>object</strong>：关键字，声明一个单例对象(伴生对象)</p>
 <p><strong>main方法</strong>：从外部可以直接调用执行的方法，定义在object中</p>
 <p><strong>定义方法</strong>：<code>def 方法名称(参数名称: 参数类型): 返回值类型 = &#123; 方法体 &#125;</code></p>
-<p>**[]**：表示泛型(与Java要区分)</p>
+<p><strong>[]</strong>：表示泛型(与Java要区分)</p>
 <p><strong>Unit</strong>：表示没有返回值(类似Java中的void)</p>
 <p>scala中没有public关键字，如果不声明访问权限，那么就是公共的</p>
 <h4 id="1-5-2-clss和object说明"><a href="#1-5-2-clss和object说明" class="headerlink" title="1.5.2 clss和object说明"></a>1.5.2 clss和object说明</h4><p>Scala是一个完全面向对象的语言，没有静态语法，为了能模仿静态语法，采用<strong>伴生对象单例</strong>的方式调用方法</p>
@@ -257,22 +251,18 @@
 <p>class关键字和Java中相同，用来定义一个类</p>
 <p>伴生对象与类必须同名且在一个文件中，类可以访问伴生对象所有私有属性</p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span>(<span class="hljs-params">name: <span class="hljs-type">String</span>, age: <span class="hljs-type">Int</span></span>) </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">printInfo</span></span>(): <span class="hljs-type">Unit</span> = &#123;<br>        println(name + <span class="hljs-string">&quot; &quot;</span> + age + <span class="hljs-string">&quot; &quot;</span> + <span class="hljs-type">Student</span>.school)<br>    &#125;<br><br>&#125;<br><br><span class="hljs-comment">// 引入伴生对象</span><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Student</span> </span>&#123;<br>    <span class="hljs-keyword">val</span> school: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;NJU&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">val</span> alice = <span class="hljs-keyword">new</span> <span class="hljs-type">Student</span>(<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-number">20</span>)<br>        <span class="hljs-keyword">val</span> bob = <span class="hljs-keyword">new</span> <span class="hljs-type">Student</span>(<span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-number">23</span>)<br><br>        alice.printInfo()<br>        bob.printInfo()<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">// alice 20 NJU</span><br><span class="hljs-comment">// bob 23 NJU</span><br></code></pre></td></tr></table></figure>
-
 <h4 id="1-5-3-Scala程序反编译"><a href="#1-5-3-Scala程序反编译" class="headerlink" title="1.5.3 Scala程序反编译"></a>1.5.3 Scala程序反编译</h4><p><strong>Student.class</strong></p>
 <p>入口类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.whale.scalademo;<br><br><span class="hljs-keyword">import</span> scala.Predef$;<br><span class="hljs-keyword">import</span> scala.reflect.ScalaSignature;<br><br><span class="hljs-meta">@ScalaSignature(bytes = &quot;\006\001\r3Aa\003\007\001&#x27;!A!\004\001B\001B\003%1\004\003\005&#x27;\001\t\005\t\025!\003(\021\025Q\003\001\&quot;\001,\021\025\001\004\001\&quot;\0012\017\025)D\002#\0017\r\025YA\002#\0018\021\025Qc\001\&quot;\0019\021\035IdA1A\005\002iBaa\017\004!\002\023Y\002\&quot;\002\037\007\t\003i$aB*uk\022,g\016\036\006\003\0339\t\021b]2bY\006$W-\\8\013\005=\001\022!B&lt;iC2,&#x27;\&quot;A\t\002\007\r|Wn\001\001\024\005\001!\002CA\013\031\033\0051\&quot;\&quot;A\f\002\013M\034\027\r\\1\n\005e1\&quot;AB!osJ+g-\001\003oC6,\007C\001\017$\035\ti\022\005\005\002\037-5\tqD\003\002!%\0051AH]8pizJ!A\t\f\002\rA\023X\rZ3g\023\t!SE\001\004TiJLgn\032\006\003EY\t1!Y4f!\t)</span>\<span class="hljs-number">002</span>&amp;\<span class="hljs-number">003</span>\<span class="hljs-number">002</span>*-\t\<span class="hljs-number">031</span>\021J\<span class="hljs-number">034</span>;\<span class="hljs-number">002</span>\rqJg.\<span class="hljs-number">033</span>;?)\racf\f\t\<span class="hljs-number">003</span>[\001i\<span class="hljs-number">021</span>\<span class="hljs-number">001</span>\<span class="hljs-number">004</span>\<span class="hljs-number">005</span>\<span class="hljs-number">0065</span>\r\<span class="hljs-number">001</span>\ra\<span class="hljs-number">007</span>\<span class="hljs-number">005</span>\006M\r\<span class="hljs-number">001</span>\raJ\<span class="hljs-number">001</span>\naJLg\<span class="hljs-number">016</span>^%oM&gt;$\022A\r\t\<span class="hljs-number">003</span>+MJ!\<span class="hljs-number">001</span>\<span class="hljs-number">016</span>\f\<span class="hljs-number">003</span>\tUs\<span class="hljs-number">027</span>\<span class="hljs-number">016</span>^\<span class="hljs-number">001</span>\b<span class="hljs-string">&#x27;R,H-\0328u!\tica\005\002\007)Q\ta&#x27;</span>\<span class="hljs-number">001</span>\004tG\<span class="hljs-string">&quot;|w\016\\\013\0027\00591o\0315p_2\004\023\001B7bS:$\&quot;A\r \t\013&#125;R\001\031\001!\002\t\005\024xm\035\t\004+\005[\022B\001\&quot;\027\005\025\t%O]1z\001&quot;</span>)<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student</span> &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String name;<br>  <br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> age;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Student</span><span class="hljs-params">(String name, <span class="hljs-type">int</span> age)</span> &#123;&#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">printInfo</span><span class="hljs-params">()</span> &#123;<br>    Predef$.MODULE$.println((<span class="hljs-keyword">new</span> <span class="hljs-title class_">StringBuilder</span>(<span class="hljs-number">2</span>))<br>                            .append(<span class="hljs-built_in">this</span>.name)<br>                            .append(<span class="hljs-string">&quot; &quot;</span>)<br>                            .append(<span class="hljs-built_in">this</span>.age)<br>                            .append(<span class="hljs-string">&quot; &quot;</span>)<br>                            .append(Student$.MODULE$.school()).toString());<br>  &#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> String <span class="hljs-title function_">school</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> Student$.MODULE$.school();<br>  &#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] paramArrayOfString)</span> &#123;<br>    Student$.MODULE$.main(paramArrayOfString);<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
 <p><strong>Student$.class</strong></p>
 <p>伴生对象</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> com.whale.scalademo;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Student$</span> &#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Student$ MODULE$;<br>  <br>  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> String school;<br>  <br>  <span class="hljs-keyword">public</span> String <span class="hljs-title function_">school</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>.school;<br>  &#125;<br>  <br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">Student</span> <span class="hljs-variable">alice</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(<span class="hljs-string">&quot;alice&quot;</span>, <span class="hljs-number">20</span>);<br>    <span class="hljs-type">Student</span> <span class="hljs-variable">bob</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Student</span>(<span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-number">23</span>);<br>    alice.printInfo();<br>    bob.printInfo();<br>  &#125;<br>  <br>  <span class="hljs-keyword">private</span> Student$() &#123;<br>    MODULE$ = <span class="hljs-built_in">this</span>;<br>    <span class="hljs-built_in">this</span>.school = <span class="hljs-string">&quot;NJU&quot;</span>;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="1-6-关联源码"><a href="#1-6-关联源码" class="headerlink" title="1.6 关联源码"></a>1.6 关联源码</h3><ol>
 <li><p>官网下载源代码文件scala-2.12.16.tar.gz</p>
 </li>
 <li><p>拷贝到scala-2.12.16\lib下，并解压为文件夹</p>
 </li>
-<li><p>IDEA中选择Attach Sources，选择该文件夹</p>
-</li>
+<li>IDEA中选择Attach Sources，选择该文件夹</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220918161000094.png" alt="image-20220918161000094"></p>
 
@@ -639,5 +629,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

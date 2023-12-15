@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -192,7 +188,6 @@
 <p>Scala有两种包的管理风格，一种和Java的包管理风格相同，每个源文件一个包(<strong>包名和源文件所在路径不要求必须一致</strong>)，用”.”进行分割表示包的层级关系</p>
 <p>另一种风格，通过嵌套的风格表示层级关系</p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> com &#123;<br>    <span class="hljs-keyword">package</span> whale &#123;<br>        <span class="hljs-keyword">package</span> scala &#123;<br>            <br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>有以下特点：</p>
 <ul>
 <li>一个源文件中可以声明多个package</li>
@@ -200,34 +195,28 @@
 </ul>
 <p><strong>案例实操</strong></p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> com &#123;<br>    <span class="hljs-comment">// 父包访问子包需要导包</span><br>    <span class="hljs-keyword">import</span> com.whale.<span class="hljs-type">Inner</span><br><br>    <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Outer</span> </span>&#123;<br>        <span class="hljs-keyword">val</span> out: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;out&quot;</span><br><br>        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>            println(<span class="hljs-type">Inner</span>.in)<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">package</span> whale &#123;<br><br>        <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Inner</span> </span>&#123;<br>            <span class="hljs-keyword">val</span> in: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;in&quot;</span><br><br>            <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>                println(<span class="hljs-type">Outer</span>.out) <span class="hljs-comment">// 子包访问父包无需导包</span><br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">package</span> other &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h4 id="6-1-3-包对象"><a href="#6-1-3-包对象" class="headerlink" title="6.1.3 包对象"></a>6.1.3 包对象</h4><p>在Scala中可以为每个包定义一个<strong>同名</strong>的包对象，定义在包对象中的成员，作为其<strong>对应包</strong>下所有class和object的共享变量，可以被直接访问。</p>
 <p><strong>定义</strong></p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">com</span> </span>&#123;<br>    <span class="hljs-keyword">val</span> shareValue = <span class="hljs-string">&quot;share&quot;</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">shareMethod</span></span>() = &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><strong>说明</strong></p>
 <ol>
 <li><p>若使用Java的包管理风格，则包对象一般定义在其对应包下的packageName.scala文件中，包对象名与包名保持一致</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220925121142605.png" alt="image-20220925121142605"></p>
 </li>
 <li><p>如采用嵌套方式管理包，则包对象可与包定义在同一文件，但是要保证包对象与包声明在同一作用域</p>
-<figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> com &#123;<br>    <br>    <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Outer</span> </span>&#123;<br>        <span class="hljs-keyword">val</span> out: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;out&quot;</span><br><br>        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>            println(name)<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">package</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">com</span> </span>&#123;<br>    <span class="hljs-keyword">val</span> name: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;com&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> com &#123;<br>    <br>    <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Outer</span> </span>&#123;<br>        <span class="hljs-keyword">val</span> out: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;out&quot;</span><br><br>        <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>            println(name)<br>        &#125;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">package</span> <span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">com</span> </span>&#123;<br>    <span class="hljs-keyword">val</span> name: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;com&quot;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
 </ol>
 <h4 id="6-1-4-导包说明"><a href="#6-1-4-导包说明" class="headerlink" title="6.1.4 导包说明"></a>6.1.4 导包说明</h4><ul>
-<li><p>可以在顶部使用import导入，在这个文件中的所有类都可以使用</p>
-</li>
+<li>可以在顶部使用import导入，在这个文件中的所有类都可以使用</li>
 <li><p>局部导入：什么时候使用，什么时候导入。在作用范围内都可以使用</p>
 </li>
 <li><p>通配符导入：import java.util._</p>
 </li>
-<li><p>给类起名：import java.util.{ArrayList &#x3D;&gt; JL}</p>
-</li>
-<li><p>导入相同包的多个类：import java.util.{HashSet, ArrayList}</p>
-</li>
-<li><p>屏蔽类：import java.util.{ArrayList &#x3D;&gt; _, _}</p>
-</li>
-<li><p>导入包的绝对路径：new _root_.java.util.HashMap</p>
-</li>
+<li>给类起名：import java.util.{ArrayList =&gt; JL}</li>
+<li>导入相同包的多个类：import java.util.{HashSet, ArrayList}</li>
+<li>屏蔽类：import java.util.{ArrayList =&gt; _, _}</li>
+<li>导入包的绝对路径：new _root_.java.util.HashMap</li>
 </ul>
 <p><strong>注意</strong></p>
 <p>Scala中的三个默认导入</p>
@@ -243,30 +232,28 @@
 <li>private [包名]增加包访问权限，包名下的其他类也可以使用</li>
 </ul>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-keyword">package</span> com.whale.scalademo.chapter6<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;tony&quot;</span><br>    <span class="hljs-keyword">protected</span> <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span> = <span class="hljs-number">18</span><br>    <span class="hljs-keyword">private</span> [chapter6] <span class="hljs-keyword">var</span> sex: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;男&quot;</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">say</span></span>(): <span class="hljs-type">Unit</span> = &#123;<br>        println(name)<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">val</span> person = <span class="hljs-keyword">new</span> <span class="hljs-type">Person</span><br>        person.say()<br>        println(person.name)<br>        println(person.age)<br>        println(person.sex)<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Teacher</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test</span></span>(): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">this</span>.age<br>        <span class="hljs-keyword">this</span>.sex<br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Animal</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">test</span></span>(): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">new</span> <span class="hljs-type">Person</span>().sex<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="6-2-类和对象"><a href="#6-2-类和对象" class="headerlink" title="6.2 类和对象"></a>6.2 类和对象</h3><h4 id="6-2-1-定义类"><a href="#6-2-1-定义类" class="headerlink" title="6.2.1 定义类"></a>6.2.1 定义类</h4><p><strong>回顾</strong></p>
 <p>Java中，public类的类名与文件名一致，且一个.java文件只有一个public类</p>
 <p>Scala中没有public关键字，一个.scala文件可以写多个类</p>
 <p><strong>基本语法</strong></p>
 <p>[修饰符] class 类名 {</p>
-<p>​	类体</p>
+<p>​    类体</p>
 <p>}</p>
 <ul>
 <li>Scala语法中，类并不声明为public，所有这些类都具有公有可见性(即默认为public)</li>
 <li>一个Scala源文件可以包含多个类</li>
 </ul>
 <h4 id="6-2-2-属性"><a href="#6-2-2-属性" class="headerlink" title="6.2.2 属性"></a>6.2.2 属性</h4><p><strong>基本语法</strong></p>
-<p>[修饰符] val|var 属性名 [: 类型] &#x3D; 属性值</p>
+<p>[修饰符] val|var 属性名 [: 类型] = 属性值</p>
 <p>注：<code>Bean属性(@BeanProperty)可以自动生成规范的set/get方法</code></p>
 <p><strong>案例实操</strong></p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br><br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;tony&quot;</span><br>    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span> = _  <span class="hljs-comment">// _ 表示给属性一个默认值</span><br><br>    <span class="hljs-comment">// Bean属性</span><br>    <span class="hljs-meta">@BeanProperty</span> <span class="hljs-keyword">var</span> sex: <span class="hljs-type">String</span> = <span class="hljs-string">&quot;男&quot;</span><br>    <span class="hljs-comment">// val 修饰的属性不能赋默认值，必须显式指定</span><br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Person</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">var</span> person = <span class="hljs-keyword">new</span> <span class="hljs-type">Person</span><br>        println(person.name)<br>        person.setSex(<span class="hljs-string">&quot;女&quot;</span>)<br>        println(person.getSex)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h4 id="6-2-3-方法"><a href="#6-2-3-方法" class="headerlink" title="6.2.3 方法"></a>6.2.3 方法</h4><p><strong>基本语法</strong></p>
-<p>def 方法名(参数列表)[: 返回值类型] &#x3D; {</p>
-<p>​	方法体</p>
+<p>def 方法名(参数列表)[: 返回值类型] = {</p>
+<p>​    方法体</p>
 <p>}</p>
 <h4 id="6-2-4-创建对象"><a href="#6-2-4-创建对象" class="headerlink" title="6.2.4 创建对象"></a>6.2.4 创建对象</h4><p><strong>基本语法</strong></p>
-<p>val|var 对象名 [: 类型] &#x3D; new 类型()</p>
+<p>val|var 对象名 [: 类型] = new 类型()</p>
 <p><strong>注意事项</strong></p>
 <ul>
 <li>val修饰对象，不能改变对象的引用(即内存地址)，可以改变对象属性的值</li>
@@ -275,9 +262,9 @@
 </ul>
 <h4 id="6-2-5-构造器"><a href="#6-2-5-构造器" class="headerlink" title="6.2.5 构造器"></a>6.2.5 构造器</h4><p>Scala类的构造器包括：<strong>主构造器和辅助构造器</strong></p>
 <p><strong>基本语法</strong></p>
-<p>class 类名(形参列表) { <strong>&#x2F;&#x2F; 主构造器</strong></p>
-<p>​	def <code>this</code>(形参列表){} &#x2F;&#x2F; 辅助构造器</p>
-<p>​	def <code>this</code>(形参列表){} &#x2F;&#x2F; 辅助构造器可以有多个</p>
+<p>class 类名(形参列表) { <strong>// 主构造器</strong></p>
+<p>​    def <code>this</code>(形参列表){} // 辅助构造器</p>
+<p>​    def <code>this</code>(形参列表){} // 辅助构造器可以有多个</p>
 <p>}</p>
 <ul>
 <li>辅助构造器，函数名this，可以有多个，编译器通过参数的个数及类型来区分</li>
@@ -287,7 +274,6 @@
 </ul>
 <p><strong>案例实操</strong></p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-comment">// class Person() &#123;</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span> </span>&#123;<br><br>    <span class="hljs-keyword">var</span> name: <span class="hljs-type">String</span> = _<br>    <span class="hljs-keyword">var</span> age: <span class="hljs-type">Int</span> = _<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">this</span></span>(age: <span class="hljs-type">Int</span>) &#123;<br>        <span class="hljs-keyword">this</span>()<br>        <span class="hljs-keyword">this</span>.age = age<br>        println(<span class="hljs-string">&quot;辅助构造器&quot;</span>)<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">this</span></span>(age: <span class="hljs-type">Int</span>, name: <span class="hljs-type">String</span>) &#123;<br>        <span class="hljs-keyword">this</span>(age)<br>        <span class="hljs-keyword">this</span>.name = name<br>    &#125;<br>    <br>    println(<span class="hljs-string">&quot;主构造器&quot;</span>)<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h4 id="6-2-6-构造器参数"><a href="#6-2-6-构造器参数" class="headerlink" title="6.2.6 构造器参数"></a>6.2.6 构造器参数</h4><p><strong>说明</strong></p>
 <p>Scala类的主构造器函数的形参包括三种类型：未用任何修饰、var修饰、val修饰</p>
 <ul>
@@ -297,7 +283,6 @@
 </ul>
 <p><strong>案例实操</strong></p>
 <figure class="highlight scala"><table><tr><td class="code"><pre><code class="hljs scala"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Person</span>(<span class="hljs-params">name: <span class="hljs-type">String</span>, var age: <span class="hljs-type">Int</span>, val sex: <span class="hljs-type">String</span></span>) </span>&#123;<br><br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">object</span> <span class="hljs-title">Test</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">main</span></span>(args: <span class="hljs-type">Array</span>[<span class="hljs-type">String</span>]): <span class="hljs-type">Unit</span> = &#123;<br>        <span class="hljs-keyword">var</span> person = <span class="hljs-keyword">new</span> <span class="hljs-type">Person</span>(<span class="hljs-string">&quot;bob&quot;</span>, <span class="hljs-number">18</span>, <span class="hljs-string">&quot;男&quot;</span>)<br>        <span class="hljs-comment">// 未用任何修饰符修饰，这个参数就是一个局部变量</span><br>        <span class="hljs-comment">// println(person.name)</span><br><br>        <span class="hljs-comment">// var修饰参数，作为类的成员属性使用，可以修改</span><br>        person.age = <span class="hljs-number">19</span><br>        println(person.age)<br>        <span class="hljs-comment">// val修饰参数，作为类只读属性使用，不能修改</span><br>        <span class="hljs-comment">// person.sex = &quot;女&quot;</span><br>        println(person.sex)<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="6-3-封装"><a href="#6-3-封装" class="headerlink" title="6.3 封装"></a>6.3 封装</h3><p>Scala中的<code>public</code>属性，底层实际为<code>private</code>，并通过get方法(<code>obj.field()</code>)和set方法(<code>obj.field_=(value)</code>)对其进行操作。所以Scala并不推荐将属性设为private，再设置public的get和set方法。</p>
 <p>但由于很多Java框架都利用反射调用setXXX和getXXX方法，有时为了兼容，也会为Scala的属性设置get和set方法(通过@BeanProperty)</p>
 <h3 id="6-4-继承和多态"><a href="#6-4-继承和多态" class="headerlink" title="6.4 继承和多态"></a>6.4 继承和多态</h3><p><strong>基本语法</strong></p>
@@ -670,5 +655,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -186,14 +182,14 @@
       <div class="markdown-body">
         <h2 id="Spring-Security"><a href="#Spring-Security" class="headerlink" title="Spring Security"></a>Spring Security</h2><h3 id="1-实现过程"><a href="#1-实现过程" class="headerlink" title="1. 实现过程"></a>1. 实现过程</h3><h4 id="1-1-依赖及配置"><a href="#1-1-依赖及配置" class="headerlink" title="1.1 依赖及配置"></a>1.1 依赖及配置</h4><p>依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.boot<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-boot-starter-security<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>两种配置</p>
 <ul>
 <li><p>纯Java配置类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityConfig</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>继承自WebSecurityConfigurerAdapter</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">WebSecurityConfigurerAdapter</span> &#123;&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">WebSecurityConfigurerAdapter</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>用户信息存储</p>
 <ul>
@@ -204,35 +200,26 @@
 <h4 id="1-2-UserDetails"><a href="#1-2-UserDetails" class="headerlink" title="1.2 UserDetails"></a>1.2 UserDetails</h4><p>使用Spring Data存储库来保存用户</p>
 <p>定义领域对象：User，实现了UserDetails接口，Spring Security就可以做到基于用户名密码进行认证</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// User.java</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">User</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserDetails</span> &#123;<br>    ...<br>&#125;<br><br><span class="hljs-comment">// UserDetails.class</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserDetails</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Serializable</span> &#123;<br>    Collection&lt;? <span class="hljs-keyword">extends</span> <span class="hljs-title class_">GrantedAuthority</span>&gt; getAuthorities();<br><br>    String <span class="hljs-title function_">getPassword</span><span class="hljs-params">()</span>;<br><br>    String <span class="hljs-title function_">getUsername</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isAccountNonExpired</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isAccountNonLocked</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isCredentialsNonExpired</span><span class="hljs-params">()</span>;<br><br>    <span class="hljs-type">boolean</span> <span class="hljs-title function_">isEnabled</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>定义持久化接口：<code>UserRepository</code>，增加自定义方法：<code>findByUsername</code></p>
 <h4 id="1-3-UserDetailsService"><a href="#1-3-UserDetailsService" class="headerlink" title="1.3 UserDetailsService"></a>1.3 UserDetailsService</h4><p>在配置类中添加 Bean，提供接口实现，Spring可以用于从用户名获取用户信息</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> UserDetailsService <span class="hljs-title function_">userDetailsService</span><span class="hljs-params">(UserRepository userRepo)</span> &#123;<br>    <span class="hljs-keyword">return</span> username -&gt; &#123;<br>        <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> userRepo.findByUsername(username);<br>        <span class="hljs-keyword">if</span> (user != <span class="hljs-literal">null</span>) &#123;<br>        	<span class="hljs-keyword">return</span> user;<br>        &#125;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UsernameNotFoundException</span>(<br>                      <span class="hljs-string">&quot;User &#x27;&quot;</span> + username + <span class="hljs-string">&quot;&#x27; not found&quot;</span>);<br>    &#125;;<br>&#125;<br><br><span class="hljs-comment">// UserDetailsService.class</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">UserDetailsService</span> &#123;<br>    UserDetails <span class="hljs-title function_">loadUserByUsername</span><span class="hljs-params">(String var1)</span> <span class="hljs-keyword">throws</span> UsernameNotFoundException;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h4 id="1-4-PasswordEncoder"><a href="#1-4-PasswordEncoder" class="headerlink" title="1.4 PasswordEncoder"></a>1.4 PasswordEncoder</h4><p>提供密码转换器，保证安全</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> PasswordEncoder <span class="hljs-title function_">passwordEncoder</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BCryptPasswordEncoder</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h4 id="1-5-创建自定义登录页"><a href="#1-5-创建自定义登录页" class="headerlink" title="1.5 创建自定义登录页"></a>1.5 创建自定义登录页</h4><p>当需要认证时转向的登录页：<code>.loginPage(&quot;/login&quot;)</code></p>
 <p>视图控制器，定义login请求对应的视图：<code>registry.addViewController(&quot;/login&quot;);</code></p>
 <p>登录的post请求由Spring Security自动处理，名称默认：username、password，可配置</p>
 <h4 id="1-6-保护Web请求"><a href="#1-6-保护Web请求" class="headerlink" title="1.6 保护Web请求"></a>1.6 保护Web请求</h4><p>在 Controller 前处理</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Bean</span><br><span class="hljs-keyword">public</span> SecurityFilterChain <span class="hljs-title function_">filterChain</span><span class="hljs-params">(HttpSecurity http)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-keyword">return</span> http<br>        .authorizeRequests()<br>            .mvcMatchers(<span class="hljs-string">&quot;/design&quot;</span>, <span class="hljs-string">&quot;/orders&quot;</span>).hasRole(<span class="hljs-string">&quot;USER&quot;</span>)<br>            .anyRequest().permitAll()<br>        .and() <span class="hljs-comment">// 如果用户没有定义则重定向到登录</span><br>            .formLogin()<br>              .loginPage(<span class="hljs-string">&quot;/login&quot;</span>)<br>        .and()<br>            .logout()<br>              .logoutSuccessUrl(<span class="hljs-string">&quot;/&quot;</span>)<br>        <span class="hljs-comment">// Make H2-Console non-secured; for debug purposes</span><br>        .and()<br>            .csrf()<br>              .ignoringAntMatchers(<span class="hljs-string">&quot;/h2-console/**&quot;</span>)<br>        <span class="hljs-comment">// Allow pages to be loaded in frames from the same origin; needed for H2-Console</span><br>        .and()  <br>            .headers()<br>              .frameOptions()<br>                .sameOrigin()<br>        .and()<br>        	.build();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="2-权限分类"><a href="#2-权限分类" class="headerlink" title="2. 权限分类"></a>2. 权限分类</h3><p>Authority，权限</p>
-<p>Role，角色，&#x3D;&#x3D;&#x3D;&gt;&gt;&gt;权限，加前缀：ROLE_</p>
+<p>Role，角色，===&gt;&gt;&gt;权限，加前缀：ROLE_</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// User.java</span><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> Collection&lt;? <span class="hljs-keyword">extends</span> <span class="hljs-title class_">GrantedAuthority</span>&gt; getAuthorities() &#123;<br>	<span class="hljs-keyword">return</span> Arrays.asList(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleGrantedAuthority</span>(<span class="hljs-string">&quot;ROLE_USER&quot;</span>));<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="3-实现方法级别的安全"><a href="#3-实现方法级别的安全" class="headerlink" title="3. 实现方法级别的安全"></a>3. 实现方法级别的安全</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@EnableGlobalMethodSecurity</span> <span class="hljs-comment">//注意要添加，注解才能生效</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SecurityConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">WebSecurityConfigurerAdapter</span> &#123;&#125;<br><br><span class="hljs-comment">// OrderAdminService.java</span><br><span class="hljs-meta">@PreAuthorize(&quot;hasRole(&#x27;ADMIN&#x27;)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">deleteAllOrders</span><span class="hljs-params">()</span> &#123;<br>	orderRepository.deleteAll();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-获取当前登录的用户"><a href="#4-获取当前登录的用户" class="headerlink" title="4. 获取当前登录的用户"></a>4. 获取当前登录的用户</h3><p>Principal</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@ModelAttribute(name = &quot;user&quot;)</span> <span class="hljs-comment">// jdk jaas java底层提供的框架</span><br><span class="hljs-keyword">public</span> User <span class="hljs-title function_">user</span><span class="hljs-params">(Principal principal)</span> &#123;<br>    <span class="hljs-type">String</span> <span class="hljs-variable">username</span> <span class="hljs-operator">=</span> principal.getName();<br>    <span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> userRepo.findByUsername(username);<br>    <span class="hljs-keyword">return</span> user;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>@AuthenticationPrincipal</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@PostMapping</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">processOrder</span><span class="hljs-params">(<span class="hljs-meta">@Valid</span> TacoOrder order, Errors errors,</span><br><span class="hljs-params">  	SessionStatus sessionStatus,</span><br><span class="hljs-params">  	<span class="hljs-meta">@AuthenticationPrincipal</span> User user)</span> &#123;<br>	...<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>安全上下文获取</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 可用于任何地方</span><br><span class="hljs-type">Authentication</span> <span class="hljs-variable">authentication</span> <span class="hljs-operator">=</span> SecurityContextHolder.getContext().getAuthentication();<br><span class="hljs-type">User</span> <span class="hljs-variable">user</span> <span class="hljs-operator">=</span> (User) authentication.getPrincipal();<br></code></pre></td></tr></table></figure>
-
 
       </div>
       
@@ -597,5 +584,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -197,13 +193,13 @@
 <li>用于控制处理器的操作；主要被具有特权的操作系统程序使用，以控制程序的执行</li>
 <li>程序计数器PC：存储将取指令的地址</li>
 <li>指令寄存器IR：存储最近使用的指令</li>
-<li>条件码CC：CPU为指令操作结果设置的位，标志正&#x2F;负&#x2F;零&#x2F;溢出等结果</li>
+<li>条件码CC：CPU为指令操作结果设置的位，标志正/负/零/溢出等结果</li>
 <li>标志位：中断位、中断允许位、中断屏蔽位、处理器模式位、内存保护位等</li>
 </ul>
 <h4 id="程序状态字PSW"><a href="#程序状态字PSW" class="headerlink" title="程序状态字PSW"></a><strong>程序状态字PSW</strong></h4><ul>
 <li>PSW既是操作系统的概念，指记录当前程序运行的动态信息，通常包含：<ul>
 <li>程序计数器，指令寄存器，条件码</li>
-<li>中断字，中断允许&#x2F;禁止，中断屏蔽，处理器模式，内存保护，调试控制</li>
+<li>中断字，中断允许/禁止，中断屏蔽，处理器模式，内存保护，调试控制</li>
 </ul>
 </li>
 <li>PSW也是计算机系统的寄存器<ul>
@@ -229,7 +225,7 @@
 <h4 id="指令执行周期与指令流水线"><a href="#指令执行周期与指令流水线" class="headerlink" title="指令执行周期与指令流水线"></a><strong>指令执行周期与指令流水线</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220925220906643.png" alt="image-20220925220906643"></p>
 <h4 id="特权指令与非特权指令"><a href="#特权指令与非特权指令" class="headerlink" title="特权指令与非特权指令"></a><strong>特权指令与非特权指令</strong></h4><ul>
 <li>用户程序并非能够使用全部机器指令，那些与计算机核心资源相关的特殊指令会被保护<ul>
-<li>如：启动I&#x2F;O指令、置PC指令、等等</li>
+<li>如：启动I/O指令、置PC指令、等等</li>
 <li>核心资源相关的指令只能被操作系统程序使用</li>
 </ul>
 </li>
@@ -253,10 +249,8 @@
 <li>OS内核处理完成后，调用中断返回指令（如Intel的iret）触发：内核模式 -&gt; 用户模式</li>
 </ul>
 <h4 id="用户栈与核心栈"><a href="#用户栈与核心栈" class="headerlink" title="用户栈与核心栈"></a><strong>用户栈与核心栈</strong></h4><ul>
-<li><p>用户栈是操作系统在用户进程空间开辟的一块区域，用于保存应用程序的子程序(函数)间相互调用的参数、返回值、返回点以及子程序的局部变量</p>
-</li>
-<li><p>核心栈也叫系统栈或内核栈，是主存中属于操作系统内核空间的一块区域，用途包括</p>
-<ul>
+<li>用户栈是操作系统在用户进程空间开辟的一块区域，用于保存应用程序的子程序(函数)间相互调用的参数、返回值、返回点以及子程序的局部变量</li>
+<li>核心栈也叫系统栈或内核栈，是主存中属于操作系统内核空间的一块区域，用途包括<ul>
 <li>保存中断现场，对于嵌套中断，将被中断程序的现场信息依次压入核心栈，中断返回时逆序弹出</li>
 <li>保存操作系统程序(函数)间相互调用的参数、返回值、返回点、以及程序局部变量</li>
 </ul>
@@ -273,21 +267,19 @@
 </ul>
 <h4 id="中断、异常与系统异常"><a href="#中断、异常与系统异常" class="headerlink" title="中断、异常与系统异常"></a><strong>中断、异常与系统异常</strong></h4><ul>
 <li>广义中断可以划分为狭义中断、异常和系统异常</li>
-<li>狭义的中断指来源于处理器之外的中断事件，即与当前运行指令无关的中断事件，如I&#x2F;O中断、时钟中断、外部信号中断等</li>
+<li>狭义的中断指来源于处理器之外的中断事件，即与当前运行指令无关的中断事件，如I/O中断、时钟中断、外部信号中断等</li>
 <li>异常指当前运行指令引起的中断事件，如地址异常、算术异常、处理器硬件故障等</li>
-<li>系统异常指执行陷入指令而触发系统调用引起的中断事件，如请求设备、请求I&#x2F;O、创建进程等</li>
+<li>系统异常指执行陷入指令而触发系统调用引起的中断事件，如请求设备、请求I/O、创建进程等</li>
 </ul>
 <h4 id="Linux中断的分类"><a href="#Linux中断的分类" class="headerlink" title="Linux中断的分类"></a><strong>Linux中断的分类</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018134733871.png" alt="image-20221018134733871"></p>
 <p>中断可分为同步(synchronous)中断和异步(asynchronous)中断</p>
 <ul>
-<li><p>同步中断是当指令执行时由 CPU 控制单元产生，之所以称为同步，是因为只有在一条指令执行完毕后 CPU 才会发出中断，而不是发生在代码指令执行期间，比如系统调用。</p>
-</li>
+<li>同步中断是当指令执行时由 CPU 控制单元产生，之所以称为同步，是因为只有在一条指令执行完毕后 CPU 才会发出中断，而不是发生在代码指令执行期间，比如系统调用。</li>
 <li><p>异步中断是指由其他硬件设备依照 CPU 时钟信号随机产生，即意味着中断能够在指令之间发生，例如键盘中断。</p>
 </li>
 <li><p>同步中断称为异常(exception),异常可分为故障(fault)、陷阱(trap)、终止(abort)三类。</p>
 </li>
-<li><p>异步中断被称为中断(interrupt)。中断可分为可屏蔽中断(Maskable interrupt)和非屏蔽中断(Nomaskable interrupt)。</p>
-</li>
+<li>异步中断被称为中断(interrupt)。中断可分为可屏蔽中断(Maskable interrupt)和非屏蔽中断(Nomaskable interrupt)。</li>
 </ul>
 <h3 id="2-2-2-中断源"><a href="#2-2-2-中断源" class="headerlink" title="2.2.2 中断源"></a>2.2.2 中断源</h3><h4 id="中断源的概念"><a href="#中断源的概念" class="headerlink" title="中断源的概念"></a><strong>中断源的概念</strong></h4><p>通常把引起中断的事件，即中断请求信号的来源，统称为中断源</p>
 <h4 id="硬件故障中断事件"><a href="#硬件故障中断事件" class="headerlink" title="硬件故障中断事件"></a><strong>硬件故障中断事件</strong></h4><ul>
@@ -305,17 +297,17 @@
 </ul>
 <h4 id="自愿性中断事件"><a href="#自愿性中断事件" class="headerlink" title="自愿性中断事件"></a><strong>自愿性中断事件</strong></h4><ul>
 <li>处理器执行陷入指令请求OS服务引起；在操作系统中，它一般又被称作系统调用<ul>
-<li>请求分配外设、请求I&#x2F;O、等等</li>
+<li>请求分配外设、请求I/O、等等</li>
 <li>处理流程是：陷入OS，保护现场，根据功能号查入口地址，跳转具体处理程序</li>
 </ul>
 </li>
 <li>陷入指令包括操作码和功能号两部分，前者表示是陷入指令，后者指示系统调用</li>
 </ul>
-<h4 id="I-O中断事件"><a href="#I-O中断事件" class="headerlink" title="I&#x2F;O中断事件"></a><strong>I&#x2F;O中断事件</strong></h4><ul>
-<li>来源于外围设备报告I&#x2F;O状态的中断事件<ul>
-<li>I&#x2F;O完成：调整进程状态，释放等待进程</li>
-<li>I&#x2F;O出错：等待人工干预</li>
-<li>I&#x2F;O异常：等待人工干预</li>
+<h4 id="I-O中断事件"><a href="#I-O中断事件" class="headerlink" title="I/O中断事件"></a><strong>I/O中断事件</strong></h4><ul>
+<li>来源于外围设备报告I/O状态的中断事件<ul>
+<li>I/O完成：调整进程状态，释放等待进程</li>
+<li>I/O出错：等待人工干预</li>
+<li>I/O异常：等待人工干预</li>
 </ul>
 </li>
 </ul>
@@ -323,8 +315,8 @@
 <li>由外围设备发出的信号引起的中断事件<ul>
 <li>时钟中断、间隔时钟中断：记时与时间片处理</li>
 <li>设备报告与结束中断：调整设备表</li>
-<li>键盘&#x2F;鼠标信号中断：根据信号作出相应反应</li>
-<li>关机&#x2F;重启动中断：写回文件，停止设备与CPU</li>
+<li>键盘/鼠标信号中断：根据信号作出相应反应</li>
+<li>关机/重启动中断：写回文件，停止设备与CPU</li>
 </ul>
 </li>
 </ul>
@@ -338,7 +330,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220928231054181.png" alt="image-20220928231054181"></p>
 <h4 id="中断装置"><a href="#中断装置" class="headerlink" title="中断装置"></a><strong>中断装置</strong></h4><ul>
-<li>计算机系统中发现并响应中断&#x2F;异常的硬件装置称为中断装置</li>
+<li>计算机系统中发现并响应中断/异常的硬件装置称为中断装置</li>
 <li>由于中断源的多样性，硬件实现的中断装置有多种，分别处理不同类型的中断</li>
 <li>这些中断装置因计算机而异，通常有：<ul>
 <li>处理器外的异步中断：由中断控制器发现和响应</li>
@@ -371,7 +363,7 @@
 </ul>
 </li>
 <li>中断当前程序的执行<ul>
-<li>保存当前程序的PSW&#x2F;PC到核心栈</li>
+<li>保存当前程序的PSW/PC到核心栈</li>
 </ul>
 </li>
 <li>从用户态切换至内核态，调出响应中断处理程序的PSW和PC，转向操作系统的中断处理程序</li>
@@ -418,7 +410,7 @@
 <h4 id="中断优先级"><a href="#中断优先级" class="headerlink" title="中断优先级"></a><strong>中断优先级</strong></h4><ul>
 <li>当计算机同时检测到多个中断时, 中断装置响应中断的顺序</li>
 <li>有优先度的响应中断</li>
-<li>一种可能的处理次序：<br>处理机硬件故障中断事件、自愿性中断事件、程序性中断事件、时钟中断等外部中断事件、I&#x2F;O中断事件、重启动和关机中断事件</li>
+<li>一种可能的处理次序：<br>处理机硬件故障中断事件、自愿性中断事件、程序性中断事件、时钟中断等外部中断事件、I/O中断事件、重启动和关机中断事件</li>
 <li>不同类型的操作系统有不同的中断优先级</li>
 <li>可以使用硬件或者软件方法按照顺序予以响应<ul>
 <li>硬件：根据排定的优先级顺序形成一个硬件链式排队器，当产生中断事件时，首先响应排在队列最前面的中断事件</li>
@@ -443,8 +435,7 @@
 <h4 id="多重中断处理"><a href="#多重中断处理" class="headerlink" title="多重中断处理"></a><strong>多重中断处理</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929151402615.png" alt="image-20220929151402615"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929151411941.png" alt="image-20220929151411941"></p>
 <h2 id="2-3-进程管理"><a href="#2-3-进程管理" class="headerlink" title="2.3 进程管理"></a>2.3 进程管理</h2><h3 id="2-3-1-进程及其状态"><a href="#2-3-1-进程及其状态" class="headerlink" title="2.3.1 进程及其状态"></a>2.3.1 进程及其状态</h3><h4 id="进程的概念"><a href="#进程的概念" class="headerlink" title="进程的概念"></a><strong>进程的概念</strong></h4><ul>
-<li><p>进程是具有独立功能的程序在某个数据集合上的一次运行活动</p>
-</li>
+<li>进程是具有独立功能的程序在某个数据集合上的一次运行活动</li>
 <li><p>进程是操作系统进行资源分配和调度的一个独立单位</p>
 </li>
 <li><p>一个进程包括 5 个实体部分</p>
@@ -462,10 +453,8 @@
 <li>不同程序在相同数据集上运行：构成两个共享数据的交往进程</li>
 <li>相同代码在不同数据集上运行：构成两个共享代码的无关进程</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929153007206.png" alt="image-20220929153007206" style="zoom:50%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929153101799.png" alt="image-20220929153101799" style="zoom:50%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929153007206.png" alt="image-20220929153007206" style="zoom:50%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220929153101799.png" alt="image-20220929153101799" style="zoom:50%;" /></p>
 <ul>
 <li>共享的代码称为<strong>可再入程序</strong>，如编辑器、编译器</li>
 <li>可再入程序是<strong>纯代码</strong>的</li>
@@ -476,14 +465,14 @@
 <h4 id="概念级的进程状态"><a href="#概念级的进程状态" class="headerlink" title="概念级的进程状态"></a><strong>概念级的进程状态</strong></h4><ul>
 <li><strong>运行态</strong>(running)：进程占有处理器运行</li>
 <li><strong>就绪态</strong>(ready)：进程具备运行条件，等待系统分配处理器以便运行</li>
-<li><strong>等待态</strong>(waiting)&#x2F;<strong>阻塞态</strong>(blocked)&#x2F;睡眠态(sleep)：进程由于等待资源、输入输出、信号等而不具备运行条件</li>
+<li><strong>等待态</strong>(waiting)/<strong>阻塞态</strong>(blocked)/睡眠态(sleep)：进程由于等待资源、输入输出、信号等而不具备运行条件</li>
 </ul>
 <h4 id="进程三态模型"><a href="#进程三态模型" class="headerlink" title="进程三态模型"></a><strong>进程三态模型</strong></h4><ol>
 <li><p>运行态 -&gt; 等待态</p>
-<p>等待资源、I&#x2F;O、信号</p>
+<p>等待资源、I/O、信号</p>
 </li>
 <li><p>等待态 -&gt; 就绪态</p>
-<p>资源满足、I&#x2F;O结束、信号完成</p>
+<p>资源满足、I/O结束、信号完成</p>
 </li>
 <li><p>就绪态 -&gt; 运行态</p>
 <p>处理器空闲时选择、更高优先权进程抢占</p>
@@ -535,8 +524,7 @@
 <li>借助PCB，OS可以全面管理进程的物理实体，刻画进程的执行现状，控制进程的执行</li>
 <li>系统在创建进程时就为它建立了进程控制块，进程结束时回收PCB空间</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221016223541187.png" alt="image-20221016223541187" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221016223541187.png" alt="image-20221016223541187" style="zoom: 67%;" /></p>
 <h4 id="进程控制块-标识信息"><a href="#进程控制块-标识信息" class="headerlink" title="进程控制块-标识信息"></a><strong>进程控制块-标识信息</strong></h4><ul>
 <li><p>分为用户使用的外部标识符和系统使用的内部标识号</p>
 </li>
@@ -560,15 +548,15 @@
 </ul>
 <h4 id="进程控制块-控制信息"><a href="#进程控制块-控制信息" class="headerlink" title="进程控制块-控制信息"></a><strong>进程控制块-控制信息</strong></h4><ul>
 <li>用于存放与管理、调度进程相关的信息<ul>
-<li>调度相关信息：状态、等待事件&#x2F;原因、进程优先级、队列指针</li>
-<li>进程组成信息：代码&#x2F;数据地址、外存映像地址</li>
+<li>调度相关信息：状态、等待事件/原因、进程优先级、队列指针</li>
+<li>进程组成信息：代码/数据地址、外存映像地址</li>
 <li>队列指引元：进程队列指针、父子兄弟进程指针</li>
 <li>通信相关信息：消息队列、信号量、锁</li>
-<li>进程段&#x2F;页表、进程映像在外存中的地址</li>
+<li>进程段/页表、进程映像在外存中的地址</li>
 <li>进程特权信息：如内存访问权限、处理器特权</li>
-<li>处理器使用信息：占用的处理器、时间片、处理器使用时间&#x2F;已执行总时间、记账信息</li>
+<li>处理器使用信息：占用的处理器、时间片、处理器使用时间/已执行总时间、记账信息</li>
 <li>资源清单信息：如正占有的资源、已使用的资源</li>
-<li>文件传输和I&#x2F;O信息</li>
+<li>文件传输和I/O信息</li>
 </ul>
 </li>
 </ul>
@@ -612,7 +600,7 @@
 </ul>
 <h3 id="2-3-3-进程管理的实现"><a href="#2-3-3-进程管理的实现" class="headerlink" title="2.3.3 进程管理的实现"></a>2.3.3 进程管理的实现</h3><h4 id="概念级的OS进程管理软件"><a href="#概念级的OS进程管理软件" class="headerlink" title="概念级的OS进程管理软件"></a><strong>概念级的OS进程管理软件</strong></h4><ul>
 <li>关键的进程管理软件包括：<ul>
-<li>系统调用&#x2F;中断&#x2F;异常处理程序</li>
+<li>系统调用/中断/异常处理程序</li>
 <li>队列管理模块</li>
 <li>进程控制程序</li>
 <li>进程调度程序（独立进程居多）</li>
@@ -629,7 +617,7 @@
 <li>队列管理模块是操作系统实现进程管理的核心模块</li>
 <li>操作系统建立多个进程队列，包括就绪队列和等待队列</li>
 <li>按需组织为先进先出队列与优先队列</li>
-<li>队列中的进程可以通过PCB中的队列指引元采用单&#x2F;双指引元或索引连接</li>
+<li>队列中的进程可以通过PCB中的队列指引元采用单/双指引元或索引连接</li>
 <li>出队和入队操作</li>
 <li>进程与资源调度围绕进程队列展开</li>
 </ul>
@@ -647,7 +635,7 @@
 <li>其他：如修改进程特权</li>
 </ul>
 <h4 id="原语与进程控制原语"><a href="#原语与进程控制原语" class="headerlink" title="原语与进程控制原语"></a><strong>原语与进程控制原语</strong></h4><ul>
-<li>进程控制过程中涉及对OS核心数据结构(进程表&#x2F;PCB池&#x2F;队列&#x2F;资源表)的修改</li>
+<li>进程控制过程中涉及对OS核心数据结构(进程表/PCB池/队列/资源表)的修改</li>
 <li>为防止与时间有关的错误，应使用<strong>原语</strong></li>
 <li>原语是<strong>由若干条指令构成</strong>的完成某种特定功能的程序，执行上具有<strong>不可分割性</strong></li>
 <li>原语的执行可以通过关闭中断实现(进入原语前关闭,退出原语前打开)</li>
@@ -665,9 +653,9 @@
 </ul>
 </li>
 <li>工作过程：<ol>
-<li>(中断&#x2F;异常等触发)<strong>正向模式切换</strong>并<strong>压入 PSW&#x2F;PC</strong></li>
+<li>(中断/异常等触发)<strong>正向模式切换</strong>并<strong>压入 PSW/PC</strong></li>
 <li><strong>保存</strong>被中断进程的<strong>现场信息</strong></li>
-<li>处理具体中断&#x2F;异常</li>
+<li>处理具体中断/异常</li>
 <li>把被中断进程的系统堆栈指针<strong>SP值保存到PCB</strong></li>
 <li><strong>调整</strong>被中断进程的<strong>PCB</strong>信息，如进程状态</li>
 <li>把被中断进程的PCB<strong>加入相关队列</strong></li>
@@ -676,14 +664,14 @@
 <li><strong>设置</strong>被选中进程的<strong>地址空间</strong>，<strong>恢复存储管理信息</strong></li>
 <li><strong>恢复</strong>被选中进程的<strong>SP</strong>值到处理器寄存器SP</li>
 <li><strong>恢复</strong>被选中进程的<strong>现场信息</strong>进入处理器</li>
-<li>(中断返回指令触发)<strong>逆向模式转换</strong>并<strong>弹出 PSW&#x2F;PC</strong></li>
+<li>(中断返回指令触发)<strong>逆向模式转换</strong>并<strong>弹出 PSW/PC</strong></li>
 </ol>
 </li>
 </ul>
 <h4 id="模式切换"><a href="#模式切换" class="headerlink" title="模式切换"></a><strong>模式切换</strong></h4><ul>
 <li>进程切换必须在操作系统内核模式下完成，这就需要模式切换</li>
 <li>模式切换又称处理器状态切换，包括：<ul>
-<li>用户模式到内核模式由中断&#x2F;异常&#x2F;系统调用中断用户进程执行而触发</li>
+<li>用户模式到内核模式由中断/异常/系统调用中断用户进程执行而触发</li>
 <li>内核模式到用户模式OS执行中断返回指令将控制权交还用户进程而触发</li>
 </ul>
 </li>
@@ -691,31 +679,31 @@
 <h4 id="模式切换的基本工作任务"><a href="#模式切换的基本工作任务" class="headerlink" title="模式切换的基本工作任务"></a><strong>模式切换的基本工作任务</strong></h4><ul>
 <li>中断装置完成正向模式切换，包括：<ul>
 <li>处理器模式转为内核模式</li>
-<li>保存当前进程的PC&#x2F;PSW值到核心栈</li>
-<li>转向中断&#x2F;异常&#x2F;系统调用处理程序</li>
+<li>保存当前进程的PC/PSW值到核心栈</li>
+<li>转向中断/异常/系统调用处理程序</li>
 </ul>
 </li>
 <li>中断返回指令完成逆向模式转换，包括：<ul>
-<li>从待运行进程核心栈中弹出PSW&#x2F;PC值</li>
+<li>从待运行进程核心栈中弹出PSW/PC值</li>
 <li>处理器模式转为用户模式</li>
 </ul>
 </li>
 </ul>
 <h4 id="进程切换的发生时机"><a href="#进程切换的发生时机" class="headerlink" title="进程切换的发生时机"></a><strong>进程切换的发生时机</strong></h4><ul>
-<li>进程切换一定发生在<strong>中断&#x2F;异常&#x2F;系统调用</strong>处理过程中，常见的情况是：<ul>
+<li>进程切换一定发生在<strong>中断/异常/系统调用</strong>处理过程中，常见的情况是：<ul>
 <li>阻塞式系统调用、虚拟地址异常导致被中断进程进入等待态</li>
-<li>时间片中断、I&#x2F;O中断后发现更高优先级进程，导致被中断进程转入就绪态</li>
+<li>时间片中断、I/O中断后发现更高优先级进程，导致被中断进程转入就绪态</li>
 <li>终止用系统调用、不能继续执行的异常，导致被中断进程进入终止态</li>
 </ul>
 </li>
 </ul>
 <h4 id="进程切换与模式切换"><a href="#进程切换与模式切换" class="headerlink" title="进程切换与模式切换"></a><strong>进程切换与模式切换</strong></h4><ul>
-<li>一些中断&#x2F;异常不会引起进程状态转换，不会引起进程切换，只是在处理完成后把控制权交回给被中断进程，处理流程是：<ul>
-<li>(中断&#x2F;异常触发)正向模式切换压入PSW&#x2F;PC</li>
+<li>一些中断/异常不会引起进程状态转换，不会引起进程切换，只是在处理完成后把控制权交回给被中断进程，处理流程是：<ul>
+<li>(中断/异常触发)正向模式切换压入PSW/PC</li>
 <li>保存被中断进程的现场信息</li>
-<li>处理中断&#x2F;异常</li>
+<li>处理中断/异常</li>
 <li>恢复被中断进程的现场信息</li>
-<li>(中断返回指令触发)逆向模式转换弹出PSW&#x2F;PC</li>
+<li>(中断返回指令触发)逆向模式转换弹出PSW/PC</li>
 </ul>
 </li>
 </ul>
@@ -743,8 +731,7 @@
 <li>服务例程完成任务后，只需进行逆向模式切换并恢复应用程序现场，就可以返回被打断的应用进程继续执行</li>
 </ul>
 </li>
-<li><p><strong>优点</strong></p>
-<ul>
+<li><strong>优点</strong><ul>
 <li>一个应用程序被中断以执行某些操作系统例程时不需要执行两次进程切换</li>
 <li>如果确定需要发生进程切换而不是返回先前执行程序，可将控制权转交给进程切换函数</li>
 </ul>
@@ -754,7 +741,7 @@
 <li><p><strong>概念介绍</strong></p>
 <ul>
 <li>把操作系统服务例程组织为一组在用户态工作的系统进程，也称服务器进程</li>
-<li>应用进程的系统调用服务请求和服务器进程的服务响应通过内核的消息传递机制实现，形成客户机&#x2F;服务器工作方式</li>
+<li>应用进程的系统调用服务请求和服务器进程的服务响应通过内核的消息传递机制实现，形成客户机/服务器工作方式</li>
 </ul>
 </li>
 <li><p><strong>特点</strong></p>
@@ -763,8 +750,7 @@
 <li>进程切换则是这一运行模式必须付出的代价，性能的下降不可避免</li>
 </ul>
 </li>
-<li><p><strong>优点</strong></p>
-<ul>
+<li><strong>优点</strong><ul>
 <li>可采用模块化的操作系统实现方法，模块间具有最少和最简洁的接口，有利于操作系统的实现、替换和扩充</li>
 </ul>
 </li>
@@ -794,7 +780,8 @@
 </ul>
 <h4 id="多线程结构进程"><a href="#多线程结构进程" class="headerlink" title="多线程结构进程"></a><strong>多线程结构进程</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221013144217979.png" alt="image-20221013144217979"></p>
 <ul>
-<li>多线程环境下<strong>进程</strong>的概念<ul>
+<li><p>多线程环境下<strong>进程</strong>的概念</p>
+<ul>
 <li><p>在多线程环境下，<strong>进程是操作系统中进行保护和资源分配的独立单位</strong>，具有：</p>
 <ul>
 <li>用来容纳进程映像的虚拟地址空间</li>
@@ -803,8 +790,7 @@
 </li>
 <li><p>进程可以分为资源集合和线程集合。进程要支撑线程运行，为线程提供虚拟地址空间和各种资源</p>
 </li>
-<li><p>进程封装管理信息：对指令代码、全局数据、打开的文件和信号量等共享部分的管理</p>
-</li>
+<li>进程封装管理信息：对指令代码、全局数据、打开的文件和信号量等共享部分的管理</li>
 </ul>
 </li>
 <li>多线程环境下<strong>线程</strong>的概念<ul>
@@ -844,7 +830,7 @@
 </li>
 </ul>
 <h4 id="一个进程中的线程组织方式"><a href="#一个进程中的线程组织方式" class="headerlink" title="一个进程中的线程组织方式"></a><strong>一个进程中的线程组织方式</strong></h4><ul>
-<li>调度者&#x2F;工作者模式：进程中的一个线程担任调度员，接收和处理工作请求，其他线程是工作者线程，由调度员线程分配任务并唤醒工作者线程</li>
+<li>调度者/工作者模式：进程中的一个线程担任调度员，接收和处理工作请求，其他线程是工作者线程，由调度员线程分配任务并唤醒工作者线程</li>
 <li>组模式：进程中的各个线程看作同一组，都可以取得并处理工作请求，不存在调度员线程。有时候每个线程被设计成专门执行特定的任务，同时建立相应的任务队列</li>
 <li>流水线模式：线程排成某个次序，第一个线程所产生的数据传送给下一个线程进行处理，以此类推；数据按照排定次序由线程依次传递以完成被请求的任务</li>
 </ul>
@@ -857,7 +843,7 @@
 </ul>
 <h4 id="多线程技术的应用"><a href="#多线程技术的应用" class="headerlink" title="多线程技术的应用"></a><strong>多线程技术的应用</strong></h4><ul>
 <li>前台和后台工作</li>
-<li>C&#x2F;S应用模式</li>
+<li>C/S应用模式</li>
 <li>加快执行速度</li>
 <li>设计用户接口</li>
 </ul>
@@ -905,7 +891,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018153247134.png" alt="image-20221018153247134"></p>
 <h4 id="多线程实现混合式策略的特点"><a href="#多线程实现混合式策略的特点" class="headerlink" title="多线程实现混合式策略的特点"></a><strong>多线程实现混合式策略的特点</strong></h4><ul>
-<li>组合用户级线程&#x2F;内核级线程设施，可以提供各种复杂语义</li>
+<li>组合用户级线程/内核级线程设施，可以提供各种复杂语义</li>
 <li>线程创建完全在用户空间中完成，线程的调度和同步也在应用程序中进行</li>
 <li>一个应用中的多个用户级线程被映射到一些(小于等于用户级线程数目)内核级线程上</li>
 <li>程序员可以针对特定应用和机器调节内核级线程的数目，以达到整体最佳结果</li>
@@ -957,7 +943,7 @@
 <li>中级调度把一些进程换出主存，从而使之进入“挂起”状态，不参与进程调度，以平顺系统的负载</li>
 </ul>
 <h4 id="低级调度"><a href="#低级调度" class="headerlink" title="低级调度"></a><strong>低级调度</strong></h4><ul>
-<li>低级调度：又称处理器调度、进程&#x2F;线程调度、短程调度，按照某种原则把处理器分配给就绪态进程或内核级线程</li>
+<li>低级调度：又称处理器调度、进程/线程调度、短程调度，按照某种原则把处理器分配给就绪态进程或内核级线程</li>
 <li>进程调度程序：又称分派程序，操作系统中实现处理器调度的程序，是操作系统的最核心部分</li>
 <li>处理器调度策略的优劣直接影响到整个系统的性能</li>
 </ul>
@@ -971,7 +957,7 @@
 <li><strong>资源利用率</strong>：使得CPU或其他资源的使用率尽可能高且能够并行工作</li>
 <li><strong>响应时间</strong>：使交互式用户的响应时间尽可能小，或尽快处理实时任务</li>
 <li><strong>周转时间</strong>：提交给系统开始到执行完成获得结果为止的这段时间间隔称周转时间，应该使周转时间或平均周转时间尽可能短<ul>
-<li>归一化周转时间 &#x3D; 周转时间 &#x2F; CPU服务时间 &gt; 1，目标不断接近1</li>
+<li>归一化周转时间 = 周转时间 / CPU服务时间 &gt; 1，目标不断接近1</li>
 </ul>
 </li>
 <li><strong>吞吐量</strong>：单位时间处理的进程数尽可能多</li>
@@ -999,13 +985,13 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221017110647416.png" alt="image-20221017110647416"></p>
 <h4 id="与使用处理器的服务时间长短相关的优先数"><a href="#与使用处理器的服务时间长短相关的优先数" class="headerlink" title="与使用处理器的服务时间长短相关的优先数"></a><strong>与使用处理器的服务时间长短相关的优先数</strong></h4><ul>
-<li><strong>计算时间短(SJF)</strong>(作业&#x2F;进程)优先</li>
-<li>**剩余计算时间短(SRTF)**进程优先</li>
-<li><strong>响应比高者(HRRF)</strong>(作业&#x2F;进程)优先<ul>
-<li>响应比 &#x3D; $\frac{等待时间 + 期待(预估)处理器的服务时间}{期待(预估)处理器的服务时间}$</li>
+<li><strong>计算时间短(SJF)</strong>(作业/进程)优先</li>
+<li><strong>剩余计算时间短(SRTF)</strong>进程优先</li>
+<li><strong>响应比高者(HRRF)</strong>(作业/进程)优先<ul>
+<li>响应比 = $\frac{等待时间 + 期待(预估)处理器的服务时间}{期待(预估)处理器的服务时间}$</li>
 </ul>
 </li>
-<li>**先来先服务(FCFS)**：先进队先被选择(常用于非抢占式)<ul>
+<li><strong>先来先服务(FCFS)</strong>：先进队先被选择(常用于非抢占式)<ul>
 <li>多用于高级调度；低级调度中，以计算为主的进程过于优越，即容易造成长时间占用处理器</li>
 </ul>
 </li>
@@ -1027,8 +1013,7 @@
 </li>
 <li>举例：</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221017112203432.png" alt="image-20221017112203432" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221017112203432.png" alt="image-20221017112203432" style="zoom:80%;" /></p>
 <h4 id="分级调度算法的分级原则"><a href="#分级调度算法的分级原则" class="headerlink" title="分级调度算法的分级原则"></a><strong>分级调度算法的分级原则</strong></h4><ul>
 <li>一般分级原则<ul>
 <li>外设访问，交互性，时间紧迫程度，系统效率，用户立场，…</li>
@@ -1082,11 +1067,10 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018161936990.png" alt="image-20221018161936990" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018161936990.png" alt="image-20221018161936990" style="zoom:80%;" /></p>
 <h4 id="3-调度的模式"><a href="#3-调度的模式" class="headerlink" title="3.调度的模式"></a><strong>3.调度的模式</strong></h4><ul>
 <li>非抢占式<ul>
-<li>一个进程一旦处于运行态，它就不断执行直到终止，或者为等待I&#x2F;O或请求某些操作系统服务而阻塞自己</li>
+<li>一个进程一旦处于运行态，它就不断执行直到终止，或者为等待I/O或请求某些操作系统服务而阻塞自己</li>
 </ul>
 </li>
 <li>抢占式<ul>
@@ -1101,7 +1085,7 @@
 <li><strong>SPN</strong>(<em>最短进程优先</em>) <strong>非抢占</strong></li>
 <li><strong>SRT</strong>(<em>最短剩余时间优先</em>) <strong>抢占</strong></li>
 <li><strong>HRRF</strong>(<em>最高响应比优先</em>) <strong>非抢占</strong></li>
-<li><strong>Feedback</strong>(<em>多级反馈调度</em>) <strong>抢占</strong>   &#x2F;&#x2F;RR+优先级</li>
+<li><strong>Feedback</strong>(<em>多级反馈调度</em>) <strong>抢占</strong>   //RR+优先级</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162324280.png" alt="image-20221018162324280"></p>
 <h5 id="FCFS-先来先服务"><a href="#FCFS-先来先服务" class="headerlink" title="FCFS(先来先服务)"></a><strong>FCFS(先来先服务)</strong></h5><ul>
@@ -1110,42 +1094,37 @@
 <li>当前正在运行的进程停止执行时，选择在就绪队列中存在时间最长的进程运行</li>
 <li>一个短进程可能不得不等待很长时间才能获得执行</li>
 <li>偏袒计算为主的进程<ul>
-<li>I&#x2F;O多的进程不得不等待计算为主的进程做完</li>
+<li>I/O多的进程不得不等待计算为主的进程做完</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162512311.png" alt="image-20221018162512311" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162512311.png" alt="image-20221018162512311" style="zoom:67%;" /></p>
 <h5 id="RR-时间片轮转"><a href="#RR-时间片轮转" class="headerlink" title="RR(时间片轮转)"></a><strong>RR(时间片轮转)</strong></h5><ul>
 <li>基于时钟做抢占式调度</li>
 <li>以一个周期性间隔产生时钟中断，当中断发生时，当前正在运行的进程被置于就绪队列中，然后基于FCFS策略选择下一个就绪进程运行</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162745148.png" alt="image-20221018162745148" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162745148.png" alt="image-20221018162745148" style="zoom:67%;" /></p>
 <h5 id="SPN-最短进程优先"><a href="#SPN-最短进程优先" class="headerlink" title="SPN(最短进程优先)"></a><strong>SPN(最短进程优先)</strong></h5><ul>
 <li>非抢占式调度</li>
 <li>选择所需处理时间最短的进程</li>
 <li>短进程将会越过长进程，优先获得调度</li>
 <li>问题：只要持续不断地提供更短的进程，长进程就有可能饿死</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162854427.png" alt="image-20221018162854427" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018162854427.png" alt="image-20221018162854427" style="zoom:67%;" /></p>
 <h5 id="SPT-最短剩余时间优先"><a href="#SPT-最短剩余时间优先" class="headerlink" title="SPT(最短剩余时间优先)"></a><strong>SPT(最短剩余时间优先)</strong></h5><ul>
 <li>抢占式调度</li>
 <li>调度器总是选择预期剩余时间更短的进程</li>
 <li>当一个新进程加入就绪队列，他可能比当前运行的进程具有更短的剩余时间，只要该新进程就绪，调度器就可能抢占当前正在运行的进程</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163124447.png" alt="image-20221018163124447" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163124447.png" alt="image-20221018163124447" style="zoom:67%;" /></p>
 <h5 id="HRRN-最高响应比优先"><a href="#HRRN-最高响应比优先" class="headerlink" title="HRRN(最高响应比优先)"></a><strong>HRRN(最高响应比优先)</strong></h5><ul>
 <li>非抢占</li>
 <li>选择响应比最高的<ul>
-<li>响应比 &#x3D; $\frac{等待时间 + 期待(预估)处理器的服务时间}{期待(预估)处理器的服务时间}$</li>
+<li>响应比 = $\frac{等待时间 + 期待(预估)处理器的服务时间}{期待(预估)处理器的服务时间}$</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163320945.png" alt="image-20221018163320945" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163320945.png" alt="image-20221018163320945" style="zoom:67%;" /></p>
 <h5 id="Feedback-多级反馈调度"><a href="#Feedback-多级反馈调度" class="headerlink" title="Feedback(多级反馈调度)"></a><strong>Feedback(多级反馈调度)</strong></h5><ul>
 <li>抢占式</li>
 <li>RR + 优先级</li>
@@ -1159,15 +1138,11 @@
 <li>分级原则：外设访问, 交互性, 时间紧迫程度, 系统效率, 用户立场, …</li>
 <li>当一个进程第一次进入系统时，它被放置在RQ0，当它第一次被抢占后并返回就绪状态时，它被放置在RQ1。在随后的时间里，每当它被抢占时，它被降级到下一个低优先级队列中。<strong>一个短进程</strong>很快会执行完，<strong>不会在就绪队列中降很多级。</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163513176.png" alt="image-20221018163513176" style="zoom:67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163829039.png" alt="image-20221018163829039" style="zoom:67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164114444.png" alt="image-20221018164114444" style="zoom:67%;" />
-
-<h5 id="对比RR与Feedback-q-1"><a href="#对比RR与Feedback-q-1" class="headerlink" title="对比RR与Feedback(q&#x3D;1)"></a><strong>对比RR与Feedback(q&#x3D;1)</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163943191.png" alt="image-20221018163943191"></p>
-<h5 id="q-2-i"><a href="#q-2-i" class="headerlink" title="q&#x3D;2^i"></a><strong>q&#x3D;2^i</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164320210.png" alt="image-20221018164320210" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163513176.png" alt="image-20221018163513176" style="zoom:67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163829039.png" alt="image-20221018163829039" style="zoom:67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164114444.png" alt="image-20221018164114444" style="zoom:67%;" /></p>
+<h5 id="对比RR与Feedback-q-1"><a href="#对比RR与Feedback-q-1" class="headerlink" title="对比RR与Feedback(q=1)"></a><strong>对比RR与Feedback(q=1)</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018163943191.png" alt="image-20221018163943191"></p>
+<h5 id="q-2-i"><a href="#q-2-i" class="headerlink" title="q=2^i"></a><strong>q=2^i</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164320210.png" alt="image-20221018164320210" style="zoom: 67%;" /></p>
 <p><strong>低优先级队列给予更长的处理时间</strong></p>
 <h3 id="2-5-4-现代操作系统调度算法"><a href="#2-5-4-现代操作系统调度算法" class="headerlink" title="2.5.4 现代操作系统调度算法"></a>2.5.4 现代操作系统调度算法</h3><h4 id="传统Unix系统的调度"><a href="#传统Unix系统的调度" class="headerlink" title="传统Unix系统的调度"></a><strong>传统Unix系统的调度</strong></h4><ul>
 <li>多级反馈队列，每个优先级队列使用时间片轮转</li>
@@ -1175,36 +1150,31 @@
 <li>给每个进程赋予基本优先级的目的是把所有进程划分成固定的优先级区</li>
 <li>可控调节因子</li>
 </ul>
-<h4 id="Unix-SVR4调度算法"><a href="#Unix-SVR4调度算法" class="headerlink" title="Unix SVR4调度算法"></a><strong>Unix SVR4调度算法</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164522256.png" alt="image-20221018164522256" style="zoom: 80%;" />
-
+<h4 id="Unix-SVR4调度算法"><a href="#Unix-SVR4调度算法" class="headerlink" title="Unix SVR4调度算法"></a><strong>Unix SVR4调度算法</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164522256.png" alt="image-20221018164522256" style="zoom: 80%;" /></p>
 <ul>
 <li>多级反馈队列，每一个优先数都对应于一个就绪进程队列</li>
 <li>实时优先级层次：优先数和时间片都是固定的，在抢占点执行抢占</li>
 <li>分时优先级层次：优先数和时间片是可变的，从0优先数的100ms到59优先数的10ms</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164826010.png" alt="image-20221018164826010" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018164826010.png" alt="image-20221018164826010" style="zoom:80%;" /></p>
 <h4 id="Bands"><a href="#Bands" class="headerlink" title="Bands"></a><strong>Bands</strong></h4><ul>
 <li>优先级递减<ul>
 <li>对换</li>
-<li>块I&#x2F;O设备控制</li>
+<li>块I/O设备控制</li>
 <li>文件操作</li>
-<li>字符I&#x2F;O设备控制</li>
+<li>字符I/O设备控制</li>
 <li>用户进程</li>
 </ul>
 </li>
 </ul>
 <h4 id="Windows调度算法"><a href="#Windows调度算法" class="headerlink" title="Windows调度算法"></a><strong>Windows调度算法</strong></h4><ul>
-<li><p>主要设计目标：基于内核级线程的可抢占式调度，向单个用户提供交互式的计算环境，并支持各种服务器程序</p>
-</li>
-<li><p>优先级和优先数</p>
-<ul>
+<li>主要设计目标：基于内核级线程的可抢占式调度，向单个用户提供交互式的计算环境，并支持各种服务器程序</li>
+<li>优先级和优先数<ul>
 <li>实时优先级层次(优先数为31-16)：用于通信任务和实时任务，优先数不可变</li>
 <li>可变优先级层次(优先数为15-0)：用于用户提交的交互式任务，优先数可动态调整</li>
 </ul>
 </li>
-<li><p>多级反馈队列，每一个优先数都对应于一个就绪进程队列</p>
-</li>
+<li>多级反馈队列，每一个优先数都对应于一个就绪进程队列</li>
 <li><p>优先数可动态调整原则</p>
 <ul>
 <li>线程所属的进程对象有一个进程基本优先数，取值范围从0到15</li>
@@ -1216,12 +1186,9 @@
 <li><p>当存在N个处理器时，N-1个处理器上将运行N-1个最高优先级的线程，其他线程将共享剩下的一个处理器</p>
 </li>
 </ul>
-<h4 id="fork系统调用"><a href="#fork系统调用" class="headerlink" title="fork系统调用"></a><strong>fork系统调用</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165121959.png" alt="image-20221018165121959" style="zoom:67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165132183.png" alt="image-20221018165132183" style="zoom:67%;" />
-
-<h4 id="Addition-of-Medium-Term-Scheduling"><a href="#Addition-of-Medium-Term-Scheduling" class="headerlink" title="Addition of Medium Term Scheduling"></a><strong>Addition of Medium Term Scheduling</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165246398.png" alt="image-20221018165246398" style="zoom:80%;" />
-
+<h4 id="fork系统调用"><a href="#fork系统调用" class="headerlink" title="fork系统调用"></a><strong>fork系统调用</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165121959.png" alt="image-20221018165121959" style="zoom:67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165132183.png" alt="image-20221018165132183" style="zoom:67%;" /></p>
+<h4 id="Addition-of-Medium-Term-Scheduling"><a href="#Addition-of-Medium-Term-Scheduling" class="headerlink" title="Addition of Medium Term Scheduling"></a><strong>Addition of Medium Term Scheduling</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165246398.png" alt="image-20221018165246398" style="zoom:80%;" /></p>
 <h3 id="2-5-5-批处理作业的调度"><a href="#2-5-5-批处理作业的调度" class="headerlink" title="2.5.5 批处理作业的调度"></a>2.5.5 批处理作业的调度</h3><h4 id="批处理作业的管理"><a href="#批处理作业的管理" class="headerlink" title="批处理作业的管理"></a><strong>批处理作业的管理</strong></h4><ul>
 <li>作业说明语言和作业说明书</li>
 <li>脱机控制方式(批处理控制方式)</li>
@@ -1234,8 +1201,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="批处理作业的状态，作业调度与进程调度"><a href="#批处理作业的状态，作业调度与进程调度" class="headerlink" title="批处理作业的状态，作业调度与进程调度"></a><strong>批处理作业的状态，作业调度与进程调度</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165431583.png" alt="image-20221018165431583" style="zoom: 80%;" />
-
+<h4 id="批处理作业的状态，作业调度与进程调度"><a href="#批处理作业的状态，作业调度与进程调度" class="headerlink" title="批处理作业的状态，作业调度与进程调度"></a><strong>批处理作业的状态，作业调度与进程调度</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221018165431583.png" alt="image-20221018165431583" style="zoom: 80%;" /></p>
 <h4 id="批处理作业的调度"><a href="#批处理作业的调度" class="headerlink" title="批处理作业的调度"></a><strong>批处理作业的调度</strong></h4><ul>
 <li>作业调度：按一定的策略选取若干个作业让它们进入内存、构成进程去竞争处理器以获得运行机会</li>
 <li>用户立场：自己作业的周转时间尽可能的小</li>
@@ -1606,5 +1572,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

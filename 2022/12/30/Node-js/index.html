@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -191,10 +187,8 @@
 </ul>
 <p>如果要在 JS 代码中，使用 fs 模块来操作文件，需要使用如下方式导入</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
 <h4 id="1-2-读取指定文件的内容"><a href="#1-2-读取指定文件的内容" class="headerlink" title="1.2 读取指定文件的内容"></a>1.2 读取指定文件的内容</h4><p><strong><code>fs.readFile()</code>的语法格式</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.<span class="hljs-title function_">readFile</span>(path[, options], callback)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>参数1: 必选参数，字符串，表示文件的路径</li>
 <li>参数2: 可选参数，表示以什么编码格式来读取文件</li>
@@ -202,7 +196,6 @@
 </ul>
 <p><strong><code>fs.readFile()</code>的示例代码</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 以 UTF-8 的编码格式, 读取指定文件内容，并打印 err 和 dataStr 的值</span><br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br>fs.<span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;./11.txt&#x27;</span>, <span class="hljs-string">&#x27;utf8&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">err, dataStr</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(dataStr);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p>读取成功</p>
 <ul>
@@ -220,10 +213,8 @@
 <p><strong>判断文件是否读取成功</strong></p>
 <p>可以判断 err 对象是否为 null</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br>fs.<span class="hljs-title function_">readFile</span>(<span class="hljs-string">&#x27;./11.txt&#x27;</span>, <span class="hljs-string">&#x27;utf8&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">err, dataStr</span>) &#123;<br>    <span class="hljs-keyword">if</span>(err) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;文件读取失败: &#x27;</span> + err.<span class="hljs-property">message</span>);<br>    &#125;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;文件读取成功, 内容是: &#x27;</span> + dataStr);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
 <h4 id="1-3-向指定文件写入内容"><a href="#1-3-向指定文件写入内容" class="headerlink" title="1.3 向指定文件写入内容"></a>1.3 向指定文件写入内容</h4><p><strong><code>fs.writeFile()</code>的语法格式</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">fs.<span class="hljs-title function_">writeFile</span>(file, data[, options], callback)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>参数1: 必选参数，需要制定一个文件路径的字符串</li>
 <li>参数2: 必选参数，表示要写入的内容</li>
@@ -232,7 +223,6 @@
 </ul>
 <p><strong><code>fs.writeFile()</code>的示例代码</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br>fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&#x27;./11.txt&#x27;</span>, <span class="hljs-string">&#x27;Hello Node.js&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>写入成功<ul>
 <li>err: null</li>
@@ -246,8 +236,7 @@
 <p><strong>判断文件是否写入成功</strong></p>
 <p>可以判断 err 对象是否为 null</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br>fs.<span class="hljs-title function_">writeFile</span>(<span class="hljs-string">&#x27;./11.txt&#x27;</span>, <span class="hljs-string">&#x27;Hello Node.js&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">err</span>) &#123;<br>    <span class="hljs-keyword">if</span>(err) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;文件写入失败: &#x27;</span> + err.<span class="hljs-property">message</span>);<br>    &#125;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;文件写入成功&#x27;</span>);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
-<h4 id="1-4-处理路径问题"><a href="#1-4-处理路径问题" class="headerlink" title="1.4 处理路径问题"></a>1.4 处理路径问题</h4><p>在使用 fs 模块操作文件时，如果提供的操作路径是以 .&#x2F; 或 ..&#x2F; 开头的相对路径时，很容易出现路径动态拼接错误的问题</p>
+<h4 id="1-4-处理路径问题"><a href="#1-4-处理路径问题" class="headerlink" title="1.4 处理路径问题"></a>1.4 处理路径问题</h4><p>在使用 fs 模块操作文件时，如果提供的操作路径是以 ./ 或 ../ 开头的相对路径时，很容易出现路径动态拼接错误的问题</p>
 <ul>
 <li>原因：代码在运行时，会以<strong>执行 node 命令时所处的目录</strong>，动态拼接出被操作文件的完整路径</li>
 <li>解决：直接提供完整的路径<ul>
@@ -256,7 +245,6 @@
 </li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br>fs.<span class="hljs-title function_">readFile</span>(__dirname + <span class="hljs-string">&#x27;/11.txt&#x27;</span>, <span class="hljs-string">&#x27;utf8&#x27;</span>, <span class="hljs-keyword">function</span>(<span class="hljs-params">err, dataStr</span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(err);<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(dataStr);<br>&#125;);<br></code></pre></td></tr></table></figure>
-
 <h3 id="2-path-路径模块"><a href="#2-path-路径模块" class="headerlink" title="2. path 路径模块"></a>2. path 路径模块</h3><h4 id="2-1-什么是-path-路径模块"><a href="#2-1-什么是-path-路径模块" class="headerlink" title="2.1 什么是 path 路径模块"></a>2.1 什么是 path 路径模块</h4><p>path 模块是 Node.js 官方提供的，用来处理路径的模块。提供了一系列的方法和属性，用来满足用户对路径的处理需求</p>
 <ul>
 <li><code>path.join()</code>: 用来将多个路径片段拼接成一个完整的路径字符串</li>
@@ -264,24 +252,20 @@
 </ul>
 <p>使用如下方法导入</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
 <h4 id="2-2-路径拼接"><a href="#2-2-路径拼接" class="headerlink" title="2.2 路径拼接"></a>2.2 路径拼接</h4><p><strong><code>path.join()</code>的语法格式</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">path.<span class="hljs-title function_">join</span>([...paths])<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>参数: …paths 字符串类型，路径片段的序列</li>
 <li>返回值: 字符串</li>
 </ul>
 <p><strong><code>path.join()</code>的代码示例</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> pathStr = path.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;/a&#x27;</span>, <span class="hljs-string">&#x27;/b/c&#x27;</span>, <span class="hljs-string">&#x27;../&#x27;</span>, <span class="hljs-string">&#x27;./d&#x27;</span>, <span class="hljs-string">&#x27;e&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(pathStr); <span class="hljs-comment">// 输出 \a\b\d\e</span><br><br><span class="hljs-keyword">const</span> pathStr2 = path.<span class="hljs-title function_">join</span>(__dirname, <span class="hljs-string">&#x27;./11.txt&#x27;</span>);<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(pathStr2);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>今后涉及到路径的拼接操作，使用 <code>path.join()</code>，不要直接使用 + 进行字符串的拼接</li>
 </ul>
 <h4 id="2-3-获取路径中的文件名"><a href="#2-3-获取路径中的文件名" class="headerlink" title="2.3 获取路径中的文件名"></a>2.3 获取路径中的文件名</h4><p><strong><code>path.basename()</code>的语法格式</strong></p>
 <p>使用 <code>path.basename()</code> 可以获取到路径中的最后一部分，常通过该方法获取路径中的文件名</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">path.<span class="hljs-title function_">basename</span>(path[, ext])<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>path: 必选参数，表示一个路径的字符串</li>
 <li>ext: 可选参数，表示文件扩展名的字符串</li>
@@ -289,31 +273,25 @@
 </ul>
 <p><strong><code>path.basename()</code>的代码示例</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><br><span class="hljs-keyword">const</span> fpath = <span class="hljs-string">&#x27;/a/b/c/index.html&#x27;</span><br><span class="hljs-keyword">var</span> fullName = path.<span class="hljs-title function_">basename</span>(fpath)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(fullName) <span class="hljs-comment">// index.html</span><br><br><span class="hljs-keyword">var</span> nameWithoutExt = path.<span class="hljs-title function_">basename</span>(fpath, <span class="hljs-string">&#x27;.html&#x27;</span>)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(nameWithoutExt) <span class="hljs-comment">//index</span><br></code></pre></td></tr></table></figure>
-
 <h4 id="2-4-获取路径中的文件扩展名"><a href="#2-4-获取路径中的文件扩展名" class="headerlink" title="2.4 获取路径中的文件扩展名"></a>2.4 获取路径中的文件扩展名</h4><p><strong><code>path.extname()</code>的语法格式</strong></p>
 <p>使用 <code>path.extname()</code> 可以获取到路径中的扩展名部分</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">path.<span class="hljs-title function_">extname</span>(path)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>path: 必选参数，表示一个路径的字符串</li>
 <li>返回值: 扩展名字符串</li>
 </ul>
 <p><strong><code>path.extname()</code>的代码示例</strong></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;path&#x27;</span>);<br><span class="hljs-keyword">const</span> fpath = <span class="hljs-string">&#x27;/a/b/c/index.html&#x27;</span><br><span class="hljs-keyword">const</span> fext = path.<span class="hljs-title function_">extname</span>(fpath)<br><span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(fext) <span class="hljs-comment">// .html</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="3-http-模块"><a href="#3-http-模块" class="headerlink" title="3. http 模块"></a>3. http 模块</h3><h4 id="3-1-什么是-http-模块"><a href="#3-1-什么是-http-模块" class="headerlink" title="3.1 什么是 http 模块"></a>3.1 什么是 http 模块</h4><p>http 模块是 Node.js 官方提供的、用来创建 web 服务器的模块。通过 http 模块提供的 <code>http.createServer()</code> 方法，就能方便地把一台普通的电脑，变成一台 web 服务器，从而对外提供服务</p>
 <p>使用如下方法导入</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br></code></pre></td></tr></table></figure>
-
 <h4 id="3-2-创建基本-Web-服务器"><a href="#3-2-创建基本-Web-服务器" class="headerlink" title="3.2 创建基本 Web 服务器"></a>3.2 创建基本 Web 服务器</h4><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><br><span class="hljs-comment">// 创建 web 服务器实例</span><br><span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>()<br><br><span class="hljs-comment">// 为服务器实例绑定 request 事件，监听客户端的请求</span><br>server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;request&#x27;</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params">req, res</span>) &#123;<br>    <span class="hljs-comment">// 只要有请求，就会触发 request 事件，从而调用这个事件处理函数</span><br>    <span class="hljs-keyword">const</span> url = req.<span class="hljs-property">url</span><br>    <span class="hljs-keyword">const</span> method = req.<span class="hljs-property">method</span><br>    <span class="hljs-keyword">const</span> str = <span class="hljs-string">`Your request url is <span class="hljs-subst">$&#123;url&#125;</span>, and request method is <span class="hljs-subst">$&#123;method&#125;</span>`</span><br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(str)<br><br>    <span class="hljs-comment">// 设置 Content-Type 响应头，解决中文乱码的问题</span><br>    res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Content-Type&#x27;</span>, <span class="hljs-string">&#x27;text/html; charset=utf-8&#x27;</span>)<br>    <span class="hljs-comment">// 向客户端响应内容</span><br>    res.<span class="hljs-title function_">end</span>(str)<br>&#125;)<br><br><span class="hljs-comment">// 调用 .listen() 方法就能启动服务器</span><br>server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8080</span>, <span class="hljs-keyword">function</span> (<span class="hljs-params"></span>) &#123;<br>	<span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;server running at http://127.0.0.1:8080&#x27;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
 <p><strong>req 请求对象</strong></p>
 <p>只要服务器接收到了客户端的请求，就会调用通过 <code>server.on()</code> 为服务器绑定的 request 事件处理函数</p>
 <p>如果想在事件处理函数中，访问与客户端相关的数据或属性，可以使用 req 对象</p>
 <p><strong>res 响应对象</strong></p>
 <p>在服务器的 request 事件处理函数中，访问与服务器相关的数据或属性，可以使用 req 对象</p>
 <h4 id="3-3-根据不同-url-响应不同内容"><a href="#3-3-根据不同-url-响应不同内容" class="headerlink" title="3.3 根据不同 url 响应不同内容"></a>3.3 根据不同 url 响应不同内容</h4><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> http = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http&#x27;</span>)<br><span class="hljs-keyword">const</span> server = http.<span class="hljs-title function_">createServer</span>()<br><br>server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;request&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  <span class="hljs-keyword">const</span> url = req.<span class="hljs-property">url</span><br>  <span class="hljs-comment">// 设置默认的响应内容为 404 Not found</span><br>  <span class="hljs-keyword">let</span> content = <span class="hljs-string">&#x27;&lt;h1&gt;404 Not found!&lt;/h1&gt;&#x27;</span><br>  <span class="hljs-comment">// 判断用户请求的是否为 / 或 /index.html 首页</span><br>  <span class="hljs-comment">// 判断用户请求的是否为 /about.html 关于页面</span><br>  <span class="hljs-keyword">if</span> (url === <span class="hljs-string">&#x27;/&#x27;</span> || url === <span class="hljs-string">&#x27;/index.html&#x27;</span>) &#123;<br>    content = <span class="hljs-string">&#x27;&lt;h1&gt;首页&lt;/h1&gt;&#x27;</span><br>  &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (url === <span class="hljs-string">&#x27;/about.html&#x27;</span>) &#123;<br>    content = <span class="hljs-string">&#x27;&lt;h1&gt;关于页面&lt;/h1&gt;&#x27;</span><br>  &#125;<br><br>  res.<span class="hljs-title function_">setHeader</span>(<span class="hljs-string">&#x27;Content-Type&#x27;</span>, <span class="hljs-string">&#x27;text/html; charset=utf-8&#x27;</span>)<br>  res.<span class="hljs-title function_">end</span>(content)<br>&#125;)<br><br>server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">80</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;server running at http://127.0.0.1&#x27;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
 <h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><h3 id="1-模块化的基本概念"><a href="#1-模块化的基本概念" class="headerlink" title="1. 模块化的基本概念"></a>1. 模块化的基本概念</h3><h4 id="1-1-什么是模块化"><a href="#1-1-什么是模块化" class="headerlink" title="1.1 什么是模块化"></a>1.1 什么是模块化</h4><ul>
 <li>模块化是指解决一个复杂问题时，自顶向下逐层把系统划分为若干模块的过程，模块是可组合、分解和更换的单元。</li>
 <li>编程领域中的模块化，就是遵守固定的规则，把一个大文件拆成独立并相互依赖的多个小模块</li>
@@ -347,7 +325,6 @@
 <li>每个 .js 自定义模块中都有一个 <code>module</code> 对象，它里面存储了和当前模块有关的信息</li>
 </ul>
 <figure class="highlight json"><table><tr><td class="code"><pre><code class="hljs json">Module <span class="hljs-punctuation">&#123;</span><br>  id<span class="hljs-punctuation">:</span> &#x27;.&#x27;<span class="hljs-punctuation">,</span><br>  path<span class="hljs-punctuation">:</span> &#x27;E<span class="hljs-punctuation">:</span>\\WorkSpace\\VSC\\nodejs&#x27;<span class="hljs-punctuation">,</span><br>  exports<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  filename<span class="hljs-punctuation">:</span> &#x27;E<span class="hljs-punctuation">:</span>\\WorkSpace\\VSC\\nodejs\\a.js&#x27;<span class="hljs-punctuation">,</span><br>  loaded<span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">false</span></span><span class="hljs-punctuation">,</span><br>  children<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>  paths<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><br>    &#x27;E<span class="hljs-punctuation">:</span>\\WorkSpace\\VSC\\nodejs\\node_modules&#x27;<span class="hljs-punctuation">,</span><br>    &#x27;E<span class="hljs-punctuation">:</span>\\WorkSpace\\VSC\\node_modules&#x27;<span class="hljs-punctuation">,</span><br>    &#x27;E<span class="hljs-punctuation">:</span>\\WorkSpace\\node_modules&#x27;<span class="hljs-punctuation">,</span><br>    &#x27;E<span class="hljs-punctuation">:</span>\\node_modules&#x27;<br>  <span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
-
 <p><strong><code>module.exports</code> 对象</strong></p>
 <ul>
 <li>在自定义模块中，可以使用 <code>module.exports</code> 对象，将模块内的成员共享出去，供外界使用。</li>
@@ -355,7 +332,6 @@
 <li>使用 <code>require()</code> 导入模块时，<strong>导入的结果永远以 <code>module.exports</code> 指向的对象为准</strong>。</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 向 module.exports 对象上挂载属性和方法</span><br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">username</span> = <span class="hljs-string">&#x27;zs&#x27;</span>;<br><span class="hljs-variable language_">module</span>.<span class="hljs-property">exports</span>.<span class="hljs-property">sayHello</span> = <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) &#123;<br>    <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;Hello!&#x27;</span>);<br>&#125;;<br></code></pre></td></tr></table></figure>
-
 <p><strong><code>exports</code> 对象</strong></p>
 <ul>
 <li>默认情况下，<code>exports</code> 和 <code>module.exports</code> 指向同一个对象。<strong>最终共享的结果，以 <code>module.exports</code> 指向的对象为准。</strong></li>
@@ -403,7 +379,6 @@
 </ul>
 <p><strong>快速创建 package.json</strong></p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><code class="hljs sh">npm init -y<br></code></pre></td></tr></table></figure>
-
 <p><strong>安装包</strong></p>
 <p>使用 <code>npm i(nstall)</code> 可以一次性安装所有的依赖包</p>
 <ul>
@@ -414,10 +389,8 @@
 <p><strong>devDependencies 节点</strong></p>
 <p>如果某些包只在项目开发阶段用到，项目上线后不会用到，则建议把这些包记录到 devDependencies 节点</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><code class="hljs sh"><span class="hljs-comment"># 记录到 devDependencies 节点</span><br>npm i 包名 -D<br><span class="hljs-comment"># 上面是简写，等价于下方完整写法</span><br>npm install 包名 --save-dev<br></code></pre></td></tr></table></figure>
-
 <p>与之相对，如果某些包在开发和上线都需要用到，则建议把这些包记录到 dependencies 节点</p>
 <h4 id="3-4-npm-换源"><a href="#3-4-npm-换源" class="headerlink" title="3.4 npm 换源"></a>3.4 npm 换源</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 查看当前下载源</span><br>npm config get registry<br><span class="hljs-comment"># 切换为淘宝源</span><br>npm config <span class="hljs-built_in">set</span> registry=http://registry.npmmirror.com<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-模块的加载机制"><a href="#4-模块的加载机制" class="headerlink" title="4. 模块的加载机制"></a>4. 模块的加载机制</h3><h4 id="4-1-优先从缓存中加载"><a href="#4-1-优先从缓存中加载" class="headerlink" title="4.1 优先从缓存中加载"></a>4.1 优先从缓存中加载</h4><p><strong>模块第一次加载后会被缓存</strong>，即多次调用 <code>require()</code> 不会导致模块的代码被执行多次，提高模块加载效率</p>
 <h4 id="4-2-内置模块的加载机制"><a href="#4-2-内置模块的加载机制" class="headerlink" title="4.2 内置模块的加载机制"></a>4.2 内置模块的加载机制</h4><p>内置模块加载优先级最高。</p>
 <h4 id="4-3-自定义模块的加载机制"><a href="#4-3-自定义模块的加载机制" class="headerlink" title="4.3 自定义模块的加载机制"></a>4.3 自定义模块的加载机制</h4><p>加载自定义模块时，路径要以 <code>./</code> 或 <code>../</code> 开头，否则会作为内置模块或第三方模块加载。</p>
@@ -455,10 +428,8 @@
 <p>Express 是用于快速创建服务器的第三方模块</p>
 <h4 id="1-1-基本使用"><a href="#1-1-基本使用" class="headerlink" title="1.1 基本使用"></a>1.1 基本使用</h4><p>安装 Express：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">npm install express<br></code></pre></td></tr></table></figure>
-
 <p>创建服务器，监听客户端请求，并返回内容：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;express&#x27;</span>)<br><span class="hljs-comment">// 创建 web 服务器</span><br><span class="hljs-keyword">const</span> app = <span class="hljs-title function_">express</span>()<br><br><span class="hljs-comment">// 监听客户端的 GET 和 POST 请求，并向客户端响应具体的内容</span><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/user&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  res.<span class="hljs-title function_">send</span>(&#123; <span class="hljs-attr">name</span>: <span class="hljs-string">&#x27;zs&#x27;</span>, <span class="hljs-attr">age</span>: <span class="hljs-number">20</span>, <span class="hljs-attr">gender</span>: <span class="hljs-string">&#x27;男&#x27;</span> &#125;)<br>&#125;)<br>app.<span class="hljs-title function_">post</span>(<span class="hljs-string">&#x27;/user&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  res.<span class="hljs-title function_">send</span>(<span class="hljs-string">&#x27;请求成功&#x27;</span>)<br>&#125;)<br><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// 通过 req.query 可以获取到客户端发送过来的查询参数</span><br>  <span class="hljs-comment">// ?name=zs&amp;age=20</span><br>  <span class="hljs-comment">// req.query.name   req.query.age</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">query</span>)<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">query</span>)<br>&#125;)<br><br><span class="hljs-comment">// 这里的 :id 是一个动态的参数</span><br>app.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#x27;/user/:id/:username&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">req, res</span>) =&gt;</span> &#123;<br>  <span class="hljs-comment">// req.params 是动态匹配到的 URL 参数，默认是一个空对象</span><br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(req.<span class="hljs-property">params</span>)<br>  res.<span class="hljs-title function_">send</span>(req.<span class="hljs-property">params</span>)<br>&#125;)<br><br>app.<span class="hljs-title function_">listen</span>(<span class="hljs-number">80</span>, <span class="hljs-function">() =&gt;</span> &#123;<br>  <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(<span class="hljs-string">&#x27;express server running at http://127.0.0.1&#x27;</span>)<br>&#125;)<br></code></pre></td></tr></table></figure>
-
 <h4 id="1-2-托管静态资源"><a href="#1-2-托管静态资源" class="headerlink" title="1.2 托管静态资源"></a>1.2 托管静态资源</h4><ul>
 <li>通过 <code>express.static()</code> 方法可创建静态资源服务器，向外开放访问静态资源。</li>
 <li>Express 在指定的静态目录中查找文件，并对外提供资源的访问路径，<strong>存放静态文件的目录名不会出现在 URL 中</strong></li>
@@ -466,13 +437,11 @@
 <li>可为静态资源访问路径添加前缀</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;public&#x27;</span>))<br>app.<span class="hljs-title function_">use</span>(express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;files&#x27;</span>))<br>app.<span class="hljs-title function_">use</span>(<span class="hljs-string">&#x27;/bruce&#x27;</span>, express.<span class="hljs-title function_">static</span>(<span class="hljs-string">&#x27;bruce&#x27;</span>))<br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment">可直接访问 public, files 目录下的静态资源</span><br><span class="hljs-comment">http://localhost:3000/images/bg.jpg</span><br><span class="hljs-comment">http://localhost:3000/css/style.css</span><br><span class="hljs-comment">http://localhost:3000/js/login.js</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">通过带有 /bruce 前缀的地址访问 bruce 目录下的文件</span><br><span class="hljs-comment">http://localhost:8080/bruce/images/logo.png</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="2-Express-路由"><a href="#2-Express-路由" class="headerlink" title="2. Express 路由"></a>2. Express 路由</h3><h4 id="2-1-路由的概念"><a href="#2-1-路由的概念" class="headerlink" title="2.1 路由的概念"></a>2.1 路由的概念</h4><ul>
 <li>Express 中，路由指的是客户端的请求与服务器处理函数之间的映射关系</li>
 <li>Express 中的路由分 3 部分组成，分别是<strong>请求的类型、请求的 URL 地址、处理函数</strong></li>
 </ul>
 <figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js">app.<span class="hljs-title function_">METHOD</span>(<span class="hljs-variable constant_">PATH</span>, <span class="hljs-variable constant_">HANDLER</span>)<br></code></pre></td></tr></table></figure>
-
 <h4 id="2-2-路由的使用"><a href="#2-2-路由的使用" class="headerlink" title="2.2 路由的使用"></a>2.2 路由的使用</h4><ul>
 <li><p>简单使用: 把路由直接挂载到 app 上，如上述代码所示</p>
 </li>
@@ -861,5 +830,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

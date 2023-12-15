@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -214,7 +210,8 @@
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-feign<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>OpenFeign</strong>是Spring Cloud在Feign的基础上支持了SpringMVC的注解，如@RequesMapping等等。OpenFeign的@Feignclient可以解析SpringMVC的@RequestMapping注解下的接口，并通过动态代理的方式产生实现类，实现类中做负载均衡并调用其他服务。</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 </ul>
@@ -235,15 +232,14 @@
 <p><strong>业务逻辑接口+@FeignClient配置调用provider服务</strong></p>
 <p>新建PaymentFeignService接口并新增注解@FeignClient</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@FeignClient(value = &quot;CLOUD-PAYMENT-SERVICE&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">PaymentFeignService</span>&#123;<br>    <span class="hljs-meta">@GetMapping(value = &quot;/payment/get/&#123;id&#125;&quot;)</span><br>    <span class="hljs-keyword">public</span> CommonResult&lt;Payment&gt; <span class="hljs-title function_">getPaymentById</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Long id)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>控制层Controller</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderFeignController</span>&#123;<br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> PaymentFeignService paymentFeignService;<br><br>    <span class="hljs-meta">@GetMapping(value = &quot;/consumer/payment/get/&#123;id&#125;&quot;)</span><br>    <span class="hljs-keyword">public</span> CommonResult&lt;Payment&gt; <span class="hljs-title function_">getPaymentById</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Long id)</span>&#123;<br>        <span class="hljs-keyword">return</span> paymentFeignService.getPaymentById(id);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>测试</p>
 <ul>
-<li><p>先启动2个eureka集群7001&#x2F;7002</p>
+<li><p>先启动2个eureka集群7001/7002</p>
 </li>
-<li><p>再启动2个微服务8001&#x2F;8002</p>
+<li><p>再启动2个微服务8001/8002</p>
 </li>
 <li><p>启动OpenFeign启动</p>
 </li>
@@ -255,7 +251,7 @@
 </li>
 </ol>
 <h3 id="2-3-OpenFeign超时控制"><a href="#2-3-OpenFeign超时控制" class="headerlink" title="2.3 OpenFeign超时控制"></a>2.3 OpenFeign超时控制</h3><ol>
-<li><p>服务提供方8001&#x2F;8002故意写暂停程序</p>
+<li><p>服务提供方8001/8002故意写暂停程序</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentController</span> &#123;<br>    <br>    <span class="hljs-meta">@Value(&quot;$&#123;server.port&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String serverPort;<br>   <br>    <span class="hljs-meta">@GetMapping(value = &quot;/payment/feign/timeout&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">paymentFeignTimeout</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-comment">// 业务逻辑处理正确，但是需要耗费3秒钟</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">3</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> serverPort;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>服务消费方80添加超时方法PaymentFeignService</p>
@@ -265,7 +261,6 @@
 </ol>
 <p><strong>YML文件里设置OpenFeign客户端超时控制</strong></p>
 <figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-attr">config:</span><br>      <span class="hljs-attr">default:</span><br>      	<span class="hljs-comment">#指的是建立连接所用的时间，适用于网络状况正常的情况下,两端连接所用的时间,单位毫秒</span><br>        <span class="hljs-attr">connectTimeout:</span> <span class="hljs-number">5000</span><br>        <span class="hljs-comment">#指的是建立连接后从服务器读取到可用资源所用的时间,单位毫秒</span><br>        <span class="hljs-attr">readTimeout:</span> <span class="hljs-number">5000</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="2-4-OpenFeign日志增强"><a href="#2-4-OpenFeign日志增强" class="headerlink" title="2.4 OpenFeign日志增强"></a>2.4 OpenFeign日志增强</h3><ul>
 <li><p><strong>日志打印功能</strong></p>
 <ul>
@@ -283,13 +278,13 @@
 </li>
 <li><p><strong>配置日志bean</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FeignConfig</span><br>&#123;<br>    <span class="hljs-meta">@Bean</span><br>    Logger.Level <span class="hljs-title function_">feignLoggerLevel</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> Logger.Level.FULL;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>或者在yml中配置</li>
 </ul>
 </li>
 <li><p><strong>YML文件里需要开启日志的Feign客户端</strong></p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">logging:</span><br>  <span class="hljs-attr">level:</span><br>    <span class="hljs-comment"># feign日志以什么级别监控哪个接口</span><br>    <span class="hljs-attr">com.lun.springcloud.service.PaymentFeignService:</span> <span class="hljs-string">debug</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">logging:</span><br>  <span class="hljs-attr">level:</span><br>    <span class="hljs-comment"># feign日志以什么级别监控哪个接口</span><br>    <span class="hljs-attr">com.lun.springcloud.service.PaymentFeignService:</span> <span class="hljs-string">debug</span><br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 
       </div>
@@ -655,5 +650,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,20 +180,15 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h1><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174013530.png" alt="image-20221205174013530" style="zoom:80%;" />
-
+        <h1 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h1><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174013530.png" alt="image-20221205174013530" style="zoom:80%;" /></p>
 <h3 id="1-符号表"><a href="#1-符号表" class="headerlink" title="1. 符号表"></a>1. 符号表</h3><p><strong>Definition (符号表 (Symbol Table))</strong></p>
 <p>$\textcolor{red}{\textbf{符号表}}是用于保存\textcolor{blue}{\textbf{各种信息}}的\textcolor{purple}{\textbf{数据结构}}$</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174251234.png" alt="image-20221205174251234" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174251234.png" alt="image-20221205174251234" style="zoom:80%;" /></p>
 <h3 id="2-作用域"><a href="#2-作用域" class="headerlink" title="2. 作用域"></a>2. 作用域</h3><p>“领域特定语言” (DSL) 通常只有<strong>单作用域</strong> (全局作用域)</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174334165.png" alt="image-20221205174334165" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174334165.png" alt="image-20221205174334165" style="zoom:80%;" /></p>
 <p>“通用程序设计语言” (GPL) 通常需要<strong>嵌套作用域</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174355820.png" alt="image-20221205174355820" style="zoom:80%;" />
-
-<h4 id="2-1-嵌套作用域"><a href="#2-1-嵌套作用域" class="headerlink" title="2.1 嵌套作用域"></a>2.1 嵌套作用域</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174444387.png" alt="image-20221205174444387" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174355820.png" alt="image-20221205174355820" style="zoom:80%;" /></p>
+<h4 id="2-1-嵌套作用域"><a href="#2-1-嵌套作用域" class="headerlink" title="2.1 嵌套作用域"></a>2.1 嵌套作用域</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174444387.png" alt="image-20221205174444387" style="zoom:80%;" /></p>
 <blockquote>
 <p>一个函数包括两个作用域</p>
 <ul>
@@ -205,26 +196,18 @@
 <li>函数体</li>
 </ul>
 </blockquote>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174728843.png" alt="image-20221205174728843" style="zoom:80%;" />
-
-<h3 id="3-动手写一个符号表"><a href="#3-动手写一个符号表" class="headerlink" title="3. 动手写一个符号表"></a>3. 动手写一个符号表</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206153825977.png" alt="image-20221206153825977" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174728843.png" alt="image-20221205174728843" style="zoom:80%;" /></p>
+<h3 id="3-动手写一个符号表"><a href="#3-动手写一个符号表" class="headerlink" title="3. 动手写一个符号表"></a>3. 动手写一个符号表</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206153825977.png" alt="image-20221206153825977" style="zoom:80%;" /></p>
 <p><strong>目标</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206153914843.png" alt="image-20221206153914843" style="zoom:80%;" />
-
-<h4 id="3-1-类图"><a href="#3-1-类图" class="headerlink" title="3.1 类图"></a>3.1 类图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206154419395.png" alt="image-20221206154419395" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206153914843.png" alt="image-20221206153914843" style="zoom:80%;" /></p>
+<h4 id="3-1-类图"><a href="#3-1-类图" class="headerlink" title="3.1 类图"></a>3.1 类图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206154419395.png" alt="image-20221206154419395" style="zoom:80%;" /></p>
 <ul>
 <li>通过监听器在遍历语法树的过程中构建符号表</li>
 </ul>
-<h4 id="3-2-Scope"><a href="#3-2-Scope" class="headerlink" title="3.2 Scope"></a>3.2 Scope</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207141835857.png" alt="image-20221207141835857" style="zoom:80%;" />
-
-<h4 id="3-3-Listener"><a href="#3-3-Listener" class="headerlink" title="3.3 Listener"></a>3.3 Listener</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150436040.png" alt="image-20221207150436040" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150444492.png" alt="image-20221207150444492" style="zoom:80%;" />
-
-<h4 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4 测试"></a>3.4 测试</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150521873.png" alt="image-20221207150521873" style="zoom:80%;" />
-
+<h4 id="3-2-Scope"><a href="#3-2-Scope" class="headerlink" title="3.2 Scope"></a>3.2 Scope</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207141835857.png" alt="image-20221207141835857" style="zoom:80%;" /></p>
+<h4 id="3-3-Listener"><a href="#3-3-Listener" class="headerlink" title="3.3 Listener"></a>3.3 Listener</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150436040.png" alt="image-20221207150436040" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150444492.png" alt="image-20221207150444492" style="zoom:80%;" /></p>
+<h4 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4 测试"></a>3.4 测试</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150521873.png" alt="image-20221207150521873" style="zoom:80%;" /></p>
 <h4 id="3-5-参考"><a href="#3-5-参考" class="headerlink" title="3.5 参考"></a>3.5 参考</h4><p><a target="_blank" rel="noopener" href="https://github.com/antlr/symtab">symtab @ antlr by parrt</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/parrt/cs652/tree/master/lectures/code/symtab/src">symtab @ cs652 by parrt</a></p>
 
@@ -591,5 +574,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

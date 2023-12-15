@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -196,7 +192,6 @@
 <li>而<strong>动态</strong>代理的源码是在程序运行期间由<strong>JVM</strong>根据反射等机制<strong>动态地生成</strong>，所以在运行前并不存在代理类的字节码文件</li>
 </ul>
 <h2 id="2-静态代理"><a href="#2-静态代理" class="headerlink" title="2. 静态代理"></a>2. 静态代理</h2><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceProxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-keyword">private</span> UserService target; <span class="hljs-comment">// 被代理的对象</span><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">UserServiceProxy</span><span class="hljs-params">(UserService target)</span> &#123;<br>        <span class="hljs-built_in">this</span>.target = target;<br>    &#125;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">select</span><span class="hljs-params">()</span> &#123;<br>        before();<br>        target.select();    <span class="hljs-comment">// 这里才实际调用真实主题角色的方法</span><br>        after();<br>    &#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">before</span><span class="hljs-params">()</span> &#123;     <span class="hljs-comment">// 在执行方法之前执行</span><br>        ...<br>    &#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">after</span><span class="hljs-params">()</span> &#123;      <span class="hljs-comment">// 在执行方法之后执行</span><br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>虽然静态代理实现简单，且不侵入原代码，但是，当场景稍微复杂一些的时候，静态代理的缺点也会暴露出来。</p>
 <ol>
 <li>当需要代理多个类的时候，由于代理对象要实现与目标对象一致的接口，有两种方式：</li>
@@ -205,7 +200,7 @@
 <li>只维护一个代理类，由这个代理类实现多个接口，但是这样就导致<strong>代理类过于庞大</strong></li>
 <li>新建多个代理类，每个目标对象对应一个代理类，但是这样会<strong>产生过多的代理类</strong></li>
 </ul>
-<ol start="2">
+<ol>
 <li>当接口需要增加、删除、修改方法的时候，目标对象与代理类都要同时修改，<strong>不易维护</strong></li>
 </ol>
 <h2 id="3-动态代理"><a href="#3-动态代理" class="headerlink" title="3. 动态代理"></a>3. 动态代理</h2><blockquote>
@@ -216,8 +211,6 @@
 <li>将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构</li>
 <li>在内存中生成一个代表这个类的 <code>java.lang.Class</code> 对象，作为方法区这个类的各种数据访问入口</li>
 </ol>
-</blockquote>
-<blockquote>
 <p>由于《Java虚拟机规范》对这三点要求并不具体，因此实现非常灵活。例如第一点<strong>获取类的二进制字节流</strong>就有很多途径：</p>
 <ul>
 <li>从ZIP包获取，这是JAR、EAR、WAR等格式的基础</li>
@@ -236,10 +229,8 @@
 <h3 id="3-1-JDK动态代理"><a href="#3-1-JDK动态代理" class="headerlink" title="3.1 JDK动态代理"></a>3.1 JDK动态代理</h3><p>JDK动态代理主要涉及两个类：<code>java.lang.reflect.Proxy</code> 和 <code>java.lang.reflect.InvocationHandler</code>。通过案例来说明</p>
 <p>编写一个调用逻辑处理器 <code>LogHandler</code> 类，提供日志增强功能，并实现 <code>InvocationHandler</code> 接口；在 <code>LogHandler</code> 中维护一个目标对象，这个对象是被代理的对象（真实主题角色）；在 <code>invoke</code> 方法中编写方法调用的逻辑处理</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogHandler</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">InvocationHandler</span> &#123;<br>    <br>    Object target;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">LogHandler</span><span class="hljs-params">(Object target)</span> &#123;<br>        <span class="hljs-built_in">this</span>.target = target;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">invoke</span><span class="hljs-params">(Object proxy, Method method, Object[] args)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        System.out.printf(<span class="hljs-string">&quot;log start time [%s]&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> method.invoke(target, args);<br>        System.out.printf(<span class="hljs-string">&quot;log end time [%s]&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>编写测试类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">JDKProxyTest</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 设置变量可以保存动态代理类，默认名称以 $Proxy0 格式命名</span><br>    System.getProperties().setProperty(<span class="hljs-string">&quot;sun.misc.ProxyGenerator.saveGeneratedFiles&quot;</span>, <span class="hljs-string">&quot;true&quot;</span>);<br>    <br>    <span class="hljs-comment">// 1. 创建被代理的对象</span><br>    <span class="hljs-type">UserService</span> <span class="hljs-variable">userService</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UserServiceImpl</span>();<br>    <span class="hljs-comment">// 2. 获取对应ClassLoader, userService的类为UserServiceImpl</span><br>    <span class="hljs-type">ClassLoader</span> <span class="hljs-variable">classLoader</span> <span class="hljs-operator">=</span> userService.getClass().getClassLoader();<br>    <span class="hljs-comment">// 3. 获取所有接口的Class, 这里的userService只实现了一个接口UserService</span><br>    Class&lt;?&gt;[] interfaces = userService.getClass().getInterfaces();<br>    <span class="hljs-comment">// 4. 创建一个将传给代理类的调用请求处理器, 代理对象上的方法调用实际为调用 InvocationHandler 的 invoke 方法</span><br>    <span class="hljs-comment">//    这里创建的是一个自定义的日志处理器, 须传入实际的执行对象 userService</span><br>    <span class="hljs-type">InvocationHandler</span> <span class="hljs-variable">logHandler</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LogHandler</span>(userService);<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">        5.根据上面提供的信息, 创建代理对象, 在这个过程中，</span><br><span class="hljs-comment">           a.JDK会通过根据传入的参数信息动态地在内存中创建和.class 文件等同的字节码</span><br><span class="hljs-comment">           b.然后根据相应的字节码转换成对应的class，</span><br><span class="hljs-comment">           c.然后调用newInstance()创建代理实例</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">UserService</span> <span class="hljs-variable">proxy</span> <span class="hljs-operator">=</span> (UserService) Proxy.newProxyInstance(classLoader, interfaces, logHandler);<br>    proxy.select();<br>    proxy.update();<br>    <br>    <span class="hljs-comment">// 保存JDK动态代理生成的代理类，类名保存为 UserServiceProxy</span><br>    ProxyUtils.generateClassFile(userService.getClass(), <span class="hljs-string">&quot;UserServiceProxy&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>运行结果</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310191458920.png" alt="image-20231019145819867"></p>
 <blockquote>
@@ -248,7 +239,6 @@
 </blockquote>
 <h3 id="3-2-代理类源码分析"><a href="#3-2-代理类源码分析" class="headerlink" title="3.2 代理类源码分析"></a>3.2 代理类源码分析</h3><p>通过上面测试类的配置，可以在target的类路径下找到代理类的class文件，反编译得到</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserServiceProxy</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Proxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">UserService</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Method m1;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Method m2;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Method m4;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Method m0;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> Method m3;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">UserServiceProxy</span><span class="hljs-params">(InvocationHandler var1)</span> <span class="hljs-keyword">throws</span>  &#123;<br>        <span class="hljs-built_in">super</span>(var1);<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">equals</span><span class="hljs-params">(Object var1)</span> <span class="hljs-keyword">throws</span>  &#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> String <span class="hljs-title function_">toString</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span>  &#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">select</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span>  &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-built_in">super</span>.h.invoke(<span class="hljs-built_in">this</span>, m4, (Object[])<span class="hljs-literal">null</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (RuntimeException | Error var2) &#123;<br>            <span class="hljs-keyword">throw</span> var2;<br>        &#125; <span class="hljs-keyword">catch</span> (Throwable var3) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UndeclaredThrowableException</span>(var3);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">hashCode</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span>  &#123;<br>        <span class="hljs-comment">// ...</span><br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">update</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span>  &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-built_in">super</span>.h.invoke(<span class="hljs-built_in">this</span>, m3, (Object[])<span class="hljs-literal">null</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (RuntimeException | Error var2) &#123;<br>            <span class="hljs-keyword">throw</span> var2;<br>        &#125; <span class="hljs-keyword">catch</span> (Throwable var3) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UndeclaredThrowableException</span>(var3);<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            m1 = Class.forName(<span class="hljs-string">&quot;java.lang.Object&quot;</span>).getMethod(<span class="hljs-string">&quot;equals&quot;</span>, Class.forName(<span class="hljs-string">&quot;java.lang.Object&quot;</span>));<br>            m2 = Class.forName(<span class="hljs-string">&quot;java.lang.Object&quot;</span>).getMethod(<span class="hljs-string">&quot;toString&quot;</span>);<br>            m4 = Class.forName(<span class="hljs-string">&quot;top.whale.proxy.UserService&quot;</span>).getMethod(<span class="hljs-string">&quot;select&quot;</span>);<br>            m0 = Class.forName(<span class="hljs-string">&quot;java.lang.Object&quot;</span>).getMethod(<span class="hljs-string">&quot;hashCode&quot;</span>);<br>            m3 = Class.forName(<span class="hljs-string">&quot;top.whale.proxy.UserService&quot;</span>).getMethod(<span class="hljs-string">&quot;update&quot;</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (NoSuchMethodException var2) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NoSuchMethodError</span>(var2.getMessage());<br>        &#125; <span class="hljs-keyword">catch</span> (ClassNotFoundException var3) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NoClassDefFoundError</span>(var3.getMessage());<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>从 <code>UserServiceProxy</code> 的代码中可以发现：</p>
 <ul>
 <li>UserServiceProxy 继承了 Proxy 类，并且实现了被代理的所有接口，以及equals、hashCode、toString等方法</li>
@@ -263,10 +253,8 @@
 <p>JDK动态代理中提供了一个<code>Proxy</code>类来创建代理类，而在CGLIB动态代理中也提供了一个类似的类<code>Enhancer</code></p>
 <p>编写 <code>LogInterceptor</code> ，实现 <code>MethodInterceptor</code>，用于方法的拦截回调</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LogInterceptor</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">MethodInterceptor</span> &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> o 表示要进行增强的对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> method 表示拦截的方法</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> objects 数组表示参数列表，基本数据类型需要传入其包装类型，如int--&gt;Integer</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> methodProxy 表示对方法的代理，invokeSuper方法表示对被代理对象方法的调用</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span> 执行结果</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> Throwable 异常</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> Object <span class="hljs-title function_">intercept</span><span class="hljs-params">(Object o, Method method, Object[] objects, MethodProxy methodProxy)</span> <span class="hljs-keyword">throws</span> Throwable &#123;<br>        System.out.printf(<span class="hljs-string">&quot;log start time [%s]\n&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        <span class="hljs-comment">// 注意这里是调用 invokeSuper 而不是 invoke，否则死循环</span><br>        <span class="hljs-comment">// methodProxy.invokeSuper执行的是原始类的方法，method.invoke执行的是子类的方法</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> methodProxy.invokeSuper(o, objects);<br>        System.out.printf(<span class="hljs-string">&quot;log end time [%s]\n&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>());<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>编写测试类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cglibTest</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">Enhancer</span> <span class="hljs-variable">enhancer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Enhancer</span>();<br>    enhancer.setSuperclass(UserDAO.class);<br>    enhancer.setCallback(<span class="hljs-keyword">new</span> <span class="hljs-title class_">LogInterceptor</span>());<br>    <span class="hljs-type">UserDAO</span> <span class="hljs-variable">proxyDao</span> <span class="hljs-operator">=</span> (UserDAO) enhancer.create();<br>    proxyDao.select();<br>    proxyDao.update();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310191620680.png" alt="image-20231019162025635"></p>
 <blockquote>
 <p>同样可以使用匿名内部类或Lambda表达式简化</p>
@@ -635,5 +623,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

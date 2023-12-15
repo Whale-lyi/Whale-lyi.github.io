@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -190,7 +186,7 @@
 <ul>
 <li>集合业界先进理念，华为30年研发经验，可操作可落地的端到端一站式开发方法论和工具链。</li>
 <li>学习链接:  <a target="_blank" rel="noopener" href="https://support.huaweicloud.com/devcloud/index.html">https://support.huaweicloud.com/devcloud/index.html</a></li>
-<li>集华为研发实践、前沿研发理念、先进研发工具于一体，使能软件企业&#x2F;开发者简单高效地向最终用户交付有价值的软件。</li>
+<li>集华为研发实践、前沿研发理念、先进研发工具于一体，使能软件企业/开发者简单高效地向最终用户交付有价值的软件。</li>
 </ul>
 </blockquote>
 <h2 id="2-开发模式"><a href="#2-开发模式" class="headerlink" title="2. 开发模式"></a>2. 开发模式</h2><p>前、后端不分离的开发模式</p>
@@ -214,23 +210,20 @@
 <li>Spring Cloud 使实施和部署微服务到私有云或公有云变得更加简单</li>
 </ul>
 <h3 id="5-1-Spring-Boot"><a href="#5-1-Spring-Boot" class="headerlink" title="5.1 Spring Boot"></a>5.1 Spring Boot</h3><ul>
-<li><p>简化 Spring Web 开发</p>
-</li>
-<li><p>Spring Boot Starter</p>
-<ul>
+<li>简化 Spring Web 开发</li>
+<li>Spring Boot Starter<ul>
 <li>自动管理依赖、版本号</li>
 </ul>
 </li>
-<li><p>自动配置</p>
-<ul>
+<li>自动配置<ul>
 <li>根据类路径加载的类自动创建需要的Bean</li>
 <li>如: DataSource、JdbcTemplate、视图解析器等</li>
 </ul>
 </li>
 <li><p>Actuator</p>
 <ul>
-<li>&#x2F;autoconfig 使用了哪些自动配置（positiveMatches）</li>
-<li>&#x2F;beans，包含bean依赖关系</li>
+<li>/autoconfig 使用了哪些自动配置（positiveMatches）</li>
+<li>/beans，包含bean依赖关系</li>
 </ul>
 </li>
 <li><p>Spring initializer: 生成初始框架代码</p>
@@ -243,7 +236,7 @@
 <li>Representational State Transfer，表现层状态转移</li>
 <li>资源（Resources），就是网络上的一个实体，标识: URI</li>
 <li>表现层（Representation）: json、xml、html、pdf、excel</li>
-<li>状态转移（State Transfer）: 服务端–客户端</li>
+<li>状态转移（State Transfer）: 服务端—客户端</li>
 <li>HTTP协议的四个操作方式的动词: GET、POST、PUT、DELETE<ul>
 <li>CRUD: Create、Read、Update、Delete</li>
 </ul>
@@ -252,13 +245,13 @@
 </ul>
 <h2 id="7-客户端与服务的交互"><a href="#7-客户端与服务的交互" class="headerlink" title="7. 客户端与服务的交互"></a>7. 客户端与服务的交互</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406140432047.png" alt="image-20230406140432047"></p>
 <h3 id="7-1-请求报文"><a href="#7-1-请求报文" class="headerlink" title="7.1 请求报文"></a>7.1 请求报文</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406140607318.png" alt="image-20230406140607318"></p>
-<h4 id="请求头与请求体"><a href="#请求头与请求体" class="headerlink" title="请求头与请求体"></a>请求头与请求体</h4><p>请求头: 请求头由 key&#x2F;value 对组成，每行为一对，key 和 value 之间通过冒号(:)分割。请求头的作用主要用于通知服务端有关于客户端的请求信息。</p>
+<h4 id="请求头与请求体"><a href="#请求头与请求体" class="headerlink" title="请求头与请求体"></a>请求头与请求体</h4><p>请求头: 请求头由 key/value 对组成，每行为一对，key 和 value 之间通过冒号(:)分割。请求头的作用主要用于通知服务端有关于客户端的请求信息。</p>
 <ul>
 <li>User-Agent: 生成请求的浏览器类型</li>
 <li>Accept: 客户端可识别的响应内容类型列表<ul>
 <li>星号 $\ast$ 用于按范围将类型分组</li>
-<li>$\ast &#x2F; \ast$表示可接受全部类型</li>
-<li>$\text{type}&#x2F;\ast$ 表示可接受 type 类型的所有子类型</li>
+<li>$\ast / \ast$表示可接受全部类型</li>
+<li>$\text{type}/\ast$ 表示可接受 type 类型的所有子类型</li>
 </ul>
 </li>
 <li>Accept-Language: 客户端可接受的自然语言</li>
@@ -331,9 +324,9 @@
 <li><code>new RestTemplats()</code></li>
 <li><code>getForObject()</code>, 指定返回类型，自动转换</li>
 <li><code>getForEntity()</code>，返回 <code>ResponseEntity</code>, 有头部信息，<code>getBody()</code>可以转换</li>
-<li><code>put()</code>，传递的对象存在转换问题，String 转成 test&#x2F;plain，MultiValueMap 转成 x-www-form-urlncoded，对象可能转成json，要看 classpass 类路径下有无库</li>
+<li><code>put()</code>，传递的对象存在转换问题，String 转成 test/plain，MultiValueMap 转成 x-www-form-urlncoded，对象可能转成json，要看 classpass 类路径下有无库</li>
 <li><code>delete()</code>,删除一个资源，一般提供资源路径即可</li>
-<li><code>postForObject()</code>&#x2F;<code>postForEntity()</code>&#x2F;<code>postForLocation()</code><ul>
+<li><code>postForObject()</code>/<code>postForEntity()</code>/<code>postForLocation()</code><ul>
 <li>因为需要返回值</li>
 <li><code>postForLocation</code>，只需要路径，不需要body，路径信息来源头部 Location 信息</li>
 </ul>
@@ -364,7 +357,7 @@
 <li>客户期望快速频繁交付</li>
 <li>性能和可伸缩性</li>
 <li>弹性，应用程序中某个部分的故障或问题不应该导致整个应用程序崩溃</li>
-<li>小型的、简单的和解耦的服务 &#x3D; 可伸缩的、有弹性的和灵活的应用程序</li>
+<li>小型的、简单的和解耦的服务 = 可伸缩的、有弹性的和灵活的应用程序</li>
 </ul>
 <h3 id="9-1-云计算平台"><a href="#9-1-云计算平台" class="headerlink" title="9.1 云计算平台"></a>9.1 云计算平台</h3><ul>
 <li>基础设施即服务（Infrastructure as a Service , IaaS）</li>
@@ -781,5 +774,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

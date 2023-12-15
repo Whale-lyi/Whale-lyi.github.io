@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -242,9 +238,9 @@
 <li><strong>架构模式</strong>表达了软件系统的基本结构组织模式 An architecture pattern <em>“expresses a fundamental structural organization schema for software systems”</em> (Buschmann et al. 1996)</li>
 <li>架构模式的一个重要部分是关注问题和上下文，以及如何在该上下文中解决问题。An essential part of an architecture pattern is its focus on the problem and context as well as how to solve the problem in that context.</li>
 <li>架构风格侧重于架构方法，对特定风格何时有用或无用提供更轻量级的指导。An architecture style focuses on the architecture approach, with more lightweight guidance on when a particular style may or may not be useful.</li>
-<li>架构模式：{问题，上下文} –&gt; 架构方法<br>Architecture pattern: {problem, context} –&gt; architecture approach</li>
+<li>架构模式：{问题，上下文} —&gt; 架构方法<br>Architecture pattern: {problem, context} —&gt; architecture approach</li>
 <li>架构风格：架构方式 Architecture style: architecture approach</li>
-<li>风格描述通常不包括详细的问题&#x2F;上下文信息；架构模式可以。A style description does not generally include detailed problem&#x2F;context information; architecture patterns do.</li>
+<li>风格描述通常不包括详细的问题/上下文信息；架构模式可以。A style description does not generally include detailed problem/context information; architecture patterns do.</li>
 <li>微服务知识定义了element，和element通过什么方式进行交互。</li>
 </ol>
 <h4 id="2-1-3-架构视图-Architectural-Views"><a href="#2-1-3-架构视图-Architectural-Views" class="headerlink" title="2.1.3 架构视图 Architectural Views"></a>2.1.3 架构视图 Architectural Views</h4><ol>
@@ -254,10 +250,8 @@
 <li>不同的视图在不同程度上暴露了不同的质量属性。Different views expose different quality attributes to different degrees.</li>
 </ol>
 <h3 id="2-2-结构视图-Structural-Views"><a href="#2-2-结构视图-Structural-Views" class="headerlink" title="2.2 结构视图 Structural Views"></a>2.2 结构视图 Structural Views</h3><h4 id="2-2-1-模块视图-Module-Views"><a href="#2-2-1-模块视图-Module-Views" class="headerlink" title="2.2.1 模块视图 Module Views"></a>2.2.1 模块视图 Module Views</h4><ol>
-<li><p>模块是提供一组连贯职责的实现单元 A module is an implementation unit that provides a coherent set of responsibility.</p>
-</li>
-<li><p>没有至少一个模块视图，任何软件架构的文档都不可能是完整的 It is unlikely that the documentation of any software architecture can be complete without at least one module view.</p>
-</li>
+<li>模块是提供一组连贯职责的实现单元 A module is an implementation unit that provides a coherent set of responsibility.</li>
+<li>没有至少一个模块视图，任何软件架构的文档都不可能是完整的 It is unlikely that the documentation of any software architecture can be complete without at least one module view.</li>
 <li><p>视图示例</p>
 <ol>
 <li>分解视图 Decomposition view</li>
@@ -273,12 +267,9 @@
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612185439945.png" alt="image-20230612185439945"></p>
 <h4 id="2-2-2-组件连接器视图-Component-Connector-Views"><a href="#2-2-2-组件连接器视图-Component-Connector-Views" class="headerlink" title="2.2.2 组件连接器视图 Component-Connector Views"></a>2.2.2 组件连接器视图 Component-Connector Views</h4><ol>
-<li><p>组件和连接器视图显示具有某些<strong>运行时存在</strong>的元素，例如进程、对象、客户端、服务器和数据存储（称为”组件”）。<br> Component-and-connector views show elements that have some runtime presence, e.g, processes, objects, clients, servers, and data stores (being termed ‘components).</p>
-</li>
-<li><p>附件指示哪些连接器连接到哪些组件 Attachments indicate which connectors are attached to which components.</p>
-</li>
-<li><p>通过将连接器的端点连接到组件的端口来显示附件。Attachment is shown by connecting the endpoints of the connector to the ports of components.</p>
-</li>
+<li>组件和连接器视图显示具有某些<strong>运行时存在</strong>的元素，例如进程、对象、客户端、服务器和数据存储（称为”组件”）。<br> Component-and-connector views show elements that have some runtime presence, e.g, processes, objects, clients, servers, and data stores (being termed ‘components).</li>
+<li>附件指示哪些连接器连接到哪些组件 Attachments indicate which connectors are attached to which components.</li>
+<li>通过将连接器的端点连接到组件的端口来显示附件。Attachment is shown by connecting the endpoints of the connector to the ports of components.</li>
 <li><p>视图示例</p>
 <ol>
 <li>管道和过滤器视图 Pipe-and-filter view</li>
@@ -306,9 +297,8 @@
 </ol>
 </li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612190702523.png" alt="image-20230612190702523" style="zoom:80%;" />
-
-<ol start="5">
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612190702523.png" alt="image-20230612190702523" style="zoom:80%;" /></p>
+<ol>
 <li>Summary of Allocation Views</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612190315504.png" alt="image-20230612190315504"></p>
@@ -319,7 +309,7 @@
 <li>沟通视图 Communication View</li>
 <li>异常(错误处理)视图 Exception view (error-handling) view</li>
 </ol>
-<h3 id="2-4-文档化视图-Documenting-Views"><a href="#2-4-文档化视图-Documenting-Views" class="headerlink" title="2.4 文档化视图 Documenting Views"></a>2.4 文档化视图 Documenting Views</h3><h4 id="2-4-1-使用-3-步选择视图-3-Step-for-Choosing-Views"><a href="#2-4-1-使用-3-步选择视图-3-Step-for-Choosing-Views" class="headerlink" title="2.4.1 使用 3 步选择视图 3-Step for Choosing Views"></a>2.4.1 使用 3 步选择视图 3-Step for Choosing Views</h4><p>步骤 1：构建<strong>涉众&#x2F;视图表</strong> Step-1: Build a stakeholder&#x2F;view table</p>
+<h3 id="2-4-文档化视图-Documenting-Views"><a href="#2-4-文档化视图-Documenting-Views" class="headerlink" title="2.4 文档化视图 Documenting Views"></a>2.4 文档化视图 Documenting Views</h3><h4 id="2-4-1-使用-3-步选择视图-3-Step-for-Choosing-Views"><a href="#2-4-1-使用-3-步选择视图-3-Step-for-Choosing-Views" class="headerlink" title="2.4.1 使用 3 步选择视图 3-Step for Choosing Views"></a>2.4.1 使用 3 步选择视图 3-Step for Choosing Views</h4><p>步骤 1：构建<strong>涉众/视图表</strong> Step-1: Build a stakeholder/view table</p>
 <p>步骤 2：<strong>合并视图</strong> Step-2: Combine views</p>
 <ul>
 <li><p>2.1: 识别上表中的边缘视图<br>2.1: Identify marginal views in the above table</p>
@@ -330,7 +320,7 @@
 <p>步骤 3：确定优先级和阶段 Step-3: Prioritize and stage</p>
 <ul>
 <li>分解视图 decomposition view</li>
-<li>80&#x2F;20原则 80&#x2F;20 principle</li>
+<li>80/20原则 80/20 principle</li>
 <li>按顺序完成所有视图？complete all views in sequence?</li>
 </ul>
 <h4 id="2-4-2-涉众和文档-Stakeholder-and-Documentation"><a href="#2-4-2-涉众和文档-Stakeholder-and-Documentation" class="headerlink" title="2.4.2 涉众和文档 Stakeholder and Documentation"></a>2.4.2 涉众和文档 Stakeholder and Documentation</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612191431955.png" alt="image-20230612191431955"></p>
@@ -759,5 +749,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -219,16 +215,16 @@
 <h4 id="nacos在k8s上的部署"><a href="#nacos在k8s上的部署" class="headerlink" title="nacos在k8s上的部署"></a>nacos在k8s上的部署</h4><ul>
 <li>下载脚本：<a target="_blank" rel="noopener" href="https://github.com/nacos-group/nacos-k8s">https://github.com/nacos-group/nacos-k8s</a></li>
 <li>本机的hosts文件里配置域名<ul>
-<li>127.0.0.1 <a target="_blank" rel="noopener" href="http://www.nacos.com/">www.nacos.com</a></li>
+<li>127.0.0.1 www.nacos.com</li>
 </ul>
 </li>
-<li>参考我提供的文件，修改文件 .&#x2F;deploy&#x2F;nacos&#x2F;nacos-quick-start.yaml，改成 standalone 模式</li>
+<li>参考我提供的文件，修改文件 ./deploy/nacos/nacos-quick-start.yaml，改成 standalone 模式</li>
 <li>部署<ul>
 <li><code>kubectl create -f ./deploy/mysql/mysql-local.yaml</code></li>
 <li><code>kubectl create -f ./deploy/nacos/nacos-quick-start.yaml</code></li>
 </ul>
 </li>
-<li>通过 ingress 访问：<a target="_blank" rel="noopener" href="http://www.nacos.com/nacos%EF%BC%8C%E7%94%A8%E6%88%B7%E5%90%8D%EF%BC%9Anacos%EF%BC%8C%E5%AF%86%E7%A0%81%EF%BC%9Anacos">www.nacos.com/nacos，用户名：nacos，密码：nacos</a></li>
+<li>通过 ingress 访问：www.nacos.com/nacos，用户名：nacos，密码：nacos</li>
 <li>k8s集群内访问，服务名：nacos-headless，端口号：8848</li>
 <li>去部署<ul>
 <li><code>kubectl delete -f ./deploy/nacos/nacos-quick-start.yaml</code></li>
@@ -237,9 +233,9 @@
 </li>
 </ul>
 <h4 id="测试-配置数据更新获取"><a href="#测试-配置数据更新获取" class="headerlink" title="测试-配置数据更新获取"></a>测试-配置数据更新获取</h4><ul>
-<li><p><code>curl -X POST &quot;http://www.nacos.com/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=HelloWorld&quot; </code></p>
+<li><p><code>curl -X POST &quot;http://www.nacos.com/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&amp;content=HelloWorld&quot;</code></p>
 </li>
-<li><p><code>curl -X GET &quot;http://www.nacos.com/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&quot; </code></p>
+<li><p><code>curl -X GET &quot;http://www.nacos.com/nacos/v1/cs/configs?dataId=nacos.cfg.dataId&amp;group=test&quot;</code></p>
 </li>
 <li><p>在pod中测试</p>
 <ul>
@@ -277,14 +273,10 @@
 </li>
 </ul>
 <h3 id="4-简单的例子"><a href="#4-简单的例子" class="headerlink" title="4. 简单的例子"></a>4. 简单的例子</h3><h4 id="Spring-Boot"><a href="#Spring-Boot" class="headerlink" title="Spring Boot"></a>Spring Boot</h4><ul>
-<li><p>nacos的官方例子代码：<a target="_blank" rel="noopener" href="https://github.com/nacos-group/nacos-examples.git">https://github.com/nacos-group/nacos-examples.git</a></p>
-</li>
-<li><p>代码路径：nacos-examples\nacos-spring-boot-example\nacos-spring-boot-config-example</p>
-</li>
-<li><p>依赖：nacos-config-spring-boot-starter、nacos-config-spring-boot-actuator</p>
-</li>
-<li><p>使用到的注解：<code>@NacosPropertySource</code>、<code>@NacosValue</code></p>
-</li>
+<li>nacos的官方例子代码：<a target="_blank" rel="noopener" href="https://github.com/nacos-group/nacos-examples.git">https://github.com/nacos-group/nacos-examples.git</a></li>
+<li>代码路径：nacos-examples\nacos-spring-boot-example\nacos-spring-boot-config-example</li>
+<li>依赖：nacos-config-spring-boot-starter、nacos-config-spring-boot-actuator</li>
+<li>使用到的注解：<code>@NacosPropertySource</code>、<code>@NacosValue</code></li>
 <li><p>nacos上配置数据，可手工配置，可实时更新</p>
 <ul>
 <li><code>curl -X POST &quot;http://www.nacos.com/nacos/v1/cs/configs?dataId=example&amp;group=DEFAULT_GROUP&amp;content=useLocalCache=true&quot;</code></li>
@@ -295,8 +287,7 @@
 <li><code>curl -X GET &quot;http://localhost:8080/config/get&quot;</code></li>
 </ul>
 </li>
-<li><p>信息查询</p>
-<ul>
+<li>信息查询<ul>
 <li><code>curl -X GET &quot;http://localhost:8080/actuator/health&quot;|python -m json.tool</code></li>
 <li><code>curl -X GET &quot;http://localhost:8080/actuator/nacos-config&quot; |python -m json.tool</code></li>
 </ul>
@@ -325,7 +316,7 @@
 </ul>
 <h4 id="创建适用不同环境的属性数据"><a href="#创建适用不同环境的属性数据" class="headerlink" title="创建适用不同环境的属性数据"></a>创建适用不同环境的属性数据</h4><ul>
 <li><code>@Profile</code></li>
-<li>-Dspring.profiles.active&#x3D;xxx</li>
+<li>-Dspring.profiles.active=xxx</li>
 <li>命名约定：应用程序名称-环境名称.yml</li>
 </ul>
 <h4 id="dataId-的完整格式"><a href="#dataId-的完整格式" class="headerlink" title="dataId 的完整格式"></a>dataId 的完整格式</h4><ul>
@@ -344,14 +335,15 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408131529514.png" alt="image-20230408131529514"></p>
 <h4 id="敏感信息配置"><a href="#敏感信息配置" class="headerlink" title="敏感信息配置"></a>敏感信息配置</h4><ul>
-<li><p>属性加密：对称加密（共享密钥）、非对称加密（公钥&#x2F;私钥）</p>
+<li><p>属性加密：对称加密（共享密钥）、非对称加密（公钥/私钥）</p>
 </li>
 <li><p>使用共享密钥加密后，属性值的前面加上 {cipher} 前缀</p>
 </li>
 <li><p>配置共享密钥：设置环境变量 ENCRYPT_KEY</p>
 </li>
 <li><p>添加以下依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.security<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-security-rsa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.security<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-security-rsa<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 <h2 id="基于NACOS的服务注册与发现"><a href="#基于NACOS的服务注册与发现" class="headerlink" title="基于NACOS的服务注册与发现"></a>基于NACOS的服务注册与发现</h2><h3 id="1-服务"><a href="#1-服务" class="headerlink" title="1. 服务"></a>1. 服务</h3><h4 id="nacos练习"><a href="#nacos练习" class="headerlink" title="nacos练习"></a>nacos练习</h4><ul>
 <li><p>服务注册</p>
@@ -384,10 +376,8 @@
 <li>官网文档：<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/README-zh.md">https://github.com/alibaba/spring-cloud-alibaba/blob/2021.x/README-zh.md</a></li>
 <li>例子代码：<a target="_blank" rel="noopener" href="https://github.com/alibaba/spring-cloud-alibaba/tree/2.2.x/spring-cloud-alibaba-examples">https://github.com/alibaba/spring-cloud-alibaba/tree/2.2.x/spring-cloud-alibaba-examples</a></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140757600.png" alt="image-20230408140757600" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140830205.png" alt="image-20230408140830205" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140757600.png" alt="image-20230408140757600" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140830205.png" alt="image-20230408140830205" style="zoom: 67%;" /></p>
 <h3 id="3-nacos实现服务注册与发现"><a href="#3-nacos实现服务注册与发现" class="headerlink" title="3. nacos实现服务注册与发现"></a>3. nacos实现服务注册与发现</h3><h4 id="使用到的starter依赖"><a href="#使用到的starter依赖" class="headerlink" title="使用到的starter依赖"></a>使用到的starter依赖</h4><ul>
 <li>服务配置：com.alibaba.cloud，spring-cloud-starter-alibaba-nacos-config</li>
 <li>服务注册：com.alibaba.cloud，spring-cloud-starter-alibaba-nacos-discovery</li>
@@ -395,7 +385,6 @@
 <li>简化客户端调用：org.springframework.cloud，spring-cloud-starter-openfeign</li>
 </ul>
 <h4 id="bootstrap-yml配置nacos"><a href="#bootstrap-yml配置nacos" class="headerlink" title="bootstrap.yml配置nacos"></a>bootstrap.yml配置nacos</h4><figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">spring:</span><br>  <span class="hljs-attr">cloud:</span><br>    <span class="hljs-attr">nacos:</span><br>      <span class="hljs-attr">config:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-string">nacos-headless:8848</span><br>        <span class="hljs-attr">file-extension:</span> <span class="hljs-string">yml</span><br>      <span class="hljs-attr">discovery:</span><br>        <span class="hljs-attr">server-addr:</span> <span class="hljs-string">nacos-headless:8848</span><br></code></pre></td></tr></table></figure>
-
 <h4 id="使用到的注解"><a href="#使用到的注解" class="headerlink" title="使用到的注解"></a>使用到的注解</h4><ul>
 <li><code>@EnableDiscoveryClient</code></li>
 <li><code>@EnableFeignClients</code></li>
@@ -812,5 +801,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

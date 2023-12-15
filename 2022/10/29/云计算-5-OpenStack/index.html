@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -201,8 +197,7 @@
 </li>
 <li><p>既是一个<code>开源</code>软件，也是一个开源社区，里面包含很多开源子项目</p>
 </li>
-<li><p>提供了一个部署云的操作平台和工具集</p>
-<ul>
+<li>提供了一个部署云的操作平台和工具集<ul>
 <li>用OpenStack易于构建虚拟计算或存储服务云，可为公有、私有云(无论大小)提供<code>可扩展、灵活</code>的云计算</li>
 </ul>
 </li>
@@ -216,7 +211,7 @@
 <p><strong>灵活(Flexible)</strong></p>
 <ul>
 <li>大量使用插件化方式进行架构设计与实现</li>
-<li>不使用任何不可替代的私有&#x2F;商业组件</li>
+<li>不使用任何不可替代的私有/商业组件</li>
 </ul>
 <p><strong>可扩展(Scalable)</strong></p>
 <ul>
@@ -263,7 +258,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004704248.png" alt="image-20221029004704248"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029004720874.png" alt="image-20221029004720874"></p>
-<h4 id="1-2-2-网络设计"><a href="#1-2-2-网络设计" class="headerlink" title="1.2.2 网络设计"></a>1.2.2 网络设计</h4><p>单台计算机设备：CPU、内存、硬盘、总线？ &lt;&#x3D;&#x3D;&gt; 云数据中心</p>
+<h4 id="1-2-2-网络设计"><a href="#1-2-2-网络设计" class="headerlink" title="1.2.2 网络设计"></a>1.2.2 网络设计</h4><p>单台计算机设备：CPU、内存、硬盘、总线？ &lt;==&gt; 云数据中心</p>
 <p><strong>所有组件分布在四种节点上</strong>：<code>云控制器</code>、<code>网络节点</code>、<code>计算节点</code>、<code>存储节点</code>；<strong>网络连接</strong></p>
 <ul>
 <li>控制节点中封装了很多Openstack的服务</li>
@@ -325,8 +320,7 @@
 <p>所有服务不一定要部署在同一台物理设备</p>
 <p>运行每一类服务的都可以是一个独立的集群</p>
 <p>各服务的Restful API</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029135425428.png" alt="image-20221029135425428" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029135425428.png" alt="image-20221029135425428" style="zoom: 67%;" /></p>
 <h3 id="2-2-物理部署"><a href="#2-2-物理部署" class="headerlink" title="2.2 物理部署"></a>2.2 物理部署</h3><ul>
 <li>Openstack采用 无中心结构、节点无本地状态</li>
 <li>控制器(除基础架构服务)使用对称高性能集群<ul>
@@ -410,7 +404,7 @@
 <h3 id="3-2-核心：Hypervisor"><a href="#3-2-核心：Hypervisor" class="headerlink" title="3.2 核心：Hypervisor"></a>3.2 核心：Hypervisor</h3><p>Nova-compute通过API server控制节点上的Hypervisor</p>
 <p>支持多种Hypervisor，通过配置文件设置选择哪一个Hypervisor</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141458969.png" alt="image-20221029141458969"></p>
-<h3 id="3-3-Nova相关概念"><a href="#3-3-Nova相关概念" class="headerlink" title="3.3 Nova相关概念"></a>3.3 Nova相关概念</h3><p>Nova中对主机有一个层次划分—-高于一台物理主机</p>
+<h3 id="3-3-Nova相关概念"><a href="#3-3-Nova相关概念" class="headerlink" title="3.3 Nova相关概念"></a>3.3 Nova相关概念</h3><p>Nova中对主机有一个层次划分——高于一台物理主机</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141826800.png" alt="image-20221029141826800"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141917707.png" alt="image-20221029141917707"></p>
 <h3 id="3-4-Nova操作"><a href="#3-4-Nova操作" class="headerlink" title="3.4 Nova操作"></a>3.4 Nova操作</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029141938319.png" alt="image-20221029141938319"></p>
@@ -426,7 +420,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029142247333.png" alt="image-20221029142247333"></p>
 <h2 id="4-存储节点：Swift、Cinder"><a href="#4-存储节点：Swift、Cinder" class="headerlink" title="4 存储节点：Swift、Cinder"></a>4 存储节点：Swift、Cinder</h2><h3 id="4-1-对象存储Swift"><a href="#4-1-对象存储Swift" class="headerlink" title="4.1 对象存储Swift"></a>4.1 对象存储Swift</h3><p>数据与其副本作为二进制大对象存储在对象存储服务器上</p>
-<p>对象存储没有文件存储的层次结构，对象存储在扁平的命名空间—-<code>一种特殊的文件系统</code></p>
+<p>对象存储没有文件存储的层次结构，对象存储在扁平的命名空间——<code>一种特殊的文件系统</code></p>
 <p>使用REST或SOAP等API访问对象存储，而不是文件协议</p>
 <p>不适用于高性能要求以及经常更改的结构话化数据，例如数据库</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029143040123.png" alt="image-20221029143040123"></p>
@@ -469,7 +463,7 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160422687.png" alt="image-20221029160422687"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160445194.png" alt="image-20221029160445194"></p>
 <h3 id="5-3-细节"><a href="#5-3-细节" class="headerlink" title="5.3 细节"></a>5.3 细节</h3><p>网络节点细节</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160514440.png"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160514440.png" alt=""></p>
 <p>计算节点上的网络配置细节</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160548839.png" alt="image-20221029160548839"></p>
 <h3 id="5-4-Distributed-Virtual-Routing-DVR"><a href="#5-4-Distributed-Virtual-Routing-DVR" class="headerlink" title="5.4 Distributed Virtual Routing (DVR)"></a>5.4 Distributed Virtual Routing (DVR)</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029160641521.png" alt="image-20221029160641521"></p>
@@ -484,7 +478,7 @@
 <li>让研发（Development）和运维（Operations）一体化，让团队从业务需求出发，向着同一个目标前进。</li>
 </ul>
 <p>DevOps 是一种软件研发管理的思想，方法论，追求的是一种没有隔阂的理想的研发协作的状态，可能涉及到的角色有开发、测试、产品、项目管理、运维等等。</p>
-<p>DevOps（Development和Operations的组合）是一组过程、方法与系统的统称，用于促进开发（应用程序&#x2F;软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。</p>
+<p>DevOps（Development和Operations的组合）是一组过程、方法与系统的统称，用于促进开发（应用程序/软件工程）、技术运营和质量保障（QA）部门之间的沟通、协作与整合。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029161012546.png" alt="image-20221029161012546"></p>
 <h3 id="6-2-DevOps和Openstack"><a href="#6-2-DevOps和Openstack" class="headerlink" title="6.2 DevOps和Openstack"></a>6.2 DevOps和Openstack</h3><p>要求开发人员、网络工程师和运维人员必须相互协作，来部署、运维和维护OpenStack云基础架构</p>
 <p>OpenStack和DevOps结合</p>
@@ -908,5 +902,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

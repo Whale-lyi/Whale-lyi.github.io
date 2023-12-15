@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -219,16 +215,16 @@
 <p>但是随着单台服务器无法满足大规模数据存储，使用集群替代单台服务器，ACID难以得到高效的保证</p>
 <h4 id="1-2-2-CAP理论"><a href="#1-2-2-CAP理论" class="headerlink" title="1.2.2 CAP理论"></a>1.2.2 CAP理论</h4><p>CAP理论：一个<strong>分布式系统</strong>最多能够同时满足一致性(Consistency)、可用性(Availability)、分区容错性(Partition tolerance)中的两项</p>
 <ul>
-<li><p>一致性—-一次操作之后，所有节点同一时间的数据完全一致。从客户端角度看，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
+<li><p>一致性——一次操作之后，所有节点同一时间的数据完全一致。从客户端角度看，更新过的数据在不同进程如何获取的不同策略，决定了不同的一致性。</p>
 <blockquote>
 <p>强一致性：更新过的数据，后续访问都能看到</p>
 <p>弱一致性：能容忍后续的部分或者全部访问不到</p>
 <p>最终一致性：如果经过一段时间后要求能访问到更新后的数据，称为最终一致性</p>
 </blockquote>
 </li>
-<li><p>可用性—-服务一直可用且在正常的响应时间内。</p>
+<li><p>可用性——服务一直可用且在正常的响应时间内。</p>
 </li>
-<li><p>分区容错性—-分布式系统遇到某节点或网络分区故障时，仍然能够对外提供满足一致性和可用性的服务。</p>
+<li><p>分区容错性——分布式系统遇到某节点或网络分区故障时，仍然能够对外提供满足一致性和可用性的服务。</p>
 </li>
 </ul>
 <p>阐述与证明</p>
@@ -240,8 +236,7 @@
 <li>AP：导致全局数据不一致，但是高可用</li>
 </ul>
 <p><code>对于大多数大型互联网服务而言，节点故障、网络故障是常态，均采取保证AP的策略，对于一致性退而求其次，只保证最终一致性</code></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029163737165.png" alt="image-20221029163737118" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029163737165.png" alt="image-20221029163737118" style="zoom:67%;" /></p>
 <h4 id="1-2-3-BASE理论"><a href="#1-2-3-BASE理论" class="headerlink" title="1.2.3 BASE理论"></a>1.2.3 BASE理论</h4><p>BASE理论——追求最终一致性</p>
 <ul>
 <li>Basically Available：基本可用-系统出现故障时，允许损失部分可用性，保证核心可用</li>
@@ -250,7 +245,7 @@
 </ul>
 <h4 id="1-2-4-一致性算法"><a href="#1-2-4-一致性算法" class="headerlink" title="1.2.4 一致性算法"></a>1.2.4 一致性算法</h4><p>一个典型的场景是，在一个分布式数据库系统中，如果各节点的初始状态一致，每个节点执行相同的操作序列，那么他们最后能得到一个一致的状态。为保证每个节点执行相同的命令序列，需要在每一条指令上执行一个“一致性算法”以保证每个节点看到的指令一致。</p>
 <ul>
-<li>一台机器中多个进程&#x2F;线程达成数据一致；</li>
+<li>一台机器中多个进程/线程达成数据一致；</li>
 <li>分布式文件系统或者分布式数据库中多客户端并发读写数据；</li>
 <li>分布式存储中多个副本响应读写请求的一致性。</li>
 </ul>
@@ -270,8 +265,7 @@
 <li>如果没有收到过提议，则返回空</li>
 </ul>
 </li>
-<li><p>学习者Learner：不参与决策，只是从决策过程学习到最终的一致提案的Value</p>
-</li>
+<li>学习者Learner：不参与决策，只是从决策过程学习到最终的一致提案的Value</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029164103787.png" alt="image-20221029164103787"></p>
 <p>过程：分为三个阶段</p>
@@ -293,7 +287,7 @@
 <ul>
 <li><p>初始化：计算服务器在环上位置；使用：计算数据在环上位置。</p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://www.enjoyalgorithms.com/blog/consistent-hashing-in-system-design">https://www.enjoyalgorithms.com/blog/consistent-hashing-in-system-design</a></p>
+<li><p><a target="_blank" rel="noopener" href="https://www.enjoyalgorithms.com/blog/consistent-hashing-in-system-design">https://www.enjoyalgorithms.com/blog/consistent-hashing-in-system-design</a> </p>
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029164406521.png" alt="image-20221029164406521"></p>
@@ -310,7 +304,7 @@
 </ul>
 <p>开放性</p>
 <ul>
-<li>开放性决定给了一个系统是否具备自我扩展和与其他系统集成的能力；开放的接口+接口遵循协议&#x3D;更好</li>
+<li>开放性决定给了一个系统是否具备自我扩展和与其他系统集成的能力；开放的接口+接口遵循协议=更好</li>
 </ul>
 <p>并发处理能力</p>
 <ul>
@@ -446,7 +440,7 @@
 <p>Spark是建立在RDD(Resilient Distributed Datasets，弹性分布式数据集)之上的</p>
 <p>RDD使得Spark可以用一致的方式处理大数据的不同应用场景</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221029172559187.png" alt="image-20221029172559187"></p>
-<p>解决的具体问题—-不能基于内存共享数据，反复读写磁盘</p>
+<p>解决的具体问题——不能基于内存共享数据，反复读写磁盘</p>
 <ul>
 <li>Hadoop的MapReduce对迭代式算法支持的效率不高，如图算法和机器学习算法</li>
 <li>交互式数据挖掘工具中反复查询一个数据子集</li>
@@ -480,7 +474,7 @@
 <li><p>存储层用来实际与设备交互，读写内存、磁盘、堆外内存，为数据在远程节点生成副本</p>
 </li>
 </ul>
-<p>Shuffle前后必不可少地需要网络I&#x2F;O，通过数据序列化方法和压缩技术进行效率优化</p>
+<p>Shuffle前后必不可少地需要网络I/O，通过数据序列化方法和压缩技术进行效率优化</p>
 <ul>
 <li>Spark中序列化方法和压缩算法的配置</li>
 </ul>
@@ -566,7 +560,7 @@
 <li><p>评价指标</p>
 <ul>
 <li><p>性能：吞吐率-在某一段时间可以处理的请求总数；系统响应时间-从某个请求发出到收到结果的时间</p>
-<p>&#x3D;&#x3D;&gt;  性能分析-性能优化、负载均衡、数据复制、故障检测</p>
+<p>==&gt;  性能分析-性能优化、负载均衡、数据复制、故障检测</p>
 </li>
 <li><p>可用性：指在系统面对各种异常时可以提供的正常服务能力；用停止服务的时间和正常时间比重度量</p>
 </li>
@@ -941,5 +935,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

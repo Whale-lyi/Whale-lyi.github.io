@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -197,7 +193,7 @@
 </li>
 <li><strong>Hystrix是什么</strong><ul>
 <li>Hystrix是一个用于处理分布式系统的<strong>延迟</strong>和<strong>容错</strong>的开源库，在分布式系统里，许多依赖不可避免的会调用失败，比如超时、异常等，Hystrix能够保证在一个依赖出问题的情况下，<strong>不会导致整体服务失败，避免级联故障，以提高分布式系统的弹性</strong>。</li>
-<li>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控**(类似熔断保险丝)**，向调用方返回一个符合预期的、可处理的备选响应(FallBack)，而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</li>
+<li>“断路器”本身是一种开关装置，当某个服务单元发生故障之后，通过断路器的故障监控<strong>(类似熔断保险丝)</strong>，向调用方返回一个符合预期的、可处理的备选响应(FallBack)，而不是长时间的等待或者抛出调用方无法处理的异常，这样就保证了服务调用方的线程不会被长时间、不必要地占用，从而避免了故障在分布式系统中的蔓延，乃至雪崩。</li>
 </ul>
 </li>
 </ul>
@@ -213,7 +209,7 @@
 </li>
 <li><p>服务熔断触发服务降级</p>
 </li>
-<li><p>线程池&#x2F;信号量打满也会导致服务降级</p>
+<li><p>线程池/信号量打满也会导致服务降级</p>
 </li>
 </ul>
 </li>
@@ -245,7 +241,6 @@
 <li><p>业务类</p>
 <p>service</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Service</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentService</span> &#123;<br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">paymentInfo_OK</span><span class="hljs-params">(Integer id)</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;线程池:  &quot;</span>+Thread.currentThread().getName()+<span class="hljs-string">&quot;  paymentInfo_OK,id:  &quot;</span>+id+<span class="hljs-string">&quot;\t&quot;</span>+<span class="hljs-string">&quot;O(∩_∩)O哈哈~&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">paymentInfo_TimeOut</span><span class="hljs-params">(Integer id)</span><br>    &#123;<br>        <span class="hljs-keyword">try</span> &#123; TimeUnit.MILLISECONDS.sleep(<span class="hljs-number">3000</span>); &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123; e.printStackTrace(); &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;线程池:  &quot;</span>+Thread.currentThread().getName()+<span class="hljs-string">&quot; id:  &quot;</span>+id+<span class="hljs-string">&quot;\t&quot;</span>+<span class="hljs-string">&quot;O(∩_∩)O哈哈~&quot;</span>+<span class="hljs-string">&quot;  耗时(秒): 3&quot;</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>controller</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentController</span><br>&#123;<br>    <span class="hljs-meta">@Resource</span><br>    <span class="hljs-keyword">private</span> PaymentService paymentService;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;server.port&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String serverPort;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/payment/hystrix/ok/&#123;id&#125;&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">paymentInfo_OK</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span><br>    &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> paymentService.paymentInfo_OK(id);<br>        log.info(<span class="hljs-string">&quot;*****result: &quot;</span>+result);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br><br>    <span class="hljs-meta">@GetMapping(&quot;/payment/hystrix/timeout/&#123;id&#125;&quot;)</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">paymentInfo_TimeOut</span><span class="hljs-params">(<span class="hljs-meta">@PathVariable(&quot;id&quot;)</span> Integer id)</span><br>    &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> paymentService.paymentInfo_TimeOut(id);<br>        log.info(<span class="hljs-string">&quot;*****result: &quot;</span>+result);<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
@@ -622,5 +617,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

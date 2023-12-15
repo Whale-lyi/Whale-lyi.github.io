@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -162,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-11-18 22:07:24
+          2023-12-15 19:56:12
         </span>
         
               <span class="post-categories">
@@ -186,50 +182,42 @@
       <div class="markdown-body">
         <h1 id="Machine-Learning"><a href="#Machine-Learning" class="headerlink" title="Machine Learning"></a>Machine Learning</h1><p>Looking for Function</p>
 <p><strong>机器学习就是让机器具备寻找一个函数的能力</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161415878.png" alt="image-20231116141532801" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161415878.png" alt="image-20231116141532801" style="zoom:67%;" /></p>
 <p>Different types of Functions：</p>
 <p><strong>Regression(回归)</strong>: 函数输出一个数值</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161418483.png" alt="image-20231116141804449" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161418483.png" alt="image-20231116141804449" style="zoom:80%;" /></p>
 <p><strong>Classification(分类)</strong>: 函数从设定好的选项选择出正确的一个, 即分类</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161419365.png" alt="image-20231116141953310" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161418803.png" alt="image-20231116141815757" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161419365.png" alt="image-20231116141953310" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161418803.png" alt="image-20231116141815757" style="zoom:80%;" /></p>
 <p><strong>Structured Learning</strong>: 产生一些有结构的物件(让机器学会创造)</p>
 <ul>
 <li><em>create</em> something with structure(image, document)</li>
 </ul>
 <h2 id="1-A-Case-Study"><a href="#1-A-Case-Study" class="headerlink" title="1 A Case Study"></a>1 A Case Study</h2><p>机器如何找到一个函数，以预测YouTube频道流量为例，分为三个步骤</p>
-<h3 id="Function-with-Unknown-Parameters"><a href="#Function-with-Unknown-Parameters" class="headerlink" title="Function with Unknown Parameters"></a>Function with Unknown Parameters</h3><p>写出带有未知参数的表达式：$y &#x3D; b + wx_1$ (Model) (基于 domain knowledge 进行猜测)</p>
+<h3 id="Function-with-Unknown-Parameters"><a href="#Function-with-Unknown-Parameters" class="headerlink" title="Function with Unknown Parameters"></a>Function with Unknown Parameters</h3><p>写出带有未知参数的表达式：$y = b + wx_1$ (Model) (基于 domain knowledge 进行猜测)</p>
 <ul>
 <li><p>$y$: 明日的观看人数</p>
 </li>
 <li><p>$x_1$: 今日的观看人数 (feature)</p>
 </li>
-<li><p>$w, b$: 未知参数 (weight, bias)</p>
-</li>
+<li>$w, b$: 未知参数 (weight, bias)</li>
 </ul>
 <h3 id="Define-Loss-from-Training-Data"><a href="#Define-Loss-from-Training-Data" class="headerlink" title="Define Loss from Training Data"></a>Define Loss from Training Data</h3><p>Loss 也是一个函数 $L(b, w)$, 输入是 Model 里的参数</p>
 <ul>
 <li>用来评价 $b, w$ 取值的好坏</li>
 <li>how good a set of values is</li>
 </ul>
-<p>例如 $L(0.5k, 1)\quad y&#x3D;0.5k+1x_1$</p>
+<p>例如 $L(0.5k, 1)\quad y=0.5k+1x_1$</p>
 <ul>
 <li>从训练集中已有的数据计算Loss</li>
 <li>真实值为 label</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161446486.png" alt="image-20231116144546403" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161448781.png" alt="image-20231116144832738" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161446486.png" alt="image-20231116144546403" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161448781.png" alt="image-20231116144832738" style="zoom:80%;" /></p>
 <p>此处使用 MAE 计算 $e$, 根据情况不同选择不同方法</p>
 <p>最终计算出等高线图 Error Surface</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161452449.png" alt="image-20231116145213367" style="zoom:80%;" />
-
-<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><p>$w^{\ast}, b^{\ast} &#x3D; arg \min\limits_{w, b}L $</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161452449.png" alt="image-20231116145213367" style="zoom:80%;" /></p>
+<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><p>$w^{\ast}, b^{\ast} = arg \min\limits_{w, b}L $</p>
 <ul>
 <li>找到能让损失函数值最小的参数</li>
 </ul>
@@ -237,7 +225,7 @@
 <ol>
 <li><p>随机选取初始值 $w_0$</p>
 </li>
-<li><p>计算在 $w&#x3D;w_0$ 的时候, $w$ 这个参数对 $L$ 的微分是多少, 即斜率</p>
+<li><p>计算在 $w=w_0$ 的时候, $w$ 这个参数对 $L$ 的微分是多少, 即斜率</p>
 </li>
 <li><p>不断根据微分(梯度)的方向，改变参数的值, 斜率为负就增加 $w$, 反之减少</p>
 </li>
@@ -247,7 +235,7 @@
 <ul>
 <li><p>斜率的大小</p>
 </li>
-<li><p>学习率的大小**(超参数)**</p>
+<li><p>学习率的大小<strong>(超参数)</strong></p>
 <ul>
 <li>hyperparameters: 使用者自己决定的值</li>
 </ul>
@@ -262,31 +250,26 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161506114.png" alt="img" style="zoom: 50%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161506114.png" alt="img" style="zoom: 50%;" /></p>
 <p><strong>推广到多个参数</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161518257.png" alt="image-20231116151830209" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161519928.png" alt="image-20231116151951839" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161518257.png" alt="image-20231116151830209" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161519928.png" alt="image-20231116151951839" style="zoom:80%;" /></p>
 <h2 id="2-Linear-Model-线性模型"><a href="#2-Linear-Model-线性模型" class="headerlink" title="2 Linear Model(线性模型)"></a>2 Linear Model(线性模型)</h2><p>根据周期性，修改模型 -&gt; 考虑前7天，甚至更多天的值</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161722481.png" alt="image-20231116172203430" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311161722481.png" alt="image-20231116172203430" style="zoom:80%;" /></p>
 <h3 id="2-1-Piecewise-Linear-Curve-分段线性曲线"><a href="#2-1-Piecewise-Linear-Curve-分段线性曲线" class="headerlink" title="2.1 Piecewise Linear Curve(分段线性曲线)"></a>2.1 Piecewise Linear Curve(分段线性曲线)</h3><p>线性模型太过简单，有很多限制，称为 <strong>Model Bias</strong>，需要更复杂的模型</p>
 <p>红色的曲线可以看作是 一个常数再加上一群 Hard Sigmoid 函数。Hard Sigmoid 函数的特性是当 x 轴的值小于某一个阈值且大于另外一个定值阈值的时候，中间有一个斜坡。</p>
 <p>所有红色的线，即分段线性曲线（piecewise linear curve）可以看作是一个常数项加一大堆的蓝色函数（Hard Sigmoid）</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182125237.png" alt="image-20231118212543166" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182125237.png" alt="image-20231118212543166" style="zoom:80%;" /></p>
 <p>即使 x 跟 y 的关系不是分段线性曲线，也可以在曲线上面，先取一些点，再把这些点连起来，变成一个分段线性曲线。如果点取的够多或点取的位置适当，分段线性曲线就可以逼近这一个连续的曲线</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182137986.png" alt="image-20231118213707939" style="zoom:80%;" />
-
-<p>所以可以用分段线性曲线去逼近任何的连续的曲线，直接写 Hard Sigmoid 不是很容易，但是可以用 Sigmoid 函数来逼近 Hard Sigmoid，Sigmoid 函数的表达式为<br>$$<br>y&#x3D;c\frac{1}{1+e^{-(b+wx_1)}}<br>$$<br>简写为<br>$$<br>y&#x3D;\textcolor{red}{c}\ sigmoid(b+wx_1)<br>$$</p>
-<p>当 x 趋近于无穷大，y 趋近于 c；x 趋近于无穷小，y 趋近于 0</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182144327.png" alt="image-20231118214416286" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182137986.png" alt="image-20231118213707939" style="zoom:80%;" /></p>
+<p>所以可以用分段线性曲线去逼近任何的连续的曲线，直接写 Hard Sigmoid 不是很容易，但是可以用 Sigmoid 函数来逼近 Hard Sigmoid，Sigmoid 函数的表达式为</p>
+<script type="math/tex; mode=display">
+y=c\frac{1}{1+e^{-(b+wx_1)}}</script><p>简写为</p>
+<script type="math/tex; mode=display">
+y=\textcolor{red}{c}\ sigmoid(b+wx_1)</script><p>当 x 趋近于无穷大，y 趋近于 c；x 趋近于无穷小，y 趋近于 0</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182144327.png" alt="image-20231118214416286" style="zoom:80%;" /></p>
 <p>调整这里的 b、w 和 c 可以制造各种不同形状的 Sigmoid 函数，用各种不同形状的 Sigmoid 函数去逼近 Hard Sigmoid 函数。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182207911.png" alt="image-20231118220717862" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182207911.png" alt="image-20231118220717862" style="zoom:80%;" /></p>
 
       </div>
       
@@ -302,7 +285,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-11-18 22:07:24
+              2023-12-15 19:56:12
             </span>
             
                   <span class="post-categories">
@@ -651,5 +634,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

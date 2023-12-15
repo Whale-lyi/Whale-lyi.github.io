@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -190,39 +186,28 @@
 <p>根据说明一步步安装即可</p>
 <h2 id="2-安装常用软件"><a href="#2-安装常用软件" class="headerlink" title="2. 安装常用软件"></a>2. 安装常用软件</h2><p><strong>vim</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
-
 <p><strong>jdk</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install openjdk-8-jdk<br></code></pre></td></tr></table></figure>
-
 <p><strong>浏览器无法播放视频</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install ffmpeg<br></code></pre></td></tr></table></figure>
-
 <p><strong>ide+文本编辑器</strong></p>
 <p>使用软件商店安装</p>
 <p><strong>maven</strong></p>
 <p>从官网下载.tar.gz文件</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">mkdir</span> /opt/maven<br>sudo tar zxvf apache-maven-3.8.6-bin.tar.gz -C /opt/maven<br><span class="hljs-built_in">cd</span> /opt/maven<br>sudo <span class="hljs-built_in">mkdir</span> repository<br>sudo <span class="hljs-built_in">chmod</span> 777 repository<br>sudo vim ./apache-maven-3.8.6/conf/settings.xml<br><span class="hljs-comment"># 修改本地仓库地址 + 添加阿里云镜像</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">localRepository</span>&gt;</span>/opt/maven/repository<span class="hljs-tag">&lt;/<span class="hljs-name">localRepository</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">mirror</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-aliyun<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Nexus aliyun<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">mirrorOf</span>&gt;</span>central<span class="hljs-tag">&lt;/<span class="hljs-name">mirrorOf</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mirror</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>配置环境变量</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo vim /etc/profile.d/mavenenv.sh<br><span class="hljs-comment"># 添加以下内容</span><br><span class="hljs-built_in">export</span> M2_HOME=/opt/maven/apache-maven-3.8.6<br><span class="hljs-built_in">export</span> MAVEN_HOME=/opt/maven/apache-maven-3.8.6<br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$&#123;M2_HOME&#125;</span>/bin:<span class="hljs-variable">$&#123;PATH&#125;</span><br><span class="hljs-comment"># 添加执行权限</span><br>sudo <span class="hljs-built_in">chmod</span> +x /etc/profile.d/mavenenv.sh<br><span class="hljs-comment"># 在bashrc添加加载命令</span><br>sudo vim ~/.bashrc<br><span class="hljs-comment"># 添加以下内容</span><br><span class="hljs-built_in">source</span> /etc/profile.d/mavenenv.sh<br></code></pre></td></tr></table></figure>
-
 <p><strong>redis</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install redis-server<br>sudo vim /etc/redis/redis.conf<br><span class="hljs-comment"># 设置requirepass, 即密码</span><br>service redis restart<br></code></pre></td></tr></table></figure>
-
 <p><strong>MySQL</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install mysql-server<br>sudo mysql<br>&gt; ALTER USER <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED WITH mysql_native_password by <span class="hljs-string">&#x27;password&#x27;</span><br>&gt; <span class="hljs-built_in">exit</span><br>sudo mysql_secure_installation<br></code></pre></td></tr></table></figure>
-
 <p><strong>gcc</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt-get install build-essential<br></code></pre></td></tr></table></figure>
-
 <p><strong>git</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install git<br>git config --global user.name <span class="hljs-string">&quot;name&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;email&quot;</span><br></code></pre></td></tr></table></figure>
-
 <h2 id="3-其他"><a href="#3-其他" class="headerlink" title="3. 其他"></a>3. 其他</h2><p><strong>mit 6.S081 lab</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu <br><br>git <span class="hljs-built_in">clone</span> git://g.csail.mit.edu/xv6-labs-2021<br><span class="hljs-comment"># 应当可以编译并运行xv6（按住Ctrl+a x退出）</span><br><span class="hljs-comment"># in the xv6 directory</span><br>make qemu<br><span class="hljs-comment"># ... lots of output ...</span><br>init: starting sh<br>$<br></code></pre></td></tr></table></figure>
-
 
       </div>
       
@@ -587,5 +572,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -194,23 +190,20 @@
 </ul>
 <p>一级缓存是<strong>默认开启</strong>的</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cacheTest</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">orderMapper</span> <span class="hljs-operator">=</span> session.getMapper(OrderMapper.class);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order1</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order1);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order2</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order2);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310272206039.png" alt="image-20231027220655955"></p>
 <p>当两次查询中间执行一次插入操作, 一级缓存失效</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">cacheTest</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">orderMapper</span> <span class="hljs-operator">=</span> session.getMapper(OrderMapper.class);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order1</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order1);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Order</span>(<span class="hljs-literal">null</span>, <span class="hljs-string">&quot;o5&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Customer</span>(<span class="hljs-number">1</span>, <span class="hljs-string">&quot;c01&quot;</span>, <span class="hljs-literal">null</span>));<br>    orderMapper.insertOrder(order);<br>    <span class="hljs-type">Order</span> <span class="hljs-variable">order2</span> <span class="hljs-operator">=</span> orderMapper.selectOrderWithCustomerById(<span class="hljs-number">2</span>);<br>    System.out.println(order2);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310281653397.png" alt="image-20231028165357327"></p>
 <h2 id="2-二级缓存"><a href="#2-二级缓存" class="headerlink" title="2. 二级缓存"></a>2. 二级缓存</h2><p>二级缓存是<code>SqlSessionFactory</code>级别，通过同一个<code>SqlSessionFactory</code>创建的<code>SqlSession</code>查询的结果会被缓存；此后若再次执行相同的查询语句，结果就会从缓存中获取</p>
 <p>二级缓存开启的条件:</p>
 <ul>
-<li>在核心配置文件中，设置全局配置属性cacheEnabled&#x3D;”true”，默认为true，不需要设置</li>
+<li>在核心配置文件中，设置全局配置属性cacheEnabled=”true”，默认为true，不需要设置</li>
 <li>在映射文件中添加标签<code>&lt;cache /&gt;</code></li>
 <li>二级缓存必须在<code>SqlSession</code>关闭或提交之后有效</li>
 <li>查询的数据所转换的实体类类型必须实现序列化的接口</li>
 </ul>
 <p>测试类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testTwoCache</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-type">InputStream</span> <span class="hljs-variable">is</span> <span class="hljs-operator">=</span> Resources.getResourceAsStream(<span class="hljs-string">&quot;mybatis-config.xml&quot;</span>);<br>        <span class="hljs-type">SqlSessionFactory</span> <span class="hljs-variable">sqlSessionFactory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(is);<br><br>        <span class="hljs-type">SqlSession</span> <span class="hljs-variable">sqlSession1</span> <span class="hljs-operator">=</span> sqlSessionFactory.openSession(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">mapper1</span> <span class="hljs-operator">=</span> sqlSession1.getMapper(OrderMapper.class);<br>        System.out.println(mapper1.selectOrderWithCustomerById(<span class="hljs-number">1</span>));<br>        sqlSession1.close();<br><br>        <span class="hljs-type">SqlSession</span> <span class="hljs-variable">sqlSession2</span> <span class="hljs-operator">=</span> sqlSessionFactory.openSession(<span class="hljs-literal">true</span>);<br>        <span class="hljs-type">OrderMapper</span> <span class="hljs-variable">mapper2</span> <span class="hljs-operator">=</span> sqlSession2.getMapper(OrderMapper.class);<br>        System.out.println(mapper2.selectOrderWithCustomerById(<span class="hljs-number">1</span>));<br>        sqlSession2.close();<br>    &#125; <span class="hljs-keyword">catch</span> (IOException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>在 OrderMapper.xml 中添加 <code>&lt;cache/&gt;</code></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310282030660.png" alt="image-20231028203039622"></p>
 <p>Order, Customer类实现 <code>Serializable</code> 接口</p>
@@ -225,79 +218,80 @@
 <h2 id="3-整合第三方缓存EHCache"><a href="#3-整合第三方缓存EHCache" class="headerlink" title="3. 整合第三方缓存EHCache"></a>3. 整合第三方缓存EHCache</h2><p><strong>通过第三方实现二级缓存</strong></p>
 <p>添加依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependencies</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- Mybatis核心 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.5.13<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- junit测试 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-jupiter-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.10.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- MySQL驱动 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>com.mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-j<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.1.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- log4j2日志 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.21.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.21.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- log4j2适配slf4j --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.apache.logging.log4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>log4j-slf4j-impl<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>2.21.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- slf4j-api --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.slf4j<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>slf4j-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.7.36<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- Mybatis EHCache整合包 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis.caches<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis-ehcache<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>1.2.2<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependencies</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>创建EHCache的配置文件ehcache.xml</p>
 <ul>
 <li>名字必须叫<code>ehcache.xml</code></li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;utf-8&quot;</span> ?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">ehcache</span> <span class="hljs-attr">xmlns:xsi</span>=<span class="hljs-string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span><br><span class="hljs-tag">         <span class="hljs-attr">xsi:noNamespaceSchemaLocation</span>=<span class="hljs-string">&quot;http://ehcache.org/ehcache.xsd&quot;</span>&gt;</span><br><span class="hljs-comment">&lt;!-- 磁盘保存路径 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">diskStore</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;D:\ehcache&quot;</span>/&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">defaultCache</span></span><br><span class="hljs-tag">            <span class="hljs-attr">maxElementsInMemory</span>=<span class="hljs-string">&quot;1000&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">maxElementsOnDisk</span>=<span class="hljs-string">&quot;10000000&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">eternal</span>=<span class="hljs-string">&quot;false&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">overflowToDisk</span>=<span class="hljs-string">&quot;true&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">timeToIdleSeconds</span>=<span class="hljs-string">&quot;120&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">timeToLiveSeconds</span>=<span class="hljs-string">&quot;120&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">diskExpiryThreadIntervalSeconds</span>=<span class="hljs-string">&quot;120&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">memoryStoreEvictionPolicy</span>=<span class="hljs-string">&quot;LRU&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">defaultCache</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">ehcache</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <blockquote>
-<p>在核心配置文件中，设置全局配置属性cacheEnabled&#x3D;”true”，默认为true，不需要设置</p>
+<p>在核心配置文件中，设置全局配置属性cacheEnabled=”true”，默认为true，不需要设置</p>
 </blockquote>
 <p>mapper文件配置</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--默认的二级缓存--&gt;</span><br><span class="hljs-comment">&lt;!-- &lt;cache/&gt; --&gt;</span><br><br><span class="hljs-comment">&lt;!--使用EhcacheCache缓存--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">cache</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;org.mybatis.caches.ehcache.EhcacheCache&quot;</span>/&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>配置文件说明</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">属性名</th>
+<th style="text-align:left">属性名</th>
 <th>是否必须</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">maxElementsInMemory</td>
+<tbody>
+<tr>
+<td style="text-align:left">maxElementsInMemory</td>
 <td>是</td>
 <td>在内存中缓存的element的最大数目</td>
 </tr>
 <tr>
-<td align="left">maxElementsOnDisk</td>
+<td style="text-align:left">maxElementsOnDisk</td>
 <td>是</td>
 <td>在磁盘上缓存的element的最大数目，若是0表示无穷大</td>
 </tr>
 <tr>
-<td align="left">eternal</td>
+<td style="text-align:left">eternal</td>
 <td>是</td>
 <td>设定缓存的elements是否永远不过期。 如果为true，则缓存的数据始终有效, 如果为false那么还要根据timeToIdleSeconds、timeToLiveSeconds判断</td>
 </tr>
 <tr>
-<td align="left">overflowToDisk</td>
+<td style="text-align:left">overflowToDisk</td>
 <td>是</td>
 <td>设定当内存缓存溢出的时候是否将过期的element缓存到磁盘上</td>
 </tr>
 <tr>
-<td align="left">timeToIdleSeconds</td>
+<td style="text-align:left">timeToIdleSeconds</td>
 <td>否</td>
 <td>当缓存在EhCache中的数据前后两次访问的时间超过timeToIdleSeconds的属性取值时, 这些数据便会删除，默认值是0,也就是可闲置时间无穷大</td>
 </tr>
 <tr>
-<td align="left">timeToLiveSeconds</td>
+<td style="text-align:left">timeToLiveSeconds</td>
 <td>否</td>
 <td>缓存element的有效生命期，默认是0.,也就是element存活时间无穷大</td>
 </tr>
 <tr>
-<td align="left">diskSpoolBufferSizeMB</td>
+<td style="text-align:left">diskSpoolBufferSizeMB</td>
 <td>否</td>
 <td>DiskStore(磁盘缓存)的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区</td>
 </tr>
 <tr>
-<td align="left">diskPersistent</td>
+<td style="text-align:left">diskPersistent</td>
 <td>否</td>
 <td>在VM重启的时候是否启用磁盘保存EhCache中的数据，默认是false</td>
 </tr>
 <tr>
-<td align="left">diskExpiryThreadIntervalSeconds</td>
+<td style="text-align:left">diskExpiryThreadIntervalSeconds</td>
 <td>否</td>
 <td>磁盘缓存的清理线程运行间隔，默认是120秒。每个120s, 相应的线程会进行一次EhCache中数据的清理工作</td>
 </tr>
 <tr>
-<td align="left">memoryStoreEvictionPolicy</td>
+<td style="text-align:left">memoryStoreEvictionPolicy</td>
 <td>否</td>
 <td>当内存缓存达到最大，有新的element加入的时候，移除缓存中element的策略。 默认是LRU(最近最少使用)，可选的有LFU(最不常使用)和FIFO(先进先出)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>测试结果</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310282352842.png" alt="image-20231028235227770"></p>
 
@@ -664,5 +658,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

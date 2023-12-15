@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -187,12 +183,9 @@
         <h2 id="1-快速入门"><a href="#1-快速入门" class="headerlink" title="1. 快速入门"></a>1. 快速入门</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310231502376.png" alt="img"></p>
 <p>导入依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- Mybatis核心 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mybatis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.5.9<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!-- junit测试 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.junit.jupiter<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>junit-jupiter-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>5.10.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">scope</span>&gt;</span>test<span class="hljs-tag">&lt;/<span class="hljs-name">scope</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!-- MySQL驱动 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>mysql<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>mysql-connector-java<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>8.0.28<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>定义 mapper 接口和xml</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">EmployeeMapper</span> &#123;<br>    Employee <span class="hljs-title function_">selectEmployee</span><span class="hljs-params">(Integer empId)</span>;  <br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">mapper</span></span><br><span class="hljs-meta">        <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;</span></span><br><span class="hljs-meta">        <span class="hljs-string">&quot;https://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">namespace</span>=<span class="hljs-string">&quot;com.atguigu.mapper.EmployeeMapper&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployee&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;com.atguigu.pojo.Employee&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- #&#123;empId&#125;代表动态传入的参数,并且进行赋值!后面详细讲解 --&gt;</span><br>        select emp_id empId,emp_name empName, emp_salary empSalary from <br>           t_emp where emp_id = #&#123;empId&#125;<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mapper</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>方法名和 SQL 的 id 一致</li>
 <li>方法返回值和 <code>resultType</code> 一致</li>
@@ -204,10 +197,8 @@
 <p>习惯上命名为 mybatis-config.xml</p>
 </blockquote>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span> encoding=<span class="hljs-string">&quot;UTF-8&quot;</span> ?&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">configuration</span></span><br><span class="hljs-meta">  <span class="hljs-keyword">PUBLIC</span> <span class="hljs-string">&quot;-//mybatis.org//DTD Config 3.0//EN&quot;</span></span><br><span class="hljs-meta">  <span class="hljs-string">&quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- environments表示配置Mybatis的开发环境，可以配置多个环境，在众多具体环境中，使用default属性指定实际运行时使用的环境。default属性的取值是environment标签的id属性的值。 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">environments</span> <span class="hljs-attr">default</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- environment表示配置Mybatis的一个具体的环境 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">environment</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;development&quot;</span>&gt;</span><br>      <span class="hljs-comment">&lt;!-- Mybatis的内置的事务管理器 --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">transactionManager</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;JDBC&quot;</span>/&gt;</span><br>      <span class="hljs-comment">&lt;!-- 配置数据源 --&gt;</span><br>      <span class="hljs-tag">&lt;<span class="hljs-name">dataSource</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;POOLED&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 建立数据库连接的具体信息 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;driver&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;url&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;jdbc:mysql://localhost:3306/mybatis-example&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;root&quot;</span>/&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">property</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;root&quot;</span>/&gt;</span><br>      <span class="hljs-tag">&lt;/<span class="hljs-name">dataSource</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">environment</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">environments</span>&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">mappers</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- Mapper注册：指定Mybatis映射文件的具体位置 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- mapper标签：配置一个具体的Mapper映射文件 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- resource属性：指定Mapper映射文件的实际存储位置，这里需要使用一个以类路径根目录为基准的相对路径 --&gt;</span><br>    <span class="hljs-comment">&lt;!--    对Maven工程的目录结构来说，resources目录下的内容会直接放入类路径，所以这里我们可以以resources目录为基准 --&gt;</span><br>      <br>    <span class="hljs-comment">&lt;!-- 可以直接指定其所在的包 --&gt;</span><br>    <span class="hljs-comment">&lt;!--  &lt;package name=&quot;mappers&quot;/&gt; --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">mapper</span> <span class="hljs-attr">resource</span>=<span class="hljs-string">&quot;mappers/EmployeeMapper.xml&quot;</span>/&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">mappers</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>运行和测试</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testSelectEmployee</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-comment">// 1.创建SqlSessionFactory对象</span><br>    <span class="hljs-comment">// ①声明Mybatis全局配置文件的路径</span><br>    <span class="hljs-type">String</span> <span class="hljs-variable">mybatisConfigFilePath</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;mybatis-config.xml&quot;</span>;<br>    <span class="hljs-comment">// ②以输入流的形式加载Mybatis配置文件</span><br>    <span class="hljs-type">InputStream</span> <span class="hljs-variable">inputStream</span> <span class="hljs-operator">=</span> Resources.getResourceAsStream(mybatisConfigFilePath);<br>    <span class="hljs-comment">// ③基于读取Mybatis配置文件的输入流创建SqlSessionFactory对象</span><br>    <span class="hljs-type">SqlSessionFactory</span> <span class="hljs-variable">sessionFactory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SqlSessionFactoryBuilder</span>().build(inputStream);<br><br>    <span class="hljs-comment">// 2.使用SqlSessionFactory对象开启一个会话</span><br>    <span class="hljs-type">SqlSession</span> <span class="hljs-variable">session</span> <span class="hljs-operator">=</span> sessionFactory.openSession();<br><br>    <span class="hljs-comment">// 3.根据EmployeeMapper接口的Class对象获取Mapper接口类型的对象(动态代理技术)</span><br>    <span class="hljs-type">EmployeeMapper</span> <span class="hljs-variable">employeeMapper</span> <span class="hljs-operator">=</span> session.getMapper(EmployeeMapper.class);<br><br>    <span class="hljs-comment">// 4. 调用代理类方法既可以触发对应的SQL语句</span><br>    <span class="hljs-type">Employee</span> <span class="hljs-variable">employee</span> <span class="hljs-operator">=</span> employeeMapper.selectEmployee(<span class="hljs-number">1</span>);<br>    System.out.println(<span class="hljs-string">&quot;employee = &quot;</span> + employee);<br><br>    <span class="hljs-comment">// 5.关闭SqlSession</span><br>    session.commit(); <span class="hljs-comment">//提交事务 [DQL不需要,其他需要]</span><br>    session.close(); <span class="hljs-comment">//关闭会话</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h2 id="2-SQL语句传参"><a href="#2-SQL语句传参" class="headerlink" title="2. SQL语句传参"></a>2. SQL语句传参</h2><h3 id="2-1-日志输出配置"><a href="#2-1-日志输出配置" class="headerlink" title="2.1 日志输出配置"></a>2.1 日志输出配置</h3><p>MyBatis 配置文件设计标签和顶层结构如下：</p>
 <ul>
 <li>configuration（配置）<ul>
@@ -231,24 +222,27 @@
 </li>
 </ul>
 <p>可以在配置文件使用<strong>settings标签</strong>设置，输出运过程SQL日志！</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th align="left">设置名</th>
-<th align="left">描述</th>
-<th align="left">有效值</th>
-<th align="left">默认值</th>
+<th style="text-align:left">设置名</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">有效值</th>
+<th style="text-align:left">默认值</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">logImpl</td>
-<td align="left">指定 MyBatis 所用日志的具体实现，未指定时将自动查找。</td>
-<td align="left"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310231529791.png" alt="image-20231023152901677"></td>
-<td align="left">未设置</td>
+<tbody>
+<tr>
+<td style="text-align:left">logImpl</td>
+<td style="text-align:left">指定 MyBatis 所用日志的具体实现，未指定时将自动查找。</td>
+<td style="text-align:left"><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310231529791.png" alt="image-20231023152901677"></td>
+<td style="text-align:left">未设置</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">settings</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- SLF4J 选择slf4j输出！ --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">setting</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;logImpl&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;LOG4J2&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">settings</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="2-2"><a href="#2-2" class="headerlink" title="2.2 #{}, ${}"></a>2.2 <code>#&#123;&#125;, $&#123;&#125;</code></h3><p><strong>#{}</strong></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310231547469.png" alt="image-20231023154722087"></p>
 <ul>
@@ -278,48 +272,37 @@
 </ul>
 <p>以及插入场景下，实现主键数据回显</p>
 <h3 id="4-1-返回单个简单类型"><a href="#4-1-返回单个简单类型" class="headerlink" title="4.1 返回单个简单类型"></a>4.1 返回单个简单类型</h3><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmpCount&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;int&quot;</span>&gt;</span><br>  select count(*) from t_emp<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>select标签，通过resultType指定查询返回值类型！</p>
-<p>resultType &#x3D; “全限定符｜别名｜如果是返回集合类型，写范型类型即可”</p>
+<p>resultType = “全限定符｜别名｜如果是返回集合类型，写范型类型即可”</p>
 <blockquote>
 <p>Mybatis 内部给常用的数据类型设定了很多别名。</p>
 <p>以 int 类型为例，可以写的名称有：int、integer、Integer、java.lang.Integer、Int、INT、INTEGER 等等</p>
-</blockquote>
-<blockquote>
 <p><a target="_blank" rel="noopener" href="https://mybatis.org/mybatis-3/zh/configuration.html#typeAliases">别名问题</a></p>
 </blockquote>
 <h3 id="4-2-返回实体类对象"><a href="#4-2-返回实体类对象" class="headerlink" title="4.2 返回实体类对象"></a>4.2 返回实体类对象</h3><p>通过给数据库表字段加别名，让查询结果的每一列都和Java实体类中属性对应起来</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployee&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;com.atguigu.mybatis.entity.Employee&quot;</span>&gt;</span><br>  <span class="hljs-comment">&lt;!-- 给每一个字段设置一个别名，让别名和Java实体类中属性名一致 --&gt;</span><br>  select emp_id empId, emp_name empName, emp_salary empSalary from t_emp where emp_id=#&#123;maomi&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>或者通过<strong>增加全局配置自动识别对应关系</strong></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 在全局范围内对Mybatis进行配置 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">settings</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 具体配置 --&gt;</span><br>  <span class="hljs-comment">&lt;!-- 从org.apache.ibatis.session.Configuration类中可以查看能使用的配置项 --&gt;</span><br>  <span class="hljs-comment">&lt;!-- 将mapUnderscoreToCamelCase属性配置为true，表示开启自动映射驼峰式命名规则 --&gt;</span><br>  <span class="hljs-comment">&lt;!-- 规则要求数据库表字段命名方式：单词_单词 --&gt;</span><br>  <span class="hljs-comment">&lt;!-- 规则要求Java实体类属性名命名方式：首字母小写的驼峰式命名 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">setting</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;mapUnderscoreToCamelCase&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;true&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">settings</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="4-3-返回Map类型"><a href="#4-3-返回Map类型" class="headerlink" title="4.3 返回Map类型"></a>4.3 返回Map类型</h3><p><strong>若查询出的数据只有一条</strong></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Map&lt;String, Object&gt; <span class="hljs-title function_">getUserByIdToMap</span><span class="hljs-params">(<span class="hljs-meta">@Param(&quot;id&quot;)</span> Integer id)</span>;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getUserByIdToMap&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;map&quot;</span>&gt;</span><br>    select * from t_user where id = #&#123;id&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>返回的结果中key为属性名</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310241905604.png" alt="image-20231024190557526"></p>
 <p><strong>若查询出多条数据</strong></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;getAllUserToMap&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;map&quot;</span>&gt;</span><br>    select * from t_user<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <ol>
 <li>可以通过map类型的list集合接收</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">List&lt;Map&lt;String, Object&gt;&gt; <span class="hljs-title function_">getAllUserToMap</span><span class="hljs-params">()</span>;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310241908349.png" alt="image-20231024190838306"></p>
-<ol start="2">
+<ol>
 <li>可以在mapper接口的方法上添加 <code>@MapKey</code> 注解，此时就可以将每条数据转换的<strong>map集合作为值</strong>，以<strong>某个字段的值作为键</strong>，放在同一个map集合中</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@MapKey(&quot;id&quot;)</span><br>Map&lt;String, Object&gt; <span class="hljs-title function_">getAllUserToMap</span><span class="hljs-params">()</span>;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310241910262.png" alt="image-20231024191038218"></p>
 <h3 id="4-4-返回List类型"><a href="#4-4-返回List类型" class="headerlink" title="4.4 返回List类型"></a>4.4 返回List类型</h3><p>不需要任何特殊处理，在resultType属性中还是设置<strong>实体类类型</strong>即可</p>
 <h3 id="4-5-返回主键值"><a href="#4-5-返回主键值" class="headerlink" title="4.5 返回主键值"></a>4.5 返回主键值</h3><p><strong>自增长类型主键</strong></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- int insertEmployee(Employee employee); --&gt;</span><br><span class="hljs-comment">&lt;!-- useGeneratedKeys属性字面意思就是“使用生成的主键” --&gt;</span><br><span class="hljs-comment">&lt;!-- keyProperty属性可以指定主键在实体类对象中对应的属性名，Mybatis会将拿到的主键值存入这个属性 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">insert</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insertEmployee&quot;</span> <span class="hljs-attr">useGeneratedKeys</span>=<span class="hljs-string">&quot;true&quot;</span> <span class="hljs-attr">keyProperty</span>=<span class="hljs-string">&quot;empId&quot;</span>&gt;</span><br>  insert into t_emp(emp_name, emp_salary) values(#&#123;empName&#125;, #&#123;empSalary&#125;)<br><span class="hljs-tag">&lt;/<span class="hljs-name">insert</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>MyBatis是将自增主键的值设置到实体类对象中，而不是以Mapper接口方法返回值的形式返回</p>
 </blockquote>
@@ -327,7 +310,6 @@
 <p>对于不支持自增型主键的数据库(例如 Oracle)或者字符串类型主键，则可以使用 <code>selectKey</code> 子元素。<code>selectKey</code> 元素将会首先运行，id 会被设置，然后插入语句会被调用</p>
 <p>使用 <code>selectKey</code> 帮助插入UUID作为字符串类型主键示例：</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">insert</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insertUser&quot;</span> <span class="hljs-attr">parameterType</span>=<span class="hljs-string">&quot;User&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">selectKey</span> <span class="hljs-attr">keyProperty</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;java.lang.String&quot;</span></span><br><span class="hljs-tag">        <span class="hljs-attr">order</span>=<span class="hljs-string">&quot;BEFORE&quot;</span>&gt;</span><br>        SELECT UUID() as id<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">selectKey</span>&gt;</span><br>    INSERT INTO user (id, username, password) <br>    VALUES (<br>        #&#123;id&#125;,<br>        #&#123;username&#125;,<br>        #&#123;password&#125;<br>    )<br><span class="hljs-tag">&lt;/<span class="hljs-name">insert</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>通过 <code>keyProperty</code> 属性来指定查询到的 UUID 赋值给对象中的 <code>id</code> 属性，而 <code>resultType</code> 属性指定了 UUID 的类型为 <code>java.lang.String</code>。</p>
 <p>需要注意的是，<code>selectKey</code> 在插入语句的前面，这是因为 MySQL 在 <code>insert</code> 语句中只支持一个 <code>select</code> 子句，而 <code>selectKey</code> 中查询 UUID 的语句就是一个 <code>select</code> 子句，因此我们需要将其放在前面。</p>
 <p>最后，在将 <code>User</code> 对象插入到 <code>user</code> 表中时，我们直接使用对象中的 <code>id</code> 属性来插入主键值。</p>
@@ -343,11 +325,10 @@
 <p>使用 <code>resultMap</code> 标签定义对应关系，再在后面的SQL语句中引用这个对应关系</p>
 <p>此处简单介绍一下，涉及到一对多多对一映射的在后面部分展开</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- 专门声明一个resultMap设定column到property之间的对应关系 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">resultMap</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployeeByRMResultMap&quot;</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;com.atguigu.mybatis.entity.Employee&quot;</span>&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 使用id标签设置主键列和主键属性之间的对应关系 --&gt;</span><br>  <span class="hljs-comment">&lt;!-- column属性用于指定字段名；property属性用于指定Java实体类属性名 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">id</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;emp_id&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;empId&quot;</span>/&gt;</span><br><br>  <span class="hljs-comment">&lt;!-- 使用result标签设置普通字段和Java实体类属性之间的关系 --&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;emp_name&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;empName&quot;</span>/&gt;</span><br><br>  <span class="hljs-tag">&lt;<span class="hljs-name">result</span> <span class="hljs-attr">column</span>=<span class="hljs-string">&quot;emp_salary&quot;</span> <span class="hljs-attr">property</span>=<span class="hljs-string">&quot;empSalary&quot;</span>/&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">resultMap</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- Employee selectEmployeeByRM(Integer empId); --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectEmployeeByRM&quot;</span> <span class="hljs-attr">resultMap</span>=<span class="hljs-string">&quot;selectEmployeeByRMResultMap&quot;</span>&gt;</span><br>  select emp_id,emp_name,emp_salary from t_emp where emp_id=#&#123;empId&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <h2 id="5-Mapper标签总结"><a href="#5-Mapper标签总结" class="headerlink" title="5. Mapper标签总结"></a>5. Mapper标签总结</h2><p><strong>select 标签</strong></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;selectPerson&quot;</span> <span class="hljs-attr">resultType</span>=<span class="hljs-string">&quot;hashmap&quot;</span>&gt;</span><br>    SELECT * FROM PERSON WHERE ID = #&#123;id&#125;<br><span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>select 元素允许配置很多属性来配置每条语句的行为细节：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -355,7 +336,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>id</code></td>
 <td>在命名空间中唯一的标识符，可以被用来引用这条语句。</td>
 </tr>
@@ -375,10 +357,12 @@
 <td><code>statementType</code></td>
 <td>可选 STATEMENT，PREPARED 或 CALLABLE。这会让 MyBatis 分别使用 Statement，PreparedStatement 或 CallableStatement，默认值：PREPARED。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>insert, update 和 delete 标签</strong></p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">insert</span></span><br><span class="hljs-tag">  <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;insertAuthor&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">statementType</span>=<span class="hljs-string">&quot;PREPARED&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">keyProperty</span>=<span class="hljs-string">&quot;&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">keyColumn</span>=<span class="hljs-string">&quot;&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">useGeneratedKeys</span>=<span class="hljs-string">&quot;&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">timeout</span>=<span class="hljs-string">&quot;20&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">update</span></span><br><span class="hljs-tag">  <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;updateAuthor&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">statementType</span>=<span class="hljs-string">&quot;PREPARED&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">timeout</span>=<span class="hljs-string">&quot;20&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">delete</span></span><br><span class="hljs-tag">  <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;deleteAuthor&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">statementType</span>=<span class="hljs-string">&quot;PREPARED&quot;</span></span><br><span class="hljs-tag">  <span class="hljs-attr">timeout</span>=<span class="hljs-string">&quot;20&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -386,7 +370,8 @@
 <th>描述</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>id</code></td>
 <td>在命名空间中唯一的标识符，可以被用来引用这条语句。</td>
 </tr>
@@ -410,7 +395,9 @@
 <td><code>keyColumn</code></td>
 <td>（仅适用于 insert 和 update）设置生成键值在表中的列名，在某些数据库（像 PostgreSQL）中，当主键列不是表中的第一列的时候，是必须设置的。如果生成列不止一个，可以用逗号分隔多个属性名称。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 
       </div>
       
@@ -775,5 +762,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

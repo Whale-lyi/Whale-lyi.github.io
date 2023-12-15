@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -186,68 +182,60 @@
       <div class="markdown-body">
         <h2 id="1-页面跳转控制"><a href="#1-页面跳转控制" class="headerlink" title="1. 页面跳转控制"></a>1. 页面跳转控制</h2><h3 id="1-1-快速返回模板视图"><a href="#1-1-快速返回模板视图" class="headerlink" title="1.1 快速返回模板视图"></a>1.1 快速返回模板视图</h3><p>准备jsp页面和依赖</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!-- jsp需要依赖! jstl--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>jakarta.servlet.jsp.jstl<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jakarta.servlet.jsp.jstl-api<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>3.0.0<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <p>jsp页面创建</p>
-<p>建议位置：&#x2F;WEB-INF&#x2F;下，避免外部直接访问！</p>
-<p>位置：&#x2F;WEB-INF&#x2F;views&#x2F;home.jsp</p>
+<p>建议位置：/WEB-INF/下，避免外部直接访问！</p>
+<p>位置：/WEB-INF/views/home.jsp</p>
 <figure class="highlight jsp"><table><tr><td class="code"><pre><code class="hljs jsp">&lt;%@ page contentType=<span class="hljs-string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="hljs-string">&quot;java&quot;</span> %&gt;<br>&lt;html&gt;<br>  &lt;head&gt;<br>    &lt;title&gt;Title&lt;/title&gt;<br>  &lt;/head&gt;<br>  &lt;body&gt;<br>        &lt;!-- 可以获取共享域的数据,动态展示! jsp== 后台vue --&gt;<br>        $&#123;msg&#125;<br>  &lt;/body&gt;<br>&lt;/html&gt;<br></code></pre></td></tr></table></figure>
-
 <p>配置jsp视图解析器</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-meta">@EnableWebMvc</span>  <span class="hljs-comment">//json数据处理,必须使用此注解,因为他会加入json处理器</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(basePackages = &quot;com.atguigu.controller&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringMvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br>    <span class="hljs-comment">//配置jsp对应的视图解析器</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configureViewResolvers</span><span class="hljs-params">(ViewResolverRegistry registry)</span> &#123;<br>        <span class="hljs-comment">//快速配置jsp模板语言对应的</span><br>        registry.jsp(<span class="hljs-string">&quot;/WEB-INF/views/&quot;</span>,<span class="hljs-string">&quot;.jsp&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>handler返回视图</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs Java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> *  跳转到提交文件页面  /save/jump</span><br><span class="hljs-comment"> *  </span><br><span class="hljs-comment"> *  如果要返回jsp页面!</span><br><span class="hljs-comment"> *     1.方法返回值改成字符串类型</span><br><span class="hljs-comment"> *     2.返回逻辑视图名即可    </span><br><span class="hljs-comment"> *         &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/views/&quot;/&gt;</span><br><span class="hljs-comment"> *            + 逻辑视图名 +</span><br><span class="hljs-comment"> *         &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@GetMapping(&quot;jump&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">jumpJsp</span><span class="hljs-params">(Model model)</span>&#123;<br>    System.out.println(<span class="hljs-string">&quot;FileController.jumpJsp&quot;</span>);<br>    model.addAttribute(<span class="hljs-string">&quot;msg&quot;</span>,<span class="hljs-string">&quot;request data!!&quot;</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;home&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="1-2-转发和重定向"><a href="#1-2-转发和重定向" class="headerlink" title="1.2 转发和重定向"></a>1.2 转发和重定向</h3><p>Handler 方法返回值来实现快速转发，可以使用 redirect 或者 forward 关键字来实现重定向</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(&quot;/redirect-demo&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">redirectDemo</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 重定向到 /demo 路径 </span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;redirect:/demo&quot;</span>;<br>&#125;<br><br><span class="hljs-meta">@RequestMapping(&quot;/forward-demo&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">forwardDemo</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 转发到 /demo 路径</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;forward:/demo&quot;</span>;<br>&#125;<br><span class="hljs-comment">//注意： 转发和重定向到项目下资源路径都是相同，都不需要添加项目根路径！填写项目下路径即可！</span><br></code></pre></td></tr></table></figure>
-
 <h3 id="1-3-使用Thymeleaf"><a href="#1-3-使用Thymeleaf" class="headerlink" title="1.3 使用Thymeleaf"></a>1.3 使用Thymeleaf</h3><p>若使用的视图技术为Thymeleaf，在SpringMVC的配置文件中配置了Thymeleaf的视图解析器，由此视图解析器解析之后所得到的是ThymeleafView</p>
 <ol>
 <li><code>ThymeleafView</code></li>
 </ol>
 <p>当控制器方法中所设置的视图名称没有任何前缀时，此时的视图名称会被SpringMVC配置文件中所配置的视图解析器解析，视图名称拼接视图前缀和视图后缀所得到的最终路径，会通过转发的方式实现跳转</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(&quot;/testHello&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testHello</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312121704830.png"></p>
-<ol start="2">
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312121704830.png" alt=""></p>
+<ol>
 <li>转发视图</li>
 </ol>
 <p>SpringMVC中默认的转发视图是<code>InternalResourceView</code></p>
 <p>SpringMVC中创建转发视图的情况：</p>
 <p>当控制器方法中所设置的视图名称以”forward:”为前缀时，创建<code>InternalResourceView</code>视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀”forward:”去掉，剩余部分作为最终路径通过转发的方式实现跳转</p>
-<p>例如”forward:&#x2F;“，”forward:&#x2F;employee”</p>
+<p>例如”forward:/“，”forward:/employee”</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(&quot;/testForward&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testForward</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;forward:/testHello&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312121706160.png" alt="image-20210706201316593"></p>
-<ol start="3">
+<ol>
 <li>重定向视图</li>
 </ol>
 <p>SpringMVC中默认的重定向视图是<code>RedirectView</code></p>
 <p>当控制器方法中所设置的视图名称以”redirect:”为前缀时，创建RedirectView视图，此时的视图名称不会被SpringMVC配置文件中所配置的视图解析器解析，而是会将前缀”redirect:”去掉，剩余部分作为最终路径通过重定向的方式实现跳转</p>
-<p>例如”redirect:&#x2F;“，”redirect:&#x2F;employee”</p>
+<p>例如”redirect:/“，”redirect:/employee”</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RequestMapping(&quot;/testRedirect&quot;)</span><br><span class="hljs-keyword">public</span> String <span class="hljs-title function_">testRedirect</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;redirect:/testHello&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312121706269.png" alt="image-20210706201602267"></p>
 <blockquote>
 <p>注：</p>
-<p>重定向视图在解析时，会先将redirect:前缀去掉，然后会判断剩余部分是否以&#x2F;开头，若是则会自动拼接上下文路径</p>
+<p>重定向视图在解析时，会先将redirect:前缀去掉，然后会判断剩余部分是否以/开头，若是则会自动拼接上下文路径</p>
 </blockquote>
-<ol start="4">
+<ol>
 <li>视图控制器view-controller</li>
 </ol>
 <p>当控制器方法中，仅仅用来实现页面跳转，即只需要设置视图名称时，可以将处理器方法使用view-controller标签进行表示</p>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--</span><br><span class="hljs-comment">	path：设置处理的请求地址</span><br><span class="hljs-comment">	view-name：设置请求地址所对应的视图名称</span><br><span class="hljs-comment">--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">mvc:view-controller</span> <span class="hljs-attr">path</span>=<span class="hljs-string">&quot;/testView&quot;</span> <span class="hljs-attr">view-name</span>=<span class="hljs-string">&quot;success&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">mvc:view-controller</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>注：</p>
 <p>当SpringMVC中设置任何一个view-controller时，其他控制器中的请求映射将全部失效，此时需要在SpringMVC的核心配置文件中设置开启mvc注解驱动的标签：</p>
-<p>&lt;mvc:annotation-driven &#x2F;&gt;</p>
+<mvc:annotation-driven />
+
 </blockquote>
-<h2 id="2-返回JSON数据"><a href="#2-返回JSON数据" class="headerlink" title="2. 返回JSON数据"></a>2. 返回JSON数据</h2><p>导入jackson依赖, 添加json数据转化器(<code>@EnableWebMvc </code>)</p>
+<h2 id="2-返回JSON数据"><a href="#2-返回JSON数据" class="headerlink" title="2. 返回JSON数据"></a>2. 返回JSON数据</h2><p>导入jackson依赖, 添加json数据转化器(<code>@EnableWebMvc</code>)</p>
 <p><code>@ResponseBody</code>注解: 将方法返回的对象序列化为 JSON 或 XML 格式的数据，并发送给客户端</p>
 <p><code>@RestController</code>注解: 类上的 <code>@ResponseBody</code> 注解可以和 <code>@Controller</code> 注解合并为 <code>@RestController</code> 注解</p>
 <h2 id="3-返回静态资源处理"><a href="#3-返回静态资源处理" class="headerlink" title="3. 返回静态资源处理"></a>3. 返回静态资源处理</h2><p>在 SpringMVC 配置配置类</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@EnableWebMvc</span>  <span class="hljs-comment">//json数据处理,必须使用此注解,因为他会加入json处理器</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(basePackages = &quot;com.atguigu.controller&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">SpringMvcConfig</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">WebMvcConfigurer</span> &#123;<br><br>    <span class="hljs-comment">//配置jsp对应的视图解析器</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configureViewResolvers</span><span class="hljs-params">(ViewResolverRegistry registry)</span> &#123;<br>        <span class="hljs-comment">//快速配置jsp模板语言对应的</span><br>        registry.jsp(<span class="hljs-string">&quot;/WEB-INF/views/&quot;</span>,<span class="hljs-string">&quot;.jsp&quot;</span>);<br>    &#125;<br>    <br>    <span class="hljs-comment">//开启静态资源处理 &lt;mvc:default-servlet-handler/&gt;</span><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">configureDefaultServletHandling</span><span class="hljs-params">(DefaultServletHandlerConfigurer configurer)</span> &#123;<br>        configurer.enable();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>web应用加入静态资源</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312121711439.png" alt="img"></p>
 
@@ -614,5 +602,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

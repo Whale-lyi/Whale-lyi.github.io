@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -202,31 +198,22 @@
 <li>Header记录Entry信息，Entry记录Partition信息，形成三级结构</li>
 <li><strong>Secondary GPT 是备份，因此 GPT 相较于 MBR 方式会有更多的空间无法使用</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162723879.png" alt="image-20230214162723879" style="zoom:67%;" />
-
-
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230214162723879.png" alt="image-20230214162723879" style="zoom:67%;" /></p>
 <h4 id="文件系统概念"><a href="#文件系统概念" class="headerlink" title="文件系统概念"></a>文件系统概念</h4><ul>
 <li>操作系统中负责存取和管理文件的部分</li>
 <li>VFS, EXT2, EXT3, FAT32</li>
 </ul>
 <h4 id="bootloader只要求grub"><a href="#bootloader只要求grub" class="headerlink" title="bootloader只要求grub"></a>bootloader只要求grub</h4><ul>
-<li>程序存储在 MBR (第一阶段) 和 &#x2F;boot&#x2F;grub (第1.5和第二阶段) 中</li>
+<li>程序存储在 MBR (第一阶段) 和 /boot/grub (第1.5和第二阶段) 中</li>
 <li>了解文件系统结构；无需像LILO一样激活配置</li>
-<li>配置文件：&#x2F;boot&#x2F;grub&#x2F;grub.cfg<ul>
+<li>配置文件：/boot/grub/grub.cfg<ul>
 <li>最重要就是配置内核和init文件的位置</li>
 </ul>
 </li>
 <li>通过grub-install安装在MBR中</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs grub.cfg">title Ubuntu, kernel 2.6.20-16-generic<br>root (hd0,1)<br>kernel /boot/vmlinuz-2.6.20-16-generic root=UUID=3f784cd9-516f-4808-a601-b19356f6bdea ro quiet splash locale=zh_CN vga=0x318 // 内核与参数<br>initrd /boot/initrd.img-2.6.20-16-generic // init程序<br></code></pre></td></tr></table></figure>
-
-
-
 <h4 id="编译开源软件流程"><a href="#编译开源软件流程" class="headerlink" title="编译开源软件流程"></a>编译开源软件流程</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译源代码安装软件：automake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br>./configure<br>make<br>su - <span class="hljs-comment"># 只有make install需要切换root权限</span><br>make install <span class="hljs-comment"># 将编译后的二进制码安装到系统</span><br><br><span class="hljs-comment"># cmake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake ..	<span class="hljs-comment"># cmake后面跟application目录，..即上级目录</span><br>make VERBOSE=1	<span class="hljs-comment"># VERBOSE参数可选，仅多打印一些东西</span><br>su -<br>make install<br></code></pre></td></tr></table></figure>
-
-
-
 <h4 id="命令行提示符"><a href="#命令行提示符" class="headerlink" title="命令行提示符"></a>命令行提示符</h4><ul>
 <li>可以自己配置<ul>
 <li>修改环境变量: <code>export SUDO_PS1=&quot;\u@\h:\w\$&quot;</code>, <code>export PS1=&quot;\u@\h:\w\$&quot;</code></li>
@@ -236,67 +223,42 @@
 <li><code>#</code>：以root身份登录</li>
 </ul>
 <h4 id="所有ppt出现的命令"><a href="#所有ppt出现的命令" class="headerlink" title="所有ppt出现的命令"></a>所有ppt出现的命令</h4><ul>
-<li><p>passwd：更改密码</p>
-</li>
-<li><p>mkpasswd：生成随机密码</p>
-</li>
-<li><p>date，cal：找出今天的日期并显示日历</p>
-</li>
-<li><p>who，finger：找出还有谁在系统上处于活动状态</p>
-</li>
-<li><p>clear：清除屏幕</p>
-</li>
-<li><p>echo：在屏幕上写一条消息</p>
-</li>
-<li><p>write、wall、talk、mesg</p>
-<ul>
+<li>passwd：更改密码</li>
+<li>mkpasswd：生成随机密码</li>
+<li>date，cal：找出今天的日期并显示日历</li>
+<li>who，finger：找出还有谁在系统上处于活动状态</li>
+<li>clear：清除屏幕</li>
+<li>echo：在屏幕上写一条消息</li>
+<li>write、wall、talk、mesg<ul>
 <li>write：给其他用户发信息</li>
 <li>wall：write all, 给所有登录到系统的用户发信息</li>
 <li>talk：建立聊天session</li>
 <li>mesg：可以屏蔽用户发来的信息</li>
 </ul>
 </li>
-<li><p>pwd：当前目录</p>
-</li>
-<li><p>cd：更改目录</p>
-</li>
-<li><p>mkdir：创建目录</p>
-</li>
-<li><p>rmdir：删除目录</p>
-</li>
-<li><p>ls -l -i -R -a</p>
-</li>
-<li><p>touch：更新文件的访问, 修改时间</p>
-</li>
-<li><p>cp：复制文件</p>
-</li>
-<li><p>mv：移动并重命名文件</p>
-</li>
-<li><p>ln：链接文件</p>
-</li>
-<li><p>rm：删除文件</p>
-</li>
-<li><p>cat：打印文件内容</p>
-</li>
-<li><p>more&#x2F;less：逐页显示文件，more不可以回退，less可以回退</p>
-</li>
-<li><p>ps：报告进程状态</p>
-</li>
-<li><p>pstree：显示进程树</p>
-</li>
-<li><p>jobs, fg, bg, ctrl-z：作业控制</p>
-<ul>
+<li>pwd：当前目录</li>
+<li>cd：更改目录</li>
+<li>mkdir：创建目录</li>
+<li>rmdir：删除目录</li>
+<li>ls -l -i -R -a</li>
+<li>touch：更新文件的访问, 修改时间</li>
+<li>cp：复制文件</li>
+<li>mv：移动并重命名文件</li>
+<li>ln：链接文件</li>
+<li>rm：删除文件</li>
+<li>cat：打印文件内容</li>
+<li>more/less：逐页显示文件，more不可以回退，less可以回退</li>
+<li>ps：报告进程状态</li>
+<li>pstree：显示进程树</li>
+<li>jobs, fg, bg, ctrl-z：作业控制<ul>
 <li>bg: 后台执行</li>
 <li>fg: 前台执行</li>
 <li>ctrl-z: 暂停进程, 可通过fg, bg恢复</li>
 </ul>
 </li>
-<li><p>kill：杀死进程</p>
-</li>
-<li><p>nohup：运行命令，忽略挂起信号</p>
-</li>
-<li><p>nice，renice：修改进程优先级</p>
-</li>
+<li>kill：杀死进程</li>
+<li>nohup：运行命令，忽略挂起信号</li>
+<li>nice，renice：修改进程优先级</li>
 <li><p>top：查看进程的cpu占用</p>
 </li>
 <li><p>文件操作</p>
@@ -331,10 +293,8 @@
 </li>
 </ul>
 </li>
-<li><p>进程操作：ps, kill, jobs, fg, bg, nice</p>
-</li>
-<li><p>其它</p>
-<ul>
+<li>进程操作：ps, kill, jobs, fg, bg, nice</li>
+<li>其它<ul>
 <li>who, whoami, passwd, su, uname, …<ul>
 <li>whoami: 当前用户名</li>
 <li>uname: 显示内核信息</li>
@@ -352,7 +312,7 @@
 <li>字符型设备文件(character special file)</li>
 <li>块型设备文件(block special file)<ul>
 <li>special files：代表硬件或逻辑设备</li>
-<li>位于 &#x2F;dev 目录</li>
+<li>位于 /dev 目录</li>
 </ul>
 </li>
 <li>网络接口(socket)</li>
@@ -366,9 +326,9 @@
 </ul>
 <h4 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230227143638153.png" alt="image-20230227143638153"></p>
 <ul>
-<li><code>/boot</code>：内核、bootloader的配置，包括引导加载程序相关的文件。内核的initrd、vmlinux、grub文件位于&#x2F;boot下。</li>
+<li><code>/boot</code>：内核、bootloader的配置，包括引导加载程序相关的文件。内核的initrd、vmlinux、grub文件位于/boot下。</li>
 <li><code>/etc</code>：系统的配置文件所在地，下载软件的配置文件在也在这里，包含所有程序所需的配置文件</li>
-<li><code>/bin</code>：程序文件夹，包含二进制可执行文件，例如<code>ls</code>，其实是在执行一个程序；也有一部分程序在<code>/usr/bin</code>(在我的linux上，&#x2F;bin是&#x2F;usr&#x2F;bin的软链接)</li>
+<li><code>/bin</code>：程序文件夹，包含二进制可执行文件，例如<code>ls</code>，其实是在执行一个程序；也有一部分程序在<code>/usr/bin</code>(在我的linux上，/bin是/usr/bin的软链接)</li>
 <li><code>/mnt</code>：<strong>挂载目录</strong>，临时挂载目录，系统管理员可以挂载文件系统。</li>
 <li><code>/sbin</code>：系统二进制文件，但是这个目录下的Linux命令通常<strong>由系统管理员使用，对系统进行维护</strong>，例如<code>ifconfig/fdisk</code>也有部分程序在<code>/sbin</code>，例如分区命令<code>fdisk</code></li>
 <li><code>/usr</code>：资源文件夹(和编程相关的)；编译器、默认的头文件、系统中的库文件，包含二进制文件、库文件、文档和二级程序的源代码<ul>
@@ -378,7 +338,7 @@
 <li><code>/usr/local</code>中包含了从源安装的用户程序。</li>
 </ul>
 </li>
-<li><code>/lib</code>：系统库。包含<strong>支持位于&#x2F;bin和&#x2F;sbin下的二进制文件的库文件</strong>；库文件名为 <code>ld*或lib*.so.*</code></li>
+<li><code>/lib</code>：系统库。包含<strong>支持位于/bin和/sbin下的二进制文件的库文件</strong>；库文件名为 <code>ld*或lib*.so.*</code></li>
 <li><code>/proc</code>：包括<strong>系统进行相关信息</strong>。这是一个虚拟的文件系统，包含有关正在运行的进程的信息；系统资源以文本信息形式存在。</li>
 <li><code>/var</code>：系统里的可变数据，变量文件，并不是存放在磁盘上的数据，一般是存放在内存中的数据。<ul>
 <li>系统日志文件<code>/var/log</code></li>
@@ -393,7 +353,7 @@
 <li><code>/tmp</code>：包含系统和用户创建的<strong>临时文件</strong>，当系统重新启动时，这个目录下的文件都将被删除。</li>
 <li><code>/home</code>：用home目录来存储他们的个人档案。</li>
 <li><code>/opt</code>：可选的附加应用程序</li>
-<li><code>/media</code>：用于挂载<strong>可移动设备</strong>的临时目录。举例来说，挂载CD-ROM的&#x2F;media&#x2F;cdrom，挂载软盘驱动器的&#x2F;media&#x2F;floppy</li>
+<li><code>/media</code>：用于挂载<strong>可移动设备</strong>的临时目录。举例来说，挂载CD-ROM的/media/cdrom，挂载软盘驱动器的/media/floppy</li>
 <li><code>/srv</code>：srv代表服务。包含服务器特定服务相关的数据。</li>
 <li>修改环境变量PATH，临时修改可以直接<code>PATH=$PATH:/bin</code>，但是要永久生效得修改配置文件<code>/etc/profile</code></li>
 </ul>
@@ -406,7 +366,7 @@
 </li>
 <li>三个权限：<ol>
 <li>读取(r)：读取文件内容或目录内容</li>
-<li>写(w)：更改文件内容或在目录中创建&#x2F;删除文件</li>
+<li>写(w)：更改文件内容或在目录中创建/删除文件</li>
 <li>执行(x)：以程序执行文件或使用目录作为活动目录</li>
 </ol>
 </li>
@@ -416,16 +376,16 @@
 <ul>
 <li><code>chmod &lt;who operator what&gt; filename</code><ul>
 <li>who:<ul>
-<li><code>u</code> &#x3D; owner of file</li>
-<li><code>g</code> &#x3D; group</li>
-<li><code>o</code> &#x3D; other users on the system</li>
-<li><code>a</code> &#x3D; all(u + g + o)</li>
+<li><code>u</code> = owner of file</li>
+<li><code>g</code> = group</li>
+<li><code>o</code> = other users on the system</li>
+<li><code>a</code> = all(u + g + o)</li>
 </ul>
 </li>
 <li>operator:<ul>
-<li><code>+</code> &#x3D; add permission</li>
-<li><code>-</code> &#x3D; remove permission</li>
-<li><code>=</code> &#x3D; clear permissions and set to mode specified</li>
+<li><code>+</code> = add permission</li>
+<li><code>-</code> = remove permission</li>
+<li><code>=</code> = clear permissions and set to mode specified</li>
 </ul>
 </li>
 <li>what: <code>r, w, x</code></li>
@@ -434,6 +394,7 @@
 <li><code>chmod &lt;number&gt; file</code></li>
 <li>Default File Permissions</li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -442,7 +403,8 @@
 <th>数字权限</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>File</td>
 <td>-rw-r—r—</td>
 <td>644</td>
@@ -452,7 +414,9 @@
 <td>drwxr-xr-x</td>
 <td>755</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="进程概念"><a href="#进程概念" class="headerlink" title="进程概念"></a>进程概念</h4><ul>
 <li>进程是一个正在执行的程序实例。由执行程序，它的当前值，状态信息以及通过操作系统管理此进程执行情况的资源组成。</li>
 </ul>
@@ -461,7 +425,7 @@
 <ul>
 <li><p>使用 man 命令，您可以阅读命令的手册页</p>
 </li>
-<li><p>手册页存储在 &#x2F;usr&#x2F;man</p>
+<li><p>手册页存储在 /usr/man</p>
 </li>
 </ul>
 </li>
@@ -469,15 +433,13 @@
 <ul>
 <li><p>用于阅读文档的程序，有时可以代替手册页</p>
 </li>
-<li><p>有关信息的信息存储在 &#x2F;usr&#x2F;info</p>
+<li><p>有关信息的信息存储在 /usr/info</p>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="linux层次图"><a href="#linux层次图" class="headerlink" title="linux层次图"></a>linux层次图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303104322848.png" alt="image-20230303104322848" style="zoom:67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303105118990.png" alt="image-20230303105118990" style="zoom:80%;" />
-
+<h4 id="linux层次图"><a href="#linux层次图" class="headerlink" title="linux层次图"></a>linux层次图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303104322848.png" alt="image-20230303104322848" style="zoom:67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230303105118990.png" alt="image-20230303105118990" style="zoom:80%;" /></p>
 <h3 id="ch1-2-linux-basics"><a href="#ch1-2-linux-basics" class="headerlink" title="ch1-2 linux basics"></a>ch1-2 linux basics</h3><h4 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h4><ul>
 <li>标准输入、标准输出、标准错误<ul>
 <li>对应的文件描述符：0, 1, 2</li>
@@ -531,21 +493,15 @@
 <h3 id="ch2-shell-programming"><a href="#ch2-shell-programming" class="headerlink" title="ch2 shell programming"></a>ch2 shell programming</h3><p>只考bash，知道有其他shell就行</p>
 <h4 id="三种执行脚本方法"><a href="#三种执行脚本方法" class="headerlink" title="三种执行脚本方法"></a>三种执行脚本方法</h4><p>方法一：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sh script_file <br></code></pre></td></tr></table></figure>
-
 <p>方法二：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">chmod</span> +x script_file(<span class="hljs-built_in">chown</span>, <span class="hljs-built_in">chgrp</span> optionally)<br>./script_file<br></code></pre></td></tr></table></figure>
-
 <p>方法三：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">source</span> script_file<br>. script_file<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>方法一二原理相同：新启bash进程执行脚本</p>
 <p>方法三使用当前bash进程执行脚本</p>
 </blockquote>
 <h4 id="read命令"><a href="#read命令" class="headerlink" title="read命令"></a>read命令</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#! /bin/bash</span><br><span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;Enter your name: &quot;</span>       <span class="hljs-comment"># 参数-n的作用是不换行，echo默认是换行</span><br><span class="hljs-built_in">read</span> name                         <span class="hljs-comment">#从键盘输入</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello <span class="hljs-variable">$name</span>, welcome to my program&quot;</span><br><span class="hljs-built_in">exit</span> 0                            <span class="hljs-comment">#退出shell程序。</span><br><br><span class="hljs-comment">#! /bin/bash</span><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;Enter your name:&quot;</span> name   <span class="hljs-comment">#-p参数，允许在read命令行中直接指定一个提示</span><br><span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;Enter a number:&quot;</span> number<br><span class="hljs-built_in">echo</span> <span class="hljs-variable">$number</span><br><span class="hljs-built_in">exit</span> 0<br><br><span class="hljs-comment">#! /bin/bash</span><br><span class="hljs-keyword">if</span> <span class="hljs-built_in">read</span> -t 5 -p <span class="hljs-string">&quot;please enter your name:&quot;</span> name  <span class="hljs-comment"># 5s内输入</span><br><span class="hljs-keyword">then</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;hello <span class="hljs-variable">$name</span>， welcome to my script&quot;</span><br><span class="hljs-keyword">else</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;sorry, too slow&quot;</span><br><span class="hljs-keyword">fi</span><br><span class="hljs-built_in">exit</span> 0<br><br><span class="hljs-comment">#! /bin/bash</span><br><span class="hljs-built_in">read</span> -n1 -p <span class="hljs-string">&quot;Do you want to continue [Y/N] ?&quot;</span> answer <span class="hljs-comment"># 只读取一个字符</span><br><span class="hljs-keyword">case</span> <span class="hljs-variable">$answer</span> <span class="hljs-keyword">in</span><br>Y|y)<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;fine, continue&quot;</span>;;<br>N|n)<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;ok, good bye&quot;</span>;;<br>*)<br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;error choice&quot;</span>;;<br><span class="hljs-keyword">esac</span><br><span class="hljs-built_in">exit</span> 0<br><br><span class="hljs-comment">#! /bin/bash</span><br><span class="hljs-built_in">read</span> -s -p <span class="hljs-string">&quot;Enter your password: &quot;</span> pass	<span class="hljs-comment"># 不显示输入</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;your password is <span class="hljs-variable">$pass</span>&quot;</span><br><span class="hljs-built_in">exit</span> 0<br><br><span class="hljs-comment">#! /bin/bash</span><br>count=1<br><span class="hljs-built_in">cat</span> viewFile.sh| <span class="hljs-keyword">while</span> <span class="hljs-built_in">read</span> line<br><span class="hljs-keyword">do</span><br>  <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;<span class="hljs-variable">$count</span>:<span class="hljs-variable">$line</span>&quot;</span><br>  count=$((<span class="hljs-variable">$count</span> + <span class="hljs-number">1</span>))<br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Total Count:<span class="hljs-variable">$count</span>&quot;</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
-
-
 <h4 id="引号的用法"><a href="#引号的用法" class="headerlink" title="引号的用法"></a>引号的用法</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412225511774.png" alt="image-20230412225511774"></p>
 <h4 id="用户变量、环境变量，参数变量"><a href="#用户变量、环境变量，参数变量" class="headerlink" title="用户变量、环境变量，参数变量"></a>用户变量、环境变量，参数变量</h4><p>环境变量</p>
 <ul>
@@ -563,47 +519,28 @@
 <li><code>$*</code>: 一个全体参数组成的清单，它是一个独立的变量，各个参数之间用环境变量IFS中的第一个字符分隔开</li>
 <li><code>$@</code>: “$*”的一种变体，它不使用IFS环境变量。</li>
 </ul>
-<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230512655.png" alt="image-20230412230512655" style="zoom:80%;" />
-
-<h4 id="算数比较"><a href="#算数比较" class="headerlink" title="算数比较"></a>算数比较</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230755009.png" alt="image-20230412230755009" style="zoom:80%;" />
-
-<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230824083.png" alt="image-20230412230824083" style="zoom:80%;" />
-
-<h4 id="逻辑"><a href="#逻辑" class="headerlink" title="逻辑"></a>逻辑</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412231419320.png" alt="image-20230412231419320" style="zoom:80%;" />
-
+<h4 id="字符串比较"><a href="#字符串比较" class="headerlink" title="字符串比较"></a>字符串比较</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230512655.png" alt="image-20230412230512655" style="zoom:80%;" /></p>
+<h4 id="算数比较"><a href="#算数比较" class="headerlink" title="算数比较"></a>算数比较</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230755009.png" alt="image-20230412230755009" style="zoom:80%;" /></p>
+<h4 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412230824083.png" alt="image-20230412230824083" style="zoom:80%;" /></p>
+<h4 id="逻辑"><a href="#逻辑" class="headerlink" title="逻辑"></a>逻辑</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412231419320.png" alt="image-20230412231419320" style="zoom:80%;" /></p>
 <h4 id="if语句"><a href="#if语句" class="headerlink" title="if语句"></a>if语句</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [expression]<br><span class="hljs-keyword">then</span><br>	statements<br><span class="hljs-keyword">elif</span> [expression]<br><span class="hljs-keyword">then</span><br>	statements<br><span class="hljs-keyword">elif</span>...<br><span class="hljs-keyword">else</span><br>	statements<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>紧凑模式：使用 ; 分割</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">if</span> [ -f ~/.bashrc ]; <span class="hljs-keyword">then</span><br>	. ~/.bashrc<br><span class="hljs-keyword">fi</span><br></code></pre></td></tr></table></figure>
-
-
-
 <h4 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h4><ul>
 <li>双分号</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">case</span> str <span class="hljs-keyword">in</span><br>  str1 | str2) statements;;<br>  str3 | str4) statements;;<br>  *) statements;<br><span class="hljs-keyword">esac</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Is this morning? Please answer yes or no.&quot;</span><br><span class="hljs-built_in">read</span> answer<br><span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$answer</span>&quot;</span> <span class="hljs-keyword">in</span><br>  <span class="hljs-built_in">yes</span> | y | Yes | YES) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Good morning!&quot;</span>;;<br>  no | n | No | NO) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Good afternoon!&quot;</span>;;<br>  *) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Sorry, answer not recognized.&quot;</span>;;<br><span class="hljs-keyword">esac</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
-
-
 <h4 id="for"><a href="#for" class="headerlink" title="for"></a>for</h4><ul>
 <li>适用于对一系列字符串循环处理</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">for</span> var <span class="hljs-keyword">in</span> list<br><span class="hljs-keyword">do</span><br>	statements<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br><span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> $(<span class="hljs-built_in">ls</span> f*.sh); <span class="hljs-keyword">do</span><br>	lpr <span class="hljs-variable">$file</span><br><span class="hljs-keyword">done</span><br><span class="hljs-built_in">exit</span> 0<br></code></pre></td></tr></table></figure>
-
-
-
 <h4 id="while"><a href="#while" class="headerlink" title="while"></a>while</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-keyword">while</span> [expression]<br><span class="hljs-keyword">do</span><br>	statements<br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">quit=n<br><span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$quit</span>&quot;</span> != <span class="hljs-string">&quot;y&quot;</span>]; <span class="hljs-keyword">do</span><br>	<span class="hljs-built_in">read</span> menu_choice<br>	<span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$menu_choice</span>&quot;</span> <span class="hljs-keyword">in</span><br>		a) do_something;;<br>		b) do_anotherthing;;<br>		q|Q) quit=y;;<br>		*) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Sorry, choice not recognized.&quot;</span>;;<br>	<span class="hljs-keyword">esac</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">a=0<br><span class="hljs-keyword">while</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$a</span>&quot;</span> -le <span class="hljs-string">&quot;<span class="hljs-variable">$LIMIT</span>&quot;</span> ]; <span class="hljs-keyword">do</span><br>	a=$((<span class="hljs-variable">$a</span>+<span class="hljs-number">1</span>))<br>	<span class="hljs-keyword">if</span> [ <span class="hljs-string">&quot;<span class="hljs-variable">$a</span>&quot;</span> gt 2 ]; <span class="hljs-keyword">then</span><br>		<span class="hljs-built_in">break</span>  <span class="hljs-comment"># Skip entire rest of loop.</span><br>	<span class="hljs-keyword">fi</span><br>	<span class="hljs-built_in">echo</span> -n <span class="hljs-string">&quot;<span class="hljs-variable">$a</span>&quot;</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p><strong>$(())整数运算，否则会看作字符串</strong></p>
 </li>
@@ -611,11 +548,7 @@
 </li>
 </ul>
 <h4 id="select"><a href="#select" class="headerlink" title="select"></a>select</h4><figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/sh</span><br>clear<br><span class="hljs-keyword">select</span> item <span class="hljs-keyword">in</span> Continue Finish<br><span class="hljs-keyword">do</span><br>	<span class="hljs-keyword">case</span> <span class="hljs-string">&quot;<span class="hljs-variable">$item</span>&quot;</span> <span class="hljs-keyword">in</span><br>        Continue) ;;<br>        Finish) <span class="hljs-built_in">break</span> ;;<br>        *) <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;Wrong choice! Please select again!&quot;</span> ;;<br>	<span class="hljs-keyword">esac</span><br><span class="hljs-keyword">done</span><br></code></pre></td></tr></table></figure>
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412233820317.png" alt="image-20230412233820317" style="zoom:80%;" />
-
-
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412233820317.png" alt="image-20230412233820317" style="zoom:80%;" /></p>
 <h4 id="命令表"><a href="#命令表" class="headerlink" title="命令表"></a>命令表</h4><p>命令组合</p>
 <ul>
 <li><p>分号串联：command1 ; command2 ; …</p>
@@ -630,22 +563,17 @@
 <p>…….都看了吧</p>
 <h4 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h4><p>定义时不带参数</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-function"><span class="hljs-title">func</span></span>()<br>&#123;<br>	statements<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>局部变量: local关键字</li>
 <li>函数的调用: func para1 para2 …</li>
 <li>返回值: return</li>
 </ul>
 <p>例子</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235748650.png" alt="image-20230412235748650" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235756115.png" alt="image-20230412235756115" style="zoom:80%;" />
-
-
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235748650.png" alt="image-20230412235748650" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230412235756115.png" alt="image-20230412235756115" style="zoom:80%;" /></p>
 <h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><p>杂项命令</p>
 <ul>
-<li>break: 从for&#x2F;while&#x2F;until循环退出 </li>
+<li>break: 从for/while/until循环退出 </li>
 <li>continue: 跳到下一个循环继续执行</li>
 <li>exit n: 以退出码”n”退出脚本运行</li>
 <li>return: 函数返回</li>
@@ -670,7 +598,6 @@
 <li>输入 !CATINPUT! 才会停止</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-meta">#!/bin/bash</span><br><span class="hljs-built_in">cat</span> &gt;&gt; file.txt &lt;&lt; !CATINPUT!<br>Hello, this is a here document.<br>!CATINPUT!<br></code></pre></td></tr></table></figure>
-
 <h3 id="ch3-Programming-Prerequisite"><a href="#ch3-Programming-Prerequisite" class="headerlink" title="ch3 Programming Prerequisite"></a>ch3 Programming Prerequisite</h3><h4 id="知道什么是elf"><a href="#知道什么是elf" class="headerlink" title="知道什么是elf"></a>知道什么是elf</h4><ul>
 <li>“ELF” 是 “Executable and Linkable Format” 的缩写，是一种二进制文件格式，用于可执行文件、目标文件和库文件</li>
 <li>它是一种标准的二进制文件格式，可用于 Linux 操作系统下的可执行程序</li>
@@ -702,12 +629,12 @@
 <li>-c: 执行预处理、编译、汇编而不链接</li>
 <li>-o output_file: 指定输出文件名</li>
 <li>-g: 产生调试工具必需的符号信息</li>
-<li>-O&#x2F;On: 在程序编译、链接过程中进行优化处理</li>
+<li>-O/On: 在程序编译、链接过程中进行优化处理</li>
 <li>-Wall: 显示所有的警告信息</li>
 <li>-Idir: 指定额外的头文件搜索路径</li>
 <li>-Ldir: 指定额外的库文件搜索路径</li>
 <li>-lname: 链接时搜索指定的库文件</li>
-<li>-DMACRO[&#x3D;DEFN]: 定义MACRO宏</li>
+<li>-DMACRO[=DEFN]: 定义MACRO宏</li>
 </ul>
 <h4 id="扩展名"><a href="#扩展名" class="headerlink" title="扩展名"></a>扩展名</h4><p>.h 头文件</p>
 <p>.s 汇编</p>
@@ -720,21 +647,14 @@
 <li>单步执行</li>
 <li>修改变量值</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413142055943.png" alt="image-20230413142055943" style="zoom:80%;" />
-
-
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413142055943.png" alt="image-20230413142055943" style="zoom:80%;" /></p>
 <h4 id="makefile掌握ppt涉及内容"><a href="#makefile掌握ppt涉及内容" class="headerlink" title="makefile掌握ppt涉及内容"></a>makefile掌握ppt涉及内容</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38391755/article/details/80380786">https://blog.csdn.net/weixin_38391755/article/details/80380786</a></p>
 <ul>
 <li>预定义变量可以看</li>
 <li>不考复杂的、函数等</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413142324080.png" alt="image-20230413142324080" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413142324080.png" alt="image-20230413142324080" style="zoom:80%;" /></p>
 <figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">OBJECTS = main.o kbd.o command.o display.o \<br>    insert.o search.o files.o utils.o <br>edit : <span class="hljs-variable">$(OBJECTS)</span> <br>	gcc -o edit <span class="hljs-variable">$(OBJECTS)</span> <br>main.o : main.c defs.h <br>	gcc -c main.c <br>kbd.o : kbd.c defs.h command.h <br>	gcc -c kbd.c <br>command.o : command.c defs.h command.h <br>	gcc -c command.c <br>display.o : display.c defs.h buffer.h <br>	gcc -c display.c <br>insert.o : insert.c defs.h buffer.h <br>	gcc -c insert.c <br>search.o : search.c defs.h buffer.h <br>	gcc -c search.c <br>files.o : files.c defs.h buffer.h command.h <br>	gcc -c files.c <br>utils.o : utils.c defs.h <br>	gcc -c utils.c <br>clean : <br>	rm edit <span class="hljs-variable">$(OBJECTS)</span><br></code></pre></td></tr></table></figure>
-
-
-
 <h3 id="ch3-1-Linux-System-Programming-–-File-System"><a href="#ch3-1-Linux-System-Programming-–-File-System" class="headerlink" title="ch3-1 Linux System Programming – File System"></a>ch3-1 Linux System Programming – File System</h3><h4 id="什么是文件、文件系统"><a href="#什么是文件、文件系统" class="headerlink" title="什么是文件、文件系统"></a>什么是文件、文件系统</h4><p>文件：可以写入、读取或两者兼有的对象，文件具有某些属性，包括访问权限和类型</p>
 <p>文件系统：操作系统中负责存取和管理文件的部分，是文件及其属性的集合，为引用文件的文件序列号提供了名称空间。</p>
 <h4 id="文件系统三层含义"><a href="#文件系统三层含义" class="headerlink" title="文件系统三层含义"></a>文件系统三层含义</h4><ol>
@@ -758,7 +678,7 @@
 <li>不能跨越文件系统</li>
 <li>对应系统调用link</li>
 <li>命令行使用 ln [文件名] [文件名]</li>
-<li>应用程序使用 int link(const char *oldpath, const char *newpath);</li>
+<li>应用程序使用 int link(const char <em>oldpath, const char </em>newpath);</li>
 </ul>
 </li>
 <li>软链接<ul>
@@ -766,14 +686,13 @@
 <li>可以跨越文件系统</li>
 <li>对应系统调用symlink</li>
 <li>命令行使用 ln -s [文件名] [文件名]</li>
-<li>应用程序使用 int symlink(const char *oldpath, const char *newpath);</li>
+<li>应用程序使用 int symlink(const char <em>oldpath, const char </em>newpath);</li>
 </ul>
 </li>
 </ol>
 <h4 id="系统调用和c库的关系-重点"><a href="#系统调用和c库的关系-重点" class="headerlink" title="系统调用和c库的关系 重点"></a>系统调用和c库的关系 重点</h4><p>看清题目要求，要求系统调用还是c库</p>
 <h4 id="系统调用部分："><a href="#系统调用部分：" class="headerlink" title="系统调用部分："></a>系统调用部分：</h4><ul>
-<li><p><code>int open(const char *pathname, int flags, mode_t mode);</code></p>
-<ul>
+<li><code>int open(const char *pathname, int flags, mode_t mode);</code><ul>
 <li>flags<ul>
 <li>O_RDONLY：只读</li>
 <li>O_WRONLY：只写</li>
@@ -786,12 +705,9 @@
 </li>
 </ul>
 </li>
-<li><p><code>int close(int fd);</code></p>
-</li>
-<li><p><code>ssize_t read(int fd, void *buf, size_t count);</code></p>
-</li>
-<li><p><code>ssize_t write(int fd, const void *buf, size_t count);</code></p>
-</li>
+<li><code>int close(int fd);</code></li>
+<li><code>ssize_t read(int fd, void *buf, size_t count);</code></li>
+<li><code>ssize_t write(int fd, const void *buf, size_t count);</code></li>
 <li><p><code>off_t lseek(int fd, off_t offset, int whence);</code></p>
 <ul>
 <li>用于设置文件读写指针的位置</li>
@@ -815,9 +731,9 @@
 <li><p>cmd</p>
 <ul>
 <li>F_DUPFD：复制文件描述符</li>
-<li>F_GETFD&#x2F;F_SETFD：获取&#x2F;设置文件描述符标志，为解决fork子进程执行其他任务(exec等)导致父进程的文件描述符被复制到子进程中，使得对应文件描述符无法被之后需要的进程获取。设置了这个标记后可以使得子进程在执行exce等命令后释放对应的文件描述符资源。</li>
-<li>F_GETFL&#x2F;F_SETFL:获得&#x2F;设置文件状态标志(open&#x2F;creat中的flags 参数)</li>
-<li>F_GETOWN&#x2F;F_SETOWN: 管理 I&#x2F;O 可用相关的信号。</li>
+<li>F_GETFD/F_SETFD：获取/设置文件描述符标志，为解决fork子进程执行其他任务(exec等)导致父进程的文件描述符被复制到子进程中，使得对应文件描述符无法被之后需要的进程获取。设置了这个标记后可以使得子进程在执行exce等命令后释放对应的文件描述符资源。</li>
+<li>F_GETFL/F_SETFL:获得/设置文件状态标志(open/creat中的flags 参数)</li>
+<li>F_GETOWN/F_SETOWN: 管理 I/O 可用相关的信号。</li>
 <li><strong>F_GETLK</strong>：获得文件的锁信息</li>
 <li><strong>F_SETLK</strong>：设置文件锁，如果无法获取锁，则返回错误信息</li>
 <li><strong>F_SETLKW</strong>：设置文件锁，如果无法获取锁，则等待直到可以获取为止</li>
@@ -829,7 +745,6 @@
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//file:fcntl</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">pid_t</span> pid;<br>    fd = open( <span class="hljs-string">&quot;test.txt&quot;</span>,O_RDWR|O_APPEND);<br>    <span class="hljs-keyword">if</span> (fd == <span class="hljs-number">-1</span>)<br>    #<span class="hljs-meta">#printf(<span class="hljs-string">&quot;open err/n&quot;</span>);</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fd = %d&quot;</span>,fd);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fork!/n&quot;</span>);<br>    fcntl(fd，F_SETFD, <span class="hljs-number">1</span>);<br>    <span class="hljs-type">char</span> *s=<span class="hljs-string">&quot;ooooooooooooooooooo&quot;</span>;<br>    pid = fork();<br>    <span class="hljs-keyword">if</span>(pid == <span class="hljs-number">0</span>)<br>    	execl(<span class="hljs-string">&quot;ass&quot;</span>, <span class="hljs-string">&quot;./ass&quot;</span>, &amp;fd, <span class="hljs-literal">NULL</span>);<br>    wait(<span class="hljs-literal">NULL</span>);<br>    write(fd,s,<span class="hljs-built_in">strlen</span>(s));<br>    close(fd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">//ass 源代码</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span><br>&#123;<br>    <span class="hljs-type">int</span> fd;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc = %d&quot;</span>,argc);<br>    fd = *argv[<span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fd = %d&quot;</span>,fd);<br>    <span class="hljs-type">char</span> *s = <span class="hljs-string">&quot;zzzzzzzzzzzzzzzzzzz&quot;</span>;<br>    write(fd，(<span class="hljs-type">void</span> *)s, <span class="hljs-built_in">strlen</span>(s));<br>    close(fd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p><code>fcntl(fd, F_SETFD, 1);</code>这里将<strong>close-on-exec</strong> flag设置为true，所以<strong>调用execl的时候，fd会关闭</strong>。</p>
 </li>
@@ -854,8 +769,7 @@
 </li>
 </ul>
 <h4 id="库函数部分"><a href="#库函数部分" class="headerlink" title="库函数部分"></a>库函数部分</h4><ul>
-<li><p>会自动处理缓存</p>
-</li>
+<li>会自动处理缓存</li>
 <li><p><code>FILE *fopen(const char *filename, const char *mode); int fclose(FILE *stream);</code></p>
 <ul>
 <li>r 读</li>
@@ -871,7 +785,7 @@
 <li><p>输入一个字符</p>
 <ul>
 <li><code>int getc(FILE *fp)</code>：是预定义宏，无函数副作用，更快</li>
-<li><code>int fgetc(FILE *fp)</code>：常用，在用到函数副作用&#x2F;函数指针用</li>
+<li><code>int fgetc(FILE *fp)</code>：常用，在用到函数副作用/函数指针用</li>
 </ul>
 </li>
 <li><p>输出一个字符到文件</p>
@@ -900,8 +814,7 @@
 </li>
 <li><p><code>size fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream);</code></p>
 </li>
-<li><p><code>int scanf(const char *format, ...);</code></p>
-</li>
+<li><code>int scanf(const char *format, ...);</code></li>
 <li><p><code>int printf(const char *format, ...);</code></p>
 </li>
 <li><p><code>int fseek(FILE *stream, long int offset, int whence);</code></p>
@@ -915,31 +828,25 @@
 </li>
 </ul>
 </li>
-<li><p><code>long ftell(FILE *stream);</code></p>
-<ul>
+<li><code>long ftell(FILE *stream);</code><ul>
 <li>获取文件内部的位置指针相对于文件开头的偏移量</li>
 </ul>
 </li>
-<li><p><code>void rewind(FILE *stream);</code></p>
-<ul>
+<li><code>void rewind(FILE *stream);</code><ul>
 <li>将文件内部的位置指针重新指向文件开头</li>
 </ul>
 </li>
-<li><p><code>int fflush(FILE *stream);</code></p>
-<ul>
+<li><code>int fflush(FILE *stream);</code><ul>
 <li>刷新文件流。把流里的数据立刻写入文件</li>
 </ul>
 </li>
 </ul>
-<h4 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413153957156.png" alt="image-20230413153957156" style="zoom:80%;" />
-
-
-
+<h4 id="umask"><a href="#umask" class="headerlink" title="umask"></a>umask</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413153957156.png" alt="image-20230413153957156" style="zoom:80%;" /></p>
 <h4 id="权限、链接系统调用是重点"><a href="#权限、链接系统调用是重点" class="headerlink" title="权限、链接系统调用是重点"></a>权限、链接系统调用是重点</h4><p>来自 new bing</p>
 <ul>
 <li>SUID（Set User ID）：当一个可执行文件被设置了SUID权限后，它在执行时就会具有该文件所有者的权限。例如，如果一个文件的所有者是root，那么当一个普通用户执行该文件时，该文件就会以root的身份运行。SUID权限可以让普通用户执行一些只有root才能执行的任务。</li>
 <li>SGID（Set Group ID）：当一个目录被设置了SGID权限后，该目录下新建的文件和子目录都会继承该目录的组ID。例如，如果一个目录的组ID是staff，那么在该目录下新建的文件和子目录都会属于staff组。SGID权限可以让多个用户共享同一个组。</li>
-<li>Sticky bit：当一个目录被设置了Sticky bit权限后，只有该目录的所有者和root用户才能删除该目录下的文件。例如，&#x2F;tmp目录就被设置了Sticky bit权限，这样其他用户就不能删除&#x2F;tmp目录下的文件。</li>
+<li>Sticky bit：当一个目录被设置了Sticky bit权限后，只有该目录的所有者和root用户才能删除该目录下的文件。例如，/tmp目录就被设置了Sticky bit权限，这样其他用户就不能删除/tmp目录下的文件。</li>
 </ul>
 <p>系统调用</p>
 <ul>
@@ -999,28 +906,25 @@
 <h3 id="ch4-内核"><a href="#ch4-内核" class="headerlink" title="ch4 内核"></a>ch4 内核</h3><h4 id="内核概念"><a href="#内核概念" class="headerlink" title="内核概念"></a>内核概念</h4><ul>
 <li><p>操作系统是一系列程序的集合，其中最重要的部分构成了内核</p>
 </li>
-<li><p>单内核&#x2F;微内核</p>
+<li><p>单内核/微内核</p>
 <ul>
 <li>单内核是一个很大的进程，内部可以分为若干模块，运行时是一个独立的二进制文件，模块间通讯通过直接调用函数实现</li>
 <li>微内核中大部分内核作为独立的进程在特权下运行，通过消息传递进行通信</li>
 </ul>
 </li>
-<li><p>Linux内核的能力：内存管理，文件系统，进程管理，多线程支持，多处理支持，抢占式。</p>
-</li>
-<li><p>Linux内核区别于其他UNIX商业内核的优点</p>
-<ul>
+<li>Linux内核的能力：内存管理，文件系统，进程管理，多线程支持，多处理支持，抢占式。</li>
+<li>Linux内核区别于其他UNIX商业内核的优点<ul>
 <li>单内核，模块支持</li>
-<li>免费&#x2F;开源</li>
+<li>免费/开源</li>
 <li>支持多种CPU，硬件支持能力非常强大</li>
 <li>Linux开发者都是非常出色的程序员</li>
 <li>通过学习Linux内核的源码可以了解现代操作系统的实现原理</li>
 </ul>
 </li>
 </ul>
-<h4 id="层次结构"><a href="#层次结构" class="headerlink" title="层次结构"></a>层次结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413200446162.png"></p>
+<h4 id="层次结构"><a href="#层次结构" class="headerlink" title="层次结构"></a>层次结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230413200446162.png" alt=""></p>
 <h4 id="驱动与模块-重点"><a href="#驱动与模块-重点" class="headerlink" title="驱动与模块 重点"></a>驱动与模块 重点</h4><ul>
-<li><p>形式为 .ko，<code>模块.ko</code></p>
-</li>
+<li>形式为 .ko，<code>模块.ko</code></li>
 <li><p><code>insmod &lt;module.ko&gt; [module parameters]</code></p>
 <ul>
 <li>加载模块</li>
@@ -1058,6 +962,7 @@
 <li>模块是为了完成某种特定任务而设计的。其功能比较的单一，为了丰富系统的功能，所以模块之间常常进行通信。其之间可以共享变量，数据结构，也可以调用对方提供的功能函数。</li>
 </ul>
 <h4 id="应用程序与内核的区别"><a href="#应用程序与内核的区别" class="headerlink" title="应用程序与内核的区别"></a>应用程序与内核的区别</h4><p>加上注意点一共9点，写出4点即可</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -1065,7 +970,8 @@
 <th>内核模块</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>运行在用户空间</td>
 <td>运行在内核空间</td>
 </tr>
@@ -1085,7 +991,9 @@
 <td>通过 gdb 调试</td>
 <td>通过 kdbug，kdb，kgdb等 调试</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li>不能使用 c 库开发驱动程序</li>
 <li>没有内存保护机制</li>
@@ -1111,20 +1019,15 @@
 <p>openEuler 通信支持共享内存与消息传递</p>
 <p>openEuler 内存管理有预测机制，不是100%准确</p>
 <p>openEuler大量使用寄存器，使用精简指令集 risc</p>
-<h3 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h3><p>使用C的库函数，编写一个函数void bindiff(char *file1,char *file2,char *fileo)，将文件从file1、file2对应的路径中读取并逐字节比对，将相同的字节输出到fileo对应的文件中。（25分）</p>
+<h3 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h3><p>使用C的库函数，编写一个函数void bindiff(char <em>file1,char </em>file2,char *fileo)，将文件从file1、file2对应的路径中读取并逐字节比对，将相同的字节输出到fileo对应的文件中。（25分）</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">bindiff</span><span class="hljs-params">(<span class="hljs-type">char</span> *file1,<span class="hljs-type">char</span> *file2,<span class="hljs-type">char</span> *file3)</span>;<br><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span> &#123;<br>    bindiff(argv[<span class="hljs-number">1</span>], argv[<span class="hljs-number">2</span>], argv[<span class="hljs-number">3</span>]);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">bindiff</span><span class="hljs-params">(<span class="hljs-type">char</span> *file1,<span class="hljs-type">char</span> *file2,<span class="hljs-type">char</span> *file3)</span> &#123;<br>    FILE* fp1 = fopen(file1, <span class="hljs-string">&quot;r&quot;</span>);<br>    FILE* fp2 = fopen(file2, <span class="hljs-string">&quot;r&quot;</span>);<br>    FILE* fp3 = fopen(file3, <span class="hljs-string">&quot;w&quot;</span>);<br>    <span class="hljs-type">char</span> ch1, ch2;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &#123;<br>        ch1 = fgetc(fp1);<br>        ch2 = fgetc(fp2);<br>        <span class="hljs-keyword">if</span> (feof(fp1) || feof(fp2)) &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span> (ch1 == ch2) &#123;<br>            fputc(ch1, fp3);<br>        &#125;<br>    &#125;<br>    fclose(fp1);<br>    fclose(fp2);<br>    fclose(fp3);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>shell获得用户输入的100个整数，并输出其最大值，最小值，总和。</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">max=0<br>min=0<br><span class="hljs-built_in">sum</span>=0<br>i=1<br><span class="hljs-keyword">while</span> [ <span class="hljs-variable">$i</span> -le 10 ]<br><span class="hljs-keyword">do</span><br>        <span class="hljs-built_in">read</span> -p <span class="hljs-string">&quot;num: &quot;</span> num<br>        <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$i</span> -eq 1 ]; <span class="hljs-keyword">then</span><br>                max=<span class="hljs-variable">$num</span><br>                min=<span class="hljs-variable">$num</span><br>        <span class="hljs-keyword">else</span><br>                <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -gt <span class="hljs-variable">$max</span> ]; <span class="hljs-keyword">then</span><br>                        max=<span class="hljs-variable">$num</span><br>                <span class="hljs-keyword">fi</span><br>                <span class="hljs-keyword">if</span> [ <span class="hljs-variable">$num</span> -lt <span class="hljs-variable">$min</span> ]; <span class="hljs-keyword">then</span><br>                        min=<span class="hljs-variable">$num</span><br>                <span class="hljs-keyword">fi</span><br>        <span class="hljs-keyword">fi</span><br>        <span class="hljs-built_in">sum</span>=$((sum + num))<br>        i=$((i + <span class="hljs-number">1</span>))<br><span class="hljs-keyword">done</span><br><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;最大值：<span class="hljs-variable">$max</span>&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;最小值：<span class="hljs-variable">$min</span>&quot;</span><br><span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;总和：<span class="hljs-variable">$sum</span>&quot;</span><br></code></pre></td></tr></table></figure>
-
 <p>用系统调用实现一个copy.cpp模块，输入两个参数（原文件名，目标文件名），将原文件中的内容复制到目标文件中。并且编写Makefile编译链接上述模块。</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> BUFFER_SIZE 4096</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span> &#123;<br>    <span class="hljs-type">int</span> sourece_fd = open(argv[<span class="hljs-number">1</span>], O_RDONLY);<br>    <span class="hljs-type">int</span> dest_fd = open(argv[<span class="hljs-number">2</span>], O_WRONLY | O_CREAT | O_TRUNC);<br>    <span class="hljs-type">int</span> size = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">char</span> buf[BUFFER_SIZE];<br>    <span class="hljs-keyword">while</span>((size = read(source_fd, buf, BUFFER_SIZE)) &gt; <span class="hljs-number">0</span>) &#123;<br>        write(dest_fd, buf, size);<br>    &#125;<br>    close(sourece_fd);<br>    close(dest_fd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight makefile"><table><tr><td class="code"><pre><code class="hljs makefile">copy : copy.cpp<br>	g++ -o copy copy.cpp<br></code></pre></td></tr></table></figure>
-
 <p>使用系统调用实现函数half(a, b)将a文件的一半拷贝到b文件，且b仅包含a文件的后一半的内容</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> BUFFER_SIZE 4096</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span>* argv[])</span> &#123;<br>    <span class="hljs-type">int</span> fd1 = open(argv[<span class="hljs-number">1</span>], O_RDONLY);<br>    <span class="hljs-type">int</span> fd2 = open(argv[<span class="hljs-number">2</span>], O_WRONLY | O_CREAT | O_TRUNC);<br>    <span class="hljs-type">int</span> half_size = lseek(fd1, <span class="hljs-number">0</span>, SEEK_END) / <span class="hljs-number">2</span>;<br>    lseek(fd1, half_size, SEEK_SET);<br>    <span class="hljs-type">char</span> buf[BUFFER_SIZE];<br>    <span class="hljs-type">int</span> size = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>((size = read(fd1, buf, BUFFER_SIZE)) &gt; <span class="hljs-number">0</span>) &#123;<br>        write(fd2, buf, size);<br>    &#125;<br>    close(fd1);<br>    close(fd2);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 
       </div>
       
@@ -1489,5 +1392,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,14 +180,11 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="1-Web-App开发"><a href="#1-Web-App开发" class="headerlink" title="1. Web App开发"></a>1. Web App开发</h3><h4 id="1-1-前、后端不分离的开发模式"><a href="#1-1-前、后端不分离的开发模式" class="headerlink" title="1.1 前、后端不分离的开发模式"></a>1.1 前、后端不分离的开发模式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170527653.png" alt="image-20230216170527653" style="zoom: 50%;" />
-
-<h4 id="1-2-前、后端分离的开发模式"><a href="#1-2-前、后端分离的开发模式" class="headerlink" title="1.2 前、后端分离的开发模式"></a>1.2 前、后端分离的开发模式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170540465.png" alt="image-20230216170540465" style="zoom: 67%;" />
-
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="1-Web-App开发"><a href="#1-Web-App开发" class="headerlink" title="1. Web App开发"></a>1. Web App开发</h3><h4 id="1-1-前、后端不分离的开发模式"><a href="#1-1-前、后端不分离的开发模式" class="headerlink" title="1.1 前、后端不分离的开发模式"></a>1.1 前、后端不分离的开发模式</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170527653.png" alt="image-20230216170527653" style="zoom: 50%;" /></p>
+<h4 id="1-2-前、后端分离的开发模式"><a href="#1-2-前、后端分离的开发模式" class="headerlink" title="1.2 前、后端分离的开发模式"></a>1.2 前、后端分离的开发模式</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170540465.png" alt="image-20230216170540465" style="zoom: 67%;" /></p>
 <h4 id="1-3-微服务架构-Microservices-Architecture-模式"><a href="#1-3-微服务架构-Microservices-Architecture-模式" class="headerlink" title="1.3 微服务架构(Microservices Architecture)模式"></a>1.3 微服务架构(Microservices Architecture)模式</h4><p>微服务架构时将应用拆分成小业务单元开发和部署，使用轻量级协议通信，通过协同工作实现应用逻辑的架构模式</p>
 <p>微服务的特性：小，且指责单一、独立的进程、轻量级通信机制、独立部署</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170820095.png" alt="image-20230216170820095" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216170820095.png" alt="image-20230216170820095" style="zoom:80%;" /></p>
 <h3 id="2-Spring"><a href="#2-Spring" class="headerlink" title="2. Spring"></a>2. Spring</h3><h4 id="2-1-Spring是Java生态圈的主流开发框架"><a href="#2-1-Spring是Java生态圈的主流开发框架" class="headerlink" title="2.1 Spring是Java生态圈的主流开发框架"></a>2.1 Spring是Java生态圈的主流开发框架</h4><ul>
 <li>轻量级（Lightweight）</li>
 <li>非侵入性（No intrusive）</li>
@@ -202,13 +195,11 @@
 <li>Web框架（MVC、其它WEB框架整合）</li>
 <li>其他企业服务的封装</li>
 </ul>
-<h4 id="2-2-Spring的核心是提供了一个容器-container"><a href="#2-2-Spring的核心是提供了一个容器-container" class="headerlink" title="2.2 Spring的核心是提供了一个容器(container)"></a>2.2 Spring的核心是提供了一个容器(container)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216171148852.png" alt="image-20230216171148852" style="zoom: 67%;" />
-
+<h4 id="2-2-Spring的核心是提供了一个容器-container"><a href="#2-2-Spring的核心是提供了一个容器-container" class="headerlink" title="2.2 Spring的核心是提供了一个容器(container)"></a>2.2 Spring的核心是提供了一个容器(container)</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230216171148852.png" alt="image-20230216171148852" style="zoom: 67%;" /></p>
 <h4 id="2-3-Spring的衍生"><a href="#2-3-Spring的衍生" class="headerlink" title="2.3 Spring的衍生"></a>2.3 Spring的衍生</h4><p>Spring：核心、基础框架</p>
 <p>Spring Boot：简化基于Spring的开发，自动配置</p>
 <p>Spring Cloud：基于云的、分布式系统开发，相关技术：容器、微服务、DevOps</p>
-<h4 id="2-4-Spring的模块组成"><a href="#2-4-Spring的模块组成" class="headerlink" title="2.4 Spring的模块组成"></a>2.4 Spring的模块组成</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307152941773.png" alt="image-20230307152941773" style="zoom:80%;" />
-
+<h4 id="2-4-Spring的模块组成"><a href="#2-4-Spring的模块组成" class="headerlink" title="2.4 Spring的模块组成"></a>2.4 Spring的模块组成</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307152941773.png" alt="image-20230307152941773" style="zoom:80%;" /></p>
 <h4 id="2-5-Spring的两个核心技术"><a href="#2-5-Spring的两个核心技术" class="headerlink" title="2.5 Spring的两个核心技术"></a>2.5 Spring的两个核心技术</h4><p><strong>DI(Dependency Injection)</strong></p>
 <ul>
 <li>保留抽象接口，让组件(Component)依赖于抽象接口，当组件要与其他实际的对象发生依赖关系时，由抽象接口来注入依赖的实际对象</li>
@@ -219,13 +210,11 @@
 <li>利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各部分之间的耦合度降低，提高程序的可重用性，同时提高了开发效率</li>
 </ul>
 <h2 id="依赖注入-DI"><a href="#依赖注入-DI" class="headerlink" title="依赖注入(DI)"></a>依赖注入(DI)</h2><h3 id="1-Spring配置方案"><a href="#1-Spring配置方案" class="headerlink" title="1. Spring配置方案"></a>1. Spring配置方案</h3><h4 id="1-1-自动化配置"><a href="#1-1-自动化配置" class="headerlink" title="1.1 自动化配置"></a>1.1 自动化配置</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CDPlayer</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">MediaPlayer</span> &#123;<br>    <span class="hljs-keyword">private</span> CompactDisc cd;<br><br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">CDPlayer</span><span class="hljs-params">(CompactDisc cd)</span> &#123;<br>        <span class="hljs-built_in">this</span>.cd = cd;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">play</span><span class="hljs-params">()</span> &#123;<br>        cd.play();<br>    &#125;<br>    <br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>组件扫描(component scanning)</li>
 <li>自动装配(autowiring)</li>
 </ul>
 <h5 id="组件扫描"><a href="#组件扫描" class="headerlink" title="组件扫描"></a>组件扫描</h5><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan</span><br></code></pre></td></tr></table></figure>
-
 <p>等价于: <code>&lt;context:component-scan base-package=&quot;soundsystem&quot; /&gt;</code></p>
 <p>可以为 <strong>@ComponentScan</strong> 设置 <strong>basePackages</strong> 属性来显式指定要扫描的基础包。指定时有三种实现方式：</p>
 <ul>
@@ -237,7 +226,6 @@
 <li>创建一个用来进行扫描的空标记接口(Marker interface)</li>
 </ul>
 <h5 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h5><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Autowired</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>可用于构造器</li>
 <li>用在属性 Setter 方法</li>
@@ -247,11 +235,9 @@
 </li>
 </ul>
 <h4 id="1-2-JavaConfig"><a href="#1-2-JavaConfig" class="headerlink" title="1.2 JavaConfig"></a>1.2 JavaConfig</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">CDPlayerConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> CompactDisc <span class="hljs-title function_">compactDisc</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SgtPeppers</span>();<br>    &#125;<br><br><span class="hljs-comment">//    @Bean</span><br><span class="hljs-comment">//    public CDPlayer cdPlayer(CompactDisc cd) &#123;</span><br><span class="hljs-comment">//        return new CDPlayer(cd);</span><br><span class="hljs-comment">//    &#125;</span><br>    <br>    <span class="hljs-meta">@Bean(name=&quot;myCdPlayer&quot;)</span><br>    <span class="hljs-keyword">public</span> CDPlayer <span class="hljs-title function_">cdPlayer</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 不会实例化多个CompactDisc</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CDPlayer</span>(compactDisc());<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>自动化配置有时会行不通，如第三方库，此时需要我们手动创建 Bean</p>
 <ul>
-<li><p>注入</p>
-<ul>
+<li>注入<ul>
 <li>调用方法()</li>
 <li>通过方法参数自动装配(其他配置类，其他方式创建的Bean)</li>
 </ul>
@@ -266,7 +252,6 @@
 </li>
 </ul>
 <h4 id="1-3-XML配置"><a href="#1-3-XML配置" class="headerlink" title="1.3 XML配置"></a>1.3 XML配置</h4><figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;compactDisc&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;soundsystem.SgtPeppers&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;cdPlayer&quot;</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;soundsystem.CDPlayer&quot;</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">constructor-arg</span> <span class="hljs-attr">ref</span>=<span class="hljs-string">&quot;compactDisc&quot;</span> /&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">bean</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>&lt;bean&gt;&lt;/bean&gt;</code></li>
 <li>不能类型检查</li>
@@ -295,11 +280,9 @@
 <li><code>&lt;bean class=&quot;配置类&quot; /&gt;</code></li>
 </ul>
 <h4 id="1-5-根配置"><a href="#1-5-根配置" class="headerlink" title="1.5 根配置"></a>1.5 根配置</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan</span><br><span class="hljs-meta">@Import(其他配置类.class)</span><br><span class="hljs-meta">@ImportResource(xml文件)</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">BootConfig</span>()&#123;&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="2-Profile"><a href="#2-Profile" class="headerlink" title="2. @Profile"></a>2. @Profile</h3><p>根据不同环境创造不同的 Bean</p>
 <p>在 Java 配置中，可以使用 @Profile 注解指定某个 bean 属于哪一个 profile</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 类</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@Profile(&quot;dev&quot;)</span><br><br><span class="hljs-comment">// 方法</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@Profile(&quot;prov&quot;)</span><br></code></pre></td></tr></table></figure>
-
 <p>激活</p>
 <ul>
 <li>spring.profiles.default</li>
@@ -307,7 +290,6 @@
 <li><code>@ActiveProfiles(&quot;dev&quot;)</code></li>
 </ul>
 <h3 id="3-Conditonal"><a href="#3-Conditonal" class="headerlink" title="3. @Conditonal"></a>3. @Conditonal</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// MagicConfig.java</span><br><span class="hljs-meta">@Bean</span><br><span class="hljs-meta">@Conditional(MagicExistsCondition.class)</span><br><span class="hljs-keyword">public</span> MagicBean <span class="hljs-title function_">magicBean</span><span class="hljs-params">()</span> &#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MagicBean</span>();<br>&#125;<br><br><span class="hljs-comment">// 实现 Condition 接口，重写 match 方法</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MagicExistsCondition</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Condition</span> &#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">matches</span><span class="hljs-params">(ConditionContext context, AnnotatedTypeMetadata metadata)</span> &#123;<br>        <span class="hljs-type">Environment</span> <span class="hljs-variable">env</span> <span class="hljs-operator">=</span> context.getEnvironment();<br>        <span class="hljs-keyword">return</span> env.containsProperty(<span class="hljs-string">&quot;magic&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-自动装配的歧义性"><a href="#4-自动装配的歧义性" class="headerlink" title="4. 自动装配的歧义性"></a>4. 自动装配的歧义性</h3><ul>
 <li><code>@Component</code> 或 <code>@Bean</code></li>
 <li><code>@Primary</code>: 标识首选的 Bean</li>
@@ -329,7 +311,6 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Qualifier</span><br><span class="hljs-keyword">public</span> <span class="hljs-meta">@interface</span> Cold&#123;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="5-Bean的作用域"><a href="#5-Bean的作用域" class="headerlink" title="5. Bean的作用域"></a>5. Bean的作用域</h3><p>@Scope 可以与 @Component 和 @Bean 一起使用，指定作用域</p>
 <ul>
 <li>Singleton，单例，在整个应用中，只创建 bean 的一个实例</li>
@@ -338,9 +319,7 @@
 <li>Request，请求，在Web应用中，为每个请求创建一个bean实例</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 使用会话和请求作用域</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@Scope(value=WebApplicationContext.SCOPE_SESSION,</span><br><span class="hljs-meta">       proxyMode=ScopedProxyMode.INTERFACES)</span><br><span class="hljs-keyword">public</span> ShoppingCart <span class="hljs-title function_">cart</span><span class="hljs-params">()</span>&#123;....&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="6-通过代理注入给单例对象"><a href="#6-通过代理注入给单例对象" class="headerlink" title="6. 通过代理注入给单例对象"></a>6. 通过代理注入给单例对象</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230219235848176.png" alt="image-20230219235848176" style="zoom:67%;" />
-
+<h3 id="6-通过代理注入给单例对象"><a href="#6-通过代理注入给单例对象" class="headerlink" title="6. 通过代理注入给单例对象"></a>6. 通过代理注入给单例对象</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230219235848176.png" alt="image-20230219235848176" style="zoom:67%;" /></p>
 <h2 id="面向切面编程-AOP"><a href="#面向切面编程-AOP" class="headerlink" title="面向切面编程(AOP)"></a>面向切面编程(AOP)</h2><h3 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h3><p>软件编程方法的发展</p>
 <ul>
 <li>面向过程编程(POP, Procedure Oriented Programming)</li>
@@ -349,18 +328,22 @@
 <li>函数式编程(FP, Functional Programming)</li>
 <li>反应式编程(RP, Reactive Programming)</li>
 </ul>
-<h3 id="2-AOP"><a href="#2-AOP" class="headerlink" title="2. AOP"></a>2. AOP</h3><table>
+<h3 id="2-AOP"><a href="#2-AOP" class="headerlink" title="2. AOP"></a>2. AOP</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>切入前</th>
 <th>切入后</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194342301.png" alt="image-20230228194342301" style="zoom:80%;" /></td>
 <td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194429951.png" alt="image-20230228194429951" style="zoom:80%;" /></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="2-1-横切关注点-cross-cutting-concern"><a href="#2-1-横切关注点-cross-cutting-concern" class="headerlink" title="2.1 横切关注点(cross-cutting concern)"></a>2.1 横切关注点(cross-cutting concern)</h4><ul>
 <li>日志</li>
 <li>安全</li>
@@ -376,8 +359,7 @@
 </li>
 </ul>
 </blockquote>
-<h4 id="2-2-AOP-图解"><a href="#2-2-AOP-图解" class="headerlink" title="2.2 AOP 图解"></a>2.2 AOP 图解</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194822706.png" alt="image-20230228194822706" style="zoom:80%;" />
-
+<h4 id="2-2-AOP-图解"><a href="#2-2-AOP-图解" class="headerlink" title="2.2 AOP 图解"></a>2.2 AOP 图解</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228194822706.png" alt="image-20230228194822706" style="zoom:80%;" /></p>
 <h4 id="2-3-AOP-术语"><a href="#2-3-AOP-术语" class="headerlink" title="2.3 AOP 术语"></a>2.3 AOP 术语</h4><ul>
 <li>通知(Advice)：切面做什么？什么时候做？代表了切面的逻辑。</li>
 <li>切点(Pointcut)：指定通知要切入到代码的哪些位置，切点表达式</li>
@@ -398,8 +380,7 @@
 <li>类加载期：需要类加载器的处理</li>
 <li>运行期：Spring所采纳的方式，使用代理对象，只支持方法级别的连接点</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228200339433.png" alt="image-20230228200339433" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228200339433.png" alt="image-20230228200339433" style="zoom:80%;" /></p>
 <h3 id="3-Spring-AOP"><a href="#3-Spring-AOP" class="headerlink" title="3. Spring AOP"></a>3. Spring AOP</h3><ul>
 <li><code>@AspectJ</code> 注解驱动的切面</li>
 <li><code>@EnableAspectJAutoProxy</code> 配置类中，开启AspectJ的自动代理机制</li>
@@ -412,20 +393,16 @@
 </ul>
 <h4 id="3-2-AspectJ-切点指示器-pointcut-designator"><a href="#3-2-AspectJ-切点指示器-pointcut-designator" class="headerlink" title="3.2 AspectJ 切点指示器(pointcut designator)"></a>3.2 AspectJ 切点指示器(pointcut designator)</h4><p>例子</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(</span><br><span class="hljs-meta">	&quot;execution(* soundsystem.CompactDisc.playTrack( int ))&quot; +</span><br><span class="hljs-meta">	&quot;&amp;&amp; args(trackNumber)&quot; +  //获取参数</span><br><span class="hljs-meta">	&quot;&amp;&amp; within(soundsystem.*)&quot; + //限定包路径, 只有该包下面的方法可以使用切面</span><br><span class="hljs-meta">	&quot;&amp;&amp; bean(sgtPeppers)&quot; //限定bean名称，或者： &amp;&amp; !bean(sgtPeppers)</span><br><span class="hljs-meta">)</span><br></code></pre></td></tr></table></figure>
-
 <p>获取参数例子</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Pointcut(</span><br><span class="hljs-meta">	&quot;execution(* soundsystem.CompactDisc.playTrack( int )) &quot; +</span><br><span class="hljs-meta">	&quot;&amp;&amp; args(trackNumber)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">trackPlayed</span><span class="hljs-params">(<span class="hljs-type">int</span> trackNumber)</span> &#123;&#125;<br><br><span class="hljs-meta">@Before(&quot;trackPlayed(trackNumber)&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">countTrack</span><span class="hljs-params">(<span class="hljs-type">int</span> trackNumber)</span> &#123;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">currentCount</span> <span class="hljs-operator">=</span> getPlayCount(trackNumber);<br>    trackCounts.put(trackNumber, currentCount + <span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>注解例子</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Around(&quot;@annotation(innerAuth)&quot;)</span> <span class="hljs-comment">//限定注解</span><br><span class="hljs-keyword">public</span> Object <span class="hljs-title function_">innerAround</span><span class="hljs-params">(ProceedingJoinPoint point, InnerAuth innerAuth)</span> &#123; ... &#125;<br><br><span class="hljs-meta">@InnerAuth</span><br><span class="hljs-keyword">public</span> R&lt;Boolean&gt; <span class="hljs-title function_">register</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> SysUser sysUser)</span> &#123; ... &#125;<br></code></pre></td></tr></table></figure>
-
 <h4 id="3-3-引入接口-introduction"><a href="#3-3-引入接口-introduction" class="headerlink" title="3.3 引入接口(introduction)"></a>3.3 引入接口(introduction)</h4><ul>
 <li><code>@DeclareParents</code></li>
 <li>增加新的行为、属性</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Aspect</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">EncoreableIntroducer</span> &#123;<br>    <span class="hljs-meta">@DeclareParents(value = &quot;concert.Performance+&quot;,//后面的+表示应用到所有实现了该接口的Bean</span><br><span class="hljs-meta">            		defaultImpl = DefaultEncoreable.class)</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Encoreable encoreable;<br>&#125;<br><br><span class="hljs-comment">// DefaultEncoreable.java</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DefaultEncoreable</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Encoreable</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">performEncore</span><span class="hljs-params">()</span> &#123; ... &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228212114724.png" alt="image-20230228212114724" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230228212114724.png" alt="image-20230228212114724" style="zoom:80%;" /></p>
 
       </div>
       
@@ -790,5 +767,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

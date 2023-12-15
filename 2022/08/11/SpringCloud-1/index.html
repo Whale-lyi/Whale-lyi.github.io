@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -277,12 +273,13 @@
 </ul>
 <h3 id="1-6-将微服务注册进Eureka集群"><a href="#1-6-将微服务注册进Eureka集群" class="headerlink" title="1.6 将微服务注册进Eureka集群"></a>1.6 将微服务注册进Eureka集群</h3><ul>
 <li><p>修改微服务application.yml</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#表示是否将自己注册进Eurekaserver默认为true。</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span><br>    <span class="hljs-attr">fetchRegistry:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://eureka7001.com:7001/eureka,</span> <span class="hljs-string">http://eureka7002.com:7002/eureka</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-attr">client:</span><br>    <span class="hljs-comment">#表示是否将自己注册进Eurekaserver默认为true。</span><br>    <span class="hljs-attr">register-with-eureka:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment">#是否从EurekaServer抓取已有的注册信息，默认为true。单节点无所谓，集群必须设置为true才能配合ribbon使用负载均衡</span><br>    <span class="hljs-attr">fetchRegistry:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-attr">service-url:</span><br>      <span class="hljs-attr">defaultZone:</span> <span class="hljs-string">http://eureka7001.com:7001/eureka,</span> <span class="hljs-string">http://eureka7002.com:7002/eureka</span><br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 <h3 id="1-7-支付微服务集群配置"><a href="#1-7-支付微服务集群配置" class="headerlink" title="1.7 支付微服务集群配置"></a>1.7 支付微服务集群配置</h3><ul>
 <li><p>构建cloud-provider-payment8002工程，参考cloud-provider-payment8001 (<strong>1.1.3</strong>)</p>
 </li>
-<li><p>修改8001&#x2F;8002的Controller，添加serverPort</p>
+<li><p>修改8001/8002的Controller，添加serverPort</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PaymentController</span>&#123;<br><br>    <span class="hljs-meta">@Value(&quot;$&#123;server.port&#125;&quot;)</span><br>    <span class="hljs-keyword">private</span> String serverPort;<span class="hljs-comment">//添加serverPort</span><br><br>    <span class="hljs-meta">@PostMapping(value = &quot;/payment/create&quot;)</span><br>    <span class="hljs-keyword">public</span> CommonResult <span class="hljs-title function_">create</span><span class="hljs-params">(<span class="hljs-meta">@RequestBody</span> Payment payment)</span><br>    &#123;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> paymentService.create(payment);<br>        log.info(<span class="hljs-string">&quot;*****插入结果：&quot;</span> + result);<br><br>        <span class="hljs-keyword">if</span>(result &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CommonResult</span>(<span class="hljs-number">200</span>, <span class="hljs-string">&quot;插入数据库成功,serverPort: &quot;</span> + serverPort, result);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">CommonResult</span>(<span class="hljs-number">444</span>, <span class="hljs-string">&quot;插入数据库失败&quot;</span>, <span class="hljs-literal">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>负载均衡</strong></p>
@@ -291,18 +288,19 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@RestController</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">OrderController</span> &#123;<br><br>    <span class="hljs-comment">//public static final String PAYMENT_URL = &quot;http://localhost:8001&quot;;</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-variable">PAYMENT_URL</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://CLOUD-PAYMENT-SERVICE&quot;</span>; <span class="hljs-comment">//Eureka注册的服务名</span><br>    <br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>使用@LoadBalanced注解赋予RestTemplate负载均衡的能力</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ApplicationContextConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span> <span class="hljs-comment">//使用@LoadBalanced注解赋予RestTemplate负载均衡的能力</span><br>    <span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title function_">getRestTemplate</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ApplicationContextConfig</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-meta">@LoadBalanced</span> <span class="hljs-comment">//使用@LoadBalanced注解赋予RestTemplate负载均衡的能力</span><br>    <span class="hljs-keyword">public</span> RestTemplate <span class="hljs-title function_">getRestTemplate</span><span class="hljs-params">()</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RestTemplate</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 <li><p>测试</p>
 <ul>
-<li><p>先要启动EurekaServer，7001&#x2F;7002服务</p>
+<li><p>先要启动EurekaServer，7001/7002服务</p>
 </li>
-<li><p>再要启动服务提供者provider，8001&#x2F;8002服务</p>
+<li><p>再要启动服务提供者provider，8001/8002服务</p>
 </li>
 <li><p>浏览器输入 - <a target="_blank" rel="noopener" href="http://localhost/consumer/payment/get/31">http://localhost/consumer/payment/get/31</a></p>
 </li>
-<li><p><strong>结果：负载均衡效果达到，8001&#x2F;8002端口交替出现</strong></p>
+<li><p><strong>结果：负载均衡效果达到，8001/8002端口交替出现</strong></p>
 <p>Ribbon和Eureka整合后Consumer可以直接调用服务而不用再关心地址和端口号，且该服务还有负载功能。</p>
 </li>
 <li><p><strong>相互注册，相互守望</strong></p>
@@ -324,7 +322,8 @@
 <li><p>访问信息有IP信息提示，(就是将鼠标指针移至payment8001，payment8002名下，会有IP地址提示)</p>
 <ul>
 <li><p>修改部分 - YML - eureka.instance.prefer-ip-address</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span> <br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#添加此处</span><br>    <br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8002</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#添加此处</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span> <br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#添加此处</span><br>    <br><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8002</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span> <span class="hljs-comment">#添加此处</span><br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 </ul>
@@ -363,8 +362,7 @@
 <li>为了EurekaClient可以正常运行，防止与EurekaServer网络不通情况下，EurekaServer不会立刻将EurekaClient服务剔除</li>
 </ul>
 </li>
-<li><p><strong>什么是自我保护模式?</strong></p>
-<ul>
+<li><strong>什么是自我保护模式?</strong><ul>
 <li>默认情况下，如果EurekaServer在一定时间内没有接收到某个微服务实例的心跳，EurekaServer将会注销该实例(默认90秒)。但是当网络分区故障发生(延时、卡顿、拥挤)时，微服务与EurekaServer之间无法正常通信，以上行为可能变得非常危险了——因为微服务本身其实是健康的，此时本不应该注销这个微服务。Eureka通过“自我保护模式”来解决这个问题——当EurekaServer节点在短时间内丢失过多客户端时(可能发生了网络分区故障)，那么这个节点就会进入自我保护模式。</li>
 <li><strong>在自我保护模式中，Eureka Server会保护服务注册表中的信息，不再注销任何服务实例</strong>。</li>
 <li>它的设计哲学就是宁可保留错误的服务注册信息，也不盲目注销任何可能健康的服务实例。一句话讲解：<strong>好死不如赖活着</strong>。</li>
@@ -382,7 +380,7 @@
 <ul>
 <li><p>spring-eureka主页会显示出一句：</p>
 <blockquote>
-<p>THE SELF PRESERVATION MODE IS TURNED OFF. THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK&#x2F;OTHER PROBLEMS.</p>
+<p>THE SELF PRESERVATION MODE IS TURNED OFF. THIS MAY NOT PROTECT INSTANCE EXPIRY IN CASE OF NETWORK/OTHER PROBLEMS.</p>
 </blockquote>
 </li>
 </ul>
@@ -393,7 +391,8 @@
 <figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-string">eureka.instance.lease-renewal-interval-in-seconds=30</span><br><span class="hljs-string">eureka.instance.lease-expiration-duration-in-seconds=90</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>修改为</p>
-<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment">#心跳检测与续约时间</span><br>    <span class="hljs-comment">#开发时没置小些，保证服务关闭后注册中心能即使剔除服务</span><br>    <span class="hljs-comment">#Eureka客户端向服务端发送心跳的时间间隔，单位为秒(默认是30秒)</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">1</span><br>    <span class="hljs-comment">#Eureka服务端在收到最后一次心跳后等待时间上限，单位为秒(默认是90秒)，超时将剔除服务</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure></li>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">eureka:</span><br>  <span class="hljs-string">...</span><br>  <span class="hljs-attr">instance:</span><br>    <span class="hljs-attr">instance-id:</span> <span class="hljs-string">payment8001</span><br>    <span class="hljs-attr">prefer-ip-address:</span> <span class="hljs-literal">true</span><br>    <span class="hljs-comment">#心跳检测与续约时间</span><br>    <span class="hljs-comment">#开发时没置小些，保证服务关闭后注册中心能即使剔除服务</span><br>    <span class="hljs-comment">#Eureka客户端向服务端发送心跳的时间间隔，单位为秒(默认是30秒)</span><br>    <span class="hljs-attr">lease-renewal-interval-in-seconds:</span> <span class="hljs-number">1</span><br>    <span class="hljs-comment">#Eureka服务端在收到最后一次心跳后等待时间上限，单位为秒(默认是90秒)，超时将剔除服务</span><br>    <span class="hljs-attr">lease-expiration-duration-in-seconds:</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 <li><p>测试</p>
@@ -768,5 +767,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

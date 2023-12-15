@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -188,19 +184,19 @@
 <li>B: 传输介质标准；100：速率，BASE：基带传输，T：双绞线（F是光纤），X：不同标准</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220624163532468.png" alt="image-20220624163532468"></p>
-<ol start="2">
+<ol>
 <li>C: 根交换机所有端口都是指定端口</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220624164334179.png" alt="image-20220624164334179"></p>
-<ol start="3">
-<li>B: DR 发送链路状态信息到网段上其它所有路由器，用多播地址224.0.0.5，为了保证DR&#x2F;BDR看见网端上所有路由器发送的链路状态，给所有DR&#x2F;BDR的多播地址是224.0.0.6</li>
+<ol>
+<li>B: DR 发送链路状态信息到网段上其它所有路由器，用多播地址224.0.0.5，为了保证DR/BDR看见网端上所有路由器发送的链路状态，给所有DR/BDR的多播地址是224.0.0.6</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706195515353.png" alt="image-20230706195515353"></p>
-<ol start="4">
+<ol>
 <li>B，ISDN的服务之一BRI，2B+1D，B：64kbps，D：16kbps</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220625001634262.png" alt="image-20220625001634262"></p>
-<ol start="5">
+<ol>
 <li>A, 在二层交换机上有三种转发方式：<ul>
 <li>直通转发（cut-through switching ）：只需要等收到目标 MAC 之后就可以开启转发进程。</li>
 <li>存储转发（Store-and-Forward switching）：首先交换机启动接收进程，开始收取帧，从”Preamble”字段开始，一直到最后的 CRC，当这个完整的帧收取完成之后，交换机开始启动转发进程，根据接收帧所示的 DMAC，也就是目标 MAC 地址来决定转发策略，如果在 MAC 地址表中存在，那么转发到相对应的端口；如果不存在，则泛洪到所有端口。</li>
@@ -209,7 +205,7 @@
 </li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220625002226235-16560877481771.png" alt="image-20220625002226235"></p>
-<ol start="6">
+<ol>
 <li>D</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706224420264.png" alt="image-20230706224420264"></p>
@@ -217,27 +213,27 @@
 <li>B</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706200219838.png" alt="image-20230706200219838"></p>
-<ol start="2">
+<ol>
 <li>ABD</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706202301861.png" alt="image-20230706202301861"></p>
-<ol start="3">
+<ol>
 <li>BC</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220625002610080.png" alt="image-20220625002610080"></p>
-<ol start="4">
+<ol>
 <li>BC，传输层和数据链路层有流量控制</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706211512764.png" alt="image-20230706211512764"></p>
-<ol start="5">
+<ol>
 <li>AE</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220625003324294.png" alt="image-20220625003324294"></p>
-<ol start="6">
+<ol>
 <li>AC</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706212056429.png" alt="image-20230706212056429"></p>
-<ol start="6">
+<ol>
 <li>ACD</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220625142755604.png" alt="image-20220625142755604"></p>
@@ -310,9 +306,10 @@
 <p>A(MACR1, MACR4, 110.2, 100.3)</p>
 <p>T(MACR1, MACR4, 110.2, 100.3)</p>
 <p>F(MACR1, MACR4, 110.2, 100.3)</p>
-<p>2. </p>
-<ol start="3">
-<li>A: 202.102.32.0&#x2F;25<br>B: 202.102.32.136&#x2F;29<br>C: 202.102.32.144&#x2F;28<br>D: 202.102.32.128&#x2F;27<br>E: 202.102.32.0&#x2F;24</li>
+<ol>
+<li></li>
+<li><p>A: 202.102.32.0/25<br>B: 202.102.32.136/29<br>C: 202.102.32.144/28<br>D: 202.102.32.128/27<br>E: 202.102.32.0/24</p>
+</li>
 </ol>
 <h2 id="2013"><a href="#2013" class="headerlink" title="2013"></a>2013</h2><p><strong>单选</strong></p>
 <p>1-5：DBBCC</p>
@@ -331,8 +328,7 @@
 </ol>
 <p><strong>名词解释</strong></p>
 <ul>
-<li><p>Full duplex</p>
-<ul>
+<li>Full duplex<ul>
 <li>全双工：通信的双方可以同时发送和接收信息。</li>
 </ul>
 </li>
@@ -341,18 +337,16 @@
 <li>OSI将计算机网络体系结构(architecture）划分为以下七层：物理层、数据链路层、网络层、传输层、会话层、表示层、应用层</li>
 </ul>
 </li>
-<li><p>CSMA&#x2F;CD</p>
+<li><p>CSMA/CD</p>
 <ul>
-<li>载波监听多点接入&#x2F;碰撞检测。“多点接入”就是说明这是总线型网络，“载波监听”就是用电子技术检测总线上有没有其他计算机也在发送。“碰撞检测”也就是“边发送边监听”，即适配器边发送数据边检测信道上的信号电压的变化情况，以便判断自己在发送数据时其他站是否也在发送数据。</li>
+<li>载波监听多点接入/碰撞检测。“多点接入”就是说明这是总线型网络，“载波监听”就是用电子技术检测总线上有没有其他计算机也在发送。“碰撞检测”也就是“边发送边监听”，即适配器边发送数据边检测信道上的信号电压的变化情况，以便判断自己在发送数据时其他站是否也在发送数据。</li>
 </ul>
 </li>
-<li><p>STP</p>
-<ul>
+<li>STP<ul>
 <li>生成树协议，该协议可应用于在网络中建立树形拓扑，消除网络中的环路，并且可以通过一定的方法实现路径冗余，但不是一定可以实现路径冗余</li>
 </ul>
 </li>
-<li><p>RARP</p>
-<ul>
+<li>RARP<ul>
 <li>反向地址转换协议，发出要反向解析的物理地址并希望返回其对应的IP地址</li>
 </ul>
 </li>
@@ -370,15 +364,17 @@
 <li>同</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706212520888.png" alt="image-20230706212520888"></p>
-<p>3. </p>
-<p>A: 192.168.20.0&#x2F;26</p>
-<p>B: 192.168.20.144&#x2F;29</p>
-<p>C: 192.168.20.128&#x2F;28</p>
-<p>D: 192.168.20.64&#x2F;26</p>
-<p>RTA-RTB: 192.168.20.152&#x2F;30</p>
-<p>RTA-RTC: 192.168.20.156&#x2F;30</p>
-<p>RTC-RTD: 192.168.20.160&#x2F;30</p>
-<ol start="4">
+<ol>
+<li><p>A: 192.168.20.0/26</p>
+</li>
+</ol>
+<p>B: 192.168.20.144/29</p>
+<p>C: 192.168.20.128/28</p>
+<p>D: 192.168.20.64/26</p>
+<p>RTA-RTB: 192.168.20.152/30</p>
+<p>RTA-RTC: 192.168.20.156/30</p>
+<p>RTC-RTD: 192.168.20.160/30</p>
+<ol>
 <li>同</li>
 </ol>
 <h2 id="2015"><a href="#2015" class="headerlink" title="2015"></a>2015</h2><p><strong>名词解释</strong></p>
@@ -399,7 +395,7 @@
 <blockquote>
 <ul>
 <li>Split horizon</li>
-<li>CSMA&#x2F;CD</li>
+<li>CSMA/CD</li>
 <li>DNS</li>
 <li>Time Division Multiplexing</li>
 <li>RARP</li>
@@ -407,7 +403,7 @@
 </blockquote>
 <p><strong>简答</strong></p>
 <ol>
-<li>Tell the similarities and differences between the OSI reference model and TCP&#x2F;IP model</li>
+<li>Tell the similarities and differences between the OSI reference model and TCP/IP model</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706223126435.png" alt="image-20230706223126435"></p>
 <ol>
@@ -465,13 +461,16 @@
 <li>PPP</li>
 <li>DNS</li>
 <li>Time Division Multiplexing</li>
-<li>CSMA&#x2F;CD</li>
+<li>CSMA/CD</li>
 <li>Full-delpex</li>
 </ul>
 </blockquote>
 <p><strong>简答</strong></p>
-<p>1. </p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706220133370.png" alt="image-20230706220133370"></p>
+<ol>
+<li><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706220133370.png" alt="image-20230706220133370"></p>
+</li>
+</ol>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -480,7 +479,8 @@
 <th>距离</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>N1</td>
 <td>C</td>
 <td>6</td>
@@ -510,8 +510,10 @@
 <td>F</td>
 <td>4</td>
 </tr>
-</tbody></table>
-<ol start="2">
+</tbody>
+</table>
+</div>
+<ol>
 <li>在 distance-vector-protocol 中写出 3 种解决环路的方法</li>
 </ol>
 <ul>
@@ -520,7 +522,7 @@
 <li>路由中毒</li>
 <li>计时器</li>
 </ul>
-<ol start="3">
+<ol>
 <li>建立连接和中止连接时TCP的过程</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706221144044.png" alt="image-20230706221144044"></p>
@@ -552,7 +554,7 @@
 <li>PPP</li>
 <li>RARP</li>
 <li>ICMP</li>
-<li>CSMA&#x2F;CD</li>
+<li>CSMA/CD</li>
 <li>FTP</li>
 <li>TDM</li>
 <li>DNS</li>
@@ -562,15 +564,15 @@
 <ol>
 <li>RIP，类似往年</li>
 <li>路径，往年</li>
-<li>TCP&#x2F;IP和OSI异同，往年</li>
+<li>TCP/IP和OSI异同，往年</li>
 <li>子网划分，lab1、lab2、lab3各有1个file server、1个打印机和30、32、60计算机<ul>
-<li>分配 128.198.63.0&#x2F;24<ul>
-<li>1：128.198.63.128&#x2F;26</li>
-<li>2：128.198.63.64&#x2F;26</li>
-<li>3：128.198.63.0&#x2F;26</li>
+<li>分配 128.198.63.0/24<ul>
+<li>1：128.198.63.128/26</li>
+<li>2：128.198.63.64/26</li>
+<li>3：128.198.63.0/26</li>
 </ul>
 </li>
-<li>如果给lab1分配128.198.63.0&#x2F;27是否可以？为什么？<ul>
+<li>如果给lab1分配128.198.63.0/27是否可以？为什么？<ul>
 <li>不可以，不够</li>
 </ul>
 </li>
@@ -579,7 +581,7 @@
 <li>001101 画出NRZ码、曼彻斯特码、差分曼彻斯特码</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706224047690.png" alt="image-20230706224047690"></p>
-<ol start="6">
+<ol>
 <li>TCP建立和断开链接过程，往年</li>
 </ol>
 <h2 id="2018"><a href="#2018" class="headerlink" title="2018"></a>2018</h2><p><strong>名词解释</strong></p>
@@ -592,7 +594,7 @@
 <blockquote>
 <ul>
 <li>PPP</li>
-<li>CMDA&#x2F;CD</li>
+<li>CMDA/CD</li>
 <li>CHAP</li>
 <li>ICMP</li>
 <li>TDM</li>
@@ -604,7 +606,7 @@
 <ul>
 <li>RIP路由更新</li>
 <li>子网划分</li>
-<li>OSI model 和 TCP&#x2F;IP model的异同点</li>
+<li>OSI model 和 TCP/IP model的异同点</li>
 <li>不归零、曼彻斯特、差分曼彻斯特编码</li>
 <li>2010年第四题 DTBATF</li>
 </ul>
@@ -646,6 +648,7 @@
 </li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230706225752625.png" alt="image-20230706225752625"></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -656,7 +659,8 @@
 <th>目标IP</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>1</td>
 <td>AA</td>
 <td>BB</td>
@@ -670,8 +674,10 @@
 <td>192.168.100.4</td>
 <td>202.119.32.102</td>
 </tr>
-</tbody></table>
-<ol start="2">
+</tbody>
+</table>
+</div>
+<ol>
 <li>已知UDP报头的16进制表示： 0c 32 00 35 00 1c e1 46<ul>
 <li>源端口？目的端口？<ul>
 <li>3122, 53</li>
@@ -709,8 +715,8 @@
 </ol>
 <p><strong>名词解释</strong></p>
 <ul>
-<li>CSMA&#x2F;CA<ul>
-<li>载波监听多点接入&#x2F;碰撞避免, 发送站点在发送数据前，以控制短帧刺激接收站点发送应答短帧，使接收站点周围的站点监听到该帧，从而在一定时间内避免数据发送</li>
+<li>CSMA/CA<ul>
+<li>载波监听多点接入/碰撞避免, 发送站点在发送数据前，以控制短帧刺激接收站点发送应答短帧，使接收站点周围的站点监听到该帧，从而在一定时间内避免数据发送</li>
 </ul>
 </li>
 </ul>
@@ -1177,5 +1183,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -210,13 +206,13 @@
 <h4 id="主存储器的复用"><a href="#主存储器的复用" class="headerlink" title="主存储器的复用"></a><strong>主存储器的复用</strong></h4><ul>
 <li>多道程序设计需要复用主存</li>
 <li>按照分区复用：<ul>
-<li>主存划分为多个固定&#x2F;可变尺寸的分区</li>
-<li>一个程序&#x2F;程序段占用一个分区</li>
+<li>主存划分为多个固定/可变尺寸的分区</li>
+<li>一个程序/程序段占用一个分区</li>
 </ul>
 </li>
 <li>按照页架(页框)复用：<ul>
 <li>主存划分成多个固定大小的页架</li>
-<li>一个程序&#x2F;程序段占用多个页架</li>
+<li>一个程序/程序段占用多个页架</li>
 </ul>
 </li>
 </ul>
@@ -226,11 +222,9 @@
 <li>页式存储管理：一维逻辑地址空间的程序占用多个主存页架区</li>
 <li>段页式存储管理：段式二维逻辑地址空间的程序占用多个主存页架区</li>
 </ul>
-<h4 id="存储管理模式示意图"><a href="#存储管理模式示意图" class="headerlink" title="存储管理模式示意图"></a><strong>存储管理模式示意图</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024112034401.png" alt="image-20221024112034401" style="zoom:80%;" />
-
+<h4 id="存储管理模式示意图"><a href="#存储管理模式示意图" class="headerlink" title="存储管理模式示意图"></a><strong>存储管理模式示意图</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024112034401.png" alt="image-20221024112034401" style="zoom:80%;" /></p>
 <h3 id="3-1-2-存储管理的功能"><a href="#3-1-2-存储管理的功能" class="headerlink" title="3.1.2 存储管理的功能"></a>3.1.2 存储管理的功能</h3><h4 id="地址转换"><a href="#地址转换" class="headerlink" title="地址转换"></a><strong>地址转换</strong></h4><ul>
-<li><p><strong>地址转换</strong>：又称重定位，即把逻辑地址转换成绝对地址</p>
-</li>
+<li><strong>地址转换</strong>：又称重定位，即把逻辑地址转换成绝对地址</li>
 <li><p><strong>静态重定位</strong>：在程序装入内存时进行地址转换</p>
 <ul>
 <li>由装入程序执行，早期小型OS使用</li>
@@ -301,10 +295,8 @@
 <li>对于用户，计算机系统具有一个容量大得多的主存空间，即<strong>虚拟存储器</strong></li>
 <li>虚拟存储器是一种地址空间扩展技术，通常意义上对用户编程是透明的，除非用户需要进行高性能的程序设计</li>
 </ul>
-<h4 id="虚拟存储器示意"><a href="#虚拟存储器示意" class="headerlink" title="虚拟存储器示意"></a><strong>虚拟存储器示意</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024120103491.png" alt="image-20221024120103491" style="zoom:80%;" />
-
-<h3 id="3-1-4-存储管理的硬件支撑"><a href="#3-1-4-存储管理的硬件支撑" class="headerlink" title="3.1.4 存储管理的硬件支撑"></a>3.1.4 存储管理的硬件支撑</h3><h4 id="存储器的组织层次"><a href="#存储器的组织层次" class="headerlink" title="存储器的组织层次"></a><strong>存储器的组织层次</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027141452301.png" alt="image-20221027141452301" style="zoom:80%;" />
-
+<h4 id="虚拟存储器示意"><a href="#虚拟存储器示意" class="headerlink" title="虚拟存储器示意"></a><strong>虚拟存储器示意</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024120103491.png" alt="image-20221024120103491" style="zoom:80%;" /></p>
+<h3 id="3-1-4-存储管理的硬件支撑"><a href="#3-1-4-存储管理的硬件支撑" class="headerlink" title="3.1.4 存储管理的硬件支撑"></a>3.1.4 存储管理的硬件支撑</h3><h4 id="存储器的组织层次"><a href="#存储器的组织层次" class="headerlink" title="存储器的组织层次"></a><strong>存储器的组织层次</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027141452301.png" alt="image-20221027141452301" style="zoom:80%;" /></p>
 <h4 id="存储管理涉及的存储对象"><a href="#存储管理涉及的存储对象" class="headerlink" title="存储管理涉及的存储对象"></a><strong>存储管理涉及的存储对象</strong></h4><ul>
 <li>存储管理是OS管理主存储器的软件部分</li>
 <li>为获得更好的处理性能，部分主存程序与数据（特别是关键性能数据）被调入Cache，存储管理需要对其进行管理，甚至包括对联想存储器的管理</li>
@@ -324,28 +316,22 @@
 <li>由于CPU芯片面积和成本，Cache很小</li>
 <li>根据成本控制，划分为L1、L2、L3三级</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027143738934.png" alt="image-20221027143738934" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027143738934.png" alt="image-20221027143738934" style="zoom:80%;" /></p>
 <h4 id="高速缓存存储器的分级"><a href="#高速缓存存储器的分级" class="headerlink" title="高速缓存存储器的分级"></a><strong>高速缓存存储器的分级</strong></h4><ul>
 <li>L1 Cache：分为数据缓存和指令缓存；内置；其成本最高，对CPU的性能影响最大；通常在32KB-256KB之间</li>
 <li>L2 Cache：分内置和外置两种，后者性能低一些；通常在512KB-8MB之间</li>
 <li>L3 Cache：多为外置，在游戏和服务器领域有效；但对很多应用来说，<strong>总线改善</strong>比<strong>设置L3</strong>更加有利于提升系统性能</li>
 </ul>
-<h4 id="各类处理器架构"><a href="#各类处理器架构" class="headerlink" title="各类处理器架构"></a><strong>各类处理器架构</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027143949652.png" alt="image-20221027143949652" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027144502096.png" alt="image-20221027144502096" style="zoom:80%;" />
-
-<h4 id="地址转换-存储保护的硬件支撑"><a href="#地址转换-存储保护的硬件支撑" class="headerlink" title="地址转换&#x2F;存储保护的硬件支撑"></a><strong>地址转换&#x2F;存储保护的硬件支撑</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027144710152.png" alt="image-20221027144710152" style="zoom:80%;" />
-
+<h4 id="各类处理器架构"><a href="#各类处理器架构" class="headerlink" title="各类处理器架构"></a><strong>各类处理器架构</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027143949652.png" alt="image-20221027143949652" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027144502096.png" alt="image-20221027144502096" style="zoom:80%;" /></p>
+<h4 id="地址转换-存储保护的硬件支撑"><a href="#地址转换-存储保护的硬件支撑" class="headerlink" title="地址转换/存储保护的硬件支撑"></a><strong>地址转换/存储保护的硬件支撑</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027144710152.png" alt="image-20221027144710152" style="zoom:80%;" /></p>
 <h4 id="存储管理与硬件支撑"><a href="#存储管理与硬件支撑" class="headerlink" title="存储管理与硬件支撑"></a><strong>存储管理与硬件支撑</strong></h4><ul>
-<li><p>鉴于程序执行与数据访问的局部性原理，存储管理软件使用Cache可以大幅度提升程序执行效率</p>
-</li>
+<li>鉴于程序执行与数据访问的局部性原理，存储管理软件使用Cache可以大幅度提升程序执行效率</li>
 <li><p>动态重定位、存储保护等，若无硬件支撑在效率上是无意义的，即无实现价值</p>
 </li>
 <li><p>无虚拟地址中断，虚拟存储器无法实现</p>
 </li>
-<li><p>无页面替换等硬件支撑机制，虚拟存储器在效率上是无意义的</p>
-</li>
+<li>无页面替换等硬件支撑机制，虚拟存储器在效率上是无意义的</li>
 </ul>
 <h2 id="3-2-单连续分区存储管理"><a href="#3-2-单连续分区存储管理" class="headerlink" title="3.2 单连续分区存储管理"></a>3.2 单连续分区存储管理</h2><h3 id="3-2-1-单连续分区存储管理"><a href="#3-2-1-单连续分区存储管理" class="headerlink" title="3.2.1 单连续分区存储管理"></a>3.2.1 单连续分区存储管理</h3><h4 id="单连续分区存储管理"><a href="#单连续分区存储管理" class="headerlink" title="单连续分区存储管理"></a><strong>单连续分区存储管理</strong></h4><ul>
 <li>每个进程占用一个物理上完全连续的存储空间(区域)</li>
@@ -363,8 +349,7 @@
 <h4 id="单用户连续分区存储管理示意"><a href="#单用户连续分区存储管理示意" class="headerlink" title="单用户连续分区存储管理示意"></a><strong>单用户连续分区存储管理示意</strong></h4><ul>
 <li>静态重定位：在装入一个作业时，把该作业中程序的指令地址和数据地址<strong>全部转换成绝对地址</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150255136.png" alt="image-20221027150255136" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150255136.png" alt="image-20221027150255136" style="zoom:80%;" /></p>
 <h4 id="固定分区存储管理的基本思想"><a href="#固定分区存储管理的基本思想" class="headerlink" title="固定分区存储管理的基本思想"></a><strong>固定分区存储管理的基本思想</strong></h4><ul>
 <li>支持多个分区</li>
 <li>分区数量固定</li>
@@ -373,18 +358,18 @@
 <li>硬件实现代价低</li>
 <li>早期OS采用</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150427931.png" alt="image-20221027150427931" style="zoom:50%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150427931.png" alt="image-20221027150427931" style="zoom:50%;" /></p>
 <h4 id="固定分区方式的主存分配"><a href="#固定分区方式的主存分配" class="headerlink" title="固定分区方式的主存分配"></a><strong>固定分区方式的主存分配</strong></h4><ul>
 <li><p>主存分配表</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150540542.png" alt="image-20221027150540542" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150540542.png" alt="image-20221027150540542" style="zoom:80%;" /></p>
 </li>
 <li><p>主存分配与去配</p>
 </li>
 </ul>
 <h4 id="固定分区方式的地址转换"><a href="#固定分区方式的地址转换" class="headerlink" title="固定分区方式的地址转换"></a><strong>固定分区方式的地址转换</strong></h4><ul>
 <li><p>硬件实现机制与动态重定位</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027151008590.png" alt="image-20221027151008590" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027151008590.png" alt="image-20221027151008590" style="zoom:80%;" /></p>
+</li>
 </ul>
 <h4 id="可变分区存储管理概述"><a href="#可变分区存储管理概述" class="headerlink" title="可变分区存储管理概述"></a><strong>可变分区存储管理概述</strong></h4><ul>
 <li><p>固定分区存储管理不够灵活，既不适应大尺寸程序，又存在内存<strong>内零头</strong>，有浪费</p>
@@ -403,13 +388,11 @@
 </li>
 <li>由于分区大小按照进程实际需要量来确定，因此分区个数是随机变化的</li>
 </ul>
-<h4 id="可变分区方式的内存分配示例"><a href="#可变分区方式的内存分配示例" class="headerlink" title="可变分区方式的内存分配示例"></a><strong>可变分区方式的内存分配示例</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027151836071.png" alt="image-20221027151836071" style="zoom:80%;" />
-
+<h4 id="可变分区方式的内存分配示例"><a href="#可变分区方式的内存分配示例" class="headerlink" title="可变分区方式的内存分配示例"></a><strong>可变分区方式的内存分配示例</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027151836071.png" alt="image-20221027151836071" style="zoom:80%;" /></p>
 <h4 id="可变分区方式的主存分配表"><a href="#可变分区方式的主存分配表" class="headerlink" title="可变分区方式的主存分配表"></a><strong>可变分区方式的主存分配表</strong></h4><ul>
 <li>已分配区表与未分配区表，采用链表</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027152126219.png" alt="image-20221027152126219" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027152126219.png" alt="image-20221027152126219" style="zoom:80%;" /></p>
 <h4 id="可变分区方式的内存分配"><a href="#可变分区方式的内存分配" class="headerlink" title="可变分区方式的内存分配"></a><strong>可变分区方式的内存分配</strong></h4><ul>
 <li>最先适应分配算法<ul>
 <li>从低地址向高地址扫描，所查找到的第一个可以容纳该进程的空闲区就分配给进程</li>
@@ -428,13 +411,11 @@
 </ul>
 </li>
 </ul>
-<h4 id="可变分区方式的内存回收"><a href="#可变分区方式的内存回收" class="headerlink" title="可变分区方式的内存回收"></a><strong>可变分区方式的内存回收</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153045763.png" alt="image-20221027153045763" style="zoom:80%;" />
-
+<h4 id="可变分区方式的内存回收"><a href="#可变分区方式的内存回收" class="headerlink" title="可变分区方式的内存回收"></a><strong>可变分区方式的内存回收</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153045763.png" alt="image-20221027153045763" style="zoom:80%;" /></p>
 <h4 id="地址转换与存储保护"><a href="#地址转换与存储保护" class="headerlink" title="地址转换与存储保护"></a><strong>地址转换与存储保护</strong></h4><ul>
 <li>硬件实现机制与动态重定位</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153115917.png" alt="image-20221027153115917" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153115917.png" alt="image-20221027153115917" style="zoom:80%;" /></p>
 <h4 id="可变分区方式的内存零头"><a href="#可变分区方式的内存零头" class="headerlink" title="可变分区方式的内存零头"></a><strong>可变分区方式的内存零头</strong></h4><ul>
 <li>固定分区方式会产生内存<strong>内零头</strong></li>
 <li>可变分区方式也会随着进程的内存分配产生一些小的不可用的内存分区，称为<strong>内存外零头</strong></li>
@@ -445,10 +426,8 @@
 <li>移动分区以解决内存外零头</li>
 <li>需要动态重定位支撑</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153332243.png" alt="image-20221027153332243" style="zoom:80%;" />
-
-<h4 id="移动技术的工作流程"><a href="#移动技术的工作流程" class="headerlink" title="移动技术的工作流程"></a><strong>移动技术的工作流程</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153402167.png" alt="image-20221027153402167" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153332243.png" alt="image-20221027153332243" style="zoom:80%;" /></p>
+<h4 id="移动技术的工作流程"><a href="#移动技术的工作流程" class="headerlink" title="移动技术的工作流程"></a><strong>移动技术的工作流程</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153402167.png" alt="image-20221027153402167" style="zoom:80%;" /></p>
 <h2 id="3-3-页式存储管理"><a href="#3-3-页式存储管理" class="headerlink" title="3.3 页式存储管理"></a>3.3 页式存储管理</h2><h3 id="3-3-1-页式存储管理的基本原理"><a href="#3-3-1-页式存储管理的基本原理" class="headerlink" title="3.3.1 页式存储管理的基本原理"></a>3.3.1 页式存储管理的基本原理</h3><h4 id="页式存储管理的基本原理"><a href="#页式存储管理的基本原理" class="headerlink" title="页式存储管理的基本原理"></a><strong>页式存储管理的基本原理</strong></h4><ul>
 <li><p>分页存储器将主存划分成多个大小相等的<strong>页架</strong></p>
 </li>
@@ -457,31 +436,29 @@
 <li><p>不同的页可以放在不同页架中，不需要连续</p>
 </li>
 <li><p><strong>页表</strong>用于维系进程的主存<strong>完整性</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154114015.png" alt="image-20221027154114015" style="zoom:67%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154114015.png" alt="image-20221027154114015" style="zoom:67%;" /></p>
+</li>
 </ul>
 <h4 id="页式存储管理中的地址"><a href="#页式存储管理中的地址" class="headerlink" title="页式存储管理中的地址"></a><strong>页式存储管理中的地址</strong></h4><ul>
-<li><p>页式存储管理的<strong>逻辑地址</strong>由两部分组成，**页号和单元号(页内偏移量 offset)**，逻辑地址形式：</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154312547.png" alt="image-20221027154312547" style="zoom:50%;" />
+<li><p>页式存储管理的<strong>逻辑地址</strong>由两部分组成，<strong>页号和单元号(页内偏移量 offset)</strong>，逻辑地址形式：</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154312547.png" alt="image-20221027154312547" style="zoom:50%;" /></p>
 </li>
 <li><p>页式存储管理的<strong>物理地址</strong>也有两部分组成：<strong>页架号和单元号</strong>，物理地址形式：</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154358621.png" alt="image-20221027154358621" style="zoom:50%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154358621.png" alt="image-20221027154358621" style="zoom:50%;" /></p>
 </li>
 <li><p>地址转换可以通过查页表完成</p>
 </li>
-<li><p>页内地址逐一连续对应</p>
-<ul>
+<li>页内地址逐一连续对应<ul>
 <li>所以地址转换时只需要从页号映射到页框号</li>
 </ul>
 </li>
 </ul>
-<h4 id="页式存储管理的地址转换思路"><a href="#页式存储管理的地址转换思路" class="headerlink" title="页式存储管理的地址转换思路"></a><strong>页式存储管理的地址转换思路</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154436828.png" alt="image-20221027154436828" style="zoom:80%;" />
-
-<h4 id="页式存储管理的内存分配-去配"><a href="#页式存储管理的内存分配-去配" class="headerlink" title="页式存储管理的内存分配&#x2F;去配"></a><strong>页式存储管理的内存分配&#x2F;去配</strong></h4><ul>
+<h4 id="页式存储管理的地址转换思路"><a href="#页式存储管理的地址转换思路" class="headerlink" title="页式存储管理的地址转换思路"></a><strong>页式存储管理的地址转换思路</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154436828.png" alt="image-20221027154436828" style="zoom:80%;" /></p>
+<h4 id="页式存储管理的内存分配-去配"><a href="#页式存储管理的内存分配-去配" class="headerlink" title="页式存储管理的内存分配/去配"></a><strong>页式存储管理的内存分配/去配</strong></h4><ul>
 <li>可用一张<strong>位示图</strong>来记录主存分配情况</li>
 <li>建立进程页表维护主存逻辑完整性</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154908427.png" alt="image-20221027154908427" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154908427.png" alt="image-20221027154908427" style="zoom:80%;" /></p>
 <h4 id="页的共享"><a href="#页的共享" class="headerlink" title="页的共享"></a><strong>页的共享</strong></h4><ul>
 <li><p>页式存储管理能够实现多个进程共享程序和数据</p>
 </li>
@@ -519,7 +496,7 @@
 </ul>
 <h4 id="引入快表后的地址转换代价"><a href="#引入快表后的地址转换代价" class="headerlink" title="引入快表后的地址转换代价"></a><strong>引入快表后的地址转换代价</strong></h4><ul>
 <li>采用<strong>快表</strong>后，可以加快地址转换速度</li>
-<li>假定主存访问时间为200毫微秒，快表访问时间为40毫微秒，查快表的命中率是90%，平均地址转换代价为 (200+40)*90%+(200+200+40)*10%&#x3D;260毫微秒</li>
+<li>假定主存访问时间为200毫微秒，快表访问时间为40毫微秒，查快表的命中率是90%，平均地址转换代价为 (200+40)*90%+(200+200+40)*10%=260毫微秒</li>
 <li>比两次访问主存的时间（400毫微秒）<strong>下降了35%</strong></li>
 </ul>
 <h4 id="基于快表的地址转换流程"><a href="#基于快表的地址转换流程" class="headerlink" title="基于快表的地址转换流程"></a><strong>基于快表的地址转换流程</strong></h4><ul>
@@ -532,10 +509,8 @@
 <li>进程表中登记了每个进程的页表</li>
 <li>进程占有处理器运行时，其<strong>页表起始地址和长度</strong>送入<strong>页表控制寄存器</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031104352984.png" alt="image-20221031104352984" style="zoom:80%;" />
-
-<h4 id="多道程序环境下的地址转换"><a href="#多道程序环境下的地址转换" class="headerlink" title="多道程序环境下的地址转换"></a><strong>多道程序环境下的地址转换</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031104727130.png" alt="image-20221031104727130" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031104352984.png" alt="image-20221031104352984" style="zoom:80%;" /></p>
+<h4 id="多道程序环境下的地址转换"><a href="#多道程序环境下的地址转换" class="headerlink" title="多道程序环境下的地址转换"></a><strong>多道程序环境下的地址转换</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031104727130.png" alt="image-20221031104727130" style="zoom:80%;" /></p>
 <h3 id="3-3-3-页式虚拟存储管理"><a href="#3-3-3-页式虚拟存储管理" class="headerlink" title="3.3.3 页式虚拟存储管理"></a>3.3.3 页式虚拟存储管理</h3><h4 id="页式虚拟存储管理的基本思想"><a href="#页式虚拟存储管理的基本思想" class="headerlink" title="页式虚拟存储管理的基本思想"></a><strong>页式虚拟存储管理的基本思想</strong></h4><ul>
 <li>把进程全部页面装入虚拟存储器，执行时先把部分页面装入实际内存，然后，根据执行行为，动态调入不在主存的页，同时进行必要的页面调出</li>
 <li>现代OS的<strong>主流存储管理技术</strong></li>
@@ -548,8 +523,7 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031105524974.png" alt="image-20221031105524974" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031105524974.png" alt="image-20221031105524974" style="zoom: 67%;" /></p>
 <h4 id="页式虚拟存储管理的实现"><a href="#页式虚拟存储管理的实现" class="headerlink" title="页式虚拟存储管理的实现"></a><strong>页式虚拟存储管理的实现</strong></h4><ul>
 <li>CPU处理地址<ul>
 <li>若页驻留，则获得块号形成绝对地址</li>
@@ -562,14 +536,10 @@
 </ul>
 </li>
 </ul>
-<h4 id="页式虚拟存储管理的地址转换"><a href="#页式虚拟存储管理的地址转换" class="headerlink" title="页式虚拟存储管理的地址转换"></a><strong>页式虚拟存储管理的地址转换</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031111641724.png" alt="image-20221031111641724" style="zoom:80%;" />
-
-<h4 id="缺页中断的处理流程"><a href="#缺页中断的处理流程" class="headerlink" title="缺页中断的处理流程"></a><strong>缺页中断的处理流程</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031111843806.png" alt="image-20221031111843806" style="zoom: 67%;" />
-
-<h4 id="补充：TLB-快表"><a href="#补充：TLB-快表" class="headerlink" title="补充：TLB(快表)"></a><strong>补充：TLB(快表)</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031112900090.png" alt="image-20221031112900090" style="zoom: 67%;" />
-
-<h4 id="补充：Paging-Hardware-With-TLB"><a href="#补充：Paging-Hardware-With-TLB" class="headerlink" title="补充：Paging Hardware With TLB"></a><strong>补充：Paging Hardware With TLB</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031112932254.png" alt="image-20221031112931920" style="zoom:80%;" />
-
+<h4 id="页式虚拟存储管理的地址转换"><a href="#页式虚拟存储管理的地址转换" class="headerlink" title="页式虚拟存储管理的地址转换"></a><strong>页式虚拟存储管理的地址转换</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031111641724.png" alt="image-20221031111641724" style="zoom:80%;" /></p>
+<h4 id="缺页中断的处理流程"><a href="#缺页中断的处理流程" class="headerlink" title="缺页中断的处理流程"></a><strong>缺页中断的处理流程</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031111843806.png" alt="image-20221031111843806" style="zoom: 67%;" /></p>
+<h4 id="补充：TLB-快表"><a href="#补充：TLB-快表" class="headerlink" title="补充：TLB(快表)"></a><strong>补充：TLB(快表)</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031112900090.png" alt="image-20221031112900090" style="zoom: 67%;" /></p>
+<h4 id="补充：Paging-Hardware-With-TLB"><a href="#补充：Paging-Hardware-With-TLB" class="headerlink" title="补充：Paging Hardware With TLB"></a><strong>补充：Paging Hardware With TLB</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031112932254.png" alt="image-20221031112931920" style="zoom:80%;" /></p>
 <h3 id="3-3-4-页面调度"><a href="#3-3-4-页面调度" class="headerlink" title="3.3.4 页面调度"></a>3.3.4 页面调度</h3><h4 id="页面调度"><a href="#页面调度" class="headerlink" title="页面调度"></a><strong>页面调度</strong></h4><ul>
 <li>当主存空间已满而又需要装入新页时，页式虚拟存储管理必须按照一定的算法把已在主存的一些页调出去</li>
 <li>选择淘汰页的工作称为<strong>页面调度</strong></li>
@@ -579,8 +549,8 @@
 </ul>
 <h4 id="缺页中断率"><a href="#缺页中断率" class="headerlink" title="缺页中断率"></a><strong>缺页中断率</strong></h4><ul>
 <li>假定进程P共 n 页，系统分配页架数 m 个</li>
-<li>P运行中成功访问次数为S，不成功访问次数为F，总访问次数 A&#x3D;S+F</li>
-<li><strong>缺页中断率</strong>定义为：f&#x3D;F&#x2F;A</li>
+<li>P运行中成功访问次数为S，不成功访问次数为F，总访问次数 A=S+F</li>
+<li><strong>缺页中断率</strong>定义为：f=F/A</li>
 <li>缺页中断率是衡量存储管理性能和用户编程水平的重要依据</li>
 </ul>
 <h4 id="影响缺页中断率的因素"><a href="#影响缺页中断率的因素" class="headerlink" title="影响缺页中断率的因素"></a><strong>影响缺页中断率的因素</strong></h4><ul>
@@ -591,28 +561,24 @@
 <h4 id="用户编程的例子"><a href="#用户编程的例子" class="headerlink" title="用户编程的例子"></a><strong>用户编程的例子</strong></h4><ul>
 <li>程序将数组置为“0”，假定仅分得一个主存页架，页面尺寸为128个字，数组元素按行存放，开始时第一页在主存</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031113150739.png" alt="image-20221031113150739" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031113150739.png" alt="image-20221031113150739" style="zoom:67%;" /></p>
 <h4 id="OPT页面调度算法"><a href="#OPT页面调度算法" class="headerlink" title="OPT页面调度算法"></a><strong>OPT页面调度算法</strong></h4><ul>
 <li>理想的调度算法是：当要调入新页面时，首先淘汰以后不再访问的页，然后选择距现在最长时间后再访问的页</li>
 <li>该算法由Belady出，称Belady算法，又称最佳算法(OPT)</li>
 <li>OPT只可模拟，不可实现</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115319441.png" alt="image-20221031115319441" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115319441.png" alt="image-20221031115319441" style="zoom:80%;" /></p>
 <h4 id="先进先出FIFO页面调度算法"><a href="#先进先出FIFO页面调度算法" class="headerlink" title="先进先出FIFO页面调度算法"></a><strong>先进先出FIFO页面调度算法</strong></h4><ul>
 <li>总是淘汰最先调入主存的那一页，或者说主存驻留时间最长的那一页(常驻的除外)</li>
 <li>模拟的是程序执行的顺序性，有一定合理性</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115356690.png" alt="image-20221031115356690" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115356690.png" alt="image-20221031115356690" style="zoom:80%;" /></p>
 <h4 id="最近最少用LRU页面调度算法"><a href="#最近最少用LRU页面调度算法" class="headerlink" title="最近最少用LRU页面调度算法"></a><strong>最近最少用LRU页面调度算法</strong></h4><ul>
 <li>淘汰最近一段时间较久未被访问的那一页，即那些刚被使用过的页面，可能马上还要被使用到</li>
 <li>模拟了程序执行的局部属性，既考虑了循环性又兼顾了顺序性</li>
 <li>严格实现的代价大(需要维持特殊队列)</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115610482.png" alt="image-20221031115610482" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115610482.png" alt="image-20221031115610482" style="zoom:80%;" /></p>
 <h4 id="LRU算法的模拟实现"><a href="#LRU算法的模拟实现" class="headerlink" title="LRU算法的模拟实现"></a><strong>LRU算法的模拟实现</strong></h4><ul>
 <li>每页建一个引用标志，供硬件使用</li>
 <li>设置一个时间间隔中断：中断时页引用标志置0</li>
@@ -632,8 +598,7 @@
 <li>队列指针则相当于钟表面上的表针，指向可能要淘汰的页面</li>
 <li>使用页引用标志位</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115733235.png" alt="image-20221031115733235" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115733235.png" alt="image-20221031115733235" style="zoom:80%;" /></p>
 <h4 id="CLOCK算法的工作流程"><a href="#CLOCK算法的工作流程" class="headerlink" title="CLOCK算法的工作流程"></a><strong>CLOCK算法的工作流程</strong></h4><ul>
 <li>页面调入主存时，其引用标志位置1</li>
 <li>访问主存页面时，其引用标志位置1</li>
@@ -646,7 +611,7 @@
 <h3 id="3-3-5-反置页表-详见补充4"><a href="#3-3-5-反置页表-详见补充4" class="headerlink" title="3.3.5 反置页表(详见补充4)"></a>3.3.5 反置页表(详见补充4)</h3><h4 id="反置页表的提出"><a href="#反置页表的提出" class="headerlink" title="反置页表的提出"></a><strong>反置页表的提出</strong></h4><ul>
 <li>页表及相关硬件机制在地址转换、存储保护、虚拟地址访问中发挥了<strong>关键作用</strong></li>
 <li>为页式存储管理设置专门硬件机构</li>
-<li>内存管理单元MMU：CPU管理虚拟&#x2F;物理存储器的控制线路，把虚拟地址映射为物理地址，并提供存储保护，必要时确定淘汰页面</li>
+<li>内存管理单元MMU：CPU管理虚拟/物理存储器的控制线路，把虚拟地址映射为物理地址，并提供存储保护，必要时确定淘汰页面</li>
 <li>反置页表IPT：MMU用的数据结构</li>
 </ul>
 <h4 id="反置页表的基本思想"><a href="#反置页表的基本思想" class="headerlink" title="反置页表的基本思想"></a><strong>反置页表的基本思想</strong></h4><ul>
@@ -665,8 +630,7 @@
 <li>MMU遍历哈希链找到所需进程的虚页号，该项的索引就是页架号，通过拼接位移便可生成物理地址</li>
 <li>若遍历整个反置页表中未能找到匹配页表项，说明该页不在内存，产生缺页中断，请求操作系统调入</li>
 </ul>
-<h4 id="反置页表下的地址转换示意"><a href="#反置页表下的地址转换示意" class="headerlink" title="反置页表下的地址转换示意"></a><strong>反置页表下的地址转换示意</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107145644332.png" alt="image-20221107145644332" style="zoom:80%;" />
-
+<h4 id="反置页表下的地址转换示意"><a href="#反置页表下的地址转换示意" class="headerlink" title="反置页表下的地址转换示意"></a><strong>反置页表下的地址转换示意</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107145644332.png" alt="image-20221107145644332" style="zoom:80%;" /></p>
 <h2 id="3-4-段式存储管理"><a href="#3-4-段式存储管理" class="headerlink" title="3.4 段式存储管理"></a>3.4 段式存储管理</h2><h3 id="3-4-1-段式存储管理"><a href="#3-4-1-段式存储管理" class="headerlink" title="3.4.1 段式存储管理"></a>3.4.1 段式存储管理</h3><h4 id="段式程序设计-1"><a href="#段式程序设计-1" class="headerlink" title="段式程序设计"></a><strong>段式程序设计</strong></h4><ul>
 <li>每个程序可由若干段组成，每一段都可以从“0”开始编址，段内的地址是连续的</li>
 <li>分段存储器的逻辑地址由两部分组成<ul>
@@ -674,15 +638,13 @@
 </ul>
 </li>
 </ul>
-<h4 id="程序的分段结构"><a href="#程序的分段结构" class="headerlink" title="程序的分段结构"></a><strong>程序的分段结构</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107115819595.png" alt="image-20221107115819595" style="zoom:80%;" />
-
+<h4 id="程序的分段结构"><a href="#程序的分段结构" class="headerlink" title="程序的分段结构"></a><strong>程序的分段结构</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107115819595.png" alt="image-20221107115819595" style="zoom:80%;" /></p>
 <h4 id="段式存储管理的基本思想"><a href="#段式存储管理的基本思想" class="headerlink" title="段式存储管理的基本思想"></a><strong>段式存储管理的基本思想</strong></h4><ul>
 <li>段式存储管理基于可变分区存储管理实现，一个进程要占用多个分区</li>
 <li>硬件需要增加一组用户可见的段地址寄存器（代码段、数据段、堆栈段，附加段），供地址转换使用 </li>
 <li>存储管理需要增加设置一个段表，每个段占用一个段表项，包括：段始址、段限长，以及存储保护、可移动、可扩充等标志位</li>
 </ul>
-<h4 id="段式存储管理的地址转换流程"><a href="#段式存储管理的地址转换流程" class="headerlink" title="段式存储管理的地址转换流程"></a><strong>段式存储管理的地址转换流程</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107115940791.png" alt="image-20221107115940791" style="zoom:80%;" />
-
+<h4 id="段式存储管理的地址转换流程"><a href="#段式存储管理的地址转换流程" class="headerlink" title="段式存储管理的地址转换流程"></a><strong>段式存储管理的地址转换流程</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107115940791.png" alt="image-20221107115940791" style="zoom:80%;" /></p>
 <h4 id="段的共享"><a href="#段的共享" class="headerlink" title="段的共享"></a><strong>段的共享</strong></h4><ul>
 <li>通过不同进程段表中的项指向同一个段基址来实现</li>
 <li>对共享段的信息必须进行保护，如规定只能读出不能写入，不满足保护条件则产生保护中断</li>
@@ -701,22 +663,17 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120307367.png" alt="image-20221107120307367" style="zoom:80%;" />
-
-<h4 id="段式虚拟存储管理的地址转换"><a href="#段式虚拟存储管理的地址转换" class="headerlink" title="段式虚拟存储管理的地址转换"></a><strong>段式虚拟存储管理的地址转换</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120330137.png" alt="image-20221107120330137" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120307367.png" alt="image-20221107120307367" style="zoom:80%;" /></p>
+<h4 id="段式虚拟存储管理的地址转换"><a href="#段式虚拟存储管理的地址转换" class="headerlink" title="段式虚拟存储管理的地址转换"></a><strong>段式虚拟存储管理的地址转换</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120330137.png" alt="image-20221107120330137" style="zoom:80%;" /></p>
 <h3 id="3-4-3-段页式存储管理"><a href="#3-4-3-段页式存储管理" class="headerlink" title="3.4.3 段页式存储管理"></a>3.4.3 段页式存储管理</h3><h4 id="段页式存储管理的基本思想"><a href="#段页式存储管理的基本思想" class="headerlink" title="段页式存储管理的基本思想"></a><strong>段页式存储管理的基本思想</strong></h4><ul>
 <li>段式存储管理可以基于页式存储管理实现</li>
 <li>每一段不必占据连续的存储空间，可存放在不连续的主存页架中</li>
 <li>能够扩充为段页式虚拟存储管理 </li>
 <li>装入部分段，或者装入段中部分页面</li>
 </ul>
-<h4 id="段页式存储管理的段表和页表"><a href="#段页式存储管理的段表和页表" class="headerlink" title="段页式存储管理的段表和页表"></a><strong>段页式存储管理的段表和页表</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120528299.png" alt="image-20221107120528299" style="zoom:80%;" />
-
-<h4 id="段页式存储管理的地址转换"><a href="#段页式存储管理的地址转换" class="headerlink" title="段页式存储管理的地址转换"></a><strong>段页式存储管理的地址转换</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150325303.png" alt="image-20221107150325303" style="zoom:80%;" />
-
-<h4 id="段页式虚拟存储管理的地址转换"><a href="#段页式虚拟存储管理的地址转换" class="headerlink" title="段页式虚拟存储管理的地址转换"></a><strong>段页式虚拟存储管理的地址转换</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150517462.png" alt="image-20221107150517462" style="zoom:80%;" />
-
+<h4 id="段页式存储管理的段表和页表"><a href="#段页式存储管理的段表和页表" class="headerlink" title="段页式存储管理的段表和页表"></a><strong>段页式存储管理的段表和页表</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120528299.png" alt="image-20221107120528299" style="zoom:80%;" /></p>
+<h4 id="段页式存储管理的地址转换"><a href="#段页式存储管理的地址转换" class="headerlink" title="段页式存储管理的地址转换"></a><strong>段页式存储管理的地址转换</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150325303.png" alt="image-20221107150325303" style="zoom:80%;" /></p>
+<h4 id="段页式虚拟存储管理的地址转换"><a href="#段页式虚拟存储管理的地址转换" class="headerlink" title="段页式虚拟存储管理的地址转换"></a><strong>段页式虚拟存储管理的地址转换</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150517462.png" alt="image-20221107150517462" style="zoom:80%;" /></p>
 <h2 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h2><h3 id="补充1：虚拟存储器的概念-补充局部性特征"><a href="#补充1：虚拟存储器的概念-补充局部性特征" class="headerlink" title="补充1：虚拟存储器的概念(补充局部性特征)"></a>补充1：虚拟存储器的概念(补充局部性特征)</h3><h4 id="抖动"><a href="#抖动" class="headerlink" title="抖动"></a><strong>抖动</strong></h4><ul>
 <li>如果一块正好将要被用到之前扔出，操作系统有不得不很快把它取回来，太多的这类操作会导致一种称为系统抖动的情况</li>
 <li>在处理缺页中断期间，处理器的大部分时间都用于交换块，而不是用户进程的执行指令</li>
@@ -727,8 +684,7 @@
 <li>某存储单元被使用，其<strong>相邻存储单元很快也被使用(称空间局部性spatial locality)</strong></li>
 <li>或者<strong>最近访问过的程序代码和数据，很快又被访问(称时间局部性temporal locality)</strong></li>
 </ul>
-<h4 id="分页下的运行情况"><a href="#分页下的运行情况" class="headerlink" title="分页下的运行情况"></a><strong>分页下的运行情况</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150916487.png" alt="image-20221107150916487" style="zoom:80%;" />
-
+<h4 id="分页下的运行情况"><a href="#分页下的运行情况" class="headerlink" title="分页下的运行情况"></a><strong>分页下的运行情况</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150916487.png" alt="image-20221107150916487" style="zoom:80%;" /></p>
 <h4 id="程序局部性原理-2"><a href="#程序局部性原理-2" class="headerlink" title="程序局部性原理(2)"></a><strong>程序局部性原理(2)</strong></h4><ul>
 <li>程序中只有少量分支和过程调用，存在很多顺序执行的指令</li>
 <li>程序含有若干循环结构，由少量代码组成，而被多次执行</li>
@@ -756,10 +712,8 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151347710.png" alt="image-20221107151347710" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151402680.png" alt="image-20221107151402680" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151347710.png" alt="image-20221107151347710" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151402680.png" alt="image-20221107151402680" style="zoom:80%;" /></p>
 <h4 id="Linux伙伴系统"><a href="#Linux伙伴系统" class="headerlink" title="Linux伙伴系统"></a><strong>Linux伙伴系统</strong></h4><ol>
 <li>以page结构为数组元素的mem_map[]数组</li>
 <li>以free_area_struct结构为数组元素的free_area数组</li>
@@ -768,15 +722,13 @@
 <h4 id="Linux基于伙伴的slab分配器"><a href="#Linux基于伙伴的slab分配器" class="headerlink" title="Linux基于伙伴的slab分配器"></a><strong>Linux基于伙伴的slab分配器</strong></h4><ul>
 <li><p>为什么要使用slab分配器?</p>
 <ul>
-<li>伙伴系统以页框为基本分配单位，内核在很多情况下，<strong>需要的主存量远远小于页框大小</strong>，如inode、vma、task_struct等，为了更经济地使用内核主存资源，引入<strong>SunOS操作系统中首创的基于伙伴系统的slab分配器</strong>，其基本思想是：为经常使用的小对象建立缓存，小对象的申请与释放都通过slab分配器来管理，仅当缓存不够用时才向伙伴系统申请更多空间。&#x2F;&#x2F;页内可以按2的幂次拆分。</li>
+<li>伙伴系统以页框为基本分配单位，内核在很多情况下，<strong>需要的主存量远远小于页框大小</strong>，如inode、vma、task_struct等，为了更经济地使用内核主存资源，引入<strong>SunOS操作系统中首创的基于伙伴系统的slab分配器</strong>，其基本思想是：为经常使用的小对象建立缓存，小对象的申请与释放都通过slab分配器来管理，仅当缓存不够用时才向伙伴系统申请更多空间。//页内可以按2的幂次拆分。</li>
 <li>优点：<strong>充分利用主存，减少内部碎片</strong>，对象管理局部化，尽可能少地与伙伴系统打交道，从而提高效率。</li>
 </ul>
 </li>
 <li><p>slab的结构</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151727699.png" alt="image-20221107151727548" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151742038.png" alt="image-20221107151742038" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151727699.png" alt="image-20221107151727548" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151742038.png" alt="image-20221107151742038" style="zoom:80%;" /></p>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/linux/l-linux-slab-allocator/">https://www.ibm.com/developerworks/cn/linux/l-linux-slab-allocator/</a></li>
 <li>Linux还提供十三种通用缓存，其存储对象的大小分别为32B、64B、128B、256B、512B、1KB、2KB、4KB、8KB、16KB、32KB、64KB和128KB，这些缓存用来满足特定对象之外的普通主存需求，单位的大小呈2的幂数增长，保证内部碎片率不超过50％。</li>
@@ -805,8 +757,7 @@
 <li>采用分段法</li>
 <li>某个分段的逻辑地址的段号为2, 段内偏移量为100, 计算它的物理地址</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152412373.png" alt="image-20221107152412373" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152412373.png" alt="image-20221107152412373" style="zoom:80%;" /></p>
 <h4 id="分页和分段的比较"><a href="#分页和分段的比较" class="headerlink" title="分页和分段的比较"></a><strong>分页和分段的比较</strong></h4><ul>
 <li>分段<ul>
 <li>分段是信息的逻辑单位，由源程序的逻辑结构所决定，用户可见</li>
@@ -821,38 +772,28 @@
 </ul>
 </li>
 </ul>
-<h4 id="分页：逻辑地址-物理地址"><a href="#分页：逻辑地址-物理地址" class="headerlink" title="分页：逻辑地址-&gt;物理地址"></a><strong>分页：逻辑地址-&gt;物理地址</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152637357.png" alt="image-20221107152637357" style="zoom:80%;" />
-
+<h4 id="分页：逻辑地址-gt-物理地址"><a href="#分页：逻辑地址-gt-物理地址" class="headerlink" title="分页：逻辑地址-&gt;物理地址"></a><strong>分页：逻辑地址-&gt;物理地址</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152637357.png" alt="image-20221107152637357" style="zoom:80%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152213784.png" alt="image-20221107152213784"></p>
 <p>分页：</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152747958.png" alt="image-20221107152747958" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152747958.png" alt="image-20221107152747958" style="zoom:80%;" /></p>
 <p>分段：</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152336480.png" alt="image-20221107152336480" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152336480.png" alt="image-20221107152336480" style="zoom:80%;" /></p>
 <h4 id="分页地址转换"><a href="#分页地址转换" class="headerlink" title="分页地址转换"></a><strong>分页地址转换</strong></h4><ul>
 <li>页面与页框的大小为1024字节, 指令 MOV 2100, 3100</li>
 <li>求MOV指令中两个操作数的物理地址</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152935682.png" alt="image-20221107152935682" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152945691.png" alt="image-20221107152945691" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152935682.png" alt="image-20221107152935682" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152945691.png" alt="image-20221107152945691" style="zoom:80%;" /></p>
 <h3 id="补充4：多级页表与反置页表"><a href="#补充4：多级页表与反置页表" class="headerlink" title="补充4：多级页表与反置页表"></a>补充4：多级页表与反置页表</h3><h4 id="4-1-多级页表"><a href="#4-1-多级页表" class="headerlink" title="4.1 多级页表"></a>4.1 多级页表</h4><h5 id="背景"><a href="#背景" class="headerlink" title="背景"></a><strong>背景</strong></h5><p>现代计算机普遍支持$2^{32}～2^{64}$容量的逻辑地址空间，采用分页存储管理时，页表相当大，以Windows为例，其运行的Intel x86平台具有32位地址，规定页面4KB($2^{12}$)时，那么，4GB($2^{32}$)的逻辑地址空间由1兆($2^{20}$)个页组成，若每个页表项占用4个字节，则需要占用4MB($2^{22}$)连续主存空间存放页表。系统中有许多进程，因此页表存储开销很大。</p>
 <h5 id="多级页表的概念"><a href="#多级页表的概念" class="headerlink" title="多级页表的概念"></a><strong>多级页表的概念</strong></h5><ul>
 <li>系统为每个进程建一张页目录表,它的每个表项对应一个页表页,<strong>而页表页的每个表项给出了页面和页框的对应关系</strong>,页目录表是一级页表,页表页是二级页表。</li>
 <li>逻辑地址结构有三部分组成：页目录、页表页和位移</li>
 </ul>
-<h5 id="两级页表-32位地址"><a href="#两级页表-32位地址" class="headerlink" title="两级页表(32位地址)"></a><strong>两级页表(32位地址)</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105149441.png" alt="image-20221107105149441" style="zoom:80%;" />
-
-<h5 id="多级页表的地址转换过程"><a href="#多级页表的地址转换过程" class="headerlink" title="多级页表的地址转换过程"></a><strong>多级页表的地址转换过程</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105221507.png" alt="image-20221107105221507" style="zoom:80%;" />
-
-<h5 id="二级页表"><a href="#二级页表" class="headerlink" title="二级页表"></a><strong>二级页表</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105351296.png" alt="image-20221107105351296" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105402628.png" alt="image-20221107105402628" style="zoom:80%;" />
-
-<h5 id="SUN-SPARC计算机三级分页结构"><a href="#SUN-SPARC计算机三级分页结构" class="headerlink" title="SUN SPARC计算机三级分页结构"></a><strong>SUN SPARC计算机三级分页结构</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105453288.png" alt="image-20221107105453288" style="zoom:80%;" />
-
+<h5 id="两级页表-32位地址"><a href="#两级页表-32位地址" class="headerlink" title="两级页表(32位地址)"></a><strong>两级页表(32位地址)</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105149441.png" alt="image-20221107105149441" style="zoom:80%;" /></p>
+<h5 id="多级页表的地址转换过程"><a href="#多级页表的地址转换过程" class="headerlink" title="多级页表的地址转换过程"></a><strong>多级页表的地址转换过程</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105221507.png" alt="image-20221107105221507" style="zoom:80%;" /></p>
+<h5 id="二级页表"><a href="#二级页表" class="headerlink" title="二级页表"></a><strong>二级页表</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105351296.png" alt="image-20221107105351296" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105402628.png" alt="image-20221107105402628" style="zoom:80%;" /></p>
+<h5 id="SUN-SPARC计算机三级分页结构"><a href="#SUN-SPARC计算机三级分页结构" class="headerlink" title="SUN SPARC计算机三级分页结构"></a><strong>SUN SPARC计算机三级分页结构</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105453288.png" alt="image-20221107105453288" style="zoom:80%;" /></p>
 <ul>
 <li>问题：增加了寻址时间，在计算机系统中时间与空间总是存在一些矛盾，因此经常会采取折中的方案，以时间换空间，或者以空间换取时间。</li>
 </ul>
@@ -864,7 +805,7 @@
 <h4 id="4-2-反置页表-Inverted-Page-Table"><a href="#4-2-反置页表-Inverted-Page-Table" class="headerlink" title="4.2 反置页表(Inverted Page Table)"></a>4.2 反置页表(Inverted Page Table)</h4><h5 id="概念"><a href="#概念" class="headerlink" title="概念"></a><strong>概念</strong></h5><ul>
 <li>页表设计的一个重要缺陷是页表的大小与虚拟地址空间的大小成正比</li>
 <li>在反向页表方法中，虚拟地址的页号部分使用一个简单散列函数映射到哈希表中。哈希表包含一个指向反向表的指针，而反向表中含有页表项。</li>
-<li>通过这个结构，哈希表和反向表中只有一项对应于一个**实存页(面向实存)<strong>，而不是</strong>虚拟页(面向虚存)**。</li>
+<li>通过这个结构，哈希表和反向表中只有一项对应于一个<strong>实存页(面向实存)</strong>，而不是<strong>虚拟页(面向虚存)</strong>。</li>
 <li>因此，不论有多少进程、支持多少虚拟页，页表都只需要实存中的一个固定部分。</li>
 <li>用于PowerPC, UltraSPARC, IA-64架构</li>
 </ul>
@@ -874,47 +815,35 @@
 <li><strong>控制位</strong>：该域包含一些标记，比如有效、访问和修改，以及保护和锁定的信息。</li>
 <li><strong>链指针</strong>：如果某个项没有链项，则该域为空(允许用一个单独的位来表示)。</li>
 </ul>
-<h5 id="线性反置页表的结构"><a href="#线性反置页表的结构" class="headerlink" title="线性反置页表的结构"></a><strong>线性反置页表的结构</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107110729262.png" alt="image-20221107110729262" style="zoom:80%;" />
-
+<h5 id="线性反置页表的结构"><a href="#线性反置页表的结构" class="headerlink" title="线性反置页表的结构"></a><strong>线性反置页表的结构</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107110729262.png" alt="image-20221107110729262" style="zoom:80%;" /></p>
 <ul>
 <li>问题：线性查找，效率低，有可能遍历完才发现缺页中断</li>
 </ul>
-<h5 id="改进-引入hash"><a href="#改进-引入hash" class="headerlink" title="改进(引入hash)"></a><strong>改进(引入hash)</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107110812406.png" alt="image-20221107110812406" style="zoom:80%;" />
-
+<h5 id="改进-引入hash"><a href="#改进-引入hash" class="headerlink" title="改进(引入hash)"></a><strong>改进(引入hash)</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107110812406.png" alt="image-20221107110812406" style="zoom:80%;" /></p>
 <h5 id="反置页表地址转换过程"><a href="#反置页表地址转换过程" class="headerlink" title="反置页表地址转换过程"></a><strong>反置页表地址转换过程</strong></h5><p>逻辑地址<strong>给出进程标识和页号,用它们去比较IPT</strong>,若整个反置页表中<strong>未能找到匹配的页表项,说明该页不在主存,产生缺页中断</strong>,请求操作系统调入;否则，该表项的序号便是页框号,块号加上位移,便形成物理地址。</p>
 <h5 id="线性反置页表"><a href="#线性反置页表" class="headerlink" title="线性反置页表"></a><strong>线性反置页表</strong></h5><p>pid是隐含的</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107111844378.png" alt="image-20221107111844378" style="zoom:80%;" />
-
-<h5 id="哈希线性反置页表"><a href="#哈希线性反置页表" class="headerlink" title="哈希线性反置页表"></a><strong>哈希线性反置页表</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112035238.png" alt="image-20221107112035238" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107111844378.png" alt="image-20221107111844378" style="zoom:80%;" /></p>
+<h5 id="哈希线性反置页表"><a href="#哈希线性反置页表" class="headerlink" title="哈希线性反置页表"></a><strong>哈希线性反置页表</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112035238.png" alt="image-20221107112035238" style="zoom:80%;" /></p>
 <p><strong>页表的结构称为“反向”是因为它使用帧号而不是虚拟页号来索引页表项</strong></p>
-<h5 id="主存分配的位示图和链表方法"><a href="#主存分配的位示图和链表方法" class="headerlink" title="主存分配的位示图和链表方法"></a><strong>主存分配的位示图和链表方法</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112234403.png" alt="image-20221107112234403" style="zoom:80%;" />
-
-<h5 id="段页式存储管理"><a href="#段页式存储管理" class="headerlink" title="段页式存储管理"></a><strong>段页式存储管理</strong></h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112533727.png" alt="image-20221107112533727" style="zoom:80%;" />
-
+<h5 id="主存分配的位示图和链表方法"><a href="#主存分配的位示图和链表方法" class="headerlink" title="主存分配的位示图和链表方法"></a><strong>主存分配的位示图和链表方法</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112234403.png" alt="image-20221107112234403" style="zoom:80%;" /></p>
+<h5 id="段页式存储管理"><a href="#段页式存储管理" class="headerlink" title="段页式存储管理"></a><strong>段页式存储管理</strong></h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112533727.png" alt="image-20221107112533727" style="zoom:80%;" /></p>
 <h3 id="补充5：页的大小设计"><a href="#补充5：页的大小设计" class="headerlink" title="补充5：页的大小设计"></a>补充5：页的大小设计</h3><ul>
 <li>页越小, 内存碎片越少</li>
 <li>页越小, 每个进程需要页数越多</li>
 <li>每个进程的页越多就意味着页表更大，而页表大意味着在虚拟内存中占据更多的空间</li>
 <li>辅存设计用于有效传输大数据块，因此页面大小越大越好</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112722467.png" alt="image-20221107112722467" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112722467.png" alt="image-20221107112722467" style="zoom:80%;" /></p>
 <ul>
 <li>多种页面大小提供了有效使用TLB所需的灵活性</li>
 <li>大多数操作系统只支持一种页面大小</li>
 </ul>
 <h3 id="补充6：页面替换算法"><a href="#补充6：页面替换算法" class="headerlink" title="补充6：页面替换算法"></a>补充6：页面替换算法</h3><p>OPT、FIFO、LRU、CLOCK算法见3.3.4</p>
-<h4 id="CLOCK"><a href="#CLOCK" class="headerlink" title="CLOCK"></a><strong>CLOCK</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107154512018.png" alt="image-20221107154512018" style="zoom: 67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107154528175.png" alt="image-20221107154528175" style="zoom: 67%;" />
-
-<h4 id="Belady’s-Anomaly-Belady异常"><a href="#Belady’s-Anomaly-Belady异常" class="headerlink" title="Belady’s Anomaly(Belady异常)"></a><strong>Belady’s Anomaly(Belady异常)</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160528527.png" alt="image-20221107160528527" style="zoom:80%;" />
-
-<h4 id="FIFO算法的Belady异常"><a href="#FIFO算法的Belady异常" class="headerlink" title="FIFO算法的Belady异常"></a><strong>FIFO算法的Belady异常</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160611184.png" alt="image-20221107160611184" style="zoom:80%;" />
-
-<h4 id="Comparison-of-Placement-Algorithms"><a href="#Comparison-of-Placement-Algorithms" class="headerlink" title="Comparison of Placement Algorithms"></a><strong>Comparison of Placement Algorithms</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160636982.png" alt="image-20221107160636982" style="zoom:80%;" />
-
+<h4 id="CLOCK"><a href="#CLOCK" class="headerlink" title="CLOCK"></a><strong>CLOCK</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107154512018.png" alt="image-20221107154512018" style="zoom: 67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107154528175.png" alt="image-20221107154528175" style="zoom: 67%;" /></p>
+<h4 id="Belady’s-Anomaly-Belady异常"><a href="#Belady’s-Anomaly-Belady异常" class="headerlink" title="Belady’s Anomaly(Belady异常)"></a><strong>Belady’s Anomaly(Belady异常)</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160528527.png" alt="image-20221107160528527" style="zoom:80%;" /></p>
+<h4 id="FIFO算法的Belady异常"><a href="#FIFO算法的Belady异常" class="headerlink" title="FIFO算法的Belady异常"></a><strong>FIFO算法的Belady异常</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160611184.png" alt="image-20221107160611184" style="zoom:80%;" /></p>
+<h4 id="Comparison-of-Placement-Algorithms"><a href="#Comparison-of-Placement-Algorithms" class="headerlink" title="Comparison of Placement Algorithms"></a><strong>Comparison of Placement Algorithms</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160636982.png" alt="image-20221107160636982" style="zoom:80%;" /></p>
 <h4 id="Basic-Replacement-Algorithms"><a href="#Basic-Replacement-Algorithms" class="headerlink" title="Basic Replacement Algorithms"></a><strong>Basic Replacement Algorithms</strong></h4><ul>
 <li>Page Buffering<ul>
 <li>Replaced page is added to one of two lists<ul>
@@ -973,19 +902,15 @@
 <li>工作集模型和工作集置换算法</li>
 </ol>
 <h4 id="局部最佳页面替换算法"><a href="#局部最佳页面替换算法" class="headerlink" title="局部最佳页面替换算法"></a><strong>局部最佳页面替换算法</strong></h4><ul>
-<li><p>1976年Prieve提出一种局部最佳页面替换算法MIN(Local Minimum)，它与全局最佳替换算法类似，需事先知道程序的页面引用串，再根据进程行为改变驻留页面数量</p>
-</li>
-<li><p>实现思想：进程在时刻 t 访问某页面，如果该页面不在主存中，导致一次缺页，把该页面装入一个空闲页框</p>
-</li>
+<li>1976年Prieve提出一种局部最佳页面替换算法MIN(Local Minimum)，它与全局最佳替换算法类似，需事先知道程序的页面引用串，再根据进程行为改变驻留页面数量</li>
+<li>实现思想：进程在时刻 t 访问某页面，如果该页面不在主存中，导致一次缺页，把该页面装入一个空闲页框</li>
 <li><p>不论发生缺页与否，算法在每一步要考虑引用串，<strong>如果该页面在时间间隔(t, t+τ)内未被再次引用，那么就移出；否则，该页被保留在进程驻留集中</strong> (<strong>看未来</strong>)</p>
 </li>
-<li><p>τ为一个系统常量，间隔(t, t+τ)称作滑动窗口。例子中τ&#x3D;3</p>
+<li><p>τ为一个系统常量，间隔(t, t+τ)称作滑动窗口。例子中τ=3</p>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108015614001.png" alt="image-20221108015614001" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108015707685.png" alt="image-20221108015707685" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108015614001.png" alt="image-20221108015614001" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108015707685.png" alt="image-20221108015707685" style="zoom:80%;" /></p>
 <p>缺页总数为5次，驻留集大小在1-2之间变化，任何时刻至多两个页框被占用，通过增加τ值，缺页数目可减少，但代价是花费更多页框。 </p>
 <h4 id="工作集模型和工作集置换算法"><a href="#工作集模型和工作集置换算法" class="headerlink" title="工作集模型和工作集置换算法"></a><strong>工作集模型和工作集置换算法</strong></h4><ul>
 <li>进程工作集指“在某一段时间间隔内进程运行所需访问的页面集合”</li>
@@ -993,23 +918,17 @@
 <li>任何给定时刻，<strong>进程不久的将来所需主存页框数，可通过考查其过去最近的时间内的主存需求做出估计</strong></li>
 </ul>
 <h4 id="进程工作集"><a href="#进程工作集" class="headerlink" title="进程工作集"></a><strong>进程工作集</strong></h4><ul>
-<li><p>指“在某一段时间间隔内进程运行所需访问的页面集合”，<strong>W(t，Δ)表示在时刻 t-Δ 到时刻 t 之间( (t-Δ，t))所访问的页面集合，进程在时刻 t 的工作集</strong></p>
-</li>
+<li>指“在某一段时间间隔内进程运行所需访问的页面集合”，<strong>W(t，Δ)表示在时刻 t-Δ 到时刻 t 之间( (t-Δ，t))所访问的页面集合，进程在时刻 t 的工作集</strong></li>
 <li><p>Δ 是系统定义的一个常量。变量 Δ 称为“工作集窗口尺寸”，可通过窗口来观察进程行为，还把工作集中所包含的页面数目称为“工作集尺寸”</p>
 </li>
-<li><p>Δ&#x3D;3</p>
+<li><p>Δ=3</p>
 </li>
 </ul>
-<h4 id="Working-set-model"><a href="#Working-set-model" class="headerlink" title="Working-set model"></a><strong>Working-set model</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020047797.png" alt="image-20221108020047797" style="zoom:80%;" />
-
-<h4 id="工作集替换示例"><a href="#工作集替换示例" class="headerlink" title="工作集替换示例"></a><strong>工作集替换示例</strong></h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020225281.png" alt="image-20221108020225281" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020242078.png" alt="image-20221108020242078" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020302415.png" alt="image-20221108020302415" style="zoom:67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020317071.png" alt="image-20221108020317071" style="zoom: 67%;" />
-
+<h4 id="Working-set-model"><a href="#Working-set-model" class="headerlink" title="Working-set model"></a><strong>Working-set model</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020047797.png" alt="image-20221108020047797" style="zoom:80%;" /></p>
+<h4 id="工作集替换示例"><a href="#工作集替换示例" class="headerlink" title="工作集替换示例"></a><strong>工作集替换示例</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020225281.png" alt="image-20221108020225281" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020242078.png" alt="image-20221108020242078" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020302415.png" alt="image-20221108020302415" style="zoom:67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020317071.png" alt="image-20221108020317071" style="zoom: 67%;" /></p>
 <h4 id="The-Page-Fault-Frequency-Strategy"><a href="#The-Page-Fault-Frequency-Strategy" class="headerlink" title="The Page-Fault Frequency Strategy"></a><strong>The Page-Fault Frequency Strategy</strong></h4><ul>
 <li>Define an upper bound U and lower bound L for page fault rates</li>
 <li>Allocate more frames to a process if fault rate is higher than U</li>
@@ -1017,8 +936,7 @@
 <li>The <strong>resident set size should be close to the working set size W</strong></li>
 <li>We suspend the process if the PFF &gt; U and no more free frames are available</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020434064.png" alt="image-20221108020434064" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020434064.png" alt="image-20221108020434064" style="zoom:67%;" /></p>
 <h4 id="通过工作集确定驻留集大小"><a href="#通过工作集确定驻留集大小" class="headerlink" title="通过工作集确定驻留集大小"></a><strong>通过工作集确定驻留集大小</strong></h4><ol>
 <li>监视每个进程的工作集，只有属于工作集的页面才能留在主存；</li>
 <li>定期地从进程驻留集中删去那些不在工作集中的页面；</li>
@@ -1027,7 +945,7 @@
 <h3 id="补充7：TLB快表，页表，缺页"><a href="#补充7：TLB快表，页表，缺页" class="headerlink" title="补充7：TLB快表，页表，缺页"></a>补充7：TLB快表，页表，缺页</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134658588.png" alt="image-20221114134658588"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134717530.png" alt="image-20221114134717530"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134738142.png" alt="image-20221114134738142"></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134854425.png" alt="image-20221114134854425" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134854425.png" alt="image-20221114134854425" style="zoom:80%;" /></p>
 
       </div>
       
@@ -1083,7 +1001,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">第三章 存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-text">3.1 存储管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.1.1 存储管理的主要模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80"><span class="toc-text">逻辑地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%A4%8D%E7%94%A8"><span class="toc-text">主存储器的复用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-text">存储管理的基本模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">存储管理模式示意图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">3.1.2 存储管理的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E5%8E%BB%E9%85%8D"><span class="toc-text">主存储器空间的分配与去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">主存储器空间的共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85"><span class="toc-text">主存储器空间的扩充</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">3.1.3 虚拟存储器的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E6%80%9D%E6%83%B3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">虚拟存储器思想的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">虚拟存储器的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-text">虚拟存储器的实现思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="toc-text">虚拟存储器示意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">3.1.4 存储管理的硬件支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%82%E6%AC%A1"><span class="toc-text">存储器的组织层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%B6%89%E5%8F%8A%E7%9A%84%E5%AD%98%E5%82%A8%E5%AF%B9%E8%B1%A1"><span class="toc-text">存储管理涉及的存储对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8-Cache"><span class="toc-text">高速缓存存储器(Cache)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="toc-text">高速缓存存储器的构成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">高速缓存存储器的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%BA%A7"><span class="toc-text">高速缓存存储器的分级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E7%B1%BB%E5%A4%84%E7%90%86%E5%99%A8%E6%9E%B6%E6%9E%84"><span class="toc-text">各类处理器架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">地址转换&#x2F;存储保护的硬件支撑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">存储管理与硬件支撑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2.1 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">单连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">单用户连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%A4%BA%E6%84%8F"><span class="toc-text">单用户连续分区存储管理示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">固定分区存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">固定分区方式的主存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">固定分区方式的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-text">可变分区存储管理概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2.2 可变分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">可变分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">可变分区方式的内存分配示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E8%A1%A8"><span class="toc-text">可变分区方式的主存分配表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">可变分区方式的内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-text">可变分区方式的内存回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">地址转换与存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E9%9B%B6%E5%A4%B4"><span class="toc-text">可变分区方式的内存零头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF-%E7%A8%8B%E5%BA%8F%E6%B5%AE%E5%8A%A8%E6%8A%80%E6%9C%AF"><span class="toc-text">移动技术(程序浮动技术)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">移动技术的工作流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.3 页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">3.3.1 页式存储管理的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">页式存储管理的基本原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%AD%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-text">页式存储管理中的地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%80%9D%E8%B7%AF"><span class="toc-text">页式存储管理的地址转换思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%8E%BB%E9%85%8D"><span class="toc-text">页式存储管理的内存分配&#x2F;去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">页的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">3.3.2 页式存储管理的地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-text">页式存储管理的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%BF%AB%E8%A1%A8"><span class="toc-text">页式存储管理的快表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%BF%AB%E8%A1%A8%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-text">引入快表后的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BF%AB%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-text">基于快表的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B%E8%A1%A8"><span class="toc-text">多道程序环境下的进程表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">多道程序环境下的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.3.3 页式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">页式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E9%A1%B5%E8%A1%A8"><span class="toc-text">页式虚拟存储管理的页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">页式虚拟存储管理的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">页式虚拟存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-text">缺页中断的处理流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9ATLB-%E5%BF%AB%E8%A1%A8"><span class="toc-text">补充：TLB(快表)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9APaging-Hardware-With-TLB"><span class="toc-text">补充：Paging Hardware With TLB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-text">3.3.4 页面调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-text">页面调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87"><span class="toc-text">缺页中断率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="toc-text">影响缺页中断率的因素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">用户编程的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OPT%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">OPT页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BAFIFO%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">先进先出FIFO页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E6%9C%80%E5%B0%91%E7%94%A8LRU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">最近最少用LRU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LRU%E7%AE%97%E6%B3%95%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">LRU算法的模拟实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E4%B8%8D%E5%B8%B8%E7%94%A8LFU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">最不常用LFU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9FCLOCK%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">时钟CLOCK页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK%E7%AE%97%E6%B3%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">CLOCK算法的工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-5-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-%E8%AF%A6%E8%A7%81%E8%A1%A5%E5%85%854"><span class="toc-text">3.3.5 反置页表(详见补充4)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">反置页表的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">反置页表的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E9%A1%B5%E8%A1%A8%E9%A1%B9"><span class="toc-text">反置页表的页表项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">基于反置页表的地址转换过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E7%A4%BA%E6%84%8F"><span class="toc-text">反置页表下的地址转换示意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.1 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-1"><span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-text">程序的分段结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-text">段式存储管理的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">段的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.2 段式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E6%89%A9%E5%85%85"><span class="toc-text">段式虚拟存储管理的段表扩充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段式虚拟存储管理的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.3 段页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段页式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E5%92%8C%E9%A1%B5%E8%A1%A8"><span class="toc-text">段页式存储管理的段表和页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段页式存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段页式虚拟存储管理的地址转换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%851%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5-%E8%A1%A5%E5%85%85%E5%B1%80%E9%83%A8%E6%80%A7%E7%89%B9%E5%BE%81"><span class="toc-text">补充1：虚拟存储器的概念(补充局部性特征)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%96%E5%8A%A8"><span class="toc-text">抖动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-1"><span class="toc-text">程序局部性原理(1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E4%B8%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5"><span class="toc-text">分页下的运行情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-2"><span class="toc-text">程序局部性原理(2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-3"><span class="toc-text">程序局部性原理(3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9C%80%E8%A6%81"><span class="toc-text">虚拟内存的技术需要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%852%EF%BC%9A%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">补充2：伙伴系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">Linux伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E5%9F%BA%E4%BA%8E%E4%BC%99%E4%BC%B4%E7%9A%84slab%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-text">Linux基于伙伴的slab分配器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%853%EF%BC%9A%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5%E7%9A%84%E5%AF%BB%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-text">补充3：分段和分页的寻址计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5"><span class="toc-text">分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">分页和分段的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%EF%BC%9A%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80-%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">分页：逻辑地址-&gt;物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">分页地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%854%EF%BC%9A%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E4%B8%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">补充4：多级页表与反置页表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">4.1 多级页表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">多级页表的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8-32%E4%BD%8D%E5%9C%B0%E5%9D%80"><span class="toc-text">两级页表(32位地址)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">多级页表的地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">二级页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SUN-SPARC%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7%E5%88%86%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="toc-text">SUN SPARC计算机三级分页结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">多级页表的本质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-Inverted-Page-Table"><span class="toc-text">4.2 反置页表(Inverted Page Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-text">组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">线性反置页表的结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-%E5%BC%95%E5%85%A5hash"><span class="toc-text">改进(引入hash)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">反置页表地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">哈希线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E4%BD%8D%E7%A4%BA%E5%9B%BE%E5%92%8C%E9%93%BE%E8%A1%A8%E6%96%B9%E6%B3%95"><span class="toc-text">主存分配的位示图和链表方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">段页式存储管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%855%EF%BC%9A%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">补充5：页的大小设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%856%EF%BC%9A%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">补充6：页面替换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK"><span class="toc-text">CLOCK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Belady%E2%80%99s-Anomaly-Belady%E5%BC%82%E5%B8%B8"><span class="toc-text">Belady’s Anomaly(Belady异常)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FIFO%E7%AE%97%E6%B3%95%E7%9A%84Belady%E5%BC%82%E5%B8%B8"><span class="toc-text">FIFO算法的Belady异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparison-of-Placement-Algorithms"><span class="toc-text">Comparison of Placement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Replacement-Algorithms"><span class="toc-text">Basic Replacement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resident-Set-Size-%E9%A9%BB%E7%95%99%E9%9B%86%E8%A7%84%E6%A8%A1"><span class="toc-text">Resident Set Size(驻留集规模)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">局部页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%9C%80%E4%BD%B3%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">局部最佳页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">工作集模型和工作集置换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%B7%A5%E4%BD%9C%E9%9B%86"><span class="toc-text">进程工作集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Working-set-model"><span class="toc-text">Working-set model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%9B%BF%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="toc-text">工作集替换示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Page-Fault-Frequency-Strategy"><span class="toc-text">The Page-Fault Frequency Strategy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%A1%AE%E5%AE%9A%E9%A9%BB%E7%95%99%E9%9B%86%E5%A4%A7%E5%B0%8F"><span class="toc-text">通过工作集确定驻留集大小</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%857%EF%BC%9ATLB%E5%BF%AB%E8%A1%A8%EF%BC%8C%E9%A1%B5%E8%A1%A8%EF%BC%8C%E7%BC%BA%E9%A1%B5"><span class="toc-text">补充7：TLB快表，页表，缺页</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">第三章 存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-text">3.1 存储管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.1.1 存储管理的主要模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80"><span class="toc-text">逻辑地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%A4%8D%E7%94%A8"><span class="toc-text">主存储器的复用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-text">存储管理的基本模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">存储管理模式示意图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">3.1.2 存储管理的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E5%8E%BB%E9%85%8D"><span class="toc-text">主存储器空间的分配与去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">主存储器空间的共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85"><span class="toc-text">主存储器空间的扩充</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">3.1.3 虚拟存储器的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E6%80%9D%E6%83%B3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">虚拟存储器思想的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">虚拟存储器的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-text">虚拟存储器的实现思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="toc-text">虚拟存储器示意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">3.1.4 存储管理的硬件支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%82%E6%AC%A1"><span class="toc-text">存储器的组织层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%B6%89%E5%8F%8A%E7%9A%84%E5%AD%98%E5%82%A8%E5%AF%B9%E8%B1%A1"><span class="toc-text">存储管理涉及的存储对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8-Cache"><span class="toc-text">高速缓存存储器(Cache)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="toc-text">高速缓存存储器的构成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">高速缓存存储器的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%BA%A7"><span class="toc-text">高速缓存存储器的分级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E7%B1%BB%E5%A4%84%E7%90%86%E5%99%A8%E6%9E%B6%E6%9E%84"><span class="toc-text">各类处理器架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">地址转换&#x2F;存储保护的硬件支撑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">存储管理与硬件支撑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2.1 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">单连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">单用户连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%A4%BA%E6%84%8F"><span class="toc-text">单用户连续分区存储管理示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">固定分区存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">固定分区方式的主存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">固定分区方式的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-text">可变分区存储管理概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2.2 可变分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">可变分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">可变分区方式的内存分配示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E8%A1%A8"><span class="toc-text">可变分区方式的主存分配表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">可变分区方式的内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-text">可变分区方式的内存回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">地址转换与存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E9%9B%B6%E5%A4%B4"><span class="toc-text">可变分区方式的内存零头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF-%E7%A8%8B%E5%BA%8F%E6%B5%AE%E5%8A%A8%E6%8A%80%E6%9C%AF"><span class="toc-text">移动技术(程序浮动技术)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">移动技术的工作流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.3 页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">3.3.1 页式存储管理的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">页式存储管理的基本原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%AD%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-text">页式存储管理中的地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%80%9D%E8%B7%AF"><span class="toc-text">页式存储管理的地址转换思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%8E%BB%E9%85%8D"><span class="toc-text">页式存储管理的内存分配&#x2F;去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">页的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">3.3.2 页式存储管理的地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-text">页式存储管理的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%BF%AB%E8%A1%A8"><span class="toc-text">页式存储管理的快表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%BF%AB%E8%A1%A8%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-text">引入快表后的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BF%AB%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-text">基于快表的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B%E8%A1%A8"><span class="toc-text">多道程序环境下的进程表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">多道程序环境下的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.3.3 页式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">页式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E9%A1%B5%E8%A1%A8"><span class="toc-text">页式虚拟存储管理的页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">页式虚拟存储管理的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">页式虚拟存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-text">缺页中断的处理流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9ATLB-%E5%BF%AB%E8%A1%A8"><span class="toc-text">补充：TLB(快表)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9APaging-Hardware-With-TLB"><span class="toc-text">补充：Paging Hardware With TLB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-text">3.3.4 页面调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-text">页面调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87"><span class="toc-text">缺页中断率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="toc-text">影响缺页中断率的因素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">用户编程的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OPT%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">OPT页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BAFIFO%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">先进先出FIFO页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E6%9C%80%E5%B0%91%E7%94%A8LRU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">最近最少用LRU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LRU%E7%AE%97%E6%B3%95%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">LRU算法的模拟实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E4%B8%8D%E5%B8%B8%E7%94%A8LFU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">最不常用LFU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9FCLOCK%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">时钟CLOCK页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK%E7%AE%97%E6%B3%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">CLOCK算法的工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-5-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-%E8%AF%A6%E8%A7%81%E8%A1%A5%E5%85%854"><span class="toc-text">3.3.5 反置页表(详见补充4)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">反置页表的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">反置页表的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E9%A1%B5%E8%A1%A8%E9%A1%B9"><span class="toc-text">反置页表的页表项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">基于反置页表的地址转换过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E7%A4%BA%E6%84%8F"><span class="toc-text">反置页表下的地址转换示意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.1 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-1"><span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-text">程序的分段结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-text">段式存储管理的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">段的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.2 段式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E6%89%A9%E5%85%85"><span class="toc-text">段式虚拟存储管理的段表扩充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段式虚拟存储管理的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.3 段页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段页式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E5%92%8C%E9%A1%B5%E8%A1%A8"><span class="toc-text">段页式存储管理的段表和页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段页式存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段页式虚拟存储管理的地址转换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%851%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5-%E8%A1%A5%E5%85%85%E5%B1%80%E9%83%A8%E6%80%A7%E7%89%B9%E5%BE%81"><span class="toc-text">补充1：虚拟存储器的概念(补充局部性特征)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%96%E5%8A%A8"><span class="toc-text">抖动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-1"><span class="toc-text">程序局部性原理(1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E4%B8%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5"><span class="toc-text">分页下的运行情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-2"><span class="toc-text">程序局部性原理(2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-3"><span class="toc-text">程序局部性原理(3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9C%80%E8%A6%81"><span class="toc-text">虚拟内存的技术需要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%852%EF%BC%9A%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">补充2：伙伴系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">Linux伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E5%9F%BA%E4%BA%8E%E4%BC%99%E4%BC%B4%E7%9A%84slab%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-text">Linux基于伙伴的slab分配器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%853%EF%BC%9A%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5%E7%9A%84%E5%AF%BB%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-text">补充3：分段和分页的寻址计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5"><span class="toc-text">分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">分页和分段的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%EF%BC%9A%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80-gt-%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">分页：逻辑地址-&gt;物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">分页地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%854%EF%BC%9A%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E4%B8%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">补充4：多级页表与反置页表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">4.1 多级页表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">多级页表的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8-32%E4%BD%8D%E5%9C%B0%E5%9D%80"><span class="toc-text">两级页表(32位地址)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">多级页表的地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">二级页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SUN-SPARC%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7%E5%88%86%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="toc-text">SUN SPARC计算机三级分页结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">多级页表的本质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-Inverted-Page-Table"><span class="toc-text">4.2 反置页表(Inverted Page Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-text">组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">线性反置页表的结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-%E5%BC%95%E5%85%A5hash"><span class="toc-text">改进(引入hash)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">反置页表地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">哈希线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E4%BD%8D%E7%A4%BA%E5%9B%BE%E5%92%8C%E9%93%BE%E8%A1%A8%E6%96%B9%E6%B3%95"><span class="toc-text">主存分配的位示图和链表方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">段页式存储管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%855%EF%BC%9A%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">补充5：页的大小设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%856%EF%BC%9A%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">补充6：页面替换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK"><span class="toc-text">CLOCK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Belady%E2%80%99s-Anomaly-Belady%E5%BC%82%E5%B8%B8"><span class="toc-text">Belady’s Anomaly(Belady异常)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FIFO%E7%AE%97%E6%B3%95%E7%9A%84Belady%E5%BC%82%E5%B8%B8"><span class="toc-text">FIFO算法的Belady异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparison-of-Placement-Algorithms"><span class="toc-text">Comparison of Placement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Replacement-Algorithms"><span class="toc-text">Basic Replacement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resident-Set-Size-%E9%A9%BB%E7%95%99%E9%9B%86%E8%A7%84%E6%A8%A1"><span class="toc-text">Resident Set Size(驻留集规模)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">局部页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%9C%80%E4%BD%B3%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">局部最佳页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">工作集模型和工作集置换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%B7%A5%E4%BD%9C%E9%9B%86"><span class="toc-text">进程工作集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Working-set-model"><span class="toc-text">Working-set model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%9B%BF%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="toc-text">工作集替换示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Page-Fault-Frequency-Strategy"><span class="toc-text">The Page-Fault Frequency Strategy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%A1%AE%E5%AE%9A%E9%A9%BB%E7%95%99%E9%9B%86%E5%A4%A7%E5%B0%8F"><span class="toc-text">通过工作集确定驻留集大小</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%857%EF%BC%9ATLB%E5%BF%AB%E8%A1%A8%EF%BC%8C%E9%A1%B5%E8%A1%A8%EF%BC%8C%E7%BC%BA%E9%A1%B5"><span class="toc-text">补充7：TLB快表，页表，缺页</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
@@ -1392,5 +1310,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

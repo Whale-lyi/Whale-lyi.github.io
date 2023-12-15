@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -217,7 +213,7 @@
 </ul>
 <p>由<strong>内核</strong>而不是应用程序<strong>控制切换到supervisor mode的入口点(地址)非常重要</strong>，可以避免恶意程序跳过参数验证</p>
 <h3 id="2-3-Kernel-organization"><a href="#2-3-Kernel-organization" class="headerlink" title="2.3 Kernel organization"></a>2.3 Kernel organization</h3><p><em>monolithic kernel(宏内核)</em>: 整个操作系统都在kernel中，所有system call都在supervisor mode下运行，拥有全部硬件权限，不同部分便于合作。但是一旦出现错误常常会导致内核崩溃，导致所有程序出错，不得不重启。xv6就是monolithic kernel</p>
-<p><em>micro kernel(微内核)</em>: 将需要运行在supervisor mode下的操作系统代码压到最小，保证kernel内系统的安全性，将大部分的操作系统代码执行在user mode下。会有在user&#x2F;kernel mode反复跳转带来的性能损耗。</p>
+<p><em>micro kernel(微内核)</em>: 将需要运行在supervisor mode下的操作系统代码压到最小，保证kernel内系统的安全性，将大部分的操作系统代码执行在user mode下。会有在user/kernel mode反复跳转带来的性能损耗。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915012051093.png" alt="image-20220915012051093"></p>
 <p>如2.1所示，文件系统是一个user-level的进程，为其他进程提供服务，因此也叫做server</p>
 <p>作为<strong>进程</strong>运行的<strong>操作系统服务</strong>称为server。</p>
@@ -225,22 +221,22 @@
 <p>xv6 kernel source file如下所示</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220915010746816.png" alt="image-20220915010746816"></p>
 <h3 id="2-4-Process-overview"><a href="#2-4-Process-overview" class="headerlink" title="2.4 Process overview"></a>2.4 Process overview</h3><p><strong>隔离的单元叫做进程</strong>，进程的抽象使得一个进程不能破坏或者监听另外一个进程的内存、CPU、文件描述符等，也不能破坏kernel本身，即进程无法破坏内核的隔离机制</p>
-<p>内核用于实现进程的机制包括<em>user&#x2F;supervisor mode</em>标志，地址空间，线程的时间切片</p>
+<p>内核用于实现进程的机制包括<em>user/supervisor mode</em>标志，地址空间，线程的时间切片</p>
 <p>为了实现进程隔离，<strong>xv6提供了一种机制让每个程序都认为自己拥有一个独立的机器</strong>。</p>
-<p>一个进程为一个程序<strong>提供了一个私有的内存系统，或<em>address space</em>，其他的进程不能够读&#x2F;写这个内存</strong></p>
-<p>xv6使用<em>*<em>page table</em>(页表)*<em>来给每个进程分配自己的</em>address space<em>，页表再将这些</em>address space</em>，也就是<strong>虚拟地址</strong>(virtual address)(RISC-V指令操作的地址) <strong>映射为物理地址</strong>(physical address)(CPU芯片发送到主存的地址)。</p>
+<p>一个进程为一个程序<strong>提供了一个私有的内存系统，或<em>address space</em>，其他的进程不能够读/写这个内存</strong></p>
+<p>xv6使用<strong><em>page table</em>(页表)</strong>来给每个进程分配自己的<em>address space</em>，页表再将这些<em>address space</em>，也就是<strong>虚拟地址</strong>(virtual address)(RISC-V指令操作的地址) <strong>映射为物理地址</strong>(physical address)(CPU芯片发送到主存的地址)。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220922154824955.png" alt="image-20220922154824955"></p>
 <p>虚拟地址从0开始，往上依次是指令、全局变量、栈、堆。</p>
-<p>有许多因素限制了进程地址空间的最大大小：RISC-V上的指针是64位的，硬件在页表寻找虚拟地址时只使用低39位，而xv6只使用39位中的低38位，因此最大的地址是$2^{38}-1$&#x3D;0x3fffffffff&#x3D;MAXVA</p>
-<p>在地址空间的顶部，xv6为<em>trampoline</em>保留了一页，并为映射进程<em>trapframe</em>预留了一页。xv6使用这两页切换到内核并返回：<em>trampoline</em>页包含了该功能的代码，而映射<em>trapframe</em>是保存&#x2F;恢复用户进程状态所必需的</p>
+<p>有许多因素限制了进程地址空间的最大大小：RISC-V上的指针是64位的，硬件在页表寻找虚拟地址时只使用低39位，而xv6只使用39位中的低38位，因此最大的地址是$2^{38}-1$=0x3fffffffff=MAXVA</p>
+<p>在地址空间的顶部，xv6为<em>trampoline</em>保留了一页，并为映射进程<em>trapframe</em>预留了一页。xv6使用这两页切换到内核并返回：<em>trampoline</em>页包含了该功能的代码，而映射<em>trapframe</em>是保存/恢复用户进程状态所必需的</p>
 <p>xv6内核保存了每个进程的许多状态，并集中在<code>struct pr</code>中。进程最重要的内核状态有：</p>
 <ol>
 <li>页表 <code>p-&gt;pagetable</code>，分页硬件会在用户空间执行进程时使用，并且页表还会<strong>记录分配给用于储存进程的内存的物理页地址</strong></li>
 <li>内核堆栈<code>p-&gt;kstack</code> </li>
-<li>运行状态<code>p-&gt;state</code>，显示进程是否已经被分配、准备运行&#x2F;正在运行&#x2F;等待I&#x2F;O或退出</li>
+<li>运行状态<code>p-&gt;state</code>，显示进程是否已经被分配、准备运行/正在运行/等待I/O或退出</li>
 </ol>
 <p><strong>每个进程中都有线程(<em>thread</em>)，是执行进程命令的最小单元，可以被暂停和继续。</strong>为了透明地切换进程，内核会挂起正在运行的线程，并恢复其他进程的线程。<strong>线程的大部分状态(局部变量、函数返回地址等)都被存储在线程的堆栈中。</strong></p>
-<p>每个进程有两个堆栈：**用户堆栈(<em>user stack</em>)和内核堆栈(<em>kernel stack</em>)**。</p>
+<p>每个进程有两个堆栈：<strong>用户堆栈(<em>user stack</em>)和内核堆栈(<em>kernel stack</em>)</strong>。</p>
 <ul>
 <li>当进程在user space中执行用户指令时只使用用户堆栈，内核堆栈为空</li>
 <li>当进程进入了内核(比如进行了system call或中断)使用内核堆栈，此时用户堆栈仍然包含保存的数据</li>
@@ -251,9 +247,9 @@
 <p><code>ecall</code>会接收一个数字参数，代表应用程序想要调用的System Call，<code>ecall</code>会跳转到内核中一个特定，由内核控制的位置。之后控制权到了<code>syscall</code>函数</p>
 <p>在内核空间，有一个位于syscall.c的函数<code>syscall</code>，每一个从应用程序发起的系统调用都会调用到这个<code>syscall</code>函数，<code>syscall</code>函数会检查<code>ecall</code>的参数，通过这个参数内核可以知道需要调用的是哪个system call</p>
 </blockquote>
-<p>一个进程的线程可以在内核中”阻塞”以等待I&#x2F;O，并在I&#x2F;O完成后恢复到中断的位置</p>
+<p>一个进程的线程可以在内核中”阻塞”以等待I/O，并在I/O完成后恢复到中断的位置</p>
 <p>进程捆绑了两种设计思想：地址空间(进程认为拥有属于自己的内存)、线程(进程认为拥有属于自己的CPU)。xv6中，一个进程包括一个<em>address space</em>和一个<em>thread</em>。而真实操作系统一个进程往往有多个线程来充分利用多核CPU</p>
-<h3 id="2-5-Code-starting-xv6-the-first-process-and-system-call"><a href="#2-5-Code-starting-xv6-the-first-process-and-system-call" class="headerlink" title="2.5 Code: starting xv6, the first process and system call"></a>2.5 Code: starting xv6, the first process and system call</h3><p>RISC-V计算机启动时，先运行一个存储于 ROM 中的 bootloader 程序 <code>kernel.ld</code> 来加载xv6 kernel到内存中，然后在machine模式下从<code>_entry</code>开始运行xv6。此时分页硬件没有工作，虚拟地址直接映射到物理地址。bootloader将xv6 kernel加载到<code>0x80000000</code>的物理地址中，因为前面的地址中包含I&#x2F;O设备</p>
+<h3 id="2-5-Code-starting-xv6-the-first-process-and-system-call"><a href="#2-5-Code-starting-xv6-the-first-process-and-system-call" class="headerlink" title="2.5 Code: starting xv6, the first process and system call"></a>2.5 Code: starting xv6, the first process and system call</h3><p>RISC-V计算机启动时，先运行一个存储于 ROM 中的 bootloader 程序 <code>kernel.ld</code> 来加载xv6 kernel到内存中，然后在machine模式下从<code>_entry</code>开始运行xv6。此时分页硬件没有工作，虚拟地址直接映射到物理地址。bootloader将xv6 kernel加载到<code>0x80000000</code>的物理地址中，因为前面的地址中包含I/O设备</p>
 <p>指令在<code>_entry</code>中设置了一个初始stack来执行C代码，xv6执行<code>kernel/start.c</code>并在其中声明一个初始化堆栈<code>stack0</code>。<code>_entry</code>处的代码加载堆栈的指针寄存器<code>sp</code>到栈顶<code>stack0+4096</code>，因为RISC-V的堆栈是向下生长的</p>
 <p><code>start</code>函数先在machine模式下做一些配置，还对时钟芯片进行编程，以生成定时器中断，然后通过RISC-V提供的<code>mret</code>指令切换到supervisor mode。使program counter(pc)也切换到<code>kernel/main.c</code></p>
 <blockquote>
@@ -263,7 +259,7 @@
 <p>将所有中断和异常委派给supervisor mode</p>
 </blockquote>
 <p><code>main</code>先对一些设备和子系统进行初始化，然后调用<code>kernel/proc.c</code>中定义的<code>userinit</code>来创建第一个用户进程。这个进程执行了一个<code>initcode.S</code>的汇编程序，这个汇编程序调用了<code>exec</code>这个system call来执行<code>/init</code>，重新进入kernel。<code>exec</code>将当前进程的内存和寄存器替换为一个新的程序(<code>/init</code>)，当kernel执行完毕<code>exec</code>指定的程序后，回到<code>/init</code>进程。<code>/init</code>(<code>user/init.c</code>)创建了一个新的console device以文件描述符0,1,2打开，然后在console device中开启了一个shell进程，至此整个系统启动了</p>
-<h3 id="2-6-Security-Model"><a href="#2-6-Security-Model" class="headerlink" title="2.6 Security Model"></a>2.6 Security Model</h3><p>操作系统必须假设进程的用户代码会尽力破坏内核或其他进程。包括引用超出其允许地址空间的指针、执行RISC-V特权指令、读取和写入任意RISC-V控制寄存器等。而内核的目标就是要限制每个用户进程，只能读&#x2F;写&#x2F;执行自己的用户内存、使用通用寄存器、使用允许的系统调用。</p>
+<h3 id="2-6-Security-Model"><a href="#2-6-Security-Model" class="headerlink" title="2.6 Security Model"></a>2.6 Security Model</h3><p>操作系统必须假设进程的用户代码会尽力破坏内核或其他进程。包括引用超出其允许地址空间的指针、执行RISC-V特权指令、读取和写入任意RISC-V控制寄存器等。而内核的目标就是要限制每个用户进程，只能读/写/执行自己的用户内存、使用通用寄存器、使用允许的系统调用。</p>
 <p>而内核代码不同，内核代码应当没有bug，不含任何恶意代码。这个假设会影响我们分析内核代码的方式，我们往往相信内核代码都是正确编写的，并且遵循内核自身函数和数据结构的使用规则</p>
 <p>在硬件级别，我们也假设CPU、RAM、磁盘等都按照文档正确运行，没有硬件错误</p>
 <p>而现实中，我们不可能编写无缺陷代码或者设计无缺陷硬件，因此我们有必要为内核设计保护措施：断言、类型检查、堆栈保护页等</p>
@@ -644,5 +640,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

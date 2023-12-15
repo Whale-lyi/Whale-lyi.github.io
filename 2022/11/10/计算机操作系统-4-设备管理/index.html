@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,20 +180,19 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="第四章-设备管理"><a href="#第四章-设备管理" class="headerlink" title="第四章 设备管理"></a>第四章 设备管理</h1><h2 id="4-1-设备管理基础"><a href="#4-1-设备管理基础" class="headerlink" title="4.1 设备管理基础"></a>4.1 设备管理基础</h2><h3 id="4-1-1-设备管理概述"><a href="#4-1-1-设备管理概述" class="headerlink" title="4.1.1 设备管理概述"></a>4.1.1 设备管理概述</h3><h4 id="I-O设备"><a href="#I-O设备" class="headerlink" title="I&#x2F;O设备"></a><strong>I&#x2F;O设备</strong></h4><ul>
-<li>I&#x2F;O设备，又称输入输出设备、外围设备、外部设备、外设<ul>
+        <h1 id="第四章-设备管理"><a href="#第四章-设备管理" class="headerlink" title="第四章 设备管理"></a>第四章 设备管理</h1><h2 id="4-1-设备管理基础"><a href="#4-1-设备管理基础" class="headerlink" title="4.1 设备管理基础"></a>4.1 设备管理基础</h2><h3 id="4-1-1-设备管理概述"><a href="#4-1-1-设备管理概述" class="headerlink" title="4.1.1 设备管理概述"></a>4.1.1 设备管理概述</h3><h4 id="I-O设备"><a href="#I-O设备" class="headerlink" title="I/O设备"></a><strong>I/O设备</strong></h4><ul>
+<li>I/O设备，又称输入输出设备、外围设备、外部设备、外设<ul>
 <li>用于计算机系统与外部世界(如用户、其它计算机或设备)的信息交换或存储</li>
 </ul>
 </li>
-<li>I&#x2F;O操作：内存和I&#x2F;O设备之间的信息传送操作<ul>
+<li>I/O操作：内存和I/O设备之间的信息传送操作<ul>
 <li>影响计算机的通用性和可扩充性</li>
 <li>影响计算机系统综合处理能力及性价比的重要因素</li>
 </ul>
 </li>
 </ul>
-<h4 id="I-O设备的分类"><a href="#I-O设备的分类" class="headerlink" title="I&#x2F;O设备的分类"></a><strong>I&#x2F;O设备的分类</strong></h4><ul>
-<li><p>信息传输视角</p>
-<ul>
+<h4 id="I-O设备的分类"><a href="#I-O设备的分类" class="headerlink" title="I/O设备的分类"></a><strong>I/O设备的分类</strong></h4><ul>
+<li>信息传输视角<ul>
 <li>输入设备：将外界信息输入计算机<ul>
 <li>例如：键盘，鼠标，扫描仪等</li>
 </ul>
@@ -251,9 +246,8 @@
 <li>抽象为设备文件</li>
 </ul>
 </li>
-<li><p>操作系统将所有设备(如磁带机、打印机、显示器和终端等)都定义为文件，统一在文件系统之下，赋予文件属性，对设备的操作就类似于对文件的操作，其优点:</p>
-<ul>
-<li>尽可能统一文件和设备的I&#x2F;O处理</li>
+<li>操作系统将所有设备(如磁带机、打印机、显示器和终端等)都定义为文件，统一在文件系统之下，赋予文件属性，对设备的操作就类似于对文件的操作，其优点:<ul>
+<li>尽可能统一文件和设备的I/O处理</li>
 <li>尽可能把设备文件和普通文件纳入同一保护机制下</li>
 <li>为了方便用户或高层进程使用，设备管理还对各种设备进行抽象，配置驱动程序，提供统一界面，屏蔽设备的物理细节和操作过程</li>
 </ul>
@@ -267,23 +261,23 @@
 <li>虚拟设备的实现</li>
 </ul>
 <h4 id="设备管理的层次"><a href="#设备管理的层次" class="headerlink" title="设备管理的层次"></a><strong>设备管理的层次</strong></h4><ul>
-<li>I&#x2F;O硬件<ul>
-<li>I&#x2F;O设备及其接口线路</li>
+<li>I/O硬件<ul>
+<li>I/O设备及其接口线路</li>
 <li>控制部件</li>
 <li>通道</li>
 </ul>
 </li>
-<li>I&#x2F;O软件<ul>
-<li>系统I&#x2F;O软件</li>
-<li>用户空间I&#x2F;O软件</li>
+<li>I/O软件<ul>
+<li>系统I/O软件</li>
+<li>用户空间I/O软件</li>
 </ul>
 </li>
 </ul>
-<h3 id="4-1-2-I-O控制方式"><a href="#4-1-2-I-O控制方式" class="headerlink" title="4.1.2 I&#x2F;O控制方式"></a>4.1.2 I&#x2F;O控制方式</h3><h4 id="设备控制器"><a href="#设备控制器" class="headerlink" title="设备控制器"></a><strong>设备控制器</strong></h4><ul>
+<h3 id="4-1-2-I-O控制方式"><a href="#4-1-2-I-O控制方式" class="headerlink" title="4.1.2 I/O控制方式"></a>4.1.2 I/O控制方式</h3><h4 id="设备控制器"><a href="#设备控制器" class="headerlink" title="设备控制器"></a><strong>设备控制器</strong></h4><ul>
 <li>为达到模块化和通用性的设计目标，通常分开设置设备中的机械部件和电子部件</li>
-<li>电子部件称为设备控制器、又称为设备适配器、I&#x2F;O控制器、I&#x2F;O控制接口、I&#x2F;O模块、I&#x2F;O接口</li>
+<li>电子部件称为设备控制器、又称为设备适配器、I/O控制器、I/O控制接口、I/O模块、I/O接口</li>
 <li>系统与控制器交互，而非与设备交互</li>
-<li>设备控制器具体控制设备进行I&#x2F;O</li>
+<li>设备控制器具体控制设备进行I/O</li>
 </ul>
 <h4 id="设备控制器的功能"><a href="#设备控制器的功能" class="headerlink" title="设备控制器的功能"></a><strong>设备控制器的功能</strong></h4><ul>
 <li>设备控制器是CPU与设备之间的接口<ul>
@@ -295,17 +289,16 @@
 </li>
 </ul>
 <h4 id="设备控制器的组成示意"><a href="#设备控制器的组成示意" class="headerlink" title="设备控制器的组成示意"></a><strong>设备控制器的组成示意</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110145307845.png" alt="image-20221110145307845"></p>
-<h4 id="I-O控制的轮询方式"><a href="#I-O控制的轮询方式" class="headerlink" title="I&#x2F;O控制的轮询方式"></a><strong>I&#x2F;O控制的轮询方式</strong></h4><ul>
-<li>处理器向控制器发送I&#x2F;O命令，轮询I&#x2F;O结果</li>
+<h4 id="I-O控制的轮询方式"><a href="#I-O控制的轮询方式" class="headerlink" title="I/O控制的轮询方式"></a><strong>I/O控制的轮询方式</strong></h4><ul>
+<li>处理器向控制器发送I/O命令，轮询I/O结果</li>
 <li>如果设备未就绪，则重复测试过程，直至设备就绪</li>
 <li>执行内存数据交换</li>
-<li>等待I&#x2F;O操作完成后，处理器才可以继续其它操作</li>
+<li>等待I/O操作完成后，处理器才可以继续其它操作</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110145630241.png" alt="image-20221110145630241" style="zoom:80%;" />
-
-<h4 id="I-O控制的中断方式"><a href="#I-O控制的中断方式" class="headerlink" title="I&#x2F;O控制的中断方式"></a><strong>I&#x2F;O控制的中断方式</strong></h4><ul>
-<li>处理器向控制器发出具体I&#x2F;O命令，然后继续执行后续指令<ul>
-<li>若该进程支持异步I&#x2F;O，后续指令可以仍是该进程中的指令</li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110145630241.png" alt="image-20221110145630241" style="zoom:80%;" /></p>
+<h4 id="I-O控制的中断方式"><a href="#I-O控制的中断方式" class="headerlink" title="I/O控制的中断方式"></a><strong>I/O控制的中断方式</strong></h4><ul>
+<li>处理器向控制器发出具体I/O命令，然后继续执行后续指令<ul>
+<li>若该进程支持异步I/O，后续指令可以仍是该进程中的指令</li>
 <li>否则，该进程在这个中断上挂起，处理器执行其他工作</li>
 </ul>
 </li>
@@ -313,24 +306,21 @@
 <li>CPU响应中断，进行中断处理</li>
 <li>中断处理执行内存数据交换</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110150514138.png" alt="image-20221110150514138" style="zoom:80%;" />
-
-<h4 id="I-O控制的DMA方式"><a href="#I-O控制的DMA方式" class="headerlink" title="I&#x2F;O控制的DMA方式"></a><strong>I&#x2F;O控制的DMA方式</strong></h4><ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110150514138.png" alt="image-20221110150514138" style="zoom:80%;" /></p>
+<h4 id="I-O控制的DMA方式"><a href="#I-O控制的DMA方式" class="headerlink" title="I/O控制的DMA方式"></a><strong>I/O控制的DMA方式</strong></h4><ul>
 <li>直接存储器访问(Direct Memory Access)</li>
 <li>DMA模块<ul>
 <li>能够替代处理器来控制主存和设备控制器之间的数据交换</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110150658729.png" alt="image-20221110150658729" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110150658729.png" alt="image-20221110150658729" style="zoom:80%;" /></p>
 <h4 id="DMA的工作流程"><a href="#DMA的工作流程" class="headerlink" title="DMA的工作流程"></a><strong>DMA的工作流程</strong></h4><ul>
-<li>处理器向DMA模块发出I&#x2F;O命令</li>
+<li>处理器向DMA模块发出I/O命令</li>
 <li>处理器继续执行其它工作，DMA模块负责传送全部数据</li>
 <li>数据传送结束后，DMA中断处理器</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110150908940.png" alt="image-20221110150908940" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110150908940.png" alt="image-20221110150908940" style="zoom:80%;" /></p>
 <h4 id="DMA方式中的周期窃取"><a href="#DMA方式中的周期窃取" class="headerlink" title="DMA方式中的周期窃取"></a><strong>DMA方式中的周期窃取</strong></h4><ul>
 <li>当DMA和CPU同时经总线访问内存时，CPU会把总线的占有权让给DMA一个或几个主存周期</li>
 <li>周期窃取对CPU与主存的数据交换影响不大<ul>
@@ -340,69 +330,64 @@
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110151301200.png" alt="image-20221110151301200"></p>
-<h4 id="I-O控制方式的总结"><a href="#I-O控制方式的总结" class="headerlink" title="I&#x2F;O控制方式的总结"></a><strong>I&#x2F;O控制方式的总结</strong></h4><ul>
+<h4 id="I-O控制方式的总结"><a href="#I-O控制方式的总结" class="headerlink" title="I/O控制方式的总结"></a><strong>I/O控制方式的总结</strong></h4><ul>
 <li><strong>轮询</strong>方式：CPU等待设备就绪，且参与内存数据交换</li>
 <li><strong>中断</strong>方式：CPU无需等待设备就绪，响应中断后参与内存数据交换</li>
-<li><strong>DMA</strong>方式：CPU只在I&#x2F;O开始和结束时参与，不参与主存数据交换</li>
+<li><strong>DMA</strong>方式：CPU只在I/O开始和结束时参与，不参与主存数据交换</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110151553359.png" alt="image-20221110151553359" style="zoom:80%;" />
-
-<h4 id="I-O通道"><a href="#I-O通道" class="headerlink" title="I&#x2F;O通道"></a><strong>I&#x2F;O通道</strong></h4><ul>
-<li>又称为通道控制器、I&#x2F;O处理器，用于完成逻辑上独立的I&#x2F;O任务</li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110151553359.png" alt="image-20221110151553359" style="zoom:80%;" /></p>
+<h4 id="I-O通道"><a href="#I-O通道" class="headerlink" title="I/O通道"></a><strong>I/O通道</strong></h4><ul>
+<li>又称为通道控制器、I/O处理器，用于完成逻辑上独立的I/O任务</li>
 <li>采用四级连接：处理器，通道，控制器，设备<ul>
 <li>通道可控制多台同类或不同类的设备</li>
 </ul>
 </li>
-<li>处理器不再执行I&#x2F;O指令，而是在主存中组织通道程序，由I&#x2F;O通道执行</li>
+<li>处理器不再执行I/O指令，而是在主存中组织通道程序，由I/O通道执行</li>
 <li>为获得CPU和外围设备间更高的并行工作能力，为让种类繁多，物理特性各异的外围设备能以标准的接口连接到系统中，计算机系统引入了自成独立体系的通道结构</li>
 </ul>
-<h4 id="I-O通道的工作流程"><a href="#I-O通道的工作流程" class="headerlink" title="I&#x2F;O通道的工作流程"></a><strong>I&#x2F;O通道的工作流程</strong></h4><ol>
-<li><p>CPU遇到I&#x2F;O任务，组织通道程序，置通道程序地址字CAW，启动指定通道</p>
+<h4 id="I-O通道的工作流程"><a href="#I-O通道的工作流程" class="headerlink" title="I/O通道的工作流程"></a><strong>I/O通道的工作流程</strong></h4><ol>
+<li><p>CPU遇到I/O任务，组织通道程序，置通道程序地址字CAW，启动指定通道</p>
 </li>
-<li><p>通道从CAW获取通道程序，控制I&#x2F;O设备进行操作。CPU执行其他任务</p>
+<li><p>通道从CAW获取通道程序，控制I/O设备进行操作。CPU执行其他任务</p>
 </li>
-<li><p>I&#x2F;O操作完成后，I&#x2F;O通道发出中断，CPU处理中断，并从通道程序状态字CSW获得通道执行情况，处理I&#x2F;O操作</p>
+<li><p>I/O操作完成后，I/O通道发出中断，CPU处理中断，并从通道程序状态字CSW获得通道执行情况，处理I/O操作</p>
 </li>
 </ol>
 <ul>
 <li><strong>CPU与通道高度并行工作</strong></li>
 </ul>
-<h3 id="4-1-3-总线与I-O"><a href="#4-1-3-总线与I-O" class="headerlink" title="4.1.3 总线与I&#x2F;O"></a>4.1.3 总线与I&#x2F;O</h3><h4 id="总线：解决I-O速度不匹配问题"><a href="#总线：解决I-O速度不匹配问题" class="headerlink" title="总线：解决I&#x2F;O速度不匹配问题"></a><strong>总线：解决I&#x2F;O速度不匹配问题</strong></h4><ul>
-<li>I&#x2F;O与CPU速度、各设备I&#x2F;O速度不匹配</li>
+<h3 id="4-1-3-总线与I-O"><a href="#4-1-3-总线与I-O" class="headerlink" title="4.1.3 总线与I/O"></a>4.1.3 总线与I/O</h3><h4 id="总线：解决I-O速度不匹配问题"><a href="#总线：解决I-O速度不匹配问题" class="headerlink" title="总线：解决I/O速度不匹配问题"></a><strong>总线：解决I/O速度不匹配问题</strong></h4><ul>
+<li>I/O与CPU速度、各设备I/O速度不匹配</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154228960.png" alt="image-20221110154228786" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154228960.png" alt="image-20221110154228786" style="zoom:80%;" /></p>
 <ul>
 <li>使主机和设备充分并行，提高系统效率</li>
 </ul>
 <h4 id="单总线结构模型"><a href="#单总线结构模型" class="headerlink" title="单总线结构模型"></a><strong>单总线结构模型</strong></h4><ul>
-<li>将CPU、主存和I&#x2F;O模块连接到同一总线</li>
+<li>将CPU、主存和I/O模块连接到同一总线</li>
 <li>优点：结构简单，易于扩充</li>
 <li>缺点：共用总线；设备多时总线压力大，传输时延长，且慢速外设占用带宽多</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154610295.png" alt="image-20221110154610295" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154610295.png" alt="image-20221110154610295" style="zoom:80%;" /></p>
 <h4 id="三级总线模型"><a href="#三级总线模型" class="headerlink" title="三级总线模型"></a><strong>三级总线模型</strong></h4><ul>
-<li>主存和Cache通过主存总线连接，主存总线和扩展总线上的I&#x2F;O设备间通过扩展总线接口缓冲</li>
-<li>优点：主存与I&#x2F;O之间的数据传送、处理器的内存活动分离；可以支持更多的I&#x2F;O设备</li>
-<li>缺点：不适用于I&#x2F;O设备数据速率相差太大的情形</li>
+<li>主存和Cache通过主存总线连接，主存总线和扩展总线上的I/O设备间通过扩展总线接口缓冲</li>
+<li>优点：主存与I/O之间的数据传送、处理器的内存活动分离；可以支持更多的I/O设备</li>
+<li>缺点：不适用于I/O设备数据速率相差太大的情形</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154559310.png" alt="image-20221110154559310" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154559310.png" alt="image-20221110154559310" style="zoom:80%;" /></p>
 <h4 id="南桥与北桥"><a href="#南桥与北桥" class="headerlink" title="南桥与北桥"></a><strong>南桥与北桥</strong></h4><ul>
-<li>通过存储总线、PCI总线、E(ISA)总线分别连接主存、高速I&#x2F;O设备和低速I&#x2F;O设备</li>
-<li>优点：可以支持不同数据速率的I&#x2F;O设备</li>
+<li>通过存储总线、PCI总线、E(ISA)总线分别连接主存、高速I/O设备和低速I/O设备</li>
+<li>优点：可以支持不同数据速率的I/O设备</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154634521.png" alt="image-20221110154634521" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221110154634521.png" alt="image-20221110154634521" style="zoom:80%;" /></p>
 <h4 id="一种基于通道的服务器总线模型"><a href="#一种基于通道的服务器总线模型" class="headerlink" title="一种基于通道的服务器总线模型"></a><strong>一种基于通道的服务器总线模型</strong></h4><ul>
-<li>支持CPU、主存和多个I&#x2F;O通道之间的数据传送</li>
-<li>支持I&#x2F;O通道和I&#x2F;O控制器，以及I&#x2F;O控制器和设备之间的数据传送</li>
+<li>支持CPU、主存和多个I/O通道之间的数据传送</li>
+<li>支持I/O通道和I/O控制器，以及I/O控制器和设备之间的数据传送</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114145214381.png" alt="image-20221114145214381"></p>
-<h2 id="4-2-设备管理软件"><a href="#4-2-设备管理软件" class="headerlink" title="4.2 设备管理软件"></a>4.2 设备管理软件</h2><h3 id="4-2-1-I-O软件的实现层次"><a href="#4-2-1-I-O软件的实现层次" class="headerlink" title="4.2.1 I&#x2F;O软件的实现层次"></a>4.2.1 I&#x2F;O软件的实现层次</h3><h4 id="I-O软件的设计目标"><a href="#I-O软件的设计目标" class="headerlink" title="I&#x2F;O软件的设计目标"></a><strong>I&#x2F;O软件的设计目标</strong></h4><ul>
+<h2 id="4-2-设备管理软件"><a href="#4-2-设备管理软件" class="headerlink" title="4.2 设备管理软件"></a>4.2 设备管理软件</h2><h3 id="4-2-1-I-O软件的实现层次"><a href="#4-2-1-I-O软件的实现层次" class="headerlink" title="4.2.1 I/O软件的实现层次"></a>4.2.1 I/O软件的实现层次</h3><h4 id="I-O软件的设计目标"><a href="#I-O软件的设计目标" class="headerlink" title="I/O软件的设计目标"></a><strong>I/O软件的设计目标</strong></h4><ul>
 <li>设计目标<ul>
-<li>高效率：改善设备效率，尤其是磁盘I&#x2F;O操作的效率</li>
+<li>高效率：改善设备效率，尤其是磁盘I/O操作的效率</li>
 <li>通用性：用统一的标准来管理所有设备</li>
 </ul>
 </li>
@@ -411,31 +396,30 @@
 </ul>
 </li>
 </ul>
-<h4 id="I-O软件设计要考虑的问题"><a href="#I-O软件设计要考虑的问题" class="headerlink" title="I&#x2F;O软件设计要考虑的问题"></a><strong>I&#x2F;O软件设计要考虑的问题</strong></h4><ul>
+<h4 id="I-O软件设计要考虑的问题"><a href="#I-O软件设计要考虑的问题" class="headerlink" title="I/O软件设计要考虑的问题"></a><strong>I/O软件设计要考虑的问题</strong></h4><ul>
 <li>设备无关性：访问设备的程序与具体设备无关</li>
 <li>出错处理：低层软件能处理的错误不让高层软件感知</li>
-<li>同步&#x2F;异步传输：支持<strong>同步</strong>(阻塞)和<strong>异步</strong>(中断驱动)两种工作方式</li>
+<li>同步/异步传输：支持<strong>同步</strong>(阻塞)和<strong>异步</strong>(中断驱动)两种工作方式</li>
 <li>缓冲技术：建立内存数据缓冲区，提高吞吐率</li>
 </ul>
-<h4 id="I-O软件的层次结构"><a href="#I-O软件的层次结构" class="headerlink" title="I&#x2F;O软件的层次结构"></a><strong>I&#x2F;O软件的层次结构</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114145459495.png" alt="image-20221114145459495"></p>
-<h3 id="4-2-2-I-O软件的实现"><a href="#4-2-2-I-O软件的实现" class="headerlink" title="4.2.2 I&#x2F;O软件的实现"></a>4.2.2 I&#x2F;O软件的实现</h3><h4 id="I-O中断处理程序"><a href="#I-O中断处理程序" class="headerlink" title="I&#x2F;O中断处理程序"></a><strong>I&#x2F;O中断处理程序</strong></h4><ul>
+<h4 id="I-O软件的层次结构"><a href="#I-O软件的层次结构" class="headerlink" title="I/O软件的层次结构"></a><strong>I/O软件的层次结构</strong></h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114145459495.png" alt="image-20221114145459495"></p>
+<h3 id="4-2-2-I-O软件的实现"><a href="#4-2-2-I-O软件的实现" class="headerlink" title="4.2.2 I/O软件的实现"></a>4.2.2 I/O软件的实现</h3><h4 id="I-O中断处理程序"><a href="#I-O中断处理程序" class="headerlink" title="I/O中断处理程序"></a><strong>I/O中断处理程序</strong></h4><ul>
 <li>位于OS底层，与硬件设备密切相关，与系统其余部分尽可能少地发生联系</li>
-<li>进程请求I&#x2F;O操作时，通常被阻塞</li>
-<li>数据传输结束后产生I&#x2F;O中断</li>
+<li>进程请求I/O操作时，通常被阻塞</li>
+<li>数据传输结束后产生I/O中断</li>
 <li>CPU响应请求并转入中断处理程序</li>
 </ul>
-<h4 id="I-O中断处理程序的功能"><a href="#I-O中断处理程序的功能" class="headerlink" title="I&#x2F;O中断处理程序的功能"></a><strong>I&#x2F;O中断处理程序的功能</strong></h4><ul>
-<li>检查设备状态寄存器内容，判断中断原因，根据I&#x2F;O操作的完成情况进行相应的处理<ul>
+<h4 id="I-O中断处理程序的功能"><a href="#I-O中断处理程序的功能" class="headerlink" title="I/O中断处理程序的功能"></a><strong>I/O中断处理程序的功能</strong></h4><ul>
+<li>检查设备状态寄存器内容，判断中断原因，根据I/O操作的完成情况进行相应的处理<ul>
 <li>如果数据传输有错，向上层软件报告设备的出错信息，实施重新执行</li>
 <li>如果正常结束，唤醒等待传输的进程，使其转换为就绪态</li>
-<li>如果有等待传输的I&#x2F;O命令，通知相关软件启动下一个I&#x2F;O请求</li>
+<li>如果有等待传输的I/O命令，通知相关软件启动下一个I/O请求</li>
 </ul>
 </li>
 </ul>
 <h4 id="设备驱动程序"><a href="#设备驱动程序" class="headerlink" title="设备驱动程序"></a><strong>设备驱动程序</strong></h4><ul>
-<li><p>包括与设备密切相关的所有代码</p>
-</li>
-<li><p>从独立于设备的软件中接收抽象的I&#x2F;O请求</p>
+<li>包括与设备密切相关的所有代码</li>
+<li><p>从独立于设备的软件中接收抽象的I/O请求</p>
 <ul>
 <li><p>一条典型的请求是读第 n 块</p>
 </li>
@@ -445,7 +429,7 @@
 </li>
 </ul>
 </li>
-<li><p>把用户提交的逻辑I&#x2F;O请求转化为物理I&#x2F;O操作的启动和执行</p>
+<li><p>把用户提交的逻辑I/O请求转化为物理I/O操作的启动和执行</p>
 <ul>
 <li>如设备名-&gt;端口地址、逻辑记录-&gt;物理记录、逻辑操作-&gt;物理操作等</li>
 </ul>
@@ -470,36 +454,36 @@
 </li>
 <li><p>设备驱动程序可以分层实现</p>
 <ul>
-<li>高层&#x2F;处理类设备，底层&#x2F;处理具体设备</li>
-<li>系统建立栈，接到I&#x2F;O请求时先调用栈顶的驱动程序，然后继续向下调用低层驱动程序，直到所有物理操作被处理</li>
+<li>高层/处理类设备，底层/处理具体设备</li>
+<li>系统建立栈，接到I/O请求时先调用栈顶的驱动程序，然后继续向下调用低层驱动程序，直到所有物理操作被处理</li>
 <li>这一方式使设备驱动的实现结构清晰、便于移植，但会增加一部分系统开销</li>
 </ul>
 </li>
 </ul>
-<h4 id="独立于设备的I-O软件"><a href="#独立于设备的I-O软件" class="headerlink" title="独立于设备的I&#x2F;O软件"></a>独立于设备的I&#x2F;O软件</h4><ul>
-<li>执行适用于所有设备的常用I&#x2F;O功能，并向用户层软件提供一致性接口，包括：<ul>
+<h4 id="独立于设备的I-O软件"><a href="#独立于设备的I-O软件" class="headerlink" title="独立于设备的I/O软件"></a>独立于设备的I/O软件</h4><ul>
+<li>执行适用于所有设备的常用I/O功能，并向用户层软件提供一致性接口，包括：<ul>
 <li>设备命名：通过路径名寻址设备</li>
 <li>设备保护：用户是否有权访问设备</li>
-<li>提供与设备无关的数据单位：字符&#x2F;块</li>
-<li>缓冲技术：调整CPU与I&#x2F;O速度不匹配</li>
+<li>提供与设备无关的数据单位：字符/块</li>
+<li>缓冲技术：调整CPU与I/O速度不匹配</li>
 <li>分配和状态跟踪：分配设备</li>
-<li>错误处理&#x2F;报告：驱动无法处理的错误</li>
+<li>错误处理/报告：驱动无法处理的错误</li>
 </ul>
 </li>
 </ul>
-<h4 id="用户空间的I-O软件"><a href="#用户空间的I-O软件" class="headerlink" title="用户空间的I&#x2F;O软件"></a>用户空间的I&#x2F;O软件</h4><ul>
-<li>库函数：一部分I&#x2F;O软件可以使用库函数实现，放在操作系统内核之外，运行时与应用程序链接</li>
-<li>虚拟设备软件：用一类设备模拟另一类设备的仿真I&#x2F;O软件</li>
+<h4 id="用户空间的I-O软件"><a href="#用户空间的I-O软件" class="headerlink" title="用户空间的I/O软件"></a>用户空间的I/O软件</h4><ul>
+<li>库函数：一部分I/O软件可以使用库函数实现，放在操作系统内核之外，运行时与应用程序链接</li>
+<li>虚拟设备软件：用一类设备模拟另一类设备的仿真I/O软件</li>
 </ul>
-<h3 id="4-2-3-I-O缓冲"><a href="#4-2-3-I-O缓冲" class="headerlink" title="4.2.3 I&#x2F;O缓冲"></a>4.2.3 I&#x2F;O缓冲</h3><h4 id="设置I-O缓冲的目的"><a href="#设置I-O缓冲的目的" class="headerlink" title="设置I&#x2F;O缓冲的目的"></a>设置I&#x2F;O缓冲的目的</h4><ul>
+<h3 id="4-2-3-I-O缓冲"><a href="#4-2-3-I-O缓冲" class="headerlink" title="4.2.3 I/O缓冲"></a>4.2.3 I/O缓冲</h3><h4 id="设置I-O缓冲的目的"><a href="#设置I-O缓冲的目的" class="headerlink" title="设置I/O缓冲的目的"></a>设置I/O缓冲的目的</h4><ul>
 <li>解决CPU与设备之间速度不匹配的矛盾</li>
 <li>协调逻辑记录大小和物理记录大小不一致的问题</li>
 <li>提高CPU和设备的并行性</li>
-<li>减少I&#x2F;O操作对CPU的中断次数</li>
+<li>减少I/O操作对CPU的中断次数</li>
 <li>放宽对CPU中断响应时间的要求</li>
 </ul>
-<h4 id="I-O缓冲区"><a href="#I-O缓冲区" class="headerlink" title="I&#x2F;O缓冲区"></a>I&#x2F;O缓冲区</h4><ul>
-<li>I&#x2F;O缓冲区：在内存中开辟的存储区，专门用于临时存放I&#x2F;O操作的数据</li>
+<h4 id="I-O缓冲区"><a href="#I-O缓冲区" class="headerlink" title="I/O缓冲区"></a>I/O缓冲区</h4><ul>
+<li>I/O缓冲区：在内存中开辟的存储区，专门用于临时存放I/O操作的数据</li>
 <li>操作过程：<ul>
 <li>写操作：将数据送至缓冲区，直到装满或需要写出，待适当时候系统将缓冲区内容写到设备上</li>
 <li>读操作：系统将设备上的物理记录读至缓冲区，根据要求将当前所需要的数据从缓冲区中读出并传送给进程</li>
@@ -510,7 +494,7 @@
 <li><p>操作系统在主存系统区中开设一个缓冲区</p>
 <ul>
 <li><p>输入：先把数据读至缓冲区，再把缓冲区数据送至用户区，应用程序处理数据；如此往复，系统继续读入后继数据</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114150708546.png" alt="image-20221114150708546" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114150708546.png" alt="image-20221114150708546" style="zoom:80%;" /></p>
 </li>
 <li><p>输出：把数据从用户区传送到缓冲区，再将数据输出到设备，应用程序继续请求输出</p>
 </li>
@@ -521,7 +505,7 @@
 <li><p>操作系统在主存系统区开设两个缓冲区</p>
 <ul>
 <li><p>输入：先把数据输入缓冲区1，再从缓冲区1把数据传到用户区，供应用程序处理；(同时设备可将数据传送到缓冲区2)</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114150830354.png" alt="image-20221114150830354" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114150830354.png" alt="image-20221114150830354" style="zoom:80%;" /></p>
 </li>
 <li><p>输出：先将数据从用户区传送到缓冲区1，再将数据传送到设备；(同时应用程序可 将数据传送到缓冲区2)</p>
 </li>
@@ -532,7 +516,8 @@
 <li><p>OS分配一组缓冲区，每个缓冲区有指向下个缓冲区的链接指针，构成循环缓冲</p>
 <ul>
 <li><p>继续调节设备和进程速度不匹配问题</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114150905161.png" alt="image-20221114150905161" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114150905161.png" alt="image-20221114150905161" style="zoom:80%;" /></p>
+</li>
 </ul>
 </li>
 </ul>
@@ -549,7 +534,7 @@
 </ul>
 <h4 id="设备独立性的优点"><a href="#设备独立性的优点" class="headerlink" title="设备独立性的优点"></a><strong>设备独立性的优点</strong></h4><ul>
 <li>应用程序与具体物理设备无关，系统增减或变更设备时不需要修改源程序</li>
-<li>易于应对I&#x2F;O设备故障，提高系统可靠性</li>
+<li>易于应对I/O设备故障，提高系统可靠性</li>
 <li>增加设备分配的灵活性，有利于更加有效地利用设备资源，实现多道程序设计</li>
 </ul>
 <h3 id="4-3-2-独占型外围设备的分配"><a href="#4-3-2-独占型外围设备的分配" class="headerlink" title="4.3.2 独占型外围设备的分配"></a>4.3.2 独占型外围设备的分配</h3><h4 id="设备分配方式"><a href="#设备分配方式" class="headerlink" title="设备分配方式"></a><strong>设备分配方式</strong></h4><ul>
@@ -579,23 +564,20 @@
 </li>
 <li>设备表<ul>
 <li>每类设备都有各自的设备表，用来登记这类设备中的每台物理设备</li>
-<li>包括：物理设备名，逻辑设备名，占有设备的进程，分配标志，好&#x2F;坏标志等</li>
+<li>包括：物理设备名，逻辑设备名，占有设备的进程，分配标志，好/坏标志等</li>
 </ul>
 </li>
 </ul>
 <h2 id="4-4-共享型外围设备的驱动"><a href="#4-4-共享型外围设备的驱动" class="headerlink" title="4.4 共享型外围设备的驱动"></a>4.4 共享型外围设备的驱动</h2><h3 id="4-4-1-磁盘的物理结构"><a href="#4-4-1-磁盘的物理结构" class="headerlink" title="4.4.1 磁盘的物理结构"></a>4.4.1 磁盘的物理结构</h3><h4 id="磁盘结构"><a href="#磁盘结构" class="headerlink" title="磁盘结构"></a><strong>磁盘结构</strong></h4><ul>
-<li><p>磁盘一般由多个<strong>盘片</strong>组成</p>
-</li>
-<li><p>每个盘片一般有两个<strong>盘面</strong></p>
-</li>
-<li><p>盘面包括多个同心圆结构的<strong>磁道</strong>，不同盘面上位于相同位置的磁道构成<strong>柱面</strong></p>
-</li>
+<li>磁盘一般由多个<strong>盘片</strong>组成</li>
+<li>每个盘片一般有两个<strong>盘面</strong></li>
+<li>盘面包括多个同心圆结构的<strong>磁道</strong>，不同盘面上位于相同位置的磁道构成<strong>柱面</strong></li>
 <li><p>每个磁道分为固定的多个<strong>扇区</strong>，相邻扇区组合成<strong>簇</strong></p>
 </li>
 <li><p>物理块地址</p>
 <ol>
 <li>柱面号、磁头号、扇区号</li>
-<li>0 道 0 面 1 扇区：面指磁头&#x2F;不是柱面</li>
+<li>0 道 0 面 1 扇区：面指磁头/不是柱面</li>
 </ol>
 </li>
 </ul>
@@ -608,8 +590,7 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114151950130.png" alt="image-20221114151950130" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114151950130.png" alt="image-20221114151950130" style="zoom:80%;" /></p>
 <h4 id="磁盘存取时间"><a href="#磁盘存取时间" class="headerlink" title="磁盘存取时间"></a>磁盘存取时间</h4><ul>
 <li><p>磁盘完成数据读写所需要的时间</p>
 <ul>
@@ -620,25 +601,22 @@
 </li>
 <li><p>为了读或者写，磁头必须定位到指定的磁道(track)和该磁道中指定的扇区(sector)的开始处</p>
 </li>
-<li><p>寻道时间 (记为Ts)</p>
-<ul>
+<li>寻道时间 (记为Ts)<ul>
 <li>将磁盘磁头臂移动指定磁道所需要的时间</li>
 </ul>
 </li>
-<li><p>旋转延迟 (Rotational delay or rotational latency)</p>
-<ul>
+<li>旋转延迟 (Rotational delay or rotational latency)<ul>
 <li>要读写的扇区到达磁头的旋转时间</li>
 </ul>
 </li>
-<li><p>传送时间</p>
-</li>
+<li>传送时间</li>
 </ul>
 <h3 id="4-4-2-磁盘的驱动调度"><a href="#4-4-2-磁盘的驱动调度" class="headerlink" title="4.4.2 磁盘的驱动调度"></a>4.4.2 磁盘的驱动调度</h3><h4 id="磁盘调度"><a href="#磁盘调度" class="headerlink" title="磁盘调度"></a>磁盘调度</h4><ul>
-<li>磁盘可能同时接收到若干I&#x2F;O请求<ul>
-<li>随机响应I&#x2F;O请求，会得到很坏的性能</li>
+<li>磁盘可能同时接收到若干I/O请求<ul>
+<li>随机响应I/O请求，会得到很坏的性能</li>
 </ul>
 </li>
-<li>驱动调度：OS的磁盘调度策略，即按照最佳次序执行处理访问磁盘的多个I&#x2F;O请求，以减少磁盘访问的总处理时间</li>
+<li>驱动调度：OS的磁盘调度策略，即按照最佳次序执行处理访问磁盘的多个I/O请求，以减少磁盘访问的总处理时间</li>
 <li>驱动调度策略包括<ul>
 <li>移臂调度</li>
 <li>旋转调度</li>
@@ -661,13 +639,13 @@
 </ul>
 <h4 id="移臂调度的扫描算法"><a href="#移臂调度的扫描算法" class="headerlink" title="移臂调度的扫描算法"></a>移臂调度的扫描算法</h4><ul>
 <li>单向扫描：移动臂向一个方向扫描，归途不提供服务，适用于不断有均匀分布的大量柱面请求的情形</li>
-<li>双向扫描，移动臂每次向一个方向移动，遇到最近的I&#x2F;O请求便进行处理，到达最后一个柱面后再向相反方向移动</li>
+<li>双向扫描，移动臂每次向一个方向移动，遇到最近的I/O请求便进行处理，到达最后一个柱面后再向相反方向移动</li>
 <li>电梯调度：双向扫描的改进，当前移动方向没有访问请求时，就改变移动方向</li>
 </ul>
 <h4 id="旋转调度"><a href="#旋转调度" class="headerlink" title="旋转调度"></a>旋转调度</h4><ul>
 <li>目的：使得旋转延迟的总时间最少</li>
 <li>循环排序<ul>
-<li>通过优化I&#x2F;O请求排序，在最少旋转圈数内完成位于同一柱面的访问请求</li>
+<li>通过优化I/O请求排序，在最少旋转圈数内完成位于同一柱面的访问请求</li>
 <li>旋转位置测定硬件和多磁头同时读写技术有利于提高旋转调度的效率</li>
 </ul>
 </li>
@@ -677,10 +655,8 @@
 </li>
 <li><p>交替排序：由于磁盘匀速运转，可能处理当前扇区数据时，下个扇区已经跳过。因此，可对扇区间隔编号，如交叉因子为 n:1 表示相邻编号间会间隔 n-1 个扇区</p>
 </li>
-<li><p>把相邻扇区集中成簇读写</p>
-</li>
-<li><p>按柱面集中存储数据(另一种集簇方式)，可以减少数据读写时的移臂操作</p>
-</li>
+<li>把相邻扇区集中成簇读写</li>
+<li>按柱面集中存储数据(另一种集簇方式)，可以减少数据读写时的移臂操作</li>
 </ul>
 <h2 id="4-5-虚拟设备"><a href="#4-5-虚拟设备" class="headerlink" title="4.5 虚拟设备"></a>4.5 虚拟设备</h2><h3 id="4-5-1-SPOOLing系统"><a href="#4-5-1-SPOOLing系统" class="headerlink" title="4.5.1 SPOOLing系统"></a>4.5.1 SPOOLing系统</h3><h4 id="虚拟设备技术"><a href="#虚拟设备技术" class="headerlink" title="虚拟设备技术"></a>虚拟设备技术</h4><ul>
 <li>使用一类物理设备模拟另一类物理设备的技术</li>
@@ -698,20 +674,16 @@
 </li>
 <li><p>用<strong>高速的磁盘设备来模拟慢速的字符设备，缩短进程在内存中的驻留时间</strong></p>
 </li>
-<li><p>慢速输出设备先输出到(输出井)</p>
-</li>
-<li><p>进程运行过程中只从输入井读入数据，只向输出井输出信息，使得全部 I&#x2F;O 都基于磁盘</p>
-</li>
-<li><p>加快进程周转时间，提高系统吞吐量</p>
-</li>
+<li>慢速输出设备先输出到(输出井)</li>
+<li>进程运行过程中只从输入井读入数据，只向输出井输出信息，使得全部 I/O 都基于磁盘</li>
+<li>加快进程周转时间，提高系统吞吐量</li>
 </ul>
 <h4 id="该SPOOLing系统的软件组成"><a href="#该SPOOLing系统的软件组成" class="headerlink" title="该SPOOLing系统的软件组成"></a>该SPOOLing系统的软件组成</h4><ul>
 <li>预输入程序：预先把数据从输入设备传送到磁盘输入井</li>
 <li>缓输出程序：把数据从磁盘输出井传送到输出设备</li>
-<li>井管理程序：控制进程和井之间的数据交换(事实上是 I&#x2F;O 重定向)</li>
+<li>井管理程序：控制进程和井之间的数据交换(事实上是 I/O 重定向)</li>
 </ul>
-<h4 id="SPOOLing系统的示意图"><a href="#SPOOLing系统的示意图" class="headerlink" title="SPOOLing系统的示意图"></a>SPOOLing系统的示意图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119135159446.png" alt="image-20221119135159446" style="zoom:80%;" />
-
+<h4 id="SPOOLing系统的示意图"><a href="#SPOOLing系统的示意图" class="headerlink" title="SPOOLing系统的示意图"></a>SPOOLing系统的示意图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119135159446.png" alt="image-20221119135159446" style="zoom:80%;" /></p>
 <h4 id="打印SPOOLing系统"><a href="#打印SPOOLing系统" class="headerlink" title="打印SPOOLing系统"></a>打印SPOOLing系统</h4><ul>
 <li>打印机守护进程和 SPOOLing 打印目录<ul>
 <li>守护进程是唯一有特权使用打印机设备的进程</li>
@@ -720,10 +692,8 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119135834798.png" alt="image-20221119135834798" style="zoom:80%;" />
-
-<h3 id="4-5-2-批处理系统的作业管理"><a href="#4-5-2-批处理系统的作业管理" class="headerlink" title="4.5.2 批处理系统的作业管理"></a>4.5.2 批处理系统的作业管理</h3><h4 id="SPOOLing系统与作业管理"><a href="#SPOOLing系统与作业管理" class="headerlink" title="SPOOLing系统与作业管理"></a>SPOOLing系统与作业管理</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119135931778.png" alt="image-20221119135931778" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119135834798.png" alt="image-20221119135834798" style="zoom:80%;" /></p>
+<h3 id="4-5-2-批处理系统的作业管理"><a href="#4-5-2-批处理系统的作业管理" class="headerlink" title="4.5.2 批处理系统的作业管理"></a>4.5.2 批处理系统的作业管理</h3><h4 id="SPOOLing系统与作业管理"><a href="#SPOOLing系统与作业管理" class="headerlink" title="SPOOLing系统与作业管理"></a>SPOOLing系统与作业管理</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119135931778.png" alt="image-20221119135931778" style="zoom:80%;" /></p>
 <h4 id="多道批处理OS的作业管理"><a href="#多道批处理OS的作业管理" class="headerlink" title="多道批处理OS的作业管理"></a>多道批处理OS的作业管理</h4><ul>
 <li>作业说明语言：用于作业控制的语言</li>
 <li>作业说明书：刻画具体作业的控制方式</li>
@@ -731,46 +701,42 @@
 <li>作业调度：从后备状态作业中选择部分进入运行状态(前提是资源满足)</li>
 <li>作业调度算法：优先数、短作业、响应比、设备搭配、等等</li>
 </ul>
-<h4 id="作业调度与进程调度的关系"><a href="#作业调度与进程调度的关系" class="headerlink" title="作业调度与进程调度的关系"></a>作业调度与进程调度的关系</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119140301989.png" alt="image-20221119140301989" style="zoom:80%;" />
-
-<h2 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h2><h3 id="1-I-O硬件"><a href="#1-I-O硬件" class="headerlink" title="1. I&#x2F;O硬件"></a>1. I&#x2F;O硬件</h3><h4 id="I-O设备控制器"><a href="#I-O设备控制器" class="headerlink" title="I&#x2F;O设备控制器"></a>I&#x2F;O设备控制器</h4><ul>
+<h4 id="作业调度与进程调度的关系"><a href="#作业调度与进程调度的关系" class="headerlink" title="作业调度与进程调度的关系"></a>作业调度与进程调度的关系</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221119140301989.png" alt="image-20221119140301989" style="zoom:80%;" /></p>
+<h2 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h2><h3 id="1-I-O硬件"><a href="#1-I-O硬件" class="headerlink" title="1. I/O硬件"></a>1. I/O硬件</h3><h4 id="I-O设备控制器"><a href="#I-O设备控制器" class="headerlink" title="I/O设备控制器"></a>I/O设备控制器</h4><ul>
 <li>控制器(或适配器) 是用于操作端口、总线或设备的一组电子器件，它是可插入主板扩充槽的印刷电路板，机械部件则是设备本身</li>
 <li>例如，IDE接口设备、SCSI接口设备</li>
 <li><strong>操作系统与控制器打交道</strong>，微机和小型机采用单总线模型，实现CPU和控制器间的数据传送，中、大型机则采用多总线结构和多通道方式，以提高并行操作程度</li>
-<li><strong>如果没有控制器，复杂操作必须由操作系统来解决，引入控制器后，通过传递简单参数就可进行I&#x2F;O操作，大大简化系统的设计，有利于计算机系统对各类控制器和设备的兼容性</strong></li>
+<li><strong>如果没有控制器，复杂操作必须由操作系统来解决，引入控制器后，通过传递简单参数就可进行I/O操作，大大简化系统的设计，有利于计算机系统对各类控制器和设备的兼容性</strong></li>
 </ul>
-<h4 id="PC中的设备I-O的端口位置-部分"><a href="#PC中的设备I-O的端口位置-部分" class="headerlink" title="PC中的设备I&#x2F;O的端口位置(部分)"></a>PC中的设备I&#x2F;O的端口位置(部分)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126162631176.png" alt="image-20221126162631176" style="zoom:80%;" />
-
-<h4 id="I-O模块框图"><a href="#I-O模块框图" class="headerlink" title="I&#x2F;O模块框图"></a>I&#x2F;O模块框图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126162654937.png" alt="image-20221126162654937" style="zoom:80%;" />
-
-<h4 id="Pentium处理器的中断向量表"><a href="#Pentium处理器的中断向量表" class="headerlink" title="Pentium处理器的中断向量表"></a>Pentium处理器的中断向量表</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126163416861.png" alt="image-20221126163416861" style="zoom:80%;" />
-
-<h4 id="I-O功能的演化"><a href="#I-O功能的演化" class="headerlink" title="I&#x2F;O功能的演化"></a>I&#x2F;O功能的演化</h4><ul>
+<h4 id="PC中的设备I-O的端口位置-部分"><a href="#PC中的设备I-O的端口位置-部分" class="headerlink" title="PC中的设备I/O的端口位置(部分)"></a>PC中的设备I/O的端口位置(部分)</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126162631176.png" alt="image-20221126162631176" style="zoom:80%;" /></p>
+<h4 id="I-O模块框图"><a href="#I-O模块框图" class="headerlink" title="I/O模块框图"></a>I/O模块框图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126162654937.png" alt="image-20221126162654937" style="zoom:80%;" /></p>
+<h4 id="Pentium处理器的中断向量表"><a href="#Pentium处理器的中断向量表" class="headerlink" title="Pentium处理器的中断向量表"></a>Pentium处理器的中断向量表</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126163416861.png" alt="image-20221126163416861" style="zoom:80%;" /></p>
+<h4 id="I-O功能的演化"><a href="#I-O功能的演化" class="headerlink" title="I/O功能的演化"></a>I/O功能的演化</h4><ul>
 <li>处理器直接控制外围设备</li>
-<li>增加了控制器或者I&#x2F;O模块<ul>
-<li>处理器使用非中断的可编程I&#x2F;O</li>
+<li>增加了控制器或者I/O模块<ul>
+<li>处理器使用非中断的可编程I/O</li>
 <li>处理器开始从外围设备接口的具体细节中分离出来</li>
 </ul>
 </li>
-<li>采用中断方式的控制器或者I&#x2F;O模块<ul>
-<li>处理器无需花费等待执行一个I&#x2F;O操作所需的时间，因而提高了效率</li>
+<li>采用中断方式的控制器或者I/O模块<ul>
+<li>处理器无需花费等待执行一个I/O操作所需的时间，因而提高了效率</li>
 </ul>
 </li>
-<li>I&#x2F;O模块通过DMA直接控制存储器<ul>
+<li>I/O模块通过DMA直接控制存储器<ul>
 <li>可以在没有处理器参与的情况下，从主存中移出或者往主存中移入一块数据，仅仅在传送开始和结束时需要用到处理器</li>
 </ul>
 </li>
-<li>I&#x2F;O模块被增强为单独的处理器，有专门为I&#x2F;O设计的指令集<ul>
-<li>I&#x2F;O处理器在没有CPU干涉的情况下取指令并执行这些指令，使得CPU可以指定一系列I&#x2F;O活动，并只有当整个序列执行完成后CPU才被中断</li>
+<li>I/O模块被增强为单独的处理器，有专门为I/O设计的指令集<ul>
+<li>I/O处理器在没有CPU干涉的情况下取指令并执行这些指令，使得CPU可以指定一系列I/O活动，并只有当整个序列执行完成后CPU才被中断</li>
 </ul>
 </li>
-<li>I&#x2F;O模块有自己的局部存储器，其本身就是一台计算机</li>
+<li>I/O模块有自己的局部存储器，其本身就是一台计算机</li>
 </ul>
 <h4 id="DMA"><a href="#DMA" class="headerlink" title="DMA"></a>DMA</h4><ul>
 <li>替代 CPU, DMA 控制内存与磁盘之间数据传输</li>
 <li>周期窃取是指利用 CPU 不访问存储器的那些周期来实现 DMA 操作，此时 DMA 可以使用总线而不用通知 CPU 也不会妨碍 CPU 的工作<ul>
 <li>周期挪用并不减慢 CPU 的操作，但可能需要复杂的时序电路，而且数据传送过程是不连续的和不规则的</li>
-<li>在这种方法中，每当I&#x2F;O设备发出DMA请求时，I&#x2F;O设备便挪用或窃取总线占用权一个或几个主存周期，而DMA不请求时，CPU仍继续访问主存</li>
+<li>在这种方法中，每当I/O设备发出DMA请求时，I/O设备便挪用或窃取总线占用权一个或几个主存周期，而DMA不请求时，CPU仍继续访问主存</li>
 </ul>
 </li>
 <li>不发生中断<ul>
@@ -778,33 +744,24 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165455669.png" alt="image-20221126165455669" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165606238.png" alt="image-20221126165606238" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165619121.png" alt="image-20221126165619121" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165636899.png" alt="image-20221126165636899" style="zoom:80%;" />
-
-<h4 id="指令周期中DMA和中断的断点"><a href="#指令周期中DMA和中断的断点" class="headerlink" title="指令周期中DMA和中断的断点"></a>指令周期中DMA和中断的断点</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165519386.png" alt="image-20221126165519386" style="zoom:80%;" />
-
-<h4 id="具有通道的I-O系统"><a href="#具有通道的I-O系统" class="headerlink" title="具有通道的I&#x2F;O系统"></a>具有通道的I&#x2F;O系统</h4><ul>
-<li><p>具有通道的计算机系统，I&#x2F;O程序设计涉及：</p>
-<ul>
-<li>CPU执行I&#x2F;O指令</li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165455669.png" alt="image-20221126165455669" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165606238.png" alt="image-20221126165606238" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165619121.png" alt="image-20221126165619121" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165636899.png" alt="image-20221126165636899" style="zoom:80%;" /></p>
+<h4 id="指令周期中DMA和中断的断点"><a href="#指令周期中DMA和中断的断点" class="headerlink" title="指令周期中DMA和中断的断点"></a>指令周期中DMA和中断的断点</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126165519386.png" alt="image-20221126165519386" style="zoom:80%;" /></p>
+<h4 id="具有通道的I-O系统"><a href="#具有通道的I-O系统" class="headerlink" title="具有通道的I/O系统"></a>具有通道的I/O系统</h4><ul>
+<li>具有通道的计算机系统，I/O程序设计涉及：<ul>
+<li>CPU执行I/O指令</li>
 <li>通道执行通道命令</li>
 <li>CPU和通道之间的通信</li>
 </ul>
 </li>
-<li><p>通道状态字(CSW, Channel Status Word)</p>
-<ul>
+<li>通道状态字(CSW, Channel Status Word)<ul>
 <li>通道状态字是存放在内存固定单元的控制字，专门用于记录通道和设备执行操作的情况</li>
 </ul>
 </li>
-<li><p>输入输出中断</p>
-</li>
-<li><p>输入输出指令</p>
-<ul>
+<li>输入输出中断</li>
+<li>输入输出指令<ul>
 <li>启动输入输出指令(SIO)</li>
 <li>查询输入输出指令(TIO)</li>
 <li>查询通道指令(TCH)</li>
@@ -827,15 +784,13 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126170402254.png" alt="image-20221126170402254" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126170402254.png" alt="image-20221126170402254" style="zoom:80%;" /></p>
 <h4 id="通道命令和通道程序"><a href="#通道命令和通道程序" class="headerlink" title="通道命令和通道程序"></a>通道命令和通道程序</h4><h5 id="通道命令"><a href="#通道命令" class="headerlink" title="通道命令"></a>通道命令</h5><ul>
 <li>通道，具有自己的指令系统，它的指令常称通道命令。</li>
-<li>通道命令字CCW (Channel Command Word)是通道<strong>从主存取出并控制I&#x2F;O设备执行I&#x2F;O操作的命令字</strong>，用通道命令编写的程序称<em>通道程序</em>，通道程序由多条通道命令组成，每次启动可以完成复杂的I&#x2F;O控制</li>
-<li>IBM370及后继产品IBM S&#x2F;390均采用通道技术，IBM370系统的通道命令为双字长</li>
+<li>通道命令字CCW (Channel Command Word)是通道<strong>从主存取出并控制I/O设备执行I/O操作的命令字</strong>，用通道命令编写的程序称<em>通道程序</em>，通道程序由多条通道命令组成，每次启动可以完成复杂的I/O控制</li>
+<li>IBM370及后继产品IBM S/390均采用通道技术，IBM370系统的通道命令为双字长</li>
 </ul>
-<h5 id="IBM370系统的通道命令"><a href="#IBM370系统的通道命令" class="headerlink" title="IBM370系统的通道命令"></a>IBM370系统的通道命令</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126170113147.png" alt="image-20221126170113147" style="zoom:80%;" />
-
+<h5 id="IBM370系统的通道命令"><a href="#IBM370系统的通道命令" class="headerlink" title="IBM370系统的通道命令"></a>IBM370系统的通道命令</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126170113147.png" alt="image-20221126170113147" style="zoom:80%;" /></p>
 <ul>
 <li>命令码<ul>
 <li>数据传输类(读、反读、写、取状态)，通道转移类(转移)，设备控制类(随设备类不同执行不同控制)</li>
@@ -854,9 +809,9 @@
 </ul>
 </li>
 </ul>
-<h3 id="2-I-O缓冲"><a href="#2-I-O缓冲" class="headerlink" title="2. I&#x2F;O缓冲"></a>2. I&#x2F;O缓冲</h3><h4 id="I-O缓冲"><a href="#I-O缓冲" class="headerlink" title="I&#x2F;O缓冲"></a>I&#x2F;O缓冲</h4><ul>
+<h3 id="2-I-O缓冲"><a href="#2-I-O缓冲" class="headerlink" title="2. I/O缓冲"></a>2. I/O缓冲</h3><h4 id="I-O缓冲"><a href="#I-O缓冲" class="headerlink" title="I/O缓冲"></a>I/O缓冲</h4><ul>
 <li>使用缓冲的原因<ul>
-<li>进程经常需要等I&#x2F;O完成才能继续后续的执行</li>
+<li>进程经常需要等I/O完成才能继续后续的执行</li>
 <li>在存储管理中使用分页机制，那么需要将包括目标地址单元的页锁定在主存中</li>
 </ul>
 </li>
@@ -873,7 +828,7 @@
 </li>
 </ul>
 <h4 id="单缓冲"><a href="#单缓冲" class="headerlink" title="单缓冲"></a>单缓冲</h4><ul>
-<li>操作系统在主存中为I&#x2F;O请求分配一个缓冲区</li>
+<li>操作系统在主存中为I/O请求分配一个缓冲区</li>
 <li>面向块 (Block-oriented)<ul>
 <li>输入传送的数据被放到缓冲区中</li>
 <li>当传送完成时，进程把该块移动到用户空间，并立即请求另一块，这种方式成为超前(预先输入)</li>
@@ -888,20 +843,17 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126171855798.png" alt="image-20221126171855798" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126171855798.png" alt="image-20221126171855798" style="zoom:80%;" /></p>
 <h4 id="双缓冲"><a href="#双缓冲" class="headerlink" title="双缓冲"></a>双缓冲</h4><ul>
 <li>最多两个缓冲</li>
 <li>在一个进程往一个缓冲区中传送数据(从这个缓冲区取数据)的同时，操作系统正在清空(或者填充)另一个缓冲区</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126172040024.png" alt="image-20221126172040024" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126172040024.png" alt="image-20221126172040024" style="zoom:80%;" /></p>
 <h4 id="循环缓冲"><a href="#循环缓冲" class="headerlink" title="循环缓冲"></a>循环缓冲</h4><ul>
 <li>使用两个以上的缓冲区</li>
-<li>使得I&#x2F;O操作能跟得上进程的执行</li>
+<li>使得I/O操作能跟得上进程的执行</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126172102931.png" alt="image-20221126172102931" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126172102931.png" alt="image-20221126172102931" style="zoom:80%;" /></p>
 <h3 id="3-独占型外围设备的分配"><a href="#3-独占型外围设备的分配" class="headerlink" title="3. 独占型外围设备的分配"></a>3. 独占型外围设备的分配</h3><h4 id="设备分配"><a href="#设备分配" class="headerlink" title="设备分配"></a>设备分配</h4><ul>
 <li>从设备的特性来看，可以把设备分成独占设备、共享设备和虚拟设备三类</li>
 <li>相应的管理和分配外围设备的技术可分成：独占方式、共享方式和虚拟方式</li>
@@ -934,12 +886,12 @@
 <li><strong>利用这种局部性可以提高吞吐量，减少队列长度</strong></li>
 <li>只要一个作业积极地使用文件系统，它就可以尽可能快地得到处理</li>
 <li>如果由于工作量大而磁盘保持忙状态，就有可能出现饿死的情况</li>
-<li>当一个作业已经往队列中送入一个I&#x2F;O请求，并且错过了可以提供服务的位置时，该作业就有可能永远得不到服务，除非它之前的队列变为空</li>
+<li>当一个作业已经往队列中送入一个I/O请求，并且错过了可以提供服务的位置时，该作业就有可能永远得不到服务，除非它之前的队列变为空</li>
 </ul>
 </li>
 <li><p>最短服务时间优先(SSTF, Shortest ServiceTimeFirst)</p>
 <ul>
-<li>选择使磁头臂从当前位置开始移动最少的磁盘I&#x2F;O请求，因此SSTF策略总是选择导致最小寻道时间的请求</li>
+<li>选择使磁头臂从当前位置开始移动最少的磁盘I/O请求，因此SSTF策略总是选择导致最小寻道时间的请求</li>
 <li>总是选择最小寻道时间并不能保证平均寻道时间最小，但是，它的性能比FIFO更好</li>
 </ul>
 </li>
@@ -950,7 +902,7 @@
 </ul>
 </li>
 <li><p>电梯调度算法</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126173435634.png" alt="image-20221126173435634" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126173435634.png" alt="image-20221126173435634" style="zoom:80%;" /></p>
 </li>
 <li><p>循环扫描 (C-SCAN)</p>
 <ul>
@@ -960,11 +912,11 @@
 </li>
 <li><p>N-step-SCAN</p>
 <ul>
-<li>进程**重复请求同一磁道会垄断整个设备，”造成磁头臂的粘性”**，采用分步扫描可避免这类问题</li>
+<li>进程<strong>重复请求同一磁道会垄断整个设备，”造成磁头臂的粘性”</strong>，采用分步扫描可避免这类问题</li>
 <li><strong>把磁盘请求队列分成长度为 N 的子队列，每一次用SCAN处理一个子队列</strong></li>
 <li>在处理一个队列时，新请求必须添加到其他某个队列中</li>
 <li>如果在扫描的最后剩下的请求数小于N，则它们全部将在下一次扫描时处理</li>
-<li>当N很大时，N-step-SCAN的性能接近SCAN；当N&#x3D;1时，实际上是FIFO</li>
+<li>当N很大时，N-step-SCAN的性能接近SCAN；当N=1时，实际上是FIFO</li>
 </ul>
 </li>
 <li><p>FSCAN</p>
@@ -982,25 +934,21 @@
 <li>交替地址</li>
 </ul>
 <h4 id="循环排序"><a href="#循环排序" class="headerlink" title="循环排序"></a>循环排序</h4><blockquote>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174051812.png" alt="image-20221126174051812" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174051812.png" alt="image-20221126174051812" style="zoom:80%;" /></p>
 <ul>
-<li>方法1：按照I&#x2F;O请求次序读记录4、3、2、1，平均用1&#x2F;2周定位，再加上1&#x2F;4周读出记录，总处理时间等于1&#x2F;2 + 1&#x2F;4 + 3 * 3&#x2F;4 &#x3D; 3周，即60毫秒</li>
-<li>方法2：如果次序为读记录1、2、3、4，总处理时间等于1&#x2F;2 + 1&#x2F;4 + 3 * 1&#x2F;4 &#x3D; 1.5周，即30毫秒。</li>
-<li>方法3：如果知道当前读位置是记录3，则采用次序为读记录4、1、2、3，总处理时间等于4 * 1&#x2F;4＝1周，即20毫秒。</li>
+<li>方法1：按照I/O请求次序读记录4、3、2、1，平均用1/2周定位，再加上1/4周读出记录，总处理时间等于1/2 + 1/4 + 3 * 3/4 = 3周，即60毫秒</li>
+<li>方法2：如果次序为读记录1、2、3、4，总处理时间等于1/2 + 1/4 + 3 * 1/4 = 1.5周，即30毫秒。</li>
+<li>方法3：如果知道当前读位置是记录3，则采用次序为读记录4、1、2、3，总处理时间等于4 * 1/4＝1周，即20毫秒。</li>
 </ul>
 </blockquote>
-<h4 id="优化分布-1"><a href="#优化分布-1" class="headerlink" title="优化分布"></a>优化分布</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174438942.png" alt="image-20221126174438942" style="zoom:80%;" />
-
+<h4 id="优化分布-1"><a href="#优化分布-1" class="headerlink" title="优化分布"></a>优化分布</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174438942.png" alt="image-20221126174438942" style="zoom:80%;" /></p>
 <p><strong>按照下面方式对信息优化分布</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174539407.png" alt="image-20221126174539407" style="zoom:67%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174555625.png" alt="image-20221126174555625" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174539407.png" alt="image-20221126174539407" style="zoom:67%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174555625.png" alt="image-20221126174555625" style="zoom:80%;" /></p>
 <h4 id="RAID"><a href="#RAID" class="headerlink" title="RAID"></a>RAID</h4><ul>
 <li><p>RAID 0</p>
 <ul>
-<li>RAID0-连续的数据条带(每个条带可规定为1个或多个扇区)以轮转方式写到全部磁盘上，然后采用并行交叉存取，减少I&#x2F;O请求排队时间，适用于大数据量的I&#x2F;O请求，但并<strong>无冗余校验功能，可靠性较差</strong></li>
+<li>RAID0-连续的数据条带(每个条带可规定为1个或多个扇区)以轮转方式写到全部磁盘上，然后采用并行交叉存取，减少I/O请求排队时间，适用于大数据量的I/O请求，但并<strong>无冗余校验功能，可靠性较差</strong></li>
 </ul>
 </li>
 <li><p>RAID 1 (镜像)</p>
@@ -1012,31 +960,32 @@
 <ul>
 <li>RAID2-采用数据字或字节交叉存放，<strong>并行存取获得高性能</strong>，使用<strong>海明校验码</strong>，适合大量顺序数据访问。<strong>由于使用多个冗余盘，成本较高</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174832320.png" alt="image-20221126174832320" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174832320.png" alt="image-20221126174832320" style="zoom:80%;" /></p>
 </li>
 <li><p>RAID 3 (交错位奇偶校验)</p>
 <ul>
 <li>RAID3是RAID2的简化版本，差别是它<strong>仅用一只冗余盘，采用奇偶校验技术</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174914755.png" alt="image-20221126174914755" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174914755.png" alt="image-20221126174914755" style="zoom:80%;" /></p>
 </li>
 <li><p>RAID 4 (块奇偶校验)</p>
 <ul>
-<li>RAID 4 采用<strong>独立存取磁盘阵列，数据条带交叉存放</strong>，访问请求可并行地获得满足，适合有较高I&#x2F;O请求速度的应用场合，使用一只冗余盘存放奇偶校验码</li>
+<li>RAID 4 采用<strong>独立存取磁盘阵列，数据条带交叉存放</strong>，访问请求可并行地获得满足，适合有较高I/O请求速度的应用场合，使用一只冗余盘存放奇偶校验码</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174946605.png" alt="image-20221126174946605" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126174946605.png" alt="image-20221126174946605" style="zoom:80%;" /></p>
 </li>
 <li><p>RAID 5 (块分布奇偶校验)</p>
 <ul>
 <li>RAID5与RAID4的组织类似，但<strong>奇偶校验码循环分布在每个盘上使容错性更好</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126175049593.png" alt="image-20221126175049593" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126175049593.png" alt="image-20221126175049593" style="zoom:80%;" /></p>
 </li>
 <li><p>RAID 6 (双重冗余)</p>
 <ul>
 <li>RAID 6 采用<strong>双重冗余技术</strong>，P和Q是两种不同的数据校验算法，其中一种是 RAID 4 和 RAID 5 所使用是异或计算，另一种是独立数据校验算法，<strong>即使有两个数据磁盘发生错误，也可重新生成数据</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126175135137.png" alt="image-20221126175135137" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126175135137.png" alt="image-20221126175135137" style="zoom:80%;" /></p>
+</li>
 </ul>
 <h4 id="磁盘-Cache"><a href="#磁盘-Cache" class="headerlink" title="磁盘 Cache"></a>磁盘 Cache</h4><ul>
 <li>磁盘高速缓存是主存中为磁盘扇区设置的一个缓冲区</li>
@@ -1069,7 +1018,7 @@
 </li>
 <li>井管理程序</li>
 </ul>
-<h3 id="6-I-O设备管理的实现与层次"><a href="#6-I-O设备管理的实现与层次" class="headerlink" title="6. I&#x2F;O设备管理的实现与层次"></a>6. I&#x2F;O设备管理的实现与层次</h3><h4 id="I-O软件的设计目标和原则"><a href="#I-O软件的设计目标和原则" class="headerlink" title="I&#x2F;O软件的设计目标和原则"></a>I&#x2F;O软件的设计目标和原则</h4><ul>
+<h3 id="6-I-O设备管理的实现与层次"><a href="#6-I-O设备管理的实现与层次" class="headerlink" title="6. I/O设备管理的实现与层次"></a>6. I/O设备管理的实现与层次</h3><h4 id="I-O软件的设计目标和原则"><a href="#I-O软件的设计目标和原则" class="headerlink" title="I/O软件的设计目标和原则"></a>I/O软件的设计目标和原则</h4><ul>
 <li>设备无关性。<ul>
 <li>访问文件数据的程序时，与具体的物理设备无关</li>
 </ul>
@@ -1079,8 +1028,8 @@
 </ul>
 </li>
 <li>同步(阻塞)—异步(中断驱动)传输。<ul>
-<li>异步传输: CPU在启动I&#x2F;O操作后既可继续执行其他工作，直到中断到达；</li>
-<li>同步传输: 阻塞方式，让启动I&#x2F;O操作的进程阻塞等待，直到数据传输完成。</li>
+<li>异步传输: CPU在启动I/O操作后既可继续执行其他工作，直到中断到达；</li>
+<li>同步传输: 阻塞方式，让启动I/O操作的进程阻塞等待，直到数据传输完成。</li>
 </ul>
 </li>
 <li>独占性外围设备和共享性外围设备。<ul>
@@ -1088,9 +1037,8 @@
 </ul>
 </li>
 </ul>
-<h4 id="阻塞与非阻塞I-O"><a href="#阻塞与非阻塞I-O" class="headerlink" title="阻塞与非阻塞I&#x2F;O"></a>阻塞与非阻塞I&#x2F;O</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126213439497.png" alt="image-20221126213439497" style="zoom:80%;" />
-
-<h4 id="独立于设备的I-O软件-1"><a href="#独立于设备的I-O软件-1" class="headerlink" title="独立于设备的I&#x2F;O软件"></a>独立于设备的I&#x2F;O软件</h4><ul>
+<h4 id="阻塞与非阻塞I-O"><a href="#阻塞与非阻塞I-O" class="headerlink" title="阻塞与非阻塞I/O"></a>阻塞与非阻塞I/O</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126213439497.png" alt="image-20221126213439497" style="zoom:80%;" /></p>
+<h4 id="独立于设备的I-O软件-1"><a href="#独立于设备的I-O软件-1" class="headerlink" title="独立于设备的I/O软件"></a>独立于设备的I/O软件</h4><ul>
 <li><p>功能</p>
 <ul>
 <li><p>对设备驱动程序的统一接口</p>
@@ -1115,11 +1063,11 @@
 </li>
 <li><p>设备不仅具有文件名，且<strong>支持与文件相关的所有系统调用</strong>,如open、close、read、write、stat及lseek等</p>
 </li>
-<li><p>设备文件依赖于inode来实现，文件目录并不能区分文件名是代表一个磁盘文件或设备文件，但inode的内容是不同的，磁盘文件的inode包含指向数据块的指针，而设备文件的inode则包含指向内核设备驱动程序的指针，用来控制设备的I&#x2F;O。</p>
+<li><p>设备文件依赖于inode来实现，文件目录并不能区分文件名是代表一个磁盘文件或设备文件，但inode的内容是不同的，磁盘文件的inode包含指向数据块的指针，而设备文件的inode则包含指向内核设备驱动程序的指针，用来控制设备的I/O。</p>
 </li>
-<li><p>设备保护需要检查用户是否有权访问所申请的设备，多数大中型计算机系统中，<strong>用户进程对I&#x2F;O设备的直接访问是绝对禁止的，I&#x2F;O指令定义为特权指令，通过系统调用的方式间接地供用户使用</strong></p>
+<li><p>设备保护需要检查用户是否有权访问所申请的设备，多数大中型计算机系统中，<strong>用户进程对I/O设备的直接访问是绝对禁止的，I/O指令定义为特权指令，通过系统调用的方式间接地供用户使用</strong></p>
 </li>
-<li><p>此外，在UNIX&#x2F;Linux中还使用一种灵活的方法，<strong>对应于I&#x2F;O设备的特别文件采用rwx保护机制，以判断文件所有者和组成员是否有权向设备发送和读取数据的权限。</strong>Windows中设备作为命名对象出现在文件系统中，对文件的保护规则也适用于I&#x2F;O设备。</p>
+<li><p>此外，在UNIX/Linux中还使用一种灵活的方法，<strong>对应于I/O设备的特别文件采用rwx保护机制，以判断文件所有者和组成员是否有权向设备发送和读取数据的权限。</strong>Windows中设备作为命名对象出现在文件系统中，对文件的保护规则也适用于I/O设备。</p>
 </li>
 </ul>
 </li>
@@ -1128,58 +1076,49 @@
 <li>屏蔽不同磁盘扇区大小并向高层软件提供统一大小的逻辑块</li>
 </ul>
 </li>
-<li><p>缓冲区管理</p>
-<ul>
+<li>缓冲区管理<ul>
 <li>通过缓冲区来消除填满速率和清空速率之间的影响，块设备和字符设备都需要缓冲技术，可通过在主存建立缓冲区的方法来解决</li>
 </ul>
 </li>
-<li><p>设备分配和状态跟踪</p>
-<ul>
+<li>设备分配和状态跟踪<ul>
 <li>静态、动态、虚拟分配</li>
 </ul>
 </li>
-<li><p>错误处理和报告</p>
-<ul>
+<li>错误处理和报告<ul>
 <li>错误处理多数由驱动程序完成。低层软件处理不了的情况，交给高层软件处理，在许多情况下，错误恢复可在低层透明地得到解决，而高层软件甚至不知道存在错误。</li>
 </ul>
 </li>
 </ul>
-<h4 id="用户空间的I-O软件-1"><a href="#用户空间的I-O软件-1" class="headerlink" title="用户空间的I&#x2F;O软件"></a>用户空间的I&#x2F;O软件</h4><ul>
-<li>库函数实现的I&#x2F;O系统调用<ul>
-<li>I&#x2F;O系统调用通常先是库函数调用</li>
+<h4 id="用户空间的I-O软件-1"><a href="#用户空间的I-O软件-1" class="headerlink" title="用户空间的I/O软件"></a>用户空间的I/O软件</h4><ul>
+<li>库函数实现的I/O系统调用<ul>
+<li>I/O系统调用通常先是库函数调用</li>
 <li><code>count=write(fd，buffer，nbytes);</code></li>
 </ul>
 </li>
-<li>所调用的库函数write将与应用程序链接在一起，形成可执行代码装入主存，这些库函数显然也是I&#x2F;O系统的一部分。</li>
-<li><strong>库函数所做的工作只是将系统调用时所用的参数放在合适的位置，然后执行访管指令来陷入内核，再由内核函数实现真正的I&#x2F;O操作。</strong></li>
+<li>所调用的库函数write将与应用程序链接在一起，形成可执行代码装入主存，这些库函数显然也是I/O系统的一部分。</li>
+<li><strong>库函数所做的工作只是将系统调用时所用的参数放在合适的位置，然后执行访管指令来陷入内核，再由内核函数实现真正的I/O操作。</strong></li>
 </ul>
-<h4 id="I-O操作执行步骤"><a href="#I-O操作执行步骤" class="headerlink" title="I&#x2F;O操作执行步骤"></a>I&#x2F;O操作执行步骤</h4><ol>
+<h4 id="I-O操作执行步骤"><a href="#I-O操作执行步骤" class="headerlink" title="I/O操作执行步骤"></a>I/O操作执行步骤</h4><ol>
 <li>进程对已打开文件的文件描述符执行读库函数</li>
-<li>与设备无关的I&#x2F;O软件检查参数正确性。<strong>高速缓存中有要读的信息块</strong>，从缓冲区直接读到用户区，完成I&#x2F;O请求</li>
-<li>若数据不在缓冲区，执行物理I&#x2F;O，实现将设备逻辑名转换成物理名，检查对设备操作的权限，将I&#x2F;O请求排队，阻塞进程且等待I&#x2F;O完成</li>
-<li>内核启动<strong>设备驱动程序</strong>，<strong>分配存放读出块的缓冲区，准备接收数据</strong>，且向设备控制寄存器发启动命令，或建立DMA传输，启动I&#x2F;O</li>
+<li>与设备无关的I/O软件检查参数正确性。<strong>高速缓存中有要读的信息块</strong>，从缓冲区直接读到用户区，完成I/O请求</li>
+<li>若数据不在缓冲区，执行物理I/O，实现将设备逻辑名转换成物理名，检查对设备操作的权限，将I/O请求排队，阻塞进程且等待I/O完成</li>
+<li>内核启动<strong>设备驱动程序</strong>，<strong>分配存放读出块的缓冲区，准备接收数据</strong>，且向设备控制寄存器发启动命令，或建立DMA传输，启动I/O</li>
 <li>设备控制器操作设备，执行数据传输</li>
-<li>DMA控制器控制一块传输完成，硬件产生I&#x2F;O结束中断</li>
+<li>DMA控制器控制一块传输完成，硬件产生I/O结束中断</li>
 <li>CPU响应中断，转向磁盘中断处理程序</li>
-<li>当应用进程被再次调度执行时，从I&#x2F;O系统调用的断点恢复执行。</li>
+<li>当应用进程被再次调度执行时，从I/O系统调用的断点恢复执行。</li>
 </ol>
-<h4 id="Windows的I-O管理"><a href="#Windows的I-O管理" class="headerlink" title="Windows的I&#x2F;O管理"></a>Windows的I&#x2F;O管理</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230317718.png" alt="image-20221126230317718" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230326027.png" alt="image-20221126230326027" style="zoom:80%;" />
-
+<h4 id="Windows的I-O管理"><a href="#Windows的I-O管理" class="headerlink" title="Windows的I/O管理"></a>Windows的I/O管理</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230317718.png" alt="image-20221126230317718" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230326027.png" alt="image-20221126230326027" style="zoom:80%;" /></p>
 <h4 id="Windows的设备管理"><a href="#Windows的设备管理" class="headerlink" title="Windows的设备管理"></a>Windows的设备管理</h4><ul>
 <li>设备驱动程序</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230352046.png" alt="image-20221126230352046" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230352046.png" alt="image-20221126230352046" style="zoom:80%;" /></p>
 <ul>
 <li>即插即用结构</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230418275.png" alt="image-20221126230418275" style="zoom:80%;" />
-
-
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230446414.png" alt="image-20221126230446414" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230418275.png" alt="image-20221126230418275" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221126230446414.png" alt="image-20221126230446414" style="zoom:80%;" /></p>
 
       </div>
       
@@ -1544,5 +1483,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -205,6 +201,7 @@
 </ul>
 </li>
 </ul>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -212,16 +209,17 @@
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
-<td>git config –global user.name 用户名</td>
+<tbody>
+<tr>
+<td>git config —global user.name 用户名</td>
 <td>设置用户签名</td>
 </tr>
 <tr>
-<td>git config –global user.email 邮箱</td>
+<td>git config —global user.email 邮箱</td>
 <td>设置用户签名</td>
 </tr>
 <tr>
-<td>git config –list</td>
+<td>git config —list</td>
 <td>查看配置</td>
 </tr>
 <tr>
@@ -249,18 +247,22 @@
 <td>查看版本详细信息</td>
 </tr>
 <tr>
-<td>git reset –hard 版本号</td>
+<td>git reset —hard 版本号</td>
 <td>版本穿梭</td>
 </tr>
-</tbody></table>
-<h2 id="2-Git分支操作"><a href="#2-Git分支操作" class="headerlink" title="2. Git分支操作"></a>2. Git分支操作</h2><table>
+</tbody>
+</table>
+</div>
+<h2 id="2-Git分支操作"><a href="#2-Git分支操作" class="headerlink" title="2. Git分支操作"></a>2. Git分支操作</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>git branch 分支名</td>
 <td>创建分支</td>
 </tr>
@@ -284,7 +286,9 @@
 <td>git merge 分支名</td>
 <td>把指定的分支合并到当前分支上</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li>产生合并冲突<ul>
 <li>表现：后面状态为MERGING</li>
@@ -298,14 +302,16 @@
 </ul>
 </li>
 </ul>
-<h2 id="3-GitHub操作"><a href="#3-GitHub操作" class="headerlink" title="3. GitHub操作"></a>3. GitHub操作</h2><table>
+<h2 id="3-GitHub操作"><a href="#3-GitHub操作" class="headerlink" title="3. GitHub操作"></a>3. GitHub操作</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>git remote -v</td>
 <td>查看当前所有远程地址别名</td>
 </tr>
@@ -333,7 +339,9 @@
 <td>cat id_rsa.pub</td>
 <td>查看公钥</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 
       </div>
       
@@ -698,5 +706,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -202,10 +198,8 @@
 <li>目录(directory)：该目录中的文件列表</li>
 </ol>
 <p>文件结构：字节流，没有特别的内部结构</p>
-<h3 id="1-3-Linux中的文件系统"><a href="#1-3-Linux中的文件系统" class="headerlink" title="1.3 Linux中的文件系统"></a>1.3 Linux中的文件系统</h3><h4 id="Virtual-File-system-Switch-VFS"><a href="#Virtual-File-system-Switch-VFS" class="headerlink" title="Virtual File system Switch (VFS)"></a>Virtual File system Switch (VFS)</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317104012704.png" alt="image-20230317104012704" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317104034363.png" alt="image-20230317104034363" style="zoom:80%;" />
-
+<h3 id="1-3-Linux中的文件系统"><a href="#1-3-Linux中的文件系统" class="headerlink" title="1.3 Linux中的文件系统"></a>1.3 Linux中的文件系统</h3><h4 id="Virtual-File-system-Switch-VFS"><a href="#Virtual-File-system-Switch-VFS" class="headerlink" title="Virtual File system Switch (VFS)"></a>Virtual File system Switch (VFS)</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317104012704.png" alt="image-20230317104012704" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317104034363.png" alt="image-20230317104034363" style="zoom:80%;" /></p>
 <h4 id="VFS模型（会考）"><a href="#VFS模型（会考）" class="headerlink" title="VFS模型（会考）"></a>VFS模型（会考）</h4><p>虚拟；仅存在于内存中</p>
 <p>组件：</p>
 <ul>
@@ -227,10 +221,8 @@
 </li>
 <li>目录对象(dentry object)</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317104621277.png" alt="image-20230317104621277" style="zoom:80%;" />
-
-<h4 id="Ext2-File-System（不考）"><a href="#Ext2-File-System（不考）" class="headerlink" title="Ext2 File System（不考）"></a>Ext2 File System（不考）</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/14.png" alt="img" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317104621277.png" alt="image-20230317104621277" style="zoom:80%;" /></p>
+<h4 id="Ext2-File-System（不考）"><a href="#Ext2-File-System（不考）" class="headerlink" title="Ext2 File System（不考）"></a>Ext2 File System（不考）</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/14.png" alt="img" style="zoom: 67%;" /></p>
 <h3 id="1-4-硬链接和符号链接"><a href="#1-4-硬链接和符号链接" class="headerlink" title="1.4 硬链接和符号链接"></a>1.4 硬链接和符号链接</h3><p>Hard link</p>
 <ol>
 <li>不同的文件名对应同一个inode</li>
@@ -245,28 +237,28 @@
 </ol>
 <blockquote>
 <p>为了显示文件的可访问权限，我们在使用 ls 命令的时候同时使用 -l 参数</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317105718162.png" alt="image-20230317105718162" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317105718162.png" alt="image-20230317105718162" style="zoom:80%;" /></p>
 </blockquote>
 <h2 id="2-系统调用和库函数"><a href="#2-系统调用和库函数" class="headerlink" title="2. 系统调用和库函数"></a>2. 系统调用和库函数</h2><p>都以C函数的形式出现</p>
 <p>系统调用：Linux内核的对外接口; 用户程序和内核之间唯一的接口; 提供最小接口</p>
 <p>库函数：依赖于系统调用; 提供较复杂功能</p>
 <ul>
-<li>例：标准I&#x2F;O库</li>
+<li>例：标准I/O库</li>
 </ul>
-<h3 id="2-1-无缓冲-I-O-和缓冲-I-O"><a href="#2-1-无缓冲-I-O-和缓冲-I-O" class="headerlink" title="2.1 无缓冲 I&#x2F;O 和缓冲 I&#x2F;O"></a>2.1 无缓冲 I&#x2F;O 和缓冲 I&#x2F;O</h3><p>Unbuffered I&#x2F;O</p>
+<h3 id="2-1-无缓冲-I-O-和缓冲-I-O"><a href="#2-1-无缓冲-I-O-和缓冲-I-O" class="headerlink" title="2.1 无缓冲 I/O 和缓冲 I/O"></a>2.1 无缓冲 I/O 和缓冲 I/O</h3><p>Unbuffered I/O</p>
 <ul>
-<li>read&#x2F;write -&gt; System calls</li>
+<li>read/write -&gt; System calls</li>
 <li>File descriptor</li>
 <li>Not in ANSI C, but in POSIX.1 and XPG3</li>
 </ul>
-<p>Buffered I&#x2F;O</p>
+<p>Buffered I/O</p>
 <ul>
-<li>在标准I&#x2F;O库实现</li>
-<li>处理很多细节, 如缓存分配, 以优化长度执行I&#x2F;O等</li>
+<li>在标准I/O库实现</li>
+<li>处理很多细节, 如缓存分配, 以优化长度执行I/O等</li>
 <li>Stream -&gt; a pointer to FILE</li>
 </ul>
-<h3 id="2-2-Basic-I-O-System-Calls"><a href="#2-2-Basic-I-O-System-Calls" class="headerlink" title="2.2 Basic I&#x2F;O System Calls"></a>2.2 Basic I&#x2F;O System Calls</h3><p>文件描述符</p>
-<p>标准I&#x2F;O</p>
+<h3 id="2-2-Basic-I-O-System-Calls"><a href="#2-2-Basic-I-O-System-Calls" class="headerlink" title="2.2 Basic I/O System Calls"></a>2.2 Basic I/O System Calls</h3><p>文件描述符</p>
+<p>标准I/O</p>
 <ol>
 <li><code>open/creat, close, read, write, lseek</code></li>
 <li><code>dup/dup2</code></li>
@@ -283,17 +275,15 @@
 </ul>
 </li>
 </ul>
-<p>文件操作的一般步骤：open - read&#x2F;write - [lseek] - close</p>
+<p>文件操作的一般步骤：open - read/write - [lseek] - close</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/* a rudimentary example program */</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br>main()&#123;<br>   <span class="hljs-type">int</span> fd, nread;<br>   <span class="hljs-type">char</span> buf[<span class="hljs-number">1024</span>];<br>   <span class="hljs-comment">/*open file &quot;data&quot; for reading */</span><br>   fd = open(<span class="hljs-string">&quot;data&quot;</span>, O_RDONLY);<br>   <span class="hljs-comment">/* read in the data */</span><br>   nread = read(fd, buf, <span class="hljs-number">1024</span>);<br>   <span class="hljs-comment">/* close the file */</span><br>   close(fd); <span class="hljs-comment">// 关闭的时候也用文件描述符关闭，释放句柄</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="open-creat-函数"><a href="#open-creat-函数" class="headerlink" title="open&#x2F;creat 函数"></a>open&#x2F;creat 函数</h4><ol>
+<h4 id="open-creat-函数"><a href="#open-creat-函数" class="headerlink" title="open/creat 函数"></a>open/creat 函数</h4><ol>
 <li>打开和建立一个文件或设备</li>
 <li>C语言不能够重载，为什么会有2个open？并不是通过重载实现的，两个open是以一个函数的形式提供的，C语言提供了变长参数的函数机制（<code>...</code>）。</li>
 </ol>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/types.h&gt;</span> <span class="hljs-comment">// sys:linux系统下提供的头文件</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/stat.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><br><span class="hljs-comment">// open 也可以创建文件，覆盖了creat的所有功能</span><br><span class="hljs-comment">// pathname 含路径的文件名</span><br><span class="hljs-comment">// flags 标志位，是一串二进制数字，可以进行按位或操作，所以是int类型</span><br><span class="hljs-comment">// mode 文件权限</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">open</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname, <span class="hljs-type">int</span> flags)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">open</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname, <span class="hljs-type">int</span> flags, <span class="hljs-type">mode_t</span> mode)</span>;<br><span class="hljs-comment">// 创建文件的系统调用接口</span><br><span class="hljs-comment">// flag 默认为只写O_WRONLY和清零O_TRUNC</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">creat</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *pathname, <span class="hljs-type">mode_t</span> mode)</span>;<br><span class="hljs-comment">// (Return: a new file descriptor if success; -1 if failure)</span><br></code></pre></td></tr></table></figure>
-
 <h4 id="参数-“flags”"><a href="#参数-“flags”" class="headerlink" title="参数 “flags”"></a>参数 “flags”</h4><p>“flags”：文件访问方式</p>
-<p><code>O_RDONLY</code>，<code>O_WRONLY</code>或<code>O_RDWR</code>中的一个请求分别按以下方式对文件进行只读，只写或读&#x2F;写操作，这些操作按零或多个进行按位或运算（全部在<code>/usr/include/fcntl.h</code>中定义 ）</p>
+<p><code>O_RDONLY</code>，<code>O_WRONLY</code>或<code>O_RDWR</code>中的一个请求分别按以下方式对文件进行只读，只写或读/写操作，这些操作按零或多个进行按位或运算（全部在<code>/usr/include/fcntl.h</code>中定义 ）</p>
 <ul>
 <li><code>O_APPEND</code>：以附加模式打开文件</li>
 <li><code>O_TRUNC</code>：如果文件已经存在并且是常规文件，并且打开方式允许写入，则会将其长度截断为0。</li>
@@ -303,32 +293,27 @@
 <p>“creat”函数：相当于以等于<code>O_CREAT | O_WRONLY | O_TRUNC</code>的标志打开</p>
 <h4 id="参数-“mode”"><a href="#参数-“mode”" class="headerlink" title="参数 “mode”"></a>参数 “mode”</h4><p>mode：指定在创建新文件的情况下使用的权限</p>
 <p>需要多个权限的话，也是按位或。<code>S_IRUSR|S_IWUSR</code>就表示<code>rw-</code>。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317113601067.png" alt="image-20230317113601067" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317113601067.png" alt="image-20230317113601067" style="zoom: 67%;" /></p>
 <p>umask：一种文件保护机制</p>
 <p>新文件的初始访问方式：mode和~umask</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317113821087.png" alt="image-20230317113821087" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230317113821087.png" alt="image-20230317113821087" style="zoom:80%;" /></p>
 <h4 id="close-函数"><a href="#close-函数" class="headerlink" title="close 函数"></a>close 函数</h4><h4 id="fcntl-函数"><a href="#fcntl-函数" class="headerlink" title="fcntl 函数"></a>fcntl 函数</h4><p>Manipulate a file descriptor</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;unistd.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;fcntl.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fcntl</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">int</span> cmd)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">fcntl</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">int</span> cmd, <span class="hljs-type">long</span> arg)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">fcntl</span><span class="hljs-params">(<span class="hljs-type">int</span> fd, <span class="hljs-type">int</span> cmd, <span class="hljs-keyword">struct</span> flock *lock)</span>;<span class="hljs-comment">//可以对文件加锁</span><br><span class="hljs-comment">//(返回值: 若成功则依赖于cmd，若出错为-1)</span><br></code></pre></td></tr></table></figure>
-
 <p>The‏ operation‏ is‏ determined ‏by‏”cmd”.</p>
 <p>The‏ value‏ of‏”cmd”</p>
 <ul>
 <li><code>F_DUPFD</code>：Duplicate a file descriptor</li>
-<li><code>F_GETFD/F_SETFD</code>：‏Get&#x2F;set ‏the‏ file ‏descriptor’s close-on exec flag<ul>
+<li><code>F_GETFD/F_SETFD</code>：‏Get/set ‏the‏ file ‏descriptor’s close-on exec flag<ul>
 <li>执行时是否关闭，文件描述符能否从父进程传递到子进程。</li>
 </ul>
 </li>
-<li><code>F_GETFL/F_SETFL</code>：Get&#x2F;set ‏the‏ file ‏descriptor’s <strong>‏flags</strong></li>
-<li><code>F_GETOWN/F_SETOWN</code>：Manage I&#x2F;O availability signals</li>
-<li><code>F_GETLK/F_SETLK/F_SETLKW</code>：Get&#x2F;set the file lock</li>
+<li><code>F_GETFL/F_SETFL</code>：Get/set ‏the‏ file ‏descriptor’s <strong>‏flags</strong></li>
+<li><code>F_GETOWN/F_SETOWN</code>：Manage I/O availability signals</li>
+<li><code>F_GETLK/F_SETLK/F_SETLKW</code>：Get/set the file lock</li>
 </ul>
-<p>Example：dup&#x2F;dup2 and fcntl</p>
+<p>Example：dup/dup2 and fcntl</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//file:fcntl</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-type">pid_t</span> pid;<br>    fd = open( <span class="hljs-string">&quot;test.txt&quot;</span>,O_RDWR|O_APPEND);<br>    <span class="hljs-keyword">if</span> (fd == <span class="hljs-number">-1</span>)<br>    #<span class="hljs-meta">#printf(<span class="hljs-string">&quot;open err/n&quot;</span>);</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fd = %d&quot;</span>,fd);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fork!/n&quot;</span>);<br>    fcntl(fd，F_SETFD, <span class="hljs-number">1</span>);<br>    <span class="hljs-type">char</span> *s=<span class="hljs-string">&quot;ooooooooooooooooooo&quot;</span>;<br>    pid = fork();<br>    <span class="hljs-keyword">if</span>(pid == <span class="hljs-number">0</span>)<br>    	execl(<span class="hljs-string">&quot;ass&quot;</span>, <span class="hljs-string">&quot;./ass&quot;</span>, &amp;fd, <span class="hljs-literal">NULL</span>);<br>    wait(<span class="hljs-literal">NULL</span>);<br>    write(fd,s,<span class="hljs-built_in">strlen</span>(s));<br>    close(fd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//ass 源代码</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> *argv[])</span><br>&#123;<br>    <span class="hljs-type">int</span> fd;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;argc = %d&quot;</span>,argc);<br>    fd = *argv[<span class="hljs-number">1</span>];<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;fd = %d&quot;</span>,fd);<br>    <span class="hljs-type">char</span> *s = <span class="hljs-string">&quot;zzzzzzzzzzzzzzzzzzz&quot;</span>;<br>    write(fd，(<span class="hljs-type">void</span> *)s, <span class="hljs-built_in">strlen</span>(s));<br>    close(fd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ol>
 <li>pid保存进程id(可以理解为int类型，linux下做了类型的重定义)</li>
 <li><code>if(fd == -1)</code>：异常处理(文件打开失败)</li>
@@ -352,17 +337,16 @@
 </ol>
 <h4 id="ioctl-函数"><a href="#ioctl-函数" class="headerlink" title="ioctl 函数"></a>ioctl 函数</h4><p>控制设备驱动</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;sys/ioctl.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">ioctl</span><span class="hljs-params">(<span class="hljs-type">int</span> d, <span class="hljs-type">int</span> request, ...)</span>;<br></code></pre></td></tr></table></figure>
-
-<h3 id="2-3-Standard-I-O-Library"><a href="#2-3-Standard-I-O-Library" class="headerlink" title="2.3 Standard I&#x2F;O Library"></a>2.3 Standard I&#x2F;O Library</h3><ul>
+<h3 id="2-3-Standard-I-O-Library"><a href="#2-3-Standard-I-O-Library" class="headerlink" title="2.3 Standard I/O Library"></a>2.3 Standard I/O Library</h3><ul>
 <li>File stream</li>
-<li>Standard I&#x2F;O functions</li>
+<li>Standard I/O functions</li>
 </ul>
 <h4 id="File-stream"><a href="#File-stream" class="headerlink" title="File stream"></a>File stream</h4><p>流和”FILE”结构</p>
 <ul>
 <li><code>FILE * fp;</code></li>
 <li>预定义指针：<code>stdin, stdout, stderr</code>(封装了012号文件描述符)</li>
 </ul>
-<p>缓冲I&#x2F;O</p>
+<p>缓冲I/O</p>
 <ul>
 <li>三类缓冲<ol>
 <li>全缓冲</li>
@@ -380,21 +364,19 @@
 </ul>
 <p><code>setbuf, setvbuf</code> functions</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">void</span> <span class="hljs-title function_">setbuf</span><span class="hljs-params">(FILE *stream, <span class="hljs-type">char</span> *buf)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">setvbuf</span><span class="hljs-params">(FILE *stream, <span class="hljs-type">char</span> *buf, <span class="hljs-type">int</span> type, <span class="hljs-type">size_t</span> size)</span>;<br></code></pre></td></tr></table></figure>
-
 <p>type：<code>_IOFBF</code>(满缓冲）<code>_IOLBF</code>(行缓冲） <code>_IONBF</code>(无缓冲）</p>
-<h4 id="Standard-I-O-functions"><a href="#Standard-I-O-functions" class="headerlink" title="Standard I&#x2F;O functions"></a>Standard I&#x2F;O functions</h4><p>Stream open&#x2F;close</p>
-<p>Stream read&#x2F;write</p>
+<h4 id="Standard-I-O-functions"><a href="#Standard-I-O-functions" class="headerlink" title="Standard I/O functions"></a>Standard I/O functions</h4><p>Stream open/close</p>
+<p>Stream read/write</p>
 <ul>
-<li>每次一个字符的I&#x2F;O</li>
-<li>每次一行的I&#x2F;O</li>
-<li>直接I&#x2F;O(二进制I&#x2F;O)‏</li>
-<li>格式化I&#x2F;O</li>
+<li>每次一个字符的I/O</li>
+<li>每次一行的I/O</li>
+<li>直接I/O(二进制I/O)‏</li>
+<li>格式化I/O</li>
 </ul>
 <p>Stream reposition</p>
 <p>Stream flush</p>
-<h4 id="Stream-open-close"><a href="#Stream-open-close" class="headerlink" title="Stream open&#x2F;close"></a>Stream open&#x2F;close</h4><p>Open a stream</p>
+<h4 id="Stream-open-close"><a href="#Stream-open-close" class="headerlink" title="Stream open/close"></a>Stream open/close</h4><p>Open a stream</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br>FILE *<span class="hljs-title function_">fopen</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *filename, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *mode)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">fclose</span><span class="hljs-params">(FILE *stream)</span>;<br></code></pre></td></tr></table></figure>
-
 <p>Parameter‏”mode”</p>
 <ul>
 <li><code>&quot;r&quot;</code>：Open text file for <strong>reading</strong>.</li>
@@ -406,15 +388,11 @@
 </ul>
 <p>Close a stream</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">fclose</span><span class="hljs-params">(FILE *fp)</span>;<br><span class="hljs-comment">// (Return: 0 if success; -1 if failure)</span><br></code></pre></td></tr></table></figure>
-
 <h4 id="Input-of-a-character"><a href="#Input-of-a-character" class="headerlink" title="Input of a character"></a>Input of a character</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">getc</span><span class="hljs-params">(FILE *fp)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">fgetc</span><span class="hljs-params">(FILE *fp)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">getchar</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;<br><span class="hljs-comment">// (Result: Reads the next character from a stream and returns it as an unsigned char cast to an int, or EOF on end of file or error.)</span><br></code></pre></td></tr></table></figure>
-
 <p>Three functions：<code>ferror, feof, clearerr</code></p>
 <p><code>ungetc</code> function：push a character back to a stream</p>
 <h4 id="Output-of-a-Character"><a href="#Output-of-a-Character" class="headerlink" title="Output of a Character"></a>Output of a Character</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">putc</span><span class="hljs-params">(<span class="hljs-type">int</span> c, FILE *fp)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">fputc</span><span class="hljs-params">(<span class="hljs-type">int</span> c, FILE *fp)</span>;<br><span class="hljs-type">int</span> <span class="hljs-title function_">putchar</span><span class="hljs-params">(<span class="hljs-type">int</span> c)</span>;<br><span class="hljs-comment">// (Return: the character if success; -1 if failure)</span><br></code></pre></td></tr></table></figure>
-
 <h4 id="Input-of-a-Line-of-String"><a href="#Input-of-a-Line-of-String" class="headerlink" title="Input of a Line of String"></a>Input of a Line of String</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-type">char</span> *<span class="hljs-title function_">fgets</span><span class="hljs-params">(<span class="hljs-type">char</span> *s, <span class="hljs-type">int</span> size, FILE *stream)</span>;<br><span class="hljs-type">char</span> *<span class="hljs-title function_">gets</span><span class="hljs-params">(<span class="hljs-type">char</span> *s)</span>; <span class="hljs-comment">//not recommended.</span><br></code></pre></td></tr></table></figure>
-
 <p><code>fgets</code>：最多从流中读 <strong>size-1</strong> 字节并存储到 s 指向的缓冲区，读到 EOF或新行结束，“\0” 会存储到缓冲区结尾</p>
 
       </div>
@@ -780,5 +758,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

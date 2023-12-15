@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -327,11 +323,11 @@
 </ul>
 <h2 id="2-2-微服务架构通信模式"><a href="#2-2-微服务架构通信模式" class="headerlink" title="2.2 微服务架构通信模式"></a>2.2 微服务架构通信模式</h2><h3 id="2-2-1-问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？"><a href="#2-2-1-问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？" class="headerlink" title="2.2.1 问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？"></a>2.2.1 问题：同步通信中如何避免由于服务故障或网络中断所引起的故障蔓延到其他服务？</h3><h4 id="上下文"><a href="#上下文" class="headerlink" title="上下文"></a>上下文</h4><ul>
 <li>微服务，分布式，进程间调用</li>
-<li>服务请求可能面临局部故障(故障&#x2F;停机&#x2F;过载）</li>
+<li>服务请求可能面临局部故障(故障/停机/过载）</li>
 <li>同步通信客户端等待响应被阻塞，蔓延</li>
 </ul>
 <h4 id="需求-1"><a href="#需求-1" class="headerlink" title="需求"></a>需求</h4><ul>
-<li>处理网络超时&#x2F;无响应服务的能力</li>
+<li>处理网络超时/无响应服务的能力</li>
 <li>限制客户端向服务器发出请求的数量</li>
 <li>决定如何从失败的远程服务中恢复</li>
 </ul>
@@ -374,7 +370,7 @@
 <p>结果：</p>
 <ul>
 <li>相较于服务器端服务发现，其活动部件与网络中转数量更少</li>
-<li>需要为应用中使用的每种编程语言&#x2F;框架建立客户端服务发现逻辑，例如Netflix Prana 为非 JVM 客户端提供了一套基于 HTTP 代理的服务发现方案</li>
+<li>需要为应用中使用的每种编程语言/框架建立客户端服务发现逻辑，例如Netflix Prana 为非 JVM 客户端提供了一套基于 HTTP 代理的服务发现方案</li>
 <li>客户端与服务注册表相耦合</li>
 <li>开发者负责设置和管理服务注册表，分散精力</li>
 </ul>
@@ -411,7 +407,7 @@
 </ul>
 <h4 id="模式1：API-Gateway模式"><a href="#模式1：API-Gateway模式" class="headerlink" title="模式1：API Gateway模式"></a>模式1：API Gateway模式</h4><ul>
 <li>实现一个服务，外部 API 客户端进入基于微服务应用的入口点(类似于外观模式）</li>
-<li>部分请求会被直接代理&#x2F;路由至对应的服务</li>
+<li>部分请求会被直接代理/路由至对应的服务</li>
 <li>部分请求则需要接入多项服务</li>
 <li>针对不同客户端提供不同的 API</li>
 </ul>
@@ -420,7 +416,7 @@
 <li>确保客户端无法察觉应用程序是如何被拆分为多项微服务的</li>
 <li>确保客户端不受服务实例的位置的影响</li>
 <li>为每套客户端提供最优API</li>
-<li>降低请求&#x2F;往返次数</li>
+<li>降低请求/往返次数</li>
 <li>将从客户端调用多项服务的逻辑转换为从API网关处调用，从而简化整个客户端</li>
 <li>API组合、协议转换和边缘功能，身份验证等</li>
 <li>问题：复杂性、性能和可扩展性、局部故障等</li>
@@ -530,7 +526,7 @@
 <li>容器是一种更现代、更轻量级的部署机制，操作系统级的虚拟化机制</li>
 <li>容器由在隔离的沙箱中运行的一个或多个进程组成，多个容器通常在一台机器上运行，容器共享操作系统</li>
 <li>从在容器中运行的进程的角度来看，它就好像在自己的机器上运行一样，有独立IP、可消除端口冲突</li>
-<li>使用 Docker 编排框架指定并协调容器资源，如 Kubernetes、Marathon&#x2F;Mesos、Amazon EC2 Container Service</li>
+<li>使用 Docker 编排框架指定并协调容器资源，如 Kubernetes、Marathon/Mesos、Amazon EC2 Container Service</li>
 </ul>
 </li>
 <li>部署过程：<ul>
@@ -671,7 +667,7 @@
 <li>pull - 指标服务从服务中提取指标</li>
 </ul>
 </li>
-<li>实例：Coda Hale&#x2F;Yammer Java 指标库、Prometheus(普罗米修斯）、AWS Cloud Watch等</li>
+<li>实例：Coda Hale/Yammer Java 指标库、Prometheus(普罗米修斯）、AWS Cloud Watch等</li>
 </ul>
 <p>需求：</p>
 <ul>
@@ -748,7 +744,7 @@
 <li>当服务实例失败时应生成警报，请求应该被路由到正常工作的服务实例</li>
 </ul>
 <h4 id="模式：健康检查API模式"><a href="#模式：健康检查API模式" class="headerlink" title="模式：健康检查API模式"></a>模式：健康检查API模式</h4><ul>
-<li>服务具有 &#x2F;health 返回服务健康状况的健康检查 API 端点(实例Spring Boot Actuator），执行检查：<ul>
+<li>服务具有 /health 返回服务健康状况的健康检查 API 端点(实例Spring Boot Actuator），执行检查：<ul>
 <li>服务实例使用的基础设施服务的连接状态</li>
 <li>主机的状态，例如磁盘空间</li>
 <li>应用程序特定逻辑</li>
@@ -757,7 +753,7 @@
 <li>监控服务、服务注册表或负载均衡可以定期 “ping” 调用端点来检查服务实例的健康状况</li>
 <li>使用 Spring Boot 和 Spring Cloud 作为微服务框架</li>
 <li>提供健康检查端点，由 Spring Boot Actuator 模块实现</li>
-<li>配置调用 &#x2F;health 可扩展健康检查逻辑的 HTTP 端点。</li>
+<li>配置调用 /health 可扩展健康检查逻辑的 HTTP 端点。</li>
 </ul>
 <p>优点：</p>
 <ul>
@@ -1136,5 +1132,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

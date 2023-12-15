@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,9 +180,9 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="1-索引是一种快捷访问方式"><a href="#1-索引是一种快捷访问方式" class="headerlink" title="1. 索引是一种快捷访问方式"></a>1. 索引是一种快捷访问方式</h2><h3 id="二分搜索树（BST，Binary-Search-Trees）"><a href="#二分搜索树（BST，Binary-Search-Trees）" class="headerlink" title="二分搜索树（BST，Binary Search Trees）"></a>二分搜索树（BST，Binary Search Trees）</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161009595.png" alt="image-20230314161009595" style="zoom:80%;" />
-
+        <h2 id="1-索引是一种快捷访问方式"><a href="#1-索引是一种快捷访问方式" class="headerlink" title="1. 索引是一种快捷访问方式"></a>1. 索引是一种快捷访问方式</h2><h3 id="二分搜索树（BST，Binary-Search-Trees）"><a href="#二分搜索树（BST，Binary-Search-Trees）" class="headerlink" title="二分搜索树（BST，Binary Search Trees）"></a>二分搜索树（BST，Binary Search Trees）</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161009595.png" alt="image-20230314161009595" style="zoom:80%;" /></p>
 <p>为什么要 Tree Balancing？</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -194,21 +190,21 @@
 <th>$O(N)$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161419104.png" alt="image-20230314161419104" style="zoom:80%;" /></td>
 <td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161432799.png" alt="image-20230314161432799" style="zoom:80%;" /></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>怎么做 Tree Balancing？</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161528646.png" alt="image-20230314161528646" style="zoom:80%;" />
-
-<h3 id="HDD和SSDs的差异"><a href="#HDD和SSDs的差异" class="headerlink" title="HDD和SSDs的差异"></a>HDD和SSDs的差异</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161855859.png" alt="image-20230314161855859" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161528646.png" alt="image-20230314161528646" style="zoom:80%;" /></p>
+<h3 id="HDD和SSDs的差异"><a href="#HDD和SSDs的差异" class="headerlink" title="HDD和SSDs的差异"></a>HDD和SSDs的差异</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314161855859.png" alt="image-20230314161855859" style="zoom:80%;" /></p>
 <p>Block：最小的写单元，64-512 Page</p>
 <p>Page：最小的读单元，2KB-16KB</p>
-<p>SSD不过于像HDD⼀样非常强调随机 I&#x2F;O和顺序I&#x2F;O的差别，因为延迟差异不是很⼤。但是，预取、读取连续页和内部并⾏等⽅面，⼆者差距依旧存在[GOOSSAERT14] </p>
-<h3 id="逻辑图和实现结构图的差异"><a href="#逻辑图和实现结构图的差异" class="headerlink" title="逻辑图和实现结构图的差异"></a>逻辑图和实现结构图的差异</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314162451882.png" alt="image-20230314162451882" style="zoom:80%;" />
-
+<p>SSD不过于像HDD⼀样非常强调随机 I/O和顺序I/O的差别，因为延迟差异不是很⼤。但是，预取、读取连续页和内部并⾏等⽅面，⼆者差距依旧存在[GOOSSAERT14] </p>
+<h3 id="逻辑图和实现结构图的差异"><a href="#逻辑图和实现结构图的差异" class="headerlink" title="逻辑图和实现结构图的差异"></a>逻辑图和实现结构图的差异</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314162451882.png" alt="image-20230314162451882" style="zoom:80%;" /></p>
 <h3 id="基于磁盘的索引结构"><a href="#基于磁盘的索引结构" class="headerlink" title="基于磁盘的索引结构"></a>基于磁盘的索引结构</h3><p>对于特定数据结构，有些更适用于磁盘，⽽有些更适用于内存</p>
 <p>平台级软件，和硬件的关系非常⼤（操作系统、数据库、嵌⼊式、芯片……）</p>
 <p>更适合磁盘实现的树必须具备以下属性</p>
@@ -219,10 +215,9 @@
 <h2 id="2-B树索引的结构和应用"><a href="#2-B树索引的结构和应用" class="headerlink" title="2. B树索引的结构和应用"></a>2. B树索引的结构和应用</h2><h3 id="B-Tree（B-Tree）结构"><a href="#B-Tree（B-Tree）结构" class="headerlink" title="B-Tree（B+Tree）结构"></a>B-Tree（B+Tree）结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314162720655.png" alt="image-20230314162720655"></p>
 <h3 id="B树查找算法"><a href="#B树查找算法" class="headerlink" title="B树查找算法"></a>B树查找算法</h3><p>查找，从根节点到叶节点的单向遍历</p>
 <p>从根节点上执⾏⼆分搜索算法，将要搜索的$K$，与存储在根节点中的$K_n$进⾏比较，直到找到⼤于$K$的第⼀个分隔键，这样定位了⼀个要搜索的⼦树，顺着相应指针继续相同的搜索过程，直到目标叶节点，找到数据主⽂件指针</p>
-<h3 id="B-Tree（B-Tree）的逻辑存储结构"><a href="#B-Tree（B-Tree）的逻辑存储结构" class="headerlink" title="B-Tree（B+Tree）的逻辑存储结构"></a>B-Tree（B+Tree）的逻辑存储结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314163035891.png" alt="image-20230314163035891" style="zoom:80%;" />
-
+<h3 id="B-Tree（B-Tree）的逻辑存储结构"><a href="#B-Tree（B-Tree）的逻辑存储结构" class="headerlink" title="B-Tree（B+Tree）的逻辑存储结构"></a>B-Tree（B+Tree）的逻辑存储结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314163035891.png" alt="image-20230314163035891" style="zoom:80%;" /></p>
 <ul>
-<li><p>一次I&#x2F;O：一次 Block 的读写，每个矩形就是一个 Block</p>
+<li><p>一次I/O：一次 Block 的读写，每个矩形就是一个 Block</p>
 </li>
 <li><p>对于硬件，只有 Block 锁，可以在内存添加 Page 锁</p>
 </li>
@@ -233,11 +228,10 @@
 </ul>
 <h3 id="B-树索引能做什么？"><a href="#B-树索引能做什么？" class="headerlink" title="B+树索引能做什么？"></a>B+树索引能做什么？</h3><ol>
 <li>全键值：<code>where x = 123</code> (depth + 1次的固定次数)</li>
-<li>键值范围：<code>where 45 &lt; x &lt; 123</code> (先进行x&#x3D;45，然后顺序读取直到x&gt;&#x3D;123)</li>
+<li>键值范围：<code>where 45 &lt; x &lt; 123</code> (先进行x=45，然后顺序读取直到x&gt;=123)</li>
 <li>键前缀查找：<code>where x LIKE &#39;J%&#39;</code></li>
 </ol>
-<h3 id="索引对数据的访问只是第一步"><a href="#索引对数据的访问只是第一步" class="headerlink" title="索引对数据的访问只是第一步"></a>索引对数据的访问只是第一步</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314163536609.png" alt="image-20230314163536609" style="zoom:80%;" />
-
+<h3 id="索引对数据的访问只是第一步"><a href="#索引对数据的访问只是第一步" class="headerlink" title="索引对数据的访问只是第一步"></a>索引对数据的访问只是第一步</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230314163536609.png" alt="image-20230314163536609" style="zoom:80%;" /></p>
 <p>主键默认增加索引</p>
 <p>两种方案：</p>
 <ul>
@@ -608,5 +602,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

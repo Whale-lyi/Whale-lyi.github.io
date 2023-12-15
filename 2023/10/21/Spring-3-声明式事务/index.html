@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -186,7 +182,6 @@
       <div class="markdown-body">
         <h2 id="1-声明式事务概念"><a href="#1-声明式事务概念" class="headerlink" title="1. 声明式事务概念"></a>1. 声明式事务概念</h2><p><strong>编程式事务</strong>指通过编写代码的方式直接控制事务的提交和回滚。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Connection</span> <span class="hljs-variable">conn</span> <span class="hljs-operator">=</span> ...; <br><br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">// 开启事务：关闭事务的自动提交</span><br>    conn.setAutoCommit(<span class="hljs-literal">false</span>);<br>    <span class="hljs-comment">// 提交事务</span><br>    conn.commit();<br>&#125;<span class="hljs-keyword">catch</span>(Exception e)&#123;<br>    <span class="hljs-comment">// 回滚事务</span><br>    conn.rollBack();<br>&#125;<span class="hljs-keyword">finally</span>&#123;<br>    <span class="hljs-comment">// 释放数据库连接</span><br>    conn.close();<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>细节没有被屏蔽：具体操作过程中，所有细节都需要程序员自己来完成，比较繁琐。</li>
 <li>代码复用性不高：如果没有有效抽取出来，每次实现功能都需要自己编写代码，代码就没有得到复用。</li>
@@ -197,7 +192,7 @@
 <ul>
 <li>spring-tx: 包含声明式事务实现的基本规范（事务管理器规范接口和事务增强等等）</li>
 <li>spring-jdbc: 包含DataSource方式事务管理器实现类DataSourceTransactionManager</li>
-<li>spring-orm: 包含其他持久层框架的事务管理器实现类例如：Hibernate&#x2F;Jpa等</li>
+<li>spring-orm: 包含其他持久层框架的事务管理器实现类例如：Hibernate/Jpa等</li>
 </ul>
 <p>Spring声明式事务对应事务管理器接口</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310221519594.png" alt="img"></p>
@@ -212,10 +207,8 @@
 </ul>
 <h2 id="2-基于注解的声明式事务"><a href="#2-基于注解的声明式事务" class="headerlink" title="2. 基于注解的声明式事务"></a>2. 基于注解的声明式事务</h2><h3 id="2-1-使用方法"><a href="#2-1-使用方法" class="headerlink" title="2.1 使用方法"></a>2.1 使用方法</h3><p>配置类上添加 <code>@EnableTransactionManagement</code>, 实例化 <code>TransactionManager</code> 组件</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Configuration</span><br><span class="hljs-meta">@ComponentScan(&quot;top.whalefall&quot;)</span><br><span class="hljs-meta">@PropertySource(&quot;classpath:jdbc.properties&quot;)</span><br><span class="hljs-meta">@EnableTransactionManagement</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DataSourceConfig</span> &#123;<br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> DataSource <span class="hljs-title function_">dataSource</span><span class="hljs-params">(<span class="hljs-meta">@Value(&quot;$&#123;whale.url&#125;&quot;)</span>String url,</span><br><span class="hljs-params">                                 <span class="hljs-meta">@Value(&quot;$&#123;whale.driver&#125;&quot;)</span>String driver,</span><br><span class="hljs-params">                                 <span class="hljs-meta">@Value(&quot;$&#123;whale.username&#125;&quot;)</span>String username,</span><br><span class="hljs-params">                                 <span class="hljs-meta">@Value(&quot;$&#123;whale.password&#125;&quot;)</span>String password)</span>&#123;<br>        <span class="hljs-type">DruidDataSource</span> <span class="hljs-variable">dataSource</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DruidDataSource</span>();<br>        dataSource.setDriverClassName(driver);<br>        dataSource.setUrl(url);<br>        dataSource.setUsername(username);<br>        dataSource.setPassword(password);<br><br>        <span class="hljs-keyword">return</span> dataSource;<br>    &#125;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> JdbcTemplate <span class="hljs-title function_">jdbcTemplate</span><span class="hljs-params">(DataSource dataSource)</span> &#123;<br>        <span class="hljs-type">JdbcTemplate</span> <span class="hljs-variable">jdbcTemplate</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">JdbcTemplate</span>();<br>        jdbcTemplate.setDataSource(dataSource);<br>        <span class="hljs-keyword">return</span> jdbcTemplate;<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 装配事务管理实现对象</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> dataSource</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@return</span></span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> TransactionManager <span class="hljs-title function_">transactionManager</span><span class="hljs-params">(DataSource dataSource)</span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">DataSourceTransactionManager</span>(dataSource);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>使用声明事务注解 <code>@Transactional</code></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">changeInfo</span><span class="hljs-params">()</span>&#123;<br>    studentDao.updateAgeById(<span class="hljs-number">100</span>,<span class="hljs-number">1</span>); <span class="hljs-comment">// 被回滚</span><br>    System.out.println(<span class="hljs-string">&quot;-----------&quot;</span>); <span class="hljs-comment">// 这行会执行</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>/<span class="hljs-number">0</span>;<br>    studentDao.updateNameById(<span class="hljs-string">&quot;test1&quot;</span>,<span class="hljs-number">1</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <blockquote>
 <p>将 <code>@Transactional</code> 标记在类上会作用在类中所有方法，设置的事务属性也会延续影响到方法执行时的事务属性</p>
 <p>对一个方法来说，离它最近的 <code>@Transactional</code> 注解中的事务属性设置生效</p>
@@ -248,17 +241,15 @@
 <li>串行化（Serializable）：最高的隔离级别，完全禁止了并发，只允许一个事务执行完毕之后才能执行另一个事务。可以避免以上所有问题，但效率较低，不适用于高并发场景。</li>
 </ol>
 <p><strong>事务传播行为</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310230038490.png" alt="img" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310230038490.png" alt="img" style="zoom:67%;" /></p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Transactional</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">MethodA</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// ...</span><br>    MethodB();<br>    <span class="hljs-comment">// ...</span><br>&#125;<br><br><span class="hljs-comment">//在被调用的子方法中设置传播行为，代表如何处理调用的事务！ 是加入，还是新事务等！</span><br><span class="hljs-meta">@Transactional(propagation = Propagation.REQUIRES_NEW)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">MethodB</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-comment">// ...</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><code>@Transactional</code> 注解通过 <code>propagation</code> 属性设置事务的传播行为</p>
 <ul>
 <li>它的默认值是 <code>Propagation propagation() default Propagation.REQUIRED;</code></li>
 <li>可选值由 <code>org.springframework.transaction.annotation.Propagation</code> 枚举类提供<ul>
 <li><code>Propagation.REQUIRED</code>：如果当前存在事务，则加入当前事务，否则创建一个新事务。</li>
 </ul>
-<ol start="2">
+<ol>
 <li><code>Propagation.REQUIRES_NEW</code>：创建一个新事务，并在新事务中执行。如果当前存在事务，则挂起当前事务，即使新事务抛出异常，也不会影响当前事务。</li>
 <li><code>Propagation.NESTED</code>：如果当前存在事务，则在该事务中嵌套一个新事务，如果没有事务，则与Propagation.REQUIRED一样。</li>
 <li><code>Propagation.SUPPORTS</code>：如果当前存在事务，则加入该事务，否则以非事务方式执行。</li>
@@ -636,5 +627,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -194,11 +190,11 @@
 <li>CSV 文件 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Comma-separated_values#/media/File:CsvDelimited001.svg">Comma-Separated Values</a>)</li>
 <li>JSON 文件 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/JSON#Syntax">JavaScript Object Notation</a>)</li>
 <li>SQL 引擎 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/SQL_syntax">Structured Query Language</a>)</li>
-<li>TLA+&#x2F;TLAPS (<a target="_blank" rel="noopener" href="https://github.com/Starydark/PaxosStore-tla/blob/master/theorem%20proving/TPaxos.tla">TPaxos.tla</a>)</li>
+<li>TLA+/TLAPS (<a target="_blank" rel="noopener" href="https://github.com/Starydark/PaxosStore-tla/blob/master/theorem%20proving/TPaxos.tla">TPaxos.tla</a>)</li>
 <li>(Java) 字节码解释器</li>
-<li>C&#x2F;C++ 语言编译器</li>
+<li>C/C++ 语言编译器</li>
 <li>排版工具 (<a target="_blank" rel="noopener" href="https://github.com/courses-at-nju-by-hfwei/compilers-lectures/blob/master/2021/0-overview/parts/overview.tex">LATEX</a>)</li>
-<li>绘图工具 (<a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/TikZ_package">TikZ</a>, <a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Dot&#x2F;Graphviz</a>)</li>
+<li>绘图工具 (<a target="_blank" rel="noopener" href="https://www.overleaf.com/learn/latex/TikZ_package">TikZ</a>, <a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Dot/Graphviz</a>)</li>
 <li>L-System (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/L-system#Example_3:_Cantor_set">Cantor Set</a>)</li>
 </ul>
 <h3 id="4-IR-Intermediate-Representation-中间表示"><a href="#4-IR-Intermediate-Representation-中间表示" class="headerlink" title="4. IR: Intermediate Representation (中间表示)"></a>4. IR: Intermediate Representation (中间表示)</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108002915488.png" alt="image-20221108002915488"></p>
@@ -211,33 +207,30 @@
 <h3 id="5-词法、语法、语义和物理定律"><a href="#5-词法、语法、语义和物理定律" class="headerlink" title="5. 词法、语法、语义和物理定律"></a>5. 词法、语法、语义和物理定律</h3><blockquote>
 <p>作为一名程序员，你看到了什么？</p>
 </blockquote>
-<p>position &#x3D; initial + rate ∗ 60</p>
+<p>position = initial + rate ∗ 60</p>
 <ol>
 <li><strong>词法</strong>: 标识符、数字、运算符</li>
 <li><strong>语法</strong>: 包含算术运算的赋值语句</li>
 <li><strong>语义</strong>: position, initial, rate 是数值类型</li>
-<li><strong>物理定律</strong>: 当前位置 &#x3D; 初始位置 + 速度 × 时间</li>
+<li><strong>物理定律</strong>: 当前位置 = 初始位置 + 速度 × 时间</li>
 </ol>
 <p>我们希望编译器可以懂词法、语法、语义，但是作为编译器, 它仅仅看到了一个<strong>字符串</strong></p>
-<h4 id="5-1-词法分析器"><a href="#5-1-词法分析器" class="headerlink" title="5.1 词法分析器"></a>5.1 词法分析器</h4><p>词法分析器 (Lexer&#x2F;Scanner): 将<strong>字符</strong>流转化为<strong>词法单元</strong>(token)流。</p>
+<h4 id="5-1-词法分析器"><a href="#5-1-词法分析器" class="headerlink" title="5.1 词法分析器"></a>5.1 词法分析器</h4><p>词法分析器 (Lexer/Scanner): 将<strong>字符</strong>流转化为<strong>词法单元</strong>(token)流。</p>
 <p><code>&lt;id,1&gt;</code></p>
 <ul>
 <li>id：表示标识符(identifier)的抽象符号</li>
 <li>1：指向符号表中position对应的条目。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003702784.png" alt="image-20221108003702784" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003702784.png" alt="image-20221108003702784" style="zoom:80%;" /></p>
 <h4 id="5-2-语法分析器"><a href="#5-2-语法分析器" class="headerlink" title="5.2 语法分析器"></a>5.2 语法分析器</h4><p>语法分析器 (Parser): 构建<strong>词法单元</strong>之间的语法结构, 生成<strong>语法树</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003810281.png" alt="image-20221108003810281" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003810281.png" alt="image-20221108003810281" style="zoom:80%;" /></p>
 <h4 id="5-3-语义分析器"><a href="#5-3-语义分析器" class="headerlink" title="5.3 语义分析器"></a>5.3 语义分析器</h4><p>语义分析器: 语义检查, 如<strong>类型检查、”先声明后使用”约束检查</strong></p>
 <p>程序设计语言可能允许某些类型转换，这被称为<strong>自动类型转换</strong>(coercion)</p>
 <blockquote>
 <p>假设position、initial和rate已被声明为浮点数类型，而词素60本身形成一个整数。</p>
 <p>语义分析器的类型检查程序发现运算符 * 被用于一个浮点数 rate 和一个整数 60。在这种情况下，这个整数可以被转换成为一个浮点数。</p>
 </blockquote>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003908957.png" alt="image-20221108003908957" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108003908957.png" alt="image-20221108003908957" style="zoom:80%;" /></p>
 <h4 id="5-4-中间代码生成器"><a href="#5-4-中间代码生成器" class="headerlink" title="5.4 中间代码生成器"></a>5.4 中间代码生成器</h4><p>中间代码生成器: 生成中间代码, 如 <strong>“三地址代码”</strong></p>
 <blockquote>
 <p>“三地址代码”，这种中间表示由一组类似于汇编语言的指令组成，每个指令具有三个运算分量。每个运算分量都像一个寄存器。</p>
@@ -252,15 +245,12 @@
 <li>易于生成</li>
 <li>能够被轻松地翻译为目标机器上的语言。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004056358.png" alt="image-20221108004056358" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004056358.png" alt="image-20221108004056358" style="zoom:80%;" /></p>
 <h4 id="5-5-中间代码优化器"><a href="#5-5-中间代码优化器" class="headerlink" title="5.5 中间代码优化器"></a>5.5 中间代码优化器</h4><p>编译时计算、消除冗余临时变量</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004121768.png" alt="image-20221108004121768" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004121768.png" alt="image-20221108004121768" style="zoom:80%;" /></p>
 <h4 id="5-6-代码生成器"><a href="#5-6-代码生成器" class="headerlink" title="5.6 代码生成器"></a>5.6 代码生成器</h4><p>代码生成器: 生成目标代码, 主要任务包括<strong>指令选择、寄存器分配</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004243070.png" alt="image-20221108004243070" style="zoom:80%;" />
-
-<h4 id="5-7-符号表"><a href="#5-7-符号表" class="headerlink" title="5.7 符号表"></a>5.7 符号表</h4><p>符号表: 收集并管理<strong>变量名&#x2F;函数名</strong>相关的信息</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108004243070.png" alt="image-20221108004243070" style="zoom:80%;" /></p>
+<h4 id="5-7-符号表"><a href="#5-7-符号表" class="headerlink" title="5.7 符号表"></a>5.7 符号表</h4><p>符号表: 收集并管理<strong>变量名/函数名</strong>相关的信息</p>
 <ul>
 <li><p>变量名: 类型、寄存器、内存地址、行号</p>
 </li>
@@ -296,14 +286,13 @@
 <h3 id="自制编译器："><a href="#自制编译器：" class="headerlink" title="自制编译器："></a>自制编译器：</h3><h4 id="1-可执行文件"><a href="#1-可执行文件" class="headerlink" title="1. 可执行文件"></a>1. 可执行文件</h4><ul>
 <li><p>现代的 Linux 上的可执行文件，通常是指符合 ELF(Executable and Linking Format)这种特定形式的文件。</p>
 <ul>
-<li>ls、cp 这些命令(command)对应的实体文件都是可执行文件，例如 &#x2F;bin&#x2F;ls 和 &#x2F;bin&#x2F;cp 等。</li>
+<li>ls、cp 这些命令(command)对应的实体文件都是可执行文件，例如 /bin/ls 和 /bin/cp 等。</li>
 <li>使用 file 命令能够查看文件是否符合 ELF 的形式。会显示 ELF……executable</li>
 </ul>
 </li>
-<li><p>ELF 文件中包含了**程序(代码)<strong>以及如何运行该程序的</strong>相关信息(元数据)**。程序(代码)就是机器语言(machine language)的列表。</p>
+<li><p>ELF 文件中包含了<strong>程序(代码)</strong>以及如何运行该程序的<strong>相关信息(元数据)</strong>。程序(代码)就是机器语言(machine language)的列表。</p>
 </li>
-<li><p>GCC 将 C 语言的程序转化为用机器语言(例如 486 的机器语言)描述的程序。<strong>将机器语言的程序按照 ELF 这种特定的文件格式注入文件，得到的就是可执行文件。</strong></p>
-</li>
+<li>GCC 将 C 语言的程序转化为用机器语言(例如 486 的机器语言)描述的程序。<strong>将机器语言的程序按照 ELF 这种特定的文件格式注入文件，得到的就是可执行文件。</strong></li>
 </ul>
 <h4 id="2-编译"><a href="#2-编译" class="headerlink" title="2. 编译"></a>2. 编译</h4><blockquote>
 <p>gcc 命令是如何将 hello.c 转换为可执行文件的呢？</p>
@@ -693,5 +682,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

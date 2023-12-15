@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,23 +180,20 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="1-类-适配器模式与-对象-适配器模式"><a href="#1-类-适配器模式与-对象-适配器模式" class="headerlink" title="1. (类)适配器模式与(对象)适配器模式"></a>1. (类)适配器模式与(对象)适配器模式</h2><h3 id="1-1-模式动机"><a href="#1-1-模式动机" class="headerlink" title="1.1 模式动机"></a>1.1 模式动机</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612095510933.png" alt="image-20230612095510933" style="zoom:80%;" />
-
+        <h2 id="1-类-适配器模式与-对象-适配器模式"><a href="#1-类-适配器模式与-对象-适配器模式" class="headerlink" title="1. (类)适配器模式与(对象)适配器模式"></a>1. (类)适配器模式与(对象)适配器模式</h2><h3 id="1-1-模式动机"><a href="#1-1-模式动机" class="headerlink" title="1.1 模式动机"></a>1.1 模式动机</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612095510933.png" alt="image-20230612095510933" style="zoom:80%;" /></p>
 <ol>
 <li>在软件开发中采用类似于电源适配器的设计和编码技巧被称为<strong>适配器模式</strong>。</li>
 <li>通常情况下，<strong>客户端可以通过目标类的接口访问它所提供的服务</strong>。有时，现有的类可以满足客户类的功能需要，但是它所提供的接口不一定是客户类所期望的，这可能是因为现有类中方法名与目标类中定义的方法名不一致等原因所导致的。</li>
 <li>在这种情况下，现有的接口需要转化为客户类期望的接口，这样保证了对现有类的重用。如果不进行这样的转化，客户类就不能利用现有类所提供的功能，适配器模式可以完成这样的转化。</li>
-<li>在适配器模式中可以定义一个包装类，包装不兼容接口的对象，这个包装类指的就是**适配器(Adapter)<strong>，它所包装的对象就是</strong>适配者(Adaptee)**，即被适配的类。</li>
+<li>在适配器模式中可以定义一个包装类，包装不兼容接口的对象，这个包装类指的就是<strong>适配器(Adapter)</strong>，它所包装的对象就是<strong>适配者(Adaptee)</strong>，即被适配的类。</li>
 <li>适配器提供客户类需要的接口，<strong>适配器的实现就是把客户类的请求转化为对适配者的相应接口的调用</strong>。也就是说：<strong>当客户类调用适配器的方法时，在适配器类的内部将调用适配者类的方法，而这个过程对客户类是透明的，客户类并不直接访问适配者类</strong>。因此，<strong>适配器可以使由于接口不兼容而不能交互的类可以一起工作</strong>。这就是适配器模式的模式动机。</li>
 </ol>
 <h3 id="1-2-模式定义"><a href="#1-2-模式定义" class="headerlink" title="1.2 模式定义"></a>1.2 模式定义</h3><ol>
 <li>适配器模式(Adapter Pattern) ：<strong>将一个接口转换成客户希望的另一个接口</strong>，适配器模式使<strong>接口不兼容的那些类可以一起工作</strong>，其别名为包装器(Wrapper)。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</li>
 <li>Adapter Pattern: <strong>Convert the interface of a  class into another interface clients expect</strong>.  Adapter lets classes work together that  couldn’t otherwise because of incompatible  interfaces.</li>
 </ol>
-<h3 id="1-3-模式结构"><a href="#1-3-模式结构" class="headerlink" title="1.3 模式结构"></a>1.3 模式结构</h3><h4 id="对象适配器"><a href="#对象适配器" class="headerlink" title="对象适配器"></a>对象适配器</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612095709256.png" alt="image-20230612095709256" style="zoom:80%;" />
-
-<h4 id="类适配器"><a href="#类适配器" class="headerlink" title="类适配器"></a>类适配器</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612095817460.png" alt="image-20230612095817460" style="zoom:80%;" />
-
+<h3 id="1-3-模式结构"><a href="#1-3-模式结构" class="headerlink" title="1.3 模式结构"></a>1.3 模式结构</h3><h4 id="对象适配器"><a href="#对象适配器" class="headerlink" title="对象适配器"></a>对象适配器</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612095709256.png" alt="image-20230612095709256" style="zoom:80%;" /></p>
+<h4 id="类适配器"><a href="#类适配器" class="headerlink" title="类适配器"></a>类适配器</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612095817460.png" alt="image-20230612095817460" style="zoom:80%;" /></p>
 <p>适配器模式包含如下角色：</p>
 <ol>
 <li>Target：目标抽象类</li>
@@ -212,20 +205,16 @@
 <li>典型的类适配器代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Adapter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Adaptee</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Target</span>&#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">request</span><span class="hljs-params">()</span>&#123;<br>    specificRequest();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="2">
+<ol>
 <li>典型的对象适配器代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Adapter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Target</span>&#123;<br>  <span class="hljs-keyword">private</span> Adaptee adaptee;<br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">Adapter</span><span class="hljs-params">(Adaptee adaptee)</span>&#123;<br>    <span class="hljs-built_in">this</span>.adaptee=adaptee;<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">request</span><span class="hljs-params">()</span>&#123;<br>    adaptee.specificRequest();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="1-5-适配器模式实例与解析"><a href="#1-5-适配器模式实例与解析" class="headerlink" title="1.5 适配器模式实例与解析"></a>1.5 适配器模式实例与解析</h3><p>实例一：仿生机器人</p>
 <p>现需要设计一个可以模拟各种动物行为的机器人，在机器人中定义了一系列方法，如机器人叫喊方法cry()、机器人移动方法move()等。如果希望在不修改已有代码的基础上使得机器人能够像狗一样叫，像狗一样跑，使用适配器模式进行系统设计。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100106413.png" alt="image-20230612100106413" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100106413.png" alt="image-20230612100106413" style="zoom:80%;" /></p>
 <p>实例二：加密适配器</p>
 <p>某系统需要提供一个加密模块，将用户信息（如密码等机密信息）加密之后再存储在数据库中，系统已经定义好了数据库操作类。为了提高开发效率，现需要重用已有的加密算法，这些算法封装在一些由第三方提供的类中，有些甚至没有源代码。使用适配器模式设计该加密模块，实现在不修改现有类的基础上重用第三方加密方法。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100259747.png" alt="image-20230612100259747" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100259747.png" alt="image-20230612100259747" style="zoom:80%;" /></p>
 <h3 id="1-6-模式优缺点"><a href="#1-6-模式优缺点" class="headerlink" title="1.6 模式优缺点"></a>1.6 模式优缺点</h3><p><strong>适配器模式的优点</strong></p>
 <ol>
 <li><strong>将目标类和适配者类解耦</strong>，通过引入一个适配器类来重用现有的适配者类，而无须修改原有代码。</li>
@@ -259,16 +248,12 @@
 <h3 id="1-9-模式应用"><a href="#1-9-模式应用" class="headerlink" title="1.9 模式应用"></a>1.9 模式应用</h3><p><strong>JDK类库中的适配器类</strong></p>
 <p>如在com.sun.imageio.plugins.common包中定义的<strong>InputStreamAdapter</strong>类，用于包装ImageInputStream接口及其子类对象。</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">InputStreamAdapter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">InputStream</span>&#123;<br>  ImageInputStream stream;<br>  <span class="hljs-keyword">public</span> <span class="hljs-title function_">InputStreamAdapter</span><span class="hljs-params">(ImageInputStream stream)</span> &#123;<br>    <span class="hljs-built_in">super</span>();<br>    <span class="hljs-built_in">this</span>.stream = stream;<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">read</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-keyword">return</span> stream.read();<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">read</span><span class="hljs-params">(<span class="hljs-type">byte</span> b[], <span class="hljs-type">int</span> off, <span class="hljs-type">int</span> len)</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-keyword">return</span> stream.read(b, off, len);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p><strong>默认适配器模式(Default Adapter Pattern)或缺省适配器模式</strong></p>
 <p>当不需要全部实现接口提供的方法时，可先设计一个<strong>抽象类实现接口</strong>，并<strong>为该接口中每个方法提供一个默认实现</strong>（空方法），那么该抽象类的子类可有选择地覆盖父类的某些方法来实现需求，它<strong>适用于一个接口不想使用其所有的方法的情况</strong>。因此也称为<strong>单接口适配器模式</strong>。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100912991.png" alt="image-20230612100912991" style="zoom:80%;" />
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100934239.png" alt="image-20230612100934239" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100912991.png" alt="image-20230612100912991" style="zoom:80%;" /><br><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612100934239.png" alt="image-20230612100934239" style="zoom:80%;" /></p>
 <p><strong>双向适配器</strong></p>
 <p>在对象适配器的使用过程中，如果<strong>在适配器中同时包含对目标类和适配者类的引用，适配者可以通过它调用目标类中的方法，目标类也可以通过它调用适配者类中的方法</strong>，那么该适配器就是一个<strong>双向适配器</strong>。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612101107369.png" alt="image-20230612101107369" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612101107369.png" alt="image-20230612101107369" style="zoom:80%;" /></p>
 <h3 id="1-10-适配器小结"><a href="#1-10-适配器小结" class="headerlink" title="1.10 适配器小结"></a>1.10 适配器小结</h3><ol>
 <li>结构型模式描述如何将类或者对象结合在一起形成更大的结构。</li>
 <li>适配器模式用于将一个接口转换成客户希望的另一个接口，适配器模式使接口不兼容的那些类可以一起工作，其别名为包装器。适配器模式既可以作为类结构型模式，也可以作为对象结构型模式。</li>
@@ -288,8 +273,7 @@
 </li>
 <li>适配器模式适用情况包括：系统需要使用现有的类，而这些类的接口不符合系统的需要；想要建立一个可以重复使用的类，用于与一些彼此之间没有太大关联的一些类一起工作。</li>
 </ol>
-<h2 id="2-组合模式-对象"><a href="#2-组合模式-对象" class="headerlink" title="2. 组合模式(对象)"></a>2. 组合模式(对象)</h2><h3 id="2-1-模式动机"><a href="#2-1-模式动机" class="headerlink" title="2.1 模式动机"></a>2.1 模式动机</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612102923937.png" alt="image-20230612102923937" style="zoom:80%;" />
-
+<h2 id="2-组合模式-对象"><a href="#2-组合模式-对象" class="headerlink" title="2. 组合模式(对象)"></a>2. 组合模式(对象)</h2><h3 id="2-1-模式动机"><a href="#2-1-模式动机" class="headerlink" title="2.1 模式动机"></a>2.1 模式动机</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612102923937.png" alt="image-20230612102923937" style="zoom:80%;" /></p>
 <ol>
 <li>对于<strong>树形结构</strong>，当容器对象（如文件夹）的某一个方法被调用时，将遍历整个树形结构，寻找也包含这个方法的成员对象（可以是容器对象，也可以是叶子对象，如子文件夹和文件）并调用执行。<strong>（递归调用）</strong></li>
 <li>由于容器对象和叶子对象在功能上的区别，在使用这些对象的客户端代码中必须<strong>有区别地对待容器对象和叶子对象</strong>，而实际上<strong>大多数情况下客户端希望一致地处理它们，因为对于这些对象的区别对待将会使得程序非常复杂</strong>。</li>
@@ -300,8 +284,7 @@
 <li>组合模式又可以称为<strong>整体-部分(Part-Whole)模式</strong>，属于对象的结构模式，它<strong>将对象组织到树结构中，可以用来描述整体与部分的关系</strong>。</li>
 <li>Composite Pattern: Compose objects into tree  structures to represent part-whole hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.</li>
 </ol>
-<h3 id="2-3-模式结构"><a href="#2-3-模式结构" class="headerlink" title="2.3 模式结构"></a>2.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612103906865.png" alt="image-20230612103906865" style="zoom:80%;" />
-
+<h3 id="2-3-模式结构"><a href="#2-3-模式结构" class="headerlink" title="2.3 模式结构"></a>2.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612103906865.png" alt="image-20230612103906865" style="zoom:80%;" /></p>
 <p>组合模式包含如下角色：</p>
 <ol>
 <li>Component: 抽象构件</li>
@@ -314,27 +297,22 @@
 <li>同时<strong>容器对象与抽象构件类之间还建立一个聚合关联关系</strong>，在容器对象中既可以包含叶子，也可以包含容器，以此<strong>实现递归组合，形成一个树形结构</strong>。</li>
 <li>文件系统组合模式结构图：</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104101339.png" alt="image-20230612104101339" style="zoom:80%;" />
-
-<ol start="4">
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104101339.png" alt="image-20230612104101339" style="zoom:80%;" /></p>
+<ol>
 <li>典型的抽象构件角色代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Component</span>&#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(Component c)</span>;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Component c)</span>;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> Component <span class="hljs-title function_">getChild</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span>;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="5">
+<ol>
 <li>典型的叶子构件角色代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Leaf</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Component</span>&#123;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(Component c)</span><br>  &#123; <span class="hljs-comment">//异常处理或错误提示 </span><br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Component c)</span><br>  &#123; <span class="hljs-comment">//异常处理或错误提示 </span><br>  &#125;<br>  <span class="hljs-keyword">public</span> Component <span class="hljs-title function_">getChild</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span><br>  &#123; <span class="hljs-comment">//异常处理或错误提示 </span><br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span><br>  &#123; <span class="hljs-comment">//实现代码</span><br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="6">
+<ol>
 <li>典型的容器构件角色代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Composite</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Component</span><br>&#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-type">ArrayList</span> <span class="hljs-variable">list</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>();<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">add</span><span class="hljs-params">(Component c)</span> &#123;<br>    list.add(c);<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">remove</span><span class="hljs-params">(Component c)</span> &#123;<br>    list.remove(c);<br>  &#125;<br>  <span class="hljs-keyword">public</span> Component <span class="hljs-title function_">getChild</span><span class="hljs-params">(<span class="hljs-type">int</span> i)</span> &#123;<br>    <span class="hljs-keyword">return</span> (Component)list.get(i);<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">for</span>(Object obj:list) &#123;<br>      ((Component)obj).operation();<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="2-5-组合模式实例与解析"><a href="#2-5-组合模式实例与解析" class="headerlink" title="2.5 组合模式实例与解析"></a>2.5 组合模式实例与解析</h3><p>实例一：水果盘</p>
 <p>在水果盘(Plate)中有一些水果，如苹果(Apple)、香蕉(Banana)、梨子(Pear)，当然大水果盘中还可以有小水果盘，现需要对盘中的水果进行遍历（吃），当然如果对一个水果盘执行”吃”方法，实际上就是吃其中的水果。使用组合模式模拟该场景。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104406439.png" alt="image-20230612104406439" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104406439.png" alt="image-20230612104406439" style="zoom:80%;" /></p>
 <p>实例二：文件浏览</p>
 <p>文件有不同类型，不同类型的文件其浏览方式有所区别，如文本文件和图片文件的浏览方式就不相同。对文件夹的浏览实际上就是对其中所包含文件的浏览，而客户端可以一致地对文件和文件夹进行操作，无须关心它们的区别。使用组合模式来模拟文件的浏览操作。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104525305.png" alt="image-20230612104525305"></p>
@@ -360,17 +338,13 @@
 <li>XML文档解析</li>
 </ol>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-meta">&lt;?xml version=<span class="hljs-string">&quot;1.0&quot;</span>?&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">books</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">book</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">author</span>&gt;</span>Carson<span class="hljs-tag">&lt;/<span class="hljs-name">author</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">price</span> <span class="hljs-attr">format</span>=<span class="hljs-string">&quot;dollar&quot;</span>&gt;</span>31.95<span class="hljs-tag">&lt;/<span class="hljs-name">price</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">pubdate</span>&gt;</span>05/01/2001<span class="hljs-tag">&lt;/<span class="hljs-name">pubdate</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">book</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">pubinfo</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">publisher</span>&gt;</span>MSPress<span class="hljs-tag">&lt;/<span class="hljs-name">publisher</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">state</span>&gt;</span>WA<span class="hljs-tag">&lt;/<span class="hljs-name">state</span>&gt;</span><br>  <span class="hljs-tag">&lt;/<span class="hljs-name">pubinfo</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">books</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104708064.png" alt="image-20230612104708064" style="zoom:80%;" />
-
-<ol start="2">
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104708064.png" alt="image-20230612104708064" style="zoom:80%;" /></p>
+<ol>
 <li><strong>操作系统中的目录结构</strong>是一个树形结构，因此在对文件和文件夹进行操作时可以应用组合模式，例如杀毒软件在查毒或杀毒时，既可以针对一个具体文件，也可以针对一个目录。如果是对目录查毒或杀毒，将递归处理目录中的每一个子目录和文件。</li>
-<li>JDK的<strong>AWT&#x2F;Swing</strong>是组合模式在Java类库中的一个典型实际应用。</li>
+<li>JDK的<strong>AWT/Swing</strong>是组合模式在Java类库中的一个典型实际应用。</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104736113.png" alt="image-20230612104736113" style="zoom:80%;" />
-
-<h3 id="2-9-模式扩展"><a href="#2-9-模式扩展" class="headerlink" title="2.9 模式扩展"></a>2.9 模式扩展</h3><h4 id="更复杂的组合模式"><a href="#更复杂的组合模式" class="headerlink" title="更复杂的组合模式"></a>更复杂的组合模式</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104808582.png" alt="image-20230612104808582" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104736113.png" alt="image-20230612104736113" style="zoom:80%;" /></p>
+<h3 id="2-9-模式扩展"><a href="#2-9-模式扩展" class="headerlink" title="2.9 模式扩展"></a>2.9 模式扩展</h3><h4 id="更复杂的组合模式"><a href="#更复杂的组合模式" class="headerlink" title="更复杂的组合模式"></a>更复杂的组合模式</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104808582.png" alt="image-20230612104808582" style="zoom:80%;" /></p>
 <h4 id="透明组合模式"><a href="#透明组合模式" class="headerlink" title="透明组合模式"></a>透明组合模式</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612104847480.png" alt="image-20230612104847480"></p>
 <h4 id="安全组合模式"><a href="#安全组合模式" class="headerlink" title="安全组合模式"></a>安全组合模式</h4><ul>
 <li>违反了里氏代换原则</li>
@@ -411,8 +385,7 @@
 <li>装饰模式(Decorator Pattern) ：<strong>动态地给一个对象增加一些额外的职责</strong>(Responsibility)，就增加对象功能来说，装饰模式比生成子类实现更为灵活。其别名也可以称为<strong>包装器</strong>(Wrapper)，与适配器模式的别名相同，但它们适用于不同的场合。根据翻译的不同，装饰模式也有人称之为”油漆工模式”，它是一种<strong>对象结构型模式</strong>。</li>
 <li>Decorator Pattern: Attach additional responsibilities to an object dynamically. Decorators provide a flexible alternative to  subclassing for extending functionality.</li>
 </ol>
-<h3 id="3-3-模式结构"><a href="#3-3-模式结构" class="headerlink" title="3.3 模式结构"></a>3.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612105517641.png" alt="image-20230612105517641" style="zoom:80%;" />
-
+<h3 id="3-3-模式结构"><a href="#3-3-模式结构" class="headerlink" title="3.3 模式结构"></a>3.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612105517641.png" alt="image-20230612105517641" style="zoom:80%;" /></p>
 <p>装饰模式包含如下角色：</p>
 <ol>
 <li>Component: 抽象构件</li>
@@ -426,16 +399,13 @@
 <li>典型的抽象装饰类代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Decorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Component</span> &#123;<br>  	<span class="hljs-keyword">private</span> Component component;<br>  	<span class="hljs-keyword">public</span> <span class="hljs-title function_">Decorator</span><span class="hljs-params">(Component component)</span> &#123;<br>    	<span class="hljs-built_in">this</span>.component=component;<br>  	&#125;<br>  	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span> &#123;<br>   		component.operation();<br>   	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="5">
+<ol>
 <li>典型的具体装饰类代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ConcreteDecorator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Decorator</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">ConcreteDecorator</span><span class="hljs-params">(Component component)</span> &#123;<br>    	<span class="hljs-built_in">super</span>(component);<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-built_in">super</span>.operation();<br>        addedBehavior();<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">addedBehavior</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//新增方法</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="3-5-装饰模式实例与解析"><a href="#3-5-装饰模式实例与解析" class="headerlink" title="3.5 装饰模式实例与解析"></a>3.5 装饰模式实例与解析</h3><p>实例一：变形金刚</p>
 <p>变形金刚在变形之前是一辆汽车，它可以在陆地上移动。当它变成机器人之后除了能够在陆地上移动之外，还可以说话；如果需要，它还可以变成飞机，除了在陆地上移动还可以在天空中飞翔。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110030272.png" alt="image-20230612110030272" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110030272.png" alt="image-20230612110030272" style="zoom:80%;" /></p>
 <p>实例二：多重加密系统</p>
 <p>某系统提供了一个数据加密功能，可以对字符串进行加密。最简单的加密算法通过对字母进行移位来实现，同时还提供了稍复杂的逆向输出加密，还提供了更为高级的求模加密。用户先使用最简单的加密算法对字符串进行加密，如果觉得还不够可以对加密之后的结果使用其他加密算法进行二次加密，当然也可以进行第三次加密。现使用装饰模式设计该多重加密系统。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110111263.png" alt="image-20230612110111263"></p>
@@ -462,18 +432,15 @@
 <li>如JList构件本身并不支持直接滚动，即没有滚动条，要创建可以滚动的列表，可以使用如下代码实现：</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">JList</span> <span class="hljs-variable">list</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">JList</span>();<br><span class="hljs-type">JScrollPane</span> <span class="hljs-variable">sp</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">JScrollPane</span>(list);<br></code></pre></td></tr></table></figure>
-
 <p>装饰模式在JDK中最经典的实例是Java IO。</p>
 <ul>
 <li>以 <code>InputStream</code> 为例：</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110315912.png" alt="image-20230612110315912" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110315912.png" alt="image-20230612110315912" style="zoom:80%;" /></p>
 <ul>
 <li>抽象装饰类：<code>FilterInputStream</code></li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">volatile</span> InputStream in;<br><span class="hljs-keyword">protected</span> <span class="hljs-title function_">FilterInputStream</span><span class="hljs-params">(InputStream in)</span> &#123;<br>	<span class="hljs-built_in">this</span>.in = in;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p>角色分配：</p>
 <ul>
@@ -487,9 +454,7 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">FileInputStream</span> <span class="hljs-variable">inFS</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">FileInputStream</span>(<span class="hljs-string">&quot;temp/fileSrc.txt&quot;</span>);<br><span class="hljs-type">BufferedInputStream</span> <span class="hljs-variable">inBS</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">BufferedInputStream</span>(inFS);<br><span class="hljs-comment">//定义一个字节数组，用于存放缓冲数据</span><br><span class="hljs-type">byte</span>[] data = <span class="hljs-keyword">new</span> <span class="hljs-title class_">byte</span>[<span class="hljs-number">1024</span>];<br>inBS.read(data);<br></code></pre></td></tr></table></figure>
-
-<h3 id="3-9-模式扩展"><a href="#3-9-模式扩展" class="headerlink" title="3.9 模式扩展"></a>3.9 模式扩展</h3><h4 id="装饰模式的简化"><a href="#装饰模式的简化" class="headerlink" title="装饰模式的简化"></a>装饰模式的简化</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110713084.png" alt="image-20230612110713084" style="zoom:80%;" />
-
+<h3 id="3-9-模式扩展"><a href="#3-9-模式扩展" class="headerlink" title="3.9 模式扩展"></a>3.9 模式扩展</h3><h4 id="装饰模式的简化"><a href="#装饰模式的简化" class="headerlink" title="装饰模式的简化"></a>装饰模式的简化</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612110713084.png" alt="image-20230612110713084" style="zoom:80%;" /></p>
 <p>需要注意的问题</p>
 <ul>
 <li><strong>一个装饰类的接口必须与被装饰类的接口保持相同</strong>，对于客户端来说无论是装饰之前的对象还是装饰之后的对象都可以一致对待。</li>
@@ -500,12 +465,10 @@
 <li>在透明装饰模式中，要求<strong>客户端完全针对抽象编程</strong>，装饰模式的透明性要求客户端程序不应该声明具体构件类型和具体装饰类型，而应该全部声明为抽象构件类型。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Cipher sc,cc,ac;<br>sc = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleCipher</span>();<br>cc = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ComplexCipher</span>(sc);<br>ac = <span class="hljs-keyword">new</span> <span class="hljs-title class_">AdvancedCipher</span>(cc);<br></code></pre></td></tr></table></figure>
-
 <h4 id="半透明装饰模式（变形金刚）"><a href="#半透明装饰模式（变形金刚）" class="headerlink" title="半透明装饰模式（变形金刚）"></a>半透明装饰模式（变形金刚）</h4><ol>
-<li>**半透明(semi-transparent)**的装饰模式允许用户在客户端声明具体装饰者类型的对象，调用在具体装饰者中新增的方法。</li>
+<li><strong>半透明(semi-transparent)</strong>的装饰模式允许用户在客户端声明具体装饰者类型的对象，调用在具体装饰者中新增的方法。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">Transform camaro;<br>camaro=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Car</span>();<br>camaro.move();<br><span class="hljs-type">Robot</span> <span class="hljs-variable">bumblebee</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Robot</span>(camaro);<br>bumblebee.move();<br>bumblebee.say();<br></code></pre></td></tr></table></figure>
-
 <h3 id="3-10-小结"><a href="#3-10-小结" class="headerlink" title="3.10 小结"></a>3.10 小结</h3><ol>
 <li>装饰模式用于动态地给一个对象增加一些额外的职责，就增加对象功能来说，装饰模式比生成子类实现更为灵活。它是一种对象结构型模式。</li>
 <li>装饰模式包含四个角色<ol>
@@ -533,8 +496,7 @@
 </ol>
 </li>
 </ol>
-<h2 id="4-外观模式-对象"><a href="#4-外观模式-对象" class="headerlink" title="4. 外观模式(对象)"></a>4. 外观模式(对象)</h2><h3 id="4-1-模式动机"><a href="#4-1-模式动机" class="headerlink" title="4.1 模式动机"></a>4.1 模式动机</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612111836731.png" alt="image-20230612111836731" style="zoom:80%;" />
-
+<h2 id="4-外观模式-对象"><a href="#4-外观模式-对象" class="headerlink" title="4. 外观模式(对象)"></a>4. 外观模式(对象)</h2><h3 id="4-1-模式动机"><a href="#4-1-模式动机" class="headerlink" title="4.1 模式动机"></a>4.1 模式动机</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612111836731.png" alt="image-20230612111836731" style="zoom:80%;" /></p>
 <p>引入外观角色之后，<strong>用户只需要直接与外观角色交互，用户与子系统之间的复杂关系由外观角色来实现</strong>，从而降低了系统的耦合度。</p>
 <h3 id="4-2-模式定义"><a href="#4-2-模式定义" class="headerlink" title="4.2 模式定义"></a>4.2 模式定义</h3><ol>
 <li>外观模式(Facade Pattern)：外部与一个子系统的通信必须通过一个<strong>统一的外观对象</strong>进行，为子系统中的一组接口<strong>提供一个一致的界面</strong>，外观模式定义了一个高层接口，这个接口<strong>使得这一子系统更加容易使用</strong>。外观模式又称为<strong>门面模式</strong>，它是一种<strong>对象结构型模式</strong>。<ol>
@@ -562,7 +524,6 @@
 <li>典型的外观角色代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Facade</span> &#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-type">SubSystemA</span> <span class="hljs-variable">obj1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SubSystemA</span>();<br>  <span class="hljs-keyword">private</span> <span class="hljs-type">SubSystemB</span> <span class="hljs-variable">obj2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SubSystemB</span>();<br>  <span class="hljs-keyword">private</span> <span class="hljs-type">SubSystemC</span> <span class="hljs-variable">obj3</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SubSystemC</span>();<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method</span><span class="hljs-params">()</span>&#123;<br>    obj1.method();<br>    obj2.method();<br>    obj3.method();<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="4-5-外观模式实例与解析"><a href="#4-5-外观模式实例与解析" class="headerlink" title="4.5 外观模式实例与解析"></a>4.5 外观模式实例与解析</h3><p>实例一：电源总开关</p>
 <p>现在考察一个电源总开关的例子，以便进一步说明外观模式。为了使用方便，一个电源总开关可以控制四盏灯、一个风扇、一台空调和一台电视机的启动和关闭。通过该电源总开关可以同时控制上述所有电器设备，使用外观模式设计该系统。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612112647563.png" alt="image-20230612112647563"></p>
@@ -591,16 +552,13 @@
 </ol>
 <h3 id="4-8-模式应用"><a href="#4-8-模式应用" class="headerlink" title="4.8 模式应用"></a>4.8 模式应用</h3><p>外观模式应用于JDBC数据库操作</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">JDBCFacade</span> &#123;<br>  <span class="hljs-keyword">private</span> Connection conn=<span class="hljs-literal">null</span>;<br>  <span class="hljs-keyword">private</span> Statement statement=<span class="hljs-literal">null</span>;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">open</span><span class="hljs-params">(String driver,String jdbcUrl,String userName,String userPwd)</span> &#123;<br>  	......<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">executeUpdate</span><span class="hljs-params">(String sql)</span> &#123;<br>  	......<br>  &#125;<br>  <span class="hljs-keyword">public</span> ResultSet <span class="hljs-title function_">executeQuery</span><span class="hljs-params">(String sql)</span> &#123;<br>  	......<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">close</span><span class="hljs-params">()</span> &#123;<br>  	......<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>Session外观模式是外观模式在Java EE框架中的应用。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612113443164.png" alt="image-20230612113443164" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612113443164.png" alt="image-20230612113443164" style="zoom:80%;" /></p>
 <h3 id="4-9-模式扩展"><a href="#4-9-模式扩展" class="headerlink" title="4.9 模式扩展"></a>4.9 模式扩展</h3><h4 id="一个系统有多个外观类"><a href="#一个系统有多个外观类" class="headerlink" title="一个系统有多个外观类"></a>一个系统有多个外观类</h4><p>在外观模式中，通常只需要一个外观类，并且此外观类只有一个实例，换言之它是一个<strong>单例类</strong>。<strong>在很多情况下为了节约系统资源，一般将外观类设计为单例类</strong>。当然这并不意味着在整个系统里只能有一个外观类，<strong>在一个系统中可以设计多个外观类，每个外观类都负责和一些特定的子系统交互</strong>，向用户提供相应的业务功能。</p>
 <h4 id="不要试图通过外观类为子系统增加新行为"><a href="#不要试图通过外观类为子系统增加新行为" class="headerlink" title="不要试图通过外观类为子系统增加新行为"></a>不要试图通过外观类为子系统增加新行为</h4><p><strong>不要通过继承一个外观类在子系统中加入新的行为，这种做法是错误的。</strong>外观模式的用意是为子系统提供一个集中化和简化的沟通渠道，而不是向子系统加入新的行为，新的行为的增加应该通过修改原有子系统类或增加新的子系统类来实现，不能通过外观类来实现。</p>
 <h4 id="外观模式与迪米特法则"><a href="#外观模式与迪米特法则" class="headerlink" title="外观模式与迪米特法则"></a>外观模式与迪米特法则</h4><p><strong>外观模式创造出一个外观对象，将客户端所涉及的属于一个子系统的协作伙伴的数量减到最少，使得客户端与子系统内部的对象的相互作用被外观对象所取代</strong>。外观类充当了客户类与子系统类之间的“第三者”，降低了客户类与子系统类之间的耦合度，外观模式就是实现代码重构以便达到“迪米特法则”要求的一个强有力的武器。</p>
 <h4 id="抽象外观类的引入"><a href="#抽象外观类的引入" class="headerlink" title="抽象外观类的引入"></a>抽象外观类的引入</h4><p>外观模式最大的缺点在于违背了“开闭原则”，<strong>当增加新的子系统或者移除子系统时需要修改外观类，可以通过引入抽象外观类在一定程度上解决该问题，客户端针对抽象外观类进行编程</strong>。对于新的业务需求，不修改原有外观类，而对应增加一个新的具体外观类，由新的具体外观类来关联新的子系统对象，同时通过修改配置文件来达到不修改源代码并更换外观类的目的。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612113636474.png" alt="image-20230612113636474" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612113636474.png" alt="image-20230612113636474" style="zoom:80%;" /></p>
 <h3 id="4-10-小结"><a href="#4-10-小结" class="headerlink" title="4.10 小结"></a>4.10 小结</h3><ol>
 <li>在外观模式中，外部与一个子系统的通信必须通过一个统一的外观对象进行，为子系统中的一组接口提供一个一致的界面，外观模式定义了一个高层接口，这个接口使得这一子系统更加容易使用。外观模式又称为门面模式，它是一种对象结构型模式。</li>
 <li>外观模式包含两个角色<ol>
@@ -622,6 +580,7 @@
 </li>
 </ol>
 <h2 id="5-代理模式-对象"><a href="#5-代理模式-对象" class="headerlink" title="5. 代理模式(对象)"></a>5. 代理模式(对象)</h2><h3 id="5-1-模式动机"><a href="#5-1-模式动机" class="headerlink" title="5.1 模式动机"></a>5.1 模式动机</h3><p>在某些情况下，<strong>一个客户不想或者不能直接引用一个对象，此时可以通过一个称之为“代理”的第三者来实现间接引用</strong>。代理对象可以在<strong>客户端和目标对象之间起到中介的作用</strong>，并且可以<strong>通过代理对象去掉客户不能看到的内容和服务或者添加客户需要的额外服务</strong>。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -629,15 +588,20 @@
 <th><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612114245067.png" alt="image-20230612114245067"></th>
 </tr>
 </thead>
+<tbody>
+<tr>
+<td></td>
+</tr>
+</tbody>
 </table>
+</div>
 <p>通过<strong>引入一个新的对象</strong>（如小图片和远程代理对象）<strong>来实现对真实对象的操作或者将新的对象作为真实对象的一个替身</strong>，这种实现机制即为代理模式，<strong>通过引入代理对象来间接访问一个对象</strong>，这就是代理模式的模式动机。</p>
 <h3 id="5-2-模式定义"><a href="#5-2-模式定义" class="headerlink" title="5.2 模式定义"></a>5.2 模式定义</h3><ol>
 <li>代理模式(Proxy Pattern) ：给某一个对象<strong>提供一个代理</strong>，并<strong>由代理对象控制对原对象的引用</strong>。代理模式的英文叫做<strong>Proxy或Surrogate</strong>，它是一种<strong>对象结构型模式</strong>。</li>
 <li>Proxy Pattern: Provide a surrogate or placeholder for another object to control access to it.</li>
 <li>思想简单，但是变体很多</li>
 </ol>
-<h3 id="5-3-模式结构"><a href="#5-3-模式结构" class="headerlink" title="5.3 模式结构"></a>5.3 模式结构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612114401259.png" alt="image-20230612114401259" style="zoom:80%;" />
-
+<h3 id="5-3-模式结构"><a href="#5-3-模式结构" class="headerlink" title="5.3 模式结构"></a>5.3 模式结构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612114401259.png" alt="image-20230612114401259" style="zoom:80%;" /></p>
 <ol>
 <li>代理模式包含如下角色：<ol>
 <li>Subject: 抽象主题角色</li>
@@ -650,13 +614,11 @@
 <h3 id="5-4-模式分析"><a href="#5-4-模式分析" class="headerlink" title="5.4 模式分析"></a>5.4 模式分析</h3><ol>
 <li>代理模式示意结构图比较简单，一般可以简化为如下图所示，但是在现实中要复杂很多。</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612114500888.png" alt="image-20230612114500888" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612114500888.png" alt="image-20230612114500888" style="zoom:80%;" /></p>
 <ol>
 <li>典型的代理类实现代码：</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Proxy</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Subject</span>&#123;<br>  <span class="hljs-keyword">private</span> <span class="hljs-type">RealSubject</span> <span class="hljs-variable">realSubject</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RealSubject</span>();<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">preRequest</span><span class="hljs-params">()</span> &#123;......&#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">request</span><span class="hljs-params">()</span> &#123;<br>    preRequest();<br>    realSubject.request();<br>    postRequest();<br>  &#125;<br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">postRequest</span><span class="hljs-params">()</span> &#123;......&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="5-5-代理模式实例与解析"><a href="#5-5-代理模式实例与解析" class="headerlink" title="5.5 代理模式实例与解析"></a>5.5 代理模式实例与解析</h3><p>实例一：论坛权限控制代理</p>
 <ol>
 <li>在一个论坛中已注册用户和游客的权限不同，已注册的用户拥有发帖、修改自己的注册信息、修改自己的帖子等功能；而游客只能看到别人发的帖子，没有其他权限。使用代理模式来设计该权限管理模块。</li>
@@ -698,7 +660,7 @@
 <li>Java RMI (Remote Method Invocation，远程方法调用)。</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612114851066.png" alt="image-20230612114851066"></p>
-<ol start="2">
+<ol>
 <li><strong>EJB、Web Service等分布式技术都是代理模式的应用</strong>。在EJB中使用了RMI机制，远程服务器中的企业级Bean在本地有一个桩代理，客户端通过桩来调用远程对象中定义的方法，而无须直接与远程对象交互。在EJB的使用中需要提供一个公共的接口，客户端针对该接口进行编程，无须知道桩以及远程EJB的实现细节。</li>
 </ol>
 <h3 id="5-9-模式扩展"><a href="#5-9-模式扩展" class="headerlink" title="5.9 模式扩展"></a>5.9 模式扩展</h3><p>几种常用的代理模式</p>
@@ -709,10 +671,8 @@
 </li>
 <li><p>在应用程序启动的时候，可以用代理对象代替真实对象初始化，节省了内存的占用，并大大加速了系统的启动时间。</p>
 </li>
-<li><p>一个很常见的代理模式的应用实例就是<strong>对大图浏览的控制</strong>。</p>
-</li>
-<li><p>用户通过浏览器访问网页时先不加载真实的大图，而是通过代理对象的方法来进行处理，在代理对象的方法中，<strong>先使用一个线程向客户端浏览器加载一个小图片</strong>，然后在后台使用另一个线程来调用大图片的加载方法将大图片加载到客户端。当需要浏览大图片时，再将大图片在新网页中显示。如果用户在浏览大图时加载工作还没有完成，可以再启动一个线程来显示相应的提示信息。<strong>通过代理技术结合多线程编程将真实图片的加载放到后台来操作，不影响前台图片的浏览</strong>。</p>
-</li>
+<li>一个很常见的代理模式的应用实例就是<strong>对大图浏览的控制</strong>。</li>
+<li>用户通过浏览器访问网页时先不加载真实的大图，而是通过代理对象的方法来进行处理，在代理对象的方法中，<strong>先使用一个线程向客户端浏览器加载一个小图片</strong>，然后在后台使用另一个线程来调用大图片的加载方法将大图片加载到客户端。当需要浏览大图片时，再将大图片在新网页中显示。如果用户在浏览大图时加载工作还没有完成，可以再启动一个线程来显示相应的提示信息。<strong>通过代理技术结合多线程编程将真实图片的加载放到后台来操作，不影响前台图片的浏览</strong>。</li>
 </ol>
 <h3 id="5-10-小结"><a href="#5-10-小结" class="headerlink" title="5.10 小结"></a>5.10 小结</h3><ol>
 <li>在代理模式中，要求给某一个对象提供一个代理，并由代理对象控制对原对象的引用。代理模式的英文叫做Proxy或Surrogate，它是一种对象结构型模式。</li>
@@ -736,7 +696,7 @@
 <li>第一种设计方案是为每一种形状都提供一套各种颜色的版本。</li>
 <li>第二种设计方案是根据实际需要对形状和颜色进行组合。</li>
 </ol>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627215938461.png" alt="image-20230627215938461">对于有<strong>两个变化维度（即两个变化的原因)<strong>的系统，采用</strong>方案二</strong>来进行设计系统中类的个数更少，且系统扩展更为方便。设计方案二即是桥接模式的应用。桥接模式<strong>将继承关系转换为关联关系</strong>，从而<strong>降低了类与类之间的耦合，减少了代码编写量</strong>。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627215938461.png" alt="image-20230627215938461">对于有<strong>两个变化维度（即两个变化的原因)</strong>的系统，采用<strong>方案二</strong>来进行设计系统中类的个数更少，且系统扩展更为方便。设计方案二即是桥接模式的应用。桥接模式<strong>将继承关系转换为关联关系</strong>，从而<strong>降低了类与类之间的耦合，减少了代码编写量</strong>。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627220126858.png" alt="image-20230627220126858"></p>
 <h3 id="6-2-模式定义"><a href="#6-2-模式定义" class="headerlink" title="6.2 模式定义"></a>6.2 模式定义</h3><ol>
 <li>桥接模式(Bridge Pattern)：<strong>将抽象部分与它的实现部分分离，使它们都可以独立地变化</strong>。它是一种对象结构型模式，又称为柄体(Handle and Body)模式或接口(Interface)模式。</li>
@@ -758,15 +718,12 @@
 </ol>
 <p>典型的实现类接口代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">interface</span> <span class="hljs-title class_">Implementor</span> &#123;<br>	<span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operationImpl</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的抽象类代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Abstraction</span>&#123;<br>    <span class="hljs-keyword">protected</span> Implementor impl;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setImpl</span><span class="hljs-params">(Implementor impl)</span> &#123;<br>    	<span class="hljs-built_in">this</span>.impl=impl;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <p>典型的扩充抽象类代码：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RefinedAbstraction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Abstraction</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//代码</span><br>        impl.operationImpl();<br>        <span class="hljs-comment">//代码</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="6-5-桥接模式实例与解析"><a href="#6-5-桥接模式实例与解析" class="headerlink" title="6.5 桥接模式实例与解析"></a>6.5 桥接模式实例与解析</h3><p>实例一：模拟毛笔</p>
-<p>现需要提供大中小3种型号的画笔，能够绘制5种不同颜色，如果使用蜡笔，我们需要准备3*5&#x3D;15支蜡笔，也就是说必须准备15个具体的蜡笔类。而如果使用毛笔的话，只需要3种型号的毛笔，外加5个颜料盒，用3+5&#x3D;8个类就可以实现15支蜡笔的功能。本实例使用桥接模式来模拟毛笔的使用过程。</p>
+<p>现需要提供大中小3种型号的画笔，能够绘制5种不同颜色，如果使用蜡笔，我们需要准备3*5=15支蜡笔，也就是说必须准备15个具体的蜡笔类。而如果使用毛笔的话，只需要3种型号的毛笔，外加5个颜料盒，用3+5=8个类就可以实现15支蜡笔的功能。本实例使用桥接模式来模拟毛笔的使用过程。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627220431701.png" alt="image-20230627220431701"></p>
 <p>实例二：跨平台视频播放器</p>
 <p>如果需要开发一个跨平台视频播放器，可以在不同操作系统平台（如Windows、Linux、Unix等）上播放多种格式的视频文件，常见的视频格式包括MPEG、RMVB、AVI、WMV等。现使用桥接模式设计该播放器。</p>
@@ -795,7 +752,7 @@
 <li>Java语言通过Java虚拟机实现了平台的无关性。</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627221049267.png" alt="image-20230627221049267"></p>
-<ol start="2">
+<ol>
 <li><p>一个 Java桌面软件总是带有所在操作系统的视感(<strong>LookAndFeel</strong>)，如果一个Java软件是在Unix系统上开发的，那么开发人员看到的是Motif用户界面的视感；在Windows上面使用这个系统的用户看到的是Windows用户界面的视感；而一个在Macintosh上面使用的用户看到的则是Macintosh用户界面的视感，Java语言是通过所谓的Peer架构做到这一点的。Java为AWT中的每一个GUI构件都提供了一个Peer构件，<strong>在AWT中的Peer架构就使用了桥接模式</strong>。</p>
 </li>
 <li><p>JDBC驱动程序也是桥接模式的应用之一。使用JDBC驱动程序的应用系统就是抽象角色，而所使用的数据库是实现角色。<strong>一个JDBC驱动程序可以动态地将一个特定类型的数据库与一个Java应用程序绑定在一起，从而实现抽象角色与实现角色的动态耦合</strong>。</p>
@@ -853,8 +810,7 @@
 <li><p>享元模式是一个考虑系统性能的设计模式，通过使用享元模式可以节约内存空间，提高系统的性能。</p>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627210554872.png" alt="image-20230627210554872" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627210554872.png" alt="image-20230627210554872" style="zoom:80%;" /></p>
 <h3 id="7-4-模式分析"><a href="#7-4-模式分析" class="headerlink" title="7.4 模式分析"></a>7.4 模式分析</h3><ul>
 <li><p>享元模式的核心在于<strong>享元工厂类</strong>，<strong>享元工厂类的作用在于提供一个用于存储享元对象的享元池</strong>，用户需要对象时，首先从享元池中获取，<strong>如果享元池中不存在，则创建一个新的享元对象返回给用户，并在享元池中保存该新增对象</strong>。</p>
 </li>
@@ -864,7 +820,6 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">FlyweightFactory</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">HashMap</span> <span class="hljs-variable">flyweights</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>();<br>    <span class="hljs-keyword">public</span> Flyweight <span class="hljs-title function_">getFlyweight</span><span class="hljs-params">(String key)</span> &#123;<br>        <span class="hljs-keyword">if</span>(flyweights.containsKey(key)) &#123;<br>        	<span class="hljs-keyword">return</span> (Flyweight)flyweights.get(key);<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-type">Flyweight</span> <span class="hljs-variable">fw</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ConcreteFlyweight</span>();<br>            flyweights.put(key,fw);<br>            <span class="hljs-keyword">return</span> fw;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p>享元模式以共享的方式高效地支持大量的细粒度对象，享元对象能做到共享的关键是区分内部状态(Internal State)和外部状态(External State)。</p>
 <ul>
@@ -878,7 +833,6 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Flyweight</span> &#123;<br>    <span class="hljs-comment">//内部状态作为成员属性</span><br>    <span class="hljs-keyword">private</span> String intrinsicState;<br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">Flyweight</span><span class="hljs-params">(String intrinsicState)</span> &#123;<br>    	<span class="hljs-built_in">this</span>.intrinsicState = intrinsicState;<br>    &#125;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">operation</span><span class="hljs-params">(String extrinsicState)</span> &#123;<br>    	......<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="7-5-享元模式实例与解析"><a href="#7-5-享元模式实例与解析" class="headerlink" title="7.5 享元模式实例与解析"></a>7.5 享元模式实例与解析</h3><p>实例一：共享网络设备（无外部状态）</p>
 <p>很多网络设备都是支持共享的，如交换机、集线器等，多台终端计算机可以连接同一台网络设备，并通过该网络设备进行数据转发，如图所示，现用享元模式模拟共享网络设备的设计原理。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627210852187.png" alt="image-20230627210852187"><br><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627210918202.png" alt="image-20230627210918202"></p>
@@ -906,7 +860,6 @@
 <li>在JDK类库中定义的String类使用了享元模式。</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs JAVA"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Demo</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String args[])</span> &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str1</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;abcd&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str2</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;abcd&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str3</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ab&quot;</span> + <span class="hljs-string">&quot;cd&quot;</span>;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str4</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ab&quot;</span>;<br>        str4 += <span class="hljs-string">&quot;cd&quot;</span>;<br>        System.out.println(str1 == str2);<span class="hljs-comment">// T</span><br>        System.out.println(str1 == str3);<span class="hljs-comment">// T</span><br>        System.out.println(str1 == str4);<span class="hljs-comment">// F</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <h3 id="7-9-模式扩展"><a href="#7-9-模式扩展" class="headerlink" title="7.9 模式扩展"></a>7.9 模式扩展</h3><h4 id="单纯享元模式和复合享元模式"><a href="#单纯享元模式和复合享元模式" class="headerlink" title="单纯享元模式和复合享元模式"></a>单纯享元模式和复合享元模式</h4><p><strong>单纯享元模式</strong>：在单纯享元模式中，<strong>所有的享元对象都是可以共享的</strong>，即所有抽象享元类的子类都可共享，不存在非共享具体享元类。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627211404485.png" alt="image-20230627211404485"></p>
 <p><strong>复合享元模式</strong>：将一些单纯享元使用组合模式加以组合，可以形成复合享元对象，这样的复合享元对象本身不能共享，但是它们可以分解成单纯享元对象，而后者则可以共享。</p>
@@ -1300,5 +1253,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

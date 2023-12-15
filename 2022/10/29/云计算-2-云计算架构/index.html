@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -193,27 +189,27 @@
 <li>计算机刚出现时候的首选：所有计算及计算资源、业务逻辑都集中于一台主机</li>
 </ul>
 </li>
-<li><strong>客户机&#x2F;服务器架构</strong><ul>
+<li><strong>客户机/服务器架构</strong><ul>
 <li>客户端：承载少量计算任务和所有IO任务</li>
 <li>服务器：承载主要计算任务</li>
 <li>优点：关注点分离，简化软件复杂度、编程模式</li>
 <li>缺点：持久链接，系统伸缩能力受限</li>
 </ul>
 </li>
-<li><strong>中间层架构</strong>—-简化和提升伸缩能力<ul>
+<li><strong>中间层架构</strong>——简化和提升伸缩能力<ul>
 <li>将业务逻辑和数据服务分别放在两个服务器上</li>
-<li>客户机到中间件为无状态的非持久链接—-提升架构弹性</li>
+<li>客户机到中间件为无状态的非持久链接——提升架构弹性</li>
 </ul>
 </li>
-<li><strong>浏览器&#x2F;服务器架构</strong><ul>
-<li>对客户机、中间层架构的扩展—-客户端和中间层均改动</li>
+<li><strong>浏览器/服务器架构</strong><ul>
+<li>对客户机、中间层架构的扩展——客户端和中间层均改动</li>
 <li>客户端：负载进一步缩减，仅显示和运行基于浏览器的脚本程序</li>
 <li>服务器：Web服务器层屏蔽各中间件的差异，提供通用的用户访问界面</li>
 <li>扩展性高：对客户机性能无要求</li>
 <li>对网络性能要求高</li>
 </ul>
 </li>
-<li><strong>C&#x2F;S和B&#x2F;S混合架构</strong><ul>
+<li><strong>C/S和B/S混合架构</strong><ul>
 <li>没有一种架构能够适用于所有场景</li>
 <li>有些服务需要持久的链接（内部用户）</li>
 <li>有些仅通过非持久链接即可（外部用户）</li>
@@ -224,7 +220,7 @@
 </li>
 <li><p><strong>SOA</strong></p>
 <ul>
-<li><p>中间层计算架构、B&#x2F;S架构、混合计算架构都可为云计算提供一定的伸缩能力</p>
+<li><p>中间层计算架构、B/S架构、混合计算架构都可为云计算提供一定的伸缩能力</p>
 <ul>
 <li>共性：基于无状态连接【http请求】和基于服务的访问【而非过程调用】</li>
 </ul>
@@ -233,7 +229,7 @@
 <ul>
 <li><p>每个程序只做本职工作，将服务暴露出来供其他程序使用</p>
 </li>
-<li><p>多个程序通过一个统一的界面协调工作—-控制复杂性，更容易管理</p>
+<li><p>多个程序通过一个统一的界面协调工作——控制复杂性，更容易管理</p>
 </li>
 <li><p>区别于“分布式对象”</p>
 <blockquote>
@@ -266,13 +262,13 @@
 </li>
 <li><p>多实例同时执行；不同实例之间能够协调对数据的处理及任务的执行；方便数据在各个模块之间共享。</p>
 </li>
-<li><p>基础架构—-云内部，后端</p>
+<li><p>基础架构——云内部，后端</p>
 <ul>
 <li>硬件：服务器、存储器、网络交换机等</li>
 <li>管理软件：服务的高可用性、可恢复性、数据一致性、应用伸缩性、可预测性、云安全等</li>
 </ul>
 </li>
-<li><p>应用程序—-云对外，前端</p>
+<li><p>应用程序——云对外，前端</p>
 <ul>
 <li>并发性、协调性、容错性、开放的API格式、开放的数据格式、承载数据密集型计算</li>
 </ul>
@@ -298,7 +294,7 @@
 <li>客户机用户界面<ul>
 <li>Web门户，将各种服务混搭集成在一个页面</li>
 <li>基于Ajax,JavaScript，趋势是使用功能完善的组件<ul>
-<li>如JavaBeans&#x2F;Applets, Silvedight&#x2F;.NET等</li>
+<li>如JavaBeans/Applets, Silvedight/.NET等</li>
 <li>可下载和安装在客户机上</li>
 </ul>
 </li>
@@ -306,7 +302,7 @@
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005105203774.png" alt="image-20221005105203774"></p>
-<p>云应用程序的结构—-云应用程序与传统操作系统上的应用程序结构有所不同</p>
+<p>云应用程序的结构——云应用程序与传统操作系统上的应用程序结构有所不同</p>
 <ul>
 <li>传统操作系统上的应用程序：进程、线程、服务、shell（应用程序的控制接口）<ul>
 <li>进程就是最终产品，每一个进程可运行多个指令序列（线程），一个线程对应一种服务</li>
@@ -339,7 +335,7 @@
 </li>
 </ul>
 <h3 id="3-1-逻辑云栈"><a href="#3-1-逻辑云栈" class="headerlink" title="3.1 逻辑云栈"></a>3.1 逻辑云栈</h3><ul>
-<li><p>云栈—-提供的服务多种多样，规模巨大，需要简历规则才能便于管理，即层次架构</p>
+<li><p>云栈——提供的服务多种多样，规模巨大，需要简历规则才能便于管理，即层次架构</p>
 </li>
 <li><p>云计算也遵循分层规则，组织为多个层次，相互叠加</p>
 <ul>
@@ -368,7 +364,7 @@
 <ul>
 <li>基于网络进行远程访问的商用软件</li>
 <li>集中式管理，而非分散在每个用户站点</li>
-<li>单个实例多个租户架构—-一对多模型</li>
+<li>单个实例多个租户架构——一对多模型</li>
 <li>按照用量计费（实际应用中按月或其他时间周期计费）</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005112550160.png" alt="image-20221005112550160"></p>
@@ -383,7 +379,7 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005112653197.png" alt="image-20221005112653197"></p>
 </li>
 </ul>
-<h3 id="3-2-技术体系结构–各层内涵"><a href="#3-2-技术体系结构–各层内涵" class="headerlink" title="3.2 技术体系结构–各层内涵"></a>3.2 技术体系结构–各层内涵</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113005932.png" alt="image-20221005113005932"></p>
+<h3 id="3-2-技术体系结构—各层内涵"><a href="#3-2-技术体系结构—各层内涵" class="headerlink" title="3.2 技术体系结构—各层内涵"></a>3.2 技术体系结构—各层内涵</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113005932.png" alt="image-20221005113005932"></p>
 <h3 id="3-3-IaaS实现机制"><a href="#3-3-IaaS实现机制" class="headerlink" title="3.3 IaaS实现机制"></a>3.3 IaaS实现机制</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005113246238.png" alt="image-20221005113246238"></p>
 <h3 id="3-4-物理云栈OpenStack"><a href="#3-4-物理云栈OpenStack" class="headerlink" title="3.4 物理云栈OpenStack"></a>3.4 物理云栈OpenStack</h3><ul>
 <li>OpenStack是一个管理云计算中计算、存储和网络，甚至是应用的通用平台，其提供Web界面、命令行工具和应用程序接口（API）等使用接口。</li>
@@ -416,7 +412,7 @@
 <h3 id="3-5-逻辑云体"><a href="#3-5-逻辑云体" class="headerlink" title="3.5 逻辑云体"></a>3.5 逻辑云体</h3><ul>
 <li>云栈是从纵向角度看云计算的整体架构，那么云体则主要是从横向角度看其架构模式</li>
 <li>类比传统操作系统横向切面：运行时环境 + 应用本身（程序+数据）<ul>
-<li>环境：进程&#x2F;线程&#x2F;内存管理 + 文件系统 + 进程间通信&#x2F;网络</li>
+<li>环境：进程/线程/内存管理 + 文件系统 + 进程间通信/网络</li>
 <li>云应用程序<ul>
 <li>类似传统应用</li>
 </ul>
@@ -507,7 +503,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84"><span class="toc-text">二、云计算架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%BC%94%E5%8C%96"><span class="toc-text">1 计算架构及演化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%80%E8%88%AC%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%E7%9A%84%E4%BA%8C%E7%BB%B4%E8%A7%86%E8%A7%92"><span class="toc-text">2 一般云计算架构的二维视角</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%91%E8%AE%A1%E7%AE%97%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="toc-text">3 云计算逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%80%BB%E8%BE%91%E4%BA%91%E6%A0%88"><span class="toc-text">3.1 逻辑云栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E2%80%93%E5%90%84%E5%B1%82%E5%86%85%E6%B6%B5"><span class="toc-text">3.2 技术体系结构–各层内涵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-IaaS%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-text">3.3 IaaS实现机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E7%89%A9%E7%90%86%E4%BA%91%E6%A0%88OpenStack"><span class="toc-text">3.4 物理云栈OpenStack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E9%80%BB%E8%BE%91%E4%BA%91%E4%BD%93"><span class="toc-text">3.5 逻辑云体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E7%89%A9%E7%90%86%E4%BA%91%E4%BD%93%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="toc-text">3.6 物理云体云数据中心</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84"><span class="toc-text">二、云计算架构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%E5%8F%8A%E6%BC%94%E5%8C%96"><span class="toc-text">1 计算架构及演化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%80%E8%88%AC%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84%E7%9A%84%E4%BA%8C%E7%BB%B4%E8%A7%86%E8%A7%92"><span class="toc-text">2 一般云计算架构的二维视角</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%91%E8%AE%A1%E7%AE%97%E9%80%BB%E8%BE%91%E6%9E%B6%E6%9E%84"><span class="toc-text">3 云计算逻辑架构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%80%BB%E8%BE%91%E4%BA%91%E6%A0%88"><span class="toc-text">3.1 逻辑云栈</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%8A%80%E6%9C%AF%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E2%80%94%E5%90%84%E5%B1%82%E5%86%85%E6%B6%B5"><span class="toc-text">3.2 技术体系结构—各层内涵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-IaaS%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6"><span class="toc-text">3.3 IaaS实现机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E7%89%A9%E7%90%86%E4%BA%91%E6%A0%88OpenStack"><span class="toc-text">3.4 物理云栈OpenStack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E9%80%BB%E8%BE%91%E4%BA%91%E4%BD%93"><span class="toc-text">3.5 逻辑云体</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E7%89%A9%E7%90%86%E4%BA%91%E4%BD%93%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="toc-text">3.6 物理云体云数据中心</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
@@ -816,5 +812,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

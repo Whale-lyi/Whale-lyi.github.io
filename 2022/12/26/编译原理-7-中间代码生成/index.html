@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -184,8 +180,7 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h1><h2 id="一、表达式的翻译与控制流的翻译"><a href="#一、表达式的翻译与控制流的翻译" class="headerlink" title="一、表达式的翻译与控制流的翻译"></a>一、表达式的翻译与控制流的翻译</h2><h3 id="1-核心"><a href="#1-核心" class="headerlink" title="1. 核心"></a>1. 核心</h3><h4 id="1-1-大局观"><a href="#1-1-大局观" class="headerlink" title="1.1 大局观"></a>1.1 大局观</h4><h4 id="1-2-分工、合作"><a href="#1-2-分工、合作" class="headerlink" title="1.2 分工、合作"></a>1.2 分工、合作</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226161923069.png" alt="image-20221226161923069" style="zoom:80%;" />
-
+        <h1 id="中间代码生成"><a href="#中间代码生成" class="headerlink" title="中间代码生成"></a>中间代码生成</h1><h2 id="一、表达式的翻译与控制流的翻译"><a href="#一、表达式的翻译与控制流的翻译" class="headerlink" title="一、表达式的翻译与控制流的翻译"></a>一、表达式的翻译与控制流的翻译</h2><h3 id="1-核心"><a href="#1-核心" class="headerlink" title="1. 核心"></a>1. 核心</h3><h4 id="1-1-大局观"><a href="#1-1-大局观" class="headerlink" title="1.1 大局观"></a>1.1 大局观</h4><h4 id="1-2-分工、合作"><a href="#1-2-分工、合作" class="headerlink" title="1.2 分工、合作"></a>1.2 分工、合作</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226161923069.png" alt="image-20221226161923069" style="zoom:80%;" /></p>
 <blockquote>
 <p>分工: $B$, $S_1$ 各自负责自己的中间代码生成 </p>
 <p>合作: $B$ 为 true 或 false 时, 需要跳转到不同的位置(类似 <code>goto label</code>), 这个位置 $B$ 不知道, 需要父节点(或父父节点..)通过继承属性传递信息</p>
@@ -197,43 +192,37 @@
 <h3 id="2-表达式的翻译"><a href="#2-表达式的翻译" class="headerlink" title="2. 表达式的翻译"></a>2. 表达式的翻译</h3><h4 id="2-1-总览"><a href="#2-1-总览" class="headerlink" title="2.1 总览"></a>2.1 总览</h4><ul>
 <li>起始符号为第三段的 $P$</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226163911815.png" alt="image-20221226163911815" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226163911815.png" alt="image-20221226163911815" style="zoom:80%;" /></p>
 <h4 id="2-2-表达式的中间代码翻译"><a href="#2-2-表达式的中间代码翻译" class="headerlink" title="2.2 表达式的中间代码翻译"></a>2.2 表达式的中间代码翻译</h4><ul>
 <li>综合属性 $\textcolor{green}{E.code}$: 中间代码</li>
 <li>综合属性 $\textcolor{blue}{E.addr}$: 变量名(包括临时变量)、常量</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226170705741.png" alt="image-20221226170705741" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226170705741.png" alt="image-20221226170705741" style="zoom:80%;" /></p>
 <ul>
 <li>LLVM IR<ul>
 <li>因为没有被使用过, 设置优化后会全部删掉</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226165931772.png" alt="image-20221226165931772" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226165931772.png" alt="image-20221226165931772" style="zoom:80%;" /></p>
 <h4 id="2-3-数组引用的中间代码翻译"><a href="#2-3-数组引用的中间代码翻译" class="headerlink" title="2.3 数组引用的中间代码翻译"></a>2.3 数组引用的中间代码翻译</h4><ul>
 <li>声明: $\text{int } a[2][3]$</li>
-<li>数组引用: $x &#x3D; a[1][2];\  a[1][2] &#x3D; x$</li>
+<li>数组引用: $x = a[1][2];  a[1][2] = x$</li>
 <li>需要计算 $a[1][2]$ 相对于<strong>数组基地址</strong> $a$ 的<strong>偏移地址</strong><ul>
-<li>$addr(a[1][2]) &#x3D; \textcolor{blue}{base} + 1 \times 12 + 2 \times 4$</li>
+<li>$addr(a[1][2]) = \textcolor{blue}{base} + 1 \times 12 + 2 \times 4$</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226171518951.png" alt="image-20221226171518951" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230104195326682.png" alt="image-20230104195326682" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221226171518951.png" alt="image-20221226171518951" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230104195326682.png" alt="image-20230104195326682" style="zoom:80%;" /></p>
 <ul>
 <li>综合属性 $\textcolor{green}{L.array(.base)}$: 数组基地址(即，数组名)</li>
 <li>综合属性 $\textcolor{red}{L.addr}$: 偏移地址</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230104195549841.png" alt="image-20230104195549841" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230104195549841.png" alt="image-20230104195549841" style="zoom:80%;" /></p>
 <ul>
 <li><p>eg: $c + a[i][j]$</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132058170.png" alt="image-20230108132058170" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132058170.png" alt="image-20230108132058170" style="zoom:80%;" /></p>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://llvm.org/docs/GetElementPtr.html">GEP Instruction</a></p>
 <blockquote>
@@ -243,11 +232,11 @@
 <li>因此需要 i64 0，先对其解一层([0])</li>
 </ul>
 </blockquote>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132135329.png" alt="image-20230108132135329" style="zoom:80%;" /></li>
+</li>
 </ul>
+<p>  <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132135329.png" alt="image-20230108132135329" style="zoom:80%;" /></p>
 <h4 id="2-4-控制流语句与布尔表达式的中间代码翻译"><a href="#2-4-控制流语句与布尔表达式的中间代码翻译" class="headerlink" title="2.4 控制流语句与布尔表达式的中间代码翻译"></a>2.4 控制流语句与布尔表达式的中间代码翻译</h4><p>继承属性 $\textcolor{blue}{B.true, B.f alse, S.next}$ 指明了<strong>控制流跳转目标</strong></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132248288.png" alt="image-20230108132248288" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230108132248288.png" alt="image-20230108132248288" style="zoom:80%;" /></p>
 <ul>
 <li>继承属性 $\textcolor{red}{S.next}$<ul>
 <li>$S.next$ 为语句 $S$ 指明了 “跳出” $S$ 的目标</li>
@@ -256,60 +245,50 @@
 </li>
 <li>代表了表达式的翻译, 包括数组引用</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109214843035.png" alt="image-20230109214843035" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109215321211.png" alt="image-20230109215321211" style="zoom:80%;" />
-
-<h5 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109215437475.png" alt="image-20230109215437475" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109214843035.png" alt="image-20230109214843035" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109215321211.png" alt="image-20230109215321211" style="zoom:80%;" /></p>
+<h5 id="if-语句"><a href="#if-语句" class="headerlink" title="if 语句"></a>if 语句</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109215437475.png" alt="image-20230109215437475" style="zoom:80%;" /></p>
 <ul>
 <li><p>举例</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109220923761.png" alt="image-20230109220923761" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109220923761.png" alt="image-20230109220923761" style="zoom:80%;" /></p>
+</li>
 </ul>
-<h5 id="if-else-语句"><a href="#if-else-语句" class="headerlink" title="if-else 语句"></a>if-else 语句</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109221547115.png" alt="image-20230109221547115" style="zoom:80%;" />
-
+<h5 id="if-else-语句"><a href="#if-else-语句" class="headerlink" title="if-else 语句"></a>if-else 语句</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109221547115.png" alt="image-20230109221547115" style="zoom:80%;" /></p>
 <ul>
 <li><p>举例</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109221603920.png" alt="image-20230109221603920" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230109221603920.png" alt="image-20230109221603920" style="zoom:80%;" /></p>
+</li>
 </ul>
-<h5 id="while-语句"><a href="#while-语句" class="headerlink" title="while 语句"></a>while 语句</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113173701643.png" alt="image-20230113173701643" style="zoom:80%;" />
-
+<h5 id="while-语句"><a href="#while-语句" class="headerlink" title="while 语句"></a>while 语句</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113173701643.png" alt="image-20230113173701643" style="zoom:80%;" /></p>
 <ul>
 <li>举例</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113173815940.png" alt="image-20230113173815940" style="zoom:80%;" />
-
-<h5 id="并列语句"><a href="#并列语句" class="headerlink" title="并列语句"></a>并列语句</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180355333.png" alt="image-20230113180355333" style="zoom:80%;" />
-
-
-
-<h4 id="2-5-布尔表达式的中间代码翻译"><a href="#2-5-布尔表达式的中间代码翻译" class="headerlink" title="2.5 布尔表达式的中间代码翻译"></a>2.5 布尔表达式的中间代码翻译</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180528906.png" alt="image-20230113180528906" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113173815940.png" alt="image-20230113173815940" style="zoom:80%;" /></p>
+<h5 id="并列语句"><a href="#并列语句" class="headerlink" title="并列语句"></a>并列语句</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180355333.png" alt="image-20230113180355333" style="zoom:80%;" /></p>
+<h4 id="2-5-布尔表达式的中间代码翻译"><a href="#2-5-布尔表达式的中间代码翻译" class="headerlink" title="2.5 布尔表达式的中间代码翻译"></a>2.5 布尔表达式的中间代码翻译</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180528906.png" alt="image-20230113180528906" style="zoom:80%;" /></p>
 <ul>
-<li><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180725060.png" alt="image-20230113180725060" style="zoom:80%;" />
+<li><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180725060.png" alt="image-20230113180725060" style="zoom:80%;" /></p>
 </li>
 <li><p>!</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180821400.png" alt="image-20230113180821400" style="zoom: 80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180821400.png" alt="image-20230113180821400" style="zoom: 80%;" /></p>
 </li>
 <li><p>||</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180906940.png" alt="image-20230113180906940" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113180906940.png" alt="image-20230113180906940" style="zoom:80%;" /></p>
 </li>
 <li><p>&amp;&amp;</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113181038343.png" alt="image-20230113181038343" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113181038343.png" alt="image-20230113181038343" style="zoom:80%;" /></p>
 </li>
 <li><p>rel</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113181113631.png" alt="image-20230113181113631" style="zoom:80%;" /></li>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113181113631.png" alt="image-20230113181113631" style="zoom:80%;" /></p>
+</li>
 </ul>
-<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113182158071.png" alt="image-20230113182158071" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113182220865.png" alt="image-20230113182220865" style="zoom:80%;" />
-
+<h5 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h5><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113182158071.png" alt="image-20230113182158071" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113182220865.png" alt="image-20230113182220865" style="zoom:80%;" /></p>
 <blockquote>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113182136913.png" alt="image-20230113182136913" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113182136913.png" alt="image-20230113182136913" style="zoom:80%;" /></p>
 </blockquote>
-<h4 id="2-6-布尔表达式的作用"><a href="#2-6-布尔表达式的作用" class="headerlink" title="2.6 布尔表达式的作用"></a>2.6 布尔表达式的作用</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113210020300.png" alt="image-20230113210020300" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113210031118.png" alt="image-20230113210031118" style="zoom:80%;" />
+<h4 id="2-6-布尔表达式的作用"><a href="#2-6-布尔表达式的作用" class="headerlink" title="2.6 布尔表达式的作用"></a>2.6 布尔表达式的作用</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113210020300.png" alt="image-20230113210020300" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230113210031118.png" alt="image-20230113210031118" style="zoom:80%;" /></p>
 
       </div>
       
@@ -674,5 +653,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

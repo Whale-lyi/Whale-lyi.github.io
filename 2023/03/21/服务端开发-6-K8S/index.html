@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -209,8 +205,7 @@
 <li><code>kubectl get nodes --show-labels</code></li>
 <li>给节点打标签：<code>kubectl label node docker-desktop disktype=ssd</code></li>
 </ul>
-<h2 id="1-核心概念"><a href="#1-核心概念" class="headerlink" title="1. 核心概念"></a>1. 核心概念</h2><h3 id="1-1-Kubernetes-基本架构"><a href="#1-1-Kubernetes-基本架构" class="headerlink" title="1.1 Kubernetes 基本架构"></a>1.1 Kubernetes 基本架构</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406003846139.png" alt="image-20230406003846139" style="zoom:80%;" />
-
+<h2 id="1-核心概念"><a href="#1-核心概念" class="headerlink" title="1. 核心概念"></a>1. 核心概念</h2><h3 id="1-1-Kubernetes-基本架构"><a href="#1-1-Kubernetes-基本架构" class="headerlink" title="1.1 Kubernetes 基本架构"></a>1.1 Kubernetes 基本架构</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406003846139.png" alt="image-20230406003846139" style="zoom:80%;" /></p>
 <h3 id="1-2-k8s中的资源"><a href="#1-2-k8s中的资源" class="headerlink" title="1.2 k8s中的资源"></a>1.2 k8s中的资源</h3><ul>
 <li>namespaces</li>
 <li>Pods</li>
@@ -240,8 +235,7 @@
 <li>OnFailure：失败退出时（exit code不为0）才重启</li>
 <li>Never：永远不重启</li>
 </ul>
-<h4 id="Pod、Container-与-Node-之间的关系"><a href="#Pod、Container-与-Node-之间的关系" class="headerlink" title="Pod、Container 与 Node 之间的关系"></a>Pod、Container 与 Node 之间的关系</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406004354883.png" alt="image-20230406004354883"  />
-
+<h4 id="Pod、Container-与-Node-之间的关系"><a href="#Pod、Container-与-Node-之间的关系" class="headerlink" title="Pod、Container 与 Node 之间的关系"></a>Pod、Container 与 Node 之间的关系</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230406004354883.png" alt="image-20230406004354883"  /></p>
 <h2 id="2-K8S-操作"><a href="#2-K8S-操作" class="headerlink" title="2. K8S 操作"></a>2. K8S 操作</h2><h4 id="创建一个pod"><a href="#创建一个pod" class="headerlink" title="创建一个pod"></a>创建一个pod</h4><ul>
 <li><p><code>kubectl run myspittr --image spittr:1.0-SNAPSHOT</code></p>
 </li>
@@ -693,5 +687,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

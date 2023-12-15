@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -210,13 +206,12 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005140516166.png" alt="image-20221005140516166"></p>
 </li>
-<li><p>1974年，Popek和Goldberg定义虚拟机可以看作物理机的一种&#x3D;&#x3D;高效&#x3D;&#x3D;&#x3D;&#x3D;隔离&#x3D;&#x3D;的&#x3D;&#x3D;复制&#x3D;&#x3D;。</p>
+<li><p>1974年，Popek和Goldberg定义虚拟机可以看作物理机的一种==高效====隔离==的==复制==。</p>
 <ul>
-<li><p>三个要求</p>
-<ul>
+<li>三个要求<ul>
 <li>运行在该虚拟硬件环境中的程序性能损失应该较低(高效)</li>
-<li>系统资源应该处于VMM的完全控制之中(隔离–资源受控)</li>
-<li>为程序提供与原始硬件机器基本一致的环境(复制–同质)</li>
+<li>系统资源应该处于VMM的完全控制之中(隔离—资源受控)</li>
+<li>为程序提供与原始硬件机器基本一致的环境(复制—同质)</li>
 </ul>
 </li>
 <li><p>硬件仿真(裸机虚拟化)</p>
@@ -263,7 +258,7 @@
 </li>
 <li><code>特权功能</code><ul>
 <li>在虚拟化层添加特权功能的优点：不能被客户机绕过、更容易实现</li>
-<li>事件记录和回放—-入侵检测、病毒检测等</li>
+<li>事件记录和回放——入侵检测、病毒检测等</li>
 </ul>
 </li>
 </ul>
@@ -277,16 +272,15 @@
 <li>访问存储保护系统、内存系统或地址重定位系统</li>
 </ul>
 </li>
-<li>客户机操作系统的敏感指令都是特权指令才能够实现高效的虚拟化—-陷入VMM</li>
+<li>客户机操作系统的敏感指令都是特权指令才能够实现高效的虚拟化——陷入VMM</li>
 </ul>
-<p><strong>虚拟化的硬件对象：CPU，内存，I&#x2F;O 设备（硬盘、网卡、鼠标、键盘等）</strong></p>
+<p><strong>虚拟化的硬件对象：CPU，内存，I/O 设备（硬盘、网卡、鼠标、键盘等）</strong></p>
 <h4 id="2-2-4-CPU虚拟化"><a href="#2-2-4-CPU虚拟化" class="headerlink" title="2.2.4 CPU虚拟化"></a>2.2.4 CPU虚拟化</h4><ul>
 <li>任意时刻一个物理CPU只能运行一个虚拟CPU</li>
 <li>每个客户操作系统可以使用一个或多个虚拟CPU</li>
 <li>各个操作系统之间虚拟CPU运行相互隔离，互不影响</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028160515257.png" alt="image-20221028160515257" style="zoom:67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028160515257.png" alt="image-20221028160515257" style="zoom:67%;" /></p>
 <p><strong>调度</strong>：调度问题指 VMM 决定当前哪个虚拟 CPU 在物理 CPU 上运行，保证隔离、公平和性能。</p>
 <p><strong>执行</strong>：虚拟 CPU 正确运行是保证虚拟机指令正确运行，实现技术包括模拟执行和监控执行。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028160608688.png" alt="image-20221028160608688"></p>
@@ -335,19 +329,19 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028175408820.png" alt="image-20221028175408820"></p>
 </li>
 </ol>
-<h4 id="2-2-6-I-O虚拟化"><a href="#2-2-6-I-O虚拟化" class="headerlink" title="2.2.6 I&#x2F;O虚拟化"></a>2.2.6 I&#x2F;O虚拟化</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005143610078.png" alt="image-20221005143610078"></p>
+<h4 id="2-2-6-I-O虚拟化"><a href="#2-2-6-I-O虚拟化" class="headerlink" title="2.2.6 I/O虚拟化"></a>2.2.6 I/O虚拟化</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221005143610078.png" alt="image-20221005143610078"></p>
 <h3 id="2-3-操作系统级虚拟化"><a href="#2-3-操作系统级虚拟化" class="headerlink" title="2.3 操作系统级虚拟化"></a>2.3 操作系统级虚拟化</h3><ul>
 <li><strong>可以看作是“寄居虚拟化”的一种</strong><ul>
-<li>虽然没有Hypervisor&#x2F;VMM</li>
+<li>虽然没有Hypervisor/VMM</li>
 <li>但是需要主机操作系统，在主机操作系统中插入一个虚拟化层<ul>
 <li>在同一个操作系统内核内，运行多个虚拟机；虚拟机可以访问</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>虚拟执行环境(Virtual Execution Environment)&#x2F;虚拟专用系统(Virtual Private System)&#x2F;容器(Container)</li>
+<li>虚拟执行环境(Virtual Execution Environment)/虚拟专用系统(Virtual Private System)/容器(Container)</li>
 <li>优点<ul>
-<li>最小的启动&#x2F;停止开销&#x2F;资源需求低&#x2F;可扩展性强</li>
+<li>最小的启动/停止开销/资源需求低/可扩展性强</li>
 <li>可同步虚拟机与宿主操作系统环境状态的变化</li>
 <li>允许虚拟机中进程访问尽可能多的主机资源</li>
 </ul>
@@ -450,7 +444,7 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221028212907878.png" alt="image-20221028212907878"></p>
 <p>虚拟机迁移的具体内容</p>
 <ul>
-<li><p>内存迁移—-最困难的地方</p>
+<li><p>内存迁移——最困难的地方</p>
 <ul>
 <li>第一阶段：Push；第二阶段：Stop-and-Copy；第三阶段：Pull</li>
 </ul>
@@ -832,5 +826,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

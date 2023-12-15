@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -187,8 +183,7 @@
         <p>架构模式是一组架构设计决策，适用于重复出现的设计问题，并进行了参数化处理以解决出现该问题的不同软件开发环境。<br>An architectural pattern is a set of architectural design decisions that are applicable to a recurring design problem, and parameterized to account for different software development contexts in which that problem appears.</p>
 <p>架构模式与DSSA相似，但适用于较低级别，范围更窄。<br>Architectural patterns are similar to DSSAs but applied at a lower level” and within a much narrower scope.</p>
 <p>课本227页</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508141625196.png" alt="image-20230508141625196" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508141625196.png" alt="image-20230508141625196" style="zoom:80%;" /></p>
 <h2 id="1-领域特定的软件架构-Domain-Specific-Software-Architecture"><a href="#1-领域特定的软件架构-Domain-Specific-Software-Architecture" class="headerlink" title="1. 领域特定的软件架构 Domain-Specific Software Architecture"></a>1. 领域特定的软件架构 Domain-Specific Software Architecture</h2><ul>
 <li>领域特定的软件架构(DSSA)是软件组件的组合<br>Domain- Specific Software Architectures (DSSA) is an assemblage of software components<ul>
 <li>专用于特定类型的任务(域)<br>specialized for a particular type of task (domain)</li>
@@ -207,7 +202,7 @@
 <li>架构模式建立了以下之间的<strong>关系</strong>：Architecture pattern establishes a relationship between:<ul>
 <li><strong>上下文</strong>：一个世界上经常发生的普遍情况，会引起一个问题<br>A context: A recurring, common situation in the world that gives rise to a problem.</li>
 <li>一个<strong>问题</strong>：在给定的上下文中出现的问题，经过适当概括<br>A problem: The problem, appropriately generalized, that arises in the given context.</li>
-<li><strong>解决方案</strong>：针对问题的成功架构解决方案，并进行了适当抽象<br>A solution: A successful architecture resolution to the problem, appropriately abstracted.</li>
+<li><strong>解决方案</strong>：针对问题的成功架构解决方案，并进行了适当抽象<br>A solution: A successful architecture resolution to the problem, appropriately abstracted. </li>
 </ul>
 </li>
 <li>在实践中找到模式 Patterns are found in practice<ul>
@@ -217,15 +212,11 @@
 </li>
 </ul>
 <h3 id="3-1-分层模式-Layered-Pattern"><a href="#3-1-分层模式-Layered-Pattern" class="headerlink" title="3.1 分层模式 Layered Pattern"></a>3.1 分层模式 Layered Pattern</h3><p>对应4+1视图中的逻辑视图</p>
-<h4 id="3-1-1-解决方案-Layered-Pattern-Solution"><a href="#3-1-1-解决方案-Layered-Pattern-Solution" class="headerlink" title="3.1.1 解决方案 Layered Pattern Solution"></a>3.1.1 解决方案 Layered Pattern Solution</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508172855333.png" alt="image-20230508172855333" style="zoom:80%;" />
-
+<h4 id="3-1-1-解决方案-Layered-Pattern-Solution"><a href="#3-1-1-解决方案-Layered-Pattern-Solution" class="headerlink" title="3.1.1 解决方案 Layered Pattern Solution"></a>3.1.1 解决方案 Layered Pattern Solution</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508172855333.png" alt="image-20230508172855333" style="zoom:80%;" /></p>
 <p>层间的访问必须按照逐层进行访问</p>
-<h4 id="3-1-2-堆叠盒表示法-Stack-of-boxes-Notation"><a href="#3-1-2-堆叠盒表示法-Stack-of-boxes-Notation" class="headerlink" title="3.1.2 堆叠盒表示法 Stack-of-boxes Notation"></a>3.1.2 堆叠盒表示法 Stack-of-boxes Notation</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508173032102.png" alt="image-20230508173032102" style="zoom:80%;" />
-
-<h4 id="3-1-3-基于分层模式的系统-Layered-Pattern-Based-System"><a href="#3-1-3-基于分层模式的系统-Layered-Pattern-Based-System" class="headerlink" title="3.1.3 基于分层模式的系统 Layered Pattern Based System"></a>3.1.3 基于分层模式的系统 Layered Pattern Based System</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508173041863.png" alt="image-20230508173041863" style="zoom:80%;" />
-
-<h4 id="3-1-4-分层模式变体-Layered-Pattern-Variants"><a href="#3-1-4-分层模式变体-Layered-Pattern-Variants" class="headerlink" title="3.1.4 分层模式变体 Layered Pattern Variants"></a>3.1.4 分层模式变体 Layered Pattern Variants</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508181748878.png" alt="image-20230508181748878" style="zoom:80%;" />
-
+<h4 id="3-1-2-堆叠盒表示法-Stack-of-boxes-Notation"><a href="#3-1-2-堆叠盒表示法-Stack-of-boxes-Notation" class="headerlink" title="3.1.2 堆叠盒表示法 Stack-of-boxes Notation"></a>3.1.2 堆叠盒表示法 Stack-of-boxes Notation</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508173032102.png" alt="image-20230508173032102" style="zoom:80%;" /></p>
+<h4 id="3-1-3-基于分层模式的系统-Layered-Pattern-Based-System"><a href="#3-1-3-基于分层模式的系统-Layered-Pattern-Based-System" class="headerlink" title="3.1.3 基于分层模式的系统 Layered Pattern Based System"></a>3.1.3 基于分层模式的系统 Layered Pattern Based System</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508173041863.png" alt="image-20230508173041863" style="zoom:80%;" /></p>
+<h4 id="3-1-4-分层模式变体-Layered-Pattern-Variants"><a href="#3-1-4-分层模式变体-Layered-Pattern-Variants" class="headerlink" title="3.1.4 分层模式变体 Layered Pattern Variants"></a>3.1.4 分层模式变体 Layered Pattern Variants</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508181748878.png" alt="image-20230508181748878" style="zoom:80%;" /></p>
 <ul>
 <li>上面的A、B、C：不是一种分层模式<ul>
 <li>分层的核心是为了实现关注点分离</li>
@@ -250,10 +241,8 @@
 <li>可复用性</li>
 </ol>
 <h3 id="3-2-代理模式-Broker-Pattern"><a href="#3-2-代理模式-Broker-Pattern" class="headerlink" title="3.2 代理模式 Broker Pattern"></a>3.2 代理模式 Broker Pattern</h3><p>Broker可以理解为中间人，撮合双方达成交易。</p>
-<h4 id="3-2-1-解决方案-Broker-Pattern-Solution"><a href="#3-2-1-解决方案-Broker-Pattern-Solution" class="headerlink" title="3.2.1 解决方案 Broker Pattern Solution"></a>3.2.1 解决方案 Broker Pattern Solution</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182146084.png" alt="image-20230508182146084" style="zoom:80%;" />
-
-<h4 id="3-2-2-概述图"><a href="#3-2-2-概述图" class="headerlink" title="3.2.2 概述图"></a>3.2.2 概述图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182335938.png" alt="image-20230508182335938" style="zoom:80%;" />
-
+<h4 id="3-2-1-解决方案-Broker-Pattern-Solution"><a href="#3-2-1-解决方案-Broker-Pattern-Solution" class="headerlink" title="3.2.1 解决方案 Broker Pattern Solution"></a>3.2.1 解决方案 Broker Pattern Solution</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182146084.png" alt="image-20230508182146084" style="zoom:80%;" /></p>
+<h4 id="3-2-2-概述图"><a href="#3-2-2-概述图" class="headerlink" title="3.2.2 概述图"></a>3.2.2 概述图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182335938.png" alt="image-20230508182335938" style="zoom:80%;" /></p>
 <h4 id="3-2-3-质量属性体现模式的优缺点"><a href="#3-2-3-质量属性体现模式的优缺点" class="headerlink" title="3.2.3 质量属性体现模式的优缺点"></a>3.2.3 质量属性体现模式的优缺点</h4><blockquote>
 <ul>
 <li>优点<ul>
@@ -288,20 +277,16 @@
 </li>
 <li>model -&gt; controller 不会产生通信</li>
 </ul>
-<h4 id="3-3-1-解决方案"><a href="#3-3-1-解决方案" class="headerlink" title="3.3.1 解决方案"></a>3.3.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182557555.png" alt="image-20230508182557555" style="zoom:80%;" />
-
-<h4 id="3-3-2-概述图"><a href="#3-3-2-概述图" class="headerlink" title="3.3.2 概述图"></a>3.3.2 概述图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182734832.png" alt="image-20230508182734832"  />
-
+<h4 id="3-3-1-解决方案"><a href="#3-3-1-解决方案" class="headerlink" title="3.3.1 解决方案"></a>3.3.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182557555.png" alt="image-20230508182557555" style="zoom:80%;" /></p>
+<h4 id="3-3-2-概述图"><a href="#3-3-2-概述图" class="headerlink" title="3.3.2 概述图"></a>3.3.2 概述图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230508182734832.png" alt="image-20230508182734832"  /></p>
 <h3 id="3-4-管道和过滤器模式-Pipe-and-Filter-Pattern"><a href="#3-4-管道和过滤器模式-Pipe-and-Filter-Pattern" class="headerlink" title="3.4 管道和过滤器模式 Pipe-and-Filter Pattern"></a>3.4 管道和过滤器模式 Pipe-and-Filter Pattern</h3><ul>
 <li>filter：相当于component，起到数据处理、计算作用，每个filter有input和多个output，数据处理后传递给后续的部分。</li>
 <li>pipe：连接filter，相当于connector，将output导入到其他的filter的input中去，不会孤立存在。</li>
 <li>管道和过滤模式不会孤立存在，应用在顺序处理结构，有一系列的数据结构filter，体现依赖关系。</li>
 <li>场景应用在科学计算的场景中，需要避免出现环形的filter，不适用于有很多交互产生的场景。</li>
 </ul>
-<h4 id="3-4-1-解决方案"><a href="#3-4-1-解决方案" class="headerlink" title="3.4.1 解决方案"></a>3.4.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509101001324.png" alt="image-20230509101001324" style="zoom:80%;" />
-
-<h4 id="3-4-2-基于管道和过滤器模式的系统"><a href="#3-4-2-基于管道和过滤器模式的系统" class="headerlink" title="3.4.2 基于管道和过滤器模式的系统"></a>3.4.2 基于管道和过滤器模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509101156013.png" alt="image-20230509101156013" style="zoom:80%;" />
-
+<h4 id="3-4-1-解决方案"><a href="#3-4-1-解决方案" class="headerlink" title="3.4.1 解决方案"></a>3.4.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509101001324.png" alt="image-20230509101001324" style="zoom:80%;" /></p>
+<h4 id="3-4-2-基于管道和过滤器模式的系统"><a href="#3-4-2-基于管道和过滤器模式的系统" class="headerlink" title="3.4.2 基于管道和过滤器模式的系统"></a>3.4.2 基于管道和过滤器模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509101156013.png" alt="image-20230509101156013" style="zoom:80%;" /></p>
 <ul>
 <li>每一组件表示filter，连接两个组件的部分是pipe(类似于queue交易任务的排队等待处理)</li>
 <li>任何一个filter都依赖于前一个filter的输出，中间没有机会接收外部的交互来改变严格定义好的流程。</li>
@@ -315,16 +300,14 @@
 <li>Server可能有性能瓶颈，但是可以通过事先规划避免。</li>
 <li>Server可能单点失效，但是broker可以控制</li>
 </ul>
-<h4 id="3-5-1-解决方案"><a href="#3-5-1-解决方案" class="headerlink" title="3.5.1 解决方案"></a>3.5.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509131852683.png" alt="image-20230509131852683" style="zoom:80%;" />
-
-<h4 id="3-5-2-基于客户端-服务端模式的系统"><a href="#3-5-2-基于客户端-服务端模式的系统" class="headerlink" title="3.5.2 基于客户端-服务端模式的系统"></a>3.5.2 基于客户端-服务端模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509131935722.png" alt="image-20230509131935722" style="zoom:80%;" />
-
+<h4 id="3-5-1-解决方案"><a href="#3-5-1-解决方案" class="headerlink" title="3.5.1 解决方案"></a>3.5.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509131852683.png" alt="image-20230509131852683" style="zoom:80%;" /></p>
+<h4 id="3-5-2-基于客户端-服务端模式的系统"><a href="#3-5-2-基于客户端-服务端模式的系统" class="headerlink" title="3.5.2 基于客户端-服务端模式的系统"></a>3.5.2 基于客户端-服务端模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509131935722.png" alt="image-20230509131935722" style="zoom:80%;" /></p>
 <ul>
 <li>ATM 验证身份，某一个server会给很多设备提供服务。</li>
 <li>ATM 操作安全监控、盗刷之类，通过 monitoring 发现问题找到记录</li>
 <li>对银行工作人员而言，需要新的业务，policy发生变化，银行工作人员定义ATM上的操作</li>
 <li>银行负责安全金融的根据ATM、对照用户操作行为是否有安全隐患，多对多。</li>
-<li>问题：broker也存在client和server之间的关系，对质量属性的影响，做一下比较，broker是之前，c&#x2F;s是90年代流行广泛应用<ol>
+<li>问题：broker也存在client和server之间的关系，对质量属性的影响，做一下比较，broker是之前，c/s是90年代流行广泛应用<ol>
 <li>互操作性：可能导致变弱？没有broker，需要人为连接</li>
 <li>安全性：Client、Server不采用broker 可能被拦截</li>
 <li>伸缩性</li>
@@ -333,17 +316,15 @@
 </ol>
 </li>
 <li>小型局域网、互联网还没有普及，规模有限，直接联系，性能上安全性可能带来更大收益</li>
-<li>broker的一些负面影响就不必承担了，c&#x2F;s会比broker投入更少，收益可能更大</li>
+<li>broker的一些负面影响就不必承担了，c/s会比broker投入更少，收益可能更大</li>
 </ul>
 <h3 id="3-6-Peer-to-Peer-Pattern-点对点模式"><a href="#3-6-Peer-to-Peer-Pattern-点对点模式" class="headerlink" title="3.6 Peer-to-Peer Pattern 点对点模式"></a>3.6 Peer-to-Peer Pattern 点对点模式</h3><ul>
 <li>这一刻是提供者，下一刻就是消费者，是对等的。</li>
 <li>不单单提供服务，还能提供物流(对于整个网络)</li>
 <li>对每一个peer可能会给他一个规定对的连接数</li>
 </ul>
-<h4 id="3-6-1-解决方案"><a href="#3-6-1-解决方案" class="headerlink" title="3.6.1 解决方案"></a>3.6.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509132055841.png" alt="image-20230509132055841" style="zoom:80%;" />
-
-<h4 id="3-6-2-基于点对点模式的系统"><a href="#3-6-2-基于点对点模式的系统" class="headerlink" title="3.6.2 基于点对点模式的系统"></a>3.6.2 基于点对点模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509132519307.png" alt="image-20230509132519307" style="zoom:80%;" />
-
+<h4 id="3-6-1-解决方案"><a href="#3-6-1-解决方案" class="headerlink" title="3.6.1 解决方案"></a>3.6.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509132055841.png" alt="image-20230509132055841" style="zoom:80%;" /></p>
+<h4 id="3-6-2-基于点对点模式的系统"><a href="#3-6-2-基于点对点模式的系统" class="headerlink" title="3.6.2 基于点对点模式的系统"></a>3.6.2 基于点对点模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509132519307.png" alt="image-20230509132519307" style="zoom:80%;" /></p>
 <ul>
 <li>可能安全性不受保障，因为节点既是Client又是Server，被攻击可能性提高了，attack、surface受攻击面变大</li>
 <li>数据分布在不同的节点上，相同数据多处拷贝，如果要的话，可能会导致数据不一致(数据一致性难度更大)，不能保证数据一定可用，数据可用性不能百分之百保证。</li>
@@ -364,17 +345,15 @@
 </ul>
 </li>
 </ul>
-<h4 id="3-7-1-解决方案"><a href="#3-7-1-解决方案" class="headerlink" title="3.7.1 解决方案"></a>3.7.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509132900563.png" alt="image-20230509132900563" style="zoom:80%;" />
-
-<h4 id="3-7-2-基于SOA的系统"><a href="#3-7-2-基于SOA的系统" class="headerlink" title="3.7.2 基于SOA的系统"></a>3.7.2 基于SOA的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509133010845.png" alt="image-20230509133010845" style="zoom:80%;" />
-
+<h4 id="3-7-1-解决方案"><a href="#3-7-1-解决方案" class="headerlink" title="3.7.1 解决方案"></a>3.7.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509132900563.png" alt="image-20230509132900563" style="zoom:80%;" /></p>
+<h4 id="3-7-2-基于SOA的系统"><a href="#3-7-2-基于SOA的系统" class="headerlink" title="3.7.2 基于SOA的系统"></a>3.7.2 基于SOA的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509133010845.png" alt="image-20230509133010845" style="zoom:80%;" /></p>
 <ul>
 <li>旅行社有一系列需求</li>
 <li>真正提供服务的是酒店、导游之类的，系统需要通过Web Service Broker连接到不同的真正提供者。下单：商家发货。</li>
 </ul>
 <h4 id="3-7-3-SOA中的连接器-Connectors-in-SOA"><a href="#3-7-3-SOA中的连接器-Connectors-in-SOA" class="headerlink" title="3.7.3 SOA中的连接器 Connectors in SOA"></a>3.7.3 SOA中的连接器 Connectors in SOA</h4><ul>
-<li><strong>SOAP</strong>(简单对象访问协议)：服务使用者和提供者通过通常在<strong>HTTP之上</strong>交换请求&#x2F;答复<strong>XML消息</strong>进行交互<br>SOAP (Simple Object Access Protocol): Service consumers and providers interact by exchanging request&#x2F;reply XML messages typically on top of HTTP</li>
-<li><strong>REST</strong>(表征状态转移)：服务使用者发送依赖于<strong>四个</strong>基本**HTTP命令(POST，GET，PUT，DELETE)**的HTTP请求<br>REST (Representational State Transfer) : A service consumer sends HTTP requests that rely on four basic HTTP commands (POST, GET, PUT, DELETE)</li>
+<li><strong>SOAP</strong>(简单对象访问协议)：服务使用者和提供者通过通常在<strong>HTTP之上</strong>交换请求/答复<strong>XML消息</strong>进行交互<br>SOAP (Simple Object Access Protocol): Service consumers and providers interact by exchanging request/reply XML messages typically on top of HTTP</li>
+<li><strong>REST</strong>(表征状态转移)：服务使用者发送依赖于<strong>四个</strong>基本<strong>HTTP命令(POST，GET，PUT，DELETE)</strong>的HTTP请求<br>REST (Representational State Transfer) : A service consumer sends HTTP requests that rely on four basic HTTP commands (POST, GET, PUT, DELETE)</li>
 <li><strong>异步消息传递</strong>(“<strong>即发即忘</strong>”)：参与者不必等待接受确认<br>Asynchronous messaging (“fire-and-forget”): Participants do not have to wait for an acknowledgment of receipt.</li>
 </ul>
 <h4 id="3-7-4-SOA和其他架构的区别"><a href="#3-7-4-SOA和其他架构的区别" class="headerlink" title="3.7.4 SOA和其他架构的区别"></a>3.7.4 SOA和其他架构的区别</h4><ul>
@@ -389,8 +368,7 @@
 <li>subscribe注册对于publiser进行注册</li>
 <li>某一个publiser发布自己的消息可能订阅其他消息（朋友圈微博）</li>
 </ul>
-<h4 id="3-8-1-解决方案"><a href="#3-8-1-解决方案" class="headerlink" title="3.8.1 解决方案"></a>3.8.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135114614.png" alt="image-20230509135114614" style="zoom:80%;" />
-
+<h4 id="3-8-1-解决方案"><a href="#3-8-1-解决方案" class="headerlink" title="3.8.1 解决方案"></a>3.8.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135114614.png" alt="image-20230509135114614" style="zoom:80%;" /></p>
 <ul>
 <li>传统操作系统也是通过事件驱动方式来管理的</li>
 <li>IDE环境注册后就行结构发布的事件</li>
@@ -399,11 +377,9 @@
 <li>scalability publisher数量不会变多</li>
 <li>发布者不关心每个订阅者都收到不是guarantee</li>
 </ul>
-<h4 id="3-8-2-基于发布-订阅模式的系统"><a href="#3-8-2-基于发布-订阅模式的系统" class="headerlink" title="3.8.2 基于发布-订阅模式的系统"></a>3.8.2 基于发布-订阅模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135230707.png" alt="image-20230509135230707" style="zoom:80%;" />
-
+<h4 id="3-8-2-基于发布-订阅模式的系统"><a href="#3-8-2-基于发布-订阅模式的系统" class="headerlink" title="3.8.2 基于发布-订阅模式的系统"></a>3.8.2 基于发布-订阅模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135230707.png" alt="image-20230509135230707" style="zoom:80%;" /></p>
 <h3 id="3-9-共享数据模式-Shared-Data-Pattern"><a href="#3-9-共享数据模式-Shared-Data-Pattern" class="headerlink" title="3.9 共享数据模式 Shared-Data Pattern"></a>3.9 共享数据模式 Shared-Data Pattern</h3><p>中间安全数据会被很多人共享登录访问</p>
-<h4 id="3-9-1-解决方案"><a href="#3-9-1-解决方案" class="headerlink" title="3.9.1 解决方案"></a>3.9.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135326701.png" alt="image-20230509135326701" style="zoom:80%;" />
-
+<h4 id="3-9-1-解决方案"><a href="#3-9-1-解决方案" class="headerlink" title="3.9.1 解决方案"></a>3.9.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135326701.png" alt="image-20230509135326701" style="zoom:80%;" /></p>
 <ul>
 <li>这样一个系统模式有什么问题嘛？</li>
 <li>单点失效性能瓶颈问题（都要对它操作） 安全性（攻击中心点有风险）对安全性数据来说强调强一致性如果有副本有一段时间才能到其他副本上更（可能成为漏洞任何时刻访问数据都必须一致）</li>
@@ -414,8 +390,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="3-9-2-基于共享数据模式的系统"><a href="#3-9-2-基于共享数据模式的系统" class="headerlink" title="3.9.2 基于共享数据模式的系统"></a>3.9.2 基于共享数据模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135413329.png" alt="image-20230509135413329" style="zoom:80%;" />
-
+<h4 id="3-9-2-基于共享数据模式的系统"><a href="#3-9-2-基于共享数据模式的系统" class="headerlink" title="3.9.2 基于共享数据模式的系统"></a>3.9.2 基于共享数据模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135413329.png" alt="image-20230509135413329" style="zoom:80%;" /></p>
 <p>既有读又有写</p>
 <h3 id="3-10-Map-Reduce-Pattern"><a href="#3-10-Map-Reduce-Pattern" class="headerlink" title="3.10 Map-Reduce Pattern"></a>3.10 Map-Reduce Pattern</h3><ul>
 <li>软件和外部环境的关系 部署</li>
@@ -424,8 +399,7 @@
 <li>相互独立可以运行</li>
 <li>reduce进行合并产出想要的答案</li>
 </ul>
-<h4 id="3-10-1-解决方案"><a href="#3-10-1-解决方案" class="headerlink" title="3.10.1 解决方案"></a>3.10.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135538285.png" alt="image-20230509135538285" style="zoom:80%;" />
-
+<h4 id="3-10-1-解决方案"><a href="#3-10-1-解决方案" class="headerlink" title="3.10.1 解决方案"></a>3.10.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135538285.png" alt="image-20230509135538285" style="zoom:80%;" /></p>
 <ul>
 <li>map reduce部署在不同的地方</li>
 <li>词频分析案例大量数据</li>
@@ -435,22 +409,19 @@
 <li>通过reduce进行合并</li>
 <li>最后进行排序</li>
 </ul>
-<h4 id="3-10-2-基于Map-Reduce模式的系统"><a href="#3-10-2-基于Map-Reduce模式的系统" class="headerlink" title="3.10.2 基于Map-Reduce模式的系统"></a>3.10.2 基于Map-Reduce模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135604677.png" alt="image-20230509135604677" style="zoom:80%;" />
-
+<h4 id="3-10-2-基于Map-Reduce模式的系统"><a href="#3-10-2-基于Map-Reduce模式的系统" class="headerlink" title="3.10.2 基于Map-Reduce模式的系统"></a>3.10.2 基于Map-Reduce模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135604677.png" alt="image-20230509135604677" style="zoom:80%;" /></p>
 <h3 id="3-11-Multi-Tier-Pattern-多层模式"><a href="#3-11-Multi-Tier-Pattern-多层模式" class="headerlink" title="3.11 Multi-Tier Pattern 多层模式"></a>3.11 Multi-Tier Pattern 多层模式</h3><ul>
 <li>部署的环境划分</li>
 <li>layer是真实存在的</li>
 <li>这里是逻辑的组合没有和层的强依赖关系</li>
 <li>不同的部署环境里面分层不同但是软件完成内容一样</li>
 </ul>
-<h4 id="3-11-1-解决方案"><a href="#3-11-1-解决方案" class="headerlink" title="3.11.1 解决方案"></a>3.11.1 解决方案</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135626778.png" alt="image-20230509135626778" style="zoom:80%;" />
-
+<h4 id="3-11-1-解决方案"><a href="#3-11-1-解决方案" class="headerlink" title="3.11.1 解决方案"></a>3.11.1 解决方案</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135626778.png" alt="image-20230509135626778" style="zoom:80%;" /></p>
 <ul>
 <li>旅行社例子</li>
 <li>tier只是部署方案决定并没有改变代码本身</li>
 </ul>
-<h4 id="3-11-2-基于多层模式的系统"><a href="#3-11-2-基于多层模式的系统" class="headerlink" title="3.11.2 基于多层模式的系统"></a>3.11.2 基于多层模式的系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135718648.png" alt="image-20230509135718648" style="zoom:80%;" />
-
+<h4 id="3-11-2-基于多层模式的系统"><a href="#3-11-2-基于多层模式的系统" class="headerlink" title="3.11.2 基于多层模式的系统"></a>3.11.2 基于多层模式的系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509135718648.png" alt="image-20230509135718648" style="zoom:80%;" /></p>
 <p>三大类：modular类、runtime process动态类、软件和非软件环境关系（部署关系）11个架构模式</p>
 <h3 id="3-12-不同的模式对于质量属性不同的影响"><a href="#3-12-不同的模式对于质量属性不同的影响" class="headerlink" title="3.12 不同的模式对于质量属性不同的影响"></a>3.12 不同的模式对于质量属性不同的影响</h3><p>某一个Pattern会对一些质量属性产生积极影响，但是也会对其他属性产生不好的影响</p>
 <h2 id="4-模式与策略-Architecture-Patterns-and-Tactics"><a href="#4-模式与策略-Architecture-Patterns-and-Tactics" class="headerlink" title="4. 模式与策略 Architecture Patterns and Tactics"></a>4. 模式与策略 Architecture Patterns and Tactics</h2><ul>
@@ -471,16 +442,14 @@
 <li>tactic是设计最小粒度tactic进行组合一个tactic是为了某一个质量属性也会影响其他属性（正面、负面）</li>
 <li>针对某一个质量属性Modifiablity 相关的 tactic 和 pattern 之间的关系是否涉及到</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509141058889.png" alt="image-20230509141058889" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509141058889.png" alt="image-20230509141058889" style="zoom:80%;" /></p>
 <ol>
 <li>设计深度问题</li>
 </ol>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509141138497.png" alt="image-20230509141138497"  />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230509141138497.png" alt="image-20230509141138497"  /></p>
 <p>图一：</p>
 <ul>
-<li>椭圆形——某一个 tactic 如ping&#x2F;Echo</li>
+<li>椭圆形——某一个 tactic 如ping/Echo</li>
 <li>可用性有贡献但是可能会产生其他影响（系统复杂度、资源影响、性能）</li>
 <li>如果性能很在意就对它单独进行设计成本、增加资源利用率问题</li>
 </ul>
@@ -858,5 +827,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -189,8 +185,7 @@
 </li>
 <li><p>文件(document)与计算机文件(file)</p>
 </li>
-<li><p>文件名是由字母、数字和其他符号组成的一个字符串，其格式和长度因系统而异</p>
-</li>
+<li>文件名是由字母、数字和其他符号组成的一个字符串，其格式和长度因系统而异</li>
 </ul>
 <h4 id="文件的命名"><a href="#文件的命名" class="headerlink" title="文件的命名"></a>文件的命名</h4><ul>
 <li>文件命名一般包括文件名和扩展名：<ul>
@@ -215,8 +210,7 @@
 <li>还可以按文件的逻辑结构或物理结构分类</li>
 </ul>
 <h4 id="引入文件的优点"><a href="#引入文件的优点" class="headerlink" title="引入文件的优点"></a>引入文件的优点</h4><ul>
-<li><p><strong>用户使用方便</strong>：使用者无需记住信息存放在辅助存储器中的物理位置，也无需考虑如何将信息存放到存储介质上，只要知道文件名，给出有关操作系统要求便可存取信息，实现了”按名存取”</p>
-</li>
+<li><strong>用户使用方便</strong>：使用者无需记住信息存放在辅助存储器中的物理位置，也无需考虑如何将信息存放到存储介质上，只要知道文件名，给出有关操作系统要求便可存取信息，实现了”按名存取”</li>
 <li><p><strong>文件安全可靠</strong>：由于用户通过文件系统才能实现对文件的访问，而文件系统能提供各种安全、保密和保护措施，故可防止对文件信息的有意或无意的破坏或窃用</p>
 </li>
 <li><p><strong>文件可备份</strong>：可组织转储或备份，在文件使用过程中出现硬件故障时，文件系统可组织重执，提高可靠性</p>
@@ -251,23 +245,17 @@
 </ul>
 </li>
 </ul>
-<h4 id="文件系统的组成"><a href="#文件系统的组成" class="headerlink" title="文件系统的组成"></a>文件系统的组成</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124135005799.png" alt="image-20221124135005799" style="zoom:80%;" />
-
+<h4 id="文件系统的组成"><a href="#文件系统的组成" class="headerlink" title="文件系统的组成"></a>文件系统的组成</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124135005799.png" alt="image-20221124135005799" style="zoom:80%;" /></p>
 <h2 id="5-2-文件的组织"><a href="#5-2-文件的组织" class="headerlink" title="5.2 文件的组织"></a>5.2 文件的组织</h2><h3 id="5-2-1-文件的存储"><a href="#5-2-1-文件的存储" class="headerlink" title="5.2.1 文件的存储"></a>5.2.1 文件的存储</h3><h4 id="卷和块"><a href="#卷和块" class="headerlink" title="卷和块"></a>卷和块</h4><ul>
-<li><p>文件存储介质有磁带、光盘和磁盘</p>
-</li>
-<li><p><strong>卷</strong>是存储介质的物理单位，对应于一盘磁带、一块软盘、一个光盘片、一个硬盘分区</p>
-</li>
-<li><p><strong>块</strong>是存储介质上连续信息所组成的一个区域，也叫做物理记录</p>
-</li>
+<li>文件存储介质有磁带、光盘和磁盘</li>
+<li><strong>卷</strong>是存储介质的物理单位，对应于一盘磁带、一块软盘、一个光盘片、一个硬盘分区</li>
+<li><strong>块</strong>是存储介质上连续信息所组成的一个区域，也叫做物理记录</li>
 <li><p>块在主存储器和辅助存储器进行信息交换的物理单位，每次总是交换一块或整数块信息</p>
 </li>
 <li><p>决定块的大小要考虑用户使用方式、数据传输效率和存储设备类型等多种因素</p>
 </li>
-<li><p>不同类型的存储介质，块的长短常常各不相同；对同一类型的存储介质，块的大小一般相同，但也可以不同</p>
-</li>
-<li><p>外围设备由于启停机械动作或识别不同块的要求，两个相邻块之间必须留有间隙</p>
-<ul>
+<li>不同类型的存储介质，块的长短常常各不相同；对同一类型的存储介质，块的大小一般相同，但也可以不同</li>
+<li>外围设备由于启停机械动作或识别不同块的要求，两个相邻块之间必须留有间隙<ul>
 <li>间隙是块之间不记录用户代码信息的区域</li>
 </ul>
 </li>
@@ -304,8 +292,7 @@
 <li>逻辑记录是文件中按信息在逻辑上的独立含义所划分的信息单位</li>
 <li>如，每个职工的工资信息是一个逻辑记录；整个单位职工的工资信息便组成了该单位工资信息的记录式文件</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124142641691.png" alt="image-20221124142641691" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124142641691.png" alt="image-20221124142641691" style="zoom:80%;" /></p>
 <h4 id="记录式文件与数据库"><a href="#记录式文件与数据库" class="headerlink" title="记录式文件与数据库"></a>记录式文件与数据库</h4><ul>
 <li>数据库管理系统也支持逻辑记录</li>
 <li>但数据库有别于记录式文件，数据库中的记录之间可以通过数据冗余构成某种联系</li>
@@ -316,16 +303,14 @@
 </li>
 <li><p>若干个逻辑记录合并成一组，写入一个块叫<strong>记录的成组</strong>，每块中的逻辑记录数称<strong>块因子</strong></p>
 </li>
-<li><p>对于流式文件，一个物理记录可以存放很多个连续字节</p>
-</li>
+<li>对于流式文件，一个物理记录可以存放很多个连续字节</li>
 </ul>
 <h4 id="成组与分解操作"><a href="#成组与分解操作" class="headerlink" title="成组与分解操作"></a>成组与分解操作</h4><ul>
-<li>系统设置独立于用户数据区的输入&#x2F;输出缓冲区</li>
+<li>系统设置独立于用户数据区的输入/输出缓冲区</li>
 <li><strong>记录的成组操作</strong>在输出缓冲区内进行，凑满一块后才将缓冲区内的信息写到存储介质上</li>
 <li>当存储介质上的一个物理记录读进输入缓冲区后，把逻辑记录从块中分离出来的操作叫<strong>记录的分解操作</strong></li>
 </ul>
-<h4 id="成组与分解操作示意"><a href="#成组与分解操作示意" class="headerlink" title="成组与分解操作示意"></a>成组与分解操作示意</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124145408709.png" alt="image-20221124145408709" style="zoom:80%;" />
-
+<h4 id="成组与分解操作示意"><a href="#成组与分解操作示意" class="headerlink" title="成组与分解操作示意"></a>成组与分解操作示意</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124145408709.png" alt="image-20221124145408709" style="zoom:80%;" /></p>
 <h4 id="成组与分解的特征"><a href="#成组与分解的特征" class="headerlink" title="成组与分解的特征"></a>成组与分解的特征</h4><ul>
 <li>优点：记录成组与分解不仅节省存储空间，还能减少输入输出操作次数，提高系统效率</li>
 <li>记录成组与分解处理带来的新特征：<ul>
@@ -361,8 +346,7 @@
 <li>第一块文件信息的物理地址由文件目录给出，而每一块的连接字指出了文件的下一个物理块位置；连接字内容为 0 时，表示文件至本块结束</li>
 <li>像输入井、输出井等都用此类文件</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124144402437.png" alt="image-20221124144402437" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124144402437.png" alt="image-20221124144402437" style="zoom:80%;" /></p>
 <h4 id="连接文件的特点"><a href="#连接文件的特点" class="headerlink" title="连接文件的特点"></a>连接文件的特点</h4><ul>
 <li><strong>优点</strong><ul>
 <li>易于对文件记录做增、删、改，易于动态增长记录</li>
@@ -399,8 +383,7 @@
 <li>二级索引</li>
 <li>多级索引</li>
 </ul>
-<h4 id="一种多级索引结构"><a href="#一种多级索引结构" class="headerlink" title="一种多级索引结构"></a>一种多级索引结构</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124145124548.png" alt="image-20221124145124548" style="zoom:80%;" />
-
+<h4 id="一种多级索引结构"><a href="#一种多级索引结构" class="headerlink" title="一种多级索引结构"></a>一种多级索引结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124145124548.png" alt="image-20221124145124548" style="zoom:80%;" /></p>
 <h2 id="5-3-文件目录"><a href="#5-3-文件目录" class="headerlink" title="5.3 文件目录"></a>5.3 文件目录</h2><h3 id="5-3-1-文件目录结构"><a href="#5-3-1-文件目录结构" class="headerlink" title="5.3.1 文件目录结构"></a>5.3.1 文件目录结构</h3><h4 id="文件目录"><a href="#文件目录" class="headerlink" title="文件目录"></a>文件目录</h4><ul>
 <li>文件目录是实现文件的 <strong>“按名存取”</strong> 的关键数据结构</li>
 <li>文件系统的基本功能之一就是负责文件目录的建立、维护和检索，要求编排的目录便于查找、防止冲突</li>
@@ -415,8 +398,7 @@
 <li>第二级为用户的文件目录，它为该用户的每个文件保存一个登记栏，其内容与一级目录的目录项相同</li>
 <li>每一用户只允许查看自己的文件目录</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124151737496.png" alt="image-20221124151737496" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124151737496.png" alt="image-20221124151737496" style="zoom:80%;" /></p>
 <h4 id="二级目录结构的特点"><a href="#二级目录结构的特点" class="headerlink" title="二级目录结构的特点"></a>二级目录结构的特点</h4><ul>
 <li>采用二级目录管理文件时，因为任何文件的存取都通过主文件目录，于是可以检查访问文件者的存取权限，避免一个用户未经授权就存取另一个用户的文件，使用户文件的私有性得到保证，实现了对文件的保密和保护</li>
 <li>特别是不同用户具有同名文件时，由于各自有不同的用户文件目录而不会导致混乱</li>
@@ -433,15 +415,14 @@
 </ul>
 <h4 id="树形目录结构中的文件定位"><a href="#树形目录结构中的文件定位" class="headerlink" title="树形目录结构中的文件定位"></a>树形目录结构中的文件定位</h4><ul>
 <li>在树形目录结构中，一个文件的全名包括从根目录开始到文件为止，通路上遇到的所有子目录路径，又称为路径名</li>
-<li>各子目录名之间用正斜线 &#x2F; (反斜线 \ )隔开</li>
+<li>各子目录名之间用正斜线 / (反斜线 \ )隔开</li>
 <li>一个硬盘分区可以组织成一颗子树<ul>
 <li>每棵子树可以对应于一个逻辑盘符(Win)</li>
 <li>也可以把众多子树嫁接成一颗大树(UNIX)</li>
 </ul>
 </li>
 </ul>
-<h4 id="树形目录结构-1"><a href="#树形目录结构-1" class="headerlink" title="树形目录结构"></a>树形目录结构</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124152156116.png" alt="image-20221124152156116" style="zoom:80%;" />
-
+<h4 id="树形目录结构-1"><a href="#树形目录结构-1" class="headerlink" title="树形目录结构"></a>树形目录结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221124152156116.png" alt="image-20221124152156116" style="zoom:80%;" /></p>
 <h3 id="5-3-2-文件目录管理"><a href="#5-3-2-文件目录管理" class="headerlink" title="5.3.2 文件目录管理"></a>5.3.2 文件目录管理</h3><h4 id="文件查找"><a href="#文件查找" class="headerlink" title="文件查找"></a>文件查找</h4><ul>
 <li>文件查找是文件目录管理的重要工作，”按名存取”文件就是系统根据用户提供的<strong>文件路径名</strong>来搜索各级文件目录，找到该文件<ul>
 <li>可以从根目录查起(绝对路径名)</li>
@@ -537,9 +518,9 @@
 <li>每行包括：用户、文件、存取属性</li>
 <li>存取控制表仅登记那些对文件拥有存取属性的部分</li>
 </ul>
-<h4 id="基于存取控制矩阵-表的文件保护"><a href="#基于存取控制矩阵-表的文件保护" class="headerlink" title="基于存取控制矩阵&#x2F;表的文件保护"></a>基于存取控制矩阵&#x2F;表的文件保护</h4><ul>
+<h4 id="基于存取控制矩阵-表的文件保护"><a href="#基于存取控制矩阵-表的文件保护" class="headerlink" title="基于存取控制矩阵/表的文件保护"></a>基于存取控制矩阵/表的文件保护</h4><ul>
 <li>存取属性：可以有访问、读、写、执行、创建、删除、授权等等</li>
-<li>系统通过查阅(矩阵&#x2F;表)核对用户对文件的存取权限</li>
+<li>系统通过查阅(矩阵/表)核对用户对文件的存取权限</li>
 <li>文件属主使用GRANT、REVOKE等命令进行授权，甚至把授权权转授给他信任的用户</li>
 <li>系统管理用户(超级用户)等同于文件属主权限，并获得对系统文件的授访问权权限</li>
 </ul>
@@ -550,8 +531,7 @@
 <li>文件属性可以放在文件目录项中，管理大为简化</li>
 <li>用户使用文件时，通过核对文件属性，实现保护</li>
 </ul>
-<h4 id="文件属性的例子"><a href="#文件属性的例子" class="headerlink" title="文件属性的例子"></a>文件属性的例子</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205103440530.png" alt="image-20221205103440530" style="zoom:80%;" />
-
+<h4 id="文件属性的例子"><a href="#文件属性的例子" class="headerlink" title="文件属性的例子"></a>文件属性的例子</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205103440530.png" alt="image-20221205103440530" style="zoom:80%;" /></p>
 <h2 id="5-5-文件的使用"><a href="#5-5-文件的使用" class="headerlink" title="5.5 文件的使用"></a>5.5 文件的使用</h2><h3 id="5-5-1-文件的存取方法"><a href="#5-5-1-文件的存取方法" class="headerlink" title="5.5.1 文件的存取方法"></a>5.5.1 文件的存取方法</h3><h4 id="文件的存取方法"><a href="#文件的存取方法" class="headerlink" title="文件的存取方法"></a>文件的存取方法</h4><ul>
 <li>文件存取方法是操作系统为用户程序提供的使用文件的技术和手段</li>
 <li>文件存取方法在某种程度上依赖于文件的物理结构</li>
@@ -575,7 +555,7 @@
 <h3 id="5-5-2-文件的使用"><a href="#5-5-2-文件的使用" class="headerlink" title="5.5.2 文件的使用"></a>5.5.2 文件的使用</h3><h4 id="文件的使用"><a href="#文件的使用" class="headerlink" title="文件的使用"></a>文件的使用</h4><ul>
 <li>用户通过两类接口与文件系统联系</li>
 <li>第一类是与文件有关的操作命令，例如，UNIX中的<code>cat，cd，cp，find，mv， rm，mkdir，rmdir</code>等等</li>
-<li>第二类是提供给用户程序使用的文件类系统调用，基本文件类系统调用有：建立、打开、读&#x2F;写、定位、关闭、撤销</li>
+<li>第二类是提供给用户程序使用的文件类系统调用，基本文件类系统调用有：建立、打开、读/写、定位、关闭、撤销</li>
 </ul>
 <h4 id="建立文件"><a href="#建立文件" class="headerlink" title="建立文件"></a>建立文件</h4><ul>
 <li>“建立文件” 用于创建一个文件</li>
@@ -597,8 +577,8 @@
 <li>所需参数：文件句柄</li>
 <li>处理流程：将活动文件表中该文件的”当前使用用户数”减1；若此值为0，则收回此活动文件表；完成”推迟写”；若活动文件表目内容已被改过，则应先将表目内容写回文件存储器上相应表目中，以使文件目录保持最新状态</li>
 </ul>
-<h4 id="读-写文件"><a href="#读-写文件" class="headerlink" title="读&#x2F;写文件"></a>读&#x2F;写文件</h4><ul>
-<li>“读&#x2F;写文件”用于读写文件</li>
+<h4 id="读-写文件"><a href="#读-写文件" class="headerlink" title="读/写文件"></a>读/写文件</h4><ul>
+<li>“读/写文件”用于读写文件</li>
 <li>所需参数参数：文件句柄、用户数据区地址、读写的记录或字节个数</li>
 <li>处理流程：按文件句柄从活动文件表中找到该文件的目录项信息；根据目录项指出的该文件的逻辑和物理组织方式，把相关逻辑记录转换成物理块</li>
 </ul>
@@ -626,15 +606,11 @@
 <li>字位为”1”表示相应块已占用，字位为”0”状态表示该块空闲</li>
 <li>其主要优点是，可以把位示图全部或大部分保存在主存中，再配合现代计算机都具有的位操作指令，可实现高速物理块分配和去配</li>
 </ul>
-<h4 id="空闲块的管理：空闲块成组连接法"><a href="#空闲块的管理：空闲块成组连接法" class="headerlink" title="空闲块的管理：空闲块成组连接法"></a>空闲块的管理：空闲块成组连接法</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208010437962.png" alt="image-20221208010437962" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208010507041.png" alt="image-20221208010507041" style="zoom:80%;" />
-
-<h3 id="5-6-2-文件系统的实现层次"><a href="#5-6-2-文件系统的实现层次" class="headerlink" title="5.6.2 文件系统的实现层次"></a>5.6.2 文件系统的实现层次</h3><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208010558457.png" alt="image-20221208010558457" style="zoom:80%;" />
-
+<h4 id="空闲块的管理：空闲块成组连接法"><a href="#空闲块的管理：空闲块成组连接法" class="headerlink" title="空闲块的管理：空闲块成组连接法"></a>空闲块的管理：空闲块成组连接法</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208010437962.png" alt="image-20221208010437962" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208010507041.png" alt="image-20221208010507041" style="zoom:80%;" /></p>
+<h3 id="5-6-2-文件系统的实现层次"><a href="#5-6-2-文件系统的实现层次" class="headerlink" title="5.6.2 文件系统的实现层次"></a>5.6.2 文件系统的实现层次</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208010558457.png" alt="image-20221208010558457" style="zoom:80%;" /></p>
 <h1 id="补充内容"><a href="#补充内容" class="headerlink" title="补充内容"></a>补充内容</h1><h2 id="1-Inode、目录项、层次目录结构"><a href="#1-Inode、目录项、层次目录结构" class="headerlink" title="1. Inode、目录项、层次目录结构"></a>1. Inode、目录项、层次目录结构</h2><h4 id="Linux特殊目录项建立方法"><a href="#Linux特殊目录项建立方法" class="headerlink" title="Linux特殊目录项建立方法"></a>Linux特殊目录项建立方法</h4><p>Linux系统的 FCB 中的文件名和其他管理信息分开，其他信息单独组成一个数据结构，称为索引节点 inode，此索引节点在磁盘上的位置由 inode号 标识。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205082251475.png" alt="image-20221205082251475" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205082251475.png" alt="image-20221205082251475" style="zoom:80%;" /></p>
 <blockquote>
 <p>文件名(含路径) $\stackrel{目录检索}{\longrightarrow}$ 目录项 $\longrightarrow$ [文件名(不含路径), inode号]</p>
 </blockquote>
@@ -642,7 +618,6 @@
 <li>文件系统中的每个文件都有一个磁盘 inode 与之对应，这些inode被集中存放于磁盘上的 inode 区。FCB 对于文件的作用，犹如 PCB 对于进程的作用，集中这个文件的所有相关信息，找到inode，就能获得此文件的必要信息。</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">inode</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_ino; <span class="hljs-comment">/*inode号*/</span><br>    <span class="hljs-type">atomic_t</span> i_count; <span class="hljs-comment">/*inode引用数*/</span><br>    <span class="hljs-type">kdev_t</span> i_dev; <span class="hljs-comment">/*inode所在设备*/</span><br>	...<br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>数据块索引在union结构的每个具体文件系统中，其中的 <code>i_data[15]</code> 数组给出数据块地址索引<ul>
 <li>前12项为直接索引，第13项为一次间接索引，第14项为二次间接索引，第15项为三次间接索引。</li>
@@ -664,18 +639,16 @@
 <li>有向无环图目录 尽管它<strong>允许文件有多个父目录而破坏树的特性</strong>，但不同用户可以对称方式实现文件共享，即可能属于不同用户的多个目录，使用不同文件名能访问和共享同一个文件。</li>
 <li>有向无环图目录结构的维护比纯树型目录结构复杂，<strong>由于一个文件可能有多个父目录，需为每个文件维护一个引用计数，用来记录文件的父目录个数，仅当引用计数为1时，删除操作才移去文件，否则仅仅把相关记录从父目录中删去。</strong></li>
 <li><strong>Linux支持多父目录，但其中一个是主父目录，它是文件拥有者</strong>，且文件被物理存储在此目录下，其他次父目录通过link方式来连结和引用文件，允许任一父目录删除共享文件。<ul>
-<li>下图示例这种文件共享的情形，文件&#x2F;home&#x2F;fei1为myfile.c的主父目录(图中实线表示)，&#x2F;home&#x2F;fei2和&#x2F;home&#x2F;fei3&#x2F;fei4均为文件myfile.c的次父目录(图中虚线表示)。</li>
+<li>下图示例这种文件共享的情形，文件/home/fei1为myfile.c的主父目录(图中实线表示)，/home/fei2和/home/fei3/fei4均为文件myfile.c的次父目录(图中虚线表示)。</li>
 </ul>
 </li>
 <li>Windows实现被称作”快捷方式”的多父目录连结，快捷方式是一些指向不同文件夹(子目录)和菜单之间任意复制和移动的文件及文件夹的指针，删除快捷方式就是删除指针。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205093920792.png" alt="image-20221205093920792" style="zoom:80%;" />
-
-<h2 id="2-Unix-Linux文件系统的多重索引结构"><a href="#2-Unix-Linux文件系统的多重索引结构" class="headerlink" title="2. Unix&#x2F;Linux文件系统的多重索引结构"></a>2. Unix&#x2F;Linux文件系统的多重索引结构</h2><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205094000697.png" alt="image-20221205094000697" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205093920792.png" alt="image-20221205093920792" style="zoom:80%;" /></p>
+<h2 id="2-Unix-Linux文件系统的多重索引结构"><a href="#2-Unix-Linux文件系统的多重索引结构" class="headerlink" title="2. Unix/Linux文件系统的多重索引结构"></a>2. Unix/Linux文件系统的多重索引结构</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205094000697.png" alt="image-20221205094000697" style="zoom:80%;" /></p>
 <blockquote>
 <p>在UNIX系统中，每个i节点中分别含有 10 个直接地址的索引和一、二、三级间接索引。若每个盘块放128个盘块地址，则一个1MB的文件分别占用多少各级索引所使用的数据物理块？20MB的文件呢？设每个盘块有512B。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205094103433.png" alt="image-20221205094103433" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205094103433.png" alt="image-20221205094103433" style="zoom:80%;" /></p>
 </blockquote>
 <h2 id="3-文件系统的功能与实现"><a href="#3-文件系统的功能与实现" class="headerlink" title="3. 文件系统的功能与实现"></a>3. 文件系统的功能与实现</h2><h3 id="3-1-文件系统调用的实现"><a href="#3-1-文件系统调用的实现" class="headerlink" title="3.1 文件系统调用的实现"></a>3.1 文件系统调用的实现</h3><ul>
 <li>文件系统提供给用户程序的一组系统调用，包括：<strong>创建、删除、打开、关闭、读、写和控制</strong>，通过这些系统调用用户能获得文件系统的各种服务。</li>
@@ -723,12 +696,9 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100646528.png" alt="image-20221205100646528" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100848938.png" alt="image-20221205100848938" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100646528.png" alt="image-20221205100646528" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100848938.png" alt="image-20221205100848938" style="zoom:80%;" /></p>
 <h4 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h4><h5 id="文件的创建"><a href="#文件的创建" class="headerlink" title="文件的创建"></a>文件的创建</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd, mode;<br><span class="hljs-type">char</span> *filenamep;<br>fd = create(filenamep, mode);<br></code></pre></td></tr></table></figure>
-
 <ol>
 <li>为新文件分配<strong>索引节点和活动索引节点</strong>，并把<strong>索引节点编号与文件分量名</strong>组成<strong>新目录项</strong>，记到目录中</li>
 <li>在新文件所对应的活动索引节点中置初值，如<strong>置存取权限i_mode，连接计数i_nlink</strong>等</li>
@@ -741,17 +711,15 @@
 <li>在执行删除时，必须要求用户对该文件具有”写”操作权</li>
 </ul>
 <h5 id="文件的打开"><a href="#文件的打开" class="headerlink" title="文件的打开"></a>文件的打开</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd, mode;<br><span class="hljs-type">char</span> * filenamep;<br>fd = open (filenamep, mode);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>检索目录，把它的<strong>外存索引节点复制到活动索引节点表</strong></li>
 <li>根据参数mode核对权限，如果非法，则这次打开失败</li>
 <li>当”打开”合法时，<strong>为文件分配用户打开文件表项和系统打开文件表项</strong>，并为表项设置初值。<strong>通过指针建立这些表项与活动索引节点间的联系</strong>。把文件描述字，即用户打开文件表中相应<strong>文件表项的序号返回给调用者</strong></li>
 </ul>
 <h5 id="文件的关闭"><a href="#文件的关闭" class="headerlink" title="文件的关闭"></a>文件的关闭</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd;<br>close (fd);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>根据<strong>fd找到用户打开文件表项，再找到系统打开文件表项</strong>。<strong>释放</strong>用户打开文件表项</li>
-<li>把对应**系统打开文件表项中的f_count减”1”**，如果非”0” ，说明还有进程共享这一表项，不用释放直接返回；否则释放表项</li>
+<li>把对应<strong>系统打开文件表项中的f_count减”1”</strong>，如果非”0” ，说明还有进程共享这一表项，不用释放直接返回；否则释放表项</li>
 <li>把<strong>活动索引节点中的i_count减”1”</strong> ，若不为”0”，表明还有用户进程正在使用该文件，不用释放而直接返回，<strong>否则在把该活动索引节点中的内容复制回文件卷上的相应索引节点中后，释放该活动索引节点</strong></li>
 <li>f_count和i_count分别反映进程动态地共享一个文件的两种方式<ul>
 <li>f_count<strong>反映不同进程通过同一个系统打开文件表项共享一个文件的情况</strong></li>
@@ -761,38 +729,32 @@
 </li>
 </ul>
 <h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> nr, fd, count;<br><span class="hljs-type">char</span> buf [ ]<br>nr = read (fd, buf, count);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>系统根据f_flag中的信息，<strong>检查读操作合法性</strong></li>
 <li>再<strong>根据当前位移量f_offset值，要求读出的字节数</strong>，及活动索引节点中<strong>i_data[15]指出的文件物理块存放地址，把相应的物理块读到缓冲区中</strong>，然后再送到bufp指向的用户主存区中。</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205102611877.png" alt="image-20221205102611877" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205102611877.png" alt="image-20221205102611877" style="zoom:80%;" /></p>
 <h5 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">nw = write(fd, buf, count);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>buf是信息传送的源地址，即把buf所指向的用户主存区中的信息，写入到文件中。</li>
 </ul>
 <h5 id="文件的随机存取"><a href="#文件的随机存取" class="headerlink" title="文件的随机存取"></a>文件的随机存取</h5><ul>
-<li>在文件初次”打开”时，文件的位移量**<code>f_offset</code>**清空为零，以后的文件读写操作总是根据offset的当前值，顺序地读写文件。为了支持文件的随机访问，提供系统调用<code>lseek</code>，它允许用户在读、写文件前，事先改变<code>f_offset</code>的指向</li>
+<li>在文件初次”打开”时，文件的位移量<strong><code>f_offset</code></strong>清空为零，以后的文件读写操作总是根据offset的当前值，顺序地读写文件。为了支持文件的随机访问，提供系统调用<code>lseek</code>，它允许用户在读、写文件前，事先改变<code>f_offset</code>的指向</li>
 <li>系统调用的形式为：</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">long</span> lseek;<br><span class="hljs-type">long</span> offset;<br><span class="hljs-type">int</span> whence, fd;<br>lseek(fd, offset, whence);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>文件描述字 fd 必须指向一个用读或写方式打开的文件</li>
 <li>当whence是”0”时，则f_offset被置为offset</li>
 <li>当whence是”1”时，则f_offset被置为文件当前位置加上offset。</li>
 </ul>
 <h3 id="3-2-文件共享"><a href="#3-2-文件共享" class="headerlink" title="3.2 文件共享"></a>3.2 文件共享</h3><h4 id="文件的静态共享"><a href="#文件的静态共享" class="headerlink" title="文件的静态共享"></a>文件的静态共享</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">chat * oldnamep, * newnamep;<br>link(oldnamep, newnamep);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>检索目录找到 <code>oldnamep</code> 所指向文件的索引节点inode编号</li>
 <li>再次检索目录找到 <code>newnamep</code> 所指文件的父目录文件，并把已存在文件的索引节点inode编号与别名构成一个目录项，记入到该目录中去</li>
 <li>把已存在文件索引节点inode的连接计数 <code>i_nlink</code> 加 1</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208130412662.png" alt="image-20221208130412662" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208130412662.png" alt="image-20221208130412662" style="zoom:80%;" /></p>
 <ul>
 <li>链接实际上是<strong>共享已存在文件的索引节点 inode</strong>，完成链接的系统调用<ul>
 <li><code>link(&quot;/home/fei1/myfile.c&quot;, &quot;/home/fei2/myfile.c&quot;);</code></li>
@@ -806,31 +768,26 @@
 </ul>
 <p>文件解除链接调用形式为</p>
 <figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">unlink(namep);<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>解除链接与文件删除执行的是同一系统调用代码。删除文件是从文件主角度讲的，解除文件连接是从共享文件的其他用户角度讲的。都要删去目录项，把 i_nlink 减 “1”，不过，只有当i_nlink减为”0”时，才真正删除文件。</li>
 </ul>
 <h4 id="文件的动态共享"><a href="#文件的动态共享" class="headerlink" title="文件的动态共享"></a>文件的动态共享</h4><ul>
 <li>文件动态共享是系统中不同的用户进程或同一用户的不同进程并发访问同一文件</li>
 <li>这种共享关系只有当用户进程存在时才可能出现，一旦用户的进程消亡，其共享关系也就自动消失</li>
-<li>文件的每次读写由一个读&#x2F;写位移指针指出要读写的位置。现在的问题是：<strong>应让多个进程共用同一个读&#x2F;写位移，还是各个进程具有各自的读写位移呢?</strong></li>
-<li>同一用户父、子进程协同完成任务，使用同一读&#x2F;写位移，同步地对文件进行操作</li>
+<li>文件的每次读写由一个读/写位移指针指出要读写的位置。现在的问题是：<strong>应让多个进程共用同一个读/写位移，还是各个进程具有各自的读写位移呢?</strong></li>
+<li>同一用户父、子进程协同完成任务，使用同一读/写位移，同步地对文件进行操作</li>
 <li>该位移指针宜放在相应文件的活动索引节点中。当用系统调用fork建立子进程时<strong>，父进程的PCB结构被复制到子进程的PCB结构中，使两个进程的打开文件表指向同一活动的索引节点，达到共享同一位移指针的目的。</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208133726368.png" alt="image-20221208133726368" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208133726368.png" alt="image-20221208133726368" style="zoom:80%;" /></p>
 <ul>
 <li>多用户共享文件，每个希望独立地读、写文件，这时不能只设置一个读写位移指针，须<strong>为每个用户进程分别设置一个读、写位移指针</strong></li>
 <li><strong>位移指针应放在每个进程用户打开文件表的表目中</strong>。这样，当一个进程读、写文件，并修改位移指针时，另一个进程的位移指针不会随之改变，从而，使两个进程能独立地访问同一文件</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208133846993.png" alt="image-20221208133846993" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221208133846993.png" alt="image-20221208133846993" style="zoom:80%;" /></p>
 <h4 id="文件的符号链接共享"><a href="#文件的符号链接共享" class="headerlink" title="文件的符号链接共享"></a>文件的符号链接共享</h4><ul>
-<li><p>操作系统可支持多个物理磁盘或多个逻辑磁盘(分区)，那么，文件系统是建立一棵目录树还是多棵目录树呢?</p>
-</li>
-<li><p>Windows采用将盘符或卷标分配给磁盘或分区，并将其名字作为文件路径名的一部分。</p>
-</li>
-<li><p>UNIX&#x2F;Linux的<strong>每个分区有自己的文件目录树</strong>，当有多个文件系统时，可通过安装的办法整合成一棵更大的文件目录树。</p>
+<li>操作系统可支持多个物理磁盘或多个逻辑磁盘(分区)，那么，文件系统是建立一棵目录树还是多棵目录树呢?</li>
+<li>Windows采用将盘符或卷标分配给磁盘或分区，并将其名字作为文件路径名的一部分。</li>
+<li><p>UNIX/Linux的<strong>每个分区有自己的文件目录树</strong>，当有多个文件系统时，可通过安装的办法整合成一棵更大的文件目录树。</p>
 </li>
 <li><p>问题：系统中每个文件对应一个inode，编号是唯一的，但两个不同的磁盘或分区都含有相同inode号对应的文件，也就是说，整合的目录树中，inode号并不唯一地标识一个文件</p>
 <ul>
@@ -839,16 +796,13 @@
 </li>
 <li><p>符号链接又称软链接，是一种只有文件名，不指向inode的文件</p>
 </li>
-<li><p>符号链接共享文件的实现思想：</p>
-<ul>
+<li>符号链接共享文件的实现思想：<ul>
 <li>用户A目录中形式为<code>afile -&gt; bfile</code>，实现A的目录与B的文件的链接。其中<strong>只包含被链接文件bfile的路径名</strong>而不是它的inode号，而<strong>文件的拥有者才具有指向inode的指针</strong></li>
 <li>当用户A要访问被符号链接的用户B的文件bfile，且要读“符号链接”类文件时，被操作系统截获，它将依据符号链接中的路径名去读文件，于是就能实现用户A使用文件名afile对用户B的文件bfile的共享</li>
 </ul>
 </li>
-<li><p>优点：能用于链接计算机系统中不同文件系统中的文件，可链接计算机网络中不同机器上的文件，此时，仅需提供文件所在机器地址和该机器中文件的路径名</p>
-</li>
-<li><p>缺点：搜索文件路径开销大，需要额外的空间查找存储路径。</p>
-</li>
+<li>优点：能用于链接计算机系统中不同文件系统中的文件，可链接计算机网络中不同机器上的文件，此时，仅需提供文件所在机器地址和该机器中文件的路径名</li>
+<li>缺点：搜索文件路径开销大，需要额外的空间查找存储路径。</li>
 </ul>
 <h3 id="3-3-文件空间管理"><a href="#3-3-文件空间管理" class="headerlink" title="3.3 文件空间管理"></a>3.3 文件空间管理</h3><p>磁盘文件空间分配采用两种办法</p>
 <ul>
@@ -859,7 +813,7 @@
 <h4 id="磁盘空闲空间管理方法"><a href="#磁盘空闲空间管理方法" class="headerlink" title="磁盘空闲空间管理方法"></a>磁盘空闲空间管理方法</h4><p><strong>位示图</strong></p>
 <ul>
 <li>磁盘空间通常使用固定大小的块，<strong>可方便地用位示图管理，用若干字节构成一张位示图</strong>，其中每一字位对应一个物理块，字位的次序与块的相对次序一致，字位为‘1’表示相应块已占用，字位为‘0’表示该块空闲。</li>
-<li>微型机操作系统VM&#x2F;SP、Windows和Macintosh等操作系统均使用这种技术管理文件存储空间</li>
+<li>微型机操作系统VM/SP、Windows和Macintosh等操作系统均使用这种技术管理文件存储空间</li>
 <li>主要优点是：每个盘块仅需 1 个附加位，如盘块长 1KB，位示图开销仅占 0.012%；可把位示图全部或大部分保存在主存，再配合现代机器都具有的位操作指令，实现高速物理块分配和去配</li>
 </ul>
 <p><strong>空闲区表</strong></p>
@@ -876,15 +830,14 @@
 <li>删除时释放占用块，使其成为空闲块并将它挂到空闲链上</li>
 <li>这种方法效率低，<strong>每申请一块都要读出空闲块并取得指针，申请多块时要多次读盘，但便于文件动态增长和收缩</strong></li>
 </ul>
-<h4 id="UNIX-Linux空闲块成组连接法"><a href="#UNIX-Linux空闲块成组连接法" class="headerlink" title="UNIX&#x2F;Linux空闲块成组连接法"></a>UNIX&#x2F;Linux空闲块成组连接法</h4><ul>
+<h4 id="UNIX-Linux空闲块成组连接法"><a href="#UNIX-Linux空闲块成组连接法" class="headerlink" title="UNIX/Linux空闲块成组连接法"></a>UNIX/Linux空闲块成组连接法</h4><ul>
 <li>存储空间分成 512 字节一块。假定文件卷启用时共有可用文件 338 块，编号从 12 至 349。每 100 块划分一组，<strong>每组第一块登记下一组空闲块的盘物理块号和空闲总数</strong></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203174705186.png" alt="image-20230203174705186" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230203174705186.png" alt="image-20230203174705186" style="zoom:80%;" /></p>
 <h3 id="3-4-主存映射文件"><a href="#3-4-主存映射文件" class="headerlink" title="3.4 主存映射文件"></a>3.4 主存映射文件</h3><ul>
 <li>首先，用于读写文件的操作在功能与格式上与读写主存的操作有很大不同，如果能消除这种差异就能简化编程工作</li>
 <li>其次，文件中的数据是一部分一部分在进程空间与磁盘空间之间传送，文件操作实现不但管理复杂且开销较大，能否找出一种方法既降低开销，又能通过直接读写主存来使用文件信息呢?</li>
-<li>针对这一点，最早由MULTICS首创通过结合虚存管理和文件管理技术来提供一种新的文件使用方法，称主存映射文件，UNIX&#x2F;Linux及Windows等现代操作系统都已实现这一功能。</li>
+<li>针对这一点，最早由MULTICS首创通过结合虚存管理和文件管理技术来提供一种新的文件使用方法，称主存映射文件，UNIX/Linux及Windows等现代操作系统都已实现这一功能。</li>
 </ul>
 <h4 id="主存映射文件"><a href="#主存映射文件" class="headerlink" title="主存映射文件"></a>主存映射文件</h4><p>什么是主存映射文件</p>
 <ul>
@@ -895,11 +848,9 @@
 </li>
 <li>优点是：方便易用、节省空间、便于共享、灵活高效</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224141108533.png" alt="image-20230224141108533" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224141108533.png" alt="image-20230224141108533" style="zoom:80%;" /></p>
 <p>优点：进程读写虚存内容相当于执行文件读写操作，在建立映射后，不再需要使用文件系统调用来读写数据，能大大降低开销；在主存中仅需一个页面副本，既节省空间，又不需要缓冲到主存的复制操作</p>
-<h4 id="文件系统的系统视图"><a href="#文件系统的系统视图" class="headerlink" title="文件系统的系统视图"></a>文件系统的系统视图</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224142310663.png" alt="image-20230224142310663" style="zoom:80%;" />
-
+<h4 id="文件系统的系统视图"><a href="#文件系统的系统视图" class="headerlink" title="文件系统的系统视图"></a>文件系统的系统视图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224142310663.png" alt="image-20230224142310663" style="zoom:80%;" /></p>
 <h3 id="3-5-虚拟文件系统"><a href="#3-5-虚拟文件系统" class="headerlink" title="3.5 虚拟文件系统"></a>3.5 虚拟文件系统</h3><ul>
 <li>第一个虚拟文件系统在1986年由Sun公司开发成功，并在SunOS中使用。</li>
 <li>虚拟文件系统也称虚拟文件系统开关VFS (Virtual Filesystem Switch)</li>
@@ -911,8 +862,7 @@
 <li>提供通过网络共享文件的支持，访问远程结点上的文件系统应与访问本地结点的文件系统一致</li>
 <li>可以开发出新的文件系统，以模块方式加入到操作系统中。</li>
 </ul>
-<h4 id="Linux虚拟文件系统"><a href="#Linux虚拟文件系统" class="headerlink" title="Linux虚拟文件系统"></a>Linux虚拟文件系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224143118663.png" alt="image-20230224143118663" style="zoom:80%;" />
-
+<h4 id="Linux虚拟文件系统"><a href="#Linux虚拟文件系统" class="headerlink" title="Linux虚拟文件系统"></a>Linux虚拟文件系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224143118663.png" alt="image-20230224143118663" style="zoom:80%;" /></p>
 <h4 id="虚拟文件系统设计思想"><a href="#虚拟文件系统设计思想" class="headerlink" title="虚拟文件系统设计思想"></a>虚拟文件系统设计思想</h4><ol>
 <li>应用层：<ul>
 <li>VFS模型源于UNIX文件系统，使得用户可直接使用标准UNIX文件系统调用来操作文件，无需考虑具体文件系统特性和物理存储介质，通过VFS访问文件系统，才使得不同文件系统之间的协作性和通用性成为可能</li>
@@ -934,8 +884,7 @@
 <li>实现面向文件的通用操作</li>
 <li>涉及特定文件系统的操作时映射到具体文件系统中去。</li>
 </ul>
-<h4 id="Linux虚拟文件系统-1"><a href="#Linux虚拟文件系统-1" class="headerlink" title="Linux虚拟文件系统"></a>Linux虚拟文件系统</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224145414967.png" alt="image-20230224145414967" style="zoom:80%;" />
-
+<h4 id="Linux虚拟文件系统-1"><a href="#Linux虚拟文件系统-1" class="headerlink" title="Linux虚拟文件系统"></a>Linux虚拟文件系统</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224145414967.png" alt="image-20230224145414967" style="zoom:80%;" /></p>
 <h4 id="VFS的组成"><a href="#VFS的组成" class="headerlink" title="VFS的组成"></a>VFS的组成</h4><ul>
 <li>超级块对象 - 代表一个文件系统。<ul>
 <li>存放已安装的文件系统信息，如果是基于磁盘的文件系统，该对象便对应于存放在磁盘上的文件系统控制块，每个文件系统都对应一个超级块对象。</li>
@@ -962,40 +911,30 @@
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224150106624.png" alt="image-20230224150106624" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224150641250.png" alt="image-20230224150641250" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224151231371.png" alt="image-20230224151231371" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153404909.png" alt="image-20230224153404909" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153529284.png" alt="image-20230224153529284" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153625151.png" alt="image-20230224153625151" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153643673.png" alt="image-20230224153643673" style="zoom:80%;" />
-
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153725825.png" alt="image-20230224153725825" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224150106624.png" alt="image-20230224150106624" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224150641250.png" alt="image-20230224150641250" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224151231371.png" alt="image-20230224151231371" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153404909.png" alt="image-20230224153404909" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153529284.png" alt="image-20230224153529284" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153625151.png" alt="image-20230224153625151" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153643673.png" alt="image-20230224153643673" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153725825.png" alt="image-20230224153725825" style="zoom:80%;" /></p>
 <h4 id="文件系统注册与注销，安装与卸载"><a href="#文件系统注册与注销，安装与卸载" class="headerlink" title="文件系统注册与注销，安装与卸载"></a>文件系统注册与注销，安装与卸载</h4><p>文件系统的注册与注销</p>
 <ul>
 <li>Linux支持多个物理磁盘，每个磁盘可划分为一个或多个磁盘分区，每个分区上可建立一个文件系统，一个安装好的Linux操作系统究竟支持几种不同类型的文件系统，是通过文件系统类型注册链表来描述的，VFS以链表形式管理已注册的具体文件系统。</li>
 <li>向系统注册文件系统类型有两种途径<ul>
 <li>一是在编译操作系统内核时确定可支持哪些文件系统，在文件系统被引导时，在VFS中进行注册</li>
-<li>二是文件系统当作可装载模块，通过insmod&#x2F;rmmod命令在装入该文件系统模块时向VFS注册&#x2F;注销。</li>
+<li>二是文件系统当作可装载模块，通过insmod/rmmod命令在装入该文件系统模块时向VFS注册/注销。</li>
 </ul>
 </li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153910074.png" alt="image-20230224153910074" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224153910074.png" alt="image-20230224153910074" style="zoom:80%;" /></p>
 <ol>
 <li><p>文件系统安装: 文件系统类型名、所在物理设备名、安装点，再用mount命令安装</p>
 </li>
 <li><p>文件系统安装过程: 寻找匹配的file_system_type、查找安装点VFS inode、分配一个VFS超级块、利用read_super()函数读入参数、申请一个vfsmount数据结构。</p>
 </li>
-<li><p>文件系统卸载过程: 是否可卸载、如果为“脏”把VFS超级块写回磁盘、删去vfsmount。</p>
-</li>
+<li>文件系统卸载过程: 是否可卸载、如果为“脏”把VFS超级块写回磁盘、删去vfsmount。</li>
 </ol>
 <h4 id="文件系统的缓存机制"><a href="#文件系统的缓存机制" class="headerlink" title="文件系统的缓存机制"></a>文件系统的缓存机制</h4><p>VFS inode缓存</p>
 <ul>
@@ -1009,7 +948,7 @@
 <ul>
 <li>Linux维护一组页缓冲区，它独立于任何类型的文件系统，被所有物理设备所共享</li>
 <li>优点：<ul>
-<li>数据一经使用，就在页缓冲区中留下备份，再次使用时可直接找回，避免不必要的磁盘I&#x2F;O</li>
+<li>数据一经使用，就在页缓冲区中留下备份，再次使用时可直接找回，避免不必要的磁盘I/O</li>
 <li>“脏”页写回磁盘时，可适当进行排序，实现磁盘驱动调度优化。</li>
 </ul>
 </li>
@@ -1021,8 +960,7 @@
 <li>inode位示图记录inode表中inode的使用情况。</li>
 <li>inode表保存本组所有的inode，inode用于描述文件，一个inode对应一个文件和子目录，有一个唯一的inode号，并记录了文件在外存的位置、存取权限、修改时间、类型等信息。</li>
 </ul>
-<h4 id="文件系统结构"><a href="#文件系统结构" class="headerlink" title="文件系统结构"></a>文件系统结构</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224155556986.png" alt="image-20230224155556986" style="zoom:80%;" />
-
+<h4 id="文件系统结构"><a href="#文件系统结构" class="headerlink" title="文件系统结构"></a>文件系统结构</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230224155556986.png" alt="image-20230224155556986" style="zoom:80%;" /></p>
 <h4 id="EXT2的超级块"><a href="#EXT2的超级块" class="headerlink" title="EXT2的超级块"></a>EXT2的超级块</h4><ul>
 <li>Ext2超级块用来描述目录和文件在磁盘上的静态分布，包括尺寸和结构，每个块组都有一个超级块，只有块1的超级块才被读入主存工作，直至卸载，其他块组的超级块仅作为恢复备份。</li>
 <li>超级块主要包括：块组编号、块数量、块长度(1KB至4KB)、空闲块数量、inode数量、空闲inode数量、第一个inode号、第一个数据块位置、每个块组中的块数、每个块组的inode数，以及安装时间、最后一次写时间、安装信息、文件系统状态信息等内容。</li>
@@ -1033,7 +971,7 @@
 <li>inode表。块组中inode占用的数据块数，系统中的每个文件对应一个inode，每个inode都由一个数据结构来描述。</li>
 <li>空闲块数、空闲inode数和已用数目。</li>
 </ul>
-<h4 id="EXT2的inode"><a href="#EXT2的inode" class="headerlink" title="EXT2的inode"></a>EXT2的inode</h4><p>inode用于描述文件，一个inode对应一个文件和子目录，有一个唯一的inode号，并记录了文件的类型及存取权限、用户和组标识、修改&#x2F;访问&#x2F;创建&#x2F;删除时间、link数、文件长度和占用块数、在外存的位置、以及其他控制信息。</p>
+<h4 id="EXT2的inode"><a href="#EXT2的inode" class="headerlink" title="EXT2的inode"></a>EXT2的inode</h4><p>inode用于描述文件，一个inode对应一个文件和子目录，有一个唯一的inode号，并记录了文件的类型及存取权限、用户和组标识、修改/访问/创建/删除时间、link数、文件长度和占用块数、在外存的位置、以及其他控制信息。</p>
 <h4 id="Linux数据块分配策略"><a href="#Linux数据块分配策略" class="headerlink" title="Linux数据块分配策略"></a>Linux数据块分配策略</h4><p>EXT2采用两个策略减少文件碎片</p>
 <ul>
 <li>原地先查找策略：为文件分配数据块时，尽量在文件原有数据块附近查找。先试探紧跟文件末尾的数据块，然后试探位于同一个块组相邻的64个数据块，接着在同一个块组中寻找其他空闲数据块；实在不得己才搜索其他块组，且首先考虑8个一簇的连续的块。</li>
@@ -1404,5 +1342,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

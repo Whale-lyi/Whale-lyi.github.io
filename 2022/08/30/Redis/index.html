@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -189,14 +185,16 @@
 <p>端口号<code>6379</code></p>
 <p>默认16个数据库，类似数组下标从0开始，初始默认使用0号库</p>
 <p>统一密码管理，所有库同样密码</p>
-<h2 id="2-常用五大数据类型"><a href="#2-常用五大数据类型" class="headerlink" title="2. 常用五大数据类型"></a>2. 常用五大数据类型</h2><h3 id="2-1-Redis键-key"><a href="#2-1-Redis键-key" class="headerlink" title="2.1 Redis键(key)"></a>2.1 Redis键(key)</h3><table>
+<h2 id="2-常用五大数据类型"><a href="#2-常用五大数据类型" class="headerlink" title="2. 常用五大数据类型"></a>2. 常用五大数据类型</h2><h3 id="2-1-Redis键-key"><a href="#2-1-Redis键-key" class="headerlink" title="2.1 Redis键(key)"></a>2.1 Redis键(key)</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>keys *</code></td>
 <td>查看当前库所有key  (匹配：keys *1)</td>
 </tr>
@@ -240,18 +238,22 @@
 <td><code>flushall</code></td>
 <td>清空全部库</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="2-2-Redis字符串-String"><a href="#2-2-Redis字符串-String" class="headerlink" title="2.2 Redis字符串(String)"></a>2.2 Redis字符串(String)</h3><h4 id="2-2-1-简介"><a href="#2-2-1-简介" class="headerlink" title="2.2.1 简介"></a>2.2.1 简介</h4><p>String是Redis最基本的类型，你可以理解成与Memcached一模一样的类型，一个key对应一个value。</p>
 <p>String类型是<code>二进制安全的</code>。意味着Redis的string可以包含任何数据。比如jpg图片或者序列化的对象。</p>
 <p>String类型是Redis最基本的数据类型，一个Redis中字符串value最多可以是512M</p>
-<h4 id="2-2-2-常用命令"><a href="#2-2-2-常用命令" class="headerlink" title="2.2.2 常用命令"></a>2.2.2 常用命令</h4><table>
+<h4 id="2-2-2-常用命令"><a href="#2-2-2-常用命令" class="headerlink" title="2.2.2 常用命令"></a>2.2.2 常用命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>set &lt;key&gt; &lt;value&gt;</code></td>
 <td>添加键值对</td>
 </tr>
@@ -311,16 +313,16 @@
 <td><code>getset &lt;key&gt; &lt;value&gt;</code></td>
 <td>以新换旧，设置了新值同时获得旧值</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220831005752139.png" alt="image-20220831005752139"></p>
 <blockquote>
 <p>*NX: 当数据库中key不存在时，可以将key-value添加数据库</p>
 <p>*XX: 当数据库中key存在时，可以将key-value添加数据库，与NX参数互斥</p>
 <p>*EX: key的超时秒数</p>
 <p>*PX: key的超时毫秒数，与EX互斥</p>
-</blockquote>
-<blockquote>
-<p>&#x3D;&#x3D;原子性&#x3D;&#x3D;</p>
+<p>==原子性==</p>
 <p>所谓<strong>原子</strong>操作是指不会被线程调度机制打断的操作</p>
 <p>这种操作一旦开始，就一直运行到结束，中间不会有任何 context switch （切换到另一个线程）。</p>
 <p>（1）在单线程中，能够在单条指令中完成的操作都可以认为是”原子操作”，因为中断只能发生于指令之间。</p>
@@ -333,20 +335,22 @@
 <h3 id="2-3-Redis列表-List"><a href="#2-3-Redis列表-List" class="headerlink" title="2.3 Redis列表(List)"></a>2.3 Redis列表(List)</h3><h4 id="2-3-1-简介"><a href="#2-3-1-简介" class="headerlink" title="2.3.1 简介"></a>2.3.1 简介</h4><p>Redis 列表是简单的字符串列表，按照插入顺序排序。你可以添加一个元素到列表的头部（左边）或者尾部（右边）。</p>
 <p>它的底层实际是个双向链表，对两端的操作性能很高，通过索引下标的操作中间的节点性能会较差。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901100702152.png" alt="image-20220901100702152"></p>
-<h4 id="2-3-2-常用命令"><a href="#2-3-2-常用命令" class="headerlink" title="2.3.2 常用命令"></a>2.3.2 常用命令</h4><table>
+<h4 id="2-3-2-常用命令"><a href="#2-3-2-常用命令" class="headerlink" title="2.3.2 常用命令"></a>2.3.2 常用命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>lpush/rpush &lt;key&gt; &lt;value1&gt; &lt;value2&gt; &lt;value3&gt; ....</code></td>
-<td>从左边&#x2F;右边插入一个或多个值</td>
+<td>从左边/右边插入一个或多个值</td>
 </tr>
 <tr>
 <td><code>lpop/rpop &lt;key&gt;</code></td>
-<td>从左边&#x2F;右边吐出一个值。值在键在，值光键亡</td>
+<td>从左边/右边吐出一个值。值在键在，值光键亡</td>
 </tr>
 <tr>
 <td><code>rpoplpush &lt;key1&gt; &lt;key2&gt;</code></td>
@@ -365,8 +369,9 @@
 <td>获得列表长度</td>
 </tr>
 <tr>
-<td>&#96;linsert <key> before</td>
-<td>after <value> <newvalue>&#96;</td>
+<td>`linsert <key> before</td>
+<td>after <value> <newvalue>`</td>
+<td>在<code>&lt;value&gt;</code>的前/后面插入<code>&lt;newvalue&gt;</code></td>
 </tr>
 <tr>
 <td><code>lrem &lt;key&gt; &lt;n&gt; &lt;value&gt;</code></td>
@@ -376,22 +381,26 @@
 <td><code>lset &lt;key&gt; &lt;index&gt; &lt;value&gt;</code></td>
 <td>将列表key下标为index的值替换成value</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="2-3-3-数据结构"><a href="#2-3-3-数据结构" class="headerlink" title="2.3.3 数据结构"></a>2.3.3 数据结构</h4><p>List的数据结构为快速链表quickList。</p>
 <p>首先在列表元素较少的情况下会使用一块连续的内存存储，这个结构是zipList，也即是压缩列表。它将所有的元素紧挨着一起存储，分配的是一块连续的内存。当数据量比较多的时候才会改成quicklist。</p>
 <p>因为普通的链表需要的附加指针空间太大，会比较浪费空间。比如这个列表里存的只是int类型的数据，结构上还需要两个额外的指针prev和next。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901101645368.png" alt="image-20220901101645368"></p>
 <p>Redis将链表和ziplist结合起来组成了quicklist。也就是将多个ziplist使用双向指针串起来使用。这样既满足了快速的插入删除性能，又不会出现太大的空间冗余。</p>
 <h3 id="2-4-Redis集合-Set"><a href="#2-4-Redis集合-Set" class="headerlink" title="2.4 Redis集合(Set)"></a>2.4 Redis集合(Set)</h3><h4 id="2-4-1-简介"><a href="#2-4-1-简介" class="headerlink" title="2.4.1 简介"></a>2.4.1 简介</h4><p>Redis set对外提供的功能与list类似，是一个列表的功能，特殊之处在于set是可以<strong>自动排重</strong>的，当你需要存储一个列表数据，又不希望出现重复数据时，set是一个很好的选择，并且set提供了判断某个成员是否在一个set集合内的重要接口，这个也是list所不能提供的。</p>
-<p>Redis的Set是string类型的<strong>无序集合</strong>。<strong>底层是一个value为null的hash表</strong>，所以添加，删除，查找的**复杂度都是O(1)**。</p>
-<h4 id="2-4-2-常用命令"><a href="#2-4-2-常用命令" class="headerlink" title="2.4.2 常用命令"></a>2.4.2 常用命令</h4><table>
+<p>Redis的Set是string类型的<strong>无序集合</strong>。<strong>底层是一个value为null的hash表</strong>，所以添加，删除，查找的<strong>复杂度都是O(1)</strong>。</p>
+<h4 id="2-4-2-常用命令"><a href="#2-4-2-常用命令" class="headerlink" title="2.4.2 常用命令"></a>2.4.2 常用命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>sadd &lt;key&gt; &lt;value1&gt; &lt;value2&gt; .....</code></td>
 <td>将一个或多个元素加入到集合 key 中，已经存在的元素将被忽略</td>
 </tr>
@@ -435,26 +444,30 @@
 <td><code>sdiff &lt;key1&gt; &lt;key2&gt;</code></td>
 <td>返回两个集合的<strong>差集</strong>元素(key1中的，不包含key2中的)</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="2-4-3-数据结构"><a href="#2-4-3-数据结构" class="headerlink" title="2.4.3 数据结构"></a>2.4.3 数据结构</h4><p>Set数据结构是dict字典，字典是用哈希表实现的。</p>
 <p>Java中HashSet的内部实现使用的是HashMap，只不过所有的value都指向同一个对象。Redis的set结构也是一样，它的内部也使用hash结构，所有的value都指向同一个内部值。</p>
 <h3 id="2-5-Redis哈希-Hash"><a href="#2-5-Redis哈希-Hash" class="headerlink" title="2.5 Redis哈希(Hash)"></a>2.5 Redis哈希(Hash)</h3><h4 id="2-5-1-简介"><a href="#2-5-1-简介" class="headerlink" title="2.5.1 简介"></a>2.5.1 简介</h4><p>Redis hash是一个键值对集合。是一个string类型的field和value的映射表，特别适合用于存储对象。</p>
-<p>类似Java里面的Map&lt;String,Object&gt;</p>
-<p>用户ID为查找的key，存储的value用户对象包含姓名，年龄，生日等信息，如果用普通的key&#x2F;value结构来存储，主要有以下2种存储方式：</p>
+<p>类似Java里面的Map<String,Object></p>
+<p>用户ID为查找的key，存储的value用户对象包含姓名，年龄，生日等信息，如果用普通的key/value结构来存储，主要有以下2种存储方式：</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901104741224.png" alt="image-20220901104741224"></p>
 <p>每次修改用户的某个属性需要，先反序列化改好后再序列化回去。开销较大。</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901104754643.png" alt="image-20220901104754643"></p>
 <p>用户ID数据冗余</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220901104806546.png" alt="image-20220901104806546"></p>
 <p>通过 <code>key(用户ID) + field(属性标签)</code> 就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和并发修改控制的问题</p>
-<h4 id="2-5-2-常用命令"><a href="#2-5-2-常用命令" class="headerlink" title="2.5.2 常用命令"></a>2.5.2 常用命令</h4><table>
+<h4 id="2-5-2-常用命令"><a href="#2-5-2-常用命令" class="headerlink" title="2.5.2 常用命令"></a>2.5.2 常用命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>hset &lt;key&gt; &lt;field&gt; &lt;value&gt;</code></td>
 <td>给<code>&lt;key&gt;</code>集合中的<code>&lt;field&gt;</code>键赋值<code>&lt;value&gt;</code></td>
 </tr>
@@ -486,33 +499,37 @@
 <td><code>hsetnx &lt;key&gt; &lt;field&gt; &lt;value&gt;</code></td>
 <td>将哈希表 key 中的域 field 的值设置为 value ，当且仅当域 field 不存在</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h4 id="2-5-3-数据结构"><a href="#2-5-3-数据结构" class="headerlink" title="2.5.3 数据结构"></a>2.5.3 数据结构</h4><p>Hash类型对应的数据结构是两种：ziplist（压缩列表），hashtable（哈希表）。当field-value长度较短且个数较少时，使用ziplist，否则使用hashtable。</p>
 <h3 id="2-6-Redis有序集合-Zset"><a href="#2-6-Redis有序集合-Zset" class="headerlink" title="2.6 Redis有序集合(Zset)"></a>2.6 Redis有序集合(Zset)</h3><h4 id="2-6-1-简介"><a href="#2-6-1-简介" class="headerlink" title="2.6.1 简介"></a>2.6.1 简介</h4><p>Redis有序集合zset与普通集合set非常相似，是一个没有重复元素的字符串集合。</p>
-<p>不同之处是有序集合的每个成员都关联了一个**评分(score)**，集合中的成员按照最低分到最高分的方式排序。集合的成员是唯一的，但是评分可以是重复的。</p>
+<p>不同之处是有序集合的每个成员都关联了一个<strong>评分(score)</strong>，集合中的成员按照最低分到最高分的方式排序。集合的成员是唯一的，但是评分可以是重复的。</p>
 <p>因为元素是有序的, 所以可以根据评分(score)或者次序(position)来获取一个范围的元素。</p>
 <p>访问有序集合的中间元素也是非常快的，因此可以使用zset作为一个没有重复成员的智能列表。</p>
-<h4 id="2-6-2-常用命令"><a href="#2-6-2-常用命令" class="headerlink" title="2.6.2 常用命令"></a>2.6.2 常用命令</h4><table>
+<h4 id="2-6-2-常用命令"><a href="#2-6-2-常用命令" class="headerlink" title="2.6.2 常用命令"></a>2.6.2 常用命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>zadd &lt;key&gt; &lt;score1&gt; &lt;value1&gt; &lt;score2&gt; &lt;value2&gt;</code></td>
 <td>将一个或多个 member 元素及其 score 值加入到有序集 key 当中。</td>
 </tr>
 <tr>
 <td><code>zrange &lt;key&gt; &lt;start&gt; &lt;stop&gt; [WITHSCORES]</code></td>
-<td>返回有序集 key 中，下标在&lt;start&gt;&lt;stop&gt;之间的元素。带 WITHSCORES，可以让分数一起和值返回到结果集。</td>
+<td>返回有序集 key 中，下标在\<start>\<stop>之间的元素。带 WITHSCORES，可以让分数一起和值返回到结果集。</td>
 </tr>
 <tr>
 <td><code>zrangebyscore &lt;key&gt; &lt;min&gt; &lt;max&gt; [WITHSCORES] [limit offset count]</code></td>
 <td>返回有序集 key 中，所有 score 值介于 min 和 max 之间(包括等于min或max)的成员。有序集成员按 score 值递增(从小到大)次序排列。</td>
 </tr>
 <tr>
-<td><code>zrevrangebyscore &lt;key&gt; &lt;min&gt; &lt;max&gt; [withscores] [limit offset count] </code></td>
+<td><code>zrevrangebyscore &lt;key&gt; &lt;min&gt; &lt;max&gt; [withscores] [limit offset count]</code></td>
 <td>同上，改为从大到小排列。</td>
 </tr>
 <tr>
@@ -531,8 +548,10 @@
 <td><code>zrank &lt;key&gt; &lt;value&gt;</code></td>
 <td>返回该值在集合中的排名，从0开始</td>
 </tr>
-</tbody></table>
-<h4 id="2-6-3-数据结构"><a href="#2-6-3-数据结构" class="headerlink" title="2.6.3 数据结构"></a>2.6.3 数据结构</h4><p>SortedSet(zset)是Redis提供的一个非常特别的数据结构，一方面它等价于Java的数据结构Map&lt;String, Double&gt;，可以给每一个元素value赋予一个权重score，另一方面它又类似于TreeSet，内部的元素会按照权重score进行排序，可以得到每个元素的名次，还可以通过score的范围来获取元素的列表。</p>
+</tbody>
+</table>
+</div>
+<h4 id="2-6-3-数据结构"><a href="#2-6-3-数据结构" class="headerlink" title="2.6.3 数据结构"></a>2.6.3 数据结构</h4><p>SortedSet(zset)是Redis提供的一个非常特别的数据结构，一方面它等价于Java的数据结构Map<String, Double>，可以给每一个元素value赋予一个权重score，另一方面它又类似于TreeSet，内部的元素会按照权重score进行排序，可以得到每个元素的名次，还可以通过score的范围来获取元素的列表。</p>
 <p>zset底层使用了两个数据结构</p>
 <ul>
 <li>hash，hash的作用就是关联元素value和权重score，保障元素value的唯一性，可以通过元素value找到相应的score值。</li>
@@ -558,10 +577,10 @@
 <p>在第0层，51节点为要查找的节点，节点被找到，共查找4次。</p>
 </li>
 </ul>
-<h2 id="3-Redis配置文件介绍"><a href="#3-Redis配置文件介绍" class="headerlink" title="3. Redis配置文件介绍"></a>3. Redis配置文件介绍</h2><p>文件 &#x2F;etc&#x2F;redis&#x2F;redis.conf</p>
+<h2 id="3-Redis配置文件介绍"><a href="#3-Redis配置文件介绍" class="headerlink" title="3. Redis配置文件介绍"></a>3. Redis配置文件介绍</h2><p>文件 /etc/redis/redis.conf</p>
 <h3 id="3-1-NETWORK"><a href="#3-1-NETWORK" class="headerlink" title="3.1 NETWORK"></a>3.1 NETWORK</h3><p><strong>bind</strong></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220914193301605.png" alt="image-20220914193301605"></p>
-<p>默认情况bind&#x3D;127.0.0.1只能接受本机的访问请求</p>
+<p>默认情况bind=127.0.0.1只能接受本机的访问请求</p>
 <p>不写的情况下，接受任何ip地址的访问</p>
 <p><strong>protected-mode</strong></p>
 <p>设置本机访问保护模式</p>
@@ -569,9 +588,9 @@
 <p><strong>port</strong></p>
 <p>端口号，默认6379</p>
 <p><strong>tcp-backlog</strong></p>
-<p>设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和&#x3D;未完成三次握手队列 + 已经完成三次握手队列。</p>
+<p>设置tcp的backlog，backlog其实是一个连接队列，backlog队列总和=未完成三次握手队列 + 已经完成三次握手队列。</p>
 <p>在高并发环境下需要一个高backlog值来避免慢客户端连接问题。</p>
-<p>注意Linux内核会将这个值减小到&#x2F;proc&#x2F;sys&#x2F;net&#x2F;core&#x2F;somaxconn的值（128），所以需要确认增大&#x2F;proc&#x2F;sys&#x2F;net&#x2F;core&#x2F;somaxconn和&#x2F;proc&#x2F;sys&#x2F;net&#x2F;ipv4&#x2F;tcp_max_syn_backlog（128）两个值来达到想要的效果</p>
+<p>注意Linux内核会将这个值减小到/proc/sys/net/core/somaxconn的值（128），所以需要确认增大/proc/sys/net/core/somaxconn和/proc/sys/net/ipv4/tcp_max_syn_backlog（128）两个值来达到想要的效果</p>
 <p><strong>timeout</strong></p>
 <p>一个空闲的客户端维持多少秒会关闭，0表示关闭该功能。即<code>永不关闭</code>。</p>
 <p><strong>tcp-keepalive</strong></p>
@@ -587,7 +606,7 @@
 <p><strong>logfile</strong></p>
 <p>日志文件名称</p>
 <p><strong>databases</strong></p>
-<p>设定库的数量，默认16个，默认数据库为0，可以使用SELECT &lt;dbid&gt;命令在连接上指定数据库id</p>
+<p>设定库的数量，默认16个，默认数据库为0，可以使用SELECT \<dbid>命令在连接上指定数据库id</p>
 <h3 id="3-3-SECURITY"><a href="#3-3-SECURITY" class="headerlink" title="3.3 SECURITY"></a>3.3 SECURITY</h3><p><strong>requirepass</strong></p>
 <p>设置密码，进入redis时通过<code>auth &lt;pass&gt;</code>来使用</p>
 <p>在命令中设置密码，只是临时的，永久设置需要在配置文件中进行设置</p>
@@ -613,7 +632,7 @@
 <p><strong>maxmemory-samples</strong></p>
 <p>设置样本数量，LRU,LFU算法和最小TTL算法都并非是精确的算法，而是估算值，所以你可以设置样本的大小，redis默认会检查这么多个key并选择其中LRU的那个</p>
 <p>一般设置3到7的数字，数值越小样本越不准确，但性能消耗越小</p>
-<h2 id="4-Redis的发布和订阅"><a href="#4-Redis的发布和订阅" class="headerlink" title="4. Redis的发布和订阅"></a>4. Redis的发布和订阅</h2><h3 id="4-1-什么是发布和订阅"><a href="#4-1-什么是发布和订阅" class="headerlink" title="4.1 什么是发布和订阅"></a>4.1 什么是发布和订阅</h3><p>Redis 发布订阅 (pub&#x2F;sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。</p>
+<h2 id="4-Redis的发布和订阅"><a href="#4-Redis的发布和订阅" class="headerlink" title="4. Redis的发布和订阅"></a>4. Redis的发布和订阅</h2><h3 id="4-1-什么是发布和订阅"><a href="#4-1-什么是发布和订阅" class="headerlink" title="4.1 什么是发布和订阅"></a>4.1 什么是发布和订阅</h3><p>Redis 发布订阅 (pub/sub) 是一种消息通信模式：发送者 (pub) 发送消息，订阅者 (sub) 接收消息。</p>
 <p>Redis 客户端可以订阅任意数量的频道。</p>
 <h3 id="4-2-Redis的发布和订阅"><a href="#4-2-Redis的发布和订阅" class="headerlink" title="4.2 Redis的发布和订阅"></a>4.2 Redis的发布和订阅</h3><p>客户端可以订阅频道如下图</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220914200344453.png" alt="image-20220914200344453"></p>
@@ -623,11 +642,11 @@
 <li>打开一个客户端订阅channel1</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220914200539836.png" alt="image-20220914200539836"></p>
-<ol start="2">
+<ol>
 <li>打开另一个客户端，给channel1发布消息hello</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220914200723253.png" alt="image-20220914200723253"></p>
-<ol start="3">
+<ol>
 <li>第一个客户端接收到消息</li>
 </ol>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220914200738291.png" alt="image-20220914200738291"></p>
@@ -639,14 +658,16 @@
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20220914203611578.png" alt="image-20220914203611578"></p>
-<h4 id="5-1-2-命令"><a href="#5-1-2-命令" class="headerlink" title="5.1.2 命令"></a>5.1.2 命令</h4><table>
+<h4 id="5-1-2-命令"><a href="#5-1-2-命令" class="headerlink" title="5.1.2 命令"></a>5.1.2 命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>setbit &lt;key&gt; &lt;offset&gt; &lt;value&gt;</code></td>
 <td>设置Bitmaps中某个偏移量的值(0或1)</td>
 </tr>
@@ -662,20 +683,24 @@
 <td><code>bitop and(or/not/xor) &lt;destkey&gt; [key…]</code></td>
 <td>bitop是一个复合操作，它可以做多个Bitmaps的and(交集)、or(并集)、not(非)、xor(异或)操作并将结果保存在destkey中。</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="5-2-HyperLogLog"><a href="#5-2-HyperLogLog" class="headerlink" title="5.2 HyperLogLog"></a>5.2 HyperLogLog</h3><h4 id="5-2-1-简介"><a href="#5-2-1-简介" class="headerlink" title="5.2.1 简介"></a>5.2.1 简介</h4><p>求集合中不重复元素个数的问题称为基数问题。</p>
 <p>Redis HyperLogLog就是用来做基数统计的算法，HyperLogLog的优点是在输入元素的数量或者体积非常非常大时，计算基数所需的空间总是固定的、并且是很小的。</p>
 <p>在 Redis 里面，每个 HyperLogLog 键只需要花费 12 KB 内存，就可以计算接近 2^64 个不同元素的基数。这和计算基数时，元素越多耗费内存就越多的集合形成鲜明对比。</p>
 <p>但是，因为 HyperLogLog 只会根据输入元素来计算基数，而不会储存输入元素本身，所以 HyperLogLog 不能像集合那样，返回输入的各个元素。</p>
-<h4 id="5-2-2-命令"><a href="#5-2-2-命令" class="headerlink" title="5.2.2 命令"></a>5.2.2 命令</h4><table>
+<h4 id="5-2-2-命令"><a href="#5-2-2-命令" class="headerlink" title="5.2.2 命令"></a>5.2.2 命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
-<td><code>pfadd &lt;key&gt; &lt;element&gt; [element ...] </code></td>
+<tbody>
+<tr>
+<td><code>pfadd &lt;key&gt; &lt;element&gt; [element ...]</code></td>
 <td>添加指定元素到 HyperLogLog 中</td>
 </tr>
 <tr>
@@ -686,16 +711,20 @@
 <td><code>pfmerge &lt;destkey&gt; &lt;sourcekey&gt; [sourcekey ...]</code></td>
 <td>将一个或多个HLL合并后的结果存储在另一个HLL中，比如每月活跃用户可以使用每天的活跃用户来合并计算可得</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h3 id="5-3-Geospatial"><a href="#5-3-Geospatial" class="headerlink" title="5.3 Geospatial"></a>5.3 Geospatial</h3><h4 id="5-3-1-简介"><a href="#5-3-1-简介" class="headerlink" title="5.3.1 简介"></a>5.3.1 简介</h4><p>Redis 3.2 中增加了对GEO类型的支持。GEO，Geographic，地理信息的缩写。该类型，就是元素的2维坐标，在地图上就是经纬度。redis基于该类型，提供了经纬度设置，查询，范围查询，距离查询，经纬度Hash等常见操作。</p>
-<h4 id="5-3-2-命令"><a href="#5-3-2-命令" class="headerlink" title="5.3.2 命令"></a>5.3.2 命令</h4><table>
+<h4 id="5-3-2-命令"><a href="#5-3-2-命令" class="headerlink" title="5.3.2 命令"></a>5.3.2 命令</h4><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>命令</th>
 <th>解释</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>geoadd &lt;key&gt; &lt;longitude&gt; &lt;latitude&gt; &lt;member&gt; [longitude latitude member...]</code></td>
 <td>添加地理位置(经度，纬度，名称)</td>
 </tr>
@@ -704,19 +733,26 @@
 <td>获得指定地区的坐标值</td>
 </tr>
 <tr>
-<td>&#96;geodist <key> <member1> <member2> [m</td>
+<td>`geodist <key> <member1> <member2> [m</td>
 <td>km</td>
+<td>ft</td>
+<td>mi]`</td>
+<td>获取两个位置之间的直线距离,mi-英里,ft-英尺。默认使用m</td>
 </tr>
 <tr>
-<td>&#96;georadius <key> <longitude> <latitude> radius [m</td>
+<td>`georadius <key> <longitude> <latitude> radius [m</td>
 <td>km</td>
+<td>ft</td>
+<td>mi]`</td>
+<td>以给定的经纬度为中心，找出某一半径内的元素</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="6-Jedis"><a href="#6-Jedis" class="headerlink" title="6. Jedis"></a>6. Jedis</h2><ul>
 <li>引入依赖</li>
 </ul>
 <figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>redis.clients<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jedis<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>4.2.3<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><p>注意事项</p>
 <p>禁用Linux的防火墙，redis.conf中注释掉bind 127.0.0.1 ,然后 protected-mode no</p>
@@ -737,7 +773,8 @@
 <li><p>hash</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">jedis.hset(<span class="hljs-string">&quot;hash1&quot;</span>,<span class="hljs-string">&quot;userName&quot;</span>,<span class="hljs-string">&quot;lisi&quot;</span>);<br>System.out.println(jedis.hget(<span class="hljs-string">&quot;hash1&quot;</span>,<span class="hljs-string">&quot;userName&quot;</span>));<br>Map&lt;String,String&gt; map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;String,String&gt;();<br>map.put(<span class="hljs-string">&quot;telphone&quot;</span>,<span class="hljs-string">&quot;13810169999&quot;</span>);<br>map.put(<span class="hljs-string">&quot;address&quot;</span>,<span class="hljs-string">&quot;atguigu&quot;</span>);<br>map.put(<span class="hljs-string">&quot;email&quot;</span>,<span class="hljs-string">&quot;abc@163.com&quot;</span>);<br>jedis.hmset(<span class="hljs-string">&quot;hash2&quot;</span>,map);<br>List&lt;String&gt; result = jedis.hmget(<span class="hljs-string">&quot;hash2&quot;</span>, <span class="hljs-string">&quot;telphone&quot;</span>,<span class="hljs-string">&quot;email&quot;</span>);<br></code></pre></td></tr></table></figure></li>
 <li><p>zset</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">jedis.zadd(<span class="hljs-string">&quot;zset01&quot;</span>, <span class="hljs-number">100d</span>, <span class="hljs-string">&quot;z3&quot;</span>);<br>jedis.zadd(<span class="hljs-string">&quot;zset01&quot;</span>, <span class="hljs-number">90d</span>, <span class="hljs-string">&quot;l4&quot;</span>);<br> <br>Set&lt;String&gt; zrange = jedis.zrange(<span class="hljs-string">&quot;zset01&quot;</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">jedis.zadd(<span class="hljs-string">&quot;zset01&quot;</span>, <span class="hljs-number">100d</span>, <span class="hljs-string">&quot;z3&quot;</span>);<br>jedis.zadd(<span class="hljs-string">&quot;zset01&quot;</span>, <span class="hljs-number">90d</span>, <span class="hljs-string">&quot;l4&quot;</span>);<br> <br>Set&lt;String&gt; zrange = jedis.zrange(<span class="hljs-string">&quot;zset01&quot;</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>);<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 </ul>
@@ -752,7 +789,8 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@EnableCaching</span><br><span class="hljs-meta">@Configuration</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisConfig</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">CachingConfigurerSupport</span> &#123;<br><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> RedisTemplate&lt;String, Object&gt; <span class="hljs-title function_">redisTemplate</span><span class="hljs-params">(RedisConnectionFactory factory)</span> &#123;<br>        <span class="hljs-comment">// 1.创建 redisTemplate 模版</span><br>        RedisTemplate&lt;String, Object&gt; template = <span class="hljs-keyword">new</span> <span class="hljs-title class_">RedisTemplate</span>&lt;&gt;();<br>        <span class="hljs-comment">// 2.关联 redisConnectionFactory</span><br>        template.setConnectionFactory(factory);<br>        <span class="hljs-comment">// 3.创建 序列化类</span><br>        <span class="hljs-type">GenericToStringSerializer</span> <span class="hljs-variable">genericToStringSerializer</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">GenericToStringSerializer</span>(Object.class);<br>        <span class="hljs-comment">// 6.序列化类，对象映射设置</span><br>        <span class="hljs-comment">// 7.设置 value 的转化格式和 key 的转化格式</span><br>        template.setValueSerializer(genericToStringSerializer);<br>        template.setKeySerializer(<span class="hljs-keyword">new</span> <span class="hljs-title class_">StringRedisSerializer</span>());<br>        template.afterPropertiesSet();<br>        <span class="hljs-keyword">return</span> template;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>测试</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/redisTest&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisTestController</span> &#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RedisTemplate redisTemplate;<br><br>    <span class="hljs-meta">@GetMapping</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">testRedis</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//设置值到redis</span><br>        redisTemplate.opsForValue().set(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;lucy&quot;</span>);<br>        <span class="hljs-comment">//从redis获取值</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> (String)redisTemplate.opsForValue().get(<span class="hljs-string">&quot;name&quot;</span>);<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(&quot;/redisTest&quot;)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">RedisTestController</span> &#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> RedisTemplate redisTemplate;<br><br>    <span class="hljs-meta">@GetMapping</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">testRedis</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">//设置值到redis</span><br>        redisTemplate.opsForValue().set(<span class="hljs-string">&quot;name&quot;</span>,<span class="hljs-string">&quot;lucy&quot;</span>);<br>        <span class="hljs-comment">//从redis获取值</span><br>        <span class="hljs-type">String</span> <span class="hljs-variable">name</span> <span class="hljs-operator">=</span> (String)redisTemplate.opsForValue().get(<span class="hljs-string">&quot;name&quot;</span>);<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+</li>
 </ul>
 
       </div>
@@ -1118,5 +1156,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

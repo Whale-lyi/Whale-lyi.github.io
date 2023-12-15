@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -190,8 +186,7 @@
 <h3 id="3-1-Paging-hardware"><a href="#3-1-Paging-hardware" class="headerlink" title="3.1 Paging hardware"></a>3.1 Paging hardware</h3><p>RISC-V指令操纵虚拟地址，而机器RAM或物理内存使用物理地址，RISC-V页表硬件通过将每个虚拟地址映射到物理地址来连接这两种地址</p>
 <p>xv6运行于Sv39 RISC-V，即在 64 位地址中只有最下面的 39 位被使用作为虚拟地址，其中底 12 位是页内偏移，高 27 位是页表索引，即 4096 字节( $2^{12}$ )作为一个page，一个进程的虚拟内存可以有 $2^{27}$ 个page，对应到页表中就是 $2^{27}$ 个<em>page table entry</em>(PTE)。</p>
 <p>每个PTE有一个 44 位的physical page number (PPN) 用来映射到物理地址上和 10 位flag，总共需要 54 位，用 8 个字节存储(下面解释)。每个物理地址的高 44 位是页表中存储的PPN，低 12 位是页内偏移，一个物理地址总共由 56 位构成。</p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221113234723564.png" alt="image-20221113234723564" style="zoom: 50%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221113234723564.png" alt="image-20221113234723564" style="zoom: 50%;" /></p>
 <p>在Sv39 RISC-V，PTE格式中存在着可以使物理地址再增加 10 位的空间。</p>
 <p>在实际中，页表并不是作为一个包含了 $2^{27}$ 个PTE的大列表存储在物理内存中的，而是采用了三级树状的形式进行存储，这样可以让页表分散存储。每个页表就是一页。第一级页表是一个 4096 字节的页，包含了 512 个PTE(因为每个PTE需要 8 字节)，每个PTE存储了下级页表的页物理地址。第二级列表由512个页构成，第三级列表由512*512个页构成。</p>
 <blockquote>
@@ -200,7 +195,7 @@
 <p>例如，如果一个应用程序只使用从地址 0 开始的几个页面，那么一级页面目录的条目 1 到 511 是无效的，因此内核不必为 1-511 的二级页面目录分配页面。此外，内核还不必为这些二级页面目录对应的的三层页面目录分配页面。因此，在本例中，三层结构为二级页面目录节省了511页，为底层页面目录节省511×512页。</p>
 </blockquote>
 <p>因为每个进程虚拟地址的高 27 位用来确定PTE，对应到3级页表就是最高的 9 位确定一级页表PTE的位置，中间 9 位确定二级页表PTE的位置，最低 9 位确定三级页表PTE的位置。如下图所示。第一级根页表的物理页地址存储在<code>satp</code>寄存器中，每个CPU拥有自己独立的<code>satp</code></p>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221113234808913.png" alt="image-20221113234808913" style="zoom:80%;" />
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221113234808913.png" alt="image-20221113234808913" style="zoom:80%;" /></p>
 
       </div>
       
@@ -565,5 +560,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

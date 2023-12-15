@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -217,8 +213,7 @@
 <li>锁机制，使得并发控制成为可能</li>
 <li><strong>不同的数据库，实现锁机制是不一样的</strong></li>
 </ul>
-<h4 id="比如：Oracle的锁机制就比较特别"><a href="#比如：Oracle的锁机制就比较特别" class="headerlink" title="比如：Oracle的锁机制就比较特别"></a>比如：Oracle的锁机制就比较特别</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215103012132.png" alt="image-20230215103012132" style="zoom:80%;" />
-
+<h4 id="比如：Oracle的锁机制就比较特别"><a href="#比如：Oracle的锁机制就比较特别" class="headerlink" title="比如：Oracle的锁机制就比较特别"></a>比如：Oracle的锁机制就比较特别</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215103012132.png" alt="image-20230215103012132" style="zoom:80%;" /></p>
 <p>这个时候，Transaction1能提交吗？</p>
 <ul>
 <li>可以的，结果是1000</li>
@@ -228,8 +223,7 @@
 <li>读一致查询：对于一个时间点（point time），查询会产生一致的结果</li>
 <li>非阻塞查询：查询不会被写入器阻塞，<em>但在其它数据库中可能不是这样的</em></li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/2.png" alt="img" style="zoom: 50%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/2.png" alt="img" style="zoom: 50%;" /></p>
 <blockquote>
 <p>对于左侧，打开游标时，不会读取数据，只有在读取游标时才会读取数据</p>
 <p>对于右侧，如果我们删除了所有的表，但是我们在Oracle中仍然可以使用之前打开的游标来读取那个时刻的数据</p>
@@ -241,8 +235,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="Oracle-MySQL和其它数据库在并发上的差别"><a href="#Oracle-MySQL和其它数据库在并发上的差别" class="headerlink" title="Oracle&#x2F;MySQL和其它数据库在并发上的差别"></a>Oracle&#x2F;MySQL和其它数据库在并发上的差别</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215104203198.png" alt="image-20230215104203198" style="zoom: 67%;" />
-
+<h4 id="Oracle-MySQL和其它数据库在并发上的差别"><a href="#Oracle-MySQL和其它数据库在并发上的差别" class="headerlink" title="Oracle/MySQL和其它数据库在并发上的差别"></a>Oracle/MySQL和其它数据库在并发上的差别</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215104203198.png" alt="image-20230215104203198" style="zoom: 67%;" /></p>
 <h4 id="从体系结构和特性中了解具体数据库的锁机制"><a href="#从体系结构和特性中了解具体数据库的锁机制" class="headerlink" title="从体系结构和特性中了解具体数据库的锁机制"></a>从体系结构和特性中了解具体数据库的锁机制</h4><p>比如Oracle实现的锁机制</p>
 <ul>
 <li><strong>只有修改才加行级锁</strong></li>
@@ -255,8 +248,7 @@
 <ul>
 <li>通过使用 <code>FOR UPDATE</code> 手动加锁</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215104534691.png" alt="image-20230215104534691" style="zoom:80%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215104534691.png" alt="image-20230215104534691" style="zoom:80%;" /></p>
 <h4 id="黑盒和数据库独立性的问题"><a href="#黑盒和数据库独立性的问题" class="headerlink" title="黑盒和数据库独立性的问题"></a>黑盒和数据库独立性的问题</h4><ul>
 <li>数据库有脱离实现级别的使用方法</li>
 <li>我的观点是<ul>
@@ -277,12 +269,11 @@
 <p>例子：在表T中，如果不满足某个条件，则找出X为NULL的所有行，如果满足就找出X等于某个特定值的所有行。</p>
 <ul>
 <li>Oracle并没有返回NULL(不知道)的所有行</li>
-<li>Oracle中NULL &#x3D; NULL 返回 NULL</li>
+<li>Oracle中NULL = NULL 返回 NULL</li>
 <li>那么我们使用了is null关键字，但是Oracle不会为空值建立聚簇索引，导致性能会大幅度下降</li>
 <li>于是我们通过创建了一个<strong>基于函数的索引</strong>来解决这个问题</li>
 </ul>
-<img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215105546447.png" alt="image-20230215105546447" style="zoom: 67%;" />
-
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215105546447.png" alt="image-20230215105546447" style="zoom: 67%;" /></p>
 <h4 id="关于黑盒的问题总结几点"><a href="#关于黑盒的问题总结几点" class="headerlink" title="关于黑盒的问题总结几点"></a>关于黑盒的问题总结几点</h4><ul>
 <li>数据库是不同的。在一个数据库上取得的经验也许可以部分应用于另一个数据库，但是必须有心理准备，二者之间可能存在一些基本差别，可能还有一些细微的差别。</li>
 <li>细微的差别（比如对NULL的处理）与基本差别（如并发控制机制）可能有同样显著的影响。</li>
@@ -291,7 +282,7 @@
 <h2 id="2-优化"><a href="#2-优化" class="headerlink" title="2. 优化"></a>2. 优化</h2><h3 id="2-1-设计问题"><a href="#2-1-设计问题" class="headerlink" title="2.1 设计问题"></a>2.1 设计问题</h3><h4 id="我能不能找一个大牛帮我调优"><a href="#我能不能找一个大牛帮我调优" class="headerlink" title="我能不能找一个大牛帮我调优"></a>我能不能找一个大牛帮我调优</h4><ul>
 <li>先把程序写出来，之后再让专家在生产环境中帮我<strong>调优</strong>：<strong>这个想法是错误的</strong>。</li>
 <li>性能调优(目前情况下性能优化至最优)<ol>
-<li>根据当前CPU能力、可用内存、I&#x2F;O子系统等资源情况来设置相应参数</li>
+<li>根据当前CPU能力、可用内存、I/O子系统等资源情况来设置相应参数</li>
 <li>通过<strong>索引、物理结构、SQL</strong>的优化，具体提高某一个查询的性能</li>
 </ol>
 </li>
@@ -306,7 +297,7 @@
 </ol>
 </li>
 <li>比如，新闻的门户网站<ol>
-<li>动态页面 vs 静态页面：百万量级的高并发下的动态网页导致大量的连接创建、I&#x2F;O资源、CPU资源被消耗，导致负担过重</li>
+<li>动态页面 vs 静态页面：百万量级的高并发下的动态网页导致大量的连接创建、I/O资源、CPU资源被消耗，导致负担过重</li>
 <li>静态页面 + 内容管理系统：这个管理系统远远复杂于动态页面，使用触发器等自动化部署手段来生成静态网页</li>
 </ol>
 </li>
@@ -330,8 +321,7 @@
 </ul>
 </li>
 </ul>
-<h4 id="使用优化工具"><a href="#使用优化工具" class="headerlink" title="使用优化工具"></a>使用优化工具</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215112738722.png" alt="image-20230215112738722" style="zoom:67%;" />
-
+<h4 id="使用优化工具"><a href="#使用优化工具" class="headerlink" title="使用优化工具"></a>使用优化工具</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215112738722.png" alt="image-20230215112738722" style="zoom:67%;" /></p>
 <h4 id="整体层面的性能优化考虑"><a href="#整体层面的性能优化考虑" class="headerlink" title="整体层面的性能优化考虑"></a>整体层面的性能优化考虑</h4><p>问题一：CPU负载高，IO负载低</p>
 <ul>
 <li>内存不够</li>
@@ -347,7 +337,7 @@
 <li><strong>Autocommit，产生大量小IO</strong></li>
 <li><strong>大量大的IO执行写操作</strong></li>
 <li><strong>SQL的问题</strong></li>
-<li>IO&#x2F;PS磁盘限定一个每秒最大IO次数</li>
+<li>IO/PS磁盘限定一个每秒最大IO次数</li>
 </ul>
 <p>问题三：IO和CPU负载都高</p>
 <ul>
@@ -357,18 +347,17 @@
 <blockquote>
 <p>性能问题，90%的问题来源都是程序员的问题，开发环境到生产环境是一场灾难</p>
 </blockquote>
-<h4 id="SQL优化的方向"><a href="#SQL优化的方向" class="headerlink" title="SQL优化的方向"></a>SQL优化的方向</h4><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215113804909.png" alt="image-20230215113804909" style="zoom:80%;" />
-
+<h4 id="SQL优化的方向"><a href="#SQL优化的方向" class="headerlink" title="SQL优化的方向"></a>SQL优化的方向</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230215113804909.png" alt="image-20230215113804909" style="zoom:80%;" /></p>
 <h4 id="限用Boolean型字段"><a href="#限用Boolean型字段" class="headerlink" title="限用Boolean型字段"></a>限用Boolean型字段</h4><ul>
 <li>SQL中并不存在Boolean类型</li>
-<li>实现flag表示标志位的Y&#x2F;N或T&#x2F;F<ul>
+<li>实现flag表示标志位的Y/N或T/F<ul>
 <li>例如：order_completed</li>
 <li>但是…往往增加信息字段能包含更多的信息量</li>
 <li>例如：completion_date completion_by</li>
 <li>或者增加order更多状态标示</li>
 </ul>
 </li>
-<li>极端的例子：四个属性取值都是T&#x2F;F，可以用0-15这16个数值代表四个属性所有组合状态<ul>
+<li>极端的例子：四个属性取值都是T/F，可以用0-15这16个数值代表四个属性所有组合状态<ul>
 <li>技巧可能违反了原子性的原则</li>
 <li>为数据而数据，是通向灾难之路</li>
 </ul>
@@ -777,5 +766,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

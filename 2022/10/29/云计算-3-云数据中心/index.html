@@ -65,11 +65,7 @@
       document.documentElement.setAttribute('color-mode', colorMode)
     }
   </script>
-<!-- hexo injector head_end start -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
-
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+<meta name="generator" content="Hexo 6.3.0"></head>
 
 
   <body>
@@ -199,14 +195,12 @@
 <li>软件：虚拟机等资源调度算法、计算任务管理算法等</li>
 </ul>
 </li>
-<li><p>高可用性</p>
-<ul>
+<li>高可用性<ul>
 <li>各个部分的冗余、容错、容灾设计</li>
 <li>扩展和升级时，保持正常运行</li>
 </ul>
 </li>
-<li><p>自动化管理</p>
-<ul>
+<li>自动化管理<ul>
 <li>无人值守，远程管理(系统漏洞与补丁管理、性能管理和瓶颈分析、服务器与操作系统部署、系统功率测量和调整)</li>
 <li>门禁、通风、温度、湿度、电力均可远程调度与控制</li>
 </ul>
@@ -250,7 +244,7 @@
 <blockquote>
 <p>但是，FatTree的扩展性受限于核心交换机端口数量，目前比较常用的是48端口10G核心交换机，在3层树结构中能够支持27648台主机。</p>
 <p>48个端口 -&gt; 48个Pod -&gt; 每个Pod有24个汇聚，24个接入 -&gt; 每个接入有24个接口接主机</p>
-<p>48 * 24 * 24 &#x3D; 27648</p>
+<p>48 * 24 * 24 = 27648</p>
 </blockquote>
 </li>
 </ul>
@@ -295,7 +289,7 @@
 </ul>
 </li>
 <li>每一个高层的网络拓扑，由多个低层的递归单元按照递归规律相互连接构成，同时也是更高层级网络的一个递归单元。</li>
-<li>增加服务器数量&#x3D;&#x3D;&gt;提高总的递归层次<ul>
+<li>增加服务器数量==&gt;提高总的递归层次<ul>
 <li>添加服务器更加灵活，可增加的数量增大</li>
 <li>对交换机性能要求低</li>
 </ul>
@@ -336,7 +330,7 @@
 <h3 id="3-4-光交换网络"><a href="#3-4-光交换网络" class="headerlink" title="3.4 光交换网络"></a>3.4 光交换网络</h3><ul>
 <li><p>业务越来越庞大和复杂，数据中心内部和服务器间的数据流量快速增加，传统网络设备无法处理如此流量的数据——考虑可光速传播数据的设备，需要调整网络拓扑</p>
 </li>
-<li><p>Helios：混合电&#x2F;光结构网络</p>
+<li><p>Helios：混合电/光结构网络</p>
 <ul>
 <li>两层多根树</li>
 <li>服务器连接接入交换机</li>
@@ -360,7 +354,7 @@
 </li>
 <li><p>Openflow，第一个针对SDN实现的标准接口</p>
 </li>
-<li><p>以良好的灵活性、规范性被看成SDN通信协议的标准，类似TCP&#x2F;IP作为互联网的标准</p>
+<li><p>以良好的灵活性、规范性被看成SDN通信协议的标准，类似TCP/IP作为互联网的标准</p>
 </li>
 <li><p>起源于斯坦福大学的Clean Slate计划（致力于研究重新设计互联网的项目）</p>
 </li>
@@ -416,7 +410,7 @@
 </li>
 <li>低能耗加湿系统：湿膜加湿系统或水喷雾系统</li>
 <li>自然冷空调系统<ul>
-<li>新风自然冷系统，能效比 EER（制冷量&#x2F;制冷电能耗）由 2-3.5 提高到 10-15：低温或降温风系统、新风过滤系统、气流组织、智能控制</li>
+<li>新风自然冷系统，能效比 EER（制冷量/制冷电能耗）由 2-3.5 提高到 10-15：低温或降温风系统、新风过滤系统、气流组织、智能控制</li>
 <li>水自然冷系统，能效比 EER 6~8</li>
 </ul>
 </li>
@@ -435,7 +429,7 @@
 </ul>
 <h3 id="4-4-节能策略和算法研究"><a href="#4-4-节能策略和算法研究" class="headerlink" title="4.4 节能策略和算法研究"></a>4.4 节能策略和算法研究</h3><ul>
 <li>功率管理和降低能耗两个角度<ul>
-<li>动态功率管理（Dynamic Power Management，DPM）：Dynamic Voltage &amp; Frequency Scaling，DVFS，动态电压&#x2F;频率调整</li>
+<li>动态功率管理（Dynamic Power Management，DPM）：Dynamic Voltage &amp; Frequency Scaling，DVFS，动态电压/频率调整</li>
 <li>静态功率管理（Static Power Management，SPM）：通过设备结构的改变降低能耗</li>
 </ul>
 </li>
@@ -445,7 +439,7 @@
 <li>虚拟机迁移实现负载合并，转换闲置节点为节能模式；虚拟机能耗管理；最大化空闲物理机数量；基于蚁群算法的虚拟资源分配策略等。</li>
 </ul>
 </li>
-<li>主机关闭&#x2F;开启节能：随机策略、超时策略和预测式策略</li>
+<li>主机关闭/开启节能：随机策略、超时策略和预测式策略</li>
 <li>其他：如冷却系统节能等</li>
 </ul>
 <h3 id="4-5-新能源应用"><a href="#4-5-新能源应用" class="headerlink" title="4.5 新能源应用"></a>4.5 新能源应用</h3><ul>
@@ -519,7 +513,7 @@
 </ul>
 </li>
 <li>基于IP的SAN的远程数据容灾备份技术<ul>
-<li>将主数据中心SAN(Storage Area Networks)中的信息通过现有TCP&#x2F;IP网络远程复制到备份中心SAN中；可跨越LAN、MAN、WAN，成本低可扩展性好</li>
+<li>将主数据中心SAN(Storage Area Networks)中的信息通过现有TCP/IP网络远程复制到备份中心SAN中；可跨越LAN、MAN、WAN，成本低可扩展性好</li>
 </ul>
 </li>
 <li>数据库复制技术<ul>
@@ -892,5 +886,21 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+</body>
 </html>
