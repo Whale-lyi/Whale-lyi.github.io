@@ -286,7 +286,7 @@
 <li><p><strong>唯一</strong>的初始状态 $s_0 \in S$</p>
 </li>
 <li><p>状态转移<strong>函数</strong> $\delta$</p>
-<p>$\delta: S \times (\Sigma \cup { \textcolor{blue}{\epsilon} }) \rightarrow \textcolor{blue}{2^S} $</p>
+<p>$\delta: S \times (\Sigma \cup \{ \textcolor{blue}{\epsilon} \}) \rightarrow \textcolor{blue}{2^S} $</p>
 </li>
 <li><p>接受状态集合 $F \subseteq S$</p>
 </li>
@@ -295,7 +295,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221115234212017.png" alt="image-20221115234212017" style="zoom:80%;" /></p>
 <blockquote>
-<p>非确定性的来源：$\delta: S \times (\Sigma \cup { \textcolor{blue}{\epsilon} }) \rightarrow \textcolor{blue}{2^S} $</p>
+<p>非确定性的来源：$\delta: S \times (\Sigma \cup \{ \textcolor{blue}{\epsilon} \}) \rightarrow \textcolor{blue}{2^S} $</p>
 <ul>
 <li><p>$\epsilon$: 没有新来的字符也可能转移状态</p>
 </li>
@@ -346,7 +346,7 @@
 <ul>
 <li>$1011 \in L(\mathcal{A})$: 不接受</li>
 <li>$0011 \in L(\mathcal{A})$: 接受</li>
-<li>$L(\mathcal{A}) = {包含偶数个 1 或偶数个 0 的 01 串}$</li>
+<li>$L(\mathcal{A}) = \{包含偶数个 1 或偶数个 0 的 01 串\}$</li>
 </ul>
 </li>
 </ul>
@@ -1211,6 +1211,8 @@
     });
 </script>
 <!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>

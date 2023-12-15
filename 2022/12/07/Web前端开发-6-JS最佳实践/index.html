@@ -371,12 +371,12 @@
 <li><code>/^A/</code> 并不会匹配 “an A” 中的 ‘A’, 但是会匹配 “An E” 中的 ‘A’</li>
 </ul>
 </li>
-<li>$ 匹配输入的结束。如果多行标志被设置为 true, 那么也匹配换行符前的位置<ul>
+<li>\$ 匹配输入的结束。如果多行标志被设置为 true, 那么也匹配换行符前的位置<ul>
 <li>例如, <code>/t$/</code> 并不会匹配 “eater” 中的 ‘t’, 但是会匹配 “eat” 中的 ‘t’</li>
 </ul>
 </li>
-<li>\ 转义<ul>
-<li>如果要匹配特殊字符: /\$.[]()^*+?</li>
+<li> 转义<ul>
+<li>如果要匹配特殊字符: /\\$.[]()^*+?</li>
 <li><code>/&lt;br \/&gt;/</code> 匹配 <code>&lt;br /&gt;</code> 标记</li>
 </ul>
 </li>
@@ -943,6 +943,8 @@
     });
 </script>
 <!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>

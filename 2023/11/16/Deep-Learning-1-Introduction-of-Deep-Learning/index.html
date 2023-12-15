@@ -265,7 +265,7 @@
 <p>所以可以用分段线性曲线去逼近任何的连续的曲线，直接写 Hard Sigmoid 不是很容易，但是可以用 Sigmoid 函数来逼近 Hard Sigmoid，Sigmoid 函数的表达式为</p>
 <p>$y=c\frac{1}{1+e^{-(b+wx_1)}}$</p>
 <p>简写为</p>
-<p>$y=\textcolor{red}{c}\ sigmoid(b+wx_1)$</p>
+<p>$y=\textcolor{red}{c} sigmoid(b+wx_1)$</p>
 <p>当 x 趋近于无穷大，y 趋近于 c；x 趋近于无穷小，y 趋近于 0</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202311182144327.png" alt="image-20231118214416286" style="zoom:80%;" /></p>
 <p>调整这里的 b、w 和 c 可以制造各种不同形状的 Sigmoid 函数，用各种不同形状的 Sigmoid 函数去逼近 Hard Sigmoid 函数。</p>
@@ -649,6 +649,8 @@
     });
 </script>
 <!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
 </body>
 </html>
