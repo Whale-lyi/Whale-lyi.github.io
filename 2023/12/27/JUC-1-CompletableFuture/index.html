@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      JUC(1) CompletableFuture 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">JUC(1) CompletableFuture</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-12-27 22:55:14
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-线程基础知识"><a href="#1-线程基础知识" class="headerlink" title="1. 线程基础知识"></a>1. 线程基础知识</h2><ul>
+<li><p>1把锁：synchronized</p>
+</li>
+<li><p>2个并：</p>
+<ul>
+<li><p>并发（concurrent）：是在同一实体上的多个事件，是在<strong>一台机器</strong>上“<strong>同时</strong>”处理多个任务，同一时刻，其实是<strong>只有一个</strong>事情再发生。</p>
+</li>
+<li><p>并行（parallel）：是在不同实体上的多个事件，是在<strong>多台处理器</strong>上同时处理多个任务，同一时刻，大家都在做事情，你做你的，我做我的，各干各的。</p>
+</li>
+</ul>
+</li>
+<li><p>3个程：</p>
+<ul>
+<li><p>进程：在系统中运行的一个应用程序，每个进程都有它自己的内存空间和系统资源</p>
+</li>
+<li><p>线程：也被称为轻量级进程，在同一个进程内会有1个或多个线程，是大多数操作系统进行时序调度的基本单元。</p>
+</li>
+<li><p>管程：Monitor（锁），也就是我们平时所说的锁。Monitor其实是一种<strong>同步机制</strong>，它的义务是保证（同一时间）只有一个线程可以访问被保护的数据和代码，JVM中同步是基于进入和退出监视器（Monitor管程对象）来实现的，每个对象实例都会有一个Monitor对象，Monitor对象和Java对象一同创建并销毁，底层由C++语言实现。</p>
+</li>
+</ul>
+</li>
+<li><p>线程分类（一般不做特别说明配置，默认都是用户线程）：</p>
+<ul>
+<li><p>用户线程：是系统的工作线程，它会完成这个程序需要完成的业务操作。</p>
+</li>
+<li><p>守护线程：是一种特殊的线程为其他线程服务的，在后台默默地完成一些系统性的任务，比如垃圾回收线程就是最典型的例子。守护线程作为一个服务线程，没有服务对象就没有必要继续运行了，如果用户线程全部结束了，意味着程序需要完成的业务操作已经结束了，系统可以退出了。所以假如当系统只剩下守护线程的时候，守护线程伴随着JVM一同结束工作。</p>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DaemonDemo</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; 开始运行,&quot;</span> + (Thread.currentThread().isDaemon() ? <span class="hljs-string">&quot;守护线程&quot;</span> : <span class="hljs-string">&quot;用户线程&quot;</span>));<br>            <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br><br>            &#125;<br>        &#125;, <span class="hljs-string">&quot;t1&quot;</span>);<br>        t1.setDaemon(<span class="hljs-literal">true</span>);<span class="hljs-comment">//通过设置属性Daemon来设置当前线程是否为守护线程</span><br>        t1.start();<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">3</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br><br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; 主线程结束&quot;</span>);<br>    &#125;<br>&#125;<br><br><br>输出：<br>Thread-<span class="hljs-number">0</span> 开始运行,守护线程<br>main 主线程结束<br>    <br><span class="hljs-comment">// 在main主线程结束后，守护线程会伴随着JVM一同结束工作，即使还有循环没有结束</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-Future"><a href="#2-Future" class="headerlink" title="2. Future"></a>2. Future</h2><p>Future是Java5新加的一个接口，它提供一种异步并行计算的功能，如果主线程需要执行一个很耗时的计算任务，我们会就可以通过Future把这个任务放进异步线程中执行，主线程继续处理其他任务或者先行结束，再通过Future获取计算结果。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312272145993.png" alt="image.png"></p>
+<h2 id="3-FutureTask"><a href="#3-FutureTask" class="headerlink" title="3. FutureTask"></a>3. FutureTask</h2><p>目的：异步多线程任务执行且返回有结果，三个特点：<strong>多线程、有返回、异步任务</strong>（班长为老师去买水作为新启动的异步多线程任务且买到水有结果返回）</p>
+<p>代码实现：Runnable接口 + Callable接口 + Future接口 + FutureTask实现类。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312272149662.png" alt="在这里插入图片描述" style="zoom:80%;" /></p>
+<blockquote>
+<p>线程 Thread 构造函数仅接收 Runnable 类型参数，Runnable 无返回值</p>
+<p>FutureTask 解决了无返回值问题，构造函数接收 Callable 类型，并且本身实现 Runnable 接口，可以作为 Thread 的构造函数参数</p>
+<p>使用线程池的 submit() 可以省略构造线程并 start() 的代码</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">futureTaskDemo</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    FutureTask&lt;String&gt; futureTask = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FutureTask</span>&lt;&gt;(() -&gt; &#123;<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;come in&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">5</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;task over&quot;</span>;<br>    &#125;);<br><br>    <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(futureTask, <span class="hljs-string">&quot;t1&quot;</span>);<br>    t1.start();<br>    <br>    System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; ------忙其他任务&quot;</span>);<br><br>    <span class="hljs-comment">// 获取结果的三种方式</span><br>	<span class="hljs-comment">// System.out.println(futureTask.get());//这样会有阻塞的可能，在程序没有计算完毕的情况下。</span><br>	<span class="hljs-comment">// System.out.println(futureTask.get(3,TimeUnit.SECONDS));//只愿意等待三秒，计算未完成直接抛出异常</span><br>    <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<span class="hljs-comment">//轮询</span><br>        <span class="hljs-keyword">if</span>(futureTask.isDone()) &#123;<br>            System.out.println(futureTask.get());<br>            <span class="hljs-keyword">break</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            TimeUnit.MILLISECONDS.sleep(<span class="hljs-number">500</span>);<br>            System.out.println(<span class="hljs-string">&quot;正在处理中，不要催了，越催越慢&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><p>优点：Future + 线程池异步多线程任务配合，能显著提高程序的运行效率。</p>
+</li>
+<li><p>缺点：</p>
+<ul>
+<li><p><code>get()</code>阻塞—-一旦调用get()方法求结果，一旦调用不见不散，非要等到结果才会离开，不管你是否计算完成，如果没有计算完成容易程序堵塞。</p>
+</li>
+<li><p><code>isDone()</code>轮询—-轮询的方式会耗费无谓的cpu资源，而且也不见得能及时得到计算结果，如果想要异步获取结果，通常会以轮询的方式去获取结果，尽量不要阻塞。</p>
+</li>
+</ul>
+</li>
+<li><p>结论：Future对于结果的获取不是很友好，只能通过<strong>阻塞或轮询</strong>的方式得到任务的结果</p>
+</li>
+</ul>
+<h2 id="4-CompletableFuture"><a href="#4-CompletableFuture" class="headerlink" title="4. CompletableFuture"></a>4. CompletableFuture</h2><p>FutureTask 只能通过<strong>阻塞或轮询</strong>的方式得到任务的结果，显然不是我们想要的</p>
+<p>对于真正的异步处理我们希望是可以通过传入回调函数，在Future结束时自动调用该回调函数，这样，我们就不用等待结果。JDK8 设计的 CompletableFuture提供了一种<strong>观察者模式</strong>类似的机制，可以让任务执行完成后通知监听的一方。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312272203226.png" alt="在这里插入图片描述"></p>
+<ul>
+<li>CompletionStage<ul>
+<li>代表异步计算过程中的某一个阶段，一个阶段完成以后可能会触发另外一个阶段</li>
+<li>一个阶段的计算执行可以是一个Function, Consumer或者Runnable。比如: <ul>
+<li><code>stage.thenApply(x -&gt; square(x)).thenAccept(x-&gt;System.out.println(x)).thenRun(()-&gt;System.out.println(&quot;123&quot;))</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>CompletableFuture<ul>
+<li>提供了非常强大的Future的扩展功能，可以帮助我们简化异步编程的复杂性，并且提供了函数式编程的能力，可以<strong>通过回调的方式处理计算结果</strong>，也提供了转换和组合CompletableFuture的方法</li>
+<li>它可能代表一个明确完成的Future，也可能代表一个完成阶段（CompletionStage），它支持在计算完成以后触发一些函数或执行某些动作</li>
+</ul>
+</li>
+</ul>
+<p><strong>核心的四个静态方法，来创建一个异步任务</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312272212642.png" alt="在这里插入图片描述"></p>
+<blockquote>
+<p>函数式编程相关见 <a target="_blank" rel="noopener" href="https://whalefall.top/2023/05/25/Java-8%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">Java8函数式编程</a></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312272213121.png" alt="img"></p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">completableFutureBuildDemo</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> ExecutionException, InterruptedException, TimeoutException &#123;<br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">executorService</span> <span class="hljs-operator">=</span> Executors.newFixedThreadPool(<span class="hljs-number">3</span>);<br>    CompletableFuture&lt;Void&gt; completableFuture = CompletableFuture.runAsync(() -&gt; &#123;<br>        System.out.println(Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>        &#125;<br>    &#125;, executorService);<br><br>    System.out.println(completableFuture.get()); <span class="hljs-comment">// null</span><br><br>    CompletableFuture&lt;String&gt; objectCompletableFuture = CompletableFuture.supplyAsync(()-&gt;&#123;<br>        System.out.println(Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">2</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(e);<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello supplyAsync&quot;</span>;<br>    &#125;, executorService);<br><br>    System.out.println(objectCompletableFuture.get()); <span class="hljs-comment">// hello supplyAsync</span><br><br>    executorService.shutdown();<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><code>executorService.shutdown()</code></p>
+<ul>
+<li>线程池会把正在执行的任务及队列中等待执行的任务都执行完毕后，再去关闭；</li>
+<li>如果还有新的任务过来，线程池就会拒绝</li>
+</ul>
+</blockquote>
+<h3 id="4-1-CompletableFuture-常用方法"><a href="#4-1-CompletableFuture-常用方法" class="headerlink" title="4.1 CompletableFuture 常用方法"></a>4.1 CompletableFuture 常用方法</h3><h4 id="获得结果"><a href="#获得结果" class="headerlink" title="获得结果"></a>获得结果</h4><ul>
+<li><code>public T get()</code>: 获取结果，会阻塞</li>
+<li><code>public T get(long timeout, TimeUnit unit)</code>: 设置超时时间</li>
+<li><code>public T join()</code>: 和get一样的作用，只是不需要抛出异常</li>
+<li><code>public T getNow(T valuelfAbsent)</code>: 计算完成就返回正常值，否则返回valuelfAbsent, 立即获取结果不阻塞</li>
+</ul>
+<h4 id="触发计算"><a href="#触发计算" class="headerlink" title="触发计算"></a>触发计算</h4><ul>
+<li><code>public boolean complete(T value)</code>: 是否打断get方法立即返回括号值<ul>
+<li>一旦调用了 <code>complete()</code> 方法，CompletableFuture 对象的状态会立即变为已完成，而且之后任何对该对象的计算都不会再触发异步任务的执行。如果该对象已经处于完成状态，再次调用 <code>complete()</code> 方法不会有任何效果。</li>
+<li>如果异步任务已经抛出了异常，调用 <code>complete()</code> 方法将不会有任何效果。此时，可以使用 <code>completeExceptionally(Throwable ex)</code> 方法手动设置异步任务的异常结果。</li>
+<li>如果有多个线程同时尝试调用 <code>complete()</code> 方法，只有第一个成功的线程能够设置结果，其他线程的调用将被忽略。</li>
+</ul>
+</li>
+</ul>
+<h4 id="对计算结果进行处理"><a href="#对计算结果进行处理" class="headerlink" title="对计算结果进行处理"></a>对计算结果进行处理</h4><ul>
+<li><code>thenApply</code>：上一步有异常就叫停</li>
+<li><code>handle</code>：上一步有异常，该步骤正常执行</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">completableFutureApiDemo</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool</span> <span class="hljs-operator">=</span> Executors.newFixedThreadPool(<span class="hljs-number">3</span>);<br>    CompletableFuture&lt;Integer&gt; completableFuture = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>    &#125;, threadPool).thenApply(f -&gt; &#123;<br>        System.out.println(<span class="hljs-string">&quot;222&quot;</span>);<br>        <span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span> / <span class="hljs-number">0</span>; <span class="hljs-comment">// 除0异常</span><br>        <span class="hljs-keyword">return</span> f + <span class="hljs-number">2</span>;<br>    &#125;).handle((f, e) -&gt; &#123; <span class="hljs-comment">// 会正常执行</span><br>        System.out.println(<span class="hljs-string">&quot;3333&quot;</span>);<br>        <span class="hljs-keyword">return</span> f + <span class="hljs-number">2</span>;<br>    &#125;).whenComplete((v, e) -&gt; &#123;<br>        <span class="hljs-keyword">if</span> (e == <span class="hljs-literal">null</span>) &#123;<br>            System.out.println(<span class="hljs-string">&quot;----计算结果&quot;</span> + v);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;----出现异常, 计算结果&quot;</span> + v);<br>        &#125;<br>    &#125;).exceptionally(e -&gt; &#123;<br>        System.out.println(<span class="hljs-string">&quot;出现异常&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;);<br>    System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;------主线程先去做其他事情&quot;</span>);<br>    threadPool.shutdown();<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>发生异常后进入exceptionally代码块，但是thenApply中的代码不会执行，whenComplete依旧会执行</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><code class="hljs text">main------主线程先去做其他事情<br>222<br>3333<br>----出现异常, 计算结果null<br>出现异常<br></code></pre></td></tr></table></figure>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312272234823.png" alt="img"></p>
+<h4 id="对计算结果进行消费"><a href="#对计算结果进行消费" class="headerlink" title="对计算结果进行消费"></a>对计算结果进行消费</h4><ul>
+<li><code>thenAccept</code></li>
+</ul>
+<p><strong>对比补充</strong></p>
+<ul>
+<li><code>thenRun(Runnable runnable)</code> :任务A执行完执行B，并且不需要A的结果</li>
+<li><code>thenAccept(Consumer action)</code>: 任务A执行完执行B，B需要A的结果，但是任务B没有返回值</li>
+<li><code>thenApply(Function fn)</code>: 任务A执行完执行B，B需要A的结果，同时任务B有返回值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    System.out.println(CompletableFuture.supplyAsync(() -&gt; <span class="hljs-string">&quot;result&quot;</span>).thenRun(() -&gt; &#123;&#125;).join());<span class="hljs-comment">//null</span><br>    System.out.println(CompletableFuture.supplyAsync(() -&gt; <span class="hljs-string">&quot;result&quot;</span>).thenAccept(r -&gt; System.out.println(r)).join());<span class="hljs-comment">//result null</span><br>    System.out.println(CompletableFuture.supplyAsync(() -&gt; <span class="hljs-string">&quot;result&quot;</span>).thenApply(f -&gt; f + <span class="hljs-number">2</span>).join());<span class="hljs-comment">//result2</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>CompletableFuture和线程池说明</strong></p>
+<ul>
+<li><p>如果没有传入自定义线程池，都用默认线程池ForkJoinPool</p>
+</li>
+<li><p>如果你执行第一个任务时，传入了一个自定义线程池</p>
+<ul>
+<li><p>调用<code>thenRun</code>方法执行第二个任务时，则第二个任务和第一个任务时共用同一个线程池</p>
+</li>
+<li><p>调用<code>thenRunAsync</code>执行第二个任务时，则第一个任务使用的是你自定义的线程池，第二个任务使用的是ForkJoin线程池</p>
+</li>
+</ul>
+</li>
+<li><p>备注：可能是线程处理太快，系统优化切换原则，直接使用了 main 线程处理</p>
+</li>
+<li><code>thenAccept</code>和<code>thenAcceptAsync</code>，<code>thenApply</code>和<code>thenApplyAsync</code>等之间的区别同理</li>
+</ul>
+<h4 id="对计算速度进行选用"><a href="#对计算速度进行选用" class="headerlink" title="对计算速度进行选用"></a>对计算速度进行选用</h4><ul>
+<li>谁快用谁</li>
+<li><code>applyToEither</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool</span> <span class="hljs-operator">=</span> Executors.newFixedThreadPool(<span class="hljs-number">3</span>);<br>    CompletableFuture&lt;String&gt; playA = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;A come in&quot;</span>);<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">2</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;playA&quot;</span>;<br>    &#125;, threadPool);<br><br><br>    CompletableFuture&lt;String&gt; playB = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(<span class="hljs-string">&quot;B come in&quot;</span>);<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">3</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;playB&quot;</span>;<br>    &#125;, threadPool);<br><br>    CompletableFuture&lt;String&gt; result = playA.applyToEither(playB, f -&gt; &#123;<br>        <span class="hljs-keyword">return</span> f + <span class="hljs-string">&quot; is winner&quot;</span>;<br>    &#125;);<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * A come in</span><br><span class="hljs-comment">     * B come in</span><br><span class="hljs-comment">     * main-----------winner:playA is winner</span><br><span class="hljs-comment">     */</span><br>    System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;-----------winner:&quot;</span> + result.join());<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="对计算结果合并"><a href="#对计算结果合并" class="headerlink" title="对计算结果合并"></a>对计算结果合并</h4><ul>
+<li>两个CompletableStage任务都完成后，最终能把两个任务的结果一起交给<code>thenCombine</code>来处理</li>
+<li>先完成的等待其他分支任务</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    CompletableFuture&lt;Integer&gt; completableFuture1 = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; 启动&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">10</span>;<br>    &#125;);<br><br>    CompletableFuture&lt;Integer&gt; completableFuture2 = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; 启动&quot;</span>);<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">2</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">20</span>;<br>    &#125;);<br><br>    CompletableFuture&lt;Integer&gt; finalResult = completableFuture1.thenCombine(completableFuture2, (x, y) -&gt; &#123;<br>        System.out.println(<span class="hljs-string">&quot;----------开始两个结果合并&quot;</span>);<br>        <span class="hljs-keyword">return</span> x + y;<br>    &#125;);<br>    System.out.println(finalResult.join());<br><br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">ForkJoinPool.commonPool-worker-9 启动</span><br><span class="hljs-comment">ForkJoinPool.commonPool-worker-2 启动</span><br><span class="hljs-comment">----------开始两个结果合并</span><br><span class="hljs-comment">30</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<h4 id="并行执行"><a href="#并行执行" class="headerlink" title="并行执行"></a>并行执行</h4><ul>
+<li><code>allOf()</code>：当所有给定的 CompletableFuture 完成时，返回一个新的 CompletableFuture</li>
+<li><code>anyOf()</code>：只要有一个任务执行完成后就返回 future 并将第一个完成的参数带着一起返回</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    CompletableFuture&lt;String&gt; f1 = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">3</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;f1&quot;</span>;<br>    &#125;);<br><br>    CompletableFuture&lt;String&gt; f2 = CompletableFuture.supplyAsync(() -&gt; &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            TimeUnit.SECONDS.sleep(<span class="hljs-number">2</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;f2&quot;</span>;<br>    &#125;);<br><br>    <span class="hljs-comment">// allof测试</span><br>    CompletableFuture&lt;Void&gt; all = CompletableFuture.allOf(f1, f2).thenApply(x -&gt; &#123;<br>        System.out.println(<span class="hljs-string">&quot;all&quot;</span>);<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>    &#125;);<br>    <span class="hljs-comment">// anyof测试</span><br>    CompletableFuture&lt;Object&gt; any = CompletableFuture.anyOf(f1, f2).thenApply(x -&gt; &#123;<br>        System.out.println(x);<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;);;<br>    <br><br>    System.out.println(System.currentTimeMillis() + <span class="hljs-string">&quot;:阻塞&quot;</span>);<br>    <span class="hljs-type">Void</span> <span class="hljs-variable">aVoid</span> <span class="hljs-operator">=</span> all.get();<br>    System.out.println(System.currentTimeMillis() + <span class="hljs-string">&quot;:阻塞结束&quot;</span>);<br><br>    <span class="hljs-comment">//一个需要耗时2秒，一个需要耗时3秒，只有当最长的耗时3秒的完成后，才会结束。</span><br>    System.out.println(<span class="hljs-string">&quot;任务均已完成。&quot;</span>);<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    1703688408160:阻塞</span><br><span class="hljs-comment">	all</span><br><span class="hljs-comment">	1703688411161:阻塞结束</span><br><span class="hljs-comment">	任务均已完成。</span><br><span class="hljs-comment">    */</span><br>    <br>    System.out.println(any.get());<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    f2</span><br><span class="hljs-comment">    f2</span><br><span class="hljs-comment">    */</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/12/12/SpringMVC-5-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E3%80%81%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-12-27 22:55:14
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/12/27/JUC-2-%E9%94%81/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">1. 线程基础知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Future"><span class="toc-text">2. Future</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-FutureTask"><span class="toc-text">3. FutureTask</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-CompletableFuture"><span class="toc-text">4. CompletableFuture</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-CompletableFuture-%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">4.1 CompletableFuture 常用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%8E%B7%E5%BE%97%E7%BB%93%E6%9E%9C"><span class="toc-text">获得结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A6%E5%8F%91%E8%AE%A1%E7%AE%97"><span class="toc-text">触发计算</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86"><span class="toc-text">对计算结果进行处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E8%BF%9B%E8%A1%8C%E6%B6%88%E8%B4%B9"><span class="toc-text">对计算结果进行消费</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%AE%A1%E7%AE%97%E9%80%9F%E5%BA%A6%E8%BF%9B%E8%A1%8C%E9%80%89%E7%94%A8"><span class="toc-text">对计算速度进行选用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%AE%A1%E7%AE%97%E7%BB%93%E6%9E%9C%E5%90%88%E5%B9%B6"><span class="toc-text">对计算结果合并</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E6%89%A7%E8%A1%8C"><span class="toc-text">并行执行</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JUC(1)%20CompletableFuture + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F12%2F27%2FJUC-1-CompletableFuture%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/12/27/JUC-1-CompletableFuture/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
