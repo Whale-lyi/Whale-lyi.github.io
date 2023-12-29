@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      JUC(6) 线程池 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">JUC(6) 线程池</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-12-29 15:15:20
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p><strong>线程池</strong>(thread pool)一种线程使用模式。线程过多会带来调度开销，进而影响缓存局部性和整体性能。而线程池维护着多个线程，等待着监督管理者分配可并发执行的任务。这避免了在处理短时间任务时创建与销毁线程的代价。线程池不仅能够保证内核的充分利用，还能防止过分调度</p>
+<p><strong>线程池的优势</strong>：线程池做的工作只要是控制运行的线程数量，处理过程中将任务放入队列，然后在线程创建后启动这些任务，如果线程数量超过了最大数量，超过数量的线程排队等候，等其他线程执行完毕，再从队列中取出任务来执行。</p>
+<p>线程池的特点：</p>
+<ul>
+<li>降低资源消耗: 通过重复利用已创建的线程降低线程创建和销毁造成的销耗。</li>
+<li>提高响应速度: 当任务到达时，任务可以不需要等待线程创建就能立即执行。</li>
+<li>提高线程的可管理性: 线程是稀缺资源，如果无限制的创建，不仅会销耗系统资源，还会降低系统的稳定性，使用线程池可以进行统一的分配，调优和监控。</li>
+</ul>
+<p>Java 中的线程池是通过 <code>Executor</code> 框架实现的，该框架中用到了 <code>Executor</code>，<code>Executors</code>，<code>ExecutorService</code>，<code>ThreadPoolExecutor</code> 这几个类</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291440375.png" alt="image-20231229144024317" style="zoom:80%;" /></p>
+<h2 id="2-使用方式"><a href="#2-使用方式" class="headerlink" title="2. 使用方式"></a>2. 使用方式</h2><p>创建线程池</p>
+<ul>
+<li><p><code>Executors.newFixedThreadPool(int)</code>：一池N线程</p>
+<ul>
+<li>创建一个可重用固定线程数的线程池，以共享的无界队列方式来运行这些线程</li>
+<li>如果在关闭前的执行期间由于失败而导致任何线程终止，那么一个新线程将代替它执行后续的任务。在某个线程被显式地关闭之前，池中的线程将一直存在。</li>
+<li>线程池中的线程处于一定的量，可以很好的控制线程的并发量</li>
+<li>线程可以重复被使用，在显式关闭之前，都将一直存在</li>
+<li>超出一定量的线程被提交时候需在队列中等待</li>
+</ul>
+</li>
+<li><p><code>Executors.newSingleThreadExecutor()</code>：一池一线程</p>
+<ul>
+<li>创建一个使用单个 worker 线程的 Executor，以无界队列方式来运行该线程。</li>
+<li>如果因为在关闭前的执行期间出现失败而终止了此单个线程，那么如果需要，一个新线程将代替它执行后续的任务</li>
+</ul>
+</li>
+<li><p><code>Executors.newCachedThreadPool()</code>：一池可扩容根据需求创建线程</p>
+<ul>
+<li>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程</li>
+<li>线程池中数量没有固定，可达到最大值(<code>Interger. MAX_VALUE</code>)</li>
+<li>线程池中的线程可进行缓存重复利用和回收(回收默认时间为 1 分钟)</li>
+<li>当线程池中没有可用线程，会重新创建一个线程</li>
+</ul>
+</li>
+<li><code>Executors.newScheduledThreadPool(int corePoolSize)</code>(了解)<ul>
+<li>线程池支持定时以及周期性执行任务，创建一个 corePoolSize 为传入参数，最大线程数为整形的最大数的线程池</li>
+<li>线程池中具有指定数量的线程，即便是空线程也将保留</li>
+<li>可定时或者延迟执行线程活动</li>
+<li>适用于需要多个后台线程执行周期任务的场景</li>
+</ul>
+</li>
+<li><code>Executors.newWorkStealingPool(int parallelism)</code><ul>
+<li>parallelism：并行级别，通常默认为 JVM 可用的处理器个数</li>
+<li>底层使用的是 ForkJoinPool 实现，创建一个拥有多个任务队列的线程池，可以减少连接数，创建当前可用 cpu 核数的线程来并行执行任务</li>
+<li>适用于大耗时，可并行执行的场景</li>
+</ul>
+</li>
+</ul>
+<p>执行线程：</p>
+<ul>
+<li><code>void execute(Runnable command)</code> 参数为Runnable接口类，可以设置lambda</li>
+</ul>
+<p>关闭线程：</p>
+<ul>
+<li><code>shutdown()</code></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool1</span> <span class="hljs-operator">=</span> Executors.newFixedThreadPool(<span class="hljs-number">5</span>);<br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool2</span> <span class="hljs-operator">=</span> Executors.newSingleThreadExecutor();<br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool3</span> <span class="hljs-operator">=</span> Executors.newCachedThreadPool();<br><br>    <span class="hljs-comment">// 是个顾客请求</span><br>    <span class="hljs-keyword">try</span>&#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">10</span>; i++) &#123;<br>            <span class="hljs-comment">// 到此时执行execute()方法才创建线程</span><br>            threadPool1.execute(()-&gt;&#123;<br>                System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot; 办理业务&quot;</span>);<br>            &#125;);<br>        &#125;<br>    &#125;<span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-comment">// 关闭线程</span><br>        threadPool1.shutdown();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>threadPool1 执行结果</th>
+<th>threadPool2 执行结果</th>
+<th>threadPool3 执行结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291457725.png" alt="image-20231229145713692"></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291457280.png" alt="image-20231229145743251"></td>
+<td><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291458811.png" alt="image-20231229145809781"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="3-线程池参数"><a href="#3-线程池参数" class="headerlink" title="3. 线程池参数"></a>3. 线程池参数</h2><h3 id="3-1-参数解释"><a href="#3-1-参数解释" class="headerlink" title="3.1 参数解释"></a>3.1 参数解释</h3><p>通过查看上面三种方式创建对象的类源代码，都有 <code>new ThreadPoolExecutor</code></p>
+<p>具体查看该类的源代码，涉及七个参数</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-title function_">ThreadPoolExecutor</span><span class="hljs-params">(<span class="hljs-type">int</span> corePoolSize, // 常驻(核心)</span>线程数量<br>                          <span class="hljs-type">int</span> maximumPoolSize, <span class="hljs-comment">// 最大线程数量</span><br>                          <span class="hljs-type">long</span> keepAliveTime, <span class="hljs-comment">// 空闲线程存活时间</span><br>                          TimeUnit unit, <span class="hljs-comment">// 时间单位</span><br>                          BlockingQueue&lt;Runnable&gt; workQueue, <span class="hljs-comment">// 阻塞队列(存放提交但未执行任务的队列)</span><br>                          ThreadFactory threadFactory, <span class="hljs-comment">// 线程工厂，用于创建线程</span><br>                          RejectedExecutionHandler handler <span class="hljs-comment">// 拒绝策略(线程满了)</span><br>                         ) &#123;<br>    <span class="hljs-keyword">if</span> (corePoolSize &lt; <span class="hljs-number">0</span> ||<br>        maximumPoolSize &lt;= <span class="hljs-number">0</span> ||<br>        maximumPoolSize &lt; corePoolSize ||<br>        keepAliveTime &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IllegalArgumentException</span>();<br>    <span class="hljs-keyword">if</span> (workQueue == <span class="hljs-literal">null</span> || threadFactory == <span class="hljs-literal">null</span> || handler == <span class="hljs-literal">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">NullPointerException</span>();<br>    <span class="hljs-built_in">this</span>.acc = System.getSecurityManager() == <span class="hljs-literal">null</span> ?<br>            <span class="hljs-literal">null</span> :<br>            AccessController.getContext();<br>    <span class="hljs-built_in">this</span>.corePoolSize = corePoolSize;<br>    <span class="hljs-built_in">this</span>.maximumPoolSize = maximumPoolSize;<br>    <span class="hljs-built_in">this</span>.workQueue = workQueue;<br>    <span class="hljs-built_in">this</span>.keepAliveTime = unit.toNanos(keepAliveTime);<br>    <span class="hljs-built_in">this</span>.threadFactory = threadFactory;<br>    <span class="hljs-built_in">this</span>.handler = handler;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="3-2-工作流程"><a href="#3-2-工作流程" class="headerlink" title="3.2 工作流程"></a>3.2 工作流程</h3><p>当提交任务数大于 <code>corePoolSize</code> 的时候，会优先将任务放到 <code>workQueue</code> 阻塞队列中。当阻塞队列饱和后，会扩充线程池中线程数，直到达到 <code>maximumPoolSize</code> 最大线程数配置。此时，再多余的任务，则会触发线程池的拒绝策略了。</p>
+<p>当提交的任务数大于 <code>workQueue.size() + maximumPoolSize</code>，就会触发线程池的拒绝策略。</p>
+<p>示例：阻塞队列为3，常驻线程数2，最大线程数5，现在来了9个任务</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291507007.png" alt="img" style="zoom:80%;" /></p>
+<p>第1-2个线程进入线程池创建</p>
+<p>第3-5个线程进入阻塞队列</p>
+<p>第6-8个线程会为他们创建新线程执行（直接运行线程6而非线程3）</p>
+<p>第9个线程会被拒绝</p>
+<h3 id="3-3-拒绝策略"><a href="#3-3-拒绝策略" class="headerlink" title="3.3 拒绝策略"></a>3.3 拒绝策略</h3><p>AbortPolicy(默认): 丢弃任务，并<strong>抛出拒绝执行 RejectedExecutionException 异常信息</strong>。线程池默认的拒绝策略。必须处理好抛出的异常，否则会打断当前的执行流程，影响后续的任务执行。</p>
+<p>CallerRunsPolicy: 当触发拒绝策略，只要线程池没有关闭的话，则<strong>使用调用线程直接运行任务</strong>。一般并发比较小，性能要求不高，不允许失败。但是，由于调用者自己运行任务，如果任务提交速度过快，可能导致程序阻塞，性能效率上必然的损失较大</p>
+<p>DiscardOldestPolicy: 当触发拒绝策略，只要线程池没有关闭的话，<strong>丢弃阻塞队列 workQueue 中最老的一个任务</strong>，并将新任务加入，尝试再次提交</p>
+<p>DiscardPolicy: 直接丢弃</p>
+<h2 id="4-自定义线程池"><a href="#4-自定义线程池" class="headerlink" title="4. 自定义线程池"></a>4. 自定义线程池</h2><p>实际在开发中不允许使用 <code>Executors</code> 创建，而是通过 <code>ThreadPoolExecutor</code> 的方式，规避资源耗尽风险</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291513055.png" alt="image-20231229151351014"></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-comment">// 定义线程池</span><br>    <span class="hljs-type">ExecutorService</span> <span class="hljs-variable">threadPool</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>(<br>            <span class="hljs-comment">// 常驻线程数量（核心）2个</span><br>            <span class="hljs-number">2</span>,<br>            <span class="hljs-comment">// 最大线程数量5个</span><br>            <span class="hljs-number">5</span>,<br>            <span class="hljs-comment">// 线程存活时间:2秒</span><br>            <span class="hljs-number">2L</span>,<br>            TimeUnit.SECONDS,<br>            <span class="hljs-comment">// 阻塞队列</span><br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBlockingQueue</span>&lt;&gt;(<span class="hljs-number">3</span>),<br>            <span class="hljs-comment">// 默认线程工厂</span><br>            Executors.defaultThreadFactory(),<br>            <span class="hljs-comment">// 拒绝策略。抛出异常</span><br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadPoolExecutor</span>.AbortPolicy()<br>    );<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">8</span>; i++) &#123;<br>            threadPool.execute(()-&gt;&#123;<br>                System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot; 办理业务&quot;</span>);<br>            &#125;);<br>        &#125;<br>    &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>        e.printStackTrace();<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-comment">// 关闭线程池</span><br>        threadPool.shutdown();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/12/29/JUC-5-%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-12-29 15:15:20
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/12/29/JUC-7-Fork-Join/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text">2. 使用方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BA%BF%E7%A8%8B%E6%B1%A0%E5%8F%82%E6%95%B0"><span class="toc-text">3. 线程池参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%8F%82%E6%95%B0%E8%A7%A3%E9%87%8A"><span class="toc-text">3.1 参数解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">3.2 工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5"><span class="toc-text">3.3 拒绝策略</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-text">4. 自定义线程池</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JUC(6)%20%E7%BA%BF%E7%A8%8B%E6%B1%A0 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F12%2F29%2FJUC-6-%25E7%25BA%25BF%25E7%25A8%258B%25E6%25B1%25A0%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/12/29/JUC-6-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>

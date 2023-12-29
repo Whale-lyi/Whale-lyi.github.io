@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="南京大学软件学院大三在读" />
+  
+  
+  <title>
+    
+      JUC(7) Fork/Join 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">JUC(7) Fork/Join</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-12-29 16:19:35
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>Fork/Join 它可以将一个大的任务拆分成多个子任务进行并行处理，最后将子任务结果合并成最后的计算结果，并进行输出。Fork/Join 框架要完成两件事情：</p>
+<ul>
+<li>任务分割：首先 Fork/Join 框架需要把大的任务分割成足够小的子任务，如果子任务比较大的话还要对子任务进行继续分割<ul>
+<li>Fork：把一个复杂任务进行分拆，大事化小</li>
+</ul>
+</li>
+<li>执行任务并合并结果：分割的子任务分别放到双端队列里，然后几个启动线程分别从双端队列里获取任务执行。子任务执行完的结果都放在另外一个队列里，启动一个线程从队列里取数据，然后合并这些数据。<ul>
+<li>Join：把分拆任务的结果进行合并</li>
+</ul>
+</li>
+</ul>
+<p>Java Fork/Join 框架实现方式</p>
+<ul>
+<li><p><code>ForkJoinTask</code>: 我们要使用 Fork/Join 框架，首先需要创建一个 ForkJoin 任务。该类提供了在任务中执行 fork 和 join 的机制。通常情况下我们不需要直接集成 ForkJoinTask 类，只需要继承它的子类，Fork/Join 框架提供了两个子类</p>
+<ul>
+<li><code>RecursiveAction</code>: 用于没有返回结果的任务</li>
+<li><code>RecursiveTask</code>: 用于有返回结果的任务<ul>
+<li>继承后可以实现递归(自己调自己)调用的任务</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>ForkJoinPool</code>: <code>ForkJoinTask</code> 需要通过 <code>ForkJoinPool</code> 来执行</p>
+<ul>
+<li><code>ForkJoinPool</code> 由 <code>ForkJoinTask</code> 数组和 <code>ForkJoinWorkerThread</code> 数组组成</li>
+<li><code>ForkJoinTask</code> 数组负责存放以及将程序提交给 <code>ForkJoinPool</code></li>
+<li><code>ForkJoinWorkerThread</code> 负责执行这些任务</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291549444.png" alt="image-20231229154916392" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291550057.png" alt="image-20231229155049016" style="zoom:80%;" /></p>
+<h2 id="2-核心方法"><a href="#2-核心方法" class="headerlink" title="2. 核心方法"></a>2. 核心方法</h2><h3 id="2-1-fork"><a href="#2-1-fork" class="headerlink" title="2.1 fork"></a>2.1 fork</h3><p>当我们调用 <code>ForkJoinTask</code> 的 <code>fork</code> 方法时，程序会把任务放在 <code>ForkJoinWorkerThread</code> 的 <code>workQueue</code> 中，异步地执行这个任务，然后立即返回结果</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> ForkJoinTask&lt;V&gt; <span class="hljs-title function_">fork</span><span class="hljs-params">()</span> &#123;<br>    Thread t;<br>    <span class="hljs-keyword">if</span> ((t = Thread.currentThread()) <span class="hljs-keyword">instanceof</span> ForkJoinWorkerThread)<br>        ((ForkJoinWorkerThread)t).workQueue.push(<span class="hljs-built_in">this</span>);<br>    <span class="hljs-keyword">else</span><br>        ForkJoinPool.common.externalPush(<span class="hljs-built_in">this</span>);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">this</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>push</code> 方法把当前任务存放在 <code>ForkJoinTask</code> 数组队列里。然后再调用 <code>ForkJoinPool</code> 的 <code>signalWork()</code> 方法唤醒或创建一个工作线程来执行任务。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">push</span><span class="hljs-params">(ForkJoinTask&lt;?&gt; task)</span> &#123;<br>    ForkJoinTask&lt;?&gt;[] a; ForkJoinPool p;<br>    <span class="hljs-type">int</span> <span class="hljs-variable">b</span> <span class="hljs-operator">=</span> base, s = top, n;<br>    <span class="hljs-keyword">if</span> ((a = array) != <span class="hljs-literal">null</span>) &#123;    <span class="hljs-comment">// ignore if queue removed</span><br>        <span class="hljs-type">int</span> <span class="hljs-variable">m</span> <span class="hljs-operator">=</span> a.length - <span class="hljs-number">1</span>;     <span class="hljs-comment">// fenced write for task visibility</span><br>        U.putOrderedObject(a, ((m &amp; s) &lt;&lt; ASHIFT) + ABASE, task);<br>        U.putOrderedInt(<span class="hljs-built_in">this</span>, QTOP, s + <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">if</span> ((n = s - b) &lt;= <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-keyword">if</span> ((p = pool) != <span class="hljs-literal">null</span>)<br>                p.signalWork(p.workQueues, <span class="hljs-built_in">this</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (n &gt;= m)<br>            growArray();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-join"><a href="#2-2-join" class="headerlink" title="2.2 join"></a>2.2 join</h3><p>Join 方法的主要作用是阻塞当前线程并等待获取结果</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> V <span class="hljs-title function_">join</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> s;<br>    <span class="hljs-keyword">if</span> ((s = doJoin() &amp; DONE_MASK) != NORMAL)<br>        reportException(s);<br>    <span class="hljs-keyword">return</span> getRawResult();<br>&#125;<br><br><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-title function_">doJoin</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> s; Thread t; ForkJoinWorkerThread wt; ForkJoinPool.WorkQueue w;<br>    <span class="hljs-keyword">return</span> (s = status) &lt; <span class="hljs-number">0</span> ? s :<br>        ((t = Thread.currentThread()) <span class="hljs-keyword">instanceof</span> ForkJoinWorkerThread) ?<br>        (w = (wt = (ForkJoinWorkerThread)t).workQueue).<br>        tryUnpush(<span class="hljs-built_in">this</span>) &amp;&amp; (s = doExec()) &lt; <span class="hljs-number">0</span> ? s :<br>        wt.pool.awaitJoin(w, <span class="hljs-built_in">this</span>, <span class="hljs-number">0L</span>) :<br>        externalAwaitDone();<br>&#125;<br><br><span class="hljs-keyword">final</span> <span class="hljs-type">int</span> <span class="hljs-title function_">doExec</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-type">int</span> s; <span class="hljs-type">boolean</span> completed;<br>    <span class="hljs-keyword">if</span> ((s = status) &gt;= <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            completed = exec();<br>        &#125; <span class="hljs-keyword">catch</span> (Throwable rex) &#123;<br>            <span class="hljs-keyword">return</span> setExceptionalCompletion(rex);<br>        &#125;<br>        <span class="hljs-keyword">if</span> (completed)<br>            s = setCompletion(NORMAL);<br>    &#125;<br>    <span class="hljs-keyword">return</span> s;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>它首先调用 <code>doJoin()</code> 方法，得到当前任务的状态来判断返回什么结果，任务状态有 4 种:</p>
+<ul>
+<li>已完成（NORMAL）直接返回任务结果</li>
+<li>被取消（CANCELLED）直接抛出 CancellationException</li>
+<li>信号（SIGNAL）</li>
+<li>出现异常（EXCEPTIONAL）直接抛出对应的异常</li>
+</ul>
+<p><code>doJoin()</code> 方法流程如下</p>
+<ol>
+<li>首先通过查看任务的状态，看任务是否已经执行完成，如果执行完成，则直接返回任务状态</li>
+<li>如果没有执行完，则从任务数组里取出任务并执行。</li>
+<li>如果任务顺利执行完成，则设置任务状态为 NORMAL，如果出现异常，则记录异常，并将任务状态设置为 EXCEPTIONAL。</li>
+</ol>
+<h2 id="3-异常处理"><a href="#3-异常处理" class="headerlink" title="3. 异常处理"></a>3. 异常处理</h2><p>ForkJoinTask 在执行的时候可能会抛出异常，但是我们没办法在主线程里直接捕获异常，所以 ForkJoinTask 提供了 isCompletedAbnormally() 方法来检查任务是否已经抛出异常或已经被取消了，并且可以通过 ForkJoinTask 的 getException 方法获取异常。</p>
+<p>getException 方法返回 Throwable 对象，如果任务被取消了则返回 CancellationException。如果任务没有完成或者没有抛出异常则返回 null</p>
+<h2 id="4-案例"><a href="#4-案例" class="headerlink" title="4. 案例"></a>4. 案例</h2><p>1加到100，要求相加的一列数的首尾两个数差值不能大于10</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyTask</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">RecursiveTask</span>&lt;Integer&gt; &#123;<br><br>    <span class="hljs-comment">// 拆分差值不能超过10</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">Integer</span> <span class="hljs-variable">VALUE</span> <span class="hljs-operator">=</span> <span class="hljs-number">10</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> begin;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> end;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> result;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">MyTask</span><span class="hljs-params">(<span class="hljs-type">int</span> begin, <span class="hljs-type">int</span> end)</span>&#123;<br>        <span class="hljs-built_in">this</span>.begin = begin;<br>        <span class="hljs-built_in">this</span>.end = end;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">protected</span> Integer <span class="hljs-title function_">compute</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-comment">// 判断两个值的差值是否大于10</span><br>        <span class="hljs-keyword">if</span>((end-begin)&lt;=<span class="hljs-number">10</span>) &#123;<br>            <span class="hljs-comment">// 相加操作</span><br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> begin; i &lt;= end ; i++) &#123;<br>                result = result + i;<br>            &#125;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">// 大于10 继续拆分</span><br>            <span class="hljs-type">int</span> <span class="hljs-variable">middle</span> <span class="hljs-operator">=</span> (begin + end) / <span class="hljs-number">2</span>;<br>            <span class="hljs-comment">// 拆分左边</span><br>            <span class="hljs-type">MyTask</span> <span class="hljs-variable">task01</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyTask</span>(begin, middle);<br>            <span class="hljs-comment">// 拆分右边</span><br>            <span class="hljs-type">MyTask</span> <span class="hljs-variable">task02</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyTask</span>(middle + <span class="hljs-number">1</span>, end);<br>            <span class="hljs-comment">// 调用方法拆分</span><br>            task01.fork();<br>            task02.fork();<br>            <span class="hljs-comment">// 合并结果</span><br>            result = task01.join() + task02.join();<br>        &#125;<br>        <span class="hljs-keyword">return</span> result;<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ForkJoinTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> ExecutionException, InterruptedException &#123;<br>        <span class="hljs-comment">// 创建MyTask对象</span><br>        <span class="hljs-type">MyTask</span> <span class="hljs-variable">task</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">MyTask</span>(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>);<br>        <span class="hljs-comment">// 创建分支合并池对象</span><br>        <span class="hljs-type">ForkJoinPool</span> <span class="hljs-variable">forkJoinPool</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ForkJoinPool</span>();<br>        ForkJoinTask&lt;Integer&gt; forkJoinTask = forkJoinPool.submit(task);<br><br>        <span class="hljs-comment">// 获取最终合并之后结果</span><br>        <span class="hljs-type">Integer</span> <span class="hljs-variable">reslut</span> <span class="hljs-operator">=</span> forkJoinTask.get();<br>        System.out.println(reslut);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/12/29/JUC-6-%E7%BA%BF%E7%A8%8B%E6%B1%A0/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-12-29 16:19:35
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%A0%B8%E5%BF%83%E6%96%B9%E6%B3%95"><span class="toc-text">2. 核心方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-fork"><span class="toc-text">2.1 fork</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-join"><span class="toc-text">2.2 join</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-text">3. 异常处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%A1%88%E4%BE%8B"><span class="toc-text">4. 案例</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2023 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JUC(7)%20Fork%2FJoin + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F12%2F29%2FJUC-7-Fork-Join%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/12/29/JUC-7-Fork-Join/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
+</html>
