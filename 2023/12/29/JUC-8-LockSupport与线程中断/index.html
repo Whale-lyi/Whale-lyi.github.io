@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-12-30 00:33:29
+          2024-01-08 01:15:53
         </span>
         
               <span class="post-categories">
@@ -211,7 +211,7 @@
 <ul>
 <li><p>静态方法 <code>Thread.interrupted();</code></p>
 </li>
-<li><p>判断线程是否被中断并清除当前中断状态（做了两件事情）</p>
+<li><p>判断当前线程是否被中断并清除当前中断状态(做了两件事情)</p>
 <ul>
 <li><p>返回当前线程的中断状态，测试当前线程是否已被中断</p>
 </li>
@@ -219,7 +219,7 @@
 </li>
 </ul>
 </li>
-<li><p>这个方法有点不好理解, 如果连续两次调用此方法，则第二次返回false，因为连续调用两次的结果可能不一样</p>
+<li><p>如果连续两次调用此方法，则第二次返回false</p>
 </li>
 </ul>
 </li>
@@ -227,13 +227,12 @@
 <ul>
 <li><p>实例方法</p>
 </li>
-<li><p>判断当前线程是否被中断（通过检查中断标志位）</p>
+<li><p>判断当前线程是否被中断(通过检查中断标志位)</p>
 </li>
 </ul>
 </li>
 </ul>
-<h3 id="1-3-面试题中断机制考点"><a href="#1-3-面试题中断机制考点" class="headerlink" title="1.3 面试题中断机制考点"></a>1.3 面试题中断机制考点</h3><p><strong>如何停止中断运行中的线程？</strong></p>
-<ul>
+<h3 id="1-3-面试题中断机制考点"><a href="#1-3-面试题中断机制考点" class="headerlink" title="1.3 面试题中断机制考点"></a>1.3 面试题中断机制考点</h3><h4 id="如何停止运行中的线程？"><a href="#如何停止运行中的线程？" class="headerlink" title="如何停止运行中的线程？"></a>如何停止运行中的线程？</h4><ul>
 <li>通过一个volatile变量实现</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-keyword">volatile</span> <span class="hljs-type">boolean</span> <span class="hljs-variable">isStop</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>; <span class="hljs-comment">//volatile表示的变量具有可见性</span><br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            <span class="hljs-keyword">if</span> (isStop) &#123;<br>                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; isStop的值被改为true，t1程序停止&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            System.out.println(<span class="hljs-string">&quot;-----------hello volatile&quot;</span>);<br>        &#125;<br>    &#125;, <span class="hljs-string">&quot;t1&quot;</span>).start();<br>    <span class="hljs-keyword">try</span> &#123;<br>        TimeUnit.MILLISECONDS.sleep(<span class="hljs-number">10</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; isStop = <span class="hljs-literal">true</span>, <span class="hljs-string">&quot;t2&quot;</span>).start();<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * -----------hello volatile</span><br><span class="hljs-comment"> * -----------hello volatile</span><br><span class="hljs-comment"> * -----------hello volatile</span><br><span class="hljs-comment"> * -----------hello volatile</span><br><span class="hljs-comment"> * t1 isStop的值被改为true，t1程序停止</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
@@ -242,23 +241,40 @@
 </ul>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-type">AtomicBoolean</span> <span class="hljs-variable">atomicBoolean</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">AtomicBoolean</span>(<span class="hljs-literal">false</span>);<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            <span class="hljs-keyword">if</span> (atomicBoolean.get()) &#123;<br>                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; atomicBoolean的值被改为true，t1程序停止&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            System.out.println(<span class="hljs-string">&quot;-----------hello atomicBoolean&quot;</span>);<br>        &#125;<br>    &#125;, <span class="hljs-string">&quot;t1&quot;</span>).start();<br>    <span class="hljs-keyword">try</span> &#123;<br>        TimeUnit.MILLISECONDS.sleep(<span class="hljs-number">10</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; atomicBoolean.set(<span class="hljs-literal">true</span>), <span class="hljs-string">&quot;t2&quot;</span>).start();<br>&#125;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * -----------hello atomicBoolean</span><br><span class="hljs-comment"> * -----------hello atomicBoolean</span><br><span class="hljs-comment"> * -----------hello atomicBoolean</span><br><span class="hljs-comment"> * -----------hello atomicBoolean</span><br><span class="hljs-comment"> * t1 atomicBoolean的值被改为true，t1程序停止</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
 <ul>
-<li>通过Thread类自带的中断api实例方法实现</li>
+<li>通过Thread类自带的中断api实例方法实现<ul>
+<li>在需要中断的线程中不断监听中断状态，一旦发生中断，就执行相应的中断处理业务逻辑stop线程。</li>
 </ul>
-<p><strong>当前线程中断标识为true，是不是线程就立刻停止</strong></p>
-<p><strong>静态方法<code>Thread.interrupted()</code>, 谈谈你的理解</strong></p>
-<h2 id="2-线程间通信"><a href="#2-线程间通信" class="headerlink" title="2. 线程间通信"></a>2. 线程间通信</h2><ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            <span class="hljs-keyword">if</span> (Thread.currentThread().isInterrupted()) &#123;<br>                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; isInterrupted()的值被改为true，t1程序停止&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            System.out.println(<span class="hljs-string">&quot;-----------hello isInterrupted()&quot;</span>);<br>        &#125;<br>    &#125;, <span class="hljs-string">&quot;t1&quot;</span>);<br>    t1.start();<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        TimeUnit.MILLISECONDS.sleep(<span class="hljs-number">10</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>    <span class="hljs-comment">//t2向t1放出协商，将t1中的中断标识位设为true，希望t1停下来</span><br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; t1.interrupt(), <span class="hljs-string">&quot;t2&quot;</span>).start();<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * -----------hello isInterrupted()</span><br><span class="hljs-comment"> * -----------hello isInterrupted()</span><br><span class="hljs-comment"> * -----------hello isInterrupted()</span><br><span class="hljs-comment"> * -----------hello isInterrupted()</span><br><span class="hljs-comment"> * t1 isInterrupted()的值被改为true，t1程序停止</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+<h4 id="当前线程中断标识为true，是不是线程就立刻停止"><a href="#当前线程中断标识为true，是不是线程就立刻停止" class="headerlink" title="当前线程中断标识为true，是不是线程就立刻停止"></a>当前线程中断标识为true，是不是线程就立刻停止</h4><p>答案是不立刻停止，具体来说，当对一个线程调用interrupt时：</p>
+<ul>
+<li>如果线程处于正常活动状态，那么会将该线程的中断标志设置为true，仅此而已，被设置中断标志的线程将继续正常运行，不受影响，所以interrupt()并不能真正的中断线程，需要被调用的线程自己进行配合才行，<strong>对于不活动的线程没有任何影响</strong>。</li>
+<li>如果线程处于阻塞状态(例如sleep, wait, join等)，在别的线程中调用当前线程对象的interrupt方法，那么线程将立即退出被阻塞状态(<strong>中断标志也将被清除</strong>)，并抛出一个InterruptedException异常。</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            <span class="hljs-keyword">if</span> (Thread.currentThread().isInterrupted()) &#123;<br>                System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot; 中断标志位为：true 程序停止&quot;</span>);<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            <span class="hljs-comment">//sleep方法抛出InterruptedException后，中断标识也被清空置为false，如果没有在</span><br>            <span class="hljs-comment">//catch方法中必须调用interrupt方法再次将中断标识置为true，否则将导致无限循环</span><br>            <span class="hljs-keyword">try</span> &#123;<br>                Thread.sleep(<span class="hljs-number">200</span>);<br>            &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>                Thread.currentThread().interrupt();<br>                e.printStackTrace();<br>            &#125;<br>            System.out.println(<span class="hljs-string">&quot;-------------hello InterruptDemo3&quot;</span>);<br>        &#125;<br>    &#125;, <span class="hljs-string">&quot;t1&quot;</span>);<br>    t1.start();<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(t1::interrupt, <span class="hljs-string">&quot;t2&quot;</span>).start();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="静态方法Thread-interrupted-谈谈你的理解"><a href="#静态方法Thread-interrupted-谈谈你的理解" class="headerlink" title="静态方法Thread.interrupted(), 谈谈你的理解"></a>静态方法<code>Thread.interrupted()</code>, 谈谈你的理解</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">interrupted</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-keyword">return</span> currentThread().isInterrupted(<span class="hljs-literal">true</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>返回当前线程中断标志位，并且清空中断标志位</strong><ul>
+<li>也就是说，如果连续两次调用该方法，第二次调用将返回false</li>
+<li>除非当前线程在第一次和第二次调用之间再次被 interrupt</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-线程等待唤醒机制"><a href="#2-线程等待唤醒机制" class="headerlink" title="2. 线程等待唤醒机制"></a>2. 线程等待唤醒机制</h2><p>三种实现方式：</p>
+<ol>
 <li>关键字 <code>synchronized</code> 与 <code>wait()/notify()</code> 一起使用可以实现等待/通知模式</li>
 <li><code>Lock</code> 接口中的 <code>newContition()</code> 方法返回 Condition 对象，Condition 类使用 <code>await()/signal()</code> 也可以实现等待/通知模式</li>
-</ul>
-<p><strong>synchronized实现</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 创建一个资源类</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Share</span>&#123;<br>    <span class="hljs-comment">// 设置临界资源</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 实现+1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">incr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-comment">// 操作：判断、干活、通知</span><br>        <span class="hljs-keyword">while</span> (number != <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-comment">// number不为0，等待</span><br>            <span class="hljs-comment">// wait 有一个特点，在哪里睡，就在哪里醒</span><br>            <span class="hljs-built_in">this</span>.wait();	<br>        &#125;<br>        number++;<br>        System.out.print(Thread.currentThread().getName()+<span class="hljs-string">&quot;::&quot;</span>+number);<br>        <span class="hljs-comment">// 唤醒其他线程</span><br>        <span class="hljs-built_in">this</span>.notifyAll();<br>    &#125;<br><br>    <span class="hljs-comment">// 实现-1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">decr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-keyword">while</span> (number != <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-built_in">this</span>.wait();<br>        &#125;<br>        number--;<br>        System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;::&quot;</span>+number);<br>        <span class="hljs-built_in">this</span>.notifyAll();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<li>LockSupport类可以阻塞当前线程以及唤醒指定被阻塞的线程</li>
+</ol>
+<h3 id="2-1-synchronized实现"><a href="#2-1-synchronized实现" class="headerlink" title="2.1 synchronized实现"></a>2.1 synchronized实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Share</span>&#123;<br>    <span class="hljs-comment">// 设置临界资源</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 实现+1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">incr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-comment">// 操作：判断、干活、通知</span><br>        <span class="hljs-keyword">while</span> (number != <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-comment">// number不为0，等待</span><br>            <span class="hljs-comment">// wait 有一个特点，在哪里睡，就在哪里醒</span><br>            <span class="hljs-built_in">this</span>.wait();	<br>        &#125;<br>        number++;<br>        System.out.print(Thread.currentThread().getName()+<span class="hljs-string">&quot;::&quot;</span>+number);<br>        <span class="hljs-comment">// 唤醒其他线程</span><br>        <span class="hljs-built_in">this</span>.notifyAll();<br>    &#125;<br><br>    <span class="hljs-comment">// 实现-1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">decr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        <span class="hljs-keyword">while</span> (number != <span class="hljs-number">1</span>) &#123;<br>            <span class="hljs-built_in">this</span>.wait();<br>        &#125;<br>        number--;<br>        System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;::&quot;</span>+number);<br>        <span class="hljs-built_in">this</span>.notifyAll();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p><strong>注意</strong></p>
 <p>上述代码中进行判断时必须使用 while 而不是 if，否则会产生<strong>虚假唤醒</strong>问题，即唤醒后不需要再进行判断而可以直接执行</p>
 </blockquote>
-<p><strong>Lock实现</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Share</span> &#123;<br>    <span class="hljs-comment">// 设置临界资源</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 创建一个Condition</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Lock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantLock</span>();<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Condition</span> <span class="hljs-variable">condition</span> <span class="hljs-operator">=</span> lock.newCondition();<br><br>    <span class="hljs-comment">// 实现+1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">incr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (number != <span class="hljs-number">0</span>) &#123;<br>                condition.await();<br>            &#125;<br>            number++;<br>            System.out.print(Thread.currentThread().getName() + <span class="hljs-string">&quot;::&quot;</span> + number + <span class="hljs-string">&quot;---&gt;&quot;</span>);<br>            condition.signalAll();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 实现-1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">decr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (number != <span class="hljs-number">1</span>) &#123;<br>                condition.await();<br>            &#125;<br>            number--;<br>            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;::&quot;</span> + number);<br>            condition.signalAll();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="2-1-定制化通信"><a href="#2-1-定制化通信" class="headerlink" title="2.1 定制化通信"></a>2.1 定制化通信</h3><blockquote>
+<h3 id="2-2-Lock实现"><a href="#2-2-Lock实现" class="headerlink" title="2.2 Lock实现"></a>2.2 Lock实现</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Share</span> &#123;<br>    <span class="hljs-comment">// 设置临界资源</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">number</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 创建一个Condition</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Lock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantLock</span>();<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Condition</span> <span class="hljs-variable">condition</span> <span class="hljs-operator">=</span> lock.newCondition();<br><br>    <span class="hljs-comment">// 实现+1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">incr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (number != <span class="hljs-number">0</span>) &#123;<br>                condition.await();<br>            &#125;<br>            number++;<br>            System.out.print(Thread.currentThread().getName() + <span class="hljs-string">&quot;::&quot;</span> + number + <span class="hljs-string">&quot;---&gt;&quot;</span>);<br>            condition.signalAll();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 实现-1操作</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">decr</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>        lock.lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-keyword">while</span> (number != <span class="hljs-number">1</span>) &#123;<br>                condition.await();<br>            &#125;<br>            number--;<br>            System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;::&quot;</span> + number);<br>            condition.signalAll();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            lock.unlock();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>定制化通信</strong></p>
+<blockquote>
 <p>案例：启动三个线程，按照如下要求：<br>AA打印5次，BB打印10次，CC打印15次，一共进行10轮</p>
 <p>具体思路：每个线程添加一个标志位，是该标志位则执行操作，并且修改为下一个标志位，通知下一个标志位的线程。创建一个可重入锁与三个开锁通知</p>
 <p>该案例被称为<strong>单标志法</strong></p>
@@ -267,6 +283,50 @@
 <p>单标志法的问题</p>
 <ul>
 <li>该算法可确保每次只允许一个进程进入临界区，但进程必须交替进入临界区，若某个进程不再进入临界区，则另一个进程也无法进入临界区</li>
+</ul>
+<h3 id="2-3-LockSupport实现"><a href="#2-3-LockSupport实现" class="headerlink" title="2.3 LockSupport实现"></a>2.3 LockSupport实现</h3><blockquote>
+<p>上述两种方法使用都有限制</p>
+<ul>
+<li>线程需要先获得并持有锁，必须在锁块(synchronized 或 lock)中</li>
+<li>必须要先等待后唤醒，线程才能够被唤醒</li>
+</ul>
+</blockquote>
+<p>LockSupport是用来创建锁和其他同步类的基本线程阻塞原语。其中的 <code>park()</code> 和 <code>unpark()</code> 的作用分别是阻塞线程和解除阻塞线程</p>
+<p>LockSupport类使用了一种名为Permit(许可)的概念来做到阻塞和唤醒线程的功能，每个线程都有一个许可(Permit)，<strong>但与Semaphore不同的是，许可证不会累积，最多只有一个</strong></p>
+<p>主要方法(全部都是静态方法, 底层使用 <code>UNSAFE</code> 类实现)</p>
+<ul>
+<li>阻塞：<ul>
+<li>Permit许可证默认没有不能放行，所以一开始调 <code>park()</code> 方法当前线程就会阻塞，直到别的线程给当前线程的发放 Permit，park 方法才会被唤醒。</li>
+<li><code>park()</code>: 阻塞当前线程</li>
+</ul>
+</li>
+<li>唤醒：<ul>
+<li>调用 <code>unpark(thread)</code> 方法后，就会发放 thread 线程的许可证，会自动唤醒 park 线程，即之前阻塞中的 <code>LockSuppot.park()</code> 方法会立即返回。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     * t1	 ----------come in</span><br><span class="hljs-comment">     * t2	 ----------发出通知</span><br><span class="hljs-comment">     * t1	 ----------被唤醒</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-type">Thread</span> <span class="hljs-variable">t1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t ----------come in&quot;</span>);<br>        LockSupport.park();<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t ----------被唤醒&quot;</span>);<br>    &#125;, <span class="hljs-string">&quot;t1&quot;</span>);<br>    t1.start();<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        TimeUnit.SECONDS.sleep(<span class="hljs-number">1</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br><br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>        LockSupport.unpark(t1);<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;\t ----------发出通知&quot;</span>);<br>    &#125;, <span class="hljs-string">&quot;t2&quot;</span>).start();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-总结"><a href="#3-总结" class="headerlink" title="3. 总结"></a>3. 总结</h2><ul>
+<li><strong>LockSupport是用来创建锁和其他同步类的基本线程阻塞原语</strong>，所有的方法都是静态方法，可以让线程在任意位置阻塞，阻塞后也有对应的唤醒方法。归根结底，LockSupport时调用Unsafe中的native代码</li>
+<li>LockSupport提供 <code>park()</code> 和 <code>unpark()</code> 方法实现阻塞线程和解除线程阻塞的过程，LockSupport和每个使用它的线程都有一个许可(Permit)关联，每个线程都有一个相关的permit，permit最多只有一个，重复调用 unpark 也不会积累凭证。</li>
+<li><p>形象理解：线程阻塞需要消耗凭证(Permit)，这个凭证最多只有一个</p>
+</li>
+<li><p>当调用park时，如果有凭证，则会直接消耗掉这个凭证然后正常退出。如果没有凭证，则必须阻塞等待凭证可用；</p>
+</li>
+<li>当调用unpark时，它会增加一个凭证，但凭证最多只能有1各，累加无效。</li>
+</ul>
+<p>面试题</p>
+<ul>
+<li><p>为什么LockSupport可以突破wait/notify的原有调用顺序？</p>
+<ul>
+<li>因为unpark获得了一个凭证，之后再调用park方法，就可以名正言顺的凭证消费，故不会阻塞，先发放了凭证后续可以畅通无阻。</li>
+</ul>
+</li>
+<li><p>为什么唤醒两次后阻塞两次，但最终结果还会阻塞线程？</p>
+<ul>
+<li>因为凭证的数量最多为1，连续调用两次unpark和调用一次unpark效果一样，只会增加一个凭证，而调用两次park却需要消费两个凭证，证不够，不能放行。</li>
+</ul>
+</li>
 </ul>
 
       </div>
@@ -283,7 +343,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-12-30 00:33:29
+              2024-01-08 01:15:53
             </span>
             
                   <span class="post-categories">
@@ -323,7 +383,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6"><span class="toc-text">1. 线程中断机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6"><span class="toc-text">1.1 什么是中断机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%AD%E6%96%ADAPI"><span class="toc-text">1.2 中断API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E8%80%83%E7%82%B9"><span class="toc-text">1.3 面试题中断机制考点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BA%BF%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1"><span class="toc-text">2. 线程间通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%9A%E5%88%B6%E5%8C%96%E9%80%9A%E4%BF%A1"><span class="toc-text">2.1 定制化通信</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6"><span class="toc-text">1. 线程中断机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6"><span class="toc-text">1.1 什么是中断机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%AD%E6%96%ADAPI"><span class="toc-text">1.2 中断API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E9%9D%A2%E8%AF%95%E9%A2%98%E4%B8%AD%E6%96%AD%E6%9C%BA%E5%88%B6%E8%80%83%E7%82%B9"><span class="toc-text">1.3 面试题中断机制考点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%81%9C%E6%AD%A2%E8%BF%90%E8%A1%8C%E4%B8%AD%E7%9A%84%E7%BA%BF%E7%A8%8B%EF%BC%9F"><span class="toc-text">如何停止运行中的线程？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%93%E5%89%8D%E7%BA%BF%E7%A8%8B%E4%B8%AD%E6%96%AD%E6%A0%87%E8%AF%86%E4%B8%BAtrue%EF%BC%8C%E6%98%AF%E4%B8%8D%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%B0%B1%E7%AB%8B%E5%88%BB%E5%81%9C%E6%AD%A2"><span class="toc-text">当前线程中断标识为true，是不是线程就立刻停止</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%96%B9%E6%B3%95Thread-interrupted-%E8%B0%88%E8%B0%88%E4%BD%A0%E7%9A%84%E7%90%86%E8%A7%A3"><span class="toc-text">静态方法Thread.interrupted(), 谈谈你的理解</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BA%BF%E7%A8%8B%E7%AD%89%E5%BE%85%E5%94%A4%E9%86%92%E6%9C%BA%E5%88%B6"><span class="toc-text">2. 线程等待唤醒机制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-synchronized%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.1 synchronized实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Lock%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.2 Lock实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-LockSupport%E5%AE%9E%E7%8E%B0"><span class="toc-text">2.3 LockSupport实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%80%BB%E7%BB%93"><span class="toc-text">3. 总结</span></a></li></ol>
       
     </div>
   </div>
