@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2024-01-08 01:28:25
+          2024-01-08 15:20:15
         </span>
         
               <span class="post-categories">
@@ -180,7 +180,156 @@
           
       </div>
       <div class="markdown-body">
-        
+        <blockquote>
+<p>面试题</p>
+<ul>
+<li>你知道什么是Java内存模型JMM吗？</li>
+<li>JMM和volatile他们两个之间的关系？</li>
+<li>JMM有哪些特征或者它的三大特征是什么？</li>
+<li>为什么要有JMM，它为什么出现？作用和功能是什么？</li>
+<li>happens-before先行并发原则你有了解过吗？</li>
+</ul>
+</blockquote>
+<h2 id="1-JMM"><a href="#1-JMM" class="headerlink" title="1. JMM"></a>1. JMM</h2><h3 id="1-1-计算机硬件存储体系"><a href="#1-1-计算机硬件存储体系" class="headerlink" title="1.1 计算机硬件存储体系"></a>1.1 计算机硬件存储体系</h3><p>CPU的运行并不是直接操作内存而是先把内存里面的数据读到缓存，而内存的读和写操作的时候会造成不一致的问题。JVM规范中试图定义一种Java内存模型来<strong>屏蔽掉各种硬件和操作系统的内存访问差异</strong>，以实现让Java程序再各种平台下都能达到一致性的<strong>内存访问效果</strong></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202401081324075.png" alt="img" style="zoom:80%;" /></p>
+<h3 id="1-2-JMM概述"><a href="#1-2-JMM概述" class="headerlink" title="1.2 JMM概述"></a>1.2 JMM概述</h3><p>JMM(Java内存模型Java Memory Model, 简称JMM)本身是一种<strong>抽象的</strong>概念并不真实存在它仅仅<strong>描述的是一组约定或规范</strong>，通过这组规范定义了程序中(尤其是多线程)各个变量的读写访问方式并决定一个线程对共享变量的写入以及如何变成对另一个线程可见，关键技术点都是围绕多线程的原子性、可见性和有序性展开的。</p>
+<p>原则:</p>
+<ul>
+<li>JMM的关键技术点都是围绕多线程的<strong>原子性、可见性和有序性</strong>展开的</li>
+</ul>
+<p>作用:</p>
+<ul>
+<li>通过JMM来实现线程和主内存之间的抽象关系。</li>
+<li>屏蔽各个硬件平台和操作系统的内存访问差异以实现让Java程序在各种平台下都能达到一致的内存访问效果。</li>
+</ul>
+<h2 id="2-JMM规范下，三大特性"><a href="#2-JMM规范下，三大特性" class="headerlink" title="2. JMM规范下，三大特性"></a>2. JMM规范下，三大特性</h2><p>可见性、原子性、有序性</p>
+<h4 id="可见性"><a href="#可见性" class="headerlink" title="可见性"></a>可见性</h4><p>是指当一个线程修改了某一个共享变量的值，其他线程是否能够<strong>立即</strong>知道该变更，JMM规定了所有的变量都存储在<strong>主内存</strong>中</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202401081354774.png" alt="img" style="zoom: 33%;" /></p>
+<p>系统中主内存<strong>共享变量</strong>数据修改被写入的时机是不确定的，<strong>多线程并发下很可能出现“脏读”</strong>，所以每个线程都有自己的工作内存，线程自己的工作内存中保存了该线程使用到的变量的<strong>主内存副本拷贝</strong>，线程对变量的所有操作（读取、赋值等）都必须在线程自己的工作内存中进行，而不能够直接写入主内存中的变量，不同线程之间也无法直接访问对方工作内存中的变量，线程间变量值的传递均需要通过主内存来完成。</p>
+<h4 id="原子性"><a href="#原子性" class="headerlink" title="原子性"></a>原子性</h4><p>指一个操作是不可被打断的，即多线程环境下，操作不能被其他线程干扰</p>
+<h4 id="有序性"><a href="#有序性" class="headerlink" title="有序性"></a>有序性</h4><p>对于一个线程的执行代码而言，我们总是习惯性地认为代码的执行总是从上到下，有序执行。但为了提升性能，编译器和处理器通常会对指令序列进行<strong>重新排序</strong>。Java规范规定JVM线程内部维持<strong>顺序化语义</strong>，即只要程序的最终结果与它顺序化执行的结果相等，那么指令的执行顺序可以与代码顺序<strong>不一致，此过程叫指令的重排序</strong></p>
+<p>优缺点：</p>
+<ul>
+<li><p>JVM能根据处理器特性（CPU多级缓存系统、多核处理器等）适当的对机器指令进行重排序，使机器指令更符合CPU的执行特性，最大限度的发挥机器性能。</p>
+</li>
+<li><p>但是指令重排<strong>可以保证串行语义一致</strong>，但没有义务保证多线程的语义也一致（即可能产生“脏读”），简单而言就是两行以上不相干的代码在执行的时候有可能先执行的不是第一条，不见得是从上到下顺序执行，执行顺序会被优化。</p>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202401081422853.png" alt="img"></p>
+<ul>
+<li>单线程环境里确实能够保证程序最终执行结果和代码顺序执行的结果一致</li>
+<li>处理器在进行重排序时必须考虑到指令之间的<strong>数据依赖性</strong></li>
+<li>多线程环境中线程交替执行，由于编译器优化重排的存在，可能出现乱序现象，两个线程使用的变量能否保证一致性是无法确定的，结果无法预测</li>
+</ul>
+<h2 id="3-JMM规范下，多线程对变量的读写过程"><a href="#3-JMM规范下，多线程对变量的读写过程" class="headerlink" title="3. JMM规范下，多线程对变量的读写过程"></a>3. JMM规范下，多线程对变量的读写过程</h2><p>由于JVM运行程序的实体是线程，而每个线程创建时JVM都会为其创建一个工作内存（有的地方称为栈空间），工作内存是每个线程的私有数据区域，而Java内存模型中规定所有变量都存储在主内存，主内存是共享内存区域，所有线程都可以访问，但线程对变量的操作（读写赋值等）必须在工作内存中进行，首先要将变量从主内存拷贝到线程自己的工作内存空间，然后对变量进行操作，操作完成后再将变量写回主内存，不能直接操作主内存中的变量，各个线程中的工作内存存储着主内存中的变量副本拷贝，因此不同的线程无法访问对方的工作内存，线程间的通信（传值）必须通过主内存来完成，其简要访问过程如下图：</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202401081429603.png" alt="image.png" style="zoom: 50%;" /></p>
+<p>JMM定义了线程和主内存之间的抽象关系：</p>
+<ul>
+<li>线程之间的共享变量存储在主内存中（从硬件角度讲就是内存条）</li>
+<li>每个线程都有一个自己的本地工作内存，本地工作内存中存储了该线程用来读写共享变量的副本（<strong>从硬件角度来说就是CPU的缓存</strong>）</li>
+</ul>
+<p>小总结：</p>
+<ul>
+<li>我们定义的所有共享变量都储存在物理主内存中</li>
+<li>每个线程都有自己独立的工作内存，里面保证该线程使用到的共享变量的副本（主内存中该变量的一份拷贝）</li>
+<li>线程对共享变量所有的操作都必须先在线程自己的工作内存中进行后写回主内存，不能直接从主内存在读写（不能越级）</li>
+<li>不同线程之间也无法直接访问其他线程的工作内存中的变量，线程间变量值的传递需要通过主内存来进行（同级不能互相访问）。</li>
+</ul>
+<h2 id="4-JMM规范下，多线程先行发生原则之happens-before"><a href="#4-JMM规范下，多线程先行发生原则之happens-before" class="headerlink" title="4. JMM规范下，多线程先行发生原则之happens-before"></a>4. JMM规范下，多线程先行发生原则之happens-before</h2><p>在JVM中，如果<strong>一个操作执行的结果需要对另一个操作可见或者代码重排序</strong>，那么这两个操作之间必须存在happens-before（先行发生）原则，逻辑上的先后关系。</p>
+<blockquote>
+<p>x, y 案例说明：</p>
+<ul>
+<li><p>A 线程执行：x = 5</p>
+</li>
+<li><p>B 线程执行：y = x</p>
+</li>
+</ul>
+<p>如果线程 A 的操作 happens-before（先行发生）线程 B，那么可以确定线程 B 执行 y = 5 一定成立</p>
+<p>如果他们不存在 happens-before 原则，那么 y = 5 不一定成立</p>
+<p>happens-before原则<strong>包含可见性和有序性的约束</strong></p>
+</blockquote>
+<p>如果Java内存模型中所有的有序性都仅靠 volatile 和 synchronized 来完成，那么有很多操作都将变得非常繁琐，但是我们在编写Java并发代码的时候并没有察觉到这一点。</p>
+<p>我们没有时时、处处、次次添加 volatile 和 synchronized 来完成程序，这是因为Java语言中JMM原则下，有一个“先行发生”（happens-before）原则限制。</p>
+<p>这个原则非常重要：它是判断数据是否存在竞争，线程是否安全的非常有用的手段。依赖这个原则，我们可以通过几条简单规则解决并发环境下两个操作之间是否可能存在冲突的所有问题，而不需要陷入Java内存模型晦涩难懂的底层编译原理之中。</p>
+<h3 id="4-1-happens-before-总原则"><a href="#4-1-happens-before-总原则" class="headerlink" title="4.1 happens-before 总原则"></a>4.1 happens-before 总原则</h3><ul>
+<li>如果一个操作happens-before另一个操作，那么第一个操作的执行结果将对第二个操作可见，而且第一个操作的执行顺序排在第二个操作之前</li>
+<li>如果两个操作之间存在happens-before关系，并不意味着一定要按照happens-before原则制定的顺序来执行。如果重排之后的执行结果与按照happens-before关系来执行的<strong>结果一致</strong>，那么这种重排序<strong>并不非法</strong>。</li>
+</ul>
+<h3 id="4-2-happens-before-8-条原则"><a href="#4-2-happens-before-8-条原则" class="headerlink" title="4.2 happens-before 8 条原则"></a>4.2 happens-before 8 条原则</h3><blockquote>
+<p>从JDK 5开始，Java使用新的JSR-133内存模型，提供了 happens-before 原则来辅助保证程序执行的原子性、可见性以及有序性的问题，它是判断数据是否存在竞争、线程是否安全的依据，happens-before 原则内容如下：</p>
+</blockquote>
+<ol>
+<li><p><strong>次序规则</strong>：<strong>一个线程内</strong>，按照代码的顺序，写在前面的操作先行发生于写在后面的操作，也就是说前一个操作的结果可以被后续的操作获取（保证语义串行性，按照代码顺序执行）</p>
+</li>
+<li><p><strong>锁定规则</strong>：一个unlock操作先行发生于后面对同一个锁的lock操作（后面指时间上的先后）</p>
+</li>
+<li><p><strong>volatile变量规则</strong>：对一个volatile变量的写操作先行发生于后面对这个变量的读操作，前面的写对后面的读是可见的，这里的后面同样指时间上的先后</p>
+</li>
+<li><p><strong>传递规则</strong>：如果操作A先行发生于操作B，而操作B又先行发生于操作C，则可以得出操作A先行发生于操作C</p>
+</li>
+<li><p><strong>线程启动规则</strong>（Thread start Rule）：Thread对象的start()方法先行发生于此线程的每一个动作</p>
+</li>
+<li><p><strong>线程中断规则</strong>（Thread Interruption Rule）：</p>
+<ol>
+<li><p>对线程<code>interrupt()</code>方法的调用先行发生于被中断线程的代码检测到中断事件的发生</p>
+</li>
+<li><p>可以通过<code>Thread.interrupted()</code>检测到是否发生中断</p>
+</li>
+<li><p>也就是说你要先调用<code>interrupt()</code>方法设置过中断标志位，我才能检测到中断发生</p>
+</li>
+</ol>
+</li>
+<li><p><strong>线程终止规则</strong>（Thread Termination Rule）：线程中的所有操作都优先发生于对此线程的终止检测，我们可以通过<code>isAlive()</code>等手段检测线程是否已经终止执行</p>
+</li>
+<li><p><strong>对象终结规则</strong>（Finalizer Rule）：一个对象的初始化完成（构造函数执行结束）先行发生于它的finalize(）方法的开始，即对象没有完成初始化之前，是不能调用finalized()方法的</p>
+</li>
+</ol>
+<h3 id="4-3-总结"><a href="#4-3-总结" class="headerlink" title="4.3 总结"></a>4.3 总结</h3><ul>
+<li><p>在Java语言里面，Happens-before的语义本质上是一种可见性</p>
+</li>
+<li><p>A happens-before B, 意味着 A 发生过的事情对 B 而言是可见的，无论 A 事件和 B 事件是否发生在同一线程里</p>
+</li>
+<li><p>JVM的设计分为两部分：</p>
+<ul>
+<li><p>一部分是面向我们程序员提供的，也就是happens-before规则，它通俗易懂的向我们程序员阐述了一个强内存模型，我们只要理解happens-before规则，就可以编写并发安全的程序了</p>
+</li>
+<li><p>另一部分是针对 JVM 实现的，为了尽可能少的对编译器和处理器做约束从而提升性能，JMM 在不影响程序执行结果的前提下对其不做要求，即允许优化重排序，我们只要关注前者就好了，也就是理解 happens-before 规则即可，其他繁杂的内容由 JMM 规范结合操作系统给我们搞定，我们只写好代码即可</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>案例</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-type">int</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getValue</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> value;<br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">setValue</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> ++value;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>问题描述：假设存在线程A和B，线程A先（时间上的先后）调用了<code>setValue()</code>方法，然后线程B调用了同一个对象的<code>getValue()</code>方法，那么线程B收到的返回值是什么？</p>
+<p>答案：不一定</p>
+<blockquote>
+<p>分析happens-before规则（规则5，6，7，8可以忽略，和代码无关）</p>
+<ol>
+<li><p>由于两个方法由不同线程调用，不满足一个线程的条件，不满足程序次序规则</p>
+</li>
+<li><p>两个方法都没有用锁，不满足锁定规则</p>
+</li>
+<li><p>变量没有使用volatile修饰，所以不满足volatile变量规则</p>
+</li>
+<li><p>传递规则肯定不满足</p>
+</li>
+</ol>
+<p>综上：无法通过 happens-before 原则推导出 A happens-before B，虽然可以确定时间上线程 A 优于线程 B，但就是无法确定线程 B 获得的结果是什么，所以<strong>这段代码不是线程安全的</strong></p>
+<p>注意：</p>
+<ul>
+<li><strong>如果两个操作的执行次序无法从happens-before原则推导出来，那么就不能保证他们的有序性，虚拟机可以随意对他们进行重排序</strong></li>
+</ul>
+</blockquote>
+<p>改进方法：</p>
+<ul>
+<li>把 getter/setter 方法都定义为 synchronized 方法<ul>
+<li>不好，重量级锁，并发性下降</li>
+</ul>
+</li>
+<li>把 value 定义为 volatile 变量，由于 setter 方法对 value 的修改不依赖 value 的原值，满足 volatile 关键字使用场景</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* 利用volatile保证读取操作的可见性，</span><br><span class="hljs-comment">* 利用synchronized保证符合操作的原子性</span><br><span class="hljs-comment">* 结合使用锁和volatile变量来减少同步的开销</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-type">int</span> <span class="hljs-variable">value</span> <span class="hljs-operator">=</span><span class="hljs-number">0</span>;<br><span class="hljs-keyword">public</span> <span class="hljs-type">int</span> <span class="hljs-title function_">getValue</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> value;<br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-type">int</span> <span class="hljs-title function_">setValue</span><span class="hljs-params">()</span>&#123;<br>    <span class="hljs-keyword">return</span> ++value;<br>&#125;<br></code></pre></td></tr></table></figure>
+
       </div>
       
         <div class="prev-or-next">
@@ -195,7 +344,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2024-01-08 01:28:25
+              2024-01-08 15:20:15
             </span>
             
                   <span class="post-categories">
@@ -218,11 +367,33 @@
           </div>
           <div class="post-foot-prev">
             
+              <a href="/2024/01/08/JUC-10-volatile%E4%B8%8EJMM/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
           </div>
         </div>
       
     </div>
     
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-JMM"><span class="toc-text">1. JMM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A1%AC%E4%BB%B6%E5%AD%98%E5%82%A8%E4%BD%93%E7%B3%BB"><span class="toc-text">1.1 计算机硬件存储体系</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-JMM%E6%A6%82%E8%BF%B0"><span class="toc-text">1.2 JMM概述</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-JMM%E8%A7%84%E8%8C%83%E4%B8%8B%EF%BC%8C%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="toc-text">2. JMM规范下，三大特性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7"><span class="toc-text">可见性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="toc-text">原子性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%89%E5%BA%8F%E6%80%A7"><span class="toc-text">有序性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-JMM%E8%A7%84%E8%8C%83%E4%B8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%AF%B9%E5%8F%98%E9%87%8F%E7%9A%84%E8%AF%BB%E5%86%99%E8%BF%87%E7%A8%8B"><span class="toc-text">3. JMM规范下，多线程对变量的读写过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-JMM%E8%A7%84%E8%8C%83%E4%B8%8B%EF%BC%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%88%E8%A1%8C%E5%8F%91%E7%94%9F%E5%8E%9F%E5%88%99%E4%B9%8Bhappens-before"><span class="toc-text">4. JMM规范下，多线程先行发生原则之happens-before</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-happens-before-%E6%80%BB%E5%8E%9F%E5%88%99"><span class="toc-text">4.1 happens-before 总原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-happens-before-8-%E6%9D%A1%E5%8E%9F%E5%88%99"><span class="toc-text">4.2 happens-before 8 条原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%80%BB%E7%BB%93"><span class="toc-text">4.3 总结</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
 
     
   </div>
@@ -522,5 +693,23 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>
