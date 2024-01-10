@@ -11,7 +11,7 @@
   
   <title>
     
-      编译原理(4) 符号表 
+      JUC(12) ThreadLocal 
       
       
       |
@@ -154,25 +154,25 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">编译原理(4) 符号表</div>
+      <div class="post-title">JUC(12) ThreadLocal</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-09 14:53:19
+          2024-01-10 17:57:05
         </span>
         
               <span class="post-categories">
                 <i class="iconfont icon-bookmark" title="Categories"></i>
                 
                 <span class="span--category">
-                  <a href="/categories/NJU/" title="NJU">
-                    <b>#</b> NJU
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
                   </a>
                 </span>
                 
                 <span class="span--category">
-                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
-                    <b>#</b> 编译原理
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
                   </a>
                 </span>
                 
@@ -180,43 +180,13 @@
           
       </div>
       <div class="markdown-body">
-        <h1 id="符号表"><a href="#符号表" class="headerlink" title="符号表"></a>符号表</h1><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174013530.png" alt="image-20221205174013530" style="zoom:80%;" /></p>
-<h3 id="1-符号表"><a href="#1-符号表" class="headerlink" title="1. 符号表"></a>1. 符号表</h3><p><strong>Definition (符号表 (Symbol Table))</strong></p>
-<p>$\textcolor{red}{\textbf{符号表}}是用于保存\textcolor{blue}{\textbf{各种信息}}的\textcolor{purple}{\textbf{数据结构}}$</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174251234.png" alt="image-20221205174251234" style="zoom:80%;" /></p>
-<h3 id="2-作用域"><a href="#2-作用域" class="headerlink" title="2. 作用域"></a>2. 作用域</h3><p>“领域特定语言” (DSL) 通常只有<strong>单作用域</strong> (全局作用域)</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174334165.png" alt="image-20221205174334165" style="zoom:80%;" /></p>
-<p>“通用程序设计语言” (GPL) 通常需要<strong>嵌套作用域</strong></p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174355820.png" alt="image-20221205174355820" style="zoom:80%;" /></p>
-<h4 id="2-1-嵌套作用域"><a href="#2-1-嵌套作用域" class="headerlink" title="2.1 嵌套作用域"></a>2.1 嵌套作用域</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174444387.png" alt="image-20221205174444387" style="zoom:80%;" /></p>
-<blockquote>
-<p>一个函数包括两个作用域</p>
-<ul>
-<li>参数</li>
-<li>函数体</li>
-</ul>
-</blockquote>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205174728843.png" alt="image-20221205174728843" style="zoom:80%;" /></p>
-<h3 id="3-动手写一个符号表"><a href="#3-动手写一个符号表" class="headerlink" title="3. 动手写一个符号表"></a>3. 动手写一个符号表</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206153825977.png" alt="image-20221206153825977" style="zoom:80%;" /></p>
-<p><strong>目标</strong></p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206153914843.png" alt="image-20221206153914843" style="zoom:80%;" /></p>
-<h4 id="3-1-类图"><a href="#3-1-类图" class="headerlink" title="3.1 类图"></a>3.1 类图</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221206154419395.png" alt="image-20221206154419395" style="zoom:80%;" /></p>
-<ul>
-<li>通过监听器在遍历语法树的过程中构建符号表</li>
-</ul>
-<h4 id="3-2-Scope"><a href="#3-2-Scope" class="headerlink" title="3.2 Scope"></a>3.2 Scope</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207141835857.png" alt="image-20221207141835857" style="zoom:80%;" /></p>
-<h4 id="3-3-Listener"><a href="#3-3-Listener" class="headerlink" title="3.3 Listener"></a>3.3 Listener</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150436040.png" alt="image-20221207150436040" style="zoom:80%;" /></p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150444492.png" alt="image-20221207150444492" style="zoom:80%;" /></p>
-<h4 id="3-4-测试"><a href="#3-4-测试" class="headerlink" title="3.4 测试"></a>3.4 测试</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221207150521873.png" alt="image-20221207150521873" style="zoom:80%;" /></p>
-<h4 id="3-5-参考"><a href="#3-5-参考" class="headerlink" title="3.5 参考"></a>3.5 参考</h4><p><a target="_blank" rel="noopener" href="https://github.com/antlr/symtab">symtab @ antlr by parrt</a></p>
-<p><a target="_blank" rel="noopener" href="https://github.com/parrt/cs652/tree/master/lectures/code/symtab/src">symtab @ cs652 by parrt</a></p>
-
+        
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2022/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-6-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" target="_self">
+              <a href="/2024/01/09/JUC-11-CAS-%E5%8E%9F%E5%AD%90%E6%93%8D%E4%BD%9C%E7%B1%BB/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -225,21 +195,21 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-09 14:53:19
+              2024-01-10 17:57:05
             </span>
             
                   <span class="post-categories">
                     <i class="iconfont icon-bookmark" title="Categories"></i>
                     
                     <span class="span--category">
-                      <a href="/categories/NJU/" title="NJU">
-                        <b>#</b> NJU
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
                       </a>
                     </span>
                     
                     <span class="span--category">
-                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
-                        <b>#</b> 编译原理
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
                       </a>
                     </span>
                     
@@ -248,33 +218,11 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2022/12/07/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-6-JS%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
           </div>
         </div>
       
     </div>
     
-  <div id="btn-catalog" class="btn-catalog">
-    <i class="iconfont icon-catalog"></i>
-  </div>
-  <div class="post-catalog hidden" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
-      
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">符号表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">1. 符号表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">2. 作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E5%B5%8C%E5%A5%97%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">2.1 嵌套作用域</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8A%A8%E6%89%8B%E5%86%99%E4%B8%80%E4%B8%AA%E7%AC%A6%E5%8F%B7%E8%A1%A8"><span class="toc-text">3. 动手写一个符号表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E7%B1%BB%E5%9B%BE"><span class="toc-text">3.1 类图</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-Scope"><span class="toc-text">3.2 Scope</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-Listener"><span class="toc-text">3.3 Listener</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-%E6%B5%8B%E8%AF%95"><span class="toc-text">3.4 测试</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-%E5%8F%82%E8%80%83"><span class="toc-text">3.5 参考</span></a></li></ol></li></ol></li></ol></li></ol>
-      
-    </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
 
     
   </div>
@@ -555,12 +503,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(4)%20%E7%AC%A6%E5%8F%B7%E8%A1%A8 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F05%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-4-%25E7%25AC%25A6%25E5%258F%25B7%25E8%25A1%25A8%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JUC(12)%20ThreadLocal + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F01%2F10%2FJUC-12-ThreadLocal%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/05/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-4-%E7%AC%A6%E5%8F%B7%E8%A1%A8/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/01/10/JUC-12-ThreadLocal/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
