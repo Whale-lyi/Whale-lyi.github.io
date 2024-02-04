@@ -11,7 +11,7 @@
   
   <title>
     
-      JUC(2) 锁 基础篇 
+      JUC(2) 锁 
       
       
       |
@@ -154,11 +154,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">JUC(2) 锁 基础篇</div>
+      <div class="post-title">JUC(2) 锁</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-12-29 17:24:28
+          2024-02-04 23:50:36
         </span>
         
               <span class="post-categories">
@@ -181,67 +181,177 @@
       </div>
       <div class="markdown-body">
         <h2 id="1-synchronized"><a href="#1-synchronized" class="headerlink" title="1. synchronized"></a>1. synchronized</h2><h3 id="1-1-三种应用方式"><a href="#1-1-三种应用方式" class="headerlink" title="1.1 三种应用方式"></a>1.1 三种应用方式</h3><ul>
-<li>一把锁只能同时被一个线程获取，没有获得锁的线程只能等待；</li>
-<li>每个实例都对应有自己的一把锁(this),不同实例之间互不影响；例外：锁对象是*.class以及synchronized修饰的是static方法的时候，所有对象公用同一把锁</li>
-<li>synchronized修饰的方法，无论方法正常执行完毕还是抛出异常，都会释放锁</li>
+<li>一把锁只能同时被一个线程获取, 没有获得锁的线程只能等待；</li>
+<li>每个实例都对应有自己的一把锁(this),不同实例之间互不影响；例外：锁对象是*.class以及synchronized修饰的是static方法的时候, 所有对象公用同一把锁</li>
+<li>synchronized修饰的方法, 无论方法正常执行完毕还是抛出异常, 都会释放锁</li>
 </ul>
 <p><strong>对象锁</strong>：包括方法锁(默认锁对象为this,当前实例对象)和同步代码块锁(自己指定锁对象)</p>
 <ul>
-<li>方法锁：synchronized修饰普通方法，锁对象默认为this</li>
+<li>方法锁：synchronized修饰普通方法, 锁对象默认为this</li>
 <li>同步代码块锁：见下方代码</li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">block1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><span class="hljs-type">Object</span> <span class="hljs-variable">block2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 这个代码块使用的是第一把锁，当他释放后，后面的代码块由于使用的是第二把锁，因此可以马上执行</span><br>    <span class="hljs-keyword">synchronized</span> (block1) &#123;<br>        System.out.println(<span class="hljs-string">&quot;block1锁,我是线程&quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">3000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;block1锁,&quot;</span>+Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">synchronized</span> (block2) &#123;<br>        System.out.println(<span class="hljs-string">&quot;block2锁,我是线程&quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">3000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;block2锁,&quot;</span>+Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">block1</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><span class="hljs-type">Object</span> <span class="hljs-variable">block2</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><br><span class="hljs-meta">@Override</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 这个代码块使用的是第一把锁, 当他释放后, 后面的代码块由于使用的是第二把锁, 因此可以马上执行</span><br>    <span class="hljs-keyword">synchronized</span> (block1) &#123;<br>        System.out.println(<span class="hljs-string">&quot;block1锁,我是线程&quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">3000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;block1锁,&quot;</span>+Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">synchronized</span> (block2) &#123;<br>        System.out.println(<span class="hljs-string">&quot;block2锁,我是线程&quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">3000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;block2锁,&quot;</span>+Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>类锁</strong>：指synchronize修饰<strong>静态方法</strong>或指定锁对象为Class对象</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// synchronized用在静态方法上，默认的锁就是当前所在的Class类，所以无论是哪个线程访问它，需要的锁都只有一把</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method</span><span class="hljs-params">()</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;我是线程&quot;</span> + Thread.currentThread().getName());<br>    <span class="hljs-keyword">try</span> &#123;<br>        Thread.sleep(<span class="hljs-number">3000</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>    System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>&#125;<br><br><span class="hljs-comment">// 同上</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 所有线程需要的锁都是同一把</span><br>    <span class="hljs-keyword">synchronized</span>(SynchronizedObjectLock.class)&#123;<br>        System.out.println(<span class="hljs-string">&quot;我是线程&quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">3000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// synchronized用在静态方法上, 默认的锁就是当前所在的Class类, 所以无论是哪个线程访问它, 需要的锁都只有一把</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">synchronized</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">method</span><span class="hljs-params">()</span> &#123;<br>    System.out.println(<span class="hljs-string">&quot;我是线程&quot;</span> + Thread.currentThread().getName());<br>    <span class="hljs-keyword">try</span> &#123;<br>        Thread.sleep(<span class="hljs-number">3000</span>);<br>    &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>        e.printStackTrace();<br>    &#125;<br>    System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>&#125;<br><br><span class="hljs-comment">// 同上</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">run</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">// 所有线程需要的锁都是同一把</span><br>    <span class="hljs-keyword">synchronized</span>(SynchronizedObjectLock.class)&#123;<br>        System.out.println(<span class="hljs-string">&quot;我是线程&quot;</span> + Thread.currentThread().getName());<br>        <span class="hljs-keyword">try</span> &#123;<br>            Thread.sleep(<span class="hljs-number">3000</span>);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125;<br>        System.out.println(Thread.currentThread().getName() + <span class="hljs-string">&quot;结束&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="1-2-字节码分析"><a href="#1-2-字节码分析" class="headerlink" title="1.2 字节码分析"></a>1.2 字节码分析</h3><p>命令：<code>javap -c *.class</code> 文件反编译</p>
 <ul>
 <li>-v -verbose, 输出附加信息(行号、本地变量表、反汇编等详细信息)</li>
 </ul>
 <p><strong>同步代码块</strong></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291637322.png" alt="image.png"></p>
-<p>如果代码块中手动抛出了一个异常，则只会有一个 <code>monitorexit</code></p>
+<p>如果代码块中手动抛出了一个异常, 则只会有一个 <code>monitorexit</code></p>
 <p><strong>普通同步方法</strong></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291643627.png" alt="image.png"></p>
-<p>调用指令将会检查方法的 <code>ACC_SYNCHRONIZED</code> 访问标志是否被设置，如果设置了，执行线程会将先持有 monitor 锁，然后再执行该方法，最后在方法完成（无论是否正常结束）时释放monitor</p>
+<p>调用指令将会检查方法的 <code>ACC_SYNCHRONIZED</code> 访问标志是否被设置, 如果设置了, 执行线程会将先持有 monitor 锁, 然后再执行该方法, 最后在方法完成（无论是否正常结束）时释放monitor</p>
 <p><strong>静态同步方法</strong></p>
 <p><code>ACC_STATIC</code>、<code>ACC_SYNCHRONIZED</code>访问标志区分该方法是否是静态同步方法</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291644440.png" alt="image.png"></p>
 <h3 id="1-3-底层原语分析"><a href="#1-3-底层原语分析" class="headerlink" title="1.3 底层原语分析"></a>1.3 底层原语分析</h3><p><strong>为什么任何一个对象都可以成为一个锁</strong></p>
 <ul>
-<li><p>在 HotSpot 虚拟机中，monitor 采用 ObjectMonitor 实现</p>
+<li><p>在 HotSpot 虚拟机中, monitor 采用 ObjectMonitor 实现</p>
 </li>
 <li><p>ObjectMonitor.java—-&gt;ObjectMonitor.cpp—-&gt;ObjectMonitor.hpp</p>
 </li>
-<li><p>每个对象天生都带着一个对象监视器，每一个被锁住的对象都会和Monitor关联起来</p>
+<li><p>每个对象天生都带着一个对象监视器, 每一个被锁住的对象都会和Monitor关联起来</p>
 </li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291658330.png" alt="img"></p>
-<p>总结：指针指向Monitor对象（也称为管程或监视器）的真实地址。每个对象都存在着一个monitor与之关联，当一个monitor被某个线程持有后，它便处于锁定状态。在Java虚拟机（HotSpot）中，monitor是由ObjectMonitor实现的，其主要的数据结构如下（位于HotSpot虚拟机源码ObjectMonitor.hpp文件，C++实现）：</p>
+<p>总结：指针指向Monitor对象（也称为管程或监视器）的真实地址。每个对象都存在着一个monitor与之关联, 当一个monitor被某个线程持有后, 它便处于锁定状态。在Java虚拟机（HotSpot）中, monitor是由ObjectMonitor实现的, 其主要的数据结构如下（位于HotSpot虚拟机源码ObjectMonitor.hpp文件, C++实现）：</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291715842.png" alt="img"></p>
-<h3 id="1-4-Lock接口"><a href="#1-4-Lock接口" class="headerlink" title="1.4 Lock接口"></a>1.4 Lock接口</h3><p>Lock 实现提供比使用 synchronized 方法和语句可以获得的更广泛的锁定操作。它们允许更灵活的结构化，可能具有完全不同的属性，并且可以支持多个相关联的对象 Condition 。</p>
-<p>当在不同范围内发生锁定和解锁时，必须注意确保在锁定时执行的所有代码由 try-finally 或 try-catch 保护，以确保在必要时释放锁定。</p>
-<p>Lock 实现提供了使用 synchronized 方法和语句的附加功能，通过提供非阻塞尝试来获取锁 <code>tryLock()</code>，尝试获取可被中断的锁 <code>lockInterruptibly()</code>，以及尝试获取可以超时 <code>tryLock(long, TimeUnit)</code>。</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 创建可重入锁</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">ReentrantLock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantLock</span>();<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">//上锁</span><br>    lock.lock();<br>	<span class="hljs-comment">//功能操作</span><br>    ...<br>&#125;<span class="hljs-keyword">finally</span> &#123;<br>    <span class="hljs-comment">//解锁</span><br>    lock.unlock();<br>&#125;<br></code></pre></td></tr></table></figure>
-<h2 id="2-乐观锁-悲观锁-表锁-行锁-读锁-写锁"><a href="#2-乐观锁-悲观锁-表锁-行锁-读锁-写锁" class="headerlink" title="2. 乐观锁|悲观锁|表锁|行锁|读锁|写锁"></a>2. 乐观锁|悲观锁|表锁|行锁|读锁|写锁</h2><p><strong>悲观锁</strong>：认为自己在使用数据的时候<strong>一定有别的线程来修改数据</strong>，因此在<strong>获取数据的时候会先加锁</strong>，确保数据不会被别的线程修改，synchronized 和 Lock 的实现类都是悲观锁</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402011943055.png" alt="image-20240201194318895"></p>
+<h3 id="1-4-Lock接口"><a href="#1-4-Lock接口" class="headerlink" title="1.4 Lock接口"></a>1.4 Lock接口</h3><p>Lock 实现提供比使用 synchronized 方法和语句可以获得的更广泛的锁定操作。它们允许更灵活的结构化, 可能具有完全不同的属性, 并且可以支持多个相关联的对象 Condition 。</p>
+<p>当在不同范围内发生锁定和解锁时, 必须注意确保在锁定时执行的所有代码由 try-finally 或 try-catch 保护, 以确保在必要时释放锁定。</p>
+<p>Lock 实现提供了使用 synchronized 方法和语句的附加功能, 通过提供非阻塞尝试来获取锁 <code>tryLock()</code>, 尝试获取可被中断的锁 <code>lockInterruptibly()</code>, 以及尝试获取可以超时 <code>tryLock(long, TimeUnit)</code>。</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 创建可重入锁</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-type">ReentrantLock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantLock</span>();<br><span class="hljs-keyword">try</span> &#123;<br>    <span class="hljs-comment">//上锁</span><br>    lock.lock();<br>	<span class="hljs-comment">//功能操作</span><br>    ...<br>&#125; <span class="hljs-keyword">finally</span> &#123;<br>    <span class="hljs-comment">//解锁</span><br>    lock.unlock();<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="2-synchronized锁升级"><a href="#2-synchronized锁升级" class="headerlink" title="2. synchronized锁升级"></a>2. synchronized锁升级</h2><p>根据对象头的 mark word 锁标志位来确定当前属于哪一种锁</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202401311443678.png" alt="img" style="zoom: 50%;" /></p>
+<blockquote>
+<p>偏向锁：MarkWord存储的是偏向的线程ID</p>
+<p>轻量锁：MarkWord存储的是指向线程栈中Lock Record的指针</p>
+<p>重量锁：MarkWord存储的是指向堆中的monitor对象的指针</p>
+</blockquote>
+<p>在Java早期版本中, synchronized属于重量级锁, 效率低下, 因为监视器锁 (monitor)是依赖于底层的操作系统的Mutex Lock(系统互斥)来实现的, 挂起线程和恢复线程都需要转入内核态去完成</p>
+<blockquote>
+<p>Monitor, Java对象, 线程之间是如何关联的</p>
 <ul>
-<li>适合<strong>写操作多</strong>的场景，先加锁可以保证写操作时数据正确，显式的锁定之后再操作同步资源</li>
+<li>如果一个java对象被某个线程锁住, 则该对象的 Mark Word 字段中 LockWord 指向 Monitor 的起始地址</li>
+<li>Monitor 的 owner 字段会存放拥有相关联对象锁的线程id</li>
+</ul>
+</blockquote>
+<p>Java 6之后, 为了减少获得锁和释放锁所带来的性能消耗, 引入了轻量级锁和偏向锁</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402041656050.png" alt="在这里插入图片描述" style="zoom:80%;" /></p>
+<h3 id="2-1-无锁"><a href="#2-1-无锁" class="headerlink" title="2.1 无锁"></a>2.1 无锁</h3><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>System.out.println(ClassLayout.parseInstance(o).toPrintable());<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">java.lang.Object object internals:</span><br><span class="hljs-comment">OFF  SZ   TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8        (object header: mark)     0x0000000000000001 (non-biasable; age: 0)</span><br><span class="hljs-comment">  8   4        (object header: class)    0xf80001e5</span><br><span class="hljs-comment"> 12   4        (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 16 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>System.out.println(o.hashCode()); <span class="hljs-comment">// 只有计算了才会存储下来</span><br>System.out.println(ClassLayout.parseInstance(o).toPrintable());<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">2133927002</span><br><span class="hljs-comment">java.lang.Object object internals:</span><br><span class="hljs-comment">OFF  SZ   TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8        (object header: mark)     0x0000007f31245a01 (hash: 0x7f31245a; age: 0)</span><br><span class="hljs-comment">  8   4        (object header: class)    0xf80001e5</span><br><span class="hljs-comment"> 12   4        (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 16 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-2-偏向锁"><a href="#2-2-偏向锁" class="headerlink" title="2.2 偏向锁"></a>2.2 偏向锁</h3><p>偏向锁：<strong>单线程竞争</strong>, 当线程A第一次竞争到锁时, 通过修改MarkWord中的偏向线程ID、偏向锁位。如果不存在其他线程竞争, 那么持有偏向锁的线程将永远不需要进行同步。</p>
+<p>HotSpot的作者经过研究发现, 大多数情况下：<strong>在多线程情况下, 锁不仅不存在多线程竞争, 还存在由同一个线程多次获得的情况</strong>, 偏向锁就是在这种情况下出现的, 它的出现是为了解决只有一个线程执行同步时提高性能。<strong>当一段同步代码一直被同一个线程多次访问, 由于只有一个线程那么该线程在后续访问时便会自动获得锁</strong></p>
+<p>只需要在锁第一次被拥有的时候, 记录下偏向线程ID。这样偏向线程就一直持有着锁 (后续这个线程进入和退出这段加了同步锁的代码块时, 不需要再次加锁和释放锁。而是直接会去检有锁的MarkWord里面是不是放的自己的线程ID)</p>
+<ul>
+<li>如果相等, 表示偏向锁是偏向于当前线程的, 就不需要再尝试获得锁了, 直到竞争发生才释放锁。以后每次同步, 检查锁的偏向线程ID与当前线程ID是否一致, 如果一致直接进入同步。无需每次加锁解锁都去CAS更新对象头。</li>
+<li>如果不等, 表示发生了竞争, 锁已经不是总是偏向于同一个线程了, 这个时候会尝试使用CAS来替换MarkWord里面的线程ID为新线程的ID<ul>
+<li>竞争成功, 表示之前的线程不存在了, MarkWord里面的线程ID为新线程的ID, 锁不会升级, 仍然为偏向锁</li>
+<li>竞争失败, 这时候可能需要升级变为轻量级锁, 才能保证线程间公平竞争锁。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>偏向锁只有遇到其他线程尝试竞争偏向锁时, 持有偏向锁的线程才会释放锁, 线程是<strong>不会主动释放偏向锁</strong>的。</p>
+</blockquote>
+<h4 id="启动偏向锁"><a href="#启动偏向锁" class="headerlink" title="启动偏向锁"></a>启动偏向锁</h4><p>测试命令与代码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">java -XX:+PrintFlagsInitial | grep BiasedLock*<br><span class="hljs-comment">#     intx BiasedLockingBulkRebiasThreshold          = 20                                  &#123;product&#125;</span><br><span class="hljs-comment">#     intx BiasedLockingBulkRevokeThreshold          = 40                                  &#123;product&#125;</span><br><span class="hljs-comment">#     intx BiasedLockingDecayTime                    = 25000                               &#123;product&#125;</span><br><span class="hljs-comment">#     intx BiasedLockingStartupDelay                 = 4000                                &#123;product&#125;  启动延时</span><br><span class="hljs-comment">#     bool TraceBiasedLocking                        = false                               &#123;product&#125;</span><br><span class="hljs-comment">#     bool UseBiasedLocking                          = true                                &#123;product&#125;  使用偏向锁</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>    TimeUnit.MILLISECONDS.sleep(<span class="hljs-number">5000</span>); <span class="hljs-comment">// 不加会默认使用轻量级锁</span><br>    <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>    <span class="hljs-keyword">synchronized</span> (o) &#123;<br>        System.out.println(ClassLayout.parseInstance(o).toPrintable());<br>    &#125;<br>&#125;<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">java.lang.Object object internals:</span><br><span class="hljs-comment">OFF  SZ   TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8        (object header: mark)     0x0000025ca1be3005 (biased: 0x0000000097286f8c; epoch: 0; age: 0)</span><br><span class="hljs-comment">  8   4        (object header: class)    0xf80001e5</span><br><span class="hljs-comment"> 12   4        (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 16 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<p>启动偏向锁可以通过</p>
+<ul>
+<li>添加JVM参数 <code>-XX:BiasedLockingStartupDelay=0</code></li>
+<li><code>TimeUnit.MILLISECONDS.sleep(4500);</code></li>
+</ul>
+<h4 id="撤销偏向锁"><a href="#撤销偏向锁" class="headerlink" title="撤销偏向锁"></a>撤销偏向锁</h4><p>当有另外一个线程逐步来竞争锁的时候, 就不能再使用偏向锁了, 要升级为轻量级锁, 偏向锁是等到竞争出现才释放锁的机制</p>
+<p>竞争线程尝试CAS更新对象头失败, 会等到全局安全点（此时不会执行任何字节码）撤销偏向锁, 同时检查持有偏向锁的线程是否还在执行：</p>
+<ul>
+<li>第一个线程正在执行synchronized方法（处于同步块）, 它还没有执行完, 其他线程来抢夺, 该偏向锁会被取消掉并出现锁升级, 此时轻量级锁由原来持有偏向锁的线程持有, 继续执行同步代码块, 而正在竞争的线程会自动进入自旋等待获得该轻量级锁</li>
+<li>第一个线程执行完synchronized（退出同步块）, 则将对象头设置为无锁状态并撤销偏向锁, 重新偏向</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402041252920.png" alt="img" style="zoom:50%;" /></p>
+<blockquote>
+<p>Java15以后逐步废弃偏向锁, 需要手动开启(维护成本高)</p>
+</blockquote>
+<h3 id="2-3-轻量级锁"><a href="#2-3-轻量级锁" class="headerlink" title="2.3 轻量级锁"></a>2.3 轻量级锁</h3><p>多线程竞争, 但是任意时候最多只有一个线程竞争, 即不存在锁竞争太激烈的情况, 也就没有线程阻塞, 本质是自旋锁CAS</p>
+<p>轻量级锁是为了在线程近乎交替执行同步块时提高性能, 通过CAS减少重量级锁使用操作系统互斥量产生的性能消耗</p>
+<p>当关闭偏向锁功能或多线程竞争偏向锁会导致偏向锁升级为轻量级锁</p>
+<h4 id="轻量级锁的加锁与释放"><a href="#轻量级锁的加锁与释放" class="headerlink" title="轻量级锁的加锁与释放"></a>轻量级锁的加锁与释放</h4><p><strong>加锁</strong></p>
+<p>JVM会为每个线程在当前线程的栈帧中创建用于存储锁记录的空间, 官方称为Displaced Mark Word (也即Lock Record, 锁记录)。若一个线程获得锁时发现是轻量级锁, 会把锁的Mark Word复制到自己的Displaced Mark Word里面。</p>
+<p>拷贝成功后, 虚拟机将使用CAS操作尝试将对象的Mark Word更新为指向Lock Record的指针, 并将Lock Record里的owner指针指向对象的Mark Word。</p>
+<ul>
+<li>如果成功, 当前线程获得锁</li>
+<li>如果失败, 虚拟机首先会检查对象的Mark Word是否指向当前线程的栈帧<ul>
+<li>是就说明当前线程已经拥有了这个对象的锁, 那就可以直接进入同步块继续执行</li>
+<li>否则表示Mark Word已经被替换成了其他线程的锁记录, 说明在与其它线程竞争锁, 当前线程就尝试使用自旋来获取锁。</li>
+</ul>
+</li>
+</ul>
+<p>但是当自旋超过一定的次数, 或者一个线程在持有锁, 一个在自旋, 又有第三个来访时, 轻量级锁升级为重量级锁。</p>
+<blockquote>
+<p>加锁CAS说明：当前值是目前程序中Mark Word中的pointer的值, pointer的预期原值是null, 而目的值则是指向自己Lock Record的指针</p>
+</blockquote>
+<p><strong>释放</strong></p>
+<p>在释放锁时, 当前线程会使用CAS操作将Displaced Mark Word的内容复制回锁的Mark Word里面。如果没有发生竞争, 那么这个复制的操作会成功。如果有其他线程因为自旋多次导致轻量级锁升级成了重量级锁, 那么CAS操作会失败, 此时会释放锁并唤醒被阻塞的线程</p>
+<blockquote>
+<p>解锁CAS说明：当前值是目前程序中的Mark Word的值, 预期值是Lock Record存的值, 而目的值是把Mark Word修改为Lock Record的值, 也就是修改为预期值</p>
+</blockquote>
+<h4 id="自旋升级"><a href="#自旋升级" class="headerlink" title="自旋升级"></a>自旋升级</h4><p>Java6之前</p>
+<ul>
+<li>默认启动, 默认情况下自旋次数超过 10 次 (通过 <code>-XX:PreBlockSpin=10</code> 来修改), 或者自旋线程数超过 CPU 核数的一半, 则升级为重量级锁</li>
+</ul>
+<p>Java6之后</p>
+<ul>
+<li>使用<strong>自适应自旋锁</strong>, 自旋的次数不是固定不变的, 而是根据同一个锁上一次自旋的时间拥有锁线程的状态来决定<ul>
+<li>线程如果自旋成功了, 那下次自旋的最大次数会增加, 因为JVM认为既然上次成功了, 那么这一次也大概率会成功</li>
+<li>如果很少会自旋成功, 那么下次会减少自旋的次数甚至不自旋, 避免CPU空转</li>
+</ul>
+</li>
+</ul>
+<h4 id="轻量级锁和偏向锁的区别"><a href="#轻量级锁和偏向锁的区别" class="headerlink" title="轻量级锁和偏向锁的区别"></a>轻量级锁和偏向锁的区别</h4><ul>
+<li>争夺轻量锁失败时, 自旋尝试抢占锁<ul>
+<li>轻量级锁的获取及释放依赖多次CAS原子指令, 而偏向锁只需要在置换ThreadID的时候依赖一次CAS原子指令即可。</li>
+</ul>
+</li>
+<li>轻量级锁每次退出同步块都需要释放锁, 而偏向锁是在竞争发生时才释放锁</li>
+</ul>
+<h3 id="2-4-重量级锁"><a href="#2-4-重量级锁" class="headerlink" title="2.4 重量级锁"></a>2.4 重量级锁</h3><p>有大量线程参与锁的竞争, 冲突性很高</p>
+<p>Java中synchronized的重量级锁, 是基于进入和退出Monitor对象实现的。在编译时会将同步块的开始位置插入monitor enter指令, 在结束位置插入monitor exit指令</p>
+<p>当线程执行到monitor enter指今时, 会尝试获取对象所对应的Monitor所有权, 如果获取到了, 即获取到了锁, 会在Monitor的owner中存放当前线程的id, 这样它将处于锁定状态, 除非退出同步块, 否则其他线程无法获取到这个Monitor</p>
+<h3 id="2-5-锁升级补充"><a href="#2-5-锁升级补充" class="headerlink" title="2.5 锁升级补充"></a>2.5 锁升级补充</h3><h4 id="hashcode"><a href="#hashcode" class="headerlink" title="hashcode"></a>hashcode</h4><p>当一个对象已经计算过一致性哈希码后, 它就再也无法进入偏向锁状态了, 直接升级为轻量级锁</p>
+<p>当一个对象正处于偏向锁状态, 又收到需要计算一致性哈希码请求时, 它的偏向状态会被立即撤销, 并且锁会膨胀为重量级锁</p>
+<ul>
+<li>代表重量级锁的ObjectMonitor类中有字段可以记录非加锁状态(标志位为01)下的MarkWord, 其中可以存储原来的哈希码</li>
+</ul>
+<blockquote>
+<p>在无锁状态下, Mark Word中可以存储对象的identity hash code值。当对象的hashCode()方法第一次被调用时, JVM会生成对应的identity hash code值并将该值存储到Mark Word中。</p>
+<p>对于偏向锁, 在线程获取偏向锁时, 会用Thread ID和epoch值覆盖identity hash code所在的位置。如果一个对象的hashCode()方法已经被调用过一次之后, 这个对象不能被设置偏向锁。</p>
+<p>升级为轻量级锁时, JVM会在当前线程的栈帧中创建一个锁记录(Lock Record)空间, 用于存储锁对象的Mark Word拷贝, 该拷贝中可以包含identity hash code, 所以轻量级锁可以和 identity hash code共存, 哈希码和GC年龄自然保存在此, 释放锁后会将这些信息写回到对象头。</p>
+<p>升级为重量级锁后, Mark Word保存的重量级锁指针, 代表重量级锁的ObjectMonitor类里有字段记录非加锁状态下的Mark Word, 锁释放后也会将信息写回到对象头。</p>
+</blockquote>
+<h3 id="2-6-JIT编译器对锁的优化"><a href="#2-6-JIT编译器对锁的优化" class="headerlink" title="2.6 JIT编译器对锁的优化"></a>2.6 JIT编译器对锁的优化</h3><p>JIT：Just In Time Compiler，即时编译器</p>
+<h4 id="锁消除"><a href="#锁消除" class="headerlink" title="锁消除"></a>锁消除</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 锁消除</span><br><span class="hljs-comment"> * 从JIT角度看相当于无视他，synchronized(o)不存在了</span><br><span class="hljs-comment"> * 这个锁对象并没有被共用扩散到其他线程使用</span><br><span class="hljs-comment"> * 极端的说就是根本没有加锁对象的底层机器码，消除了锁的使用</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LockClearUpDemo</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-type">Object</span> <span class="hljs-variable">object</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">m1</span><span class="hljs-params">()</span> &#123;<br><span class="hljs-comment">//        synchronized (object) &#123;</span><br><span class="hljs-comment">//            System.out.println(&quot;hello ------ LockClearUpDemo&quot;);</span><br><span class="hljs-comment">//        &#125;</span><br>        <span class="hljs-comment">//锁消除问题，JIT会无视它，底层并没有加锁</span><br>        <span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>        <span class="hljs-keyword">synchronized</span> (o) &#123;<br>            System.out.println(<span class="hljs-string">&quot;-----------hello LockClearUpDemo&quot;</span> + <span class="hljs-string">&quot;\t&quot;</span> + o.hashCode() + <span class="hljs-string">&quot;\t&quot;</span> + object.hashCode());<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-type">LockClearUpDemo</span> <span class="hljs-variable">lockClearUpDemo</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">LockClearUpDemo</span>();<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++) &#123;<br>            <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>                lockClearUpDemo.m1();<br>            &#125;, String.valueOf(i)).start();<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	229465744	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	219013680	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	1109337020	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	94808467	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	973369600	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	64667370	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	1201983305	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	573110659	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	1863380256	57319765</span><br><span class="hljs-comment"> * -----------hello LockClearUpDemo	1119787251	57319765</span><br><span class="hljs-comment"> */</span><br></code></pre></td></tr></table></figure>
+<h4 id="锁粗化"><a href="#锁粗化" class="headerlink" title="锁粗化"></a>锁粗化</h4><figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * 锁粗化</span><br><span class="hljs-comment"> * 假如方法中首尾相接，前后相邻的都是同一个锁对象，那JIT编译器会把这几个synchronized块合并为一个大块</span><br><span class="hljs-comment"> * 加粗加大范围，一次申请锁使用即可，避免次次的申请和释放锁，提高了性能</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">LockBigDemo</span> &#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-type">Object</span> <span class="hljs-variable">objectLock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(() -&gt; &#123;<br>            <span class="hljs-keyword">synchronized</span> (objectLock) &#123;<br>                System.out.println(<span class="hljs-string">&quot;111111111111&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">synchronized</span> (objectLock) &#123;<br>                System.out.println(<span class="hljs-string">&quot;222222222222&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">synchronized</span> (objectLock) &#123;<br>                System.out.println(<span class="hljs-string">&quot;333333333333&quot;</span>);<br>            &#125;<br>            <span class="hljs-keyword">synchronized</span> (objectLock) &#123;<br>                System.out.println(<span class="hljs-string">&quot;444444444444&quot;</span>);<br>            &#125;<br>            <span class="hljs-comment">//底层JIT的锁粗化优化为如下代码</span><br><span class="hljs-comment">//            synchronized (objectLock) &#123;</span><br><span class="hljs-comment">//                System.out.println(&quot;111111111111&quot;);</span><br><span class="hljs-comment">//                System.out.println(&quot;222222222222&quot;);</span><br><span class="hljs-comment">//                System.out.println(&quot;333333333333&quot;);</span><br><span class="hljs-comment">//                System.out.println(&quot;444444444444&quot;);</span><br><span class="hljs-comment">//            &#125;</span><br>        &#125;, <span class="hljs-string">&quot;t1&quot;</span>).start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="3-乐观锁-悲观锁-表锁-行锁-读锁-写锁"><a href="#3-乐观锁-悲观锁-表锁-行锁-读锁-写锁" class="headerlink" title="3. 乐观锁|悲观锁|表锁|行锁|读锁|写锁"></a>3. 乐观锁|悲观锁|表锁|行锁|读锁|写锁</h2><p><strong>悲观锁</strong>：认为自己在使用数据的时候<strong>一定有别的线程来修改数据</strong>, 因此在<strong>获取数据的时候会先加锁</strong>, 确保数据不会被别的线程修改, synchronized 和 Lock 的实现类都是悲观锁</p>
+<ul>
+<li>适合<strong>写操作多</strong>的场景, 先加锁可以保证写操作时数据正确, 显式的锁定之后再操作同步资源</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291312687.png" alt="image-20231229131203595" style="zoom:80%;" /></p>
-<p><strong>乐观锁</strong>：认为自己在使用数据的时候<strong>不会有别的线程修改数据</strong>，<strong>不会添加锁</strong>，Java中使用无锁编程来实现，只是在更新的时候去判断，之前有没有别的线程更新了这个数据，如果这个数据没有被更新，当前线程将自己修改的数据成功写入，如果已经被其他线程更新，则根据不同的实现方式执行不同的操作，比如：放弃修改、重试抢锁等等。判断规则有：<strong>版本号机制Version</strong>，最常采用的是CAS算法，Java原子类中的递增操作就通过CAS自旋实现的。</p>
+<p><strong>乐观锁</strong>：认为自己在使用数据的时候<strong>不会有别的线程修改数据</strong>, <strong>不会添加锁</strong>, Java中使用无锁编程来实现, 只是在更新的时候去判断, 之前有没有别的线程更新了这个数据, 如果这个数据没有被更新, 当前线程将自己修改的数据成功写入, 如果已经被其他线程更新, 则根据不同的实现方式执行不同的操作, 比如：放弃修改、重试抢锁等等。判断规则有：<strong>版本号机制Version</strong>, 最常采用的是CAS算法, Java原子类中的递增操作就通过CAS自旋实现的。</p>
 <ul>
-<li>适合读操作多的场景，不加锁的特性能够使其读操作的性能大幅提升，乐观锁直接去操作同步资源，是一种无锁算法</li>
+<li>适合读操作多的场景, 不加锁的特性能够使其读操作的性能大幅提升, 乐观锁直接去操作同步资源, 是一种无锁算法</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291312054.png" alt="image-20231229131238997" style="zoom:80%;" /></p>
-<p><strong>表锁</strong>：整个表操作，不会发生死锁</p>
-<p><strong>行锁</strong>：每个表中的单独一行进行加锁，会发生死锁</p>
-<p><strong>读锁</strong>：共享锁（可以有多个人读），会发生死锁</p>
-<p><strong>写锁</strong>：独占锁（只能有一个人写），会发生死锁</p>
-<h2 id="3-公平锁和非公平锁"><a href="#3-公平锁和非公平锁" class="headerlink" title="3. 公平锁和非公平锁"></a>3. 公平锁和非公平锁</h2><ul>
-<li>公平锁：是指多个线程按照申请锁的顺序来获取锁，这里类似于排队买票，先来的人先买，后来的人再队尾排着，这是公平的<ul>
+<p><strong>表锁</strong>：整个表操作, 不会发生死锁</p>
+<p><strong>行锁</strong>：每个表中的单独一行进行加锁, 会发生死锁</p>
+<p><strong>读锁</strong>：共享锁（可以有多个人读）, 会发生死锁</p>
+<p><strong>写锁</strong>：独占锁（只能有一个人写）, 会发生死锁</p>
+<h2 id="4-公平锁和非公平锁"><a href="#4-公平锁和非公平锁" class="headerlink" title="4. 公平锁和非公平锁"></a>4. 公平锁和非公平锁</h2><ul>
+<li>公平锁：是指多个线程按照申请锁的顺序来获取锁, 这里类似于排队买票, 先来的人先买, 后来的人再队尾排着, 这是公平的<ul>
 <li><code>Lock lock = new ReentrantLock(true)</code></li>
 </ul>
 </li>
-<li>非公平锁：是指多个线程获取锁的顺序并不是按照申请的顺序，有可能后申请的线程比先申请的线程优先获取锁，在高并发环境下，有可能造成<strong>优先级反转</strong>或者<strong>饥饿</strong>的状态（某个线程一直得不到锁）<ul>
+<li>非公平锁：是指多个线程获取锁的顺序并不是按照申请的顺序, 有可能后申请的线程比先申请的线程优先获取锁, 在高并发环境下, 有可能造成<strong>优先级反转</strong>或者<strong>饥饿</strong>的状态（某个线程一直得不到锁）<ul>
 <li><code>Lock lock = new ReentrantLock(false)</code>, 默认为非公平锁。</li>
 </ul>
 </li>
@@ -250,22 +360,22 @@
 <ul>
 <li><p>为什么会有公平锁/非公平锁的设计？为什么默认非公平？</p>
 <ul>
-<li><p>恢复挂起的线程到真正锁的获取还是有时间差的，从开发人员来看这个时间微乎其微，但是从CPU的角度来看，这个时间差存在的还是很明显的。所以<strong>非公平锁能更充分地利用CPU的时间片，尽量减少CPU空间状态时间</strong>。</p>
+<li><p>恢复挂起的线程到真正锁的获取还是有时间差的, 从开发人员来看这个时间微乎其微, 但是从CPU的角度来看, 这个时间差存在的还是很明显的。所以<strong>非公平锁能更充分地利用CPU的时间片, 尽量减少CPU空间状态时间</strong>。</p>
 </li>
-<li><p>使用多线程很重要的考量点是线程切换的开销，当采用非公平锁时，<strong>当一个线程请求锁获取同步状态，然后释放同步状态，所以刚释放锁的线程在此刻再次获取同步状态的概率就变得很大，所以就减少了线程的开销</strong>。</p>
+<li><p>使用多线程很重要的考量点是线程切换的开销, 当采用非公平锁时, <strong>当一个线程请求锁获取同步状态, 然后释放同步状态, 所以刚释放锁的线程在此刻再次获取同步状态的概率就变得很大, 所以就减少了线程的开销</strong>。</p>
 </li>
 </ul>
 </li>
 <li><p>什么时候用公平？什么时候用非公平？</p>
 <ul>
-<li>如果为了更高的吞吐量，很显然非公平锁是比较合适的，因为节省了很多线程切换的时间，吞吐量自然就上去了；否则就用公平锁，大家公平使用。</li>
+<li>如果为了更高的吞吐量, 很显然非公平锁是比较合适的, 因为节省了很多线程切换的时间, 吞吐量自然就上去了；否则就用公平锁, 大家公平使用。</li>
 </ul>
 </li>
 </ul>
-<h2 id="4-可重入锁-递归锁"><a href="#4-可重入锁-递归锁" class="headerlink" title="4. 可重入锁(递归锁)"></a>4. 可重入锁(递归锁)</h2><ul>
-<li><p>隐式锁（即synchronized关键字使用的锁），默认是可重入锁</p>
+<h2 id="5-可重入锁-递归锁"><a href="#5-可重入锁-递归锁" class="headerlink" title="5. 可重入锁(递归锁)"></a>5. 可重入锁(递归锁)</h2><ul>
+<li><p>隐式锁（即synchronized关键字使用的锁）, 默认是可重入锁</p>
 <ul>
-<li>在一个synchronized修饰的方法或者代码块的内部调用本类的其他synchronized修饰的方法或者代码块时，是永远可以得到锁。</li>
+<li>在一个synchronized修饰的方法或者代码块的内部调用本类的其他synchronized修饰的方法或者代码块时, 是永远可以得到锁。</li>
 </ul>
 </li>
 <li><p>显式锁（即Lock）也有 ReentrantLock 这样的可重入锁</p>
@@ -275,18 +385,18 @@
 <p>重入的实现机理</p>
 <ul>
 <li>每个锁对象拥有一个锁计数器和一个指向持有该锁的线程的指针</li>
-<li>当执行monitorenter时，如果目标锁对象的计数器为零，那么说明它没有被其他线程所持有，Java虚拟机会将该锁对象的持有线程设置为当前线程，并且将其计数器加1</li>
-<li>在目标锁对象的计数器不为零的情况下，如果锁对象的持有线程是当前线程，那么Java虚拟机可以将其计数器加1，否则需要等待，直至持有线程释放该锁</li>
-<li>当执行monitorexit时，Java虚拟机则需将锁对象的计数器减1。计数器为零代表锁已被释放</li>
+<li>当执行monitorenter时, 如果目标锁对象的计数器为零, 那么说明它没有被其他线程所持有, Java虚拟机会将该锁对象的持有线程设置为当前线程, 并且将其计数器加1</li>
+<li>在目标锁对象的计数器不为零的情况下, 如果锁对象的持有线程是当前线程, 那么Java虚拟机可以将其计数器加1, 否则需要等待, 直至持有线程释放该锁</li>
+<li>当执行monitorexit时, Java虚拟机则需将锁对象的计数器减1。计数器为零代表锁已被释放</li>
 </ul>
-<h2 id="5-死锁及排查"><a href="#5-死锁及排查" class="headerlink" title="5. 死锁及排查"></a>5. 死锁及排查</h2><p>死锁是指两个或两个以上的线程在执行过程中，因抢夺资源而造成的一种互相等待的现象，若无外力干涉，则它们无法再继续推进下去。</p>
+<h2 id="6-死锁及排查"><a href="#6-死锁及排查" class="headerlink" title="6. 死锁及排查"></a>6. 死锁及排查</h2><p>死锁是指两个或两个以上的线程在执行过程中, 因抢夺资源而造成的一种互相等待的现象, 若无外力干涉, 则它们无法再继续推进下去。</p>
 <p>产生原因：</p>
 <ul>
 <li>系统资源不足</li>
 <li>进程运行推进顺序不合适</li>
 <li>系统资源分配不当</li>
 </ul>
-<h3 id="5-1-排查死锁"><a href="#5-1-排查死锁" class="headerlink" title="5.1 排查死锁"></a>5.1 排查死锁</h3><p>纯命令</p>
+<h3 id="6-1-排查死锁"><a href="#6-1-排查死锁" class="headerlink" title="6.1 排查死锁"></a>6.1 排查死锁</h3><p>纯命令</p>
 <ul>
 <li><p>jps -l</p>
 </li>
@@ -300,10 +410,10 @@
 <li>jconsole</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291323255.png" alt="image.png" style="zoom:80%;" /></p>
-<h2 id="6-读写锁"><a href="#6-读写锁" class="headerlink" title="6. 读写锁"></a>6. 读写锁</h2><h3 id="6-1-读写锁的使用"><a href="#6-1-读写锁的使用" class="headerlink" title="6.1 读写锁的使用"></a>6.1 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9cd5212c8841">读写锁的使用</a></h3><p>读写锁(<code>ReentrantReadWriteLock</code>)：一个资源可以被多个读线程访问，也可以被一个写线程访问，但不能同时存在读写线程</p>
+<h2 id="7-读写锁"><a href="#7-读写锁" class="headerlink" title="7. 读写锁"></a>7. 读写锁</h2><h3 id="7-1-读写锁的使用"><a href="#7-1-读写锁的使用" class="headerlink" title="7.1 读写锁的使用"></a>7.1 <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9cd5212c8841">读写锁的使用</a></h3><p>读写锁(<code>ReentrantReadWriteLock</code>)：一个资源可以被多个读线程访问, 也可以被一个写线程访问, 但不能同时存在读写线程</p>
 <ul>
-<li>读读共享，读写互斥，写写互斥</li>
-<li>支持锁降级，不支持锁升级</li>
+<li>读读共享, 读写互斥, 写写互斥</li>
+<li>支持锁降级, 不支持锁升级</li>
 </ul>
 <p>创建读写锁对象 <code>private ReadWriteLock rwLock = new ReentrantReadWriteLock();</code></p>
 <p>写锁(<code>ReentrantReadWriteLock.WriteLock</code>)</p>
@@ -316,27 +426,27 @@
 <li>加锁: <code>rwLock.readLock().lock()</code></li>
 <li>解锁: <code>rwLock.readLock().unlock()</code></li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCache</span>&#123;<br>    <span class="hljs-comment">// 需要模仿从Map中取对象，所以先穿件一个map对象</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Map&lt;String, Object&gt; map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-comment">// 创建读写锁</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">ReadWriteLock</span> <span class="hljs-variable">rwlock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantReadWriteLock</span>();<br><br>    <span class="hljs-comment">// 放数据</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">put</span><span class="hljs-params">(String key, Object value)</span> &#123;<br>        <span class="hljs-comment">// 添加写锁</span><br>        rwlock.writeLock().lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;正在写操作&quot;</span>+key);<br>            TimeUnit.MICROSECONDS.sleep(<span class="hljs-number">300</span>);<br>            map.put(key, value);<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;写完了&quot;</span>+key);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// 释放写锁</span><br>            rwlock.writeLock().unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 取数据</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">get</span><span class="hljs-params">(String key)</span> &#123;<br>        <span class="hljs-comment">// 添加读锁</span><br>        rwlock.readLock().lock();;<br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;正在取操作&quot;</span>+key);<br>            TimeUnit.MICROSECONDS.sleep(<span class="hljs-number">300</span>);<br>            map.get(key);<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;取完了&quot;</span>+key);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// 释放读锁</span><br>            rwlock.readLock().unlock();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="6-2-读写锁的演变"><a href="#6-2-读写锁的演变" class="headerlink" title="6.2 读写锁的演变"></a>6.2 读写锁的演变</h3><p>无锁无序 -&gt; 加独占锁 -&gt; 读写锁 -&gt; 邮戳锁</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyCache</span>&#123;<br>    <span class="hljs-comment">// 需要模仿从Map中取对象, 所以先穿件一个map对象</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> Map&lt;String, Object&gt; map = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br><br>    <span class="hljs-comment">// 创建读写锁</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-type">ReadWriteLock</span> <span class="hljs-variable">rwlock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantReadWriteLock</span>();<br><br>    <span class="hljs-comment">// 放数据</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">put</span><span class="hljs-params">(String key, Object value)</span> &#123;<br>        <span class="hljs-comment">// 添加写锁</span><br>        rwlock.writeLock().lock();<br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;正在写操作&quot;</span>+key);<br>            TimeUnit.MICROSECONDS.sleep(<span class="hljs-number">300</span>);<br>            map.put(key, value);<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;写完了&quot;</span>+key);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// 释放写锁</span><br>            rwlock.writeLock().unlock();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// 取数据</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">get</span><span class="hljs-params">(String key)</span> &#123;<br>        <span class="hljs-comment">// 添加读锁</span><br>        rwlock.readLock().lock();;<br>        <span class="hljs-keyword">try</span> &#123;<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;正在取操作&quot;</span>+key);<br>            TimeUnit.MICROSECONDS.sleep(<span class="hljs-number">300</span>);<br>            map.get(key);<br>            System.out.println(Thread.currentThread().getName()+<span class="hljs-string">&quot;取完了&quot;</span>+key);<br>        &#125; <span class="hljs-keyword">catch</span> (InterruptedException e) &#123;<br>            e.printStackTrace();<br>        &#125; <span class="hljs-keyword">finally</span> &#123;<br>            <span class="hljs-comment">// 释放读锁</span><br>            rwlock.readLock().unlock();<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="7-2-读写锁的演变"><a href="#7-2-读写锁的演变" class="headerlink" title="7.2 读写锁的演变"></a>7.2 读写锁的演变</h3><p>无锁无序 -&gt; 加独占锁 -&gt; 读写锁 -&gt; 邮戳锁</p>
 <p>读写锁缺点</p>
 <ul>
-<li>造成锁饥饿，一直读，没有写操作</li>
-<li>读的时候不能写，只有读完才能写，写的时候可以读</li>
+<li>造成锁饥饿, 一直读, 没有写操作</li>
+<li>读的时候不能写, 只有读完才能写, 写的时候可以读</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291344843.png" alt="img"></p>
-<h3 id="6-3-锁降级"><a href="#6-3-锁降级" class="headerlink" title="6.3 锁降级"></a>6.3 锁降级</h3><ul>
-<li>将写锁降级为读锁: 遵循获取写锁、获取读锁再释放写锁的次序，写锁能够降级为读锁</li>
-<li>如果一个线程持有了写锁，在没有释放写锁的情况下，它还可以继续获得读锁。这就是写锁的降级，降级成为了读锁。</li>
-<li>如果释放了写锁，那么就完全转换为读锁</li>
-<li>如果有线程在读，那么写线程是无法获取写锁的，是悲观锁的策略</li>
+<h2 id="8-锁降级"><a href="#8-锁降级" class="headerlink" title="8. 锁降级"></a>8. 锁降级</h2><ul>
+<li>将写锁降级为读锁: 遵循获取写锁、获取读锁再释放写锁的次序, 写锁能够降级为读锁</li>
+<li>如果一个线程持有了写锁, 在没有释放写锁的情况下, 它还可以继续获得读锁。这就是写锁的降级, 降级成为了读锁。</li>
+<li>如果释放了写锁, 那么就完全转换为读锁</li>
+<li>如果有线程在读, 那么写线程是无法获取写锁的, 是悲观锁的策略</li>
 </ul>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291333512.png" alt="img" style="zoom:80%;" /></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-comment">//可重入读写锁对象</span><br>    <span class="hljs-type">ReentrantReadWriteLock</span> <span class="hljs-variable">rwLock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantReadWriteLock</span>();<br>    ReentrantReadWriteLock.<span class="hljs-type">ReadLock</span> <span class="hljs-variable">readLock</span> <span class="hljs-operator">=</span> rwLock.readLock();<span class="hljs-comment">//读锁</span><br>    ReentrantReadWriteLock.<span class="hljs-type">WriteLock</span> <span class="hljs-variable">writeLock</span> <span class="hljs-operator">=</span> rwLock.writeLock();<span class="hljs-comment">//写锁</span><br>    <span class="hljs-comment">//锁降级</span><br>    <span class="hljs-comment">//1 获取写锁</span><br>    writeLock.lock();<br>    System.out.println(<span class="hljs-string">&quot;---write&quot;</span>);<br>    <span class="hljs-comment">//2 获取读锁</span><br>    readLock.lock();<br>    System.out.println(<span class="hljs-string">&quot;---read&quot;</span>);<br>    <span class="hljs-comment">//3 释放写锁</span><br>    writeLock.unlock();<br>    <span class="hljs-comment">//4 释放读锁</span><br>    readLock.unlock();<br>&#125;<br><span class="hljs-comment">// 该顺序可正常执行</span><br><span class="hljs-comment">// 如果 1 2 互换则无法执行，因为不支持锁升级，在读锁后不允许写，所以会被阻塞</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291333512.png" alt="img" style="zoom: 50%;" /></p>
+<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>    <span class="hljs-comment">//可重入读写锁对象</span><br>    <span class="hljs-type">ReentrantReadWriteLock</span> <span class="hljs-variable">rwLock</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ReentrantReadWriteLock</span>();<br>    ReentrantReadWriteLock.<span class="hljs-type">ReadLock</span> <span class="hljs-variable">readLock</span> <span class="hljs-operator">=</span> rwLock.readLock();<span class="hljs-comment">//读锁</span><br>    ReentrantReadWriteLock.<span class="hljs-type">WriteLock</span> <span class="hljs-variable">writeLock</span> <span class="hljs-operator">=</span> rwLock.writeLock();<span class="hljs-comment">//写锁</span><br>    <span class="hljs-comment">//锁降级</span><br>    <span class="hljs-comment">//1 获取写锁</span><br>    writeLock.lock();<br>    System.out.println(<span class="hljs-string">&quot;---write&quot;</span>);<br>    <span class="hljs-comment">//2 获取读锁</span><br>    readLock.lock();<br>    System.out.println(<span class="hljs-string">&quot;---read&quot;</span>);<br>    <span class="hljs-comment">//3 释放写锁</span><br>    writeLock.unlock();<br>    <span class="hljs-comment">//4 释放读锁</span><br>    readLock.unlock();<br>&#125;<br><span class="hljs-comment">// 该顺序可正常执行</span><br><span class="hljs-comment">// 如果 1 2 互换则无法执行, 因为不支持锁升级, 在读锁后不允许写, 所以会被阻塞</span><br></code></pre></td></tr></table></figure>
 <p><strong>锁降级的必要性</strong></p>
-<p>主要是为了保证数据的可见性，如果当前线程不获取读锁而是直接释放写锁， 假设此刻另一个线程（记作线程T）获取了写锁并修改了数据，那么当前线程无法感知线程T的数据更新。如果当前线程获取读锁，即遵循锁降级的步骤，则线程T将会被阻塞，直到当前线程使用数据并释放读锁之后，线程T才能获取写锁进行数据更新。</p>
-<p>这时因为可能存在一个事务线程不希望自己的操作被别的线程中断，而这个事务操作可能分成多部分操作更新不同的数据（或表）甚至非常耗时。如果长时间用写锁独占，显然对于某些高响应的应用是不允许的，<strong>所以在完成部分写操作后，退而使用读锁降级，来允许响应其他进程的读操作。只有当全部事务完成后才真正释放锁。</strong></p>
+<p>主要是为了保证数据的可见性, 如果当前线程不获取读锁而是直接释放写锁,  假设此刻另一个线程（记作线程T）获取了写锁并修改了数据, 那么当前线程无法感知线程T的数据更新。如果当前线程获取读锁, 即遵循锁降级的步骤, 则线程T将会被阻塞, 直到当前线程使用数据并释放读锁之后, 线程T才能获取写锁进行数据更新。</p>
+<p>这时因为可能存在一个事务线程不希望自己的操作被别的线程中断, 而这个事务操作可能分成多部分操作更新不同的数据（或表）甚至非常耗时。如果长时间用写锁独占, 显然对于某些高响应的应用是不允许的, <strong>所以在完成部分写操作后, 退而使用读锁降级, 来允许响应其他进程的读操作。只有当全部事务完成后才真正释放锁。</strong></p>
 <p>所以总结下锁降级的意义应该就是：在一边读一边写的情况下提高性能。</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291338901.png" alt="img" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291338901.png" alt="img" style="zoom: 33%;" /></p>
 
       </div>
       
@@ -352,7 +462,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-12-29 17:24:28
+              2024-02-04 23:50:36
             </span>
             
                   <span class="post-categories">
@@ -392,7 +502,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-synchronized"><span class="toc-text">1. synchronized</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%89%E7%A7%8D%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text">1.1 三种应用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AD%97%E8%8A%82%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text">1.2 字节码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%BA%95%E5%B1%82%E5%8E%9F%E8%AF%AD%E5%88%86%E6%9E%90"><span class="toc-text">1.3 底层原语分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Lock%E6%8E%A5%E5%8F%A3"><span class="toc-text">1.4 Lock接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B9%90%E8%A7%82%E9%94%81-%E6%82%B2%E8%A7%82%E9%94%81-%E8%A1%A8%E9%94%81-%E8%A1%8C%E9%94%81-%E8%AF%BB%E9%94%81-%E5%86%99%E9%94%81"><span class="toc-text">2. 乐观锁|悲观锁|表锁|行锁|读锁|写锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%AC%E5%B9%B3%E9%94%81%E5%92%8C%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="toc-text">3. 公平锁和非公平锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81-%E9%80%92%E5%BD%92%E9%94%81"><span class="toc-text">4. 可重入锁(递归锁)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%AD%BB%E9%94%81%E5%8F%8A%E6%8E%92%E6%9F%A5"><span class="toc-text">5. 死锁及排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%8E%92%E6%9F%A5%E6%AD%BB%E9%94%81"><span class="toc-text">5.1 排查死锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E8%AF%BB%E5%86%99%E9%94%81"><span class="toc-text">6. 读写锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">6.1 读写锁的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E6%BC%94%E5%8F%98"><span class="toc-text">6.2 读写锁的演变</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E9%94%81%E9%99%8D%E7%BA%A7"><span class="toc-text">6.3 锁降级</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-synchronized"><span class="toc-text">1. synchronized</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%89%E7%A7%8D%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-text">1.1 三种应用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AD%97%E8%8A%82%E7%A0%81%E5%88%86%E6%9E%90"><span class="toc-text">1.2 字节码分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%BA%95%E5%B1%82%E5%8E%9F%E8%AF%AD%E5%88%86%E6%9E%90"><span class="toc-text">1.3 底层原语分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Lock%E6%8E%A5%E5%8F%A3"><span class="toc-text">1.4 Lock接口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-synchronized%E9%94%81%E5%8D%87%E7%BA%A7"><span class="toc-text">2. synchronized锁升级</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%97%A0%E9%94%81"><span class="toc-text">2.1 无锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%81%8F%E5%90%91%E9%94%81"><span class="toc-text">2.2 偏向锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E5%81%8F%E5%90%91%E9%94%81"><span class="toc-text">启动偏向锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%92%A4%E9%94%80%E5%81%8F%E5%90%91%E9%94%81"><span class="toc-text">撤销偏向锁</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81"><span class="toc-text">2.3 轻量级锁</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E7%9A%84%E5%8A%A0%E9%94%81%E4%B8%8E%E9%87%8A%E6%94%BE"><span class="toc-text">轻量级锁的加锁与释放</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E6%97%8B%E5%8D%87%E7%BA%A7"><span class="toc-text">自旋升级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%BB%E9%87%8F%E7%BA%A7%E9%94%81%E5%92%8C%E5%81%8F%E5%90%91%E9%94%81%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">轻量级锁和偏向锁的区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%87%8D%E9%87%8F%E7%BA%A7%E9%94%81"><span class="toc-text">2.4 重量级锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E9%94%81%E5%8D%87%E7%BA%A7%E8%A1%A5%E5%85%85"><span class="toc-text">2.5 锁升级补充</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#hashcode"><span class="toc-text">hashcode</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-JIT%E7%BC%96%E8%AF%91%E5%99%A8%E5%AF%B9%E9%94%81%E7%9A%84%E4%BC%98%E5%8C%96"><span class="toc-text">2.6 JIT编译器对锁的优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%81%E6%B6%88%E9%99%A4"><span class="toc-text">锁消除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%94%81%E7%B2%97%E5%8C%96"><span class="toc-text">锁粗化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%B9%90%E8%A7%82%E9%94%81-%E6%82%B2%E8%A7%82%E9%94%81-%E8%A1%A8%E9%94%81-%E8%A1%8C%E9%94%81-%E8%AF%BB%E9%94%81-%E5%86%99%E9%94%81"><span class="toc-text">3. 乐观锁|悲观锁|表锁|行锁|读锁|写锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%85%AC%E5%B9%B3%E9%94%81%E5%92%8C%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81"><span class="toc-text">4. 公平锁和非公平锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%8F%AF%E9%87%8D%E5%85%A5%E9%94%81-%E9%80%92%E5%BD%92%E9%94%81"><span class="toc-text">5. 可重入锁(递归锁)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%AD%BB%E9%94%81%E5%8F%8A%E6%8E%92%E6%9F%A5"><span class="toc-text">6. 死锁及排查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%8E%92%E6%9F%A5%E6%AD%BB%E9%94%81"><span class="toc-text">6.1 排查死锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E8%AF%BB%E5%86%99%E9%94%81"><span class="toc-text">7. 读写锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">7.1 读写锁的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E8%AF%BB%E5%86%99%E9%94%81%E7%9A%84%E6%BC%94%E5%8F%98"><span class="toc-text">7.2 读写锁的演变</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E9%94%81%E9%99%8D%E7%BA%A7"><span class="toc-text">8. 锁降级</span></a></li></ol>
       
     </div>
   </div>
@@ -682,7 +792,7 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JUC(2)%20%E9%94%81%20%E5%9F%BA%E7%A1%80%E7%AF%87 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F12%2F27%2FJUC-2-%25E9%2594%2581%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JUC(2)%20%E9%94%81 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F12%2F27%2FJUC-2-%25E9%2594%2581%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
@@ -701,23 +811,5 @@
 
       </div>
     </div>
-  <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</body>
+  </body>
 </html>
