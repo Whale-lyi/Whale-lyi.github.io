@@ -11,7 +11,7 @@
   
   <title>
     
-      Ubuntu 20.04 环境配置 
+      Redis(2) 缓存 
       
       
       |
@@ -154,25 +154,25 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">Ubuntu 20.04 环境配置</div>
+      <div class="post-title">Redis(2) 缓存</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-09 14:53:19
+          2024-02-17 17:02:02
         </span>
         
               <span class="post-categories">
                 <i class="iconfont icon-bookmark" title="Categories"></i>
                 
                 <span class="span--category">
-                  <a href="/categories/Linux/" title="Linux">
-                    <b>#</b> Linux
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
                   </a>
                 </span>
                 
                 <span class="span--category">
-                  <a href="/categories/Linux/Ubuntu/" title="Ubuntu">
-                    <b>#</b> Ubuntu
+                  <a href="/categories/Backend/Redis/" title="Redis">
+                    <b>#</b> Redis
                   </a>
                 </span>
                 
@@ -180,41 +180,152 @@
           
       </div>
       <div class="markdown-body">
-        <p>记录一下安装Linux后都要安装哪些软件，方便以后查看</p>
-<h2 id="1-安装Ubuntu"><a href="#1-安装Ubuntu" class="headerlink" title="1. 安装Ubuntu"></a>1. 安装Ubuntu</h2><p>虚拟机使用VMware Workstation 16 Player</p>
-<p>前往Ubuntu官网下载Ubuntu 20.04的iso文件</p>
-<p>根据说明一步步安装即可</p>
-<h2 id="2-安装常用软件"><a href="#2-安装常用软件" class="headerlink" title="2. 安装常用软件"></a>2. 安装常用软件</h2><p><strong>vim</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install vim<br></code></pre></td></tr></table></figure>
-<p><strong>jdk</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install openjdk-8-jdk<br></code></pre></td></tr></table></figure>
-<p><strong>浏览器无法播放视频</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install ffmpeg<br></code></pre></td></tr></table></figure>
-<p><strong>ide+文本编辑器</strong></p>
-<p>使用软件商店安装</p>
-<p><strong>maven</strong></p>
-<p>从官网下载.tar.gz文件</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo <span class="hljs-built_in">mkdir</span> /opt/maven<br>sudo tar zxvf apache-maven-3.8.6-bin.tar.gz -C /opt/maven<br><span class="hljs-built_in">cd</span> /opt/maven<br>sudo <span class="hljs-built_in">mkdir</span> repository<br>sudo <span class="hljs-built_in">chmod</span> 777 repository<br>sudo vim ./apache-maven-3.8.6/conf/settings.xml<br><span class="hljs-comment"># 修改本地仓库地址 + 添加阿里云镜像</span><br></code></pre></td></tr></table></figure>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">localRepository</span>&gt;</span>/opt/maven/repository<span class="hljs-tag">&lt;/<span class="hljs-name">localRepository</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">mirror</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">id</span>&gt;</span>nexus-aliyun<span class="hljs-tag">&lt;/<span class="hljs-name">id</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>Nexus aliyun<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">url</span>&gt;</span>http://maven.aliyun.com/nexus/content/groups/public/<span class="hljs-tag">&lt;/<span class="hljs-name">url</span>&gt;</span><br>  <span class="hljs-tag">&lt;<span class="hljs-name">mirrorOf</span>&gt;</span>central<span class="hljs-tag">&lt;/<span class="hljs-name">mirrorOf</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">mirror</span>&gt;</span><br></code></pre></td></tr></table></figure>
-<p>配置环境变量</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo vim /etc/profile.d/mavenenv.sh<br><span class="hljs-comment"># 添加以下内容</span><br><span class="hljs-built_in">export</span> M2_HOME=/opt/maven/apache-maven-3.8.6<br><span class="hljs-built_in">export</span> MAVEN_HOME=/opt/maven/apache-maven-3.8.6<br><span class="hljs-built_in">export</span> PATH=<span class="hljs-variable">$&#123;M2_HOME&#125;</span>/bin:<span class="hljs-variable">$&#123;PATH&#125;</span><br><span class="hljs-comment"># 添加执行权限</span><br>sudo <span class="hljs-built_in">chmod</span> +x /etc/profile.d/mavenenv.sh<br><span class="hljs-comment"># 在bashrc添加加载命令</span><br>sudo vim ~/.bashrc<br><span class="hljs-comment"># 添加以下内容</span><br><span class="hljs-built_in">source</span> /etc/profile.d/mavenenv.sh<br></code></pre></td></tr></table></figure>
-<p><strong>redis</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install redis-server<br>sudo vim /etc/redis/redis.conf<br><span class="hljs-comment"># 设置requirepass, 即密码</span><br>service redis restart<br></code></pre></td></tr></table></figure>
-<p><strong>MySQL</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install mysql-server<br>sudo mysql<br>&gt; ALTER USER <span class="hljs-string">&#x27;root&#x27;</span>@<span class="hljs-string">&#x27;localhost&#x27;</span> IDENTIFIED WITH mysql_native_password by <span class="hljs-string">&#x27;password&#x27;</span><br>&gt; <span class="hljs-built_in">exit</span><br>sudo mysql_secure_installation<br></code></pre></td></tr></table></figure>
-<p><strong>gcc</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt-get install build-essential<br></code></pre></td></tr></table></figure>
-<p><strong>git</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt install git<br>git config --global user.name <span class="hljs-string">&quot;name&quot;</span><br>git config --global user.email <span class="hljs-string">&quot;email&quot;</span><br></code></pre></td></tr></table></figure>
-<h2 id="3-其他"><a href="#3-其他" class="headerlink" title="3. 其他"></a>3. 其他</h2><p><strong>mit 6.S081 lab</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash">sudo apt-get install git build-essential gdb-multiarch qemu-system-misc gcc-riscv64-linux-gnu binutils-riscv64-linux-gnu <br><br>git <span class="hljs-built_in">clone</span> git://g.csail.mit.edu/xv6-labs-2021<br><span class="hljs-comment"># 应当可以编译并运行xv6（按住Ctrl+a x退出）</span><br><span class="hljs-comment"># in the xv6 directory</span><br>make qemu<br><span class="hljs-comment"># ... lots of output ...</span><br>init: starting sh<br>$<br></code></pre></td></tr></table></figure>
+        <h2 id="1-缓存更新"><a href="#1-缓存更新" class="headerlink" title="1. 缓存更新"></a>1. 缓存更新</h2><h3 id="缓存更新策略"><a href="#缓存更新策略" class="headerlink" title="缓存更新策略"></a>缓存更新策略</h3><p>缓存更新是Redis为了节约内存而设计出来的，当我们向Redis插入太多数据，会导致内存占用过多，所以Redis会对部分数据进行更新，或者将其淘汰</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">内存淘汰</th>
+<th style="text-align:center">超时剔除</th>
+<th style="text-align:center">主动更新</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">说明</td>
+<td style="text-align:center">不用自己维护，利用Redis的内存淘汰机制，当内存不足时自动淘汰部分数据。下次查询时更新缓存。</td>
+<td style="text-align:center">给缓存数据添加TTL时间， 到期后自动删除缓存。下次查询时更新缓存。</td>
+<td style="text-align:center">编写业务逻辑，在修改数据库的同时更新缓存。</td>
+</tr>
+<tr>
+<td style="text-align:center">一致性</td>
+<td style="text-align:center">差</td>
+<td style="text-align:center">一般</td>
+<td style="text-align:center">好</td>
+</tr>
+<tr>
+<td style="text-align:center">维护成本</td>
+<td style="text-align:center">无</td>
+<td style="text-align:center">低</td>
+<td style="text-align:center">高</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>业务场景</p>
+<ul>
+<li>低一致性需求：使用内存淘汰机制，例如店铺类型的查询缓存（因为这个很长一段时间都不需要更新）</li>
+<li>高一致性需求：主动更新，并以超时剔除作为兜底方案，例如店铺详情查询的缓存</li>
+</ul>
+<h3 id="主动更新策略"><a href="#主动更新策略" class="headerlink" title="主动更新策略"></a>主动更新策略</h3><ol>
+<li>Cache Aside Pattern (人工编码方式)：缓存调用者在更新数据库的同时更新缓存，也称之为双写方案</li>
+<li>Read/Write Through Pattern：缓存与数据库整合为一个服务，由服务来维护一致性。调用者调用该服务，无需关心缓存一致性问题。<ul>
+<li>缺点：但是维护这样一个服务很复杂，市面上也不容易找到这样的一个现成的服务，开发成本高</li>
+</ul>
+</li>
+<li>Write Behind Caching Pattern (写回法)：调用者只操作缓存，由其他线程异步地将缓存数据持久化到数据库，保证最终一致。<ul>
+<li>优点：即使多次更新缓存，最终只需要更新一次到数据库</li>
+<li>缺点：维护异步的任务比较复杂，需要实时监控缓存中的数据更新，其他线程去异步更新数据库也可能不太及时，而且缓存服务器如果宕机，那么缓存的数据也就丢失了</li>
+</ul>
+</li>
+</ol>
+<p>综上所述，在企业的实际应用中，方案一更加可靠</p>
+<h3 id="Cache-Aside-Pattern"><a href="#Cache-Aside-Pattern" class="headerlink" title="Cache Aside Pattern"></a>Cache Aside Pattern</h3><p><strong>问题1：删除缓存还是更新缓存</strong>(删除)</p>
+<ul>
+<li>更新缓存：每次更新数据库都需要更新缓存，无效写操作较多</li>
+<li>删除缓存：更新数据库时让缓存失效，再次查询时更新缓存</li>
+</ul>
+<p><strong>问题2：如何保证缓存与数据库操作的同时成功或失败</strong></p>
+<ul>
+<li>单体系统：将缓存与数据库操作放在同一个事务</li>
+<li>分布式系统：利用TCC等分布式事务方案</li>
+</ul>
+<p><strong>问题3：先操作缓存还是先操作数据库</strong>(数据库)</p>
+<p>先删除缓存，再操作数据库</p>
+<ul>
+<li>删除缓存的操作很快，但是更新数据库的操作相对较慢，如果此时有一个线程2刚好进来查询缓存，由于我们刚刚才删除缓存，所以线程2需要查询数据库，并写入缓存，但是我们更新数据库的操作还未完成，所以线程2查询到的数据是脏数据，出现线程安全问题</li>
+</ul>
+<p>先操作数据库，再删除缓存</p>
+<ul>
+<li>假设线程1在查询缓存的时候，缓存TTL刚好失效，需要查询数据库并写入缓存，这个操作耗时相对较短，但是就在这么短的时间内，线程2进来了，更新数据库，删除缓存，但是线程1虽然查询完了数据（更新前的旧数据），但是还没来得及写入缓存，所以线程2的更新数据库与删除缓存，并没有影响到线程1的查询旧数据，写入缓存，造成线程安全问题</li>
+</ul>
+<p>分析可得，先操作数据库，再删除缓存，出现线程安全问题的概率更低</p>
+<h2 id="2-缓存穿透"><a href="#2-缓存穿透" class="headerlink" title="2. 缓存穿透"></a>2. 缓存穿透</h2><p>缓存穿透是指客户端请求的数据在缓存中和数据库中都不存在，这样缓存永远都不会生效，会频繁的去访问数据库。</p>
+<p>常见的解决方案：</p>
+<h3 id="缓存空对象"><a href="#缓存空对象" class="headerlink" title="缓存空对象"></a>缓存空对象</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402171555801.png" alt="image-20240217155552738" style="zoom:80%;" /></p>
+<ul>
+<li>实现简单、维护方便</li>
+<li>额外的内存消耗、可能造成短期的不一致</li>
+</ul>
+<h3 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a><a target="_blank" rel="noopener" href="https://juejin.cn/post/6844904007790673933">布隆过滤器</a></h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402171555793.png" alt="image-20240217155529635" style="zoom:80%;" /></p>
+<p>布隆过滤器其实采用的是哈希思想来解决这个问题，它实际上是一个初始值都为 0 的位图数组和一系列随机映射函数。布隆过滤器可以用于检索一个元素<strong>一定不存在或者可能存在</strong>一个集合中。</p>
+<p>布隆过滤器会通过 3 个操作完成标记：</p>
+<ul>
+<li>第一步，使用 N 个哈希函数分别对数据做哈希计算，得到 N 个哈希值；</li>
+<li>第二步，将第一步得到的 N 个哈希值对位图数组的长度取模，得到每个哈希值在位图数组的对应位置。</li>
+<li>第三步，将每个哈希值在位图数组的对应位置的值设置为 1；</li>
+</ul>
+<p>布隆过滤器由于是基于哈希函数实现查找的，高效查找的同时<strong>存在哈希冲突的可能性</strong>，比如数据 x 和数据 y 可能都落在第 1、4、6 位置，而事实上，可能数据库中并不存在数据 y，存在误判的情况。</p>
+<p>优点：内存占用较少，没有多余key</p>
+<p>缺点：实现复杂、存在误判可能</p>
+<blockquote>
+<p>以上两种都属于被动的解决方案</p>
+<p>可以通过增加id的复杂度，避免被猜测id规律，做好数据的基础格式校验</p>
+<p>加强用户权限校验</p>
+<p>做好热点参数的限流</p>
+</blockquote>
+<h2 id="3-缓存雪崩"><a href="#3-缓存雪崩" class="headerlink" title="3. 缓存雪崩"></a>3. 缓存雪崩</h2><ul>
+<li>缓存雪崩是指在同一时间段，大量缓存的key同时失效，或者Redis服务宕机，导致大量请求到达数据库，带来巨大压力</li>
+<li>解决方案<ul>
+<li>给不同的Key的TTL添加随机值，让其在不同时间段分批失效</li>
+<li>利用Redis集群提高服务的可用性</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul>
+</li>
+</ul>
+<h2 id="4-缓存击穿"><a href="#4-缓存击穿" class="headerlink" title="4. 缓存击穿"></a>4. 缓存击穿</h2><ul>
+<li>缓存击穿也叫热点Key问题，就是一个被<strong>高并发访问</strong>并且<strong>缓存重建业务较复杂</strong>的key突然失效了，那么无数请求访问就会在瞬间给数据库带来巨大的冲击</li>
+<li>举个不太恰当的例子：一件秒杀中的商品的key突然失效了，大家都在疯狂抢购，那么这个瞬间就会有无数的请求访问去直接抵达数据库，从而造成缓存击穿</li>
+<li>常见的解决方案有两种<ol>
+<li>互斥锁：性能较差</li>
+<li>逻辑过期</li>
+</ol>
+</li>
+</ul>
+<h3 id="互斥锁"><a href="#互斥锁" class="headerlink" title="互斥锁"></a>互斥锁</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402171659737.png" alt="image-20240217165923508" style="zoom:80%;" /></p>
+<h3 id="逻辑过期"><a href="#逻辑过期" class="headerlink" title="逻辑过期"></a>逻辑过期</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402171701748.png" alt="image-20240217170100642"></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">解决方案</th>
+<th style="text-align:center">优点</th>
+<th style="text-align:center">缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">互斥锁</td>
+<td style="text-align:center">没有额外的内存消耗<br />保证一致性<br />实现简单</td>
+<td style="text-align:center">线程需要等待，性能受影响<br />可能有死锁风险</td>
+</tr>
+<tr>
+<td style="text-align:center">逻辑过期</td>
+<td style="text-align:center">线程无需等待，性能较好</td>
+<td style="text-align:center">不保证一致性<br />有额外内存消耗<br />实现复杂</td>
+</tr>
+</tbody>
+</table>
+</div>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2022/08/30/Redis-1-%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" target="_self">
+              <a href="/2024/02/04/JUC-13-AbstractQueuedSynchronizer/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -223,21 +334,21 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-09 14:53:19
+              2024-02-17 17:02:02
             </span>
             
                   <span class="post-categories">
                     <i class="iconfont icon-bookmark" title="Categories"></i>
                     
                     <span class="span--category">
-                      <a href="/categories/Linux/" title="Linux">
-                        <b>#</b> Linux
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
                       </a>
                     </span>
                     
                     <span class="span--category">
-                      <a href="/categories/Linux/Ubuntu/" title="Ubuntu">
-                        <b>#</b> Ubuntu
+                      <a href="/categories/Backend/Redis/" title="Redis">
+                        <b>#</b> Redis
                       </a>
                     </span>
                     
@@ -245,11 +356,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2022/09/14/Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -263,7 +369,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85Ubuntu"><span class="toc-text">1. 安装Ubuntu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%AE%89%E8%A3%85%E5%B8%B8%E7%94%A8%E8%BD%AF%E4%BB%B6"><span class="toc-text">2. 安装常用软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B6%E4%BB%96"><span class="toc-text">3. 其他</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0"><span class="toc-text">1. 缓存更新</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-text">缓存更新策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%8A%A8%E6%9B%B4%E6%96%B0%E7%AD%96%E7%95%A5"><span class="toc-text">主动更新策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cache-Aside-Pattern"><span class="toc-text">Cache Aside Pattern</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BC%93%E5%AD%98%E7%A9%BF%E9%80%8F"><span class="toc-text">2. 缓存穿透</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E7%A9%BA%E5%AF%B9%E8%B1%A1"><span class="toc-text">缓存空对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E9%9A%86%E8%BF%87%E6%BB%A4%E5%99%A8"><span class="toc-text">布隆过滤器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%BC%93%E5%AD%98%E9%9B%AA%E5%B4%A9"><span class="toc-text">3. 缓存雪崩</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BC%93%E5%AD%98%E5%87%BB%E7%A9%BF"><span class="toc-text">4. 缓存击穿</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E6%96%A5%E9%94%81"><span class="toc-text">互斥锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E8%BF%87%E6%9C%9F"><span class="toc-text">逻辑过期</span></a></li></ol></li></ol>
       
     </div>
   </div>
@@ -553,12 +659,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Ubuntu%2020.04%20%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F09%2F13%2FUbuntu-20-04-%25E7%258E%25AF%25E5%25A2%2583%25E9%2585%258D%25E7%25BD%25AE%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Redis(2)%20%E7%BC%93%E5%AD%98 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F02%2F17%2FRedis-2-%25E7%25BC%2593%25E5%25AD%2598%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/09/13/Ubuntu-20-04-%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/02/17/Redis-2-%E7%BC%93%E5%AD%98/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
