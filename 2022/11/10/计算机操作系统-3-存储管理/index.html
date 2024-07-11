@@ -1,263 +1,186 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="NJUSE OS课程笔记 第三章 存储管理">
-<meta property="og:type" content="article">
-<meta property="og:title" content="计算机操作系统(3) 存储管理">
-<meta property="og:url" content="https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/index.html">
-<meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="NJUSE OS课程笔记 第三章 存储管理">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024112034401.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024120103491.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027141452301.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027143738934.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027143949652.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027144502096.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027144710152.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150255136.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150427931.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027150540542.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027151008590.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027151836071.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027152126219.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153045763.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153115917.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153332243.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027153402167.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154114015.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154312547.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154358621.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154436828.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221027154908427.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031104352984.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031104727130.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031105524974.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031111641724.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031111843806.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031112900090.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031112932254.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031113150739.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115319441.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115356690.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115610482.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031115733235.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107145644332.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107115819595.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107115940791.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120307367.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120330137.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107120528299.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150325303.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150517462.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107150916487.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151309031.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151347710.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151402680.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151727699.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107151742038.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152412373.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152637357.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152213784.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152747958.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152336480.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152935682.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107152945691.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105149441.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105221507.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105351296.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105402628.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107105453288.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107110729262.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107110812406.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107111844378.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112035238.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112234403.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112533727.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107112722467.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107154512018.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107154528175.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160528527.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160611184.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221107160636982.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108015614001.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108015707685.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020047797.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020225281.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020242078.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020302415.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020317071.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221108020434064.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134658588.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134717530.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134738142.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134854425.png">
-<meta property="article:published_time" content="2022-11-10T06:05:57.000Z">
-<meta property="article:modified_time" content="2023-08-09T06:53:19.996Z">
-<meta property="article:author" content="Whale">
-<meta property="article:tag" content="OS">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221024112034401.png">
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="码农预备役" />
+  
+  
+  <title>
     
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
+      计算机操作系统(3) 存储管理 
       
       
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
+      |
     
-    <!-- title -->
-    <title>计算机操作系统(3) 存储管理</title>
-    <!-- async scripts -->
-    <!-- Google Analytics -->
+     Whale&#39;s Blog
+  </title>
 
-
-    <!-- Umami Analytics -->
-
-
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/categories/">Category</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-4-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-2-%E5%A4%84%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&text=计算机操作系统(3) 存储管理"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&is_video=false&description=计算机操作系统(3) 存储管理"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=计算机操作系统(3) 存储管理&body=Check out this article: https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&name=计算机操作系统(3) 存储管理&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&t=计算机操作系统(3) 存储管理"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    
-    
-      <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">第三章 存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-number">1.1.</span> <span class="toc-text">3.1 存储管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">3.1.1 存储管理的主要模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">逻辑地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%A4%8D%E7%94%A8"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">主存储器的复用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">存储管理的基本模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">存储管理模式示意图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.2.</span> <span class="toc-text">3.1.2 存储管理的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E5%8E%BB%E9%85%8D"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">主存储器空间的分配与去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">主存储器空间的共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">主存储器空间的扩充</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.1.3 虚拟存储器的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E6%80%9D%E6%83%B3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">虚拟存储器思想的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">虚拟存储器的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">虚拟存储器的实现思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">虚拟存储器示意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-number">1.1.4.</span> <span class="toc-text">3.1.4 存储管理的硬件支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%82%E6%AC%A1"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">存储器的组织层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%B6%89%E5%8F%8A%E7%9A%84%E5%AD%98%E5%82%A8%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">存储管理涉及的存储对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8-Cache"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">高速缓存存储器(Cache)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">高速缓存存储器的构成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">1.1.4.5.</span> <span class="toc-text">高速缓存存储器的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%BA%A7"><span class="toc-number">1.1.4.6.</span> <span class="toc-text">高速缓存存储器的分级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E7%B1%BB%E5%A4%84%E7%90%86%E5%99%A8%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.4.7.</span> <span class="toc-text">各类处理器架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-number">1.1.4.8.</span> <span class="toc-text">地址转换&#x2F;存储保护的硬件支撑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-number">1.1.4.9.</span> <span class="toc-text">存储管理与硬件支撑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">3.2 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">3.2.1 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">单连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">单用户连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%A4%BA%E6%84%8F"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">单用户连续分区存储管理示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">固定分区存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">固定分区方式的主存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.2.1.6.</span> <span class="toc-text">固定分区方式的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.1.7.</span> <span class="toc-text">可变分区存储管理概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">3.2.2 可变分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">可变分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">可变分区方式的内存分配示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E8%A1%A8"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">可变分区方式的主存分配表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">可变分区方式的内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">可变分区方式的内存回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">地址转换与存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E9%9B%B6%E5%A4%B4"><span class="toc-number">1.2.2.7.</span> <span class="toc-text">可变分区方式的内存零头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF-%E7%A8%8B%E5%BA%8F%E6%B5%AE%E5%8A%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">1.2.2.8.</span> <span class="toc-text">移动技术(程序浮动技术)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.2.9.</span> <span class="toc-text">移动技术的工作流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">3.3 页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.3.1 页式存储管理的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">页式存储管理的基本原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%AD%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">页式存储管理中的地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">页式存储管理的地址转换思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%8E%BB%E9%85%8D"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">页式存储管理的内存分配&#x2F;去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">页的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.3.2 页式存储管理的地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">页式存储管理的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%BF%AB%E8%A1%A8"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">页式存储管理的快表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%BF%AB%E8%A1%A8%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">引入快表后的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BF%AB%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">基于快表的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B%E8%A1%A8"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">多道程序环境下的进程表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">多道程序环境下的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3.3 页式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">页式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">页式虚拟存储管理的页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">页式虚拟存储管理的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">页式虚拟存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">缺页中断的处理流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9ATLB-%E5%BF%AB%E8%A1%A8"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">补充：TLB(快表)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9APaging-Hardware-With-TLB"><span class="toc-number">1.3.3.7.</span> <span class="toc-text">补充：Paging Hardware With TLB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.3.4 页面调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">页面调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">缺页中断率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">影响缺页中断率的因素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">用户编程的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OPT%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.5.</span> <span class="toc-text">OPT页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BAFIFO%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.6.</span> <span class="toc-text">先进先出FIFO页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E6%9C%80%E5%B0%91%E7%94%A8LRU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.7.</span> <span class="toc-text">最近最少用LRU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LRU%E7%AE%97%E6%B3%95%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.4.8.</span> <span class="toc-text">LRU算法的模拟实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E4%B8%8D%E5%B8%B8%E7%94%A8LFU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.9.</span> <span class="toc-text">最不常用LFU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9FCLOCK%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.10.</span> <span class="toc-text">时钟CLOCK页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK%E7%AE%97%E6%B3%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.4.11.</span> <span class="toc-text">CLOCK算法的工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-5-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-%E8%AF%A6%E8%A7%81%E8%A1%A5%E5%85%854"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.3.5 反置页表(详见补充4)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">反置页表的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">反置页表的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E9%A1%B5%E8%A1%A8%E9%A1%B9"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">反置页表的页表项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.5.4.</span> <span class="toc-text">基于反置页表的地址转换过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E7%A4%BA%E6%84%8F"><span class="toc-number">1.3.5.5.</span> <span class="toc-text">反置页表下的地址转换示意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">3.4 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.4.1 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-1"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">程序的分段结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">段式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">段式存储管理的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">1.4.1.5.</span> <span class="toc-text">段的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.4.2 段式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">段式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E6%89%A9%E5%85%85"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">段式虚拟存储管理的段表扩充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">段式虚拟存储管理的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.4.3 段页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">段页式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E5%92%8C%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">段页式存储管理的段表和页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">段页式存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">段页式虚拟存储管理的地址转换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-number">1.5.</span> <span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%851%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5-%E8%A1%A5%E5%85%85%E5%B1%80%E9%83%A8%E6%80%A7%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">补充1：虚拟存储器的概念(补充局部性特征)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%96%E5%8A%A8"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">抖动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-1"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">程序局部性原理(1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E4%B8%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">分页下的运行情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-2"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">程序局部性原理(2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-3"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">程序局部性原理(3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9C%80%E8%A6%81"><span class="toc-number">1.5.1.6.</span> <span class="toc-text">虚拟内存的技术需要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%852%EF%BC%9A%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.2.</span> <span class="toc-text">补充2：伙伴系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">Linux伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E5%9F%BA%E4%BA%8E%E4%BC%99%E4%BC%B4%E7%9A%84slab%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">Linux基于伙伴的slab分配器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%853%EF%BC%9A%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5%E7%9A%84%E5%AF%BB%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-number">1.5.3.</span> <span class="toc-text">补充3：分段和分页的寻址计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">分页和分段的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%EF%BC%9A%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80-gt-%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">分页：逻辑地址-&gt;物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">分页地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%854%EF%BC%9A%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E4%B8%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.</span> <span class="toc-text">补充4：多级页表与反置页表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">4.1 多级页表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.5.4.1.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.4.1.2.</span> <span class="toc-text">多级页表的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8-32%E4%BD%8D%E5%9C%B0%E5%9D%80"><span class="toc-number">1.5.4.1.3.</span> <span class="toc-text">两级页表(32位地址)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.4.1.4.</span> <span class="toc-text">多级页表的地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.1.5.</span> <span class="toc-text">二级页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SUN-SPARC%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7%E5%88%86%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.4.1.6.</span> <span class="toc-text">SUN SPARC计算机三级分页结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.5.4.1.7.</span> <span class="toc-text">多级页表的本质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-Inverted-Page-Table"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">4.2 反置页表(Inverted Page Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.4.2.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-number">1.5.4.2.2.</span> <span class="toc-text">组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.4.2.3.</span> <span class="toc-text">线性反置页表的结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-%E5%BC%95%E5%85%A5hash"><span class="toc-number">1.5.4.2.4.</span> <span class="toc-text">改进(引入hash)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.4.2.5.</span> <span class="toc-text">反置页表地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.2.6.</span> <span class="toc-text">线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.2.7.</span> <span class="toc-text">哈希线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E4%BD%8D%E7%A4%BA%E5%9B%BE%E5%92%8C%E9%93%BE%E8%A1%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.4.2.8.</span> <span class="toc-text">主存分配的位示图和链表方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.5.4.2.9.</span> <span class="toc-text">段页式存储管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%855%EF%BC%9A%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.5.5.</span> <span class="toc-text">补充5：页的大小设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%856%EF%BC%9A%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.</span> <span class="toc-text">补充6：页面替换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK"><span class="toc-number">1.5.6.1.</span> <span class="toc-text">CLOCK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Belady%E2%80%99s-Anomaly-Belady%E5%BC%82%E5%B8%B8"><span class="toc-number">1.5.6.2.</span> <span class="toc-text">Belady’s Anomaly(Belady异常)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FIFO%E7%AE%97%E6%B3%95%E7%9A%84Belady%E5%BC%82%E5%B8%B8"><span class="toc-number">1.5.6.3.</span> <span class="toc-text">FIFO算法的Belady异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparison-of-Placement-Algorithms"><span class="toc-number">1.5.6.4.</span> <span class="toc-text">Comparison of Placement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Replacement-Algorithms"><span class="toc-number">1.5.6.5.</span> <span class="toc-text">Basic Replacement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resident-Set-Size-%E9%A9%BB%E7%95%99%E9%9B%86%E8%A7%84%E6%A8%A1"><span class="toc-number">1.5.6.6.</span> <span class="toc-text">Resident Set Size(驻留集规模)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.7.</span> <span class="toc-text">局部页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%9C%80%E4%BD%B3%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.8.</span> <span class="toc-text">局部最佳页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.9.</span> <span class="toc-text">工作集模型和工作集置换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%B7%A5%E4%BD%9C%E9%9B%86"><span class="toc-number">1.5.6.10.</span> <span class="toc-text">进程工作集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Working-set-model"><span class="toc-number">1.5.6.11.</span> <span class="toc-text">Working-set model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%9B%BF%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.5.6.12.</span> <span class="toc-text">工作集替换示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Page-Fault-Frequency-Strategy"><span class="toc-number">1.5.6.13.</span> <span class="toc-text">The Page-Fault Frequency Strategy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%A1%AE%E5%AE%9A%E9%A9%BB%E7%95%99%E9%9B%86%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.5.6.14.</span> <span class="toc-text">通过工作集确定驻留集大小</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%857%EF%BC%9ATLB%E5%BF%AB%E8%A1%A8%EF%BC%8C%E9%A1%B5%E8%A1%A8%EF%BC%8C%E7%BC%BA%E9%A1%B5"><span class="toc-number">1.5.7.</span> <span class="toc-text">补充7：TLB快表，页表，缺页</span></a></li></ol></li></ol></li></ol>
-      </div>
-    
-  </span>
-</div>
-
-    
-    <div class="content index py4 ">
-        
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle p-name" itemprop="name headline">
-        计算机操作系统(3) 存储管理
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-name" itemprop="name">Whale</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-10T06:05:57.000Z" class="dt-published" itemprop="datePublished">2022-11-10</time>
-        
-      
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/categories/NJU/">NJU</a> › <a class="category-link" href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">计算机操作系统</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/OS/" rel="tag">OS</a>
-    </div>
-
-
-    </div>
-  </header>
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
   
 
-  <div class="content e-content" itemprop="articleBody">
-    <h1 id="第三章-存储管理"><a href="#第三章-存储管理" class="headerlink" title="第三章 存储管理"></a>第三章 存储管理</h1><h2 id="3-1-存储管理基础"><a href="#3-1-存储管理基础" class="headerlink" title="3.1 存储管理基础"></a>3.1 存储管理基础</h2><h3 id="3-1-1-存储管理的主要模式"><a href="#3-1-1-存储管理的主要模式" class="headerlink" title="3.1.1 存储管理的主要模式"></a>3.1.1 存储管理的主要模式</h3><h4 id="逻辑地址"><a href="#逻辑地址" class="headerlink" title="逻辑地址"></a><strong>逻辑地址</strong></h4><ul>
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">计算机操作系统(3) 存储管理</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                    <b>#</b> 计算机操作系统
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h1 id="第三章-存储管理"><a href="#第三章-存储管理" class="headerlink" title="第三章 存储管理"></a>第三章 存储管理</h1><h2 id="3-1-存储管理基础"><a href="#3-1-存储管理基础" class="headerlink" title="3.1 存储管理基础"></a>3.1 存储管理基础</h2><h3 id="3-1-1-存储管理的主要模式"><a href="#3-1-1-存储管理的主要模式" class="headerlink" title="3.1.1 存储管理的主要模式"></a>3.1.1 存储管理的主要模式</h3><h4 id="逻辑地址"><a href="#逻辑地址" class="headerlink" title="逻辑地址"></a><strong>逻辑地址</strong></h4><ul>
 <li><strong>逻辑地址</strong>：又称相对地址，即用户编程所使用的地址空间</li>
 <li>逻辑地址从0开始编号，有两种形式<ul>
 <li>一维逻辑地址(地址)</li>
@@ -1024,157 +947,368 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134738142.png" alt="image-20221114134738142"></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114134854425.png" alt="image-20221114134854425" style="zoom:80%;" /></p>
 
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-        
-          <li><a href="/">Home</a></li>
-        
-          <li><a href="/archives/">Writing</a></li>
-        
-          <li><a href="/categories/">Category</a></li>
-        
-      </ul>
-    </div>
-
-    
-    
-      <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">第三章 存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-number">1.1.</span> <span class="toc-text">3.1 存储管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">3.1.1 存储管理的主要模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">逻辑地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%A4%8D%E7%94%A8"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">主存储器的复用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">存储管理的基本模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">存储管理模式示意图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">1.1.2.</span> <span class="toc-text">3.1.2 存储管理的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E5%8E%BB%E9%85%8D"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">主存储器空间的分配与去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">1.1.2.3.</span> <span class="toc-text">主存储器空间的共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.1.2.4.</span> <span class="toc-text">存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85"><span class="toc-number">1.1.2.5.</span> <span class="toc-text">主存储器空间的扩充</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.3.</span> <span class="toc-text">3.1.3 虚拟存储器的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E6%80%9D%E6%83%B3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">虚拟存储器思想的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.3.2.</span> <span class="toc-text">虚拟存储器的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">虚拟存储器的实现思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">虚拟存储器示意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-number">1.1.4.</span> <span class="toc-text">3.1.4 存储管理的硬件支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%82%E6%AC%A1"><span class="toc-number">1.1.4.1.</span> <span class="toc-text">存储器的组织层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%B6%89%E5%8F%8A%E7%9A%84%E5%AD%98%E5%82%A8%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.4.2.</span> <span class="toc-text">存储管理涉及的存储对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8-Cache"><span class="toc-number">1.1.4.3.</span> <span class="toc-text">高速缓存存储器(Cache)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="toc-number">1.1.4.4.</span> <span class="toc-text">高速缓存存储器的构成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-number">1.1.4.5.</span> <span class="toc-text">高速缓存存储器的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%BA%A7"><span class="toc-number">1.1.4.6.</span> <span class="toc-text">高速缓存存储器的分级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E7%B1%BB%E5%A4%84%E7%90%86%E5%99%A8%E6%9E%B6%E6%9E%84"><span class="toc-number">1.1.4.7.</span> <span class="toc-text">各类处理器架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-number">1.1.4.8.</span> <span class="toc-text">地址转换&#x2F;存储保护的硬件支撑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-number">1.1.4.9.</span> <span class="toc-text">存储管理与硬件支撑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">3.2 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.</span> <span class="toc-text">3.2.1 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">单连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">单用户连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%A4%BA%E6%84%8F"><span class="toc-number">1.2.1.3.</span> <span class="toc-text">单用户连续分区存储管理示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.2.1.4.</span> <span class="toc-text">固定分区存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">1.2.1.5.</span> <span class="toc-text">固定分区方式的主存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.2.1.6.</span> <span class="toc-text">固定分区方式的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.1.7.</span> <span class="toc-text">可变分区存储管理概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">3.2.2 可变分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">可变分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">可变分区方式的内存分配示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E8%A1%A8"><span class="toc-number">1.2.2.3.</span> <span class="toc-text">可变分区方式的主存分配表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">1.2.2.4.</span> <span class="toc-text">可变分区方式的内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-number">1.2.2.5.</span> <span class="toc-text">可变分区方式的内存回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-number">1.2.2.6.</span> <span class="toc-text">地址转换与存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E9%9B%B6%E5%A4%B4"><span class="toc-number">1.2.2.7.</span> <span class="toc-text">可变分区方式的内存零头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF-%E7%A8%8B%E5%BA%8F%E6%B5%AE%E5%8A%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">1.2.2.8.</span> <span class="toc-text">移动技术(程序浮动技术)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.2.9.</span> <span class="toc-text">移动技术的工作流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">3.3 页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.3.1 页式存储管理的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.1.1.</span> <span class="toc-text">页式存储管理的基本原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%AD%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-number">1.3.1.2.</span> <span class="toc-text">页式存储管理中的地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%80%9D%E8%B7%AF"><span class="toc-number">1.3.1.3.</span> <span class="toc-text">页式存储管理的地址转换思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%8E%BB%E9%85%8D"><span class="toc-number">1.3.1.4.</span> <span class="toc-text">页式存储管理的内存分配&#x2F;去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">1.3.1.5.</span> <span class="toc-text">页的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.3.2 页式存储管理的地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">页式存储管理的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%BF%AB%E8%A1%A8"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">页式存储管理的快表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%BF%AB%E8%A1%A8%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">引入快表后的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BF%AB%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">基于快表的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B%E8%A1%A8"><span class="toc-number">1.3.2.5.</span> <span class="toc-text">多道程序环境下的进程表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.2.6.</span> <span class="toc-text">多道程序环境下的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3.3 页式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">页式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">页式虚拟存储管理的页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">页式虚拟存储管理的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">页式虚拟存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.3.5.</span> <span class="toc-text">缺页中断的处理流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9ATLB-%E5%BF%AB%E8%A1%A8"><span class="toc-number">1.3.3.6.</span> <span class="toc-text">补充：TLB(快表)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9APaging-Hardware-With-TLB"><span class="toc-number">1.3.3.7.</span> <span class="toc-text">补充：Paging Hardware With TLB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.3.4 页面调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">页面调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">缺页中断率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">影响缺页中断率的因素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">用户编程的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OPT%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.5.</span> <span class="toc-text">OPT页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BAFIFO%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.6.</span> <span class="toc-text">先进先出FIFO页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E6%9C%80%E5%B0%91%E7%94%A8LRU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.7.</span> <span class="toc-text">最近最少用LRU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LRU%E7%AE%97%E6%B3%95%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.4.8.</span> <span class="toc-text">LRU算法的模拟实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E4%B8%8D%E5%B8%B8%E7%94%A8LFU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.9.</span> <span class="toc-text">最不常用LFU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9FCLOCK%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-number">1.3.4.10.</span> <span class="toc-text">时钟CLOCK页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK%E7%AE%97%E6%B3%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.4.11.</span> <span class="toc-text">CLOCK算法的工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-5-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-%E8%AF%A6%E8%A7%81%E8%A1%A5%E5%85%854"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.3.5 反置页表(详见补充4)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">反置页表的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">反置页表的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E9%A1%B5%E8%A1%A8%E9%A1%B9"><span class="toc-number">1.3.5.3.</span> <span class="toc-text">反置页表的页表项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.5.4.</span> <span class="toc-text">基于反置页表的地址转换过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E7%A4%BA%E6%84%8F"><span class="toc-number">1.3.5.5.</span> <span class="toc-text">反置页表下的地址转换示意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">3.4 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.4.1 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-1"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.1.2.</span> <span class="toc-text">程序的分段结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.1.3.</span> <span class="toc-text">段式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.1.4.</span> <span class="toc-text">段式存储管理的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-number">1.4.1.5.</span> <span class="toc-text">段的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.4.2 段式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">段式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E6%89%A9%E5%85%85"><span class="toc-number">1.4.2.2.</span> <span class="toc-text">段式虚拟存储管理的段表扩充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.4.2.3.</span> <span class="toc-text">段式虚拟存储管理的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.4.3 段页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">段页式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E5%92%8C%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">段页式存储管理的段表和页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">段页式存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">段页式虚拟存储管理的地址转换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-number">1.5.</span> <span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%851%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5-%E8%A1%A5%E5%85%85%E5%B1%80%E9%83%A8%E6%80%A7%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">补充1：虚拟存储器的概念(补充局部性特征)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%96%E5%8A%A8"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">抖动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-1"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">程序局部性原理(1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E4%B8%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">分页下的运行情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-2"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">程序局部性原理(2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-3"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">程序局部性原理(3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9C%80%E8%A6%81"><span class="toc-number">1.5.1.6.</span> <span class="toc-text">虚拟内存的技术需要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%852%EF%BC%9A%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.2.</span> <span class="toc-text">补充2：伙伴系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">Linux伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E5%9F%BA%E4%BA%8E%E4%BC%99%E4%BC%B4%E7%9A%84slab%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">Linux基于伙伴的slab分配器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%853%EF%BC%9A%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5%E7%9A%84%E5%AF%BB%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-number">1.5.3.</span> <span class="toc-text">补充3：分段和分页的寻址计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">分页和分段的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%EF%BC%9A%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80-gt-%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">分页：逻辑地址-&gt;物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">分页地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%854%EF%BC%9A%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E4%B8%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.</span> <span class="toc-text">补充4：多级页表与反置页表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.1.</span> <span class="toc-text">4.1 多级页表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-number">1.5.4.1.1.</span> <span class="toc-text">背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.4.1.2.</span> <span class="toc-text">多级页表的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8-32%E4%BD%8D%E5%9C%B0%E5%9D%80"><span class="toc-number">1.5.4.1.3.</span> <span class="toc-text">两级页表(32位地址)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.4.1.4.</span> <span class="toc-text">多级页表的地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.1.5.</span> <span class="toc-text">二级页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SUN-SPARC%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7%E5%88%86%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.4.1.6.</span> <span class="toc-text">SUN SPARC计算机三级分页结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.5.4.1.7.</span> <span class="toc-text">多级页表的本质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-Inverted-Page-Table"><span class="toc-number">1.5.4.2.</span> <span class="toc-text">4.2 反置页表(Inverted Page Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.5.4.2.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-number">1.5.4.2.2.</span> <span class="toc-text">组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.4.2.3.</span> <span class="toc-text">线性反置页表的结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-%E5%BC%95%E5%85%A5hash"><span class="toc-number">1.5.4.2.4.</span> <span class="toc-text">改进(引入hash)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-number">1.5.4.2.5.</span> <span class="toc-text">反置页表地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.2.6.</span> <span class="toc-text">线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.4.2.7.</span> <span class="toc-text">哈希线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E4%BD%8D%E7%A4%BA%E5%9B%BE%E5%92%8C%E9%93%BE%E8%A1%A8%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.4.2.8.</span> <span class="toc-text">主存分配的位示图和链表方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-number">1.5.4.2.9.</span> <span class="toc-text">段页式存储管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%855%EF%BC%9A%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.5.5.</span> <span class="toc-text">补充5：页的大小设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%856%EF%BC%9A%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.</span> <span class="toc-text">补充6：页面替换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK"><span class="toc-number">1.5.6.1.</span> <span class="toc-text">CLOCK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Belady%E2%80%99s-Anomaly-Belady%E5%BC%82%E5%B8%B8"><span class="toc-number">1.5.6.2.</span> <span class="toc-text">Belady’s Anomaly(Belady异常)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FIFO%E7%AE%97%E6%B3%95%E7%9A%84Belady%E5%BC%82%E5%B8%B8"><span class="toc-number">1.5.6.3.</span> <span class="toc-text">FIFO算法的Belady异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparison-of-Placement-Algorithms"><span class="toc-number">1.5.6.4.</span> <span class="toc-text">Comparison of Placement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Replacement-Algorithms"><span class="toc-number">1.5.6.5.</span> <span class="toc-text">Basic Replacement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resident-Set-Size-%E9%A9%BB%E7%95%99%E9%9B%86%E8%A7%84%E6%A8%A1"><span class="toc-number">1.5.6.6.</span> <span class="toc-text">Resident Set Size(驻留集规模)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.7.</span> <span class="toc-text">局部页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%9C%80%E4%BD%B3%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.8.</span> <span class="toc-text">局部最佳页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.6.9.</span> <span class="toc-text">工作集模型和工作集置换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%B7%A5%E4%BD%9C%E9%9B%86"><span class="toc-number">1.5.6.10.</span> <span class="toc-text">进程工作集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Working-set-model"><span class="toc-number">1.5.6.11.</span> <span class="toc-text">Working-set model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%9B%BF%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.5.6.12.</span> <span class="toc-text">工作集替换示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Page-Fault-Frequency-Strategy"><span class="toc-number">1.5.6.13.</span> <span class="toc-text">The Page-Fault Frequency Strategy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%A1%AE%E5%AE%9A%E9%A9%BB%E7%95%99%E9%9B%86%E5%A4%A7%E5%B0%8F"><span class="toc-number">1.5.6.14.</span> <span class="toc-text">通过工作集确定驻留集大小</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%857%EF%BC%9ATLB%E5%BF%AB%E8%A1%A8%EF%BC%8C%E9%A1%B5%E8%A1%A8%EF%BC%8C%E7%BC%BA%E9%A1%B5"><span class="toc-number">1.5.7.</span> <span class="toc-text">补充7：TLB快表，页表，缺页</span></a></li></ol></li></ol></li></ol>
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-2-%E5%A4%84%E7%90%86%E5%99%A8%E7%AE%A1%E7%90%86/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/" title="计算机操作系统">
+                        <b>#</b> 计算机操作系统
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-4-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
     
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&text=计算机操作系统(3) 存储管理"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&is_video=false&description=计算机操作系统(3) 存储管理"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=计算机操作系统(3) 存储管理&body=Check out this article: https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&title=计算机操作系统(3) 存储管理"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&name=计算机操作系统(3) 存储管理&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/&t=计算机操作系统(3) 存储管理"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
   </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">第三章 存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80"><span class="toc-text">3.1 存储管理基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-1-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E4%B8%BB%E8%A6%81%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.1.1 存储管理的主要模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80"><span class="toc-text">逻辑地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%A4%8D%E7%94%A8"><span class="toc-text">主存储器的复用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%BC%8F"><span class="toc-text">存储管理的基本模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A8%A1%E5%BC%8F%E7%A4%BA%E6%84%8F%E5%9B%BE"><span class="toc-text">存储管理模式示意图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-2-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-text">3.1.2 存储管理的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%88%86%E9%85%8D%E4%B8%8E%E5%8E%BB%E9%85%8D"><span class="toc-text">主存储器空间的分配与去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">主存储器空间的共享</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%82%A8%E5%99%A8%E7%A9%BA%E9%97%B4%E7%9A%84%E6%89%A9%E5%85%85"><span class="toc-text">主存储器空间的扩充</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-3-%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">3.1.3 虚拟存储器的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E6%80%9D%E6%83%B3%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">虚拟存储器思想的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">虚拟存储器的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%80%9D%E8%B7%AF"><span class="toc-text">虚拟存储器的实现思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%A4%BA%E6%84%8F"><span class="toc-text">虚拟存储器示意</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">3.1.4 存储管理的硬件支撑</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87%E5%B1%82%E6%AC%A1"><span class="toc-text">存储器的组织层次</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%B6%89%E5%8F%8A%E7%9A%84%E5%AD%98%E5%82%A8%E5%AF%B9%E8%B1%A1"><span class="toc-text">存储管理涉及的存储对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8-Cache"><span class="toc-text">高速缓存存储器(Cache)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%9E%84%E6%88%90"><span class="toc-text">高速缓存存储器的构成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E7%BB%84%E7%BB%87"><span class="toc-text">高速缓存存储器的组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E5%88%86%E7%BA%A7"><span class="toc-text">高速缓存存储器的分级</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%84%E7%B1%BB%E5%A4%84%E7%90%86%E5%99%A8%E6%9E%B6%E6%9E%84"><span class="toc-text">各类处理器架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2-%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4%E7%9A%84%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">地址转换&#x2F;存储保护的硬件支撑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E7%A1%AC%E4%BB%B6%E6%94%AF%E6%92%91"><span class="toc-text">存储管理与硬件支撑</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2.1 单连续分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">单连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">单用户连续分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E7%94%A8%E6%88%B7%E8%BF%9E%E7%BB%AD%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%A4%BA%E6%84%8F"><span class="toc-text">单用户连续分区存储管理示意</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">固定分区存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">固定分区方式的主存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%BA%E5%AE%9A%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">固定分区方式的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%A6%82%E8%BF%B0"><span class="toc-text">可变分区存储管理概述</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.2.2 可变分区存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">可变分区存储管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">可变分区方式的内存分配示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E8%A1%A8"><span class="toc-text">可变分区方式的主存分配表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-text">可变分区方式的内存分配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E5%9B%9E%E6%94%B6"><span class="toc-text">可变分区方式的内存回收</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%AD%98%E5%82%A8%E4%BF%9D%E6%8A%A4"><span class="toc-text">地址转换与存储保护</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E5%8F%98%E5%88%86%E5%8C%BA%E6%96%B9%E5%BC%8F%E7%9A%84%E5%86%85%E5%AD%98%E9%9B%B6%E5%A4%B4"><span class="toc-text">可变分区方式的内存零头</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF-%E7%A8%8B%E5%BA%8F%E6%B5%AE%E5%8A%A8%E6%8A%80%E6%9C%AF"><span class="toc-text">移动技术(程序浮动技术)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%BB%E5%8A%A8%E6%8A%80%E6%9C%AF%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">移动技术的工作流程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.3 页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-1-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">3.3.1 页式存储管理的基本原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86"><span class="toc-text">页式存储管理的基本原理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%AD%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="toc-text">页式存储管理中的地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%80%9D%E8%B7%AF"><span class="toc-text">页式存储管理的地址转换思路</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D-%E5%8E%BB%E9%85%8D"><span class="toc-text">页式存储管理的内存分配&#x2F;去配</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">页的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-2-%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">3.3.2 页式存储管理的地址转换</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-text">页式存储管理的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%BF%AB%E8%A1%A8"><span class="toc-text">页式存储管理的快表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E5%85%A5%E5%BF%AB%E8%A1%A8%E5%90%8E%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E4%BB%A3%E4%BB%B7"><span class="toc-text">引入快表后的地址转换代价</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%BF%AB%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-text">基于快表的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E8%BF%9B%E7%A8%8B%E8%A1%A8"><span class="toc-text">多道程序环境下的进程表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E9%81%93%E7%A8%8B%E5%BA%8F%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">多道程序环境下的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-3-%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.3.3 页式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">页式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E9%A1%B5%E8%A1%A8"><span class="toc-text">页式虚拟存储管理的页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">页式虚拟存储管理的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">页式虚拟存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%9A%84%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-text">缺页中断的处理流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9ATLB-%E5%BF%AB%E8%A1%A8"><span class="toc-text">补充：TLB(快表)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9APaging-Hardware-With-TLB"><span class="toc-text">补充：Paging Hardware With TLB</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-4-%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-text">3.3.4 页面调度</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6"><span class="toc-text">页面调度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87"><span class="toc-text">缺页中断率</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%B1%E5%93%8D%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%AD%E7%8E%87%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="toc-text">影响缺页中断率的因素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-text">用户编程的例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OPT%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">OPT页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%88%E8%BF%9B%E5%85%88%E5%87%BAFIFO%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">先进先出FIFO页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E8%BF%91%E6%9C%80%E5%B0%91%E7%94%A8LRU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">最近最少用LRU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#LRU%E7%AE%97%E6%B3%95%E7%9A%84%E6%A8%A1%E6%8B%9F%E5%AE%9E%E7%8E%B0"><span class="toc-text">LRU算法的模拟实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E4%B8%8D%E5%B8%B8%E7%94%A8LFU%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">最不常用LFU页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9FCLOCK%E9%A1%B5%E9%9D%A2%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">时钟CLOCK页面调度算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK%E7%AE%97%E6%B3%95%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-text">CLOCK算法的工作流程</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-5-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-%E8%AF%A6%E8%A7%81%E8%A1%A5%E5%85%854"><span class="toc-text">3.3.5 反置页表(详见补充4)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-text">反置页表的提出</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">反置页表的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E9%A1%B5%E8%A1%A8%E9%A1%B9"><span class="toc-text">反置页表的页表项</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">基于反置页表的地址转换过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E4%B8%8B%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E7%A4%BA%E6%84%8F"><span class="toc-text">反置页表下的地址转换示意</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.1 段式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1-1"><span class="toc-text">段式程序设计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%88%86%E6%AE%B5%E7%BB%93%E6%9E%84"><span class="toc-text">程序的分段结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E6%B5%81%E7%A8%8B"><span class="toc-text">段式存储管理的地址转换流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E7%9A%84%E5%85%B1%E4%BA%AB"><span class="toc-text">段的共享</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.2 段式虚拟存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段式虚拟存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E6%89%A9%E5%85%85"><span class="toc-text">段式虚拟存储管理的段表扩充</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段式虚拟存储管理的地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">3.4.3 段页式存储管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%80%9D%E6%83%B3"><span class="toc-text">段页式存储管理的基本思想</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E6%AE%B5%E8%A1%A8%E5%92%8C%E9%A1%B5%E8%A1%A8"><span class="toc-text">段页式存储管理的段表和页表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段页式存储管理的地址转换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">段页式虚拟存储管理的地址转换</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9"><span class="toc-text">补充内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%851%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%AD%98%E5%82%A8%E5%99%A8%E7%9A%84%E6%A6%82%E5%BF%B5-%E8%A1%A5%E5%85%85%E5%B1%80%E9%83%A8%E6%80%A7%E7%89%B9%E5%BE%81"><span class="toc-text">补充1：虚拟存储器的概念(补充局部性特征)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%96%E5%8A%A8"><span class="toc-text">抖动</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-1"><span class="toc-text">程序局部性原理(1)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E4%B8%8B%E7%9A%84%E8%BF%90%E8%A1%8C%E6%83%85%E5%86%B5"><span class="toc-text">分页下的运行情况</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-2"><span class="toc-text">程序局部性原理(2)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E5%B1%80%E9%83%A8%E6%80%A7%E5%8E%9F%E7%90%86-3"><span class="toc-text">程序局部性原理(3)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%9A%84%E6%8A%80%E6%9C%AF%E9%9C%80%E8%A6%81"><span class="toc-text">虚拟内存的技术需要</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%852%EF%BC%9A%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">补充2：伙伴系统</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F"><span class="toc-text">Linux伙伴系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux%E5%9F%BA%E4%BA%8E%E4%BC%99%E4%BC%B4%E7%9A%84slab%E5%88%86%E9%85%8D%E5%99%A8"><span class="toc-text">Linux基于伙伴的slab分配器</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%853%EF%BC%9A%E5%88%86%E6%AE%B5%E5%92%8C%E5%88%86%E9%A1%B5%E7%9A%84%E5%AF%BB%E5%9D%80%E8%AE%A1%E7%AE%97"><span class="toc-text">补充3：分段和分页的寻址计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%AE%B5"><span class="toc-text">分段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%92%8C%E5%88%86%E6%AE%B5%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-text">分页和分段的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%EF%BC%9A%E9%80%BB%E8%BE%91%E5%9C%B0%E5%9D%80-gt-%E7%89%A9%E7%90%86%E5%9C%B0%E5%9D%80"><span class="toc-text">分页：逻辑地址-&gt;物理地址</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2"><span class="toc-text">分页地址转换</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%854%EF%BC%9A%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E4%B8%8E%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">补充4：多级页表与反置页表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">4.1 多级页表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">多级页表的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%A1%B5%E8%A1%A8-32%E4%BD%8D%E5%9C%B0%E5%9D%80"><span class="toc-text">两级页表(32位地址)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">多级页表的地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">二级页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SUN-SPARC%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%89%E7%BA%A7%E5%88%86%E9%A1%B5%E7%BB%93%E6%9E%84"><span class="toc-text">SUN SPARC计算机三级分页结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-text">多级页表的本质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8-Inverted-Page-Table"><span class="toc-text">4.2 反置页表(Inverted Page Table)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%84%E6%88%90"><span class="toc-text">组成</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-text">线性反置页表的结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%B9%E8%BF%9B-%E5%BC%95%E5%85%A5hash"><span class="toc-text">改进(引入hash)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2%E8%BF%87%E7%A8%8B"><span class="toc-text">反置页表地址转换过程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%93%88%E5%B8%8C%E7%BA%BF%E6%80%A7%E5%8F%8D%E7%BD%AE%E9%A1%B5%E8%A1%A8"><span class="toc-text">哈希线性反置页表</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E5%88%86%E9%85%8D%E7%9A%84%E4%BD%8D%E7%A4%BA%E5%9B%BE%E5%92%8C%E9%93%BE%E8%A1%A8%E6%96%B9%E6%B3%95"><span class="toc-text">主存分配的位示图和链表方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">段页式存储管理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%855%EF%BC%9A%E9%A1%B5%E7%9A%84%E5%A4%A7%E5%B0%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">补充5：页的大小设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%856%EF%BC%9A%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">补充6：页面替换算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CLOCK"><span class="toc-text">CLOCK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Belady%E2%80%99s-Anomaly-Belady%E5%BC%82%E5%B8%B8"><span class="toc-text">Belady’s Anomaly(Belady异常)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FIFO%E7%AE%97%E6%B3%95%E7%9A%84Belady%E5%BC%82%E5%B8%B8"><span class="toc-text">FIFO算法的Belady异常</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Comparison-of-Placement-Algorithms"><span class="toc-text">Comparison of Placement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Basic-Replacement-Algorithms"><span class="toc-text">Basic Replacement Algorithms</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resident-Set-Size-%E9%A9%BB%E7%95%99%E9%9B%86%E8%A7%84%E6%A8%A1"><span class="toc-text">Resident Set Size(驻留集规模)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">局部页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%9C%80%E4%BD%B3%E9%A1%B5%E9%9D%A2%E6%9B%BF%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">局部最佳页面替换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%A8%A1%E5%9E%8B%E5%92%8C%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">工作集模型和工作集置换算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E5%B7%A5%E4%BD%9C%E9%9B%86"><span class="toc-text">进程工作集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Working-set-model"><span class="toc-text">Working-set model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B7%A5%E4%BD%9C%E9%9B%86%E6%9B%BF%E6%8D%A2%E7%A4%BA%E4%BE%8B"><span class="toc-text">工作集替换示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#The-Page-Fault-Frequency-Strategy"><span class="toc-text">The Page-Fault Frequency Strategy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%B7%A5%E4%BD%9C%E9%9B%86%E7%A1%AE%E5%AE%9A%E9%A9%BB%E7%95%99%E9%9B%86%E5%A4%A7%E5%B0%8F"><span class="toc-text">通过工作集确定驻留集大小</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%857%EF%BC%9ATLB%E5%BF%AB%E8%A1%A8%EF%BC%8C%E9%A1%B5%E8%A1%A8%EF%BC%8C%E7%BC%BA%E9%A1%B5"><span class="toc-text">补充7：TLB快表，页表，缺页</span></a></li></ol></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
 </div>
 
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
         
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2024
-    Whale
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
   </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/categories/">Category</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
 
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
     </div>
-    <!-- styles -->
+  </div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
-  
   <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="fa-regular fa-clone"></i>';
-    btn += '</span>';
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
       }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
   </script>
 
 
-<script src="/js/main.js"></script>
 
-<!-- search -->
 
-<!-- Baidu Analytics -->
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
 
-<!-- Cloudflare Analytics -->
+  
+<script src="/js/colorscheme.js"></script>
 
-<!-- Disqus Comments -->
 
-<!-- utterances Comments -->
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</body>
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F(3)%20%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F10%2F%25E8%25AE%25A1%25E7%25AE%2597%25E6%259C%25BA%25E6%2593%258D%25E4%25BD%259C%25E7%25B3%25BB%25E7%25BB%259F-3-%25E5%25AD%2598%25E5%2582%25A8%25E7%25AE%25A1%25E7%2590%2586%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-3-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,181 +1,186 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Spring IoC &#x2F; DI 实现步骤  配置元数据(基于XML、基于注解、基于配置类) 实例化IoC容器(可从本地文件系统、CLASSPATH等加载配置元数据)  获取Bean(组件)    1. 完全XML配置方式1.1 Bean信息声明配置基于无参数构造函数的实例化  默认需要空构造函数 &lt;bean id&#x3D;&quot;happyComponent&quot; class&#x3D;&amp;quot">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Spring(1) IoC">
-<meta property="og:url" content="https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/index.html">
-<meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="Spring IoC &#x2F; DI 实现步骤  配置元数据(基于XML、基于注解、基于配置类) 实例化IoC容器(可从本地文件系统、CLASSPATH等加载配置元数据)  获取Bean(组件)    1. 完全XML配置方式1.1 Bean信息声明配置基于无参数构造函数的实例化  默认需要空构造函数 &lt;bean id&#x3D;&quot;happyComponent&quot; class&#x3D;&amp;quot">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310020013837.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310152355021.png">
-<meta property="article:published_time" content="2023-10-01T15:59:18.000Z">
-<meta property="article:modified_time" content="2023-10-30T07:01:13.089Z">
-<meta property="article:author" content="Whale">
-<meta property="article:tag" content="Spring">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202310020013837.png">
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="码农预备役" />
+  
+  
+  <title>
     
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
+      Spring(1) IoC 
       
       
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
+      |
     
-    <!-- title -->
-    <title>Spring(1) IoC</title>
-    <!-- async scripts -->
-    <!-- Google Analytics -->
+     Whale&#39;s Blog
+  </title>
 
-
-    <!-- Umami Analytics -->
-
-
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/categories/">Category</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2023/10/16/Spring-2-AOP/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2023/08/24/SpringBoot-1-%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&text=Spring(1) IoC"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&is_video=false&description=Spring(1) IoC"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Spring(1) IoC&body=Check out this article: https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&name=Spring(1) IoC&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&t=Spring(1) IoC"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    
-    
-      <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%8C%E5%85%A8XML%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">1. 完全XML配置方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Bean%E4%BF%A1%E6%81%AF%E5%A3%B0%E6%98%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 Bean信息声明配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Bean%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Bean依赖注入配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-IoC%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 IoC容器创建和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Bean作用域和周期方法配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-FactoryBean%E7%89%B9%E6%80%A7%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 FactoryBean特性和使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B3%A8%E8%A7%A3-XML%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. 注解+XML方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Bean%E6%B3%A8%E8%A7%A3%E6%A0%87%E8%AE%B0%E5%92%8C%E6%89%AB%E6%8F%8F"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Bean注解标记和扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%E6%B3%A8%E8%A7%A3"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Bean作用域和周期方法注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Bean%E5%B1%9E%E6%80%A7%E8%B5%8B%E5%80%BC"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Bean属性赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Resource"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 @Resource</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3-%E9%85%8D%E7%BD%AE%E7%B1%BB%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3. 注解+配置类方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%85%8D%E7%BD%AE%E7%B1%BB%E5%92%8C%E6%B3%A8%E8%A7%A3%E6%89%AB%E6%8F%8F"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 配置类和注解扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Bean"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 @Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Import%E6%89%A9%E5%B1%95"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 @Import扩展</span></a></li></ol></li></ol>
-      </div>
-    
-  </span>
-</div>
-
-    
-    <div class="content index py4 ">
-        
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle p-name" itemprop="name headline">
-        Spring(1) IoC
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-name" itemprop="name">Whale</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2023-10-01T15:59:18.000Z" class="dt-published" itemprop="datePublished">2023-10-01</time>
-        
-      
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/categories/Backend/">Backend</a> › <a class="category-link" href="/categories/Backend/Spring/">Spring</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/Spring/" rel="tag">Spring</a>
-    </div>
-
-
-    </div>
-  </header>
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
   
 
-  <div class="content e-content" itemprop="articleBody">
-    <blockquote>
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Spring(1) IoC</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-10-30 15:01:13
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/Spring/" title="Spring">
+                    <b>#</b> Spring
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <blockquote>
 <p>Spring IoC / DI 实现步骤</p>
 <ol>
 <li>配置元数据(基于XML、基于注解、基于配置类)</li>
@@ -449,157 +454,368 @@
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//@SpringJUnitConfig(locations = &#123;&quot;classpath:spring-context.xml&quot;&#125;)  //指定配置文件xml</span><br><span class="hljs-meta">@SpringJUnitConfig(value = &#123;BeanConfig.class&#125;)</span>  <span class="hljs-comment">//指定配置类</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Junit5IntegrationTest</span> &#123;<br>    <br>    <span class="hljs-meta">@Autowired</span><br>    <span class="hljs-keyword">private</span> User user;<br>    <br>    <span class="hljs-meta">@Test</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testJunit5</span><span class="hljs-params">()</span> &#123;<br>        System.out.println(user);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 </blockquote>
 
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-        
-          <li><a href="/">Home</a></li>
-        
-          <li><a href="/archives/">Writing</a></li>
-        
-          <li><a href="/categories/">Category</a></li>
-        
-      </ul>
-    </div>
-
-    
-    
-      <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%8C%E5%85%A8XML%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">1. 完全XML配置方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Bean%E4%BF%A1%E6%81%AF%E5%A3%B0%E6%98%8E%E9%85%8D%E7%BD%AE"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 Bean信息声明配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Bean%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E9%85%8D%E7%BD%AE"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 Bean依赖注入配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-IoC%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">1.3 IoC容器创建和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%E9%85%8D%E7%BD%AE"><span class="toc-number">1.4.</span> <span class="toc-text">1.4 Bean作用域和周期方法配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-FactoryBean%E7%89%B9%E6%80%A7%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">1.5 FactoryBean特性和使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B3%A8%E8%A7%A3-XML%E6%96%B9%E5%BC%8F"><span class="toc-number">2.</span> <span class="toc-text">2. 注解+XML方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Bean%E6%B3%A8%E8%A7%A3%E6%A0%87%E8%AE%B0%E5%92%8C%E6%89%AB%E6%8F%8F"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Bean注解标记和扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%E6%B3%A8%E8%A7%A3"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 Bean作用域和周期方法注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Bean%E5%B1%9E%E6%80%A7%E8%B5%8B%E5%80%BC"><span class="toc-number">2.3.</span> <span class="toc-text">2.3 Bean属性赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Resource"><span class="toc-number">2.4.</span> <span class="toc-text">2.4 @Resource</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3-%E9%85%8D%E7%BD%AE%E7%B1%BB%E6%96%B9%E5%BC%8F"><span class="toc-number">3.</span> <span class="toc-text">3. 注解+配置类方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%85%8D%E7%BD%AE%E7%B1%BB%E5%92%8C%E6%B3%A8%E8%A7%A3%E6%89%AB%E6%8F%8F"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 配置类和注解扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Bean"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 @Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Import%E6%89%A9%E5%B1%95"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 @Import扩展</span></a></li></ol></li></ol>
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2023/08/24/SpringBoot-1-%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-10-30 15:01:13
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/Spring/" title="Spring">
+                        <b>#</b> Spring
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2023/10/16/Spring-2-AOP/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
     
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&text=Spring(1) IoC"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&is_video=false&description=Spring(1) IoC"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Spring(1) IoC&body=Check out this article: https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&title=Spring(1) IoC"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&name=Spring(1) IoC&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/&t=Spring(1) IoC"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
   </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AE%8C%E5%85%A8XML%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F"><span class="toc-text">1. 完全XML配置方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-Bean%E4%BF%A1%E6%81%AF%E5%A3%B0%E6%98%8E%E9%85%8D%E7%BD%AE"><span class="toc-text">1.1 Bean信息声明配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-Bean%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5%E9%85%8D%E7%BD%AE"><span class="toc-text">1.2 Bean依赖注入配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-IoC%E5%AE%B9%E5%99%A8%E5%88%9B%E5%BB%BA%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-text">1.3 IoC容器创建和使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%E9%85%8D%E7%BD%AE"><span class="toc-text">1.4 Bean作用域和周期方法配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-FactoryBean%E7%89%B9%E6%80%A7%E5%92%8C%E4%BD%BF%E7%94%A8"><span class="toc-text">1.5 FactoryBean特性和使用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%B3%A8%E8%A7%A3-XML%E6%96%B9%E5%BC%8F"><span class="toc-text">2. 注解+XML方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-Bean%E6%B3%A8%E8%A7%A3%E6%A0%87%E8%AE%B0%E5%92%8C%E6%89%AB%E6%8F%8F"><span class="toc-text">2.1 Bean注解标记和扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Bean%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%91%A8%E6%9C%9F%E6%96%B9%E6%B3%95%E6%B3%A8%E8%A7%A3"><span class="toc-text">2.2 Bean作用域和周期方法注解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-Bean%E5%B1%9E%E6%80%A7%E8%B5%8B%E5%80%BC"><span class="toc-text">2.3 Bean属性赋值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-Resource"><span class="toc-text">2.4 @Resource</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%B3%A8%E8%A7%A3-%E9%85%8D%E7%BD%AE%E7%B1%BB%E6%96%B9%E5%BC%8F"><span class="toc-text">3. 注解+配置类方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%85%8D%E7%BD%AE%E7%B1%BB%E5%92%8C%E6%B3%A8%E8%A7%A3%E6%89%AB%E6%8F%8F"><span class="toc-text">3.1 配置类和注解扫描</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Bean"><span class="toc-text">3.2 @Bean</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Import%E6%89%A9%E5%B1%95"><span class="toc-text">3.3 @Import扩展</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
 </div>
 
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
         
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2024
-    Whale
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
   </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/categories/">Category</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
 
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
     </div>
-    <!-- styles -->
+  </div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
-  
   <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="fa-regular fa-clone"></i>';
-    btn += '</span>';
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
       }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
   </script>
 
 
-<script src="/js/main.js"></script>
 
-<!-- search -->
 
-<!-- Baidu Analytics -->
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
 
-<!-- Cloudflare Analytics -->
+  
+<script src="/js/colorscheme.js"></script>
 
-<!-- Disqus Comments -->
 
-<!-- utterances Comments -->
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</body>
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Spring(1)%20IoC + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2023%2F10%2F01%2FSpring-1-IoC%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2023/10/01/Spring-1-IoC/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
 </html>

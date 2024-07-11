@@ -1,180 +1,186 @@
 <!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="1. Redisson 分布式锁 可重入：利用hash结构记录线程id和重入次数 可重试：利用信号量和PubSub功能实现等待、唤醒，获取锁失败的重试机制 超时续约：利用watchDog，开启一个定时任务，每隔一段时间（releaseTime &#x2F; 3），重置超时时间 主从一致性问题：利用MultiLock锁，Redis不再区分主从节点，只有所有的节点都写入成功，才是加锁成功，假设现在某个节点挂了，">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Redis(3) 分布式锁">
-<meta property="og:url" content="https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
-<meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="1. Redisson 分布式锁 可重入：利用hash结构记录线程id和重入次数 可重试：利用信号量和PubSub功能实现等待、唤醒，获取锁失败的重试机制 超时续约：利用watchDog，开启一个定时任务，每隔一段时间（releaseTime &#x2F; 3），重置超时时间 主从一致性问题：利用MultiLock锁，Redis不再区分主从节点，只有所有的节点都写入成功，才是加锁成功，假设现在某个节点挂了，">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png">
-<meta property="article:published_time" content="2024-02-18T11:18:45.000Z">
-<meta property="article:modified_time" content="2024-02-18T11:49:29.580Z">
-<meta property="article:author" content="Whale">
-<meta property="article:tag" content="Redis">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png">
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="码农预备役" />
+  
+  
+  <title>
     
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
+      Redis(3) 分布式锁 
       
       
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
+      |
     
-    <!-- title -->
-    <title>Redis(3) 分布式锁</title>
-    <!-- async scripts -->
-    <!-- Google Analytics -->
+     Whale&#39;s Blog
+  </title>
 
-
-    <!-- Umami Analytics -->
-
-
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-		<script type="text/x-mathjax-config">
-		  MathJax.Hub.Config({
-			tex2jax: {
-			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
-			  inlineMath: [['$','$']]
-			}
-		  });
-		</script>
-		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
-	
-<meta name="generator" content="Hexo 6.3.0"></head>
-
-<body class="max-width mx-auto px3 ltr">    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/categories/">Category</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2024/03/13/MySQL-1-%E5%AD%90%E6%9F%A5%E8%AF%A2/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2024/02/17/Redis-2-%E7%BC%93%E5%AD%98/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&text=Redis(3) 分布式锁"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&is_video=false&description=Redis(3) 分布式锁"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Redis(3) 分布式锁&body=Check out this article: https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&name=Redis(3) 分布式锁&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&t=Redis(3) 分布式锁"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    
-    
-      <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Redisson-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-number">1.</span> <span class="toc-text">1. Redisson 分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MultiLock%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">MultiLock原理</span></a></li></ol></li></ol>
-      </div>
-    
-  </span>
-</div>
-
-    
-    <div class="content index py4 ">
-        
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle p-name" itemprop="name headline">
-        Redis(3) 分布式锁
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span class="p-name" itemprop="name">Whale</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2024-02-18T11:18:45.000Z" class="dt-published" itemprop="datePublished">2024-02-18</time>
-        
-      
-    </div>
-
-
-      
-    <div class="article-category">
-        <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/categories/Backend/">Backend</a> › <a class="category-link" href="/categories/Backend/Redis/">Redis</a>
-    </div>
-
-
-      
-    <div class="article-tag">
-        <i class="fa-solid fa-tag"></i>
-        <a class="p-category" href="/tags/Redis/" rel="tag">Redis</a>
-    </div>
-
-
-    </div>
-  </header>
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
   
 
-  <div class="content e-content" itemprop="articleBody">
-    <h2 id="1-Redisson-分布式锁"><a href="#1-Redisson-分布式锁" class="headerlink" title="1. Redisson 分布式锁"></a>1. Redisson 分布式锁</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png" alt="image-20240218192041327"></p>
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">Redis(3) 分布式锁</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2024-02-18 19:49:29
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/" title="Backend">
+                    <b>#</b> Backend
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Backend/Redis/" title="Redis">
+                    <b>#</b> Redis
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-Redisson-分布式锁"><a href="#1-Redisson-分布式锁" class="headerlink" title="1. Redisson 分布式锁"></a>1. Redisson 分布式锁</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png" alt="image-20240218192041327"></p>
 <p><strong>可重入</strong>：利用hash结构记录线程id和重入次数</p>
 <p><strong>可重试</strong>：利用信号量和PubSub功能实现等待、唤醒，获取锁失败的重试机制</p>
 <p><strong>超时续约</strong>：利用watchDog，开启一个定时任务，每隔一段时间（releaseTime / 3），重置超时时间</p>
@@ -184,157 +190,368 @@
 <p>联锁的tryLock</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">tryLock</span><span class="hljs-params">(<span class="hljs-type">long</span> waitTime, <span class="hljs-type">long</span> leaseTime, TimeUnit unit)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">newLeaseTime</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1L</span>;<br>    <span class="hljs-comment">//如果传入了释放时间</span><br>    <span class="hljs-keyword">if</span> (leaseTime != -<span class="hljs-number">1L</span>) &#123;<br>        <span class="hljs-comment">//再判断一下是否有等待时间</span><br>        <span class="hljs-keyword">if</span> (waitTime == -<span class="hljs-number">1L</span>) &#123;<br>            <span class="hljs-comment">//如果没传等待时间，不重试，则只获得一次</span><br>            newLeaseTime = unit.toMillis(leaseTime);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//想要重试，耗时较久，万一释放时间小于等待时间，则会有问题，所以这里将等待时间乘以二</span><br>            newLeaseTime = unit.toMillis(waitTime) * <span class="hljs-number">2L</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//获取当前时间</span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">time</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    <span class="hljs-comment">//剩余等待时间</span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">remainTime</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1L</span>;<br>    <span class="hljs-keyword">if</span> (waitTime != -<span class="hljs-number">1L</span>) &#123;<br>        remainTime = unit.toMillis(waitTime);<br>    &#125;<br>    <span class="hljs-comment">//锁等待时间，与剩余等待时间一样    </span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">lockWaitTime</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.calcLockWaitTime(remainTime);<br>    <span class="hljs-comment">//锁失败的限制，源码返回是的0</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">failedLocksLimit</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.failedLocksLimit();<br>    <span class="hljs-comment">//已经获取成功的锁</span><br>    List&lt;RLock&gt; acquiredLocks = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>(<span class="hljs-built_in">this</span>.locks.size());<br>    <span class="hljs-comment">//迭代器，用于遍历</span><br>    ListIterator&lt;RLock&gt; iterator = <span class="hljs-built_in">this</span>.locks.listIterator();<br><br>    <span class="hljs-keyword">while</span>(iterator.hasNext()) &#123;<br>        <span class="hljs-type">RLock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> (RLock)iterator.next();<br><br>        <span class="hljs-type">boolean</span> lockAcquired;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//没有等待时间和释放时间，调用空参的tryLock</span><br>            <span class="hljs-keyword">if</span> (waitTime == -<span class="hljs-number">1L</span> &amp;&amp; leaseTime == -<span class="hljs-number">1L</span>) &#123;<br>                lockAcquired = lock.tryLock();<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//否则调用带参的tryLock</span><br>                <span class="hljs-type">long</span> <span class="hljs-variable">awaitTime</span> <span class="hljs-operator">=</span> Math.min(lockWaitTime, remainTime);<br>                lockAcquired = lock.tryLock(awaitTime, newLeaseTime, TimeUnit.MILLISECONDS);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (RedisResponseTimeoutException var21) &#123;<br>            <span class="hljs-built_in">this</span>.unlockInner(Arrays.asList(lock));<br>            lockAcquired = <span class="hljs-literal">false</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception var22) &#123;<br>            lockAcquired = <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">//判断获取锁是否成功</span><br>        <span class="hljs-keyword">if</span> (lockAcquired) &#123;<br>            <span class="hljs-comment">//成功则将锁放入成功锁的集合</span><br>            acquiredLocks.add(lock);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//如果获取锁失败</span><br>            <span class="hljs-comment">//判断当前锁的数量，减去成功获取锁的数量，如果为0，则所有锁都成功获取，跳出循环</span><br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.locks.size() - acquiredLocks.size() == <span class="hljs-built_in">this</span>.failedLocksLimit()) &#123;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            <span class="hljs-comment">//否则将拿到的锁都释放掉</span><br>            <span class="hljs-keyword">if</span> (failedLocksLimit == <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-built_in">this</span>.unlockInner(acquiredLocks);<br>                <span class="hljs-comment">//如果等待时间为-1，则不想重试，直接返回false</span><br>                <span class="hljs-keyword">if</span> (waitTime == -<span class="hljs-number">1L</span>) &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br><br>                failedLocksLimit = <span class="hljs-built_in">this</span>.failedLocksLimit();<br>                <span class="hljs-comment">//将已经拿到的锁都清空</span><br>                acquiredLocks.clear();<br>                <span class="hljs-comment">//将迭代器往前迭代，相当于重置指针，放到第一个然后重试获取锁</span><br>                <span class="hljs-keyword">while</span>(iterator.hasPrevious()) &#123;<br>                    iterator.previous();<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                --failedLocksLimit;<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">//如果剩余时间不为-1，很充足</span><br>        <span class="hljs-keyword">if</span> (remainTime != -<span class="hljs-number">1L</span>) &#123;<br>            <span class="hljs-comment">//计算现在剩余时间</span><br>            remainTime -= System.currentTimeMillis() - time;<br>            time = System.currentTimeMillis();<br>            <span class="hljs-comment">//如果剩余时间为负数，则获取锁超时了</span><br>            <span class="hljs-keyword">if</span> (remainTime &lt;= <span class="hljs-number">0L</span>) &#123;<br>                <span class="hljs-comment">//将之前已经获取到的锁释放掉，并返回false</span><br>                <span class="hljs-built_in">this</span>.unlockInner(acquiredLocks);<br>                <span class="hljs-comment">//联锁成功的条件是：每一把锁都必须成功获取，一把锁失败，则都失败</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//如果设置了锁的有效期</span><br>    <span class="hljs-keyword">if</span> (leaseTime != -<span class="hljs-number">1L</span>) &#123;<br>        List&lt;RFuture&lt;Boolean&gt;&gt; futures = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>(acquiredLocks.size());<br>        <span class="hljs-comment">//迭代器用于遍历已经获取成功的锁</span><br>        <span class="hljs-type">Iterator</span> <span class="hljs-variable">var24</span> <span class="hljs-operator">=</span> acquiredLocks.iterator();<br><br>        <span class="hljs-keyword">while</span>(var24.hasNext()) &#123;<br>            <span class="hljs-type">RLock</span> <span class="hljs-variable">rLock</span> <span class="hljs-operator">=</span> (RLock)var24.next();<br>            <span class="hljs-comment">//设置每一把锁的有效期</span><br>            RFuture&lt;Boolean&gt; future = ((RedissonLock)rLock).expireAsync(unit.toMillis(leaseTime), TimeUnit.MILLISECONDS);<br>            futures.add(future);<br>        &#125;<br><br>        var24 = futures.iterator();<br><br>        <span class="hljs-keyword">while</span>(var24.hasNext()) &#123;<br>            RFuture&lt;Boolean&gt; rFuture = (RFuture)var24.next();<br>            rFuture.syncUninterruptibly();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//但如果没设置有效期，则会触发WatchDog机制，自动帮我们设置有效期，所以大多数情况下，我们不需要自己设置有效期</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-        
-          <li><a href="/">Home</a></li>
-        
-          <li><a href="/archives/">Writing</a></li>
-        
-          <li><a href="/categories/">Category</a></li>
-        
-      </ul>
-    </div>
-
-    
-    
-      <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Redisson-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-number">1.</span> <span class="toc-text">1. Redisson 分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MultiLock%E5%8E%9F%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">MultiLock原理</span></a></li></ol></li></ol>
       </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2024/02/17/Redis-2-%E7%BC%93%E5%AD%98/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2024-02-18 19:49:29
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/" title="Backend">
+                        <b>#</b> Backend
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Backend/Redis/" title="Redis">
+                        <b>#</b> Redis
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2024/03/13/MySQL-1-%E5%AD%90%E6%9F%A5%E8%AF%A2/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
     
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&text=Redis(3) 分布式锁"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&is_video=false&description=Redis(3) 分布式锁"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Redis(3) 分布式锁&body=Check out this article: https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&title=Redis(3) 分布式锁"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&name=Redis(3) 分布式锁&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/&t=Redis(3) 分布式锁"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        
-          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
   </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Redisson-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="toc-text">1. Redisson 分布式锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MultiLock%E5%8E%9F%E7%90%86"><span class="toc-text">MultiLock原理</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
 </div>
 
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
         
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2024
-    Whale
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
   </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a href="/categories/">Category</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
 
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
     </div>
-    <!-- styles -->
+  </div>
 
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
-  
   <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="fa-regular fa-clone"></i>';
-    btn += '</span>';
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
       }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
   </script>
 
 
-<script src="/js/main.js"></script>
 
-<!-- search -->
 
-<!-- Baidu Analytics -->
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
 
-<!-- Cloudflare Analytics -->
+  
+<script src="/js/colorscheme.js"></script>
 
-<!-- Disqus Comments -->
 
-<!-- utterances Comments -->
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-</body>
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Redis(3)%20%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F02%2F18%2FRedis-3-%25E5%2588%2586%25E5%25B8%2583%25E5%25BC%258F%25E9%2594%2581%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
 </html>
