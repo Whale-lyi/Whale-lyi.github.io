@@ -162,6 +162,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -684,7 +689,7 @@
 <h4 id="Inode"><a href="#Inode" class="headerlink" title="Inode"></a>Inode</h4><ul>
 <li>文件系统中的每个文件都有一个磁盘 inode 与之对应，这些inode被集中存放于磁盘上的 inode 区。FCB 对于文件的作用，犹如 PCB 对于进程的作用，集中这个文件的所有相关信息，找到inode，就能获得此文件的必要信息。</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">inode</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_ino; <span class="hljs-comment">/*inode号*/</span><br>    <span class="hljs-type">atomic_t</span> i_count; <span class="hljs-comment">/*inode引用数*/</span><br>    <span class="hljs-type">kdev_t</span> i_dev; <span class="hljs-comment">/*inode所在设备*/</span><br>	...<br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">inode</span> &#123;</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">long</span> i_ino; <span class="hljs-comment">/*inode号*/</span><br>    <span class="hljs-type">atomic_t</span> i_count; <span class="hljs-comment">/*inode引用数*/</span><br>    <span class="hljs-type">kdev_t</span> i_dev; <span class="hljs-comment">/*inode所在设备*/</span><br>	...<br>    <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>数据块索引在union结构的每个具体文件系统中，其中的 <code>i_data[15]</code> 数组给出数据块地址索引<ul>
 <li>前12项为直接索引，第13项为一次间接索引，第14项为二次间接索引，第15项为三次间接索引。</li>
@@ -765,7 +770,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100646528.png" alt="image-20221205100646528" style="zoom:80%;" /></p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205100848938.png" alt="image-20221205100848938" style="zoom:80%;" /></p>
-<h4 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h4><h5 id="文件的创建"><a href="#文件的创建" class="headerlink" title="文件的创建"></a>文件的创建</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd, mode;<br><span class="hljs-type">char</span> *filenamep;<br>fd = create(filenamep, mode);<br></code></pre></td></tr></table></figure>
+<h4 id="文件系统调用"><a href="#文件系统调用" class="headerlink" title="文件系统调用"></a>文件系统调用</h4><h5 id="文件的创建"><a href="#文件的创建" class="headerlink" title="文件的创建"></a>文件的创建</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd, mode;<br><span class="hljs-type">char</span> *filenamep;<br>fd = create(filenamep, mode);<br></code></pre></td></tr></table></figure>
 <ol>
 <li>为新文件分配<strong>索引节点和活动索引节点</strong>，并把<strong>索引节点编号与文件分量名</strong>组成<strong>新目录项</strong>，记到目录中</li>
 <li>在新文件所对应的活动索引节点中置初值，如<strong>置存取权限i_mode，连接计数i_nlink</strong>等</li>
@@ -777,13 +782,13 @@
 <li>如果没有连接用户(i_link 为”1”)，还要把<strong>文件占用的存储空间释放</strong>。删除系统调用形式为：<code>unlink(filenamep)</code></li>
 <li>在执行删除时，必须要求用户对该文件具有”写”操作权</li>
 </ul>
-<h5 id="文件的打开"><a href="#文件的打开" class="headerlink" title="文件的打开"></a>文件的打开</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd, mode;<br><span class="hljs-type">char</span> * filenamep;<br>fd = open (filenamep, mode);<br></code></pre></td></tr></table></figure>
+<h5 id="文件的打开"><a href="#文件的打开" class="headerlink" title="文件的打开"></a>文件的打开</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd, mode;<br><span class="hljs-type">char</span> * filenamep;<br>fd = open (filenamep, mode);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>检索目录，把它的<strong>外存索引节点复制到活动索引节点表</strong></li>
 <li>根据参数mode核对权限，如果非法，则这次打开失败</li>
 <li>当”打开”合法时，<strong>为文件分配用户打开文件表项和系统打开文件表项</strong>，并为表项设置初值。<strong>通过指针建立这些表项与活动索引节点间的联系</strong>。把文件描述字，即用户打开文件表中相应<strong>文件表项的序号返回给调用者</strong></li>
 </ul>
-<h5 id="文件的关闭"><a href="#文件的关闭" class="headerlink" title="文件的关闭"></a>文件的关闭</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd;<br>close (fd);<br></code></pre></td></tr></table></figure>
+<h5 id="文件的关闭"><a href="#文件的关闭" class="headerlink" title="文件的关闭"></a>文件的关闭</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> fd;<br>close (fd);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>根据<strong>fd找到用户打开文件表项，再找到系统打开文件表项</strong>。<strong>释放</strong>用户打开文件表项</li>
 <li>把对应<strong>系统打开文件表项中的f_count减”1”</strong>，如果非”0” ，说明还有进程共享这一表项，不用释放直接返回；否则释放表项</li>
@@ -795,13 +800,13 @@
 </ul>
 </li>
 </ul>
-<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> nr, fd, count;<br><span class="hljs-type">char</span> buf [ ]<br>nr = read (fd, buf, count);<br></code></pre></td></tr></table></figure>
+<h5 id="读文件"><a href="#读文件" class="headerlink" title="读文件"></a>读文件</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">int</span> nr, fd, count;<br><span class="hljs-type">char</span> buf [ ]<br>nr = read (fd, buf, count);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>系统根据f_flag中的信息，<strong>检查读操作合法性</strong></li>
 <li>再<strong>根据当前位移量f_offset值，要求读出的字节数</strong>，及活动索引节点中<strong>i_data[15]指出的文件物理块存放地址，把相应的物理块读到缓冲区中</strong>，然后再送到bufp指向的用户主存区中。</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221205102611877.png" alt="image-20221205102611877" style="zoom:80%;" /></p>
-<h5 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h5><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">nw = write(fd, buf, count);<br></code></pre></td></tr></table></figure>
+<h5 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h5><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">nw = write(fd, buf, count);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>buf是信息传送的源地址，即把buf所指向的用户主存区中的信息，写入到文件中。</li>
 </ul>
@@ -809,13 +814,13 @@
 <li>在文件初次”打开”时，文件的位移量<strong><code>f_offset</code></strong>清空为零，以后的文件读写操作总是根据offset的当前值，顺序地读写文件。为了支持文件的随机访问，提供系统调用<code>lseek</code>，它允许用户在读、写文件前，事先改变<code>f_offset</code>的指向</li>
 <li>系统调用的形式为：</li>
 </ul>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c"><span class="hljs-type">long</span> lseek;<br><span class="hljs-type">long</span> offset;<br><span class="hljs-type">int</span> whence, fd;<br>lseek(fd, offset, whence);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">long</span> lseek;<br><span class="hljs-type">long</span> offset;<br><span class="hljs-type">int</span> whence, fd;<br>lseek(fd, offset, whence);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>文件描述字 fd 必须指向一个用读或写方式打开的文件</li>
 <li>当whence是”0”时，则f_offset被置为offset</li>
 <li>当whence是”1”时，则f_offset被置为文件当前位置加上offset。</li>
 </ul>
-<h3 id="3-2-文件共享"><a href="#3-2-文件共享" class="headerlink" title="3.2 文件共享"></a>3.2 文件共享</h3><h4 id="文件的静态共享"><a href="#文件的静态共享" class="headerlink" title="文件的静态共享"></a>文件的静态共享</h4><figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">chat * oldnamep, * newnamep;<br>link(oldnamep, newnamep);<br></code></pre></td></tr></table></figure>
+<h3 id="3-2-文件共享"><a href="#3-2-文件共享" class="headerlink" title="3.2 文件共享"></a>3.2 文件共享</h3><h4 id="文件的静态共享"><a href="#文件的静态共享" class="headerlink" title="文件的静态共享"></a>文件的静态共享</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">chat * oldnamep, * newnamep;<br>link(oldnamep, newnamep);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>检索目录找到 <code>oldnamep</code> 所指向文件的索引节点inode编号</li>
 <li>再次检索目录找到 <code>newnamep</code> 所指文件的父目录文件，并把已存在文件的索引节点inode编号与别名构成一个目录项，记入到该目录中去</li>
@@ -834,7 +839,7 @@
 </li>
 </ul>
 <p>文件解除链接调用形式为</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><code class="hljs c">unlink(namep);<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">unlink(namep);<br></code></pre></td></tr></table></figure>
 <ul>
 <li>解除链接与文件删除执行的是同一系统调用代码。删除文件是从文件主角度讲的，解除文件连接是从共享文件的其他用户角度讲的。都要删去目录项，把 i_nlink 减 “1”，不过，只有当i_nlink减为”0”时，才真正删除文件。</li>
 </ul>
@@ -1148,6 +1153,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -1158,6 +1164,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -1235,6 +1246,8 @@
 
 
 
+
+  
 
   
 

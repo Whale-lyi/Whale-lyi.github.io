@@ -171,6 +171,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -279,7 +284,7 @@
 <h4 id="3-3-ParseTreeProperty"><a href="#3-3-ParseTreeProperty" class="headerlink" title="3.3 ParseTreeProperty"></a>3.3 ParseTreeProperty</h4><ul>
 <li>通过 ANTLR4 提供的 <code>ParseTreeProperty&lt;&gt;</code> 来存储 <code>basicType</code> 与 <code>arrayType</code></li>
 </ul>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ParseTreeProperty&lt;Type&gt; arrayTypeProperty = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParseTreeProperty</span>&lt;&gt;();<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ParseTreeProperty&lt;Type&gt; basicTypeProperty = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParseTreeProperty</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ParseTreeProperty&lt;Type&gt; arrayTypeProperty = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParseTreeProperty</span>&lt;&gt;();<br><span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> ParseTreeProperty&lt;Type&gt; basicTypeProperty = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ParseTreeProperty</span>&lt;&gt;();<br></code></pre></td></tr></table></figure>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212160750687.png" alt="image-20221212160750687" style="zoom:80%;" /></p>
 <ul>
 <li>赋值语句类型检查，详见代码</li>
@@ -321,7 +326,7 @@
 <blockquote>
 <p>expr 的 value 只依赖于子节点的 value</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs antlr4">@header &#123;<br>package ag;<br>import java.util.*;<br>&#125;<br><br>@parser::members &#123;<br>  Map&lt;String, Integer&gt; memory = new HashMap&lt;&gt;();<br><br>  int eval(int left, int right, int op) &#123;<br>    switch (op) &#123;<br>      case ADD : return left + right;<br>      case SUB : return left - right;<br>      case MUL : return left * right;<br>      case DIV : return left / right;<br>      default : return 0;<br>    &#125;<br>  &#125;<br>&#125;<br><br>prog : stat* EOF ;<br><br>stat : expr         &#123; System.out.println($expr.val); &#125;<br>     | ID &#x27;=&#x27; expr  &#123; memory.put($ID.text, $expr.val); &#125;  // $ID.text -&gt; ID.getText()<br>     ;<br><br>expr returns [int val]<br>    : left = expr op = (&#x27;*&#x27; | &#x27;/&#x27;) right = expr     &#123; $val = eval($left.val, $right.val, $op.type); &#125;<br>    | left = expr op = (&#x27;+&#x27; | &#x27;-&#x27;) right = expr     &#123; $val = eval($left.val, $right.val, $op.type); &#125;<br>    | &#x27;(&#x27; expr &#x27;)&#x27;                                  &#123; $val = $expr.val; &#125;<br>    | ID                                            &#123; String id = $ID.text; $val = memory.getOrDefault(id, 0); &#125;<br>    | INT                                           &#123; $val = $INT.int; &#125;<br>    ;<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs antlr4">@header &#123;<br>package ag;<br>import java.util.*;<br>&#125;<br><br>@parser::members &#123;<br>  Map&lt;String, Integer&gt; memory = new HashMap&lt;&gt;();<br><br>  int eval(int left, int right, int op) &#123;<br>    switch (op) &#123;<br>      case ADD : return left + right;<br>      case SUB : return left - right;<br>      case MUL : return left * right;<br>      case DIV : return left / right;<br>      default : return 0;<br>    &#125;<br>  &#125;<br>&#125;<br><br>prog : stat* EOF ;<br><br>stat : expr         &#123; System.out.println($expr.val); &#125;<br>     | ID &#x27;=&#x27; expr  &#123; memory.put($ID.text, $expr.val); &#125;  // $ID.text -&gt; ID.getText()<br>     ;<br><br>expr returns [int val]<br>    : left = expr op = (&#x27;*&#x27; | &#x27;/&#x27;) right = expr     &#123; $val = eval($left.val, $right.val, $op.type); &#125;<br>    | left = expr op = (&#x27;+&#x27; | &#x27;-&#x27;) right = expr     &#123; $val = eval($left.val, $right.val, $op.type); &#125;<br>    | &#x27;(&#x27; expr &#x27;)&#x27;                                  &#123; $val = $expr.val; &#125;<br>    | ID                                            &#123; String id = $ID.text; $val = memory.getOrDefault(id, 0); &#125;<br>    | INT                                           &#123; $val = $INT.int; &#125;<br>    ;<br></code></pre></td></tr></table></figure>
 <h4 id="2-4-输出表格文件"><a href="#2-4-输出表格文件" class="headerlink" title="2.4 输出表格文件"></a>2.4 输出表格文件</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221212174143821.png" alt="image-20221212174143821" style="zoom:80%;" /></p>
 <h3 id="3-SDD"><a href="#3-SDD" class="headerlink" title="3. SDD"></a>3. SDD</h3><h4 id="3-1-SDD"><a href="#3-1-SDD" class="headerlink" title="3.1 SDD"></a>3.1 SDD</h4><p><strong>Definition (语法制导定义 (Syntax-Directed Definition; SDD))</strong></p>
 <p>SDD 是一个上下文无关文法和<strong>属性</strong>及<strong>规则</strong>的结合</p>
@@ -519,6 +524,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -529,6 +535,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -606,6 +617,8 @@
 
 
 
+
+  
 
   
 

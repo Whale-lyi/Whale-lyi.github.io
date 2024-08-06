@@ -134,6 +134,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -263,7 +268,7 @@
 </li>
 </ul>
 <p>这里，我们通过 Build 一个简单的镜像，来观察 Image 的分层机制：</p>
-<figure class="highlight dockerfile"><table><tr><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> alpine:<span class="hljs-number">3.15</span>.<span class="hljs-number">0</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">dd</span> <span class="hljs-keyword">if</span>=/dev/zero of=file1 bs=10M count=1 <span class="hljs-comment">#添加一个10M的文件file1</span></span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">dd</span> <span class="hljs-keyword">if</span>=/dev/zero of=file2 bs=10M count=1 <span class="hljs-comment">#添加一个10M的文件file2</span></span><br></code></pre></td></tr></table></figure>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dockerfile"><span class="hljs-keyword">FROM</span> alpine:<span class="hljs-number">3.15</span>.<span class="hljs-number">0</span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">dd</span> <span class="hljs-keyword">if</span>=/dev/zero of=file1 bs=10M count=1 <span class="hljs-comment">#添加一个10M的文件file1</span></span><br><span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-built_in">dd</span> <span class="hljs-keyword">if</span>=/dev/zero of=file2 bs=10M count=1 <span class="hljs-comment">#添加一个10M的文件file2</span></span><br></code></pre></td></tr></table></figure>
 <p>构建结果：</p>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230405170117559.png" alt="image-20230405170117559"></p>
 <p>通过构建结果可以看出，构建的过程就是执行 Dockerfile 文件中我们写入的命令。</p>
@@ -414,6 +419,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -424,6 +430,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -501,6 +512,8 @@
 
 
 
+
+  
 
   
 

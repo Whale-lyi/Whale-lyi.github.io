@@ -164,6 +164,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -415,7 +420,7 @@
 <li><p>实例</p>
 </li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">Accept: text/html<br>Host: www.nju.edu.cn<br>From: abc@nju.edu.cn<br>User-Agent: Mozilla/4.0<br>Referer: http://test.com/abc<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Accept: text/html<br>Host: www.nju.edu.cn<br>From: abc@nju.edu.cn<br>User-Agent: Mozilla/4.0<br>Referer: http://test.com/abc<br></code></pre></td></tr></table></figure>
 <h4 id="HTTP-响应消息"><a href="#HTTP-响应消息" class="headerlink" title="HTTP 响应消息"></a>HTTP 响应消息</h4><ul>
 <li><p>ASCII 状态行</p>
 <ul>
@@ -590,8 +595,8 @@
 <li>http/2 使用的是专门为首部压缩而设计的 HPACK 算法</li>
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230201114416399.png" alt="image-20230201114416399" style="zoom:80%;" /></p>
-<h4 id="协商示例"><a href="#协商示例" class="headerlink" title="协商示例"></a>协商示例</h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext">GET /page HTTP/1.1<br>Host: server.example.com<br>Connection: Upgrade, HTTP2-Settings<br>Upgrade: HTTP/2.0  // 协商升级协议到 2.0<br>HTTP2-Settings: (SETTINGS payload)<br><br>HTTP/1.1 200 OK<br>Content-length: 243<br>Content-type: text/html<br>(... HTTP 1.1 response ...)<br><br>(or)<br><br>HTTP/1.1 101 Switching Protocols<br>Connection: Upgrade<br>Upgrade: HTTP/2.0<br>(... HTTP 2.0 response ...)<br></code></pre></td></tr></table></figure>
-<figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 服务端启动 http2</span><br><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http2&#x27;</span>);<br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br><span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createSecureServer</span>(&#123;<br> 	<span class="hljs-attr">key</span>: fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;localhost-privkey.pem&#x27;</span>),<br> 	<span class="hljs-attr">cert</span>: fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;localhost-cert.pem&#x27;</span>)<br>&#125;);<br>server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err));<br>server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;stream&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> &#123;<br> 	<span class="hljs-comment">// stream is a Duplex</span><br> 	stream.<span class="hljs-title function_">respond</span>(&#123;<br> 		<span class="hljs-string">&#x27;content-type&#x27;</span>: <span class="hljs-string">&#x27;text/html&#x27;</span>,<br> 		<span class="hljs-string">&#x27;:status&#x27;</span>: <span class="hljs-number">200</span><br> 	&#125;);<br> 	stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">&#x27;&lt;h1&gt;Hello World&lt;/h1&gt;&#x27;</span>);<br>&#125;);<br>server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8443</span>);<br></code></pre></td></tr></table></figure>
+<h4 id="协商示例"><a href="#协商示例" class="headerlink" title="协商示例"></a>协商示例</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">GET /page HTTP/1.1<br>Host: server.example.com<br>Connection: Upgrade, HTTP2-Settings<br>Upgrade: HTTP/2.0  // 协商升级协议到 2.0<br>HTTP2-Settings: (SETTINGS payload)<br><br>HTTP/1.1 200 OK<br>Content-length: 243<br>Content-type: text/html<br>(... HTTP 1.1 response ...)<br><br>(or)<br><br>HTTP/1.1 101 Switching Protocols<br>Connection: Upgrade<br>Upgrade: HTTP/2.0<br>(... HTTP 2.0 response ...)<br></code></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs js"><span class="hljs-comment">// 服务端启动 http2</span><br><span class="hljs-keyword">const</span> http2 = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;http2&#x27;</span>);<br><span class="hljs-keyword">const</span> fs = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;fs&#x27;</span>);<br><span class="hljs-keyword">const</span> server = http2.<span class="hljs-title function_">createSecureServer</span>(&#123;<br> 	<span class="hljs-attr">key</span>: fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;localhost-privkey.pem&#x27;</span>),<br> 	<span class="hljs-attr">cert</span>: fs.<span class="hljs-title function_">readFileSync</span>(<span class="hljs-string">&#x27;localhost-cert.pem&#x27;</span>)<br>&#125;);<br>server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">err</span>) =&gt;</span> <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">error</span>(err));<br>server.<span class="hljs-title function_">on</span>(<span class="hljs-string">&#x27;stream&#x27;</span>, <span class="hljs-function">(<span class="hljs-params">stream, headers</span>) =&gt;</span> &#123;<br> 	<span class="hljs-comment">// stream is a Duplex</span><br> 	stream.<span class="hljs-title function_">respond</span>(&#123;<br> 		<span class="hljs-string">&#x27;content-type&#x27;</span>: <span class="hljs-string">&#x27;text/html&#x27;</span>,<br> 		<span class="hljs-string">&#x27;:status&#x27;</span>: <span class="hljs-number">200</span><br> 	&#125;);<br> 	stream.<span class="hljs-title function_">end</span>(<span class="hljs-string">&#x27;&lt;h1&gt;Hello World&lt;/h1&gt;&#x27;</span>);<br>&#125;);<br>server.<span class="hljs-title function_">listen</span>(<span class="hljs-number">8443</span>);<br></code></pre></td></tr></table></figure>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://nodejs.org/api/http2.html#http2_server_side_example">https://nodejs.org/api/http2.html#http2_server_side_example</a></p>
 </blockquote>
@@ -688,7 +693,7 @@
 <h4 id="预加载扫描器"><a href="#预加载扫描器" class="headerlink" title="预加载扫描器"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work#预加载扫描器">预加载扫描器</a></h4><ul>
 <li>浏览器构建 DOM 树时, 这个过程占用了主线程。当这种情况发生时, 预加载扫描仪将解析可用的内容并请求高优先级资源, 如 CSS、JavaScript 和 web 字体。多亏了预加载扫描器, 我们不必等到解析器找到对外部资源的引用来请求它。它将在后台检索资源, 以便在主 HTML 解析器到达请求的资源时, 它们可能已经在运行, 或者已经被下载。预加载扫描仪提供的优化减少了阻塞。</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;styles.css&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;myscript.js&quot;</span> <span class="hljs-attr">async</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;myimage.jpg&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;image description&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;anotherscript.js&quot;</span> <span class="hljs-attr">async</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;stylesheet&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;styles.css&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;myscript.js&quot;</span> <span class="hljs-attr">async</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;myimage.jpg&quot;</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">&quot;image description&quot;</span>/&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;anotherscript.js&quot;</span> <span class="hljs-attr">async</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <h4 id="构建-CSSOM-树"><a href="#构建-CSSOM-树" class="headerlink" title="构建 CSSOM 树"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/Performance/How_browsers_work#构建_cssom_树">构建 CSSOM 树</a></h4><ul>
 <li><p>CSS 对象模型, 简称为 CSSOM</p>
 </li>
@@ -869,13 +874,13 @@
 <li>页面预渲染: 某些浏览器可以让我们提示下一个可能的目标, 从而在隐藏的标签页中预先渲染整个页面。这样, 当用户真的触发导航时, 就能立即切换过来</li>
 </ul>
 <h4 id="推测优化"><a href="#推测优化" class="headerlink" title="推测优化"></a>推测优化</h4><p>预解析特定的域名</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;dns-prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//hostname_to_resolve.com&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;dns-prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//hostname_to_resolve.com&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 <p>预取得页面后面要用到的关键性资源</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;subresource&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/javascript/myapp.js&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;subresource&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/javascript/myapp.js&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 <p>预取得将来导航要用的资源</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/images/big.jpeg&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;prefetch&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;/images/big.jpeg&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 <p>根据对用户下一个目标的预测, 预渲染特定页面</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;prerender&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//example.org/next_page.html&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">&quot;prerender&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;//example.org/next_page.html&quot;</span> /&gt;</span><br></code></pre></td></tr></table></figure>
 <h4 id="优化应用程序交付"><a href="#优化应用程序交付" class="headerlink" title="优化应用程序交付"></a>优化应用程序交付</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230201170625047.png" alt="image-20230201170625047" style="zoom:80%;" /></p>
 <h2 id="5-最佳实践"><a href="#5-最佳实践" class="headerlink" title="5. 最佳实践"></a>5. 最佳实践</h2><p>两个准则: </p>
 <ol>
@@ -1104,7 +1109,7 @@
 </ol>
 <p>robots 是一个协议。robots.txt 文件是一个文本文件, 放置在网站根目录下。</p>
 <h4 id="Robots-txt-例子"><a href="#Robots-txt-例子" class="headerlink" title="Robots.txt 例子"></a>Robots.txt 例子</h4><p>任何机器人都不应该访问任何以”/yoursite/temp/“开头的 URL, 除了名为”IxeBot”的机器人: </p>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html">User-agent: *<br>Disallow: /yoursite/temp/<br><br>User-agent: IxeBot<br>Disallow:<br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs html">User-agent: *<br>Disallow: /yoursite/temp/<br><br>User-agent: IxeBot<br>Disallow:<br></code></pre></td></tr></table></figure>
 <h2 id="8-总结"><a href="#8-总结" class="headerlink" title="8. 总结"></a>8. 总结</h2><p>密切关注 JavaScript 的开销</p>
 <p>Netflix 的折中方案是, 使用 React 在服务器端渲染登录页面, 但同时也为注册过程的其他部分预取 React 代码。这不仅优化了首次加载性能, 还优化了注册过程其余部分的加载时间, 因为它是单页应用, 所以有更大的 JS 包需要下载。</p>
 <p>补充: </p>
@@ -1216,6 +1221,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -1226,6 +1232,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -1303,6 +1314,8 @@
 
 
 
+
+  
 
   
 

@@ -151,6 +151,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -793,7 +798,7 @@
 </li>
 <li>支持各种不同的编解码器</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- Basic Video --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">controls</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;goldrush.mp4&quot;</span>&gt;</span><br>    A movie about HTML5<br><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- Video with additional attributes --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;movies&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">controls</span> <span class="hljs-attr">preload</span>=<span class="hljs-string">&quot;metadata&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;400px&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;300px&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">poster</span>=<span class="hljs-string">&quot;html5.png&quot;</span>&gt;</span><br>    	<span class="hljs-comment">&lt;!-- 灵活, 如果第一个不支持会播放第二个 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;goldrush.webm&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;goldrush.mp4&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">track</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;English&quot;</span> <span class="hljs-attr">kind</span>=<span class="hljs-string">&quot;subtitles&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">srclang</span>=<span class="hljs-string">&quot;en&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;subtitles_en.vtt&quot;</span>&gt;</span><br>    A movie by Rocky Lubbers<br><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- Basic Video --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">controls</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;goldrush.mp4&quot;</span>&gt;</span><br>    A movie about HTML5<br><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- Video with additional attributes --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;movies&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">controls</span> <span class="hljs-attr">preload</span>=<span class="hljs-string">&quot;metadata&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;400px&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;300px&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">poster</span>=<span class="hljs-string">&quot;html5.png&quot;</span>&gt;</span><br>    	<span class="hljs-comment">&lt;!-- 灵活, 如果第一个不支持会播放第二个 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;goldrush.webm&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">source</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;goldrush.mp4&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">track</span> <span class="hljs-attr">label</span>=<span class="hljs-string">&quot;English&quot;</span> <span class="hljs-attr">kind</span>=<span class="hljs-string">&quot;subtitles&quot;</span></span><br><span class="hljs-tag">            <span class="hljs-attr">srclang</span>=<span class="hljs-string">&quot;en&quot;</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;subtitles_en.vtt&quot;</span>&gt;</span><br>    A movie by Rocky Lubbers<br><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <h3 id="4-4-HTML5-Canvas画布与SVG"><a href="#4-4-HTML5-Canvas画布与SVG" class="headerlink" title="4.4 HTML5 Canvas画布与SVG"></a>4.4 HTML5 Canvas画布与SVG</h3><ul>
 <li>提供原生的绘图功能<ul>
 <li>以前只能用插件(Flash, Silverlight)</li>
@@ -849,7 +854,7 @@
 </tbody>
 </table>
 </div>
-<h4 id="4-4-3-SVG"><a href="#4-4-3-SVG" class="headerlink" title="4.4.3 SVG"></a>4.4.3 SVG</h4><figure class="highlight html"><table><tr><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;1.1&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">baseProfile</span>=<span class="hljs-string">&quot;full&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;300&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;200&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rect</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100%&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100%&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;black&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">&quot;150&quot;</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">r</span>=<span class="hljs-string">&quot;90&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;blue&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h4 id="4-4-3-SVG"><a href="#4-4-3-SVG" class="headerlink" title="4.4.3 SVG"></a>4.4.3 SVG</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">svg</span> <span class="hljs-attr">version</span>=<span class="hljs-string">&quot;1.1&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">baseProfile</span>=<span class="hljs-string">&quot;full&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;300&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;200&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">xmlns</span>=<span class="hljs-string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">rect</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100%&quot;</span> <span class="hljs-attr">height</span>=<span class="hljs-string">&quot;100%&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;black&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">circle</span> <span class="hljs-attr">cx</span>=<span class="hljs-string">&quot;150&quot;</span> <span class="hljs-attr">cy</span>=<span class="hljs-string">&quot;100&quot;</span> <span class="hljs-attr">r</span>=<span class="hljs-string">&quot;90&quot;</span></span><br><span class="hljs-tag">    <span class="hljs-attr">fill</span>=<span class="hljs-string">&quot;blue&quot;</span> /&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">svg</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221118134053321.png" alt="image-20221118134053321" style="zoom:80%;" /></p>
 <h3 id="4-5-HTML5-Web-存储"><a href="#4-5-HTML5-Web-存储" class="headerlink" title="4.5 HTML5 Web 存储"></a>4.5 HTML5 Web 存储</h3><ul>
 <li><p>最早本地存储使用的是 cookie, 但是 Web 存储更加的安全与快速</p>
@@ -1033,6 +1038,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -1043,6 +1049,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -1120,6 +1131,8 @@
 
 
 
+
+  
 
   
 

@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="1. 表驱动 表驱动法是一种编程模式(scheme)：从表里面查找信息而不使用逻辑语句(if和case) 表驱动法适用于复杂的逻辑 表驱动法的另一个好处是可以将复杂逻辑从代码中独立出来，以便于单独维护  1.1 表驱动示例 Java示例：使用复杂的逻辑对字符分类  if (((&amp;#x27;a&amp;#x27; &lt;&#x3D; inputChar) &amp;&amp; (inputChar &lt;&#x3D; &amp;#">
+  <meta name="description" content="1. 表驱动 表驱动法是一种编程模式(scheme)：从表里面查找信息而不使用逻辑语句(if和case) 表驱动法适用于复杂的逻辑 表驱动法的另一个好处是可以将复杂逻辑从代码中独立出来，以便于单独维护  1.1 表驱动示例 Java示例：使用复杂的逻辑对字符分类  123456789101112if (((&amp;#x27;a&amp;#x27; &lt;&#x3D; inputChar) &amp;&amp; (inp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="软件系统设计-设计(5) 表驱动、POP、MVC">
 <meta property="og:url" content="https://whale-lyi.github.io/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-5-%E8%A1%A8%E9%A9%B1%E5%8A%A8%E3%80%81POP%E3%80%81MVC/index.html">
 <meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="1. 表驱动 表驱动法是一种编程模式(scheme)：从表里面查找信息而不使用逻辑语句(if和case) 表驱动法适用于复杂的逻辑 表驱动法的另一个好处是可以将复杂逻辑从代码中独立出来，以便于单独维护  1.1 表驱动示例 Java示例：使用复杂的逻辑对字符分类  if (((&amp;#x27;a&amp;#x27; &lt;&#x3D; inputChar) &amp;&amp; (inputChar &lt;&#x3D; &amp;#">
+<meta property="og:description" content="1. 表驱动 表驱动法是一种编程模式(scheme)：从表里面查找信息而不使用逻辑语句(if和case) 表驱动法适用于复杂的逻辑 表驱动法的另一个好处是可以将复杂逻辑从代码中独立出来，以便于单独维护  1.1 表驱动示例 Java示例：使用复杂的逻辑对字符分类  123456789101112if (((&amp;#x27;a&amp;#x27; &lt;&#x3D; inputChar) &amp;&amp; (inp">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612121102830.png">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230612121404381.png">
@@ -131,6 +131,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -224,7 +229,7 @@
 <h3 id="1-1-表驱动示例"><a href="#1-1-表驱动示例" class="headerlink" title="1.1 表驱动示例"></a>1.1 表驱动示例</h3><ol>
 <li>Java示例：使用复杂的逻辑对字符分类</li>
 </ol>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (((<span class="hljs-string">&#x27;a&#x27;</span> &lt;= inputChar) &amp;&amp; (inputChar &lt;= <span class="hljs-string">&#x27;z&#x27;</span>))||<br>  ((<span class="hljs-string">&#x27;A&#x27;</span> &lt;= inputChar) &amp;&amp; (inputChar &lt;= <span class="hljs-string">&#x27;Z&#x27;</span>))) &#123;<br>    charType = CharacterType.Letter;<br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((inputChar==<span class="hljs-string">&#x27; &#x27;</span>)||(inputChar==<span class="hljs-string">&#x27;,&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;.&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;!&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;(&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;)&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;:&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;;&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;?&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;-&#x27;</span>))&#123;<br>    charType = CharacterType.Punctuation;<br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((<span class="hljs-string">&#x27;0&#x27;</span> &lt;= inputChar)&amp;&amp;(inputChar &lt;= <span class="hljs-string">&#x27;9&#x27;</span>)) &#123;<br>    charType = CharacterType.Digit;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (((<span class="hljs-string">&#x27;a&#x27;</span> &lt;= inputChar) &amp;&amp; (inputChar &lt;= <span class="hljs-string">&#x27;z&#x27;</span>))||<br>  ((<span class="hljs-string">&#x27;A&#x27;</span> &lt;= inputChar) &amp;&amp; (inputChar &lt;= <span class="hljs-string">&#x27;Z&#x27;</span>))) &#123;<br>    charType = CharacterType.Letter;<br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((inputChar==<span class="hljs-string">&#x27; &#x27;</span>)||(inputChar==<span class="hljs-string">&#x27;,&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;.&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;!&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;(&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;)&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;:&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;;&#x27;</span>)||<br>  (inputChar == <span class="hljs-string">&#x27;?&#x27;</span>)||(inputChar == <span class="hljs-string">&#x27;-&#x27;</span>))&#123;<br>    charType = CharacterType.Punctuation;<br>&#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((<span class="hljs-string">&#x27;0&#x27;</span> &lt;= inputChar)&amp;&amp;(inputChar &lt;= <span class="hljs-string">&#x27;9&#x27;</span>)) &#123;<br>    charType = CharacterType.Digit;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ol>
 <li>构造一个查询表：把每一个字符的类型保存在一个字符编码访问的数组</li>
 <li>Java示例：使用查询表对字符分类<code>chartype = charTypeTable[inputChar];</code></li>
@@ -239,7 +244,7 @@
 </li>
 </ol>
 <h3 id="1-3-直接访问表"><a href="#1-3-直接访问表" class="headerlink" title="1.3 直接访问表"></a>1.3 直接访问表</h3><p>所谓”直接访问”是指通过索引值(如下标)可以直接从表中找到对应的条目</p>
-<figure class="highlight vb"><table><tr><td class="code"><pre><code class="hljs vb"><span class="hljs-comment">&#x27;VB示例：确定各月天数的笨拙做法</span><br><span class="hljs-keyword">If</span> (month = <span class="hljs-number">1</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">31</span><br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">2</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">28</span><br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">3</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">31</span><br>...<br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">11</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">30</span><br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">12</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">31</span><br><span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span><br><br><span class="hljs-comment">&#x27; 你需要首先创建出这张表用来存放各个月份的天数</span><br><span class="hljs-comment">&#x27; VB示例：确定各月天数的优雅做法</span><br><span class="hljs-keyword">Dim</span> daysPerMonth() <span class="hljs-keyword">As</span> <span class="hljs-type">Integer</span> = _<br>&#123;<span class="hljs-number">31</span>, <span class="hljs-number">28</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>&#125;<br>days = daysPerMonth(month-<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs vb"><span class="hljs-comment">&#x27;VB示例：确定各月天数的笨拙做法</span><br><span class="hljs-keyword">If</span> (month = <span class="hljs-number">1</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">31</span><br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">2</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">28</span><br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">3</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">31</span><br>...<br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">11</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">30</span><br><span class="hljs-keyword">ElseIf</span> (month = <span class="hljs-number">12</span>) <span class="hljs-keyword">Then</span><br>  days = <span class="hljs-number">31</span><br><span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span><br><br><span class="hljs-comment">&#x27; 你需要首先创建出这张表用来存放各个月份的天数</span><br><span class="hljs-comment">&#x27; VB示例：确定各月天数的优雅做法</span><br><span class="hljs-keyword">Dim</span> daysPerMonth() <span class="hljs-keyword">As</span> <span class="hljs-type">Integer</span> = _<br>&#123;<span class="hljs-number">31</span>, <span class="hljs-number">28</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>, <span class="hljs-number">30</span>, <span class="hljs-number">31</span>&#125;<br>days = daysPerMonth(month-<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
 <h3 id="1-4-索引访问表"><a href="#1-4-索引访问表" class="headerlink" title="1.4 索引访问表"></a>1.4 索引访问表</h3><ol>
 <li>当无法直接从表中查询需要的条目时，就需要借助其他办法先获取<strong>表键值</strong></li>
 <li>索引访问的方法<ol>
@@ -293,7 +298,7 @@
 </li>
 <li>Visual Basic示例：阶梯表查询</li>
 </ol>
-<figure class="highlight vb"><table><tr><td class="code"><pre><code class="hljs vb"><span class="hljs-comment">&#x27; set up data for grading table</span><br><span class="hljs-keyword">Dim</span> rangeLimit() <span class="hljs-keyword">As</span> <span class="hljs-type">Double</span> = &#123; <span class="hljs-number">50.0</span>, <span class="hljs-number">65.0</span>, <span class="hljs-number">75.0</span>, <span class="hljs-number">90.0</span>, <span class="hljs-number">100.0</span> &#125;<br><span class="hljs-keyword">Dim</span> grade() <span class="hljs-keyword">As</span> <span class="hljs-type">String</span> = &#123; <span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;A&quot;</span> &#125;<br>maxGradeLevel = grade.Length - <span class="hljs-number">1</span><br>...<br><span class="hljs-comment">&#x27; assign a grade to a student based on the student&#x27;s score</span><br>gradeLevel = <span class="hljs-number">0</span><br>studentGrade = <span class="hljs-string">&quot;A&quot;</span><br><span class="hljs-keyword">While</span> ( gradeLevel &lt; maxGradeLevel )<br>  <span class="hljs-keyword">If</span> ( studentScore &lt; rangeLimit( gradeLevel ) ) <span class="hljs-keyword">Then</span><br>    studentGrade = grade( gradeLevel )<br>  <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span><br>  gradeLevel = gradeLevel + <span class="hljs-number">1</span><br>Wend<br></code></pre></td></tr></table></figure>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs vb"><span class="hljs-comment">&#x27; set up data for grading table</span><br><span class="hljs-keyword">Dim</span> rangeLimit() <span class="hljs-keyword">As</span> <span class="hljs-type">Double</span> = &#123; <span class="hljs-number">50.0</span>, <span class="hljs-number">65.0</span>, <span class="hljs-number">75.0</span>, <span class="hljs-number">90.0</span>, <span class="hljs-number">100.0</span> &#125;<br><span class="hljs-keyword">Dim</span> grade() <span class="hljs-keyword">As</span> <span class="hljs-type">String</span> = &#123; <span class="hljs-string">&quot;F&quot;</span>, <span class="hljs-string">&quot;D&quot;</span>, <span class="hljs-string">&quot;C&quot;</span>, <span class="hljs-string">&quot;B&quot;</span>, <span class="hljs-string">&quot;A&quot;</span> &#125;<br>maxGradeLevel = grade.Length - <span class="hljs-number">1</span><br>...<br><span class="hljs-comment">&#x27; assign a grade to a student based on the student&#x27;s score</span><br>gradeLevel = <span class="hljs-number">0</span><br>studentGrade = <span class="hljs-string">&quot;A&quot;</span><br><span class="hljs-keyword">While</span> ( gradeLevel &lt; maxGradeLevel )<br>  <span class="hljs-keyword">If</span> ( studentScore &lt; rangeLimit( gradeLevel ) ) <span class="hljs-keyword">Then</span><br>    studentGrade = grade( gradeLevel )<br>  <span class="hljs-keyword">End</span> <span class="hljs-keyword">If</span><br>  gradeLevel = gradeLevel + <span class="hljs-number">1</span><br>Wend<br></code></pre></td></tr></table></figure>
 <h4 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h4><ol>
 <li>注意端点</li>
 <li>二分查找取代顺序查找</li>
@@ -456,6 +461,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -466,6 +472,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -543,6 +554,8 @@
 
 
 
+
+  
 
   
 

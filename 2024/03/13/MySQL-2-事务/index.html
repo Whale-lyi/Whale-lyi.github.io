@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="事务：一组操作的集合，同时成功&#x2F;失败 -- 方式一：设置事务提交方式-- 查看事务提交方式SELECT @@AUTOCOMMIT;-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效SET @@AUTOCOMMIT &#x3D; 0;-- 提交事务COMMIT;-- 回滚事务ROLLBACK;-- 事务演示select * from account where name &#x3D; &amp;#x27">
+  <meta name="description" content="事务：一组操作的集合，同时成功&#x2F;失败 123456789101112131415161718192021222324-- 方式一：设置事务提交方式-- 查看事务提交方式SELECT @@AUTOCOMMIT;-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效SET @@AUTOCOMMIT &#x3D; 0;-- 提交事务COMMIT;-- 回滚事务ROLLBACK;-- 事务演示s">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySQL(2) 事务">
 <meta property="og:url" content="https://whale-lyi.github.io/2024/03/13/MySQL-2-%E4%BA%8B%E5%8A%A1/index.html">
 <meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="事务：一组操作的集合，同时成功&#x2F;失败 -- 方式一：设置事务提交方式-- 查看事务提交方式SELECT @@AUTOCOMMIT;-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效SET @@AUTOCOMMIT &#x3D; 0;-- 提交事务COMMIT;-- 回滚事务ROLLBACK;-- 事务演示select * from account where name &#x3D; &amp;#x27">
+<meta property="og:description" content="事务：一组操作的集合，同时成功&#x2F;失败 123456789101112131415161718192021222324-- 方式一：设置事务提交方式-- 查看事务提交方式SELECT @@AUTOCOMMIT;-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效SET @@AUTOCOMMIT &#x3D; 0;-- 提交事务COMMIT;-- 回滚事务ROLLBACK;-- 事务演示s">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202403141526258.png">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202403141526926.png">
@@ -128,6 +128,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -214,7 +219,7 @@
 
       
         <p>事务：一组操作的集合，同时成功/失败</p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 方式一：设置事务提交方式</span><br><span class="hljs-comment">-- 查看事务提交方式</span><br><span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@AUTOCOMMIT</span>;<br><span class="hljs-comment">-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效</span><br><span class="hljs-keyword">SET</span> @<span class="hljs-variable">@AUTOCOMMIT</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-comment">-- 提交事务</span><br><span class="hljs-keyword">COMMIT</span>;<br><span class="hljs-comment">-- 回滚事务</span><br><span class="hljs-keyword">ROLLBACK</span>;<br><span class="hljs-comment">-- 事务演示</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> account <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">-</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">+</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;李四&#x27;</span>;<br><span class="hljs-keyword">commit</span>;<br><br><br><span class="hljs-comment">-- 方式二：开启事务</span><br><span class="hljs-keyword">START</span> TRANSACTION; <span class="hljs-comment">-- 或者 BEGIN TRANSACTION;</span><br><span class="hljs-comment">-- 事务演示</span><br><span class="hljs-keyword">start</span> transaction;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> account <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">-</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">+</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;李四&#x27;</span>;<br><span class="hljs-keyword">commit</span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 方式一：设置事务提交方式</span><br><span class="hljs-comment">-- 查看事务提交方式</span><br><span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@AUTOCOMMIT</span>;<br><span class="hljs-comment">-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效</span><br><span class="hljs-keyword">SET</span> @<span class="hljs-variable">@AUTOCOMMIT</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-comment">-- 提交事务</span><br><span class="hljs-keyword">COMMIT</span>;<br><span class="hljs-comment">-- 回滚事务</span><br><span class="hljs-keyword">ROLLBACK</span>;<br><span class="hljs-comment">-- 事务演示</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> account <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">-</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">+</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;李四&#x27;</span>;<br><span class="hljs-keyword">commit</span>;<br><br><br><span class="hljs-comment">-- 方式二：开启事务</span><br><span class="hljs-keyword">START</span> TRANSACTION; <span class="hljs-comment">-- 或者 BEGIN TRANSACTION;</span><br><span class="hljs-comment">-- 事务演示</span><br><span class="hljs-keyword">start</span> transaction;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> account <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">-</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">+</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;李四&#x27;</span>;<br><span class="hljs-keyword">commit</span>;<br></code></pre></td></tr></table></figure>
 <h2 id="1-ACID特性"><a href="#1-ACID特性" class="headerlink" title="1. ACID特性"></a>1. ACID特性</h2><h3 id="Atomicity-原子性"><a href="#Atomicity-原子性" class="headerlink" title="Atomicity 原子性"></a>Atomicity 原子性</h3><p>事务是不可分割的最小操作单元，要么全部成功，要么全部失败</p>
 <h3 id="Consistency-一致性"><a href="#Consistency-一致性" class="headerlink" title="Consistency 一致性"></a>Consistency 一致性</h3><p>事务完成时，必须使所有数据都保持一致状态</p>
 <h3 id="Isolation-隔离性"><a href="#Isolation-隔离性" class="headerlink" title="Isolation 隔离性"></a>Isolation 隔离性</h3><p>数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行</p>
@@ -374,6 +379,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -384,6 +390,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -461,6 +472,8 @@
 
 
 
+
+  
 
   
 

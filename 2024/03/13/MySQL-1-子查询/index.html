@@ -124,6 +124,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -225,7 +230,7 @@
 <li><p>```sql<br>select d.id, d.name, (</p>
 <pre><code>select count(*) from emp e where e.dept_id = d.id
 </code></pre><p>) ‘人数’<br>from dept d;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs plaintext"><br>### 标量子查询<br><br>子查询返回的结果是单个值（数字、字符串、日期等）<br><br>常用的操作符：`= &lt;&gt; &gt; &gt;= &lt; &lt;=`<br><br>```sql<br>-- 查询销售部所有员工<br>select * from employee where dept = (select id from dept where name = &#x27;销售部&#x27;);<br><br>-- 查询xxx入职之后的员工信息<br>select * from employee where entrydate &gt; (select entrydate from employee where name = &#x27;xxx&#x27;);<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"><br>### 标量子查询<br><br>子查询返回的结果是单个值（数字、字符串、日期等）<br><br>常用的操作符：`= &lt;&gt; &gt; &gt;= &lt; &lt;=`<br><br>```sql<br>-- 查询销售部所有员工<br>select * from employee where dept = (select id from dept where name = &#x27;销售部&#x27;);<br><br>-- 查询xxx入职之后的员工信息<br>select * from employee where entrydate &gt; (select entrydate from employee where name = &#x27;xxx&#x27;);<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -241,13 +246,13 @@
 <li><code>SOME</code>: 与ANY等同，使用SOME的地方都可以使用ANY</li>
 <li><code>ALL</code>: 子查询返回列表的所有值都必须满足</li>
 </ul>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询销售部和市场部的所有员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> dept <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> dept <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;销售部&#x27;</span> <span class="hljs-keyword">or</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;市场部&#x27;</span>);<br><br><span class="hljs-comment">-- 查询比财务部所有人工资都高的员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> salary <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">all</span>(<span class="hljs-keyword">select</span> salary <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> dept <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> dept <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;财务部&#x27;</span>));<br><br><span class="hljs-comment">-- 查询比研发部任意一人工资高的员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> salary <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">any</span> (<span class="hljs-keyword">select</span> salary <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> dept <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> dept <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;研发部&#x27;</span>));<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询销售部和市场部的所有员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> dept <span class="hljs-keyword">in</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> dept <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;销售部&#x27;</span> <span class="hljs-keyword">or</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;市场部&#x27;</span>);<br><br><span class="hljs-comment">-- 查询比财务部所有人工资都高的员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> salary <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">all</span>(<span class="hljs-keyword">select</span> salary <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> dept <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> dept <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;财务部&#x27;</span>));<br><br><span class="hljs-comment">-- 查询比研发部任意一人工资高的员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> salary <span class="hljs-operator">&gt;</span> <span class="hljs-keyword">any</span> (<span class="hljs-keyword">select</span> salary <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> dept <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> id <span class="hljs-keyword">from</span> dept <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;研发部&#x27;</span>));<br></code></pre></td></tr></table></figure>
 <h3 id="行子查询"><a href="#行子查询" class="headerlink" title="行子查询"></a>行子查询</h3><p>返回的结果是一行（可以是多列）</p>
 <p>常用的操作符：<code>=, &lt;&gt;, IN, NOT IN</code></p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询与xxx的薪资及直属领导相同的员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> (salary, manager) <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> salary, manager <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx&#x27;</span>);<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询与xxx的薪资及直属领导相同的员工信息</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> (salary, manager) <span class="hljs-operator">=</span> (<span class="hljs-keyword">select</span> salary, manager <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx&#x27;</span>);<br></code></pre></td></tr></table></figure>
 <h3 id="表子查询"><a href="#表子查询" class="headerlink" title="表子查询"></a>表子查询</h3><p>返回的结果是多行多列, 常用于 FROM 之后</p>
 <p>常用的操作符：<code>IN</code></p>
-<figure class="highlight sql"><table><tr><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询与xxx1，xxx2的职位和薪资相同的员工</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee<br><span class="hljs-keyword">where</span> (job, salary) <span class="hljs-keyword">in</span> (<br>    <span class="hljs-keyword">select</span> job, salary <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx1&#x27;</span> <span class="hljs-keyword">or</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx2&#x27;</span><br>);<br><br><span class="hljs-comment">-- 查询入职日期是2006-01-01之后的员工，及其部门信息</span><br><span class="hljs-keyword">select</span> e.<span class="hljs-operator">*</span>, d.<span class="hljs-operator">*</span> <br><span class="hljs-keyword">from</span> (<br>    <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> entrydate <span class="hljs-operator">&gt;</span> <span class="hljs-string">&#x27;2006-01-01&#x27;</span><br>) e <br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> dept d<br><span class="hljs-keyword">on</span> e.dept <span class="hljs-operator">=</span> d.id;<br></code></pre></td></tr></table></figure>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 查询与xxx1，xxx2的职位和薪资相同的员工</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee<br><span class="hljs-keyword">where</span> (job, salary) <span class="hljs-keyword">in</span> (<br>    <span class="hljs-keyword">select</span> job, salary <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx1&#x27;</span> <span class="hljs-keyword">or</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;xxx2&#x27;</span><br>);<br><br><span class="hljs-comment">-- 查询入职日期是2006-01-01之后的员工，及其部门信息</span><br><span class="hljs-keyword">select</span> e.<span class="hljs-operator">*</span>, d.<span class="hljs-operator">*</span> <br><span class="hljs-keyword">from</span> (<br>    <span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> employee <span class="hljs-keyword">where</span> entrydate <span class="hljs-operator">&gt;</span> <span class="hljs-string">&#x27;2006-01-01&#x27;</span><br>) e <br><span class="hljs-keyword">left</span> <span class="hljs-keyword">join</span> dept d<br><span class="hljs-keyword">on</span> e.dept <span class="hljs-operator">=</span> d.id;<br></code></pre></td></tr></table></figure>
 
     </div>
 
@@ -351,6 +356,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -361,6 +367,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -438,6 +449,8 @@
 
 
 
+
+  
 
   
 

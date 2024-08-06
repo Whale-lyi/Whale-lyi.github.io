@@ -126,6 +126,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -313,14 +318,14 @@
 </div>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202312291426781.png" alt="image-20231229142616707"></p>
 <p><strong>第一种方式：抛出异常</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BlockingQueueTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">// 创建阻塞队列</span><br>        BlockingQueue&lt;Object&gt; blockingQueue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBlockingQueue</span>&lt;&gt;(<span class="hljs-number">3</span>);<br>        <span class="hljs-comment">// 当队列中加元素</span><br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;a&quot;</span>));<br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;b&quot;</span>));<br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;c&quot;</span>));<br>        <span class="hljs-comment">// 检查</span><br>        System.out.println(blockingQueue.element());<br>        <span class="hljs-comment">/** 此时输出的结果为</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * a</span><br><span class="hljs-comment">         * */</span><br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;d&quot;</span>));<br>        <span class="hljs-comment">// 此时再添加元素，会抛出异常:IllegalStateException: Queue full</span><br>        <span class="hljs-comment">// 取出元素</span><br>        System.out.println(blockingQueue.remove());<br>        <span class="hljs-comment">// 检查</span><br>        System.out.println(blockingQueue.element());<br>        <span class="hljs-comment">/** 此时输出的结果为</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * a</span><br><span class="hljs-comment">         * a (取出数据)</span><br><span class="hljs-comment">         * b (队首数据)</span><br><span class="hljs-comment">         * */</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">BlockingQueueTest</span> &#123;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-comment">// 创建阻塞队列</span><br>        BlockingQueue&lt;Object&gt; blockingQueue = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayBlockingQueue</span>&lt;&gt;(<span class="hljs-number">3</span>);<br>        <span class="hljs-comment">// 当队列中加元素</span><br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;a&quot;</span>));<br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;b&quot;</span>));<br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;c&quot;</span>));<br>        <span class="hljs-comment">// 检查</span><br>        System.out.println(blockingQueue.element());<br>        <span class="hljs-comment">/** 此时输出的结果为</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * a</span><br><span class="hljs-comment">         * */</span><br>        System.out.println(blockingQueue.add(<span class="hljs-string">&quot;d&quot;</span>));<br>        <span class="hljs-comment">// 此时再添加元素，会抛出异常:IllegalStateException: Queue full</span><br>        <span class="hljs-comment">// 取出元素</span><br>        System.out.println(blockingQueue.remove());<br>        <span class="hljs-comment">// 检查</span><br>        System.out.println(blockingQueue.element());<br>        <span class="hljs-comment">/** 此时输出的结果为</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * true</span><br><span class="hljs-comment">         * a</span><br><span class="hljs-comment">         * a (取出数据)</span><br><span class="hljs-comment">         * b (队首数据)</span><br><span class="hljs-comment">         * */</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><strong>第二种方式：布尔值</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">System.out.println(blockingQueue.offer(<span class="hljs-string">&quot;a&quot;</span>));<br><span class="hljs-comment">// 检查元素</span><br>System.out.println(blockingQueue.peek());<br><span class="hljs-comment">// 取出元素,先进先出</span><br>System.out.println(blockingQueue.poll());<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">System.out.println(blockingQueue.offer(<span class="hljs-string">&quot;a&quot;</span>));<br><span class="hljs-comment">// 检查元素</span><br>System.out.println(blockingQueue.peek());<br><span class="hljs-comment">// 取出元素,先进先出</span><br>System.out.println(blockingQueue.poll());<br></code></pre></td></tr></table></figure>
 <p><strong>第三种方式：阻塞</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">System.out.println(blockingQueue.put(<span class="hljs-string">&quot;a&quot;</span>));<br><span class="hljs-comment">// 检查元素</span><br>System.out.println(blockingQueue.element());<br><span class="hljs-comment">// 取出元素,先进先出</span><br>System.out.println(blockingQueue.take());<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">System.out.println(blockingQueue.put(<span class="hljs-string">&quot;a&quot;</span>));<br><span class="hljs-comment">// 检查元素</span><br>System.out.println(blockingQueue.element());<br><span class="hljs-comment">// 取出元素,先进先出</span><br>System.out.println(blockingQueue.take());<br></code></pre></td></tr></table></figure>
 <p>该方法加入元素或者取出元素，如果满了或者空了，还进行下一步加入或者取出操作，会出现阻塞的状态</p>
 <p><strong>第四种方式：超时</strong></p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java">System.out.println(blockingQueue.offer(<span class="hljs-string">&quot;w&quot;</span>, <span class="hljs-number">3L</span>, TimeUnit.SECONDS));<br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">System.out.println(blockingQueue.offer(<span class="hljs-string">&quot;w&quot;</span>, <span class="hljs-number">3L</span>, TimeUnit.SECONDS));<br></code></pre></td></tr></table></figure>
 <p>该方法满了或者空了在进行会有阻塞，但可以加入参数，超时退出，返回false</p>
 
     </div>
@@ -425,6 +430,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -435,6 +441,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -512,6 +523,8 @@
 
 
 
+
+  
 
   
 

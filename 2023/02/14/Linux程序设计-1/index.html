@@ -138,6 +138,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -396,11 +401,11 @@
 </li>
 <li>通过grub-install安装在MBR中</li>
 </ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><code class="hljs grub.cfg">title Ubuntu, kernel 2.6.20-16-generic<br>root (hd0,1)<br>kernel /boot/vmlinuz-2.6.20-16-generic root=UUID=3f784cd9-516f-4808-a601-b19356f6bdea ro quiet splash locale=zh_CN vga=0x318 // 内核与参数<br>initrd /boot/initrd.img-2.6.20-16-generic // init程序<br><br>// 配置 windows<br>title Microsoft Windows XP<br>Professional<br>root	(hd0, 0) // 0号磁盘0号分区<br>savedefault<br>makeactive<br>chainloader +1 // 找新的引导程序，windows有自己的<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs grub.cfg">title Ubuntu, kernel 2.6.20-16-generic<br>root (hd0,1)<br>kernel /boot/vmlinuz-2.6.20-16-generic root=UUID=3f784cd9-516f-4808-a601-b19356f6bdea ro quiet splash locale=zh_CN vga=0x318 // 内核与参数<br>initrd /boot/initrd.img-2.6.20-16-generic // init程序<br><br>// 配置 windows<br>title Microsoft Windows XP<br>Professional<br>root	(hd0, 0) // 0号磁盘0号分区<br>savedefault<br>makeactive<br>chainloader +1 // 找新的引导程序，windows有自己的<br></code></pre></td></tr></table></figure>
 <h2 id="3-Using-the-System"><a href="#3-Using-the-System" class="headerlink" title="3. Using the System"></a>3. Using the System</h2><h3 id="3-1-Basic-Knowledge"><a href="#3-1-Basic-Knowledge" class="headerlink" title="3.1 Basic Knowledge"></a>3.1 Basic Knowledge</h3><h4 id="Installing-Software-on-Linux"><a href="#Installing-Software-on-Linux" class="headerlink" title="Installing Software on Linux"></a>Installing Software on Linux</h4><ul>
 <li>From a tarball</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译源代码安装软件：automake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br>./configure<br>make<br>su - <span class="hljs-comment"># 只有make install需要切换root权限</span><br>make install <span class="hljs-comment"># 将编译后的二进制码安装到系统</span><br><br><span class="hljs-comment"># cmake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake ..	<span class="hljs-comment"># cmake后面跟application目录，..即上级目录</span><br>make VERBOSE=1	<span class="hljs-comment"># VERBOSE参数可选，仅多打印一些东西</span><br>su -<br>make install<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 编译源代码安装软件：automake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br>./configure<br>make<br>su - <span class="hljs-comment"># 只有make install需要切换root权限</span><br>make install <span class="hljs-comment"># 将编译后的二进制码安装到系统</span><br><br><span class="hljs-comment"># cmake模式</span><br>tar zxvf application.tar.gz<br><span class="hljs-built_in">cd</span> application<br><span class="hljs-built_in">mkdir</span> build<br><span class="hljs-built_in">cd</span> build<br>cmake ..	<span class="hljs-comment"># cmake后面跟application目录，..即上级目录</span><br>make VERBOSE=1	<span class="hljs-comment"># VERBOSE参数可选，仅多打印一些东西</span><br>su -<br>make install<br></code></pre></td></tr></table></figure>
 <ul>
 <li>yum + rpm (red hat系列使用rpm安装包)<ul>
 <li>RPM: RPM Package Management<ul>
@@ -785,7 +790,7 @@
 </ul>
 </li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt; abc.txt<br><span class="hljs-built_in">cat</span> 文件名<br><br><span class="hljs-comment"># 这里的文件名作为cat参数存在</span><br><span class="hljs-comment"># 类似于C语言中，main(int argc, char** argv)</span><br><span class="hljs-comment"># 当argc等于0，在system.in中读，再system.out打印</span><br><span class="hljs-comment"># 当cat后面加上参数，就读出文件内容，输出在屏幕上</span><br><span class="hljs-comment"># cat &lt; 文件名，这里是重定向</span><br><span class="hljs-comment"># 执行流程完全不一样，仍然是走else分支</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cat</span> &lt; abc.txt<br><span class="hljs-built_in">cat</span> 文件名<br><br><span class="hljs-comment"># 这里的文件名作为cat参数存在</span><br><span class="hljs-comment"># 类似于C语言中，main(int argc, char** argv)</span><br><span class="hljs-comment"># 当argc等于0，在system.in中读，再system.out打印</span><br><span class="hljs-comment"># 当cat后面加上参数，就读出文件内容，输出在屏幕上</span><br><span class="hljs-comment"># cat &lt; 文件名，这里是重定向</span><br><span class="hljs-comment"># 执行流程完全不一样，仍然是走else分支</span><br></code></pre></td></tr></table></figure>
 <h3 id="5-2-管道"><a href="#5-2-管道" class="headerlink" title="5.2 管道"></a>5.2 管道</h3><ul>
 <li>一个进程的输出作为另一个进程的输入</li>
 <li>存在一个管道文件，这个文件作为输入传递给后面的命令</li>
@@ -936,6 +941,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -946,6 +952,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -1023,6 +1034,8 @@
 
 
 
+
+  
 
   
 

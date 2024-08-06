@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="LLVM IR一、LLVM IR 简介1. LLVM 基础设施而非编译器 目标: 模块化，可重用     包含范围(黄色) Clang 为 LLVM 子项目，狭义上的 LLVM 并不包含 Clang   2. Clang # 和 GCC 类似，直接编译为可执行文件clang .\hello.c -o hello# -ast-dump 得到抽象语法树clang -Xclang -ast-dump -">
+  <meta name="description" content="LLVM IR一、LLVM IR 简介1. LLVM 基础设施而非编译器 目标: 模块化，可重用     包含范围(黄色) Clang 为 LLVM 子项目，狭义上的 LLVM 并不包含 Clang   2. Clang 1234# 和 GCC 类似，直接编译为可执行文件clang .\hello.c -o hello# -ast-dump 得到抽象语法树clang -Xclang -ast-du">
 <meta property="og:type" content="article">
 <meta property="og:title" content="编译原理(6) LLVM IR">
 <meta property="og:url" content="https://whale-lyi.github.io/2022/12/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6-LLVM-IR/index.html">
 <meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="LLVM IR一、LLVM IR 简介1. LLVM 基础设施而非编译器 目标: 模块化，可重用     包含范围(黄色) Clang 为 LLVM 子项目，狭义上的 LLVM 并不包含 Clang   2. Clang # 和 GCC 类似，直接编译为可执行文件clang .\hello.c -o hello# -ast-dump 得到抽象语法树clang -Xclang -ast-dump -">
+<meta property="og:description" content="LLVM IR一、LLVM IR 简介1. LLVM 基础设施而非编译器 目标: 模块化，可重用     包含范围(黄色) Clang 为 LLVM 子项目，狭义上的 LLVM 并不包含 Clang   2. Clang 1234# 和 GCC 类似，直接编译为可执行文件clang .\hello.c -o hello# -ast-dump 得到抽象语法树clang -Xclang -ast-du">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221222200423196.png">
 <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221222200437641.png">
@@ -144,6 +144,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -241,7 +246,7 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223001148768.png" alt="image-20221223001148768" style="zoom:80%;" /></p>
 <h3 id="2-Clang"><a href="#2-Clang" class="headerlink" title="2. Clang"></a>2. Clang</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221223001849775.png" alt="image-20221223001849775" style="zoom:80%;" /></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 和 GCC 类似，直接编译为可执行文件</span><br>clang .\hello.c -o hello<br><span class="hljs-comment"># -ast-dump 得到抽象语法树</span><br>clang -Xclang -ast-dump -c hello.c<br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 和 GCC 类似，直接编译为可执行文件</span><br>clang .\hello.c -o hello<br><span class="hljs-comment"># -ast-dump 得到抽象语法树</span><br>clang -Xclang -ast-dump -c hello.c<br></code></pre></td></tr></table></figure>
 <h3 id="3-IR"><a href="#3-IR" class="headerlink" title="3. IR"></a>3. IR</h3><h4 id="3-1-IR"><a href="#3-1-IR" class="headerlink" title="3.1 IR"></a>3.1 IR</h4><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221219162837400.png" alt="image-20221219162837400" style="zoom:80%;" /></p>
 <p>IR: Intermediate Representation(中间表示)</p>
 <p>LLVM IR: <strong>带有类型的</strong>、介于高级程序设计语言与汇编语言之间</p>
@@ -521,6 +526,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -531,6 +537,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -608,6 +619,8 @@
 
 
 
+
+  
 
   
 

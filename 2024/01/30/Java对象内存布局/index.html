@@ -127,6 +127,11 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
   </ul>
 </nav>
 
@@ -240,9 +245,9 @@
 <h3 id="1-2-实例数据"><a href="#1-2-实例数据" class="headerlink" title="1.2 实例数据"></a>1.2 实例数据</h3><p>存放类的属性（Field）数据信息，包括父类的属性信息</p>
 <h3 id="1-3-对齐填充"><a href="#1-3-对齐填充" class="headerlink" title="1.3 对齐填充"></a>1.3 对齐填充</h3><p>虚拟机要求对象起始地址必须是8字节的整数倍，填充数据不是必须存在的，仅仅是为了字节对齐，这部分内存按8字节补充对齐。</p>
 <h2 id="2-JOL"><a href="#2-JOL" class="headerlink" title="2. JOL"></a>2. JOL</h2><p>引入依赖</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.openjdk.jol<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jol-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.17<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.openjdk.jol<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>jol-core<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">version</span>&gt;</span>0.17<span class="hljs-tag">&lt;/<span class="hljs-name">version</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>测试代码</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>System.out.println(ClassLayout.parseInstance(o).toPrintable());<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">java.lang.Object object internals:</span><br><span class="hljs-comment">OFF  SZ   TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8        (object header: mark)     0x0000000000000001 (non-biasable; age: 0)</span><br><span class="hljs-comment">  8   4        (object header: class)    0xf80001e5</span><br><span class="hljs-comment"> 12   4        (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 16 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-type">Customer</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Customer</span>();<br>System.out.println(ClassLayout.parseInstance(c).toPrintable());<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">top.whale.Customer object internals:</span><br><span class="hljs-comment">OFF  SZ      TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8           (object header: mark)     0x0000000000000001 (non-biasable; age: 0)</span><br><span class="hljs-comment">  8   4           (object header: class)    0xf800c143</span><br><span class="hljs-comment"> 12   4       int Customer.id               0</span><br><span class="hljs-comment"> 16   1   boolean Customer.flag             false</span><br><span class="hljs-comment"> 17   7           (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 24 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 7 bytes external = 7 bytes total</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">Object</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>System.out.println(ClassLayout.parseInstance(o).toPrintable());<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">java.lang.Object object internals:</span><br><span class="hljs-comment">OFF  SZ   TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8        (object header: mark)     0x0000000000000001 (non-biasable; age: 0)</span><br><span class="hljs-comment">  8   4        (object header: class)    0xf80001e5</span><br><span class="hljs-comment"> 12   4        (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 16 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 4 bytes external = 4 bytes total</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-type">Customer</span> <span class="hljs-variable">c</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Customer</span>();<br>System.out.println(ClassLayout.parseInstance(c).toPrintable());<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">top.whale.Customer object internals:</span><br><span class="hljs-comment">OFF  SZ      TYPE DESCRIPTION               VALUE</span><br><span class="hljs-comment">  0   8           (object header: mark)     0x0000000000000001 (non-biasable; age: 0)</span><br><span class="hljs-comment">  8   4           (object header: class)    0xf800c143</span><br><span class="hljs-comment"> 12   4       int Customer.id               0</span><br><span class="hljs-comment"> 16   1   boolean Customer.flag             false</span><br><span class="hljs-comment"> 17   7           (object alignment gap)    </span><br><span class="hljs-comment">Instance size: 24 bytes</span><br><span class="hljs-comment">Space losses: 0 bytes internal + 7 bytes external = 7 bytes total</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
 <h2 id=""><a href="#" class="headerlink" title=" "></a> </h2>
     </div>
 
@@ -343,6 +348,7 @@
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
+          
         <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
@@ -353,6 +359,11 @@
       </div>
   </nav>
 </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
 
 
 
@@ -430,6 +441,8 @@
 
 
 
+
+  
 
   
 
