@@ -1,185 +1,84 @@
-<!DOCTYPE html>
-<html lang="en" color-mode="light">
-
-  <head>
+<!DOCTYPE HTML>
+<html>
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="author" content="Whale" />
-  <meta name="description" content="码农预备役" />
-  
-  
-  <title>
-    
-      云计算(3) 云数据中心 
-      
-      
-      |
-    
-     Whale&#39;s Blog
-  </title>
+  <title>云计算(3) 云数据中心 | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
 
   
-    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
-    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
-  
-
-  <!-- Raleway-Font -->
-  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-
-  <!-- hexo site css -->
-  <link rel="stylesheet" href="/css/main.css" />
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
-  <link rel="stylesheet" href="/css/intellij-light.css">
-  <!-- 代码块风格 -->
-  
-    
-<link rel="stylesheet" href="/css/figcaption/mac-block.css">
-
-  
-
-  <!-- jquery3.3.1 -->
-  
-    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
-  
-
-  <!-- fancybox -->
-  
-    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
-    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
-  
-  
-<script src="/js/fancybox.js"></script>
-
-
+  <meta name="author" content="Whale">
   
 
   
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="description" content="NJUSE 云计算课程笔记">
   
 
-  <script>
-    var html = document.documentElement
-    const colorMode = localStorage.getItem('color-mode')
-    if (colorMode) {
-      document.documentElement.setAttribute('color-mode', colorMode)
-    }
-  </script>
+  
+  
+  <meta name="keywords" content="云计算">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="云计算(3) 云数据中心"/>
+
+  <meta property="og:site_name" content="Whale&#39;s Blog"/>
+
+  
+  <meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/Cloud-Computer.png" />
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-  <body>
-    <div id="app">
-      <div class="header">
-  <div class="avatar">
-    <a href="/">
-      <!-- 头像取消懒加载，添加no-lazy -->
-      
-        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
-      
-    </a>
-    <div class="nickname"><a href="/">Whale</a></div>
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Whale&#39;s Blog</a>
+    </h1>
+    <p class="site-description">Stay hungry, Stay foolish</p>
   </div>
-  <div class="navbar">
+  <nav class="site-navigation">
     <ul>
       
-        <li class="nav-item" data-path="/">
-          <a href="/">Home</a>
-        </li>
-      
-        <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
-        </li>
-      
-        <li class="nav-item" data-path="/categories/">
-          <a href="/categories/">Categories</a>
-        </li>
-      
-        <li class="nav-item" data-path="/friends/">
-          <a href="/friends/">Friends</a>
-        </li>
-      
     </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>云计算(3) 云数据中心</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2022/10/29/云计算-3-云数据中心/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-10-29T06:34:08.000Z">
+          2022-10-29
+        </time>
+      </a>
+    </span>
   </div>
-</div>
-
-
-<script src="/js/activeNav.js"></script>
-
-
-
-      <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
-
-
-  <!-- LaTex Display -->
-
-  
-    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
-  
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    }
-  </script>
-
-
-
-
-
-  <!-- clipboard -->
-
-  
-    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
-  
-  
-<script src="/js/codeCopy.js"></script>
-
-
-
-
-
 
 
   
 
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">云计算(3) 云数据中心</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-09 14:53:19
-        </span>
-        
-              <span class="post-categories">
-                <i class="iconfont icon-bookmark" title="Categories"></i>
-                
-                <span class="span--category">
-                  <a href="/categories/NJU/" title="NJU">
-                    <b>#</b> NJU
-                  </a>
-                </span>
-                
-                <span class="span--category">
-                  <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
-                    <b>#</b> 云计算
-                  </a>
-                </span>
-                
-              </span>
-          
-      </div>
-      <div class="markdown-body">
+  <div class="article-content">
+    <div class="entry">
+      
         <h1 id="三、云数据中心"><a href="#三、云数据中心" class="headerlink" title="三、云数据中心"></a>三、云数据中心</h1><h2 id="1-云数据中心特征"><a href="#1-云数据中心特征" class="headerlink" title="1 云数据中心特征"></a>1 云数据中心特征</h2><ul>
 <li><p>高设备利用率</p>
 <ul>
@@ -523,368 +422,81 @@
 <li>Spanner:谷歌的可扩展、多版本、全球分布式、同步复制数据库</li>
 </ul>
 
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-2-%E4%BA%91%E8%AE%A1%E7%AE%97%E6%9E%B6%E6%9E%84/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>Prev</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-09 14:53:19
-            </span>
-            
-                  <span class="post-categories">
-                    <i class="iconfont icon-bookmark" title="Categories"></i>
-                    
-                    <span class="span--category">
-                      <a href="/categories/NJU/" title="NJU">
-                        <b>#</b> NJU
-                      </a>
-                    </span>
-                    
-                    <span class="span--category">
-                      <a href="/categories/NJU/%E4%BA%91%E8%AE%A1%E7%AE%97/" title="云计算">
-                        <b>#</b> 云计算
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-4-%E8%99%9A%E6%8B%9F%E5%8C%96%E6%8A%80%E6%9C%AF/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
-        </div>
       
     </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
     
-  <div id="btn-catalog" class="btn-catalog">
-    <i class="iconfont icon-catalog"></i>
-  </div>
-  <div class="post-catalog hidden" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="toc-text">三、云数据中心</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%89%B9%E5%BE%81"><span class="toc-text">1 云数据中心特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-text">2 云数据中心的设计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%BD%91%E7%BB%9C%E9%83%A8%E7%BD%B2"><span class="toc-text">3 云数据中心网络部署</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BC%A0%E7%BB%9F%E6%A0%91%E7%BB%93%E6%9E%84"><span class="toc-text">3.1 传统树结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%94%B9%E8%BF%9B%E5%9E%8B%E6%A0%91%E7%BB%93%E6%9E%84"><span class="toc-text">3.2 改进型树结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FatTree"><span class="toc-text">FatTree</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VL2%EF%BC%9A%E4%B8%80%E5%A5%97%E5%8F%AF%E6%89%A9%E5%B1%95%E4%B8%94%E5%BE%88%E7%81%B5%E6%B4%BB%E7%9A%84%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84%EF%BC%8C%E5%BE%AE%E8%BD%AF%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E9%87%87%E7%94%A8%E3%80%82"><span class="toc-text">VL2：一套可扩展且很灵活的网络架构，微软数据中心采用。</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%80%92%E5%BD%92%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">3.3 递归层次结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DCell"><span class="toc-text">DCell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#FiConn"><span class="toc-text">FiConn</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BCube"><span class="toc-text">BCube</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%85%89%E4%BA%A4%E6%8D%A2%E7%BD%91%E7%BB%9C"><span class="toc-text">3.4 光交换网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%97%A0%E7%BA%BF%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E7%BD%91%E7%BB%9C"><span class="toc-text">3.5 无线数据中心网络</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C"><span class="toc-text">3.6 软件定义网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%BF%E8%89%B2%E8%8A%82%E8%83%BD%E6%8A%80%E6%9C%AF"><span class="toc-text">4 绿色节能技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%85%8D%E7%94%B5%E7%B3%BB%E7%BB%9F%E8%8A%82%E8%83%BD"><span class="toc-text">4.1 配电系统节能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%A9%BA%E8%B0%83%E7%B3%BB%E7%BB%9F%E8%8A%82%E8%83%BD"><span class="toc-text">4.2 空调系统节能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E9%9B%86%E8%A3%85%E7%AE%B1%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83%E8%8A%82%E8%83%BD%E6%8A%80%E6%9C%AF"><span class="toc-text">4.3 集装箱数据中心节能技术</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E8%8A%82%E8%83%BD%E7%AD%96%E7%95%A5%E5%92%8C%E7%AE%97%E6%B3%95%E7%A0%94%E7%A9%B6"><span class="toc-text">4.4 节能策略和算法研究</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E6%96%B0%E8%83%BD%E6%BA%90%E5%BA%94%E7%94%A8"><span class="toc-text">4.5 新能源应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E5%85%B8%E5%9E%8B%E7%9A%84%E7%BB%BF%E8%89%B2%E8%8A%82%E8%83%BD%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83"><span class="toc-text">4.6 典型的绿色节能数据中心</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E8%87%AA%E5%8A%A8%E5%8C%96%E7%AE%A1%E7%90%86"><span class="toc-text">5 自动化管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%86%85%E5%AE%B9%E5%92%8C%E7%89%B9%E5%BE%81"><span class="toc-text">5.1 内容和特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%AE%9E%E7%8E%B0"><span class="toc-text">5.2 实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AE%B9%E7%81%BE%E5%A4%87%E4%BB%BD"><span class="toc-text">6 容灾备份</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%A0%87%E5%87%86%E7%AD%89%E7%BA%A7"><span class="toc-text">6.1 标准等级</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%85%B3%E9%94%AE%E6%8A%80%E6%9C%AF"><span class="toc-text">6.2 关键技术</span></a></li></ol></li></ol></li></ol>
-      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/云计算/">云计算</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/云计算/">云计算</a>
+    </span>
+    
+
     </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
 
     
   </div>
+</article>
+
+  
 
 
-        
-<div class="footer">
-  <div class="social">
-    <ul>
-      
-        <li>
-          
-              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
-                <i class="iconfont icon-github"></i>
-              </a>
-              
-        </li>
-        
-    </ul>
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2024 Whale
+    
+  </p>
+</footer>
+    
+    
   </div>
-  
-    
-    <div class="footer-more">
-      
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
-        
-    </div>
-  
-    
-    <div class="footer-more">
-      
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
-        
-    </div>
-  
-  
-    <div class="footer-views">
-      
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        
-      
-          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-        
-      
-          本站访客数<span id="busuanzi_value_site_uv"></span>人
-        
-      
-    </div>
-  
 </div>
-
-      </div>
-
-      <div class="tools-bar">
-        <div class="back-to-top tools-bar-item hidden">
-  <a href="javascript: void(0)">
-    <i class="iconfont icon-chevronup"></i>
-  </a>
-</div>
-
-
-<script src="/js/backtotop.js"></script>
-
-
-
-        
-  <div class="search-icon tools-bar-item" id="search-icon">
-    <a href="javascript: void(0)">
-      <i class="iconfont icon-search"></i>
-    </a>
-  </div>
-
-  <div class="search-overlay hidden">
-    <div class="search-content" tabindex="0">
-      <div class="search-title">
-        <span class="search-icon-input">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-search"></i>
-          </a>
-        </span>
-        
-          <input type="text" class="search-input" id="search-input" placeholder="Search...">
-        
-        <span class="search-close-icon" id="search-close-icon">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-close"></i>
-          </a>
-        </span>
-      </div>
-      <div class="search-result" id="search-result"></div>
-    </div>
-  </div>
-
-  <script type="text/javascript">
-    var inputArea = document.querySelector("#search-input")
-    var searchOverlayArea = document.querySelector(".search-overlay")
-
-    inputArea.onclick = function() {
-      getSearchFile()
-      this.onclick = null
-    }
-
-    inputArea.onkeydown = function() {
-      if(event.keyCode == 13)
-        return false
-    }
-
-    function openOrHideSearchContent() {
-      let isHidden = searchOverlayArea.classList.contains('hidden')
-      if (isHidden) {
-        searchOverlayArea.classList.remove('hidden')
-        document.body.classList.add('hidden')
-        // inputArea.focus()
-      } else {
-        searchOverlayArea.classList.add('hidden')
-        document.body.classList.remove('hidden')
-      }
-    }
-
-    function blurSearchContent(e) {
-      if (e.target === searchOverlayArea) {
-        openOrHideSearchContent()
-      }
-    }
-
-    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
-    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
-    searchOverlayArea.addEventListener("click", blurSearchContent, false)
-
-    var searchFunc = function (path, search_id, content_id) {
-      'use strict';
-      var $input = document.getElementById(search_id);
-      var $resultContent = document.getElementById(content_id);
-      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
-      $.ajax({
-        // 0x01. load xml file
-        url: path,
-        dataType: "xml",
-        success: function (xmlResponse) {
-          // 0x02. parse xml file
-          var datas = $("entry", xmlResponse).map(function () {
-            return {
-              title: $("title", this).text(),
-              content: $("content", this).text(),
-              url: $("url", this).text()
-            };
-          }).get();
-          $resultContent.innerHTML = "";
-
-          $input.addEventListener('input', function () {
-            // 0x03. parse query to keywords list
-            var str = '<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length <= 0) {
-              return;
-            }
-            // 0x04. perform local searching
-            datas.forEach(function (data) {
-              var isMatch = true;
-              var content_index = [];
-              if (!data.title || data.title.trim() === '') {
-                data.title = "Untitled";
-              }
-              var orig_data_title = data.title.trim();
-              var data_title = orig_data_title.toLowerCase();
-              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
-              var data_content = orig_data_content.toLowerCase();
-              var data_url = data.url;
-              var index_title = -1;
-              var index_content = -1;
-              var first_occur = -1;
-              // only match artiles with not empty contents
-              if (data_content !== '') {
-                keywords.forEach(function (keyword, i) {
-                  index_title = data_title.indexOf(keyword);
-                  index_content = data_content.indexOf(keyword);
-
-                  if (index_title < 0 && index_content < 0) {
-                    isMatch = false;
-                  } else {
-                    if (index_content < 0) {
-                      index_content = 0;
-                    }
-                    if (i == 0) {
-                      first_occur = index_content;
-                    }
-                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
-                  }
-                });
-              } else {
-                isMatch = false;
-              }
-              // 0x05. show search results
-              if (isMatch) {
-                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
-                var content = orig_data_content;
-                if (first_occur >= 0) {
-                  // cut out 100 characters
-                  var start = first_occur - 20;
-                  var end = first_occur + 80;
-
-                  if (start < 0) {
-                    start = 0;
-                  }
-
-                  if (start == 0) {
-                    end = 100;
-                  }
-
-                  if (end > content.length) {
-                    end = content.length;
-                  }
-
-                  var match_content = content.substr(start, end);
-
-                  // highlight all keywords
-                  keywords.forEach(function (keyword) {
-                    var regS = new RegExp(keyword, "gi");
-                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
-                  });
-
-                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
-                }
-                str += "</li>";
-              }
-            });
-            str += "</ul>";
-            if (str.indexOf('<li>') === -1) {
-              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
-            }
-            $resultContent.innerHTML = str;
-          });
-        },
-        error: function(xhr, status, error) {
-          $resultContent.innerHTML = ""
-          if (xhr.status === 404) {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
-          } else {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
-          }
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
         }
-      });
-      $(document).on('click', '#search-close-icon', function() {
-        $('#search-input').val('');
-        $('#search-result').html('');
-      });
-    }
-
-    var getSearchFile = function() {
-        var path = "/search.xml";
-        searchFunc(path, 'search-input', 'search-result');
-    }
-  </script>
-
-
-
-
-        
-  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
-    <a href="javascript: void(0)">
-      <i id="theme-icon" class="iconfont icon-moon"></i>
-    </a>
-  </div>
-
-  
-<script src="/js/colorscheme.js"></script>
-
-
-
-
-
-        
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E4%BA%91%E8%AE%A1%E7%AE%97(3)%20%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F29%2F%25E4%25BA%2591%25E8%25AE%25A1%25E7%25AE%2597-3-%25E4%25BA%2591%25E6%2595%25B0%25E6%258D%25AE%25E4%25B8%25AD%25E5%25BF%2583%2F + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-3-%E4%BA%91%E6%95%B0%E6%8D%AE%E4%B8%AD%E5%BF%83/" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
-  
-  
-<script src="/js/shares.js"></script>
-
-
-
-      </div>
-    </div>
-  </body>
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

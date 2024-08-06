@@ -1,185 +1,84 @@
-<!DOCTYPE html>
-<html lang="en" color-mode="light">
-
-  <head>
+<!DOCTYPE HTML>
+<html>
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="author" content="Whale" />
-  <meta name="description" content="码农预备役" />
-  
-  
-  <title>
-    
-      编译原理(3) 语法分析 
-      
-      
-      |
-    
-     Whale&#39;s Blog
-  </title>
+  <title>编译原理(3) 语法分析 | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
 
   
-    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
-    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
-  
-
-  <!-- Raleway-Font -->
-  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-
-  <!-- hexo site css -->
-  <link rel="stylesheet" href="/css/main.css" />
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
-  <link rel="stylesheet" href="/css/intellij-light.css">
-  <!-- 代码块风格 -->
-  
-    
-<link rel="stylesheet" href="/css/figcaption/mac-block.css">
-
-  
-
-  <!-- jquery3.3.1 -->
-  
-    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
-  
-
-  <!-- fancybox -->
-  
-    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
-    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
-  
-  
-<script src="/js/fancybox.js"></script>
-
-
+  <meta name="author" content="Whale">
   
 
   
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="description" content="码农预备役">
   
 
-  <script>
-    var html = document.documentElement
-    const colorMode = localStorage.getItem('color-mode')
-    if (colorMode) {
-      document.documentElement.setAttribute('color-mode', colorMode)
-    }
-  </script>
+  
+  
+  <meta name="keywords" content="编译原理">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="编译原理(3) 语法分析"/>
+
+  <meta property="og:site_name" content="Whale&#39;s Blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-  <body>
-    <div id="app">
-      <div class="header">
-  <div class="avatar">
-    <a href="/">
-      <!-- 头像取消懒加载，添加no-lazy -->
-      
-        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
-      
-    </a>
-    <div class="nickname"><a href="/">Whale</a></div>
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Whale&#39;s Blog</a>
+    </h1>
+    <p class="site-description">Stay hungry, Stay foolish</p>
   </div>
-  <div class="navbar">
+  <nav class="site-navigation">
     <ul>
       
-        <li class="nav-item" data-path="/">
-          <a href="/">Home</a>
-        </li>
-      
-        <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
-        </li>
-      
-        <li class="nav-item" data-path="/categories/">
-          <a href="/categories/">Categories</a>
-        </li>
-      
-        <li class="nav-item" data-path="/friends/">
-          <a href="/friends/">Friends</a>
-        </li>
-      
     </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>编译原理(3) 语法分析</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2022/11/21/编译原理-3-语法分析/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-11-21T07:29:12.000Z">
+          2022-11-21
+        </time>
+      </a>
+    </span>
   </div>
-</div>
-
-
-<script src="/js/activeNav.js"></script>
-
-
-
-      <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
-
-
-  <!-- LaTex Display -->
-
-  
-    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
-  
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    }
-  </script>
-
-
-
-
-
-  <!-- clipboard -->
-
-  
-    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
-  
-  
-<script src="/js/codeCopy.js"></script>
-
-
-
-
-
 
 
   
 
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">编译原理(3) 语法分析</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-09 14:53:19
-        </span>
-        
-              <span class="post-categories">
-                <i class="iconfont icon-bookmark" title="Categories"></i>
-                
-                <span class="span--category">
-                  <a href="/categories/NJU/" title="NJU">
-                    <b>#</b> NJU
-                  </a>
-                </span>
-                
-                <span class="span--category">
-                  <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
-                    <b>#</b> 编译原理
-                  </a>
-                </span>
-                
-              </span>
-          
-      </div>
-      <div class="markdown-body">
+  <div class="article-content">
+    <div class="entry">
+      
         <h1 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h1><h2 id="一、ANTLR-4-语法分析器"><a href="#一、ANTLR-4-语法分析器" class="headerlink" title="一、ANTLR 4 语法分析器"></a>一、ANTLR 4 语法分析器</h2><h3 id="1-二义性文法"><a href="#1-二义性文法" class="headerlink" title="1. 二义性文法"></a>1. 二义性文法</h3><ul>
 <li>二义性是不能接受的，必须消除</li>
 </ul>
@@ -665,368 +564,81 @@
 <p>粗体是通过 move 得到，其他都是通过 闭包 得到的</p>
 </blockquote>
 
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2022/11/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-5-%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>Prev</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-09 14:53:19
-            </span>
-            
-                  <span class="post-categories">
-                    <i class="iconfont icon-bookmark" title="Categories"></i>
-                    
-                    <span class="span--category">
-                      <a href="/categories/NJU/" title="NJU">
-                        <b>#</b> NJU
-                      </a>
-                    </span>
-                    
-                    <span class="span--category">
-                      <a href="/categories/NJU/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/" title="编译原理">
-                        <b>#</b> 编译原理
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2022/11/25/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-4-JavaScript/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
-        </div>
       
     </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
     
-  <div id="btn-catalog" class="btn-catalog">
-    <i class="iconfont icon-catalog"></i>
-  </div>
-  <div class="post-catalog hidden" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-text">语法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81ANTLR-4-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">一、ANTLR 4 语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%8C%E4%B9%89%E6%80%A7%E6%96%87%E6%B3%95"><span class="toc-text">1. 二义性文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-IfStat"><span class="toc-text">1.1 IfStat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-Left-Factoring"><span class="toc-text">1.2 Left-Factoring</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-Expr"><span class="toc-text">1.3 Expr</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Call-Graphs"><span class="toc-text">2. Call Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E7%9B%91%E5%90%AC%E5%99%A8%E6%A8%A1%E5%BC%8F-Listener"><span class="toc-text">2.1 监听器模式(Listener)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E8%AE%BF%E9%97%AE%E8%80%85%E6%A8%A1%E5%BC%8F-Visitor"><span class="toc-text">2.2 访问者模式(Visitor)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">3. 上下文无关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E8%AF%AD%E6%B3%95"><span class="toc-text">3.1 语法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Context-Free-Grammar-CFG-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-text">Definition (Context-Free Grammar (CFG); 上下文无关文法)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E8%AF%AD%E4%B9%89"><span class="toc-text">3.2 语义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC-Derivation"><span class="toc-text">推导 (Derivation)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentential-Form-%E5%8F%A5%E5%9E%8B"><span class="toc-text">Definition (Sentential Form; 句型)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-Sentence-%E5%8F%A5%E5%AD%90"><span class="toc-text">Definition (Sentence; 句子)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Definition-%E6%96%87%E6%B3%95-G-%E7%94%9F%E6%88%90%E7%9A%84%E8%AF%AD%E8%A8%80-L-G"><span class="toc-text">Definition (文法 $G$ 生成的语言 $L(G)$)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%85%B3%E4%BA%8E%E6%96%87%E6%B3%95-G-%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%9F%BA%E6%9C%AC%E9%97%AE%E9%A2%98"><span class="toc-text">3.3 关于文法 $G$ 的两个基本问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-1-%E7%BB%99%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2-x-in-T-ast-x-in-L-G"><span class="toc-text">3.3.1 给定字符串 $x \in T^\ast , x \in L(G)$ ?</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-3-2-L-G-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">3.3.2 $L(G)$ 是什么?</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">4 正则表达式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-RE-rightarrow-CFG"><span class="toc-text">4.1 RE $\rightarrow$ CFG</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-CFG-rightarrow-RE-%E5%8F%8D%E4%BE%8B"><span class="toc-text">4.2 CFG $\rightarrow$ RE 反例</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">二、递归下降的$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. 背景介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF-LL-1-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E5%99%A8"><span class="toc-text">2. 什么是$LL(1)$语法分析器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B"><span class="toc-text">2.1 自顶向下</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E9%9D%9E%E7%BB%88%E7%BB%93%E7%AC%A6"><span class="toc-text">如何选择非终结符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D"><span class="toc-text">2.2 递归下降</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%A4%BA%E4%BE%8B"><span class="toc-text">递归下降示例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">2.3 预测分析表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-Definition-LL-1-%E6%96%87%E6%B3%95"><span class="toc-text">2.4 Definition ($LL(1)$ 文法)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E4%B8%8B%E9%99%8D%E7%9A%84%E3%80%81%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95"><span class="toc-text">递归下降的、预测分析实现方法</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%AE%A1%E7%AE%97%E7%BB%99%E5%AE%9A%E6%96%87%E6%B3%95-G-%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">3. 计算给定文法 $G$ 的预测分析表</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BC%95%E5%85%A5"><span class="toc-text">3.1 引入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-FIRST-alpha"><span class="toc-text">3.2 FIRST($\alpha$)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-FOLLOW-A"><span class="toc-text">3.3 FOLLOW($A$)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-%E8%AE%A1%E7%AE%97FIRST-FOLLOW"><span class="toc-text">3.4 计算FIRST,FOLLOW</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-1-FIRST"><span class="toc-text">3.4.1 FIRST</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#3-4-2-FOLLOW"><span class="toc-text">3.4.2 FOLLOW</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-%E8%AE%A1%E7%AE%97%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E8%A1%A8"><span class="toc-text">3.5 计算预测分析表</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E9%9D%9E%E9%80%92%E5%BD%92%E7%9A%84%E9%A2%84%E6%B5%8B%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95"><span class="toc-text">4. 非递归的预测分析算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%9D%9E-LL-1-%E6%96%87%E6%B3%95%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3"><span class="toc-text">5. 非$LL(1)$文法如何解决</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E6%8F%90%E5%8F%96%E5%B7%A6%E5%85%AC%E5%9B%A0%E5%AD%90"><span class="toc-text">5.1 提取左公因子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E6%B6%88%E9%99%A4%E5%B7%A6%E9%80%92%E5%BD%92"><span class="toc-text">5.2 消除左递归</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%B3%E9%80%92%E5%BD%92"><span class="toc-text">右递归</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E6%96%87%E4%BB%B6%E7%BB%93%E6%9D%9F%E7%AC%A6-%E7%9A%84%E5%BF%85%E8%A6%81%E6%80%A7"><span class="toc-text">5.3 文件结束符 \$ 的必要性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Adaptive-LL-ast-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90%E7%AE%97%E6%B3%95"><span class="toc-text">三、Adaptive $LL(\ast)$ 语法分析算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ANTLR-4"><span class="toc-text">1. ANTLR 4</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%9B%B4%E6%8E%A5%E5%B7%A6%E9%80%92%E5%BD%92%E4%B8%8E%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">2. 直接左递归与优先级</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-%E5%BC%95%E5%85%A5"><span class="toc-text">2.1 引入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-ANTLR-%E5%A4%84%E7%90%86%E6%96%B9%E6%B3%95-%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8A%E5%8D%87%E7%AE%97%E6%B3%95"><span class="toc-text">2.2 ANTLR 处理方法(优先级上升算法)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-%E6%89%A9%E5%B1%95%E4%B8%80%E4%B8%8B%E8%AF%AD%E6%B3%95"><span class="toc-text">2.3 扩展一下语法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-%E5%A6%82%E4%BD%95%E5%86%B3%E5%AE%9A%E4%BC%98%E5%85%88%E7%BA%A7"><span class="toc-text">2.4 如何决定优先级</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E9%94%99%E8%AF%AF%E6%8A%A5%E5%91%8A%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-text">3. 错误报告与恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-%E5%BC%95%E5%85%A5-1"><span class="toc-text">3.1 引入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-%E6%81%90%E6%85%8C-%E5%BA%94%E6%80%A5-Panic-%E6%A8%A1%E5%BC%8F"><span class="toc-text">3.2 恐慌&#x2F;应急(Panic)模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-%E5%90%8C%E6%AD%A5-%E8%BF%94%E5%9B%9E-%E7%AD%96%E7%95%A5"><span class="toc-text">3.3 同步-返回 策略</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-Adaptive-LL-ast"><span class="toc-text">4. Adaptive $LL(\ast)$</span></a></li></ol></li></ol></li></ol>
-      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/编译原理/">编译原理</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/编译原理/">编译原理</a>
+    </span>
+    
+
     </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
 
     
   </div>
+</article>
+
+  
 
 
-        
-<div class="footer">
-  <div class="social">
-    <ul>
-      
-        <li>
-          
-              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
-                <i class="iconfont icon-github"></i>
-              </a>
-              
-        </li>
-        
-    </ul>
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2024 Whale
+    
+  </p>
+</footer>
+    
+    
   </div>
-  
-    
-    <div class="footer-more">
-      
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
-        
-    </div>
-  
-    
-    <div class="footer-more">
-      
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
-        
-    </div>
-  
-  
-    <div class="footer-views">
-      
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        
-      
-          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-        
-      
-          本站访客数<span id="busuanzi_value_site_uv"></span>人
-        
-      
-    </div>
-  
 </div>
-
-      </div>
-
-      <div class="tools-bar">
-        <div class="back-to-top tools-bar-item hidden">
-  <a href="javascript: void(0)">
-    <i class="iconfont icon-chevronup"></i>
-  </a>
-</div>
-
-
-<script src="/js/backtotop.js"></script>
-
-
-
-        
-  <div class="search-icon tools-bar-item" id="search-icon">
-    <a href="javascript: void(0)">
-      <i class="iconfont icon-search"></i>
-    </a>
-  </div>
-
-  <div class="search-overlay hidden">
-    <div class="search-content" tabindex="0">
-      <div class="search-title">
-        <span class="search-icon-input">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-search"></i>
-          </a>
-        </span>
-        
-          <input type="text" class="search-input" id="search-input" placeholder="Search...">
-        
-        <span class="search-close-icon" id="search-close-icon">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-close"></i>
-          </a>
-        </span>
-      </div>
-      <div class="search-result" id="search-result"></div>
-    </div>
-  </div>
-
-  <script type="text/javascript">
-    var inputArea = document.querySelector("#search-input")
-    var searchOverlayArea = document.querySelector(".search-overlay")
-
-    inputArea.onclick = function() {
-      getSearchFile()
-      this.onclick = null
-    }
-
-    inputArea.onkeydown = function() {
-      if(event.keyCode == 13)
-        return false
-    }
-
-    function openOrHideSearchContent() {
-      let isHidden = searchOverlayArea.classList.contains('hidden')
-      if (isHidden) {
-        searchOverlayArea.classList.remove('hidden')
-        document.body.classList.add('hidden')
-        // inputArea.focus()
-      } else {
-        searchOverlayArea.classList.add('hidden')
-        document.body.classList.remove('hidden')
-      }
-    }
-
-    function blurSearchContent(e) {
-      if (e.target === searchOverlayArea) {
-        openOrHideSearchContent()
-      }
-    }
-
-    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
-    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
-    searchOverlayArea.addEventListener("click", blurSearchContent, false)
-
-    var searchFunc = function (path, search_id, content_id) {
-      'use strict';
-      var $input = document.getElementById(search_id);
-      var $resultContent = document.getElementById(content_id);
-      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
-      $.ajax({
-        // 0x01. load xml file
-        url: path,
-        dataType: "xml",
-        success: function (xmlResponse) {
-          // 0x02. parse xml file
-          var datas = $("entry", xmlResponse).map(function () {
-            return {
-              title: $("title", this).text(),
-              content: $("content", this).text(),
-              url: $("url", this).text()
-            };
-          }).get();
-          $resultContent.innerHTML = "";
-
-          $input.addEventListener('input', function () {
-            // 0x03. parse query to keywords list
-            var str = '<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length <= 0) {
-              return;
-            }
-            // 0x04. perform local searching
-            datas.forEach(function (data) {
-              var isMatch = true;
-              var content_index = [];
-              if (!data.title || data.title.trim() === '') {
-                data.title = "Untitled";
-              }
-              var orig_data_title = data.title.trim();
-              var data_title = orig_data_title.toLowerCase();
-              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
-              var data_content = orig_data_content.toLowerCase();
-              var data_url = data.url;
-              var index_title = -1;
-              var index_content = -1;
-              var first_occur = -1;
-              // only match artiles with not empty contents
-              if (data_content !== '') {
-                keywords.forEach(function (keyword, i) {
-                  index_title = data_title.indexOf(keyword);
-                  index_content = data_content.indexOf(keyword);
-
-                  if (index_title < 0 && index_content < 0) {
-                    isMatch = false;
-                  } else {
-                    if (index_content < 0) {
-                      index_content = 0;
-                    }
-                    if (i == 0) {
-                      first_occur = index_content;
-                    }
-                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
-                  }
-                });
-              } else {
-                isMatch = false;
-              }
-              // 0x05. show search results
-              if (isMatch) {
-                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
-                var content = orig_data_content;
-                if (first_occur >= 0) {
-                  // cut out 100 characters
-                  var start = first_occur - 20;
-                  var end = first_occur + 80;
-
-                  if (start < 0) {
-                    start = 0;
-                  }
-
-                  if (start == 0) {
-                    end = 100;
-                  }
-
-                  if (end > content.length) {
-                    end = content.length;
-                  }
-
-                  var match_content = content.substr(start, end);
-
-                  // highlight all keywords
-                  keywords.forEach(function (keyword) {
-                    var regS = new RegExp(keyword, "gi");
-                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
-                  });
-
-                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
-                }
-                str += "</li>";
-              }
-            });
-            str += "</ul>";
-            if (str.indexOf('<li>') === -1) {
-              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
-            }
-            $resultContent.innerHTML = str;
-          });
-        },
-        error: function(xhr, status, error) {
-          $resultContent.innerHTML = ""
-          if (xhr.status === 404) {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
-          } else {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
-          }
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
         }
-      });
-      $(document).on('click', '#search-close-icon', function() {
-        $('#search-input').val('');
-        $('#search-result').html('');
-      });
-    }
-
-    var getSearchFile = function() {
-        var path = "/search.xml";
-        searchFunc(path, 'search-input', 'search-result');
-    }
-  </script>
-
-
-
-
-        
-  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
-    <a href="javascript: void(0)">
-      <i id="theme-icon" class="iconfont icon-moon"></i>
-    </a>
-  </div>
-
-  
-<script src="/js/colorscheme.js"></script>
-
-
-
-
-
-        
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86(3)%20%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F11%2F21%2F%25E7%25BC%2596%25E8%25AF%2591%25E5%258E%259F%25E7%2590%2586-3-%25E8%25AF%25AD%25E6%25B3%2595%25E5%2588%2586%25E6%259E%2590%2F + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/11/21/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-3-%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90/" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
-  
-  
-<script src="/js/shares.js"></script>
-
-
-
-      </div>
-    </div>
-  </body>
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>

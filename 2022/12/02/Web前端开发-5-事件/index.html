@@ -1,185 +1,84 @@
-<!DOCTYPE html>
-<html lang="en" color-mode="light">
-
-  <head>
+<!DOCTYPE HTML>
+<html>
+<head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
   
-  <meta name="author" content="Whale" />
-  <meta name="description" content="码农预备役" />
-  
-  
-  <title>
-    
-      Web前端开发(5) 事件、作用域、闭包 
-      
-      
-      |
-    
-     Whale&#39;s Blog
-  </title>
+  <title>Web前端开发(5) 事件、作用域、闭包 | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
 
   
-    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
-    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
-  
-
-  <!-- Raleway-Font -->
-  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
-
-  <!-- hexo site css -->
-  <link rel="stylesheet" href="/css/main.css" />
-  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
-  <link rel="stylesheet" href="/css/intellij-light.css">
-  <!-- 代码块风格 -->
-  
-    
-<link rel="stylesheet" href="/css/figcaption/mac-block.css">
-
-  
-
-  <!-- jquery3.3.1 -->
-  
-    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
-  
-
-  <!-- fancybox -->
-  
-    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
-    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
-  
-  
-<script src="/js/fancybox.js"></script>
-
-
+  <meta name="author" content="Whale">
   
 
   
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <meta name="description" content="码农预备役">
   
 
-  <script>
-    var html = document.documentElement
-    const colorMode = localStorage.getItem('color-mode')
-    if (colorMode) {
-      document.documentElement.setAttribute('color-mode', colorMode)
-    }
-  </script>
+  
+  
+  <meta name="keywords" content="前端">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Web前端开发(5) 事件、作用域、闭包"/>
+
+  <meta property="og:site_name" content="Whale&#39;s Blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 
-  <body>
-    <div id="app">
-      <div class="header">
-  <div class="avatar">
-    <a href="/">
-      <!-- 头像取消懒加载，添加no-lazy -->
-      
-        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
-      
-    </a>
-    <div class="nickname"><a href="/">Whale</a></div>
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Whale&#39;s Blog</a>
+    </h1>
+    <p class="site-description">Stay hungry, Stay foolish</p>
   </div>
-  <div class="navbar">
+  <nav class="site-navigation">
     <ul>
       
-        <li class="nav-item" data-path="/">
-          <a href="/">Home</a>
-        </li>
-      
-        <li class="nav-item" data-path="/archives/">
-          <a href="/archives/">Archives</a>
-        </li>
-      
-        <li class="nav-item" data-path="/categories/">
-          <a href="/categories/">Categories</a>
-        </li>
-      
-        <li class="nav-item" data-path="/friends/">
-          <a href="/friends/">Friends</a>
-        </li>
-      
     </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Web前端开发(5) 事件、作用域、闭包</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2022/12/02/Web前端开发-5-事件/" rel="bookmark">
+        <time class="entry-date published" datetime="2022-12-02T05:59:24.000Z">
+          2022-12-02
+        </time>
+      </a>
+    </span>
   </div>
-</div>
-
-
-<script src="/js/activeNav.js"></script>
-
-
-
-      <div class="flex-container">
-        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
-<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
-
-
-  <!-- LaTex Display -->
-
-  
-    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
-  
-  <script>
-    MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      }
-    }
-  </script>
-
-
-
-
-
-  <!-- clipboard -->
-
-  
-    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
-  
-  
-<script src="/js/codeCopy.js"></script>
-
-
-
-
-
 
 
   
 
-  
-
-  
-
-  
-  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
-  <div class="container post-details" id="post-details">
-    <div class="post-content">
-      <div class="post-title">Web前端开发(5) 事件、作用域、闭包</div>
-      <div class="post-attach">
-        <span class="post-pubtime">
-          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2023-08-09 14:53:19
-        </span>
-        
-              <span class="post-categories">
-                <i class="iconfont icon-bookmark" title="Categories"></i>
-                
-                <span class="span--category">
-                  <a href="/categories/NJU/" title="NJU">
-                    <b>#</b> NJU
-                  </a>
-                </span>
-                
-                <span class="span--category">
-                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
-                    <b>#</b> Web前端开发
-                  </a>
-                </span>
-                
-              </span>
-          
-      </div>
-      <div class="markdown-body">
+  <div class="article-content">
+    <div class="entry">
+      
         <h1 id="7-1-JS-事件"><a href="#7-1-JS-事件" class="headerlink" title="7.1 JS 事件"></a>7.1 JS 事件</h1><h2 id="1-JS-事件"><a href="#1-JS-事件" class="headerlink" title="1 JS 事件"></a>1 JS 事件</h2><h3 id="1-1-事件"><a href="#1-1-事件" class="headerlink" title="1.1 事件"></a>1.1 事件</h3><ul>
 <li>事件和事件处理<ul>
 <li>使 web 应用程序的响应性、动态性和交互性更强</li>
@@ -590,368 +489,81 @@
 </blockquote>
 <h3 id="4-5-举例"><a href="#4-5-举例" class="headerlink" title="4.5 举例"></a>4.5 举例</h3><figure class="highlight js"><table><tr><td class="code"><pre><code class="hljs js"><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;The Window&quot;</span>;<br><span class="hljs-keyword">var</span> object = &#123;<br>    name : <span class="hljs-string">&quot;My Object&quot;</span>,<br>    getNameFunc : <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>;<br>        &#125;;<br>    &#125;<br>&#125;;<br><span class="hljs-title function_">alert</span>(object.<span class="hljs-title function_">getNameFunc</span>()());  <span class="hljs-comment">// The Window</span><br><br><span class="hljs-keyword">var</span> name = <span class="hljs-string">&quot;The Window&quot;</span>;<br><span class="hljs-keyword">var</span> object = &#123;<br>	name : <span class="hljs-string">&quot;My Object&quot;</span>,<br>    getNameFunc : <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        <span class="hljs-keyword">var</span> that = <span class="hljs-variable language_">this</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">function</span>(<span class="hljs-params"></span>)&#123;<br>        	<span class="hljs-keyword">return</span> that.<span class="hljs-property">name</span>;<br>        &#125;;<br>    &#125;<br>&#125;;<br><span class="hljs-title function_">alert</span>(object.<span class="hljs-title function_">getNameFunc</span>()());   <span class="hljs-comment">// My Object</span><br></code></pre></td></tr></table></figure>
 
-      </div>
-      
-        <div class="prev-or-next">
-          <div class="post-foot-next">
-            
-              <a href="/2022/11/25/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-4-JavaScript/" target="_self">
-                <i class="iconfont icon-chevronleft"></i>
-                <span>Prev</span>
-              </a>
-            
-          </div>
-          <div class="post-attach">
-            <span class="post-pubtime">
-              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2023-08-09 14:53:19
-            </span>
-            
-                  <span class="post-categories">
-                    <i class="iconfont icon-bookmark" title="Categories"></i>
-                    
-                    <span class="span--category">
-                      <a href="/categories/NJU/" title="NJU">
-                        <b>#</b> NJU
-                      </a>
-                    </span>
-                    
-                    <span class="span--category">
-                      <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" title="Web前端开发">
-                        <b>#</b> Web前端开发
-                      </a>
-                    </span>
-                    
-                  </span>
-              
-          </div>
-          <div class="post-foot-prev">
-            
-              <a href="/2022/12/05/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-6-%E5%B9%B6%E5%8F%91%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
-            
-          </div>
-        </div>
       
     </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
     
-  <div id="btn-catalog" class="btn-catalog">
-    <i class="iconfont icon-catalog"></i>
-  </div>
-  <div class="post-catalog hidden" id="catalog">
-    <div class="title">Contents</div>
-    <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#7-1-JS-%E4%BA%8B%E4%BB%B6"><span class="toc-text">7.1 JS 事件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-JS-%E4%BA%8B%E4%BB%B6"><span class="toc-text">1 JS 事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BA%8B%E4%BB%B6"><span class="toc-text">1.1 事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E7%BC%96%E7%A8%8B"><span class="toc-text">1.2 事件驱动编程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">1.3 事件处理程序</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-JS-%E7%9A%84%E7%94%A8%E9%80%94"><span class="toc-text">1.4 JS 的用途</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E8%AF%AD%E6%B3%95"><span class="toc-text">1.5 语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E8%A7%82%E5%AF%9F%E8%80%85%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.6 观察者模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-6-1-%E7%89%B9%E5%BE%81"><span class="toc-text">1.6.1 特征</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-7-%E7%94%A8-jQuery-%E6%96%B9%E5%BC%8F%E9%99%84%E5%8A%A0%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-text">1.7 用 jQuery 方式附加事件处理程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">2 事件类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%8F%AF%E8%83%BD%E5%8F%91%E7%94%9F%E7%9A%84%E4%B8%8D%E5%90%8C%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.1 可能发生的不同事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-DOM-2-%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B"><span class="toc-text">2.2 DOM 2 事件类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-HTML5-%E6%96%B0%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.3 HTML5 新事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E8%A7%A6%E5%B1%8F%E5%92%8C%E7%A7%BB%E5%8A%A8%E8%AE%BE%E5%A4%87%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.4 触屏和移动设备事件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%BA%8B%E4%BB%B6%E7%B1%BB%E5%9E%8B%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">2.5 事件类型的使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E4%BA%8B%E4%BB%B6%E5%AF%B9%E8%B1%A1"><span class="toc-text">2.6 事件对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E9%BC%A0%E6%A0%87%E4%BA%8B%E4%BB%B6"><span class="toc-text">2.7 鼠标事件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%A8%A1%E5%9E%8B"><span class="toc-text">3 事件处理模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-DOM-0"><span class="toc-text">3.1 DOM 0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-DOM-%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">3.2 DOM 事件流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E9%98%B6%E6%AE%B5"><span class="toc-text">3.2.1 事件处理阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-2-%E4%BA%8B%E4%BB%B6%E6%B5%81"><span class="toc-text">3.2.2 事件流</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-3-DOM-2-%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">3.2.3 DOM 2 中的方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-4-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%85%BC%E5%AE%B9%E6%80%A7"><span class="toc-text">3.2.4 浏览器兼容性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%98%BB%E6%AD%A2%E9%BB%98%E8%AE%A4%E8%A1%8C%E4%B8%BA"><span class="toc-text">3.3 阻止默认行为</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E9%87%8D%E5%86%993-1%E4%B8%AD%E4%BD%BF%E7%94%A8%E7%9A%84%E7%A4%BA%E4%BE%8B"><span class="toc-text">3.4 重写3.1中使用的示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-Microsoft-specific-%E6%A8%A1%E5%9E%8B"><span class="toc-text">3.5 Microsoft-specific 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-IE-%E6%9B%BE%E7%BB%8F%E7%9A%84%E7%89%B9%E5%AE%9A%E6%93%8D%E4%BD%9C"><span class="toc-text">3.6 IE 曾经的特定操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-7-%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%BB%91%E5%AE%9A"><span class="toc-text">3.7 事件处理程序的绑定</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-2-JS-%E4%BD%9C%E7%94%A8%E5%9F%9F%E4%B8%8E%E9%97%AD%E5%8C%85"><span class="toc-text">7.2 JS 作用域与闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">1 作用域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-JS-%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">1.1 JS 作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-JS-%E5%8F%98%E9%87%8F"><span class="toc-text">1.2 JS 变量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-text">1.2.1 全局变量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E8%87%AA%E5%8A%A8%E5%85%A8%E5%B1%80"><span class="toc-text">1.2.2 自动全局</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%87%BD%E6%95%B0%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">1.3 函数作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-JS-%E5%8F%98%E9%87%8F%E7%9A%84%E6%9C%89%E6%95%88%E6%9C%9F"><span class="toc-text">1.4 JS 变量的有效期</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%97%AD%E5%8C%85"><span class="toc-text">2 闭包</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%AE%A1%E6%95%B0%E5%99%A8%E5%9B%B0%E5%A2%83"><span class="toc-text">2.1 计数器困境</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-JS-%E5%B5%8C%E5%A5%97%E5%87%BD%E6%95%B0"><span class="toc-text">2.2 JS 嵌套函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-JS-%E9%97%AD%E5%8C%85"><span class="toc-text">2.3 JS 闭包</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E9%97%AD%E5%8C%85%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">2.4 闭包的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-text">2.5 词法作用域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E9%97%AD%E5%8C%85%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">2.6 闭包应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="toc-text">3 作用域链</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE"><span class="toc-text">3.1 作用域链</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E6%89%A7%E8%A1%8C-add-%E5%87%BD%E6%95%B0"><span class="toc-text">3.1.1 执行 add 函数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BE%8B%E5%AD%90"><span class="toc-text">3.2 例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%94%B9%E5%8F%98%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE-with"><span class="toc-text">3.3 改变作用域链-with</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-%E6%94%B9%E5%8F%98%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE-%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">3.3.1 改变作用域链-性能问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-try-catch"><span class="toc-text">3.4 try-catch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E9%97%AD%E5%8C%85%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%86%85%E5%AD%98"><span class="toc-text">3.5 闭包、作用域和内存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-5-1-%E9%97%AD%E5%8C%85%E6%89%A7%E8%A1%8C"><span class="toc-text">3.5.1 闭包执行</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%8F%90%E5%8D%87"><span class="toc-text">4 提升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%8F%90%E5%8D%87-Hosting"><span class="toc-text">4.1 提升(Hosting)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-let-const"><span class="toc-text">4.2 let const</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-temporal"><span class="toc-text">4.3 temporal</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%87%BD%E6%95%B0%E6%8F%90%E5%8D%87"><span class="toc-text">4.4 函数提升</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E4%B8%BE%E4%BE%8B"><span class="toc-text">4.5 举例</span></a></li></ol></li></ol></li></ol>
-      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/Web前端开发/">Web前端开发</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/前端/">前端</a>
+    </span>
+    
+
     </div>
-  </div>
-
-  
-<script src="/js/catalog.js"></script>
-
-
-
 
     
   </div>
+</article>
+
+  
 
 
-        
-<div class="footer">
-  <div class="social">
-    <ul>
-      
-        <li>
-          
-              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
-                <i class="iconfont icon-github"></i>
-              </a>
-              
-        </li>
-        
-    </ul>
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2024 Whale
+    
+  </p>
+</footer>
+    
+    
   </div>
-  
-    
-    <div class="footer-more">
-      
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
-        
-    </div>
-  
-    
-    <div class="footer-more">
-      
-        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
-        
-    </div>
-  
-  
-    <div class="footer-views">
-      
-          本站总访问量<span id="busuanzi_value_site_pv"></span>次
-        
-      
-          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
-        
-      
-          本站访客数<span id="busuanzi_value_site_uv"></span>人
-        
-      
-    </div>
-  
 </div>
-
-      </div>
-
-      <div class="tools-bar">
-        <div class="back-to-top tools-bar-item hidden">
-  <a href="javascript: void(0)">
-    <i class="iconfont icon-chevronup"></i>
-  </a>
-</div>
-
-
-<script src="/js/backtotop.js"></script>
-
-
-
-        
-  <div class="search-icon tools-bar-item" id="search-icon">
-    <a href="javascript: void(0)">
-      <i class="iconfont icon-search"></i>
-    </a>
-  </div>
-
-  <div class="search-overlay hidden">
-    <div class="search-content" tabindex="0">
-      <div class="search-title">
-        <span class="search-icon-input">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-search"></i>
-          </a>
-        </span>
-        
-          <input type="text" class="search-input" id="search-input" placeholder="Search...">
-        
-        <span class="search-close-icon" id="search-close-icon">
-          <a href="javascript: void(0)">
-            <i class="iconfont icon-close"></i>
-          </a>
-        </span>
-      </div>
-      <div class="search-result" id="search-result"></div>
-    </div>
-  </div>
-
-  <script type="text/javascript">
-    var inputArea = document.querySelector("#search-input")
-    var searchOverlayArea = document.querySelector(".search-overlay")
-
-    inputArea.onclick = function() {
-      getSearchFile()
-      this.onclick = null
-    }
-
-    inputArea.onkeydown = function() {
-      if(event.keyCode == 13)
-        return false
-    }
-
-    function openOrHideSearchContent() {
-      let isHidden = searchOverlayArea.classList.contains('hidden')
-      if (isHidden) {
-        searchOverlayArea.classList.remove('hidden')
-        document.body.classList.add('hidden')
-        // inputArea.focus()
-      } else {
-        searchOverlayArea.classList.add('hidden')
-        document.body.classList.remove('hidden')
-      }
-    }
-
-    function blurSearchContent(e) {
-      if (e.target === searchOverlayArea) {
-        openOrHideSearchContent()
-      }
-    }
-
-    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
-    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
-    searchOverlayArea.addEventListener("click", blurSearchContent, false)
-
-    var searchFunc = function (path, search_id, content_id) {
-      'use strict';
-      var $input = document.getElementById(search_id);
-      var $resultContent = document.getElementById(content_id);
-      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
-      $.ajax({
-        // 0x01. load xml file
-        url: path,
-        dataType: "xml",
-        success: function (xmlResponse) {
-          // 0x02. parse xml file
-          var datas = $("entry", xmlResponse).map(function () {
-            return {
-              title: $("title", this).text(),
-              content: $("content", this).text(),
-              url: $("url", this).text()
-            };
-          }).get();
-          $resultContent.innerHTML = "";
-
-          $input.addEventListener('input', function () {
-            // 0x03. parse query to keywords list
-            var str = '<ul class=\"search-result-list\">';
-            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
-            $resultContent.innerHTML = "";
-            if (this.value.trim().length <= 0) {
-              return;
-            }
-            // 0x04. perform local searching
-            datas.forEach(function (data) {
-              var isMatch = true;
-              var content_index = [];
-              if (!data.title || data.title.trim() === '') {
-                data.title = "Untitled";
-              }
-              var orig_data_title = data.title.trim();
-              var data_title = orig_data_title.toLowerCase();
-              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
-              var data_content = orig_data_content.toLowerCase();
-              var data_url = data.url;
-              var index_title = -1;
-              var index_content = -1;
-              var first_occur = -1;
-              // only match artiles with not empty contents
-              if (data_content !== '') {
-                keywords.forEach(function (keyword, i) {
-                  index_title = data_title.indexOf(keyword);
-                  index_content = data_content.indexOf(keyword);
-
-                  if (index_title < 0 && index_content < 0) {
-                    isMatch = false;
-                  } else {
-                    if (index_content < 0) {
-                      index_content = 0;
-                    }
-                    if (i == 0) {
-                      first_occur = index_content;
-                    }
-                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
-                  }
-                });
-              } else {
-                isMatch = false;
-              }
-              // 0x05. show search results
-              if (isMatch) {
-                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
-                var content = orig_data_content;
-                if (first_occur >= 0) {
-                  // cut out 100 characters
-                  var start = first_occur - 20;
-                  var end = first_occur + 80;
-
-                  if (start < 0) {
-                    start = 0;
-                  }
-
-                  if (start == 0) {
-                    end = 100;
-                  }
-
-                  if (end > content.length) {
-                    end = content.length;
-                  }
-
-                  var match_content = content.substr(start, end);
-
-                  // highlight all keywords
-                  keywords.forEach(function (keyword) {
-                    var regS = new RegExp(keyword, "gi");
-                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
-                  });
-
-                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
-                }
-                str += "</li>";
-              }
-            });
-            str += "</ul>";
-            if (str.indexOf('<li>') === -1) {
-              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
-            }
-            $resultContent.innerHTML = str;
-          });
-        },
-        error: function(xhr, status, error) {
-          $resultContent.innerHTML = ""
-          if (xhr.status === 404) {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
-          } else {
-            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
-          }
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
         }
-      });
-      $(document).on('click', '#search-close-icon', function() {
-        $('#search-input').val('');
-        $('#search-result').html('');
-      });
-    }
-
-    var getSearchFile = function() {
-        var path = "/search.xml";
-        searchFunc(path, 'search-input', 'search-result');
-    }
-  </script>
-
-
-
-
-        
-  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
-    <a href="javascript: void(0)">
-      <i id="theme-icon" class="iconfont icon-moon"></i>
-    </a>
-  </div>
-
-  
-<script src="/js/colorscheme.js"></script>
-
-
-
-
-
-        
-  
-    <div class="share-icon tools-bar-item">
-      <a href="javascript: void(0)" id="share-icon">
-        <i class="iconfont iconshare"></i>
-      </a>
-      <div class="share-content hidden">
-        
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91(5)%20%E4%BA%8B%E4%BB%B6%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E3%80%81%E9%97%AD%E5%8C%85 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F12%2F02%2FWeb%25E5%2589%258D%25E7%25AB%25AF%25E5%25BC%2580%25E5%258F%2591-5-%25E4%25BA%258B%25E4%25BB%25B6%2F + '" target="_blank" title="Twitter">
-            <i class="iconfont icon-twitter"></i>
-          </a>
-        
-        
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/12/02/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-5-%E4%BA%8B%E4%BB%B6/" target="_blank" title="Facebook">
-            <i class="iconfont icon-facebooksquare"></i>
-          </a>
-        
-      </div>
-    </div>
-  
-  
-<script src="/js/shares.js"></script>
-
-
-
-      </div>
-    </div>
-  </body>
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>
