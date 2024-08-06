@@ -1,83 +1,240 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="第一、二章 软件工程概论软件工程（名词解释） 应用系统的、规范的、可量化的方法，来开发、运行和维护软件，即将工程应用到软件 对 (1) 中各种方法的研究  从1950s—2000s之间的特点 1950s：科学计算；以机器为中心进行编程；像生产硬件一样生产软件 1960s：业务应用；软件不同于硬件；用软件工艺的方式生产软件 1970s：结构化方法；瀑布模型；强调规则和纪律。奠定了软件工程的基础 19">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件工程与计算Ⅱ">
+<meta property="og:url" content="https://whale-lyi.github.io/2023/07/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97%E2%85%A1/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="第一、二章 软件工程概论软件工程（名词解释） 应用系统的、规范的、可量化的方法，来开发、运行和维护软件，即将工程应用到软件 对 (1) 中各种方法的研究  从1950s—2000s之间的特点 1950s：科学计算；以机器为中心进行编程；像生产硬件一样生产软件 1960s：业务应用；软件不同于硬件；用软件工艺的方式生产软件 1970s：结构化方法；瀑布模型；强调规则和纪律。奠定了软件工程的基础 19">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712193813264.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131001510.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131008234.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131013064.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712131047057.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712133632656.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712133636625.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/clip_image002.jpg">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712134722603.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712134738179.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712141123090.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712155653249.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712155731069.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712155735000.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712161113622.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712161116282.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165122139.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165134077.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165157920.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165211255.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165834545.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165859268.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712165903024.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712170007005.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712170010619.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712170210765.png">
+<meta property="article:published_time" content="2023-07-12T04:09:06.000Z">
+<meta property="article:modified_time" content="2023-08-09T06:53:19.996Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="软件工程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230712193813264.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2023/07/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97%E2%85%A1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>软件工程与计算Ⅱ | Whale's Blog</title>
   
-  <title>软件工程与计算Ⅱ | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="软件工程">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="软件工程与计算Ⅱ"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>软件工程与计算Ⅱ</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2023/07/12/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97%E2%85%A1/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2023/07/12/软件工程与计算Ⅱ/" rel="bookmark">
-        <time class="entry-date published" datetime="2023-07-12T04:09:06.000Z">
-          2023-07-12
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件工程与计算Ⅱ
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2023-07-12 12:09:06" itemprop="dateCreated datePublished" datetime="2023-07-12T12:09:06+08:00">2023-07-12</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-09 14:53:19" itemprop="dateModified" datetime="2023-08-09T14:53:19+08:00">2023-08-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E4%B8%8E%E8%AE%A1%E7%AE%97/" itemprop="url" rel="index"><span itemprop="name">软件工程与计算</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h2 id="第一、二章-软件工程概论"><a href="#第一、二章-软件工程概论" class="headerlink" title="第一、二章 软件工程概论"></a>第一、二章 软件工程概论</h2><h3 id="软件工程（名词解释）"><a href="#软件工程（名词解释）" class="headerlink" title="软件工程（名词解释）"></a>软件工程（名词解释）</h3><ol>
 <li>应用系统的、规范的、可量化的方法，来开发、运行和维护软件，即将工程应用到软件</li>
@@ -702,37 +859,179 @@
 </ul>
 <h3 id="软件工程知识体系的知识域"><a href="#软件工程知识体系的知识域" class="headerlink" title="软件工程知识体系的知识域"></a>软件工程知识体系的知识域</h3><p>需求、设计、构造、测试、维护、配置管理、工程管理、工程过程、工程工具和方法、质量</p>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/软件工程与计算/">软件工程与计算</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/软件工程/">软件工程</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B/" rel="tag"># 软件工程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/07/08/%E6%95%B0%E6%8D%AE%E7%AE%A1%E7%90%86%E5%9F%BA%E7%A1%80/" rel="prev" title="数据管理基础">
+      <i class="fa fa-chevron-left"></i> 数据管理基础
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/08/24/SpringBoot-1-%E6%A0%B8%E5%BF%83%E7%89%B9%E6%80%A7/" rel="next" title="SpringBoot(1) 核心特性">
+      SpringBoot(1) 核心特性 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E3%80%81%E4%BA%8C%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E6%A6%82%E8%AE%BA"><span class="nav-number">1.</span> <span class="nav-text">第一、二章 软件工程概论</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%EF%BC%88%E5%90%8D%E8%AF%8D%E8%A7%A3%E9%87%8A%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">软件工程（名词解释）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E1950s%E2%80%942000s%E4%B9%8B%E9%97%B4%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">从1950s—2000s之间的特点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E7%AB%A0-%E9%A1%B9%E7%9B%AE%E5%90%AF%E5%8A%A8"><span class="nav-number">2.</span> <span class="nav-text">第四章 项目启动</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%AE%A1%E7%90%86%E5%9B%A2%E9%98%9F"><span class="nav-number">2.1.</span> <span class="nav-text">如何管理团队</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B4%A8%E9%87%8F%E4%BF%9D%E9%9A%9C%E6%8E%AA%E6%96%BD"><span class="nav-number">2.2.</span> <span class="nav-text">质量保障措施</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%AE%A1%E7%90%86%E6%B4%BB%E5%8A%A8"><span class="nav-number">2.3.</span> <span class="nav-text">配置管理活动</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E9%9C%80%E6%B1%82%E5%9F%BA%E7%A1%80"><span class="nav-number">3.</span> <span class="nav-text">第五章 软件需求基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E5%AE%9A%E4%B9%89"><span class="nav-number">3.1.</span> <span class="nav-text">需求定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E5%B1%82%E6%AC%A1"><span class="nav-number">3.2.</span> <span class="nav-text">需求的三个层次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9C%80%E6%B1%82%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.3.</span> <span class="nav-text">需求的类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AD%E7%AB%A0-%E9%9C%80%E6%B1%82%E5%88%86%E6%9E%90%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">第六章 需求分析方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%94%A8%E4%BE%8B%E5%9B%BE"><span class="nav-number">4.1.</span> <span class="nav-text">建立用例图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%86%E6%9E%90%E7%B1%BB%E5%9B%BE%EF%BC%88%E6%A6%82%E5%BF%B5%E7%B1%BB%E5%9B%BE%E3%80%81%E9%A2%86%E5%9F%9F%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="nav-number">4.2.</span> <span class="nav-text">建立分析类图（概念类图、领域模型）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%B3%BB%E7%BB%9F%E9%A1%BA%E5%BA%8F%E5%9B%BE"><span class="nav-number">4.3.</span> <span class="nav-text">建立系统顺序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E7%8A%B6%E6%80%81%E5%9B%BE"><span class="nav-number">4.4.</span> <span class="nav-text">建立状态图</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-%E9%9C%80%E6%B1%82%E6%96%87%E6%A1%A3%E5%8C%96%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="nav-number">5.</span> <span class="nav-text">第七章 需求文档化与验证</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BB%BA%E7%AB%8B%E9%9C%80%E6%B1%82%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%EF%BC%9F%E7%BB%93%E5%90%88%E5%AE%9E%E9%AA%8C%E8%BF%9B%E8%A1%8C%E8%AF%B4%E6%98%8E"><span class="nav-number">5.1.</span> <span class="nav-text">为什么建立需求规格说明？结合实验进行说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%BB%99%E5%AE%9A%E7%9A%84%E9%9C%80%E6%B1%82%E7%A4%BA%E4%BE%8B%EF%BC%8C%E5%88%A4%E6%96%AD%E5%B9%B6%E4%BF%AE%E6%AD%A3%E5%85%B6%E9%94%99%E8%AF%AF%EF%BC%88%E5%AF%B9%E7%BB%99%E5%AE%9A%E7%9A%84%E9%9C%80%E6%B1%82%E8%A7%84%E6%A0%BC%E8%AF%B4%E6%98%8E%E7%89%87%E6%AE%B5%EF%BC%8C%E6%89%BE%E5%87%BA%E5%B9%B6%E4%BF%AE%E6%AD%A3%E5%85%B6%E9%94%99%E8%AF%AF%EF%BC%89"><span class="nav-number">5.2.</span> <span class="nav-text">对给定的需求示例，判断并修正其错误（对给定的需求规格说明片段，找出并修正其错误）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E7%BB%99%E5%AE%9A%E7%9A%84%E9%9C%80%E6%B1%82%E5%AE%9E%E4%BE%8B%EF%BC%8C%E8%AE%BE%E8%AE%A1%E5%8A%9F%E8%83%BD%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%EF%BC%8C%E7%BB%93%E5%90%88%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95"><span class="nav-number">5.3.</span> <span class="nav-text">对给定的需求实例，设计功能测试用例，结合测试方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%85%AB%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%9F%BA%E7%A1%80"><span class="nav-number">6.</span> <span class="nav-text">第八章 软件设计基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%AE%9A%E4%B9%89"><span class="nav-number">6.1.</span> <span class="nav-text">软件设计定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="nav-number">6.2.</span> <span class="nav-text">软件设计的核心思想</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E8%AE%BE%E8%AE%A1%E7%9A%84%E4%B8%89%E4%B8%AA%E5%B1%82%E6%AC%A1%E5%8F%8A%E5%90%84%E5%B1%82%E4%B8%BB%E8%A6%81%E6%80%9D%E6%83%B3"><span class="nav-number">6.3.</span> <span class="nav-text">软件工程设计的三个层次及各层主要思想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B9%9D%E3%80%81%E5%8D%81%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E4%B8%8E%E6%9E%84%E5%BB%BA"><span class="nav-number">7.</span> <span class="nav-text">第九、十章 软件体系结构设计与构建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">7.1.</span> <span class="nav-text">体系结构的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E9%A3%8E%E6%A0%BC%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">7.2.</span> <span class="nav-text">体系结构风格的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">7.3.</span> <span class="nav-text">体系结构设计的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8C%85%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">7.4.</span> <span class="nav-text">包的原则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%9E%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">7.5.</span> <span class="nav-text">体系结构构件之间接口的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%BC%80%E5%8F%91%E9%9B%86%E6%88%90%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%EF%BC%88Stub%E5%92%8CDriver%EF%BC%89"><span class="nav-number">7.6.</span> <span class="nav-text">体系结构开发集成测试用例（Stub和Driver）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%80%E7%AB%A0-%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.</span> <span class="nav-text">第十一章 人机交互设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%98%93%E7%94%A8%E6%80%A7%E6%A6%82%E5%BF%B5-Useability"><span class="nav-number">8.1.</span> <span class="nav-text">易用性概念(Useability)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%BD%E5%A4%9F%E5%88%97%E5%87%BA%E8%87%B3%E5%B0%915%E4%B8%AA%E7%95%8C%E9%9D%A2%E8%AE%BE%E8%AE%A1%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%8C%E5%B9%B6%E5%8A%A0%E4%BB%A5%E8%A7%A3%E9%87%8A"><span class="nav-number">8.2.</span> <span class="nav-text">能够列出至少5个界面设计的注意事项，并加以解释</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B2%BE%E7%A5%9E%E6%A8%A1%E5%9E%8B%E3%80%81%E5%B7%AE%E5%BC%82%E6%80%A7"><span class="nav-number">8.3.</span> <span class="nav-text">精神模型、差异性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E3%80%81%E5%8F%8D%E9%A6%88%E3%80%81%E5%8D%8F%E4%BD%9C%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">8.4.</span> <span class="nav-text">导航、反馈、协作式设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%8C%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E6%A6%82%E8%BF%B0"><span class="nav-number">9.</span> <span class="nav-text">第十二章 详细设计概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E7%9A%84%E5%87%BA%E5%8F%91%E7%82%B9"><span class="nav-number">9.1.</span> <span class="nav-text">详细设计的出发点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%81%8C%E8%B4%A3%E5%88%86%E9%85%8D"><span class="nav-number">9.2.</span> <span class="nav-text">职责分配</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E4%BD%9C"><span class="nav-number">9.3.</span> <span class="nav-text">协作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E9%A3%8E%E6%A0%BC"><span class="nav-number">9.4.</span> <span class="nav-text">控制风格</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%99%E5%AE%9A%E5%88%86%E6%9E%90%E7%B1%BB%E5%9B%BE%E3%80%81%E7%B3%BB%E7%BB%9F%E9%A1%BA%E5%BA%8F%E5%9B%BE%E5%92%8C%E8%AE%BE%E8%AE%A1%E5%9B%A0%E7%B4%A0%E6%8F%8F%E8%BF%B0%EF%BC%8C%E5%BB%BA%E7%AB%8B%E8%AE%BE%E8%AE%A1%E7%B1%BB%E5%9B%BE%E6%88%96%E8%80%85%E8%AF%A6%E7%BB%86%E9%A1%BA%E5%BA%8F%E5%9B%BE"><span class="nav-number">9.5.</span> <span class="nav-text">给定分析类图、系统顺序图和设计因素描述，建立设计类图或者详细顺序图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E4%BD%9C%E7%9A%84%E6%B5%8B%E8%AF%95"><span class="nav-number">9.6.</span> <span class="nav-text">协作的测试</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%89%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="nav-number">10.</span> <span class="nav-text">第十三章 详细设计中的模块化与信息隐藏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%A6%E5%90%88%E4%B8%8E%E5%86%85%E8%81%9A"><span class="nav-number">10.1.</span> <span class="nav-text">耦合与内聚</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E4%BE%8B%E5%AD%90%E8%AF%B4%E6%98%8E%E5%AE%83%E4%BB%AC%E4%B9%8B%E9%97%B4%E7%9A%84%E8%80%A6%E5%90%88%E7%A8%8B%E5%BA%A6%E4%B8%8E%E5%86%85%E8%81%9A%EF%BC%8C%E7%BB%99%E5%87%BA%E7%90%86%E7%94%B1"><span class="nav-number">10.2.</span> <span class="nav-text">对例子说明它们之间的耦合程度与内聚，给出理由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="nav-number">10.3.</span> <span class="nav-text">信息隐藏</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">11.</span> <span class="nav-text">第十四章 详细设计中面向对象方法下的模块化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8C%96%E7%9A%84%E5%8E%9F%E5%88%99"><span class="nav-number">11.1.</span> <span class="nav-text">模块化的原则</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E8%AF%A6%E7%BB%86%E8%AE%BE%E8%AE%A1%E4%B8%AD%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E6%96%B9%E6%B3%95%E4%B8%8B%E7%9A%84%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F"><span class="nav-number">12.</span> <span class="nav-text">第十五章 详细设计中面向对象方法下的信息隐藏</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%A1%E6%81%AF%E9%9A%90%E8%97%8F%E7%9A%84%E5%90%AB%E4%B9%89"><span class="nav-number">12.1.</span> <span class="nav-text">信息隐藏的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-number">12.2.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OCP"><span class="nav-number">12.3.</span> <span class="nav-text">OCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DIP"><span class="nav-number">12.4.</span> <span class="nav-text">DIP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E5%85%AD%E7%AB%A0-%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.</span> <span class="nav-text">第十六章 设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E3%80%81%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7%E3%80%81%E7%81%B5%E6%B4%BB%E6%80%A7"><span class="nav-number">13.1.</span> <span class="nav-text">如何实现可修改性、可扩展性、灵活性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AD%96%E7%95%A5%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.2.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.3.</span> <span class="nav-text">抽象工厂模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.4.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%AD%E4%BB%A3%E5%99%A8%E6%A8%A1%E5%BC%8F"><span class="nav-number">13.5.</span> <span class="nav-text">迭代器模式</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B8%83%E3%80%81%E5%8D%81%E5%85%AB%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E6%9E%84%E9%80%A0%E4%B8%8E%E4%BB%A3%E7%A0%81%E8%AE%BE%E8%AE%A1"><span class="nav-number">14.</span> <span class="nav-text">第十七、十八章 软件构造与代码设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%8C%85%E5%90%AB%E7%9A%84%E6%B4%BB%E5%8A%A8"><span class="nav-number">14.1.</span> <span class="nav-text">构造包含的活动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%9E%84%E3%80%81%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91%E3%80%81%E7%BB%93%E5%AF%B9%E7%BC%96%E7%A8%8B%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">14.2.</span> <span class="nav-text">重构、测试驱动开发、结对编程的概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%99%E5%AE%9A%E4%BB%A3%E7%A0%81%E6%AE%B5%E7%A4%BA%E4%BE%8B%EF%BC%8C%E5%AF%B9%E5%85%B6%E8%BF%9B%E8%A1%8C%E6%94%B9%E8%BF%9B%E6%88%96%E8%80%85%E5%8F%91%E7%8E%B0%E5%85%B6%E4%B8%AD%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">14.3.</span> <span class="nav-text">给定代码段示例，对其进行改进或者发现其中的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">14.4.</span> <span class="nav-text">单元测试用例的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A5%91%E7%BA%A6%E5%BC%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">14.5.</span> <span class="nav-text">契约式设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%98%B2%E5%BE%A1%E5%BC%8F%E7%BC%96%E7%A8%8B"><span class="nav-number">14.6.</span> <span class="nav-text">防御式编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A1%A8%E9%A9%B1%E5%8A%A8"><span class="nav-number">14.7.</span> <span class="nav-text">表驱动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%BA%A6%E9%87%8F"><span class="nav-number">14.8.</span> <span class="nav-text">代码复杂度度量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%8D%81%E4%B9%9D%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95"><span class="nav-number">15.</span> <span class="nav-text">第十九章 软件测试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8E%8C%E6%8F%A1%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E5%92%8C%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95%E7%9A%84%E5%B8%B8%E8%A7%81%E6%96%B9%E6%B3%95%EF%BC%8C%E5%B9%B6%E8%83%BD%E5%A4%9F%E8%BF%9B%E8%A1%8C%E4%BC%98%E7%BC%BA%E7%82%B9%E6%AF%94%E8%BE%83"><span class="nav-number">15.1.</span> <span class="nav-text">掌握白盒测试和黑盒测试的常见方法，并能够进行优缺点比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%E4%B8%89%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">15.2.</span> <span class="nav-text">白盒测试三种不同的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%99%E5%87%BA%E4%B8%80%E4%B8%AA%E5%9C%BA%E6%99%AF%EF%BC%8C%E5%88%A4%E6%96%AD%E5%BA%94%E8%AF%A5%E4%BD%BF%E7%94%A8%E5%93%AA%E7%A7%8D%E6%B5%8B%E8%AF%95%E6%96%B9%E6%B3%95%EF%BC%8C%E5%A6%82%E4%BD%95%E5%8E%BB%E5%86%99"><span class="nav-number">15.3.</span> <span class="nav-text">给出一个场景，判断应该使用哪种测试方法，如何去写</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E3%80%81%E4%BA%8C%E5%8D%81%E4%B8%80%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E4%BA%A4%E4%BB%98%E3%80%81%E8%BD%AF%E4%BB%B6%E7%BB%B4%E6%8A%A4%E4%B8%8E%E6%BC%94%E5%8C%96"><span class="nav-number">16.</span> <span class="nav-text">第二十、二十一章 软件交付、软件维护与演化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E8%BD%AF%E4%BB%B6%E7%BB%B4%E6%8A%A4%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7"><span class="nav-number">16.1.</span> <span class="nav-text">如何理解软件维护的重要性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%8F%91%E5%8F%AF%E7%BB%B4%E6%8A%A4%E8%BD%AF%E4%BB%B6%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">16.2.</span> <span class="nav-text">开发可维护软件的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BC%94%E5%8C%96%E5%BC%8F%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A8%A1%E5%9E%8B"><span class="nav-number">16.3.</span> <span class="nav-text">演化式生命周期模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%96%87%E6%A1%A3%E3%80%81%E7%B3%BB%E7%BB%9F%E6%96%87%E6%A1%A3"><span class="nav-number">16.4.</span> <span class="nav-text">用户文档、系统文档</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E3%80%81%E5%86%8D%E5%B7%A5%E7%A8%8B"><span class="nav-number">16.5.</span> <span class="nav-text">逆向工程、再工程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E5%8D%81%E4%BA%8C%E3%80%81%E4%BA%8C%E5%8D%81%E4%B8%89%E7%AB%A0-%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%81%8C%E4%B8%9A%E5%9F%BA%E7%A1%80"><span class="nav-number">17.</span> <span class="nav-text">第二十二、二十三章 软件开发过程模型与职业基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E6%A8%A1%E5%9E%8B"><span class="nav-number">17.1.</span> <span class="nav-text">软件生命周期模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E9%87%8A%E4%B8%8E%E6%AF%94%E8%BE%83%E4%B8%8D%E5%90%8C%E8%BF%87%E7%A8%8B%E6%A8%A1%E5%9E%8B%EF%BC%88%E8%A6%81%E6%B1%82%E3%80%81%E7%89%B9%E5%BE%81%E6%8F%8F%E8%BF%B0%E3%80%81%E4%BC%98%E7%82%B9%E3%80%81%E7%BC%BA%E7%82%B9%EF%BC%89"><span class="nav-number">17.2.</span> <span class="nav-text">解释与比较不同过程模型（要求、特征描述、优点、缺点）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%B7%A5%E7%A8%8B%E7%9F%A5%E8%AF%86%E4%BD%93%E7%B3%BB%E7%9A%84%E7%9F%A5%E8%AF%86%E5%9F%9F"><span class="nav-number">17.3.</span> <span class="nav-text">软件工程知识体系的知识域</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -744,39 +1043,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

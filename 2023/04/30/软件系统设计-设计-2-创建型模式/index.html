@@ -1,83 +1,235 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. 简单工厂模式(对象)1.1 模式动机考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮(如圆形按钮、矩形按钮、菱形按钮等)，这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件系统设计-设计(2) 创建型模式">
+<meta property="og:url" content="https://whale-lyi.github.io/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-2-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="1. 简单工厂模式(对象)1.1 模式动机考虑一个简单的软件应用场景，一个软件系统可以提供多个外观不同的按钮(如圆形按钮、矩形按钮、菱形按钮等)，这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/1.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/2.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302144630958.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302150010701.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302145941669.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302150733212.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302152423613.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230302153303001.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307103223798.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307105004867.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307135426191.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307143946706.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230307144524359.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627172507606.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627172750742.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627172921770.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173151750.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173318437.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173415062.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173603602.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230627173845855.png">
+<meta property="article:published_time" content="2023-04-30T04:56:58.000Z">
+<meta property="article:modified_time" content="2023-08-18T16:13:37.227Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="设计模式">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/1.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-2-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>软件系统设计-设计(2) 创建型模式 | Whale's Blog</title>
   
-  <title>软件系统设计-设计(2) 创建型模式 | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="设计模式">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="软件系统设计-设计(2) 创建型模式"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>软件系统设计-设计(2) 创建型模式</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-2-%E5%88%9B%E5%BB%BA%E5%9E%8B%E6%A8%A1%E5%BC%8F/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2023/04/30/软件系统设计-设计-2-创建型模式/" rel="bookmark">
-        <time class="entry-date published" datetime="2023-04-30T04:56:58.000Z">
-          2023-04-30
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件系统设计-设计(2) 创建型模式
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2023-04-30 12:56:58" itemprop="dateCreated datePublished" datetime="2023-04-30T12:56:58+08:00">2023-04-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-19 00:13:37" itemprop="dateModified" datetime="2023-08-19T00:13:37+08:00">2023-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">软件系统设计</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h2 id="1-简单工厂模式-对象"><a href="#1-简单工厂模式-对象" class="headerlink" title="1. 简单工厂模式(对象)"></a>1. 简单工厂模式(对象)</h2><h3 id="1-1-模式动机"><a href="#1-1-模式动机" class="headerlink" title="1.1 模式动机"></a>1.1 模式动机</h3><p>考虑一个简单的软件应用场景，<strong>一个软件系统可以提供多个外观不同</strong>的按钮(如圆形按钮、矩形按钮、菱形按钮等)，这些按钮都源自同一个基类，不过在继承基类后不同的子类修改了部分属性从而使得它们可以呈现不同的外观，如果我们希望在使用这些按钮时，不需要知道这些具体按钮类的名字，只需要知道表示该按钮类的一个参数，并提供一个调用方便的方法，把该参数传入方法即可返回一个相应的按钮对象，此时，就可以使用简单工厂模式</p>
 <h3 id="1-2-模式定义"><a href="#1-2-模式定义" class="headerlink" title="1.2 模式定义"></a>1.2 模式定义</h3><p>简单工厂模式(Simple Factory Pattern)：又称为<strong>静态工厂</strong>方法(Static Factory Method)模式，它属于<strong>类创建型模式</strong>。在简单工厂模式中，可以根据参数的不同返回不同类的实例。简单工厂模式专门定义一个类来负责创建其他类的实例，被创建的实例通常都具有共同的父类</p>
@@ -408,37 +560,179 @@
 <li>客户调用类的单个实例只允许使用一个公共访问点，除了该公共访问点，不能通过其他途径访问该实例</li>
 </ul>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/软件系统设计/">软件系统设计</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/设计模式/">设计模式</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># 设计模式</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-1-%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99%E3%80%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E6%A6%82%E8%BF%B0/" rel="prev" title="软件系统设计-设计(1) 软件设计原则">
+      <i class="fa fa-chevron-left"></i> 软件系统设计-设计(1) 软件设计原则
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-3-%E7%BB%93%E6%9E%84%E5%9E%8B%E6%A8%A1%E5%BC%8F/" rel="next" title="软件系统设计-设计(3) 结构型模式">
+      软件系统设计-设计(3) 结构型模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">1. 简单工厂模式(对象)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 模式实例与解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">1.6.</span> <span class="nav-text">1.6 模式优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E6%A8%A1%E5%BC%8F%E4%BD%BF%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">1.7.</span> <span class="nav-text">1.7 模式使用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-8-%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">1.8 模式应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-9-%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="nav-number">1.9.</span> <span class="nav-text">1.9 模式扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E7%AE%80%E5%8C%96"><span class="nav-number">1.9.1.</span> <span class="nav-text">简单工厂模式的简化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B7%A5%E5%8E%82%E6%96%B9%E6%B3%95%E6%A8%A1%E5%BC%8F-%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">2. 工厂方法模式(类)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%AE%80%E5%8D%95%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E4%B8%8D%E8%B6%B3"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 简单工厂模式的不足</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 模式实例与解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">2.6.</span> <span class="nav-text">2.6 模式优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">2.7.</span> <span class="nav-text">2.7 模式适用环境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E6%8A%BD%E8%B1%A1%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="nav-number">3.</span> <span class="nav-text">3. 抽象工厂模式(对象)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E6%A6%82%E5%BF%B5%E5%BC%95%E5%85%A5"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 概念引入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 模式优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 模式适用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 模式扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E2%80%9C%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99%E2%80%9D%E7%9A%84%E5%80%BE%E6%96%9C%E6%80%A7"><span class="nav-number">3.6.1.</span> <span class="nav-text">“开闭原则”的倾斜性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F%E7%9A%84%E9%80%80%E5%8C%96"><span class="nav-number">3.6.2.</span> <span class="nav-text">工厂模式的退化</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="nav-number">4.</span> <span class="nav-text">4. 建造者模式(对象)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-5-%E5%BB%BA%E9%80%A0%E8%80%85%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="nav-number">4.5.</span> <span class="nav-text">4.5 建造者模式实例与解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">4.6.</span> <span class="nav-text">4.6 模式优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">4.7.</span> <span class="nav-text">4.7 模式适用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-8-%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8"><span class="nav-number">4.8.</span> <span class="nav-text">4.8 模式应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-9-%E6%A8%A1%E5%BC%8F%E6%AF%94%E8%BE%83"><span class="nav-number">4.9.</span> <span class="nav-text">4.9 模式比较</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="nav-number">5.</span> <span class="nav-text">5. 原型模式(对象)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 模式分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 原型模式实例与解析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%82%AE%E4%BB%B6%E5%A4%8D%E5%88%B6%EF%BC%88%E6%B5%85%E5%85%8B%E9%9A%86%EF%BC%89"><span class="nav-number">5.5.1.</span> <span class="nav-text">邮件复制（浅克隆）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 模式优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">5.7.</span> <span class="nav-text">5.7 模式适用环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-8-%E6%A8%A1%E5%BC%8F%E5%BA%94%E7%94%A8"><span class="nav-number">5.8.</span> <span class="nav-text">5.8 模式应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-9-%E6%A8%A1%E5%BC%8F%E6%89%A9%E5%B1%95"><span class="nav-number">5.9.</span> <span class="nav-text">5.9 模式扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%A6%E5%8E%9F%E5%9E%8B%E7%AE%A1%E7%90%86%E5%99%A8%E7%9A%84%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">5.9.1.</span> <span class="nav-text">带原型管理器的原型模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B8%E4%BC%BC%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%A4%8D%E5%88%B6"><span class="nav-number">5.9.2.</span> <span class="nav-text">相似对象的复制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F-%E5%AF%B9%E8%B1%A1"><span class="nav-number">6.</span> <span class="nav-text">6. 单例模式(对象)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E6%A8%A1%E5%BC%8F%E5%8A%A8%E6%9C%BA"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 模式动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E6%A8%A1%E5%BC%8F%E5%AE%9A%E4%B9%89"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 模式定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E6%A8%A1%E5%BC%8F%E7%BB%93%E6%9E%84"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 模式结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E5%AE%9E%E4%BE%8B%E4%B8%8E%E8%A7%A3%E6%9E%90"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 单例模式实例与解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-5-%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B%E4%B8%8E%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B"><span class="nav-number">6.5.</span> <span class="nav-text">6.5 饿汉式单例与懒汉式单例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-1-%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B-Eager-Singleton"><span class="nav-number">6.5.1.</span> <span class="nav-text">6.5.1 饿汉式单例(Eager Singleton)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-2-%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B-Lazy-Singleton"><span class="nav-number">6.5.2.</span> <span class="nav-text">6.5.2 懒汉式单例(Lazy Singleton)</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD"><span class="nav-number">6.5.2.1.</span> <span class="nav-text">延迟加载</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81%E6%96%B9%E6%B3%95"><span class="nav-number">6.5.2.2.</span> <span class="nav-text">锁方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%94%81%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="nav-number">6.5.2.3.</span> <span class="nav-text">锁代码段</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8F%8C%E9%87%8D%E6%A3%80%E6%9F%A5%E9%94%81%E5%AE%9A"><span class="nav-number">6.5.2.4.</span> <span class="nav-text">双重检查锁定</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-3-%E9%A5%BF%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B%E7%B1%BB%E4%B8%8E%E6%87%92%E6%B1%89%E5%BC%8F%E5%8D%95%E4%BE%8B%E7%B1%BB%E7%9A%84%E6%AF%94%E8%BE%83"><span class="nav-number">6.5.3.</span> <span class="nav-text">6.5.3 饿汉式单例类与懒汉式单例类的比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-5-4-%E4%BD%BF%E7%94%A8%E9%9D%99%E6%80%81%E5%86%85%E9%83%A8%E7%B1%BB%E5%AE%9E%E7%8E%B0%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F"><span class="nav-number">6.5.4.</span> <span class="nav-text">6.5.4 使用静态内部类实现单例模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-6-%E6%A8%A1%E5%BC%8F%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">6.6.</span> <span class="nav-text">6.6 模式优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-7-%E6%A8%A1%E5%BC%8F%E9%80%82%E7%94%A8%E7%8E%AF%E5%A2%83"><span class="nav-number">6.7.</span> <span class="nav-text">6.7 模式适用环境</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -450,39 +744,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

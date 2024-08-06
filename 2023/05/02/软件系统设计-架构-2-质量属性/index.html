@@ -1,83 +1,263 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. 软件架构 Software Architecture 软件架构是系统的一个或多个结构，包含了软件元素、这些组件的外部可见属性以及他们之间的关系。Software Architecture is the structure or structures of the system, which comprise software elements, the externally visible">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件系统设计-架构(2) 质量属性">
+<meta property="og:url" content="https://whale-lyi.github.io/2023/05/02/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-2-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="1. 软件架构 Software Architecture 软件架构是系统的一个或多个结构，包含了软件元素、这些组件的外部可见属性以及他们之间的关系。Software Architecture is the structure or structures of the system, which comprise software elements, the externally visible">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501151308634.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201139387.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201152983.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201209993.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501162310334.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501164956678.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501165533669.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230613165243754.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201241584.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501171827036.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501172010947.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501172132423.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501173053221.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501173240504.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502010221233.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502010246494.png">
+<meta property="og:image" content="https://spricoder.oss-cn-shanghai.aliyuncs.com/2021-Software-System-Design/img/lec13/60.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014009007.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014204116.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014217912.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014645621.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502014703290.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502142540597.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502142635756.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502180141602.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502181331259.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502181359531.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502201358249.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502202540659.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502202644408.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203334412.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203358242.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203735211.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203808913.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230502203843719.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503174500263.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503174533139.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180645224.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180658761.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180914829.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503180953929.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503182000928.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503182027715.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193042483.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193105081.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193129199.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193849811.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193906777.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503194537890.png">
+<meta property="article:published_time" content="2023-05-02T06:22:57.000Z">
+<meta property="article:modified_time" content="2023-08-18T16:14:12.604Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="软件架构">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230501151308634.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2023/05/02/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-2-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>软件系统设计-架构(2) 质量属性 | Whale's Blog</title>
   
-  <title>软件系统设计-架构(2) 质量属性 | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="软件架构">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="软件系统设计-架构(2) 质量属性"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>软件系统设计-架构(2) 质量属性</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2023/05/02/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-2-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2023/05/02/软件系统设计-架构-2-质量属性/" rel="bookmark">
-        <time class="entry-date published" datetime="2023-05-02T06:22:57.000Z">
-          2023-05-02
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          软件系统设计-架构(2) 质量属性
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2023-05-02 14:22:57" itemprop="dateCreated datePublished" datetime="2023-05-02T14:22:57+08:00">2023-05-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-19 00:14:12" itemprop="dateModified" datetime="2023-08-19T00:14:12+08:00">2023-08-19</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index"><span itemprop="name">软件系统设计</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h2 id="1-软件架构-Software-Architecture"><a href="#1-软件架构-Software-Architecture" class="headerlink" title="1. 软件架构 Software Architecture"></a>1. 软件架构 Software Architecture</h2><ul>
 <li><strong>软件架构</strong>是系统的一个或多个结构，包含了软件<strong>元素</strong>、这些<strong>组件</strong>的外部可见<strong>属性</strong>以及他们之间的<strong>关系</strong>。<br>Software Architecture is the structure or structures of the system, which comprise software elements, the externally visible properties of these components, and the relationship among them.(In pratice书中的定义)</li>
@@ -749,37 +929,179 @@
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503193906777.png" alt="image-20230503193906777" style="zoom:80%;" /></p>
 <h3 id="3-8-更多的能力-X-ability"><a href="#3-8-更多的能力-X-ability" class="headerlink" title="3.8 更多的能力 X-ability"></a>3.8 更多的能力 X-ability</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230503194537890.png" alt="image-20230503194537890" style="zoom:80%;" /></p>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/软件系统设计/">软件系统设计</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/软件架构/">软件架构</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84/" rel="tag"># 软件架构</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/30/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E8%AE%BE%E8%AE%A1-5-%E8%A1%A8%E9%A9%B1%E5%8A%A8%E3%80%81POP%E3%80%81MVC/" rel="prev" title="软件系统设计-设计(5) 表驱动、POP、MVC">
+      <i class="fa fa-chevron-left"></i> 软件系统设计-设计(5) 表驱动、POP、MVC
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/05/08/%E8%BD%AF%E4%BB%B6%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1-%E6%9E%B6%E6%9E%84-3-%E6%9E%B6%E6%9E%84%E6%A8%A1%E5%BC%8F/" rel="next" title="软件系统设计-架构(3) 架构模式">
+      软件系统设计-架构(3) 架构模式 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84-Software-Architecture"><span class="nav-number">1.</span> <span class="nav-text">1. 软件架构 Software Architecture</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%9E%B6%E6%9E%84%E6%89%AE%E6%BC%94%E7%9A%84%E8%A7%92%E8%89%B2-Role-of-Architecture"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 架构扮演的角色 Role of Architecture</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E6%98%AF%E9%87%8D%E8%A6%81%E7%9A%84-Why-is-software-architecture-important"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 为什么软件架构是重要的 Why is software architecture important?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E8%BD%AF%E4%BB%B6%E6%9E%B6%E6%9E%84%E8%BF%87%E7%A8%8B-Software-Architecture-Process"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 软件架构过程 Software Architecture Process</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-%E7%A7%BB%E5%8A%A8%E6%89%8B%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84-Mobile-Phone-System-Architecture"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 移动手机系统架构 Mobile Phone System Architecture</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-%E6%B4%97%E8%A1%A3%E6%9C%BA%E6%9E%B6%E6%9E%84-Washing-Machine-Architecture"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 洗衣机架构 Washing Machine Architecture</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E8%AE%A8%E8%AE%BA-Discussion"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 讨论 Discussion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E9%9C%80%E6%B1%82-Requirements"><span class="nav-number">2.</span> <span class="nav-text">2. 需求 Requirements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%8A%9F%E8%83%BD%E6%80%A7%E9%9C%80%E6%B1%82-Functional-Requirements"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 功能性需求 Functional Requirements</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E8%B4%A8%E9%87%8F%E9%9C%80%E6%B1%82-Quality-Requirements"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 质量需求 Quality Requirements</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-%E9%9D%9E%E5%8A%9F%E8%83%BD%E6%80%A7%E9%9C%80%E6%B1%82-Non-functional-Requirements"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.2.1 非功能性需求 Non-functional Requirements</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7-Quality-Attributes"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2.2 质量属性 Quality Attributes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E7%A1%AE%E5%AE%9A%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7-Specifying-Quality-Attributes"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.2.3 确定质量属性 Specifying Quality Attributes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-General-Scenarios"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.2.4 通用场景 General Scenarios</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7%E5%9C%BA%E6%99%AF%E5%BB%BA%E6%A8%A1-Modeling-Quality-Attribute-Scenarios-%E9%87%8D%E8%A6%81"><span class="nav-number">2.2.5.</span> <span class="nav-text">2.2.5 质量属性场景建模 Modeling Quality Attribute Scenarios 重要</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-6-%E7%AD%96%E7%95%A5-Tactics-%E5%8E%9F%E5%AD%90%E7%BA%A7%E5%88%AB%E7%9A%84%E6%9C%80%E5%B0%8F%E7%9A%84%E5%86%B3%E5%AE%9A"><span class="nav-number">2.2.6.</span> <span class="nav-text">2.2.6 策略 Tactics (原子级别的最小的决定)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-7-%E8%B4%A8%E9%87%8F%E8%AE%BE%E8%AE%A1%E5%86%B3%E7%AD%96-Quality-Design-Decisions"><span class="nav-number">2.2.7.</span> <span class="nav-text">2.2.7 质量设计决策 Quality Design Decisions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-8-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7"><span class="nav-number">2.2.8.</span> <span class="nav-text">2.2.8 质量属性</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%BA%A6%E6%9D%9F-Constraints"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 约束 Constraints</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%B4%A8%E9%87%8F%E5%B1%9E%E6%80%A7%E5%92%8C%E7%AD%96%E7%95%A5-Quality-Attributes-amp-Tactics"><span class="nav-number">3.</span> <span class="nav-text">3. 质量属性和策略 Quality Attributes &amp; Tactics</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%8F%AF%E7%94%A8%E6%80%A7-Availability"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 可用性 Availability</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-1-Outage-Failure-Fault-Error"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 Outage, Failure, Fault, Error</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-2-%E6%9C%8D%E5%8A%A1%E6%B0%B4%E5%B9%B3%E5%8D%8F%E8%AE%AE-Service-Level-Agreement"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 服务水平协议 Service-Level Agreement</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-3-%E5%AF%B9%E4%BA%8EFailure%E7%9A%84%E8%AE%A1%E5%88%92-Planning-for-Failure"><span class="nav-number">3.1.3.</span> <span class="nav-text">3.1.3 对于Failure的计划 Planning for Failure</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-4-%E5%8F%AF%E7%94%A8%E6%80%A7%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Availability-General-Scenario"><span class="nav-number">3.1.4.</span> <span class="nav-text">3.1.4 可用性通用场景 Availability General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-5-%E5%8F%AF%E7%94%A8%E6%80%A7%E7%A4%BA%E4%BE%8B%E5%9C%BA%E6%99%AF-Availability-Sample-Scenario"><span class="nav-number">3.1.5.</span> <span class="nav-text">3.1.5 可用性示例场景 Availability Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-6-%E5%8F%AF%E7%94%A8%E6%80%A7%E7%AD%96%E7%95%A5-Availability-Tactics"><span class="nav-number">3.1.6.</span> <span class="nav-text">3.1.6 可用性策略 Availability Tactics</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-6-1-Fault-%E6%8E%A2%E6%B5%8B-Fault-Detection"><span class="nav-number">3.1.6.1.</span> <span class="nav-text">3.1.6.1 Fault 探测 Fault Detection</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-1-6-2-Fault-%E6%81%A2%E5%A4%8D-Fault-Recovery"><span class="nav-number">3.1.6.2.</span> <span class="nav-text">3.1.6.2 Fault 恢复 Fault Recovery</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-7-%E5%8F%AF%E7%94%A8%E6%80%A7%E8%AE%BE%E8%AE%A1%E5%92%8C%E5%88%86%E6%9E%90%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Availability-Design-amp-Analysis"><span class="nav-number">3.1.7.</span> <span class="nav-text">3.1.7 可用性设计和分析的检查列表 Checklist for Availability Design &amp; Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7-Interoperability"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 互操作性 Interoperability</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-1-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Interoperability-General-Scenario"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 互操作性的通用场景 Interoperability General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-2-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%A4%BA%E4%BE%8B%E5%9C%BA%E6%99%AF-Interoperability-Sample-Scenario"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 互操作性示例场景 Interoperability Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-3-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Interoperability-Tactics"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 互操作性的策略 Interoperability Tactics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-4-%E4%BA%92%E6%93%8D%E4%BD%9C%E6%80%A7%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Interoperability-Design-amp-Analysis"><span class="nav-number">3.2.4.</span> <span class="nav-text">3.2.4 互操作性的检查列表 Checklist for Interoperability Design &amp; Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7-Modifiability"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 可修改性 Modifiability</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Modifiability-General-Scenario"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 可修改性的通用场景 Modifiability General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Modifiability-Sample-Scenario"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 可修改性的样本场景 Modifiability Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-%E5%8F%AF%E4%BF%AE%E6%94%B9%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Modifiability-Tactics"><span class="nav-number">3.3.3.</span> <span class="nav-text">3.3.3 可修改性的策略 Modifiability Tactics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-4-Checklist-for-Modifiability-Design-and-Analsis"><span class="nav-number">3.3.4.</span> <span class="nav-text">3.3.4 Checklist for Modifiability Design and Analsis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E6%80%A7%E8%83%BD-Performance"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 性能 Performance</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-%E6%80%A7%E8%83%BD%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Performance-General-Scenario"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 性能的通用场景 Performance General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-%E6%80%A7%E8%83%BD%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Performance-Sample-Scenario"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 性能的样本场景 Performance Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3-%E6%80%A7%E8%83%BD%E7%9A%84%E7%AD%96%E7%95%A5-Tactics-for-Performance"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 性能的策略 Tactics for Performance</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-4-Checklist-for-Performance-Design-and-Analysis"><span class="nav-number">3.4.4.</span> <span class="nav-text">3.4.4 Checklist for Performance Design and Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-5-%E5%AE%89%E5%85%A8%E6%80%A7-Security"><span class="nav-number">3.5.</span> <span class="nav-text">3.5 安全性 Security</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-1-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Security-General-Scenario"><span class="nav-number">3.5.1.</span> <span class="nav-text">3.5.1 安全性的通用场景 Security General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-2-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Security-Sample-Scenario"><span class="nav-number">3.5.2.</span> <span class="nav-text">3.5.2 安全性的样本场景 Security Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-3-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Security-Tactics"><span class="nav-number">3.5.3.</span> <span class="nav-text">3.5.3 安全性的策略 Security Tactics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5-4-%E5%AE%89%E5%85%A8%E6%80%A7%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Security-Design-and-Analysis"><span class="nav-number">3.5.4.</span> <span class="nav-text">3.5.4 安全性的检查列表 Checklist for Security Design and Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-6-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7-Testability"><span class="nav-number">3.6.</span> <span class="nav-text">3.6 可测试性 Testability</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-1-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Testability-General-Scenario"><span class="nav-number">3.6.1.</span> <span class="nav-text">3.6.1 可测试性的通用场景 Testability General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-2-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Testability-Sample-Scenario"><span class="nav-number">3.6.2.</span> <span class="nav-text">3.6.2 可测试性的样本场景 Testability Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-3-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Testability-Tactcs"><span class="nav-number">3.6.3.</span> <span class="nav-text">3.6.3 可测试性的策略 Testability Tactcs</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-6-4-%E5%8F%AF%E6%B5%8B%E8%AF%95%E6%80%A7%E7%9A%84%E6%A3%80%E6%9F%A5%E5%88%97%E8%A1%A8-Checklist-for-Testability-Design-and-Analysis"><span class="nav-number">3.6.4.</span> <span class="nav-text">3.6.4 可测试性的检查列表 Checklist for Testability Design and Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-7-%E6%98%93%E7%94%A8%E6%80%A7-Usability"><span class="nav-number">3.7.</span> <span class="nav-text">3.7 易用性 Usability</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-1-%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84%E9%80%9A%E7%94%A8%E5%9C%BA%E6%99%AF-Usability-General-Scenario"><span class="nav-number">3.7.1.</span> <span class="nav-text">3.7.1 易用性的通用场景 Usability General Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-2-%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84%E6%A0%B7%E6%9C%AC%E5%9C%BA%E6%99%AF-Usbility-Sample-Scenario"><span class="nav-number">3.7.2.</span> <span class="nav-text">3.7.2 易用性的样本场景 Usbility Sample Scenario</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-3-%E6%98%93%E7%94%A8%E6%80%A7%E7%9A%84%E7%AD%96%E7%95%A5-Usability-Tactics"><span class="nav-number">3.7.3.</span> <span class="nav-text">3.7.3 易用性的策略 Usability Tactics</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-7-4-Checklist-for-Usbility-Design-and-Analysis"><span class="nav-number">3.7.4.</span> <span class="nav-text">3.7.4 Checklist for Usbility Design and Analysis</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-8-%E6%9B%B4%E5%A4%9A%E7%9A%84%E8%83%BD%E5%8A%9B-X-ability"><span class="nav-number">3.8.</span> <span class="nav-text">3.8 更多的能力 X-ability</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -791,39 +1113,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

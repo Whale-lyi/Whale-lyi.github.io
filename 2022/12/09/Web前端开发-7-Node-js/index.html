@@ -1,83 +1,234 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="9-Node.js1. 服务端编程静态网页与动态网页静态页面  客户&#x2F;消费者的观点: 一个url指向同一个html文件 服务器&#x2F;生产者的观点: 存储在Web服务器根文件夹内或子文件夹内的文件 HTML文件: 无论何时当一个特定资源被请求的时候都返回相同的被硬编码的内容 可以直接在浏览器上显示  动态页面  客户&#x2F;消费者的观点: url指的是动态html(可能每次请求都不同) 服务器&#x2F;生产者的观点:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web前端开发(7) Node.js">
+<meta property="og:url" content="https://whale-lyi.github.io/2022/12/09/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-7-Node-js/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="9-Node.js1. 服务端编程静态网页与动态网页静态页面  客户&#x2F;消费者的观点: 一个url指向同一个html文件 服务器&#x2F;生产者的观点: 存储在Web服务器根文件夹内或子文件夹内的文件 HTML文件: 无论何时当一个特定资源被请求的时候都返回相同的被硬编码的内容 可以直接在浏览器上显示  动态页面  客户&#x2F;消费者的观点: url指的是动态html(可能每次请求都不同) 服务器&#x2F;生产者的观点:">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126145036774.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126155638013.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126160013635.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126160035582.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126160042277.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126162814121.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126210438297.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230127150018532.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230128113254724.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230128113438817.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230128113515334.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230128113646359.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230128140941232.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230128141012898.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129002408387.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129002447793.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129002557988.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129145316636.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230129172729202.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230222224055948.png">
+<meta property="article:published_time" content="2022-12-09T06:06:01.000Z">
+<meta property="article:modified_time" content="2023-08-09T06:53:19.981Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230126145036774.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2022/12/09/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-7-Node-js/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Web前端开发(7) Node.js | Whale's Blog</title>
   
-  <title>Web前端开发(7) Node.js | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="前端">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="Web前端开发(7) Node.js"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>Web前端开发(7) Node.js</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2022/12/09/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-7-Node-js/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2022/12/09/Web前端开发-7-Node-js/" rel="bookmark">
-        <time class="entry-date published" datetime="2022-12-09T06:06:01.000Z">
-          2022-12-09
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Web前端开发(7) Node.js
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2022-12-09 14:06:01" itemprop="dateCreated datePublished" datetime="2022-12-09T14:06:01+08:00">2022-12-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-09 14:53:19" itemprop="dateModified" datetime="2023-08-09T14:53:19+08:00">2023-08-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Web前端开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h1 id="9-Node-js"><a href="#9-Node-js" class="headerlink" title="9-Node.js"></a>9-Node.js</h1><h2 id="1-服务端编程"><a href="#1-服务端编程" class="headerlink" title="1. 服务端编程"></a>1. 服务端编程</h2><h4 id="静态网页与动态网页"><a href="#静态网页与动态网页" class="headerlink" title="静态网页与动态网页"></a>静态网页与动态网页</h4><p>静态页面</p>
 <ul>
@@ -752,37 +903,179 @@
 </ul>
 <p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230222224055948.png" alt="image-20230222224055948" style="zoom:80%;" /></p>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/Web前端开发/">Web前端开发</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/前端/">前端</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/12/07/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-5-%E8%AF%AD%E4%B9%89%E5%88%86%E6%9E%90/" rel="prev" title="编译原理(5) 语义分析">
+      <i class="fa fa-chevron-left"></i> 编译原理(5) 语义分析
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/12/19/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-6-LLVM-IR/" rel="next" title="编译原理(6) LLVM IR">
+      编译原理(6) LLVM IR <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#9-Node-js"><span class="nav-number">1.</span> <span class="nav-text">9-Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BC%96%E7%A8%8B"><span class="nav-number">1.1.</span> <span class="nav-text">1. 服务端编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E7%BD%91%E9%A1%B5%E4%B8%8E%E5%8A%A8%E6%80%81%E7%BD%91%E9%A1%B5"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">静态网页与动态网页</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BC%96%E7%A8%8B"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">服务端编程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E7%AB%AF%E7%BC%96%E7%A8%8B%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.1.0.3.</span> <span class="nav-text">服务端编程的优势</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Node-js"><span class="nav-number">1.2.</span> <span class="nav-text">2. Node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js"><span class="nav-number">1.2.0.1.</span> <span class="nav-text">Node.js</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="nav-number">1.2.0.2.</span> <span class="nav-text">Node.js 的诞生</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E7%8E%B0%E7%8A%B6"><span class="nav-number">1.2.0.3.</span> <span class="nav-text">Node.js 现状</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.2.0.4.</span> <span class="nav-text">Node.js 应用场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-%E4%BC%98%E5%8A%BF"><span class="nav-number">1.2.0.5.</span> <span class="nav-text">Node 优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.0.6.</span> <span class="nav-text">何时使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E4%B8%8D%E9%80%82%E5%90%88%E7%9A%84%E9%A2%86%E5%9F%9F"><span class="nav-number">1.2.0.7.</span> <span class="nav-text">Node.js 不适合的领域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.</span> <span class="nav-text">3. 事件循环</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AF"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">Node.js 事件循环</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%A8%A1%E5%9E%8B"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">事件驱动模型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E6%94%AF%E6%8C%81-JS"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">Node.js 支持 JS</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%98%BB%E5%A1%9E"><span class="nav-number">1.4.</span> <span class="nav-text">4. 阻塞</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5-vs-%E5%BC%82%E6%AD%A5"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">同步 vs 异步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E5%BC%8F-I-O-%E5%92%8C%E5%BC%82%E6%AD%A5%E5%BC%8F-I-O-%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">同步式 I&#x2F;O 和异步式 I&#x2F;O 的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E-vs-%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="nav-number">1.4.0.3.</span> <span class="nav-text">阻塞 vs 非阻塞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%98%BB%E5%A1%9E"><span class="nav-number">1.4.0.4.</span> <span class="nav-text">阻塞</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E9%98%BB%E5%A1%9E"><span class="nav-number">1.4.0.5.</span> <span class="nav-text">非阻塞</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%AE%9E%E8%B7%B5"><span class="nav-number">1.5.</span> <span class="nav-text">5. 实践</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#package-json"><span class="nav-number">1.5.0.1.</span> <span class="nav-text">package.json</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-API"><span class="nav-number">1.5.0.2.</span> <span class="nav-text">Node.js API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js%E6%B5%81%E8%A1%8C%E6%A8%A1%E5%9D%97"><span class="nav-number">1.5.0.3.</span> <span class="nav-text">Node.js流行模块</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E6%A8%A1%E5%9D%97"><span class="nav-number">1.6.</span> <span class="nav-text">6. 模块</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97"><span class="nav-number">1.6.0.1.</span> <span class="nav-text">模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6-%E6%A8%A1%E5%9D%97%E4%B8%8E-CommonJS-%E6%A8%A1%E5%9D%97%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="nav-number">1.6.0.2.</span> <span class="nav-text">ES6 模块与 CommonJS 模块的差异</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD%E7%9A%84%E5%AE%9E%E8%B4%A8"><span class="nav-number">1.6.0.3.</span> <span class="nav-text">模块加载的实质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E7%9A%84%E5%8C%BA%E5%88%86"><span class="nav-number">1.6.0.4.</span> <span class="nav-text">Node.js 的区分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E6%97%B6%E6%94%AF%E6%8C%81%E4%B8%A4%E7%A7%8D%E6%A0%BC%E5%BC%8F%E7%9A%84%E6%A8%A1%E5%9D%97-%E4%BA%86%E8%A7%A3"><span class="nav-number">1.6.0.5.</span> <span class="nav-text">同时支持两种格式的模块(了解)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#require-%E6%96%B9%E6%B3%95%E6%9F%A5%E6%89%BE%E7%AD%96%E7%95%A5"><span class="nav-number">1.6.0.6.</span> <span class="nav-text">require 方法查找策略</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#A-simple-file-server"><span class="nav-number">1.6.0.7.</span> <span class="nav-text">A simple file server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#as"><span class="nav-number">1.6.0.8.</span> <span class="nav-text">as</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#export-default"><span class="nav-number">1.6.0.9.</span> <span class="nav-text">export default</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E5%BE%AA%E7%8E%AF%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.7.</span> <span class="nav-text">7. 循环加载</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CommonJS-%E5%BE%AA%E7%8E%AF%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.7.0.1.</span> <span class="nav-text">CommonJS 循环加载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ES6-%E5%BE%AA%E7%8E%AF%E5%8A%A0%E8%BD%BD"><span class="nav-number">1.7.0.2.</span> <span class="nav-text">ES6 循环加载</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%85%B6%E4%BB%96"><span class="nav-number">1.8.</span> <span class="nav-text">8. 其他</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E7%89%88%E6%9C%AC"><span class="nav-number">1.8.0.1.</span> <span class="nav-text">Node.js 版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%B2%E6%97%A0%E6%80%A7%E8%83%BD%E4%BC%98%E5%8A%BF"><span class="nav-number">1.8.0.2.</span> <span class="nav-text">已无性能优势?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MEAN"><span class="nav-number">1.8.0.3.</span> <span class="nav-text">MEAN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MEAN-%E6%9E%B6%E6%9E%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.8.0.4.</span> <span class="nav-text">MEAN 架构原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Web-%E6%A1%86%E6%9E%B6"><span class="nav-number">1.8.0.5.</span> <span class="nav-text">Web 框架</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Node-js-%E6%A1%86%E6%9E%B6%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="nav-number">1.8.0.6.</span> <span class="nav-text">Node.js 框架的优势</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A1%86%E6%9E%B6%E9%80%89%E5%9E%8B"><span class="nav-number">1.8.0.7.</span> <span class="nav-text">框架选型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E5%99%A8"><span class="nav-number">1.8.0.8.</span> <span class="nav-text">预处理器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.8.0.9.</span> <span class="nav-text">跨平台</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">1.8.0.10.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10-Express"><span class="nav-number">2.</span> <span class="nav-text">10-Express</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="nav-number">2.1.</span> <span class="nav-text">1. 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-Express"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">什么是 Express ?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Is-Express-opinionated"><span class="nav-number">2.1.0.3.</span> <span class="nav-text">Is Express opinionated?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E6%A6%82%E8%BF%B0"><span class="nav-number">2.1.0.4.</span> <span class="nav-text">Express 开发环境概述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Hello-world"><span class="nav-number">2.1.0.5.</span> <span class="nav-text">Hello world</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E7%94%9F%E6%88%90%E5%99%A8%E5%B7%A5%E5%85%B7"><span class="nav-number">2.1.0.6.</span> <span class="nav-text">应用生成器工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.0.7.</span> <span class="nav-text">文件结构</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E8%B7%AF%E7%94%B1"><span class="nav-number">2.2.</span> <span class="nav-text">2. 路由</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">处理数据流</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E8%B7%AF%E7%94%B1"><span class="nav-number">2.2.0.2.</span> <span class="nav-text">基本路由</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.2.0.3.</span> <span class="nav-text">路由示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.0.4.</span> <span class="nav-text">路由方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E8%B7%AF%E7%94%B1%E6%96%B9%E6%B3%95-app-all"><span class="nav-number">2.2.0.5.</span> <span class="nav-text">特殊路由方法: app.all()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E8%B7%AF%E5%BE%84"><span class="nav-number">2.2.0.6.</span> <span class="nav-text">路由路径</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%8F%82%E6%95%B0"><span class="nav-number">2.2.0.7.</span> <span class="nav-text">路由参数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="nav-number">2.2.0.8.</span> <span class="nav-text">路由处理程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E6%96%B9%E6%B3%95"><span class="nav-number">2.2.0.9.</span> <span class="nav-text">响应方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#app-route"><span class="nav-number">2.2.0.10.</span> <span class="nav-text">app.route()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#express-Router"><span class="nav-number">2.2.0.11.</span> <span class="nav-text">express.Router</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">3. 中间件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.1.</span> <span class="nav-text">编写中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Express%E5%B7%A5%E4%BD%9C%E9%87%8D%E7%82%B9"><span class="nav-number">2.3.0.2.</span> <span class="nav-text">Express工作重点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E5%87%BD%E6%95%B0%E7%9A%84%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.3.0.3.</span> <span class="nav-text">中间件函数的简单示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B"><span class="nav-number">2.3.0.4.</span> <span class="nav-text">示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.5.</span> <span class="nav-text">使用中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%B1%82%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.6.</span> <span class="nav-text">应用层中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8%E5%B1%82%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.7.</span> <span class="nav-text">路由器层中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.8.</span> <span class="nav-text">错误处理中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%85%E7%BD%AE%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.9.</span> <span class="nav-text">内置中间件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%96%B9%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="nav-number">2.3.0.10.</span> <span class="nav-text">第三方中间件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E"><span class="nav-number">2.4.</span> <span class="nav-text">4. 模板引擎</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E7%94%A8%E4%BA%8E-Express"><span class="nav-number">2.4.0.1.</span> <span class="nav-text">将模板引擎用于 Express</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E7%94%A8%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E%E9%9C%80%E8%A6%81%E8%80%83%E8%99%91%E7%9A%84%E5%9B%A0%E7%B4%A0"><span class="nav-number">2.4.0.2.</span> <span class="nav-text">选用模板引擎需要考虑的因素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA-Express-%E5%BC%80%E5%8F%91%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8E"><span class="nav-number">2.4.0.3.</span> <span class="nav-text">为 Express 开发模板引擎</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E8%AF%95-Express"><span class="nav-number">2.4.0.4.</span> <span class="nav-text">调试 Express</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -794,39 +1087,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

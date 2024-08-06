@@ -1,83 +1,222 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="nacos官方文档: https:&#x2F;&#x2F;nacos.io&#x2F;zh-cn&#x2F;docs&#x2F;v2&#x2F;what-is-nacos.html  基于NACOS的数据配置1. 配置信息将服务配置信息与代码分开 配置信息硬编码到代码中 分离的外部属性文件 与物理部署分离，如外部数据库 k8s-configmap 配置数据作为单独的服务提供  微服务的配置数据来源 Spring Cloud Config：文件系统、Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务端开发(8) NACOS">
+<meta property="og:url" content="https://whale-lyi.github.io/2023/04/06/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-8-NACOS/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="nacos官方文档: https:&#x2F;&#x2F;nacos.io&#x2F;zh-cn&#x2F;docs&#x2F;v2&#x2F;what-is-nacos.html  基于NACOS的数据配置1. 配置信息将服务配置信息与代码分开 配置信息硬编码到代码中 分离的外部属性文件 与物理部署分离，如外部数据库 k8s-configmap 配置数据作为单独的服务提供  微服务的配置数据来源 Spring Cloud Config：文件系统、Git">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230407135021721.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408130705587.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408131529514.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140342608.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140455307.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140757600.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408140830205.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230408143113182.png">
+<meta property="article:published_time" content="2023-04-06T06:50:41.000Z">
+<meta property="article:modified_time" content="2023-08-09T06:53:19.996Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="nacos">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20230407135021721.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2023/04/06/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-8-NACOS/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>服务端开发(8) NACOS | Whale's Blog</title>
   
-  <title>服务端开发(8) NACOS | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="nacos">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="服务端开发(8) NACOS"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>服务端开发(8) NACOS</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2023/04/06/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-8-NACOS/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2023/04/06/服务端开发-8-NACOS/" rel="bookmark">
-        <time class="entry-date published" datetime="2023-04-06T06:50:41.000Z">
-          2023-04-06
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          服务端开发(8) NACOS
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2023-04-06 14:50:41" itemprop="dateCreated datePublished" datetime="2023-04-06T14:50:41+08:00">2023-04-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-09 14:53:19" itemprop="dateModified" datetime="2023-08-09T14:53:19+08:00">2023-08-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">服务端开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <blockquote>
 <p>nacos官方文档: <a target="_blank" rel="noopener" href="https://nacos.io/zh-cn/docs/v2/what-is-nacos.html">https://nacos.io/zh-cn/docs/v2/what-is-nacos.html</a></p>
@@ -337,37 +476,179 @@
 <li>对第二、三种调用都有效</li>
 </ul>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/服务端开发/">服务端开发</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/nacos/">nacos</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/nacos/" rel="tag"># nacos</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/04/05/Docker-%E9%95%9C%E5%83%8F%E5%88%86%E5%B1%82%E6%9C%BA%E5%88%B6/" rel="prev" title="Docker 镜像分层机制详解">
+      <i class="fa fa-chevron-left"></i> Docker 镜像分层机制详解
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/04/08/%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%BC%80%E5%8F%91-9-Sentinel/" rel="next" title="服务端开发(9) 基于Sentinel的流控与熔断">
+      服务端开发(9) 基于Sentinel的流控与熔断 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ENACOS%E7%9A%84%E6%95%B0%E6%8D%AE%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">基于NACOS的数据配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF"><span class="nav-number">1.1.</span> <span class="nav-text">1. 配置信息</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE%E4%BF%A1%E6%81%AF%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%88%86%E5%BC%80"><span class="nav-number">1.1.1.</span> <span class="nav-text">将服务配置信息与代码分开</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%9D%A5%E6%BA%90"><span class="nav-number">1.1.2.</span> <span class="nav-text">微服务的配置数据来源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-nacos"><span class="nav-number">1.2.</span> <span class="nav-text">2. nacos</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos%E5%9C%A8docker%E4%B8%8A%E7%9A%84%E9%83%A8%E7%BD%B2"><span class="nav-number">1.2.1.</span> <span class="nav-text">nacos在docker上的部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos%E5%9C%A8k8s%E4%B8%8A%E7%9A%84%E9%83%A8%E7%BD%B2"><span class="nav-number">1.2.2.</span> <span class="nav-text">nacos在k8s上的部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95-%E9%85%8D%E7%BD%AE%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0%E8%8E%B7%E5%8F%96"><span class="nav-number">1.2.3.</span> <span class="nav-text">测试-配置数据更新获取</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-curl"><span class="nav-number">1.3.</span> <span class="nav-text">3. curl</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8"><span class="nav-number">1.3.1.</span> <span class="nav-text">常用命令使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="nav-number">1.4.</span> <span class="nav-text">4. 简单的例子</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot"><span class="nav-number">1.4.1.</span> <span class="nav-text">Spring Boot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Cloud"><span class="nav-number">1.4.2.</span> <span class="nav-text">Spring Cloud</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E9%80%82%E7%94%A8%E4%B8%8D%E5%90%8C%E7%8E%AF%E5%A2%83%E7%9A%84%E5%B1%9E%E6%80%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.3.</span> <span class="nav-text">创建适用不同环境的属性数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#dataId-%E7%9A%84%E5%AE%8C%E6%95%B4%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.4.4.</span> <span class="nav-text">dataId 的完整格式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#licensingservice%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.5.</span> <span class="nav-text">licensingservice服务部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E6%9B%B4%E6%96%B0"><span class="nav-number">1.4.6.</span> <span class="nav-text">数据更新</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E7%9F%A5%E9%81%93%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%8F%AF%E7%94%A8"><span class="nav-number">1.4.7.</span> <span class="nav-text">如何知道一个服务可用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.8.</span> <span class="nav-text">敏感信息配置</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8ENACOS%E7%9A%84%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">基于NACOS的服务注册与发现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">1. 服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#nacos%E7%BB%83%E4%B9%A0"><span class="nav-number">2.1.1.</span> <span class="nav-text">nacos练习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">2.1.2.</span> <span class="nav-text">服务发现的好处</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2"><span class="nav-number">2.1.3.</span> <span class="nav-text">服务部署</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Spring-Cloud%E5%AE%B6%E6%97%8F"><span class="nav-number">2.2.</span> <span class="nav-text">2. Spring Cloud家族</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Cloud-Alibaba"><span class="nav-number">2.2.1.</span> <span class="nav-text">Spring Cloud Alibaba</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-nacos%E5%AE%9E%E7%8E%B0%E6%9C%8D%E5%8A%A1%E6%B3%A8%E5%86%8C%E4%B8%8E%E5%8F%91%E7%8E%B0"><span class="nav-number">2.3.</span> <span class="nav-text">3. nacos实现服务注册与发现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84starter%E4%BE%9D%E8%B5%96"><span class="nav-number">2.3.1.</span> <span class="nav-text">使用到的starter依赖</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bootstrap-yml%E9%85%8D%E7%BD%AEnacos"><span class="nav-number">2.3.2.</span> <span class="nav-text">bootstrap.yml配置nacos</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%88%B0%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="nav-number">2.3.3.</span> <span class="nav-text">使用到的注解</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E8%B0%83%E7%94%A8%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">2.4.</span> <span class="nav-text">4. 调用服务的三种方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-DiscoveryClient"><span class="nav-number">2.4.1.</span> <span class="nav-text">Spring DiscoveryClient</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%94%AF%E6%8C%81LoadBalanced%E7%9A%84RestTemplate"><span class="nav-number">2.4.2.</span> <span class="nav-text">使用支持LoadBalanced的RestTemplate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8OpenFeign%EF%BC%88-FeignClient%EF%BC%89"><span class="nav-number">2.4.3.</span> <span class="nav-text">使用OpenFeign（@FeignClient）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%89%E7%94%A8%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">2.4.4.</span> <span class="nav-text">有用的命令</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5"><span class="nav-number">2.5.</span> <span class="nav-text">5. 健康检查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AD%96%E7%95%A5"><span class="nav-number">2.6.</span> <span class="nav-text">6. 负载均衡策略</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -379,39 +660,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

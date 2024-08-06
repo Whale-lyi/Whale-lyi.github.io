@@ -1,83 +1,224 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="0-Introduction1 浏览器Browsers1.1 背景1.1.1 拥抱不确定性 十年前：微软垄断下严格限定的边界 现在：宽松，比如响应式web设计、渐进渐强 放弃所谓绝对的解决方案：不同设备，不同的浏览器，不同规格的屏幕访问  1.1.2 从微软独家垄断到今天百花齐放 第一次浏览器大战：1995-1999 后.com大战：2000-2005，IE占据了90%左右的市场份额 今天：Chr">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web前端开发(1) Internet and WWW">
+<meta property="og:url" content="https://whale-lyi.github.io/2022/11/14/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-1/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="0-Introduction1 浏览器Browsers1.1 背景1.1.1 拥抱不确定性 十年前：微软垄断下严格限定的边界 现在：宽松，比如响应式web设计、渐进渐强 放弃所谓绝对的解决方案：不同设备，不同的浏览器，不同规格的屏幕访问  1.1.2 从微软独家垄断到今天百花齐放 第一次浏览器大战：1995-1999 后.com大战：2000-2005，IE占据了90%左右的市场份额 今天：Chr">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233154115.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233239657.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233847492.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233955965.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114234325153.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114235136029.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114235831918.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221116234212980.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221117000428194.png">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221117000444817.png">
+<meta property="article:published_time" content="2022-11-14T15:08:58.000Z">
+<meta property="article:modified_time" content="2023-08-09T06:53:19.981Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221114233154115.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2022/11/14/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-1/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Web前端开发(1) Internet and WWW | Whale's Blog</title>
   
-  <title>Web前端开发(1) Internet and WWW | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="前端">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="Web前端开发(1) Internet and WWW"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>Web前端开发(1) Internet and WWW</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2022/11/14/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-1/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2022/11/14/Web前端开发-1/" rel="bookmark">
-        <time class="entry-date published" datetime="2022-11-14T15:08:58.000Z">
-          2022-11-14
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Web前端开发(1) Internet and WWW
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2022-11-14 23:08:58" itemprop="dateCreated datePublished" datetime="2022-11-14T23:08:58+08:00">2022-11-14</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2023-08-09 14:53:19" itemprop="dateModified" datetime="2023-08-09T14:53:19+08:00">2023-08-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/NJU/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">Web前端开发</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h1 id="0-Introduction"><a href="#0-Introduction" class="headerlink" title="0-Introduction"></a>0-Introduction</h1><h2 id="1-浏览器Browsers"><a href="#1-浏览器Browsers" class="headerlink" title="1 浏览器Browsers"></a>1 浏览器Browsers</h2><h3 id="1-1-背景"><a href="#1-1-背景" class="headerlink" title="1.1 背景"></a>1.1 背景</h3><h4 id="1-1-1-拥抱不确定性"><a href="#1-1-1-拥抱不确定性" class="headerlink" title="1.1.1 拥抱不确定性"></a>1.1.1 拥抱不确定性</h4><ul>
 <li>十年前：微软垄断下严格限定的边界</li>
@@ -432,37 +573,179 @@
 <li>语义化、3D、人工智能、去中心化</li>
 </ul>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/NJU/">NJU</a>, <a href="/categories/NJU/Web前端开发/">Web前端开发</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/前端/">前端</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%89%8D%E7%AB%AF/" rel="tag"># 前端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-4-%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86/" rel="prev" title="计算机操作系统(4) 设备管理">
+      <i class="fa fa-chevron-left"></i> 计算机操作系统(4) 设备管理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/11/16/Web%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91-2-HTML/" rel="next" title="Web前端开发(2) HTML">
+      Web前端开发(2) HTML <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#0-Introduction"><span class="nav-number">1.</span> <span class="nav-text">0-Introduction</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8Browsers"><span class="nav-number">1.1.</span> <span class="nav-text">1 浏览器Browsers</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E8%83%8C%E6%99%AF"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 背景</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-%E6%8B%A5%E6%8A%B1%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">1.1.1 拥抱不确定性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E4%BB%8E%E5%BE%AE%E8%BD%AF%E7%8B%AC%E5%AE%B6%E5%9E%84%E6%96%AD%E5%88%B0%E4%BB%8A%E5%A4%A9%E7%99%BE%E8%8A%B1%E9%BD%90%E6%94%BE"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">1.1.2 从微软独家垄断到今天百花齐放</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-3-%E6%88%91%E4%BB%AC%E7%8E%B0%E5%9C%A8%E6%89%80%E5%A4%84%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">1.1.3 我们现在所处的位置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-JavaScript%E5%BC%95%E6%93%8E"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 JavaScript引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%9B%A0%E6%AD%A4"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4 因此</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-1-Internet"><span class="nav-number">2.</span> <span class="nav-text">1.1-Internet</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E4%BA%92%E8%81%94%E7%BD%91"><span class="nav-number">2.1.</span> <span class="nav-text">1 互联网</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E7%AE%80%E8%A6%81%E5%8F%91%E5%B1%95%E5%8F%B2"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1 简要发展史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%9B%B8%E5%85%B3%E7%BB%84%E7%BB%87"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2 相关组织</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B8%B8%E7%94%A8%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.2.</span> <span class="nav-text">2 常用协议</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E7%BD%91%E9%99%85%E4%BA%92%E8%BF%9E%E5%8D%8F%E8%AE%AE-IP"><span class="nav-number">2.2.1.</span> <span class="nav-text">2.1 网际互连协议(IP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE-TCP"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.2 传输控制协议(TCP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%8D%8F%E8%AE%AE-UDP"><span class="nav-number">2.2.3.</span> <span class="nav-text">2.3 用户数据报协议(UDP)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F-DNS"><span class="nav-number">2.2.4.</span> <span class="nav-text">2.4 域名系统(DNS)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-1-DNS%E4%B9%8B%E5%89%8D%E2%80%A6"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">2.4.1 DNS之前…</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-2-%E8%A7%A3%E6%9E%90%E5%99%A8%E4%B8%8E%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">2.4.2 解析器与名称服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-3-DNS%E5%90%8D%E7%A7%B0%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.4.3.</span> <span class="nav-text">2.4.3 DNS名称层次结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-4-%E5%9F%9F%E5%90%8D"><span class="nav-number">2.2.4.4.</span> <span class="nav-text">2.4.4 域名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-5-%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">2.2.4.5.</span> <span class="nav-text">2.4.5 名称服务器的层次结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-6-%E4%B8%BB%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E8%BE%85%E5%90%8D%E7%A7%B0%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.2.4.6.</span> <span class="nav-text">2.4.6 主名称服务器和辅名称服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-7-%E6%A0%B9%E5%9F%9F%E5%90%8D%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="nav-number">2.2.4.7.</span> <span class="nav-text">2.4.7 根域名服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-8-%E5%9F%9F%E5%90%8D%E8%A7%A3%E6%9E%90"><span class="nav-number">2.2.4.8.</span> <span class="nav-text">2.4.8 域名解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-9-%E9%80%92%E5%BD%92%E5%92%8C%E8%BF%AD%E4%BB%A3%E6%9F%A5%E8%AF%A2"><span class="nav-number">2.2.4.9.</span> <span class="nav-text">2.4.9 递归和迭代查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-10-%E7%BC%93%E5%AD%98"><span class="nav-number">2.2.4.10.</span> <span class="nav-text">2.4.10 缓存</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-11-%E8%B5%84%E6%BA%90%E8%AE%B0%E5%BD%95-Resource-Records"><span class="nav-number">2.2.4.11.</span> <span class="nav-text">2.4.11 资源记录(Resource Records)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E8%B5%84%E6%BA%90%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="nav-number">2.3.</span> <span class="nav-text">3 资源标识符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-URI"><span class="nav-number">2.3.1.</span> <span class="nav-text">3.1 URI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-URN"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.2 URN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-URL"><span class="nav-number">2.3.3.</span> <span class="nav-text">3.3 URL</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-URL%E7%9A%84%E4%B8%80%E8%88%AC%E5%BD%A2%E5%BC%8F"><span class="nav-number">2.3.3.1.</span> <span class="nav-text">3.3.1 URL的一般形式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-URL%E5%8D%8F%E8%AE%AE"><span class="nav-number">2.3.3.2.</span> <span class="nav-text">3.3.2 URL协议</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-3-URL%E8%B7%AF%E5%BE%84-a-b-c-html"><span class="nav-number">2.3.3.3.</span> <span class="nav-text">3.3.3 URL路径(&#x2F;a&#x2F;b&#x2F;c.html)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-4-%E6%9F%A5%E8%AF%A2%E5%AD%97%E6%AE%B5"><span class="nav-number">2.3.3.4.</span> <span class="nav-text">3.3.4 查询字段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-5-URL%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">2.3.3.5.</span> <span class="nav-text">3.3.5 URL的使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-6-URL%E7%BC%96%E7%A0%81"><span class="nav-number">2.3.3.6.</span> <span class="nav-text">3.3.6 URL编码</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E8%B6%85%E6%96%87%E6%9C%ACHypertext"><span class="nav-number">2.4.</span> <span class="nav-text">4 超文本Hypertext</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E7%A7%8D%E7%B1%BB"><span class="nav-number">2.4.1.</span> <span class="nav-text">4.1 种类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-2-WWW"><span class="nav-number">3.</span> <span class="nav-text">1.2 WWW</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Web"><span class="nav-number">3.1.</span> <span class="nav-text">1 Web</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-Web%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%92%8C%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">3.1.1.</span> <span class="nav-text">1.1 Web服务器和浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-Web%E7%9A%84%E8%A1%A8%E7%8E%B0%E5%BD%A2%E5%BC%8F"><span class="nav-number">3.1.2.</span> <span class="nav-text">1.2 Web的表现形式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%BA%92%E8%81%94%E7%BD%91%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">3.1.3.</span> <span class="nav-text">1.3 互联网的影响</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-Web%E5%8F%91%E5%B1%95%E5%8E%86%E7%A8%8B"><span class="nav-number">3.1.4.</span> <span class="nav-text">1.4 Web发展历程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Web1-0-Web2-0-Web3-0"><span class="nav-number">3.2.</span> <span class="nav-text">2 Web1.0 Web2.0 Web3.0</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E6%BC%94%E5%8F%98"><span class="nav-number">3.2.1.</span> <span class="nav-text">2.1 演变</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-Web-2-0"><span class="nav-number">3.2.2.</span> <span class="nav-text">2.2 Web 2.0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-Web-2-0%E7%89%B9%E7%82%B9"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">2.2.1 Web 2.0特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-Web-2-0%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">2.2.2 Web 2.0典型应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-Web-2-0%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="nav-number">3.2.2.3.</span> <span class="nav-text">2.2.3 Web 2.0的局限性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-%E7%94%A8%E6%88%B7%E7%BC%BA%E4%B9%8F%E8%87%AA%E4%B8%BB%E6%9D%83"><span class="nav-number">3.2.2.4.</span> <span class="nav-text">2.2.4 用户缺乏自主权</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Web-3-0"><span class="nav-number">3.2.3.</span> <span class="nav-text">2.3 Web 3.0</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-Web-3-0%E7%89%B9%E5%BE%81"><span class="nav-number">3.2.3.1.</span> <span class="nav-text">2.3.1 Web 3.0特征</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -474,39 +757,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>

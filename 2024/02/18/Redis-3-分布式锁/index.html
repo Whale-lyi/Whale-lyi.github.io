@@ -1,83 +1,209 @@
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1. Redisson 分布式锁 可重入：利用hash结构记录线程id和重入次数 可重试：利用信号量和PubSub功能实现等待、唤醒，获取锁失败的重试机制 超时续约：利用watchDog，开启一个定时任务，每隔一段时间（releaseTime &#x2F; 3），重置超时时间 主从一致性问题：利用MultiLock锁，Redis不再区分主从节点，只有所有的节点都写入成功，才是加锁成功，假设现在某个节点挂了，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis(3) 分布式锁">
+<meta property="og:url" content="https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/index.html">
+<meta property="og:site_name" content="Whale&#39;s Blog">
+<meta property="og:description" content="1. Redisson 分布式锁 可重入：利用hash结构记录线程id和重入次数 可重试：利用信号量和PubSub功能实现等待、唤醒，获取锁失败的重试机制 超时续约：利用watchDog，开启一个定时任务，每隔一段时间（releaseTime &#x2F; 3），重置超时时间 主从一致性问题：利用MultiLock锁，Redis不再区分主从节点，只有所有的节点都写入成功，才是加锁成功，假设现在某个节点挂了，">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png">
+<meta property="article:published_time" content="2024-02-18T11:18:45.000Z">
+<meta property="article:modified_time" content="2024-02-18T11:49:29.580Z">
+<meta property="article:author" content="Whale">
+<meta property="article:tag" content="Redis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png">
+
+<link rel="canonical" href="https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Redis(3) 分布式锁 | Whale's Blog</title>
   
-  <title>Redis(3) 分布式锁 | Whale&#39;s Blog | Stay hungry, Stay foolish</title>
-
-  
-  <meta name="author" content="Whale">
-  
-
-  
-  <meta name="description" content="码农预备役">
-  
-
-  
-  
-  <meta name="keywords" content="Redis">
-  
-
-  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-  <meta property="og:title" content="Redis(3) 分布式锁"/>
-
-  <meta property="og:site_name" content="Whale&#39;s Blog"/>
-
-  
-  <meta property="og:image" content="/favicon.ico"/>
-  
-
-  <link href="/favicon.ico" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Whale&#39;s Blog" type="application/atom+xml">
-  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-<meta name="generator" content="Hexo 6.3.0"></head>
 
 
-<body>
-<div class="blog">
-  <div class="content">
 
-    <header>
-  <div class="site-branding">
-    <h1 class="site-title">
-      <a href="/">Whale&#39;s Blog</a>
-    </h1>
-    <p class="site-description">Stay hungry, Stay foolish</p>
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
-  <nav class="site-navigation">
-    <ul>
-      
-    </ul>
-  </nav>
-</header>
 
-    <main class="site-main posts-loop">
-    <article>
+  <div class="site-meta">
 
-  
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Whale's Blog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
     
-    <h3 class="article-title"><span>Redis(3) 分布式锁</span></h3>
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
     
   
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2024/02/18/Redis-3-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/">
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2024/02/18/Redis-3-分布式锁/" rel="bookmark">
-        <time class="entry-date published" datetime="2024-02-18T11:18:45.000Z">
-          2024-02-18
-        </time>
-      </a>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Whale">
+      <meta itemprop="description" content="码农预备役">
     </span>
-  </div>
 
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Whale's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Redis(3) 分布式锁
+        </h1>
 
-  
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
 
-  <div class="article-content">
-    <div class="entry">
+              <time title="Created: 2024-02-18 19:18:45 / Modified: 19:49:29" itemprop="dateCreated datePublished" datetime="2024-02-18T19:18:45+08:00">2024-02-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Backend/" itemprop="url" rel="index"><span itemprop="name">Backend</span></a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Backend/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
         <h2 id="1-Redisson-分布式锁"><a href="#1-Redisson-分布式锁" class="headerlink" title="1. Redisson 分布式锁"></a>1. Redisson 分布式锁</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202402181920501.png" alt="image-20240218192041327"></p>
 <p><strong>可重入</strong>：利用hash结构记录线程id和重入次数</p>
@@ -89,37 +215,179 @@
 <p>联锁的tryLock</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">tryLock</span><span class="hljs-params">(<span class="hljs-type">long</span> waitTime, <span class="hljs-type">long</span> leaseTime, TimeUnit unit)</span> <span class="hljs-keyword">throws</span> InterruptedException &#123;<br>    <span class="hljs-type">long</span> <span class="hljs-variable">newLeaseTime</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1L</span>;<br>    <span class="hljs-comment">//如果传入了释放时间</span><br>    <span class="hljs-keyword">if</span> (leaseTime != -<span class="hljs-number">1L</span>) &#123;<br>        <span class="hljs-comment">//再判断一下是否有等待时间</span><br>        <span class="hljs-keyword">if</span> (waitTime == -<span class="hljs-number">1L</span>) &#123;<br>            <span class="hljs-comment">//如果没传等待时间，不重试，则只获得一次</span><br>            newLeaseTime = unit.toMillis(leaseTime);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//想要重试，耗时较久，万一释放时间小于等待时间，则会有问题，所以这里将等待时间乘以二</span><br>            newLeaseTime = unit.toMillis(waitTime) * <span class="hljs-number">2L</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//获取当前时间</span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">time</span> <span class="hljs-operator">=</span> System.currentTimeMillis();<br>    <span class="hljs-comment">//剩余等待时间</span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">remainTime</span> <span class="hljs-operator">=</span> -<span class="hljs-number">1L</span>;<br>    <span class="hljs-keyword">if</span> (waitTime != -<span class="hljs-number">1L</span>) &#123;<br>        remainTime = unit.toMillis(waitTime);<br>    &#125;<br>    <span class="hljs-comment">//锁等待时间，与剩余等待时间一样    </span><br>    <span class="hljs-type">long</span> <span class="hljs-variable">lockWaitTime</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.calcLockWaitTime(remainTime);<br>    <span class="hljs-comment">//锁失败的限制，源码返回是的0</span><br>    <span class="hljs-type">int</span> <span class="hljs-variable">failedLocksLimit</span> <span class="hljs-operator">=</span> <span class="hljs-built_in">this</span>.failedLocksLimit();<br>    <span class="hljs-comment">//已经获取成功的锁</span><br>    List&lt;RLock&gt; acquiredLocks = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>(<span class="hljs-built_in">this</span>.locks.size());<br>    <span class="hljs-comment">//迭代器，用于遍历</span><br>    ListIterator&lt;RLock&gt; iterator = <span class="hljs-built_in">this</span>.locks.listIterator();<br><br>    <span class="hljs-keyword">while</span>(iterator.hasNext()) &#123;<br>        <span class="hljs-type">RLock</span> <span class="hljs-variable">lock</span> <span class="hljs-operator">=</span> (RLock)iterator.next();<br><br>        <span class="hljs-type">boolean</span> lockAcquired;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-comment">//没有等待时间和释放时间，调用空参的tryLock</span><br>            <span class="hljs-keyword">if</span> (waitTime == -<span class="hljs-number">1L</span> &amp;&amp; leaseTime == -<span class="hljs-number">1L</span>) &#123;<br>                lockAcquired = lock.tryLock();<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//否则调用带参的tryLock</span><br>                <span class="hljs-type">long</span> <span class="hljs-variable">awaitTime</span> <span class="hljs-operator">=</span> Math.min(lockWaitTime, remainTime);<br>                lockAcquired = lock.tryLock(awaitTime, newLeaseTime, TimeUnit.MILLISECONDS);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (RedisResponseTimeoutException var21) &#123;<br>            <span class="hljs-built_in">this</span>.unlockInner(Arrays.asList(lock));<br>            lockAcquired = <span class="hljs-literal">false</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception var22) &#123;<br>            lockAcquired = <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-comment">//判断获取锁是否成功</span><br>        <span class="hljs-keyword">if</span> (lockAcquired) &#123;<br>            <span class="hljs-comment">//成功则将锁放入成功锁的集合</span><br>            acquiredLocks.add(lock);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//如果获取锁失败</span><br>            <span class="hljs-comment">//判断当前锁的数量，减去成功获取锁的数量，如果为0，则所有锁都成功获取，跳出循环</span><br>            <span class="hljs-keyword">if</span> (<span class="hljs-built_in">this</span>.locks.size() - acquiredLocks.size() == <span class="hljs-built_in">this</span>.failedLocksLimit()) &#123;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            <span class="hljs-comment">//否则将拿到的锁都释放掉</span><br>            <span class="hljs-keyword">if</span> (failedLocksLimit == <span class="hljs-number">0</span>) &#123;<br>                <span class="hljs-built_in">this</span>.unlockInner(acquiredLocks);<br>                <span class="hljs-comment">//如果等待时间为-1，则不想重试，直接返回false</span><br>                <span class="hljs-keyword">if</span> (waitTime == -<span class="hljs-number">1L</span>) &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br><br>                failedLocksLimit = <span class="hljs-built_in">this</span>.failedLocksLimit();<br>                <span class="hljs-comment">//将已经拿到的锁都清空</span><br>                acquiredLocks.clear();<br>                <span class="hljs-comment">//将迭代器往前迭代，相当于重置指针，放到第一个然后重试获取锁</span><br>                <span class="hljs-keyword">while</span>(iterator.hasPrevious()) &#123;<br>                    iterator.previous();<br>                &#125;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                --failedLocksLimit;<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">//如果剩余时间不为-1，很充足</span><br>        <span class="hljs-keyword">if</span> (remainTime != -<span class="hljs-number">1L</span>) &#123;<br>            <span class="hljs-comment">//计算现在剩余时间</span><br>            remainTime -= System.currentTimeMillis() - time;<br>            time = System.currentTimeMillis();<br>            <span class="hljs-comment">//如果剩余时间为负数，则获取锁超时了</span><br>            <span class="hljs-keyword">if</span> (remainTime &lt;= <span class="hljs-number">0L</span>) &#123;<br>                <span class="hljs-comment">//将之前已经获取到的锁释放掉，并返回false</span><br>                <span class="hljs-built_in">this</span>.unlockInner(acquiredLocks);<br>                <span class="hljs-comment">//联锁成功的条件是：每一把锁都必须成功获取，一把锁失败，则都失败</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//如果设置了锁的有效期</span><br>    <span class="hljs-keyword">if</span> (leaseTime != -<span class="hljs-number">1L</span>) &#123;<br>        List&lt;RFuture&lt;Boolean&gt;&gt; futures = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ArrayList</span>(acquiredLocks.size());<br>        <span class="hljs-comment">//迭代器用于遍历已经获取成功的锁</span><br>        <span class="hljs-type">Iterator</span> <span class="hljs-variable">var24</span> <span class="hljs-operator">=</span> acquiredLocks.iterator();<br><br>        <span class="hljs-keyword">while</span>(var24.hasNext()) &#123;<br>            <span class="hljs-type">RLock</span> <span class="hljs-variable">rLock</span> <span class="hljs-operator">=</span> (RLock)var24.next();<br>            <span class="hljs-comment">//设置每一把锁的有效期</span><br>            RFuture&lt;Boolean&gt; future = ((RedissonLock)rLock).expireAsync(unit.toMillis(leaseTime), TimeUnit.MILLISECONDS);<br>            futures.add(future);<br>        &#125;<br><br>        var24 = futures.iterator();<br><br>        <span class="hljs-keyword">while</span>(var24.hasNext()) &#123;<br>            RFuture&lt;Boolean&gt; rFuture = (RFuture)var24.next();<br>            rFuture.syncUninterruptibly();<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//但如果没设置有效期，则会触发WatchDog机制，自动帮我们设置有效期，所以大多数情况下，我们不需要自己设置有效期</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Backend/">Backend</a>, <a href="/categories/Backend/Redis/">Redis</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/Redis/">Redis</a>
-    </span>
-    
-
     </div>
 
     
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Redis/" rel="tag"># Redis</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/02/17/Redis-2-%E7%BC%93%E5%AD%98/" rel="prev" title="Redis(2) 缓存">
+      <i class="fa fa-chevron-left"></i> Redis(2) 缓存
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/03/13/MySQL-1-%E5%AD%90%E6%9F%A5%E8%AF%A2/" rel="next" title="MySQL(1) 子查询">
+      MySQL(1) 子查询 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
-</article>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-Redisson-%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81"><span class="nav-number">1.</span> <span class="nav-text">1. Redisson 分布式锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MultiLock%E5%8E%9F%E7%90%86"><span class="nav-number">1.1.</span> <span class="nav-text">MultiLock原理</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Whale</p>
+  <div class="site-description" itemprop="description">码农预备役</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">123</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Whale</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -131,39 +399,15 @@
 
 
 
-    </main>
 
-    <footer class="site-footer">
-  <p class="site-info">
-    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
-    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
-    </br>
-    
-    &copy; 2024 Whale
-    
-  </p>
-</footer>
-    
-    
-  </div>
-</div>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
-<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
-<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+
+
+
+
+  
+
+  
+
 </body>
 </html>
