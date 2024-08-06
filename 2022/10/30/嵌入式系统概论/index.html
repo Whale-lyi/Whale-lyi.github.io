@@ -1,237 +1,185 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.3.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+<html lang="en" color-mode="light">
 
-<link rel="stylesheet" href="/css/main.css">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="码农预备役" />
+  
+  
+  <title>
+    
+      嵌入式系统概论 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"whale-lyi.github.io","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
   </script>
 
-  <meta name="description" content="NJUSE 嵌入式系统概论考前复习">
-<meta property="og:type" content="article">
-<meta property="og:title" content="嵌入式系统概论">
-<meta property="og:url" content="https://whale-lyi.github.io/2022/10/30/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/index.html">
-<meta property="og:site_name" content="Whale&#39;s Blog">
-<meta property="og:description" content="NJUSE 嵌入式系统概论考前复习">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030163439013.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030164145573.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030173243340.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153554918.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153610637.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153636127.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031153652256.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031161002670.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031221056726.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031221519490.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031230125096.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221031224207967.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101150649119.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101150737127.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101160551985.png">
-<meta property="og:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221101161059659.png">
-<meta property="article:published_time" content="2022-10-30T02:11:58.000Z">
-<meta property="article:modified_time" content="2023-08-09T06:53:19.996Z">
-<meta property="article:author" content="Whale">
-<meta property="article:tag" content="嵌入式系统概论">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/image-20221030163439013.png">
-
-<link rel="canonical" href="https://whale-lyi.github.io/2022/10/30/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/">
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
 
-  <title>嵌入式系统概论 | Whale's Blog</title>
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
   
 
+  
 
+  
 
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">Whale's Blog</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-      <p class="site-subtitle" itemprop="description">Stay hungry, Stay foolish</p>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
-</div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
-</div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">嵌入式系统概论</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2023-08-09 14:53:19
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/" title="NJU">
+                    <b>#</b> NJU
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/NJU/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" title="嵌入式系统概论">
+                    <b>#</b> 嵌入式系统概论
+                  </a>
+                </span>
+                
+              </span>
           
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://whale-lyi.github.io/2022/10/30/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Whale">
-      <meta itemprop="description" content="码农预备役">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Whale's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          嵌入式系统概论
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2022-10-30 10:11:58" itemprop="dateCreated datePublished" datetime="2022-10-30T10:11:58+08:00">2022-10-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-08-09 14:53:19" itemprop="dateModified" datetime="2023-08-09T14:53:19+08:00">2023-08-09</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/NJU/" itemprop="url" rel="index"><span itemprop="name">NJU</span></a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/NJU/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" itemprop="url" rel="index"><span itemprop="name">嵌入式系统概论</span></a>
-                </span>
-            </span>
-
-          
-            <div class="post-description">NJUSE 嵌入式系统概论考前复习</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
+      </div>
+      <div class="markdown-body">
         <h2 id="1-嵌入式系统概述"><a href="#1-嵌入式系统概述" class="headerlink" title="1 嵌入式系统概述"></a>1 嵌入式系统概述</h2><h3 id="1-1-定义"><a href="#1-1-定义" class="headerlink" title="1.1 定义"></a>1.1 定义</h3><h4 id="1-1-1-IEEE-的定义"><a href="#1-1-1-IEEE-的定义" class="headerlink" title="1.1.1 IEEE 的定义"></a>1.1.1 IEEE 的定义</h4><blockquote>
 <p>嵌入式系统是用于控制、监视或者辅助操作机器和设备的装置。</p>
 <p>Devices used to control, monitor, or assist the operation of equipment, machinery or plants.</p>
@@ -894,207 +842,386 @@
 <h2 id="8-建模"><a href="#8-建模" class="headerlink" title="8 建模"></a>8 建模</h2><p>有限状态机及其应用。</p>
 <p>有限状态机的实现。</p>
 
-    </div>
-
-    
-    
-    
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" rel="tag"># 嵌入式系统概论</a>
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
           </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2023-08-09 14:53:19
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/" title="NJU">
+                        <b>#</b> NJU
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/NJU/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" title="嵌入式系统概论">
+                        <b>#</b> 嵌入式系统概论
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+              <a href="/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1-%E6%A6%82%E8%BF%B0/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-text">1 嵌入式系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1 定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-IEEE-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.1 IEEE 的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E5%9B%BD%E5%86%85%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.2 国内的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-text">1.1.3 嵌入式系统三要素</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-4-%E5%85%B6%E4%BB%96%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">1.1.4 其他的定义</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%89%B9%E7%82%B9"><span class="toc-text">1.2 特点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%88%86%E7%B1%BB"><span class="toc-text">1.3 分类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E6%8C%89%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E4%BD%8D%E6%95%B0%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.1 按嵌入式处理器的位数来分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E6%8C%89%E5%BA%94%E7%94%A8%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.2 按应用来分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-%E6%8C%89%E9%80%9F%E5%BA%A6%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.3 按速度分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-%E6%8C%89%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.4 按确定性来分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-5-%E6%8C%89%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%A4%8D%E6%9D%82%E7%A8%8B%E5%BA%A6%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="toc-text">1.3.5 按嵌入式系统软件复杂程度来分类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="toc-text">1.4 典型应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E3%80%81IOT%E3%80%81CPS%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="toc-text">2 嵌入式系统、IOT、CPS的基本组成</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.1 嵌入式系统的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-IOT%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.2 IOT的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-CPS%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">2.3 CPS的组成</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="toc-text">3 嵌入式系统设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E9%9D%A2%E4%B8%B4%E6%8C%91%E6%88%98"><span class="toc-text">3.1 嵌入式系统面临挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E4%BC%A0%E7%BB%9F%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="toc-text">3.2 传统开发过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%8D%8F%E5%90%8C%E8%AE%BE%E8%AE%A1"><span class="toc-text">3.3 软硬件协同设计 -</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%88%92%E5%88%86"><span class="toc-text">3.4 软硬件划分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-1-%E9%80%9A%E5%B8%B8%E7%94%B1%E8%BD%AF%E4%BB%B6%E5%AE%9E%E7%8E%B0%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-text">3.4.1 通常由软件实现的部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-2-%E5%8F%8C%E9%87%8D%E6%80%A7%E9%83%A8%E5%88%86"><span class="toc-text">3.4.2 双重性部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-4-3-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8A%80%E6%9C%AF%E5%AF%B9%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-text">3.4.3 软硬件技术对系统结构的影响</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80"><span class="toc-text">4 嵌入式硬件系统基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80"><span class="toc-text">4.1 嵌入式微处理器基础</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E5%86%AF%E8%AF%BA%E4%BC%8A%E6%9B%BC%E7%BB%93%E6%9E%84%E4%B8%8E%E5%93%88%E4%BD%9B%E7%BB%93%E6%9E%84"><span class="toc-text">4.1.1 冯诺伊曼结构与哈佛结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-CISC%E4%B8%8ERISC"><span class="toc-text">4.1.2 CISC与RISC</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF"><span class="toc-text">4.1.3 流水线技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-4-%E5%88%86%E7%B1%BB"><span class="toc-text">4.1.4 分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-5-%E9%80%89%E5%9E%8B"><span class="toc-text">4.1.5 选型</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84-10-%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="toc-text">选择微控制器的 10 个步骤</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AD%98%E5%82%A8%E4%BD%93%E7%B3%BB"><span class="toc-text">4.2 嵌入式系统的存储体系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">4.2.1 存储器系统：存储器系统的层次结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-2-ROM%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="toc-text">4.2.2 ROM的种类与选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-3-Flash%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="toc-text">4.2.3 Flash的种类与选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-4-RAM%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="toc-text">4.2.4 RAM的种类与选型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-5-Cache"><span class="toc-text">4.2.5 Cache-</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF"><span class="toc-text">4.3 嵌入式系统总线</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-1-%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E6%80%BB%E7%BA%BF%E5%8F%8A%E7%89%B9%E7%82%B9"><span class="toc-text">4.3.1 总线结构，常见的总线及特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-2-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%BF%99%E7%AD%89IO%E5%92%8C%E4%B8%AD%E6%96%ADIO"><span class="toc-text">4.3.2 输入输出编程：忙等IO和中断IO</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-2-1-%E5%BF%99%E7%AD%89-busy-wait-%E8%BE%93%E5%87%BA"><span class="toc-text">4.3.2.1 忙等(busy&#x2F;wait)输出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-2-2-%E4%B8%AD%E6%96%ADI-O"><span class="toc-text">4.3.2.2 中断I&#x2F;O</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-3-Programming-I-O%EF%BC%9AIndependent-I-O-port-memory-mapped-I-O"><span class="toc-text">4.3.3 Programming I&#x2F;O：Independent I&#x2F;O port. memory-mapped I&#x2F;O.</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#4-3-3-1-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E7%9A%84-I-O"><span class="toc-text">4.3.3.1 内存映射的 I&#x2F;O</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E7%9F%A5%E8%AF%86"><span class="toc-text">5 嵌入式系统软件知识</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">5.1嵌入式软件基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="toc-text">5.1.1嵌入式软件的特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-2%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">5.1.2嵌入式软件的分类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="toc-text">5.1.3 嵌入式软件体系结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BD%AE%E8%AF%A2"><span class="toc-text">轮询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="toc-text">有限状态机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B8%A6%E4%B8%AD%E6%96%AD%E7%9A%84%E8%BD%AE%E8%AF%A2"><span class="toc-text">带中断的轮询</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%85%E6%9C%89%E4%B8%AD%E6%96%AD"><span class="toc-text">仅有中断</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%98%9F%E5%88%97%E8%B0%83%E5%BA%A6"><span class="toc-text">函数队列调度</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8A%A2%E5%8D%A0%E5%BC%8F%E5%A4%9A%E4%BB%BB%E5%8A%A1%E6%88%96%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="toc-text">抢占式多任务或多线程</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">5.2 嵌入式操作系统基础知识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-1-RTOS%E6%A6%82%E5%BF%B5%E3%80%81%E7%89%B9%E7%82%B9%E3%80%81%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99%EF%BC%88%E5%95%86%E4%B8%9A%E5%8C%96RTOS%EF%BC%89"><span class="toc-text">5.2.1 RTOS概念、特点、选型原则（商业化RTOS）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E7%82%B9"><span class="toc-text">特点</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99"><span class="toc-text">选型原则</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-2-%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="toc-text">5.2.2 任务管理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E3%80%81%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">进程、线程、任务的概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E3%80%81%E4%BB%BB%E5%8A%A1%E6%8E%A7%E5%88%B6%E5%9D%97%E3%80%81%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%8A%B6%E6%80%81%E5%8F%8A%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E3%80%81%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%EF%BC%89"><span class="toc-text">任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%EF%BC%88%E5%8F%AF%E6%8A%A2%E5%8D%A0%E8%B0%83%E5%BA%A6%E3%80%81%E4%B8%8D%E5%8F%AF%E6%8A%A2%E5%8D%A0%E8%B0%83%E5%BA%A6%E3%80%81%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%E3%80%81%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC%E7%AE%97%E6%B3%95%E3%80%81%E4%BC%98%E5%85%88%E7%BA%A7%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-text">任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9E%E6%97%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%EF%BC%88RMS%E3%80%81EDF%E7%AE%97%E6%B3%95%EF%BC%89"><span class="toc-text">实时系统及任务调度（RMS、EDF算法）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%BB%E5%8A%A1%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%88%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E7%AE%A1%E9%81%93%E3%80%81%E4%BF%A1%E5%8F%B7%EF%BC%89"><span class="toc-text">任务间通信（共享内存、消息、管道、信号）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5%EF%BC%88%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E3%80%81%E4%B8%B4%E7%95%8C%E5%8C%BA%E3%80%81%E4%BA%92%E6%96%A5%E3%80%81%E4%BF%A1%E5%8F%B7%E9%87%8F%E3%80%81%E6%AD%BB%E9%94%81%EF%BC%89"><span class="toc-text">同步与互斥（竞争条件、临界区、互斥、信号量、死锁）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-3%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="toc-text">5.2.3存储管理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-text">5.3 嵌入式系统程序设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="toc-text">5.3.1嵌入式软件开发基础知识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-2%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="toc-text">5.3.2嵌入式软件开发环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-3%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91"><span class="toc-text">5.3.3嵌入式软件开发</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AE%9E%E6%97%B6%E5%86%85%E6%A0%B8%EF%BC%88%E7%BB%93%E5%90%88%C2%B5C-OS-II%E5%92%8Cfreertos%EF%BC%89"><span class="toc-text">6 嵌入式实时内核（结合µC&#x2F;OS-II和freertos）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%AE%9E%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="toc-text">6.1 实时任务调度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%B8%AD%E6%96%AD%E4%B8%8E%E6%97%B6%E9%92%9F"><span class="toc-text">6.2 中断与时钟</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E5%90%8C%E6%AD%A5%E4%B8%8E%E9%80%9A%E4%BF%A1"><span class="toc-text">6.3 同步与通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%EF%BC%88%E9%9D%99%E6%80%81%E3%80%81%E5%8A%A8%E6%80%81%EF%BC%89"><span class="toc-text">6.4 存储管理（静态、动态）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-bsp-bootloader"><span class="toc-text">7 bsp, bootloader</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">7.1 嵌入式系统的启动过程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-bsp%EF%BC%8C%E7%89%B9%E7%82%B9%EF%BC%8C%E4%B8%8Ebios%E5%8C%BA%E5%88%AB"><span class="toc-text">7.2 bsp，特点，与bios区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-1-bsp"><span class="toc-text">7.2.1 bsp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-2-%E7%89%B9%E7%82%B9"><span class="toc-text">7.2.2 特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-3-%E5%8C%BA%E5%88%AB"><span class="toc-text">7.2.3 区别</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E5%BC%95%E5%AF%BC%E6%A8%A1%E5%BC%8F"><span class="toc-text">7.3 引导模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-bootloader%E5%8F%8A%E5%85%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">7.4 bootloader及其启动过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E5%BB%BA%E6%A8%A1"><span class="toc-text">8 建模</span></a></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
 
         
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2022/10/29/%E4%BA%91%E8%AE%A1%E7%AE%97-6-%E5%88%86%E5%B8%83%E5%BC%8F%E8%AE%A1%E7%AE%97/" rel="prev" title="云计算(6) 分布式系统:计算和存储">
-      <i class="fa fa-chevron-left"></i> 云计算(6) 分布式系统:计算和存储
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/11/08/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86-1-%E6%A6%82%E8%BF%B0/" rel="next" title="编译原理(1) 概述">
-      编译原理(1) 概述 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-          </div>
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
           
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
 
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
     }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
       }
     }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
 
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
 
-  <aside class="sidebar">
-    <div class="sidebar-inner">
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
 
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="nav-number">1.</span> <span class="nav-text">1 嵌入式系统概述</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-1-IEEE-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1.1 IEEE 的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-2-%E5%9B%BD%E5%86%85%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.1.2 国内的定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.1.3 嵌入式系统三要素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-4-%E5%85%B6%E4%BB%96%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.1.4 其他的定义</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E7%89%B9%E7%82%B9"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 特点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-1-%E6%8C%89%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%A4%84%E7%90%86%E5%99%A8%E7%9A%84%E4%BD%8D%E6%95%B0%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.3.1 按嵌入式处理器的位数来分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-2-%E6%8C%89%E5%BA%94%E7%94%A8%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.2.</span> <span class="nav-text">1.3.2 按应用来分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-3-%E6%8C%89%E9%80%9F%E5%BA%A6%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.3.</span> <span class="nav-text">1.3.3 按速度分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-4-%E6%8C%89%E7%A1%AE%E5%AE%9A%E6%80%A7%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.4.</span> <span class="nav-text">1.3.4 按确定性来分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-5-%E6%8C%89%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E5%A4%8D%E6%9D%82%E7%A8%8B%E5%BA%A6%E6%9D%A5%E5%88%86%E7%B1%BB"><span class="nav-number">1.3.5.</span> <span class="nav-text">1.3.5 按嵌入式系统软件复杂程度来分类</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 典型应用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E3%80%81IOT%E3%80%81CPS%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90"><span class="nav-number">2.</span> <span class="nav-text">2 嵌入式系统、IOT、CPS的基本组成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 嵌入式系统的组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-IOT%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 IOT的组成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-CPS%E7%9A%84%E7%BB%84%E6%88%90"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 CPS的组成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.</span> <span class="nav-text">3 嵌入式系统设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E9%9D%A2%E4%B8%B4%E6%8C%91%E6%88%98"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 嵌入式系统面临挑战</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%BC%A0%E7%BB%9F%E5%BC%80%E5%8F%91%E8%BF%87%E7%A8%8B"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 传统开发过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%8D%8F%E5%90%8C%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 软硬件协同设计 -</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E5%88%92%E5%88%86"><span class="nav-number">3.4.</span> <span class="nav-text">3.4 软硬件划分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-1-%E9%80%9A%E5%B8%B8%E7%94%B1%E8%BD%AF%E4%BB%B6%E5%AE%9E%E7%8E%B0%E7%9A%84%E9%83%A8%E5%88%86"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.4.1 通常由软件实现的部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-2-%E5%8F%8C%E9%87%8D%E6%80%A7%E9%83%A8%E5%88%86"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.4.2 双重性部分</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-3-%E8%BD%AF%E7%A1%AC%E4%BB%B6%E6%8A%80%E6%9C%AF%E5%AF%B9%E7%B3%BB%E7%BB%9F%E7%BB%93%E6%9E%84%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="nav-number">3.4.3.</span> <span class="nav-text">3.4.3 软硬件技术对系统结构的影响</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%A1%AC%E4%BB%B6%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80"><span class="nav-number">4.</span> <span class="nav-text">4 嵌入式硬件系统基础</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%BE%AE%E5%A4%84%E7%90%86%E5%99%A8%E5%9F%BA%E7%A1%80"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 嵌入式微处理器基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-1-%E5%86%AF%E8%AF%BA%E4%BC%8A%E6%9B%BC%E7%BB%93%E6%9E%84%E4%B8%8E%E5%93%88%E4%BD%9B%E7%BB%93%E6%9E%84"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 冯诺伊曼结构与哈佛结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-2-CISC%E4%B8%8ERISC"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 CISC与RISC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-3-%E6%B5%81%E6%B0%B4%E7%BA%BF%E6%8A%80%E6%9C%AF"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 流水线技术</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-4-%E5%88%86%E7%B1%BB"><span class="nav-number">4.1.4.</span> <span class="nav-text">4.1.4 分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1-5-%E9%80%89%E5%9E%8B"><span class="nav-number">4.1.5.</span> <span class="nav-text">4.1.5 选型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E5%BE%AE%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84-10-%E4%B8%AA%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.1.5.0.1.</span> <span class="nav-text">选择微控制器的 10 个步骤</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AD%98%E5%82%A8%E4%BD%93%E7%B3%BB"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 嵌入式系统的存储体系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%EF%BC%9A%E5%AD%98%E5%82%A8%E5%99%A8%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 存储器系统：存储器系统的层次结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-ROM%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 ROM的种类与选型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-3-Flash%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="nav-number">4.2.3.</span> <span class="nav-text">4.2.3 Flash的种类与选型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-4-RAM%E7%9A%84%E7%A7%8D%E7%B1%BB%E4%B8%8E%E9%80%89%E5%9E%8B"><span class="nav-number">4.2.4.</span> <span class="nav-text">4.2.4 RAM的种类与选型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-5-Cache"><span class="nav-number">4.2.5.</span> <span class="nav-text">4.2.5 Cache-</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%80%BB%E7%BA%BF"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 嵌入式系统总线</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-1-%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84%EF%BC%8C%E5%B8%B8%E8%A7%81%E7%9A%84%E6%80%BB%E7%BA%BF%E5%8F%8A%E7%89%B9%E7%82%B9"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 总线结构，常见的总线及特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-2-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%BC%96%E7%A8%8B%EF%BC%9A%E5%BF%99%E7%AD%89IO%E5%92%8C%E4%B8%AD%E6%96%ADIO"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 输入输出编程：忙等IO和中断IO</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-2-1-%E5%BF%99%E7%AD%89-busy-wait-%E8%BE%93%E5%87%BA"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">4.3.2.1 忙等(busy&#x2F;wait)输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-2-2-%E4%B8%AD%E6%96%ADI-O"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">4.3.2.2 中断I&#x2F;O</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3-3-Programming-I-O%EF%BC%9AIndependent-I-O-port-memory-mapped-I-O"><span class="nav-number">4.3.3.</span> <span class="nav-text">4.3.3 Programming I&#x2F;O：Independent I&#x2F;O port. memory-mapped I&#x2F;O.</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-3-3-1-%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E7%9A%84-I-O"><span class="nav-number">4.3.3.1.</span> <span class="nav-text">4.3.3.1 内存映射的 I&#x2F;O</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E8%BD%AF%E4%BB%B6%E7%9F%A5%E8%AF%86"><span class="nav-number">5.</span> <span class="nav-text">5 嵌入式系统软件知识</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">5.1.</span> <span class="nav-text">5.1嵌入式软件基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E7%9A%84%E7%89%B9%E7%82%B9"><span class="nav-number">5.1.1.</span> <span class="nav-text">5.1.1嵌入式软件的特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%88%86%E7%B1%BB"><span class="nav-number">5.1.2.</span> <span class="nav-text">5.1.2嵌入式软件的分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84"><span class="nav-number">5.1.3.</span> <span class="nav-text">5.1.3 嵌入式软件体系结构</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BD%AE%E8%AF%A2"><span class="nav-number">5.1.3.1.</span> <span class="nav-text">轮询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%89%E9%99%90%E7%8A%B6%E6%80%81%E6%9C%BA"><span class="nav-number">5.1.3.2.</span> <span class="nav-text">有限状态机</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%B8%A6%E4%B8%AD%E6%96%AD%E7%9A%84%E8%BD%AE%E8%AF%A2"><span class="nav-number">5.1.3.3.</span> <span class="nav-text">带中断的轮询</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%85%E6%9C%89%E4%B8%AD%E6%96%AD"><span class="nav-number">5.1.3.4.</span> <span class="nav-text">仅有中断</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E9%98%9F%E5%88%97%E8%B0%83%E5%BA%A6"><span class="nav-number">5.1.3.5.</span> <span class="nav-text">函数队列调度</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%A2%E5%8D%A0%E5%BC%8F%E5%A4%9A%E4%BB%BB%E5%8A%A1%E6%88%96%E5%A4%9A%E7%BA%BF%E7%A8%8B"><span class="nav-number">5.1.3.6.</span> <span class="nav-text">抢占式多任务或多线程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E5%B5%8C%E5%85%A5%E5%BC%8F%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 嵌入式操作系统基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-1-RTOS%E6%A6%82%E5%BF%B5%E3%80%81%E7%89%B9%E7%82%B9%E3%80%81%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99%EF%BC%88%E5%95%86%E4%B8%9A%E5%8C%96RTOS%EF%BC%89"><span class="nav-number">5.2.1.</span> <span class="nav-text">5.2.1 RTOS概念、特点、选型原则（商业化RTOS）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%A6%82%E5%BF%B5"><span class="nav-number">5.2.1.1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%89%B9%E7%82%B9"><span class="nav-number">5.2.1.2.</span> <span class="nav-text">特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%80%89%E5%9E%8B%E5%8E%9F%E5%88%99"><span class="nav-number">5.2.1.3.</span> <span class="nav-text">选型原则</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-2-%E4%BB%BB%E5%8A%A1%E7%AE%A1%E7%90%86"><span class="nav-number">5.2.2.</span> <span class="nav-text">5.2.2 任务管理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E3%80%81%E7%BA%BF%E7%A8%8B%E3%80%81%E4%BB%BB%E5%8A%A1%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">5.2.2.1.</span> <span class="nav-text">进程、线程、任务的概念</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%AE%9E%E7%8E%B0%EF%BC%88%E4%BB%BB%E5%8A%A1%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E3%80%81%E4%BB%BB%E5%8A%A1%E6%8E%A7%E5%88%B6%E5%9D%97%E3%80%81%E4%BB%BB%E5%8A%A1%E7%9A%84%E7%8A%B6%E6%80%81%E5%8F%8A%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2%E3%80%81%E4%BB%BB%E5%8A%A1%E9%98%9F%E5%88%97%EF%BC%89"><span class="nav-number">5.2.2.2.</span> <span class="nav-text">任务的实现（任务的层次结构、任务控制块、任务的状态及状态转换、任务队列）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%EF%BC%88%E5%8F%AF%E6%8A%A2%E5%8D%A0%E8%B0%83%E5%BA%A6%E3%80%81%E4%B8%8D%E5%8F%AF%E6%8A%A2%E5%8D%A0%E8%B0%83%E5%BA%A6%E3%80%81%E5%85%88%E6%9D%A5%E5%85%88%E6%9C%8D%E5%8A%A1%E3%80%81%E6%97%B6%E9%97%B4%E7%89%87%E8%BD%AE%E8%BD%AC%E7%AE%97%E6%B3%95%E3%80%81%E4%BC%98%E5%85%88%E7%BA%A7%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">5.2.2.3.</span> <span class="nav-text">任务调度（可抢占调度、不可抢占调度、先来先服务、时间片轮转算法、优先级算法）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%9E%E6%97%B6%E7%B3%BB%E7%BB%9F%E5%8F%8A%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6%EF%BC%88RMS%E3%80%81EDF%E7%AE%97%E6%B3%95%EF%BC%89"><span class="nav-number">5.2.2.4.</span> <span class="nav-text">实时系统及任务调度（RMS、EDF算法）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E9%97%B4%E9%80%9A%E4%BF%A1%EF%BC%88%E5%85%B1%E4%BA%AB%E5%86%85%E5%AD%98%E3%80%81%E6%B6%88%E6%81%AF%E3%80%81%E7%AE%A1%E9%81%93%E3%80%81%E4%BF%A1%E5%8F%B7%EF%BC%89"><span class="nav-number">5.2.2.5.</span> <span class="nav-text">任务间通信（共享内存、消息、管道、信号）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%B8%8E%E4%BA%92%E6%96%A5%EF%BC%88%E7%AB%9E%E4%BA%89%E6%9D%A1%E4%BB%B6%E3%80%81%E4%B8%B4%E7%95%8C%E5%8C%BA%E3%80%81%E4%BA%92%E6%96%A5%E3%80%81%E4%BF%A1%E5%8F%B7%E9%87%8F%E3%80%81%E6%AD%BB%E9%94%81%EF%BC%89"><span class="nav-number">5.2.2.6.</span> <span class="nav-text">同步与互斥（竞争条件、临界区、互斥、信号量、死锁）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2-3%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86"><span class="nav-number">5.2.3.</span> <span class="nav-text">5.2.3存储管理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 嵌入式系统程序设计</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-1%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">5.3.1.</span> <span class="nav-text">5.3.1嵌入式软件开发基础知识</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-2%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83"><span class="nav-number">5.3.2.</span> <span class="nav-text">5.3.2嵌入式软件开发环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3-3%E5%B5%8C%E5%85%A5%E5%BC%8F%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91"><span class="nav-number">5.3.3.</span> <span class="nav-text">5.3.3嵌入式软件开发</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AE%9E%E6%97%B6%E5%86%85%E6%A0%B8%EF%BC%88%E7%BB%93%E5%90%88%C2%B5C-OS-II%E5%92%8Cfreertos%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">6 嵌入式实时内核（结合µC&#x2F;OS-II和freertos）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-%E5%AE%9E%E6%97%B6%E4%BB%BB%E5%8A%A1%E8%B0%83%E5%BA%A6"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 实时任务调度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-%E4%B8%AD%E6%96%AD%E4%B8%8E%E6%97%B6%E9%92%9F"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 中断与时钟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-%E5%90%8C%E6%AD%A5%E4%B8%8E%E9%80%9A%E4%BF%A1"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 同步与通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%EF%BC%88%E9%9D%99%E6%80%81%E3%80%81%E5%8A%A8%E6%80%81%EF%BC%89"><span class="nav-number">6.4.</span> <span class="nav-text">6.4 存储管理（静态、动态）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-bsp-bootloader"><span class="nav-number">7.</span> <span class="nav-text">7 bsp, bootloader</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 嵌入式系统的启动过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-bsp%EF%BC%8C%E7%89%B9%E7%82%B9%EF%BC%8C%E4%B8%8Ebios%E5%8C%BA%E5%88%AB"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 bsp，特点，与bios区别</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-1-bsp"><span class="nav-number">7.2.1.</span> <span class="nav-text">7.2.1 bsp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-2-%E7%89%B9%E7%82%B9"><span class="nav-number">7.2.2.</span> <span class="nav-text">7.2.2 特点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-2-3-%E5%8C%BA%E5%88%AB"><span class="nav-number">7.2.3.</span> <span class="nav-text">7.2.3 区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-3-%E5%BC%95%E5%AF%BC%E6%A8%A1%E5%BC%8F"><span class="nav-number">7.3.</span> <span class="nav-text">7.3 引导模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-4-bootloader%E5%8F%8A%E5%85%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">7.4.</span> <span class="nav-text">7.4 bootloader及其启动过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E5%BB%BA%E6%A8%A1"><span class="nav-number">8.</span> <span class="nav-text">8 建模</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Whale</p>
-  <div class="site-description" itemprop="description">码农预备役</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
         
-          <span class="site-state-item-count">123</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">41</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-        <span class="site-state-item-count">36</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Whale-lyi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;Whale-lyi" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
   </div>
 
+  
+<script src="/js/colorscheme.js"></script>
 
 
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + %E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2022%2F10%2F30%2F%25E5%25B5%258C%25E5%2585%25A5%25E5%25BC%258F%25E7%25B3%25BB%25E7%25BB%259F%25E6%25A6%2582%25E8%25AE%25BA%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2022/10/30/%E5%B5%8C%E5%85%A5%E5%BC%8F%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%AE%BA/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
       </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
   
-  &copy; 
-  <span itemprop="copyrightYear">2024</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Whale</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
-  </div>
-
-        
-
-
-
-
-
+  
+<script src="/js/shares.js"></script>
 
 
 
       </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
-  
-
+    </div>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </body>
 </html>
