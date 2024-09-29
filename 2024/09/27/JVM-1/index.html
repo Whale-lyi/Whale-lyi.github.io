@@ -11,7 +11,7 @@
   
   <title>
     
-      MySQL(2) 事务 
+      JVM(1) 字节码、类加载器 
       
       
       |
@@ -154,25 +154,25 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">MySQL(2) 事务</div>
+      <div class="post-title">JVM(1) 字节码、类加载器</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2024-03-14 16:10:01
+          2024-09-29 14:32:52
         </span>
         
               <span class="post-categories">
                 <i class="iconfont icon-bookmark" title="Categories"></i>
                 
                 <span class="span--category">
-                  <a href="/categories/Backend/" title="Backend">
-                    <b>#</b> Backend
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
                   </a>
                 </span>
                 
                 <span class="span--category">
-                  <a href="/categories/Backend/MySQL/" title="MySQL">
-                    <b>#</b> MySQL
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
                   </a>
                 </span>
                 
@@ -180,74 +180,154 @@
           
       </div>
       <div class="markdown-body">
-        <p>事务：一组操作的集合，同时成功/失败</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs sql"><span class="hljs-comment">-- 方式一：设置事务提交方式</span><br><span class="hljs-comment">-- 查看事务提交方式</span><br><span class="hljs-keyword">SELECT</span> @<span class="hljs-variable">@AUTOCOMMIT</span>;<br><span class="hljs-comment">-- 设置事务提交方式，1为自动提交，0为手动提交，该设置只对当前会话有效</span><br><span class="hljs-keyword">SET</span> @<span class="hljs-variable">@AUTOCOMMIT</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br><span class="hljs-comment">-- 提交事务</span><br><span class="hljs-keyword">COMMIT</span>;<br><span class="hljs-comment">-- 回滚事务</span><br><span class="hljs-keyword">ROLLBACK</span>;<br><span class="hljs-comment">-- 事务演示</span><br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> account <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">-</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">+</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;李四&#x27;</span>;<br><span class="hljs-keyword">commit</span>;<br><br><br><span class="hljs-comment">-- 方式二：开启事务</span><br><span class="hljs-keyword">START</span> TRANSACTION; <span class="hljs-comment">-- 或者 BEGIN TRANSACTION;</span><br><span class="hljs-comment">-- 事务演示</span><br><span class="hljs-keyword">start</span> transaction;<br><span class="hljs-keyword">select</span> <span class="hljs-operator">*</span> <span class="hljs-keyword">from</span> account <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">-</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;张三&#x27;</span>;<br><span class="hljs-keyword">update</span> account <span class="hljs-keyword">set</span> money <span class="hljs-operator">=</span> money <span class="hljs-operator">+</span> <span class="hljs-number">1000</span> <span class="hljs-keyword">where</span> name <span class="hljs-operator">=</span> <span class="hljs-string">&#x27;李四&#x27;</span>;<br><span class="hljs-keyword">commit</span>;<br></code></pre></td></tr></table></figure>
-<h2 id="1-ACID特性"><a href="#1-ACID特性" class="headerlink" title="1. ACID特性"></a>1. ACID特性</h2><h3 id="Atomicity-原子性"><a href="#Atomicity-原子性" class="headerlink" title="Atomicity 原子性"></a>Atomicity 原子性</h3><p>事务是不可分割的最小操作单元，要么全部成功，要么全部失败</p>
-<h3 id="Consistency-一致性"><a href="#Consistency-一致性" class="headerlink" title="Consistency 一致性"></a>Consistency 一致性</h3><p>事务完成时，必须使所有数据都保持一致状态</p>
-<h3 id="Isolation-隔离性"><a href="#Isolation-隔离性" class="headerlink" title="Isolation 隔离性"></a>Isolation 隔离性</h3><p>数据库系统提供的隔离机制，保证事务在不受外部并发操作影响的独立环境下运行</p>
-<h3 id="Durability-持久性"><a href="#Durability-持久性" class="headerlink" title="Durability 持久性"></a>Durability 持久性</h3><p>事务一旦提交或回滚，它对数据库中的数据的改变就是永久的</p>
-<h2 id="2-并发事务问题"><a href="#2-并发事务问题" class="headerlink" title="2. 并发事务问题"></a>2. 并发事务问题</h2><h3 id="脏读"><a href="#脏读" class="headerlink" title="脏读"></a>脏读</h3><p>一个事务读到另一个事务还没提交的数据</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202403141526258.png" alt="img"></p>
-<h3 id="不可重复读"><a href="#不可重复读" class="headerlink" title="不可重复读"></a>不可重复读</h3><p>一个事务先后读取同一条记录，但两次读取的数据不同</p>
+        <h2 id="1-字节码"><a href="#1-字节码" class="headerlink" title="1. 字节码"></a>1. 字节码</h2><h3 id="1-1-字节码的组成"><a href="#1-1-字节码的组成" class="headerlink" title="1.1 字节码的组成"></a>1.1 字节码的组成</h3><p><strong>基础信息</strong>：魔数（0xCAFEBABE）、字节码文件对应的Java版本号、访问标识（public final…）、父类和接口索引</p>
+<p><strong>常量池</strong>：保存了字符串常量、类或接口名、字段名，主要在字节码指令中使用</p>
 <blockquote>
-<p>脏读: 读到的是其他事务未提交的数据</p>
-<p>不可重复读: 读到的是其他事务已提交的数据。</p>
+<p>如果变量名和值相同，只会在常量池存储一份</p>
 </blockquote>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202403141526926.png" alt="img"></p>
-<h3 id="幻读"><a href="#幻读" class="headerlink" title="幻读"></a>幻读</h3><p>一个事务按照条件查询数据时，没有对应的数据行，但是在插入数据时，又发现这行数据已经存在</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202403141557246.png" alt="img"></p>
-<h2 id="3-事务隔离级别"><a href="#3-事务隔离级别" class="headerlink" title="3. 事务隔离级别"></a>3. 事务隔离级别</h2><div class="table-container">
+<p><strong>字段</strong>：当前类或接口声明的字段信息</p>
+<p><strong>方法</strong>：当前类或接口生命的方法信息，字节码指令</p>
+<p><strong>属性</strong>：类的属性，比如源码的文件名、内部类的列表等</p>
+<blockquote>
+<p>i++与++i的区别</p>
+<ul>
+<li>i++会先将i赋值到操作数栈，直接在局部变量表+1</li>
+<li>++i会先在局部变量表+1，再赋值到操作数栈</li>
+</ul>
+</blockquote>
+<h3 id="1-2-常用工具"><a href="#1-2-常用工具" class="headerlink" title="1.2 常用工具"></a>1.2 常用工具</h3><ul>
+<li>查看字节码：jclasslib</li>
+<li>查看字节码：<code>javap -v &#123;字节码文件名称&#125;</code></li>
+<li><a target="_blank" rel="noopener" href="https://arthas.aliyun.com/doc/commands.html">阿里arthas</a><ul>
+<li>启动：<code>java -jar arthas-boot.jar</code></li>
+<li>加载类的字节码文件：<code>dump &#123;类的全限定名&#125;</code></li>
+<li>反编译：<code>jad &#123;类的全限定名&#125;</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="2-类的生命周期"><a href="#2-类的生命周期" class="headerlink" title="2. 类的生命周期"></a>2. 类的生命周期</h2><p>加载 —&gt; 连接(验证、准备、解析) —&gt; 初始化 —&gt; 使用 —&gt; 卸载</p>
+<p><strong>加载</strong>：根据类的全限定名把字节码文件的内容加载并转换成合适的数据放入内存中，存放在方法区(InnerKlass)和堆上(Class)</p>
+<p><strong>连接-验证</strong>：魔数、版本号等验证</p>
+<p><strong>连接-准备</strong>：为静态变量分配内存并设置初始值</p>
+<p><strong>连接-解析</strong>：将常量池中的符号引用（编号）替换为直接引用（内存地址）</p>
+<p><strong>初始化</strong>：执行静态代码块和静态变量的赋值</p>
+<blockquote>
+<ul>
+<li>静态变量的定义如果使用了final关键字，这类变量会在准备阶段直接进行初始化(除非要执行方法)</li>
+<li>直接访问父类的静态变量，不会触发子类的初始化。子类的初始化 clinit 调用之前，会先调用父类的 clinit 初始化方法。</li>
+<li>添加 <code>-XX:+TraceClassLoading</code> 参数可以打印出加载并初始化的类</li>
+</ul>
+</blockquote>
+<h2 id="3-类加载器"><a href="#3-类加载器" class="headerlink" title="3. 类加载器"></a>3. 类加载器</h2><h3 id="3-1-类加载器的分类"><a href="#3-1-类加载器的分类" class="headerlink" title="3.1 类加载器的分类"></a>3.1 类加载器的分类</h3><p><strong>虚拟机底层实现</strong>：位于虚拟机源码，使用C++实现，保证程序运行时的基础类被正确的加载</p>
+<p><strong>Java</strong>：JDK中默认提供或自定义，所有Java中实现的类加载器都继承自ClassLoader抽象类</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
-<th>隔离级别</th>
-<th>脏读</th>
-<th>不可重复读</th>
-<th>幻读</th>
+<th></th>
+<th>JDK8及之前版本</th>
+<th>JDK9及之后的版本(模块化 jmod)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Read uncommitted</td>
-<td>√</td>
-<td>√</td>
-<td>√</td>
+<td>虚拟机底层实现</td>
+<td>启动类加载器Bootstrap</td>
+<td></td>
 </tr>
 <tr>
-<td>Read committed</td>
-<td>×</td>
-<td>√</td>
-<td>√</td>
+<td>Java实现</td>
+<td></td>
+<td>启动类加载器 (jdk.internal.loader.ClassLoaders)<br />BootClassLoader继承自BuitinClassLoader实现从模块中找到字节码文件<br />仍然无法通过java代码获取到(null)，保持了统一</td>
 </tr>
 <tr>
-<td>Repeatable Read(默认)</td>
-<td>×</td>
-<td>×</td>
-<td>√</td>
+<td></td>
+<td>扩展类加载器Extension (sun.misc.Launcher.java)</td>
+<td>平台类加载器 (jdk.internal.loader.ClassLoaders)<br />继承自BuitinClassLoader，其存在更多的是为了与老版本的设计兼容，没有特殊逻辑</td>
 </tr>
 <tr>
-<td>Serializable</td>
-<td>×</td>
-<td>×</td>
-<td>×</td>
+<td></td>
+<td>应用程序类加载器Application (sun.misc.Launcher.java)</td>
+<td>应用程序类加载器 (jdk.internal.loader.ClassLoaders)<br />继承自BuitinClassLoader</td>
 </tr>
 </tbody>
 </table>
 </div>
-<p>查看事务隔离级别：</p>
-<p><code>SELECT @@TRANSACTION_ISOLATION;</code></p>
-<p>设置事务隔离级别：</p>
-<p><code>SET [ SESSION | GLOBAL ] TRANSACTION ISOLATION LEVEL &#123;READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE &#125;;</code></p>
+<blockquote>
+<p>arthas</p>
 <ul>
-<li>SESSION 是会话级别，表示只针对当前会话有效，GLOBAL 表示对所有会话有效</li>
+<li><code>classloader</code>：查看类加载器的继承树、urls、类加载信息…<ul>
+<li><code>-l</code>：查看类加载器hash</li>
+<li><code>-c &#123;hash&#125;</code>：查看类加载器的加载路径</li>
+<li><code>-t</code>：查看类加载器间的父子关系</li>
 </ul>
+</li>
+<li><code>sc -d &#123;类的全限定名&#125;</code>：查看 JVM 已加载的类信息</li>
+</ul>
+</blockquote>
+<p><strong>启动类加载器</strong>：由Hotspot虚拟机提供，C++编写，默认加载/jre/lib下的类文件</p>
+<ul>
+<li>如何通过启动类加载器加载用户jar包<ul>
+<li>放在jre/lib下进行扩展(不推荐，文件名可能不匹配出错)</li>
+<li>使用参数(推荐): <code>-Xbootclasspath/a:&#123;jar包目录/jar包名&#125;</code></li>
+</ul>
+</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202409271633333.png" alt="image-20240927163342213" style="zoom:80%;" /></p>
+<p><strong>扩展类加载器</strong>：JDK中提供，默认加载/jre/lib/ext下的类文件</p>
+<ul>
+<li><p>如何通过扩展类加载器加载用户jar包</p>
+<ul>
+<li><p>放在jre/lib/ext下进行扩展(不推荐)</p>
+</li>
+<li><p>使用参数(推荐): <code>-Djava.ext.dirs=&#123;jar包目录&#125;</code>，由于这种方式会覆盖原始目录，可使用<code>;&#123;原始目录&#125;</code>追加</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>应用程序类加载器</strong>：加载classpath下的类文件</p>
+<h3 id="3-2-双亲委派机制"><a href="#3-2-双亲委派机制" class="headerlink" title="3.2 双亲委派机制"></a>3.2 双亲委派机制</h3><p><strong>定义</strong>：当一个类加载器接收到加载类的任务时，会自底向上查找是否加载过，再由顶向下进行加载</p>
+<p><strong>作用</strong>：保证类加载的安全性(避免恶意替换核心类库)、避免重复加载</p>
+<blockquote>
+<p>类加载器间的父子关系并不是继承关系，而是通过 <code>private final ClassLoader parent;</code> 来体现</p>
+</blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202409271712143.png" alt="img" style="zoom:80%;" /></p>
+<h3 id="3-3-打破双亲委派机制"><a href="#3-3-打破双亲委派机制" class="headerlink" title="3.3 打破双亲委派机制"></a>3.3 打破双亲委派机制</h3><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hollischuang/p/14260801.html">https://www.cnblogs.com/hollischuang/p/14260801.html</a></p>
+<h4 id="自定义类加载器"><a href="#自定义类加载器" class="headerlink" title="自定义类加载器"></a><strong>自定义类加载器</strong></h4><p>自定义类加载器并重写loadClass方法，就可以去除双亲委派的代码（Tomcat就通过这种方式实现应用之间类的隔离）</p>
+<ul>
+<li>如果不希望破坏双亲委派并想自定义类加载器，重写findClass方法即可</li>
+</ul>
+<blockquote>
+<p>两个自定义类加载器加载相同限定名的类不会冲突，只有相同类加载器+相同类限定名才会被认为是同一个类</p>
+</blockquote>
+<h4 id="线程上下文类加载器"><a href="#线程上下文类加载器" class="headerlink" title="线程上下文类加载器"></a><strong>线程上下文类加载器</strong></h4><p>利用上下文类加载器加载类，比如JDBC, JNDI等(SPI机制)</p>
+<p>SPI是JDK内置的一种服务提供发现机制</p>
+<ul>
+<li>在classpath路径下的META-INF/services文件夹中，以接口的全限定名来命名文件名，对应的文件里面写该接口的实现类的全限定名</li>
+<li>SPI使用线程上下文中保存的类加载器进行类的加载，这个类加载器一般是AppClassLoader</li>
+</ul>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202409291356689.png" alt="image-20240929135608595" style="zoom:80%;" /></p>
+<blockquote>
+<p>讨论：通过线程上下文类加载器是否真正打破了双亲委派机制？</p>
+<ul>
+<li>打破了：由启动类加载器加载的类，委派应用程序类加载器加载类的方式，打破了双亲委派机制</li>
+<li>没有打破：JDBC只是在DriverManager加载完之后，通过初始化阶段出发了驱动类的加载，类的加载依然遵循双亲委派机制</li>
+</ul>
+</blockquote>
+<h4 id="Osgi框架的类加载器"><a href="#Osgi框架的类加载器" class="headerlink" title="Osgi框架的类加载器"></a><strong>Osgi框架的类加载器</strong></h4><p>历史上Osgi框架实现了一套新的类加载器机制，允许同级之间委托进行类的加载。OSGi还是用类加载器实现了<strong>热部署</strong>的功能(不停机动态更新字节码文件到内存)</p>
+<p><strong>arthas热部署</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 反编译源代码</span><br>jad --source-only &#123;类全限定名&#125; &gt; &#123;目录/文件名.java&#125;<br><span class="hljs-comment"># 编译修改过的代码</span><br>mc -c &#123;类加载器的hashcode&#125; &#123;目录/文件名.java&#125; -d &#123;输出目录&#125;<br><span class="hljs-comment"># 加载新的字节码</span><br>retransform &#123;class文件所在目录/xxx.class&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>程序重启后，字节码文件会恢复，除非将class文件放入jar包中进行更新</p>
+<p>使用retransform不能添加方法或字段，也不能更新正在执行中的方法</p>
+</blockquote>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2024/03/13/MySQL-1-%E5%AD%90%E6%9F%A5%E8%AF%A2/" target="_self">
+              <a href="/2024/03/13/MySQL-2-%E4%BA%8B%E5%8A%A1/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -256,21 +336,21 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2024-03-14 16:10:01
+              2024-09-29 14:32:52
             </span>
             
                   <span class="post-categories">
                     <i class="iconfont icon-bookmark" title="Categories"></i>
                     
                     <span class="span--category">
-                      <a href="/categories/Backend/" title="Backend">
-                        <b>#</b> Backend
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
                       </a>
                     </span>
                     
                     <span class="span--category">
-                      <a href="/categories/Backend/MySQL/" title="MySQL">
-                        <b>#</b> MySQL
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
                       </a>
                     </span>
                     
@@ -278,11 +358,6 @@
               
           </div>
           <div class="post-foot-prev">
-            
-              <a href="/2024/09/27/JVM-1/" target="_self">
-                <span>Next</span>
-                <i class="iconfont icon-chevronright"></i>
-              </a>
             
           </div>
         </div>
@@ -296,7 +371,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ACID%E7%89%B9%E6%80%A7"><span class="toc-text">1. ACID特性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Atomicity-%E5%8E%9F%E5%AD%90%E6%80%A7"><span class="toc-text">Atomicity 原子性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Consistency-%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-text">Consistency 一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Isolation-%E9%9A%94%E7%A6%BB%E6%80%A7"><span class="toc-text">Isolation 隔离性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Durability-%E6%8C%81%E4%B9%85%E6%80%A7"><span class="toc-text">Durability 持久性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B9%B6%E5%8F%91%E4%BA%8B%E5%8A%A1%E9%97%AE%E9%A2%98"><span class="toc-text">2. 并发事务问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%84%8F%E8%AF%BB"><span class="toc-text">脏读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB"><span class="toc-text">不可重复读</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%BB%E8%AF%BB"><span class="toc-text">幻读</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-text">3. 事务隔离级别</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%AD%97%E8%8A%82%E7%A0%81"><span class="toc-text">1. 字节码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%AD%97%E8%8A%82%E7%A0%81%E7%9A%84%E7%BB%84%E6%88%90"><span class="toc-text">1.1 字节码的组成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-text">1.2 常用工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="toc-text">2. 类的生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-text">3. 类加载器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-text">3.1 类加载器的分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-text">3.2 双亲委派机制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%89%93%E7%A0%B4%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6"><span class="toc-text">3.3 打破双亲委派机制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-text">自定义类加载器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E4%B8%8A%E4%B8%8B%E6%96%87%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-text">线程上下文类加载器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Osgi%E6%A1%86%E6%9E%B6%E7%9A%84%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="toc-text">Osgi框架的类加载器</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
@@ -586,12 +661,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + MySQL(2)%20%E4%BA%8B%E5%8A%A1 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F03%2F13%2FMySQL-2-%25E4%25BA%258B%25E5%258A%25A1%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JVM(1)%20%E5%AD%97%E8%8A%82%E7%A0%81%E3%80%81%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F09%2F27%2FJVM-1%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/03/13/MySQL-2-%E4%BA%8B%E5%8A%A1/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/09/27/JVM-1/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
