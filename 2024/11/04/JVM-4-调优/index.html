@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en" color-mode="light">
+
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  
+  <meta name="author" content="Whale" />
+  <meta name="description" content="码农预备役" />
+  
+  
+  <title>
+    
+      JVM(4) JVM调优 
+      
+      
+      |
+    
+     Whale&#39;s Blog
+  </title>
+
+  
+    <link rel="apple-touch-icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+    <link rel="icon" href="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/favicon.ico">
+  
+
+  <!-- Raleway-Font -->
+  <link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+  <!-- hexo site css -->
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_1886449_67xjft27j1l.css" />
+  <link rel="stylesheet" href="/css/intellij-light.css">
+  <!-- 代码块风格 -->
+  
+    
+<link rel="stylesheet" href="/css/figcaption/mac-block.css">
+
+  
+
+  <!-- jquery3.3.1 -->
+  
+    <script defer type="text/javascript" src="/plugins/jquery.min.js"></script>
+  
+
+  <!-- fancybox -->
+  
+    <link href="/plugins/jquery.fancybox.min.css" rel="stylesheet">
+    <script defer type="text/javascript" src="/plugins/jquery.fancybox.min.js"></script>
+  
+  
+<script src="/js/fancybox.js"></script>
+
+
+  
+
+  
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
+
+  <script>
+    var html = document.documentElement
+    const colorMode = localStorage.getItem('color-mode')
+    if (colorMode) {
+      document.documentElement.setAttribute('color-mode', colorMode)
+    }
+  </script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div id="app">
+      <div class="header">
+  <div class="avatar">
+    <a href="/">
+      <!-- 头像取消懒加载，添加no-lazy -->
+      
+        <img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/avatar.png" alt="">
+      
+    </a>
+    <div class="nickname"><a href="/">Whale</a></div>
+  </div>
+  <div class="navbar">
+    <ul>
+      
+        <li class="nav-item" data-path="/">
+          <a href="/">Home</a>
+        </li>
+      
+        <li class="nav-item" data-path="/archives/">
+          <a href="/archives/">Archives</a>
+        </li>
+      
+        <li class="nav-item" data-path="/categories/">
+          <a href="/categories/">Categories</a>
+        </li>
+      
+        <li class="nav-item" data-path="/friends/">
+          <a href="/friends/">Friends</a>
+        </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+<script src="/js/activeNav.js"></script>
+
+
+
+      <div class="flex-container">
+        <!-- 文章详情页，展示文章具体内容，url形式：https://yoursite/文章标题/ -->
+<!-- 同时为「标签tag」，「朋友friend」，「分类categories」，「关于about」页面的承载页面，具体展示取决于page.type -->
+
+
+  <!-- LaTex Display -->
+
+  
+    <script async type="text/javascript" src="/plugins/mathjax/tex-chtml.js"></script>
+  
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+      }
+    }
+  </script>
+
+
+
+
+
+  <!-- clipboard -->
+
+  
+    <script async type="text/javascript" src="/plugins/clipboard.min.js"></script>
+  
+  
+<script src="/js/codeCopy.js"></script>
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
+  <div class="container post-details" id="post-details">
+    <div class="post-content">
+      <div class="post-title">JVM(4) JVM调优</div>
+      <div class="post-attach">
+        <span class="post-pubtime">
+          <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+          2024-11-13 15:41:36
+        </span>
+        
+              <span class="post-categories">
+                <i class="iconfont icon-bookmark" title="Categories"></i>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/" title="Language">
+                    <b>#</b> Language
+                  </a>
+                </span>
+                
+                <span class="span--category">
+                  <a href="/categories/Language/Java/" title="Java">
+                    <b>#</b> Java
+                  </a>
+                </span>
+                
+              </span>
+          
+      </div>
+      <div class="markdown-body">
+        <h2 id="1-内存调优"><a href="#1-内存调优" class="headerlink" title="1. 内存调优"></a>1. 内存调优</h2><h3 id="1-1-内存泄漏与溢出"><a href="#1-1-内存泄漏与溢出" class="headerlink" title="1.1 内存泄漏与溢出"></a>1.1 内存泄漏与溢出</h3><p>内存泄漏(memory leak): 在 Java 中如果不再使用一个对象，但是该对象依然在GC ROOT的引用链上，这个对象就不会被垃圾回收器回收，这种情况就称之为内存泄漏。内存泄漏绝大多数情况都是由堆内存泄漏引起的。</p>
+<p>内存溢出：如果发生持续的内存泄露，就会导致内存溢出，但内存溢出并不只有内存泄漏一种原因</p>
+<h3 id="1-2-内存泄露的常见场景"><a href="#1-2-内存泄露的常见场景" class="headerlink" title="1.2 内存泄露的常见场景"></a>1.2 内存泄露的常见场景</h3><ol>
+<li><p>大型的Java后端应用中，在处理用户的请求之后，没有及时将用户的数据删除</p>
+</li>
+<li><p>分布式任务调度系统如Elastic-job、Quartz等进行任务调度时，被调度的Java应用在调度任务结束中出现了内存泄漏，最终导致多次调度之后内存溢出。</p>
+</li>
+</ol>
+<h3 id="1-3-监控Java内存的工具"><a href="#1-3-监控Java内存的工具" class="headerlink" title="1.3 监控Java内存的工具"></a>1.3 监控Java内存的工具</h3><h4 id="top"><a href="#top" class="headerlink" title="top"></a>top</h4><p>top命令是linux下用来查看系统信息的一个命令，可以实时查看系统的资源，比如执行时的进程、线程和系统参数等信息。</p>
+<p>load average：过去1、5、15分钟的系统负载</p>
+<p>进程使用的内存为 RES(常驻内存) - SHR(共享内存)</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051029515.png" alt="image-20241105102939419"></p>
+<h4 id="VisualVM"><a href="#VisualVM" class="headerlink" title="VisualVM"></a>VisualVM</h4><p>VisualVM是多功能合一的Java故障排除可视化工具，整合了命令行 JDK 工具和轻量级分析功能，实时监控CPU、内存、线程等信息</p>
+<p>对大量集群化部署的Java进程需要手动进行管理</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051112835.png" alt="image-20241105111207709"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051607411.png" alt="image-20241105160723301"></p>
+<h4 id="Arthas"><a href="#Arthas" class="headerlink" title="Arthas"></a>Arthas</h4><p>Arthas 是一款线上监控诊断产品，通过全局视角实时查看应用 load、内存gc、线程的状态信息，并能在不修改应用代码的情况下，对业务问题进行诊断，包括查看方法调用的出入参、异常，监测方法执行耗时，类加载信息等。支持应用的集群管理</p>
+<p>使用 arthas tunnel 管理所有需要监控的程序</p>
+<ol>
+<li>在Spring Boot程序中添加arthas的依赖(支持Spring Boot 2)，在配置文件中添加tunnel服务端的地址，便于tunnel去监控所有的程序。</li>
+<li>将tunnel服务端程序部署在某台服务器上并启动。</li>
+<li>打开tunnel的服务端页面(ip:port/apps.html)，查看所有的进程列表，并选择进程进行arthas的操作</li>
+</ol>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">arthas:</span><br>  <span class="hljs-comment">#tunnel地址，目前是部署在同一台服务器，正式环境需要拆分</span><br>  <span class="hljs-attr">tunnel-server:</span> <span class="hljs-string">ws://localhost:7777/ws</span><br>  <span class="hljs-comment">#tunnel显示的应用名称，直接使用应用名</span><br>  <span class="hljs-attr">app-name:</span> <span class="hljs-string">$&#123;spring.application.name)</span><br>  <span class="hljs-comment">#arthas htp访问的端口和远程连接的端口, 不同应用不能重复</span><br>  <span class="hljs-attr">http-port:</span> <span class="hljs-number">8888</span><br>  <span class="hljs-attr">telnet-port:</span> <span class="hljs-number">9999</span><br></code></pre></td></tr></table></figure>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051130054.png" alt="image-20241105113058988"></p>
+<h4 id="Prometheus-Grafana"><a href="#Prometheus-Grafana" class="headerlink" title="Prometheus + Grafana"></a>Prometheus + Grafana</h4><p>Prometheus + Grafana 是企业中运维常用的监控方案，其中Prometheus用来采集系统或者应用的相关数据，同时具备告警功能。Grafana 可以将 Prometheus 采集到的数据以可视化的方式进行展示。</p>
+<p>支持系统级别和应用级别的监控，比如linux操作系统、Redis、MySQL、Java进程。</p>
+<p>支持告警并允许自定义告警指标。</p>
+<p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7095578954660053006">https://juejin.cn/post/7095578954660053006</a></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051551867.png" alt="image-20241105155112653"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051556597.png" alt="image-20241105155613522"></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051556226.png" alt="image-20241105155634147"></p>
+<h3 id="1-4-堆内存状况对比"><a href="#1-4-堆内存状况对比" class="headerlink" title="1.4 堆内存状况对比"></a>1.4 堆内存状况对比</h3><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411051600147.png" alt="image-20241105160038053"></p>
+<h3 id="1-5-内存泄漏产生原因"><a href="#1-5-内存泄漏产生原因" class="headerlink" title="1.5 内存泄漏产生原因"></a>1.5 内存泄漏产生原因</h3><h4 id="代码中的内存泄漏"><a href="#代码中的内存泄漏" class="headerlink" title="代码中的内存泄漏"></a>代码中的内存泄漏</h4><ol>
+<li><p><code>equals()</code> 和 <code>hashcode()</code>: 不正确的 <code>equals()</code> 和 <code>hashcode()</code> 实现导致内存泄漏</p>
+</li>
+<li><p>内部类引用外部类：非静态的内部类(会默认持有外部类对象)和匿名内部类(在非静态方法中被创建会持有调用者对象)的错误使用导致内存泄漏</p>
+</li>
+<li><p><code>ThreadLocal</code>使用: 由于线程池中的线程不被回收导致的 <code>ThreadLocal</code> 内存泄漏</p>
+</li>
+<li><p><code>String</code> 的 <code>intern()</code> 方法：由于JDK6中的字符串常量池位于永久代，intern被大量调用并保存产生的内存泄漏</p>
+</li>
+<li>通过静态字段保存对象：大量的数据在静态变量中被引用，但是不再使用，成为内存泄漏</li>
+<li><del>资源没有正常关闭：资源没有调用close方法正常关闭</del></li>
+</ol>
+<h4 id="并发请求问题"><a href="#并发请求问题" class="headerlink" title="并发请求问题"></a>并发请求问题</h4><p>用户通过发送请求向Java应用获取数据，正常情况下Java应用将数据返回之后，这部分数据就可以在内存中被释放掉。但是由于用户的并发请求量有可能很大，同时处理数据的时间很长，导致大量的数据存在于内存中，最终超过了内存的上限，导致内存溢出。这类问题的处理思路和内存泄漏类似，首先要定位到对象产生的根源。</p>
+<h3 id="1-6-诊断原因"><a href="#1-6-诊断原因" class="headerlink" title="1.6 诊断原因"></a>1.6 诊断原因</h3><h4 id="内存快照"><a href="#内存快照" class="headerlink" title="内存快照"></a>内存快照</h4><p>当堆内存溢出时，需要在堆内存溢出时将整个堆内存保存下来，生成内存快照(Heap Profile)文件。</p>
+<p>生成内存快照的Java虚拟机参数:</p>
+<ul>
+<li><code>-XX:+HeapDumpOnOutOfMemoryError</code>: 发生 OutOfMemoryError 错误时，自动生成 hprof 内存快照文件</li>
+<li><code>-XX:+HeapDumpBeforeFullGC</code>: 在 Full GC 之前生成内存快照</li>
+<li><code>-XX:HeapDumpPath=&lt;path&gt;/xxx.hprof</code>: 指定 hprof 文件的输出路径。</li>
+</ul>
+<p>使用 MAT 打开 hprof 文件，并选择内存泄漏检测功能，MAT 会自行根据内存快照中保存的数据分析内存泄漏的根源。</p>
+<p>导出运行中系统的内存快照</p>
+<ul>
+<li>JDK自带的jmap命令：<code>jmap -dump:[live],format=b,file=文件路径和文件名 进程id</code></li>
+<li>arthas heapdump命令：<code>heapdump --live 文件路径和文件名</code></li>
+</ul>
+<h4 id="MAT内存泄漏检测原理"><a href="#MAT内存泄漏检测原理" class="headerlink" title="MAT内存泄漏检测原理"></a>MAT内存泄漏检测原理</h4><h5 id="支配树"><a href="#支配树" class="headerlink" title="支配树"></a>支配树</h5><p>MAT提供了称为支配树(Dominator Tree)的对象图。支配树展示的是对象实例间的支配关系。在对象引用图中，所有指向对象B的路径都经过对象A，则认为对象A支配对象B。</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411061615080.png" alt="image-20241106161501006" style="zoom:67%;" /></p>
+<h5 id="深堆和浅堆"><a href="#深堆和浅堆" class="headerlink" title="深堆和浅堆"></a>深堆和浅堆</h5><p>支配树中对象本身占用的空间称之为浅堆(Shallow Heap)</p>
+<p>支配树中对象的子树就是所有被该对象支配的内容，这些内容组成了对象的深堆(Retained Heap)，也称之为保留集(Retained Set)。<strong>深堆的大小表示该对象如果可以被回收，能释放多大的内存空间。</strong></p>
+<p>某个对象的深堆包括其自身</p>
+<p>MAT就是根据支配树，从叶子节点向根节点遍历，如果发现深堆的大小超过整个堆内存的一定比例阈值，就会将其标记成内存泄漏的“嫌疑对象”</p>
+<blockquote>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411061707778.png" alt="image-20241106170728645" style="zoom:67%;" /></p>
+</blockquote>
+<h4 id="在线定位问题"><a href="#在线定位问题" class="headerlink" title="在线定位问题"></a>在线定位问题</h4><ol>
+<li>使用 <code>jmap -histo:live &#123;进程ID&#125; &gt; &#123;文件名&#125;</code> 将内存中存活对象以直方图的形式保存到文件中，这个过程会影响用户的时间，但是时间比较短暂。</li>
+<li>分析内存占用最多的对象，一般这些对象就是造成内存泄漏的原因。</li>
+<li>使用arthas的 <code>stack &#123;类名&#125; [方法名]</code> 命令，追踪对象创建的方法被调用的调用路径，找到对象创建的根源。也可以使用btrace工具编写脚本追踪方法执行的过程。</li>
+</ol>
+<h2 id="2-GC调优"><a href="#2-GC调优" class="headerlink" title="2. GC调优"></a>2. GC调优</h2><p>GC调优指的是对垃圾回收(Garbage collection)进行调优。GC调优的主要目标是避免由垃圾回收引起程序性能下降。</p>
+<p>GC调优的核心分成三部分:</p>
+<ol>
+<li>通用 JVM 参数的设置</li>
+<li>特定垃圾回收器的 JVM 参数的设置</li>
+<li>解决由频繁的 FULL GC 引起的程序性能问题</li>
+</ol>
+<h3 id="2-1-调优指标"><a href="#2-1-调优指标" class="headerlink" title="2.1 调优指标"></a>2.1 调优指标</h3><h4 id="吞吐量-Throughput"><a href="#吞吐量-Throughput" class="headerlink" title="吞吐量(Throughput)"></a>吞吐量(Throughput)</h4><p>分为业务吞吐量和垃圾回收吞吐量</p>
+<ul>
+<li><p>业务吞吐量指的在一段时间内，程序需要完成的业务数量。</p>
+</li>
+<li><p>垃圾回收吞吐量指的是 CPU 用于执行用户代码的时间与 CPU 总执行时间的比值，即吞吐量 = 执行用户代码时间/(执行用户代码时间 + GC时间)</p>
+</li>
+</ul>
+<h4 id="延迟-Latency"><a href="#延迟-Latency" class="headerlink" title="延迟(Latency)"></a>延迟(Latency)</h4><p>延迟指的是从用户发起一个请求到收到响应这其中经历的时间</p>
+<p>延迟 = GC延迟 + 业务执行时间</p>
+<h4 id="内存使用量"><a href="#内存使用量" class="headerlink" title="内存使用量"></a>内存使用量</h4><p>内存使用量指的是Java应用占用系统内存的最大值，一般通过JVM参数调整，在满足上述两个指标的前提下这个值越小越好。</p>
+<h3 id="2-2-常用工具"><a href="#2-2-常用工具" class="headerlink" title="2.2 常用工具"></a>2.2 常用工具</h3><h4 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h4><p>jstat 是 JDK 自带的一款监控工具，可以提供各种垃圾回收、类加载、编译信息等不同的数据。</p>
+<p><code>jstat -gc 进程ID 每次统计的间隔(毫秒) 统计次数</code></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411071656486.png" alt="image-20241107165654378"></p>
+<ul>
+<li>C 代表 capacity 容量，U 代表 Used 使用量</li>
+<li>S-幸存者区，E-伊甸园区，0-老年代，M-元空间</li>
+<li>YGC、YGCT: 年轻代 GC 次数和 GC 耗时(单位:秒)</li>
+<li>FGC、FGCT: FuLL GC次数和Full GC耗时</li>
+<li>GCT: GC总耗时</li>
+</ul>
+<h4 id="visual-tool"><a href="#visual-tool" class="headerlink" title="visual tool"></a>visual tool</h4><p>VisualVM中提供了一款Visual Tool插件，实时监控Java进程的堆内存结构、堆内存变化趋势以及垃圾回收时间的变化趋势。同时还可以监控对象晋升的直方图。</p>
+<h4 id="Prometheus-Grafana-1"><a href="#Prometheus-Grafana-1" class="headerlink" title="Prometheus + Grafana"></a>Prometheus + Grafana</h4><h4 id="GC日志"><a href="#GC日志" class="headerlink" title="GC日志"></a>GC日志</h4><p>通过GC日志，可以更好的看到垃圾回收细节上的数据，同时也可以根据每款垃圾回收器的不同特点更好地发现存在的问题。</p>
+<p>使用方法(JDK 8及以下): <code>-XX:+PrintGCDetails</code> <code>-Xloggc:输出目录</code></p>
+<p>使用方法(JDK 9+): <code>-Xlog:gc*:file=输出目录</code></p>
+<h4 id="GC-Viewer"><a href="#GC-Viewer" class="headerlink" title="GC Viewer"></a>GC Viewer</h4><p>GC Viewer是一个将 GC 日志转换成可视化图表的小工具</p>
+<p><code>java -jar gcviewer_1.3.4.jar 日志文件.log</code></p>
+<h4 id="GCeasy"><a href="#GCeasy" class="headerlink" title="GCeasy"></a>GCeasy</h4><p>GCeasy是业界首款使用AI机器学习技术在线进行GC分析和诊断的工具。定位内存泄漏、GC延迟高的问题，提供JVM参数优化建议，支持在线的可视化工具图表展示。</p>
+<h3 id="2-3-常见的GC模式"><a href="#2-3-常见的GC模式" class="headerlink" title="2.3 常见的GC模式"></a>2.3 常见的GC模式</h3><p>正常情况</p>
+<ul>
+<li>呈现锯齿状，对象创建之后内存上升，一旦发生垃圾回收之后下降到底部，并且每次下降之后的内存大小接近，存留的对象较少。</li>
+</ul>
+<p>缓存对象过多</p>
+<ul>
+<li><p>呈现锯齿状，对象创建之后内存上升，一旦发生垃圾回收之后下降到底部，并且每次下降之后的内存大小接近，处于比较高的位置。</p>
+</li>
+<li><p>程序中保存了大量的缓存对象，导致GC之后无法释放，可以使用MAT或者HeapHero等工具进行分析内存占用的原因。</p>
+</li>
+</ul>
+<p>内存泄漏</p>
+<ul>
+<li>呈现锯齿状，每次垃圾回收之后下降到的内存位置越来越高，最后由于垃圾回收无法释放空间导致对象无法分配产生OutOfMemory的错误。</li>
+<li>程序中保存了大量的内存泄漏对象，导致GC之后无法释放，可以使用MAT或者HeapHero等工具进行分析是哪些对象产生了内存泄漏。</li>
+</ul>
+<p>持续的FullGC</p>
+<ul>
+<li>在某个时间点产生多次Full GC，CPU使用率同时飙高，用户请求基本无法处理。一段时间之后恢复正常。</li>
+<li>在该时间范围请求量激增，程序开始生成更多对象，同时垃圾收集无法跟上对象创建速率，导致持续地在进行FULL GC。</li>
+</ul>
+<p>元空间不足导致的FullGC</p>
+<ul>
+<li>堆内存的大小并不是特别大，但是持续发生FullGC。</li>
+<li>元空间大小不足，导致持续FullGC回收元空间的数据。</li>
+</ul>
+<h3 id="2-4-基础JVM参数的设置"><a href="#2-4-基础JVM参数的设置" class="headerlink" title="2.4 基础JVM参数的设置"></a>2.4 基础JVM参数的设置</h3><p>解决GC问题的手段包括</p>
+<ul>
+<li>优化基础JVM参数</li>
+<li>减少对象产生</li>
+<li>更换垃圾回收器</li>
+<li>优化垃圾回收器参数(仅在前三种无法解决时使用)</li>
+</ul>
+<p><strong><code>-Xmx</code></strong></p>
+<p>根据最大并发量估算服务器的配置，然后再根据服务器配置计算最大堆内存的值。</p>
+<p><strong><code>-Xms</code></strong></p>
+<p>建议将-Xms设置的和-Xmx一样大，有以下几点好处:</p>
+<ul>
+<li>运行时性能更好，堆的扩容是需要向操作系统申请内存的，这样会导致程序性能短期下降。</li>
+<li>可用性问题，如果在扩容时其他程序正在使用大量内存，很容易因为操作系统内存不足分配失败。</li>
+<li>启动速度更快，如果初始堆太小，Java 应用程序启动会变得很慢，因为 JVM 被迫频繁执行垃圾收集，直到堆增长到更合理的大小。为了获得最佳启动性能，请将初始堆大小设置为与最大堆大小相同。</li>
+</ul>
+<p><strong><code>-XX:MaxMetaspaceSize</code></strong></p>
+<p>最大元空间大小，默认值比较大，如果出现元空间内存泄漏会让操作系统可用内存不可控，建议根据测试情况设置最大值，一般设置为256m。</p>
+<p><strong><code>-XX:MetaspaceSize</code></strong></p>
+<p>指的是到达这个值之后会触发FULLGC，后续什么时候再触发JVM会自行计算。如果设置为和<code>MaxMetaspaceSize</code>一样大，就不会FULLGC，但是对象也无法<br>回收。</p>
+<p><strong><code>-Xss</code></strong></p>
+<p>虚拟机栈大小，如果我们不指定栈的大小，JVM 将创建一个具有默认大小的栈。大小取决于操作系统和计算机的体系结构。比如Linux x86 64位: 1MB，如果不需要用到这么大的栈内存，完全可以将此值调小节省内存空间，合理值为256k - 1m之间。</p>
+<p><strong>不建议手动设置的参数</strong></p>
+<p>由于JVM底层设计极为复杂，一个参数的调整也许让某个接口得益，但同样有可能影响其他更多接口。</p>
+<ul>
+<li><code>-Xmn</code>: 年轻代的大小，默认值为整个堆的1/3，可以根据峰值流量计算最大的年轻代大小，尽量让对象只存放在年轻代，不进入老年代。但是实际的场景中，接口的响应时间、创建对象的大小、程序内部还会有一些定时任务等不确定因素都会导致这个值的大小并不能仅凭计算得出，如果设置该值要进行大量的测试。G1垃圾回收器尽量不要设置该值，G1会动态调整年轻代的大小。</li>
+<li><code>-XX:SurvivorRatio</code>: 伊甸园区和幸存者区的大小比例，默认值为8。</li>
+<li><code>-XX:MaxTenuringThreshold</code>: 最大晋升阈值，年龄大于此值之后，会进入老年代。另外JVM有动态年龄判断机制: 将年龄从小到大的对象占据的空间加起来，如果大于survivor区域的50%，然后把等于或大于该年龄的对象放入到老年代。</li>
+</ul>
+<p><strong>其他参数</strong></p>
+<ul>
+<li><code>-XX:+DisableExplicitGC</code>: 禁止在代码中使用 System.gc()，System.gc() 可能会引起 FULLGC，在代码中尽量不要使用。使用DisableExplicitGc参数可以禁止使用 System.gc() 方法调用</li>
+<li><code>-XX:+HeapDumpOnoutofMemoryError</code>: 发生 OutOfMemoryError 错误时，自动生成hprof内存快照文件</li>
+<li><code>-XX:HeapDumpPath=&lt;path&gt;</code>: 指定hprof文件的输出路径</li>
+<li>打印GC日志<ul>
+<li>JDK8及之前: <code>-XX:+PrintGCDetails</code> <code>-XX:+PrintGCDateStamps</code> <code>-Xloggc:文件路径</code></li>
+<li>JDK9及之后: <code>-Xlog:gc*:file=文件路径</code></li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>示例模板:</p>
+<p><code>java -jar</code></p>
+<p><code>-Xmx1g -Xms1g</code></p>
+<p><code>-XX:MaxMetaspaceSize=512m</code></p>
+<p><code>-Xss256k</code></p>
+<p><code>-XX:+DisableExplicitGC</code></p>
+<p><code>-XX:+HeapDumpOnoutofMemoryError -XX:HeapDumpPath=/opt/logs/my-service.hprof</code></p>
+<p><code>-XX:+PrintGCDetails</code> <code>-XX:+PrintGCDateStamps</code> <code>-Xloggc:文件路径</code></p>
+<p><code>test.jar</code></p>
+</blockquote>
+<h3 id="2-5-更换垃圾回收器"><a href="#2-5-更换垃圾回收器" class="headerlink" title="2.5 更换垃圾回收器"></a>2.5 更换垃圾回收器</h3><p>JDK8</p>
+<ul>
+<li><p>默认PS + PO</p>
+</li>
+<li><p>ParNew + CMS：<code>-XX:+UseParNewGC</code> <code>-XX:+UseConcMarkSweepGC</code></p>
+</li>
+<li>G1: <code>-XX:+UseG1GC</code></li>
+</ul>
+<p>JDK11 默认G1</p>
+<blockquote>
+<p>优化参数</p>
+<p>例如对于CMS的并发模式失败问题：</p>
+<ul>
+<li>减少对象的产生以及对象的晋升</li>
+<li>增加堆内存大小</li>
+<li>优化垃圾回收器的参数，比如<code>-XX:CMSInitiatingOccupancyFraction=值</code>，当老年代大小到达该阈值时，会自动进行CMS垃圾回收，通过控制这个参数提前进行老年代的垃圾回收，减少其大小<ul>
+<li>JDK8中默认这个参数值为-1，根据其他几个参数计算出阈值:<br>((100 - MinHeapFreeRatio) + (double)(CMSTriggerRatio * MinHeapFreeRatio) / 100.0)</li>
+<li>该参数设置完是不会生效的，必须开启 <code>-XX:+UseCMSInitiatingOccupancyOnly</code> 参数</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h2 id="3-性能调优"><a href="#3-性能调优" class="headerlink" title="3. 性能调优"></a>3. 性能调优</h2><p>应用程序在运行过程中经常会出现性能问题，比较常见的性能问题现象是:</p>
+<ol>
+<li>通过top命令查看CPU占用率高，接近100甚至多核CPU下超过100都是有可能的。</li>
+<li>请求单个服务处理时间特别长，多服务使用skywalking等监控系统来判断是哪一个环节性能低下。</li>
+<li>程序启动之后运行正常，但是在运行一段时间之后无法处理任何的请求(内存和GC正常)。</li>
+</ol>
+<h3 id="3-1-性能调优的方法"><a href="#3-1-性能调优的方法" class="headerlink" title="3.1 性能调优的方法"></a>3.1 性能调优的方法</h3><h4 id="线程转储"><a href="#线程转储" class="headerlink" title="线程转储"></a>线程转储</h4><p>线程转储(Thread Dump)提供了对所有运行中的线程当前状态的快照。线程转储可以通过jstack、visualvm等工具获取。</p>
+<p>线程转储(Thread Dump)中的几个核心内容</p>
+<ul>
+<li>名称: 线程名称，通过给线程设置合适的名称更容易“见名知意”</li>
+<li>优先级(prio): 线程的优先级</li>
+<li>Java ID(tid): JVM中线程的唯一ID</li>
+<li>本地 ID(nid): 操作系统分配给线程的唯一ID</li>
+<li>状态: 线程的状态，分为:<ul>
+<li>NEW - 新创建的线程，尚未开始执行</li>
+<li>RUNNABLE - 正在运行或准备执行</li>
+<li>BLOCKED - 等待获取监视器锁以进入或重新进入同步块/方法</li>
+<li>WAITING - 等待其他线程执行特定操作，没有时间限制</li>
+<li>TIMED_WAITING - 等待其他线程在指定时间内执行特定操作</li>
+<li>TERMINATED - 已完成执行</li>
+</ul>
+</li>
+<li>栈追踪: 显示整个方法的栈帧信息</li>
+</ul>
+<p>线程转储的可视化在线分析平台: <a target="_blank" rel="noopener" href="https://jstack.review/">https://jstack.review/</a>, <a target="_blank" rel="noopener" href="https://fastthread.io/">https://fastthread.io/</a></p>
+<h4 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h4><p>案例1: 通过top命令查看CPU占用率高</p>
+<ul>
+<li><code>top -c</code> 按cpu占用率排序，得到进程id</li>
+<li><code>top -Hp 进程id</code> 查看特定进程的线程级详细信息，得到线程id，从线程转储文件中查找</li>
+</ul>
+<p>案例2: 请求单个服务处理时间特别长，需要快速定位到是哪一个方法的代码执行过程中出现了性能问题</p>
+<ul>
+<li>arthas <code>trace 类名 方法名</code> 展示出整个方法的调用路径以及每一个方法的执行耗时<ul>
+<li>添加 <code>--skipJDKMethod false</code> 参数可以输出JDK核心包中的方法及耗时</li>
+<li>添加 <code>&#39;#cost &gt; 毫秒值&#39;</code> 参数，只会显示耗时超过该毫秒值的调用</li>
+<li>添加 <code>-n 数值</code> 参数，最多显示该数值条数的数据</li>
+<li>所有监控都结束之后，输入stop结束监控，重置arthas增强的对象</li>
+</ul>
+</li>
+<li>arthas <code>watch 类名 方法名 &#39;&#123;params，returnobj&#125;&#39; &#39;#cost&gt;毫秒值&#39; -x 2</code><ul>
+<li><code>&#39;&#123;params，returnobj&#125;&#39;</code> 打印参数和返回值</li>
+<li><code>-x</code> 打印的结果中如果有嵌套(比如对象里有属性)，最多只展开2层。允许设置的最大值为4。</li>
+</ul>
+</li>
+<li>arthas <code>profile</code> 生成性能监控的火焰图<ul>
+<li><code>profiler start</code> 开始监控方法执行性能</li>
+<li><code>profiler stop --format html</code> 以HTML方式生成火焰图</li>
+</ul>
+</li>
+</ul>
+<p>案例3：程序启动之后运行正常，但是在运行一段时间之后无法处理任何的请求(线程耗尽问题)</p>
+<ul>
+<li>线程耗尽问题一般由于执行时间过长，先检测是否有死锁产生，再打印线程栈检测线程正在执行哪个方法</li>
+<li><code>jstack -l 进程id &gt; 文件名</code>，在文件中搜索 deadlock 即可找到死锁位置</li>
+<li>开发环境中使用visual vm或者Jconsole工具，都可以检测出死锁。使用线程快照生成工具就可以看到死锁的根源。生产环境的服务一般不会允许使用这两种工具连接。</li>
+<li>使用fastthread自动检测线程问题</li>
+</ul>
+<h3 id="3-2-基准测试"><a href="#3-2-基准测试" class="headerlink" title="3.2 基准测试"></a>3.2 基准测试</h3><p>OpenJDK中提供了一款叫JMH(Java Microbenchmark Harness)的工具，可以准确地对Java代码进行基准测试，量化方法的执行性能。</p>
+<p>官网地址: <a target="_blank" rel="noopener" href="https://github.com/openidk/jmh">https://github.com/openidk/jmh</a></p>
+<p>JMH会首先执行预热过程，确保JIT对代码进行优化之后再进行真正的迭代测试，最后输出测试的结果</p>
+<p>案例：对比 Date 和 LocalDateTime 格式化时间的性能</p>
+<p>JMH环境搭建：</p>
+<ul>
+<li><p>创建基准测试项目</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs bash">mvn archetype:generate \<br>    -DinteractiveMode=<span class="hljs-literal">false</span> \<br>    -DarchetypeGroupId=org.openjdk.jmh \<br>    -DarchetypeArtifactId=jmh-java-benchmark-archetype \<br>    -DgroupId=org.sample \<br>    -DartifactId=<span class="hljs-built_in">test</span> \<br>    -Dversion=1.0<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>修改POM文件中的JDK版本号和JMH版本号，JMH最新版本参考github</p>
+</li>
+</ul>
+<p>编写代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs JAVA"><span class="hljs-comment">//预热次数 时间</span><br><span class="hljs-meta">@Warmup(iterations = 5, time = 1)</span><br><span class="hljs-comment">//启动多少个进程</span><br><span class="hljs-meta">@Fork(value = 1, jvmArgsAppend = &#123;&quot;-Xms1g&quot;,&quot;-Xmx1g&quot;&#125;)</span><br><span class="hljs-comment">//指定显示结果</span><br><span class="hljs-meta">@BenchmarkMode(Mode.AverageTime)</span><br><span class="hljs-comment">//指定显示结果单位</span><br><span class="hljs-meta">@OutputTimeUnit(TimeUnit.NANOSECONDS)</span><br><span class="hljs-comment">//变量共享范围</span><br><span class="hljs-meta">@State(scope.Benchmark)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DateBenchmark</span>&#123;<br>    <br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">string</span> <span class="hljs-variable">format</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Date</span> <span class="hljs-variable">date</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Date</span>();<br>	<span class="hljs-keyword">private</span> <span class="hljs-type">LocalDateTime</span> <span class="hljs-variable">localDateTime</span> <span class="hljs-operator">=</span> LocalDateTime.now();<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> ThreadLocal&lt;simpleDateFormat&gt; simpleDateFormatThreadLocal = <span class="hljs-keyword">new</span> <span class="hljs-title class_">ThreadLocal</span>&lt;&gt;();<br>	<span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">DateTimeFormatter</span> <span class="hljs-variable">formatter</span> <span class="hljs-operator">=</span> DateTimeFormatter.ofPattern(format);<br>    <br>    <span class="hljs-comment">// 初始化方法</span><br>    <span class="hljs-meta">@Setup</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">setup</span><span class="hljs-params">()</span> &#123;<br>        <span class="hljs-type">SimpleDateFormat</span> <span class="hljs-variable">simpleDateFormat</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SimpleDateFormat</span>(format);<br>        simpleDateFormatThreadLocal.set(simpleDateFormat);<br>    &#125;<br>    <br>    <span class="hljs-meta">@Benchmark</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testDate</span><span class="hljs-params">(Blackhole bh)</span>&#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> simpleDateFormatThreadLocal.get().format(date);<br>        bh.consume(str);<br>    &#125;<br>    <br>    <span class="hljs-meta">@Benchmark</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">testLocalDateTime</span><span class="hljs-params">(Blackhole bh)</span>&#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">str</span> <span class="hljs-operator">=</span> localDateTime.format(formatter);<br>        bh.consume(str);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>测试</p>
+<ul>
+<li><code>mvn clean verify</code> 生成jar包</li>
+<li><code>java -jar benchmarks.jar</code></li>
+</ul>
+<p>如果不打包，也可以在main方法中执行(不建议)，生成的json文件可以在 <a target="_blank" rel="noopener" href="https://jmh.morethan.io">https://jmh.morethan.io</a> 分析</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(string[] args)</span> <span class="hljs-keyword">throws</span> RunnerException &#123;<br>    <span class="hljs-type">Options</span> <span class="hljs-variable">options</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">OptionsBuilder</span>()<br>        .include(MyBenchmark.class.getSimpleName())<br>        .forks(<span class="hljs-number">1</span>)<br>        .resultFormat(ResultFormatType.JSON)<br>        .build();<br>    <span class="hljs-keyword">new</span> <span class="hljs-title class_">Runner</span>(options).run();<br>&#125;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>死代码问题：编写测试方法时，如果对变量进行操作需要返回，否则代码可能会被编译器优化掉</p>
+<p>黑洞：如果有多个变量需要返回，在测试方法中添加参数<code>Blackhole bh</code>, 调用 <code>bh.consume()</code> 即可, 避免了死代码, 不需要返回</p>
+</blockquote>
+
+      </div>
+      
+        <div class="prev-or-next">
+          <div class="post-foot-next">
+            
+              <a href="/2024/10/17/JVM-3-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_self">
+                <i class="iconfont icon-chevronleft"></i>
+                <span>Prev</span>
+              </a>
+            
+          </div>
+          <div class="post-attach">
+            <span class="post-pubtime">
+              <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
+              2024-11-13 15:41:36
+            </span>
+            
+                  <span class="post-categories">
+                    <i class="iconfont icon-bookmark" title="Categories"></i>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/" title="Language">
+                        <b>#</b> Language
+                      </a>
+                    </span>
+                    
+                    <span class="span--category">
+                      <a href="/categories/Language/Java/" title="Java">
+                        <b>#</b> Java
+                      </a>
+                    </span>
+                    
+                  </span>
+              
+          </div>
+          <div class="post-foot-prev">
+            
+          </div>
+        </div>
+      
+    </div>
+    
+  <div id="btn-catalog" class="btn-catalog">
+    <i class="iconfont icon-catalog"></i>
+  </div>
+  <div class="post-catalog hidden" id="catalog">
+    <div class="title">Contents</div>
+    <div class="catalog-content">
+      
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%86%85%E5%AD%98%E8%B0%83%E4%BC%98"><span class="toc-text">1. 内存调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%B8%8E%E6%BA%A2%E5%87%BA"><span class="toc-text">1.1 内存泄漏与溢出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%86%85%E5%AD%98%E6%B3%84%E9%9C%B2%E7%9A%84%E5%B8%B8%E8%A7%81%E5%9C%BA%E6%99%AF"><span class="toc-text">1.2 内存泄露的常见场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%9B%91%E6%8E%A7Java%E5%86%85%E5%AD%98%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-text">1.3 监控Java内存的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#top"><span class="toc-text">top</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#VisualVM"><span class="toc-text">VisualVM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Arthas"><span class="toc-text">Arthas</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Prometheus-Grafana"><span class="toc-text">Prometheus + Grafana</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E5%A0%86%E5%86%85%E5%AD%98%E7%8A%B6%E5%86%B5%E5%AF%B9%E6%AF%94"><span class="toc-text">1.4 堆内存状况对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0"><span class="toc-text">1.5 内存泄漏产生原因</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F"><span class="toc-text">代码中的内存泄漏</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E8%AF%B7%E6%B1%82%E9%97%AE%E9%A2%98"><span class="toc-text">并发请求问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-%E8%AF%8A%E6%96%AD%E5%8E%9F%E5%9B%A0"><span class="toc-text">1.6 诊断原因</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%BF%AB%E7%85%A7"><span class="toc-text">内存快照</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MAT%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E6%A3%80%E6%B5%8B%E5%8E%9F%E7%90%86"><span class="toc-text">MAT内存泄漏检测原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%94%AF%E9%85%8D%E6%A0%91"><span class="toc-text">支配树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B7%B1%E5%A0%86%E5%92%8C%E6%B5%85%E5%A0%86"><span class="toc-text">深堆和浅堆</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9C%A8%E7%BA%BF%E5%AE%9A%E4%BD%8D%E9%97%AE%E9%A2%98"><span class="toc-text">在线定位问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-GC%E8%B0%83%E4%BC%98"><span class="toc-text">2. GC调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%B0%83%E4%BC%98%E6%8C%87%E6%A0%87"><span class="toc-text">2.1 调优指标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%9E%E5%90%90%E9%87%8F-Throughput"><span class="toc-text">吞吐量(Throughput)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F-Latency"><span class="toc-text">延迟(Latency)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%E9%87%8F"><span class="toc-text">内存使用量</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-text">2.2 常用工具</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#jstat"><span class="toc-text">jstat</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#visual-tool"><span class="toc-text">visual tool</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Prometheus-Grafana-1"><span class="toc-text">Prometheus + Grafana</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GC%E6%97%A5%E5%BF%97"><span class="toc-text">GC日志</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GC-Viewer"><span class="toc-text">GC Viewer</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#GCeasy"><span class="toc-text">GCeasy</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%B8%B8%E8%A7%81%E7%9A%84GC%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.3 常见的GC模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%9F%BA%E7%A1%80JVM%E5%8F%82%E6%95%B0%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-text">2.4 基础JVM参数的设置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%9B%B4%E6%8D%A2%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">2.5 更换垃圾回收器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98"><span class="toc-text">3. 性能调优</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%80%A7%E8%83%BD%E8%B0%83%E4%BC%98%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-text">3.1 性能调优的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E8%BD%AC%E5%82%A8"><span class="toc-text">线程转储</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B"><span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9F%BA%E5%87%86%E6%B5%8B%E8%AF%95"><span class="toc-text">3.2 基准测试</span></a></li></ol></li></ol>
+      
+    </div>
+  </div>
+
+  
+<script src="/js/catalog.js"></script>
+
+
+
+
+    
+  </div>
+
+
+        
+<div class="footer">
+  <div class="social">
+    <ul>
+      
+        <li>
+          
+              <a title="github" target="_blank" rel="noopener" href="https://github.com/Whale-lyi">
+                <i class="iconfont icon-github"></i>
+              </a>
+              
+        </li>
+        
+    </ul>
+  </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Copyright © 2024 Oranges</a>
+        
+    </div>
+  
+    
+    <div class="footer-more">
+      
+        <a target="_blank" rel="noopener" href="https://github.com/zchengsite/hexo-theme-oranges">Theme by Oranges | Powered by Hexo</a>
+        
+    </div>
+  
+  
+    <div class="footer-views">
+      
+          本站总访问量<span id="busuanzi_value_site_pv"></span>次
+        
+      
+          本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+        
+      
+          本站访客数<span id="busuanzi_value_site_uv"></span>人
+        
+      
+    </div>
+  
+</div>
+
+      </div>
+
+      <div class="tools-bar">
+        <div class="back-to-top tools-bar-item hidden">
+  <a href="javascript: void(0)">
+    <i class="iconfont icon-chevronup"></i>
+  </a>
+</div>
+
+
+<script src="/js/backtotop.js"></script>
+
+
+
+        
+  <div class="search-icon tools-bar-item" id="search-icon">
+    <a href="javascript: void(0)">
+      <i class="iconfont icon-search"></i>
+    </a>
+  </div>
+
+  <div class="search-overlay hidden">
+    <div class="search-content" tabindex="0">
+      <div class="search-title">
+        <span class="search-icon-input">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-search"></i>
+          </a>
+        </span>
+        
+          <input type="text" class="search-input" id="search-input" placeholder="Search...">
+        
+        <span class="search-close-icon" id="search-close-icon">
+          <a href="javascript: void(0)">
+            <i class="iconfont icon-close"></i>
+          </a>
+        </span>
+      </div>
+      <div class="search-result" id="search-result"></div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    var inputArea = document.querySelector("#search-input")
+    var searchOverlayArea = document.querySelector(".search-overlay")
+
+    inputArea.onclick = function() {
+      getSearchFile()
+      this.onclick = null
+    }
+
+    inputArea.onkeydown = function() {
+      if(event.keyCode == 13)
+        return false
+    }
+
+    function openOrHideSearchContent() {
+      let isHidden = searchOverlayArea.classList.contains('hidden')
+      if (isHidden) {
+        searchOverlayArea.classList.remove('hidden')
+        document.body.classList.add('hidden')
+        // inputArea.focus()
+      } else {
+        searchOverlayArea.classList.add('hidden')
+        document.body.classList.remove('hidden')
+      }
+    }
+
+    function blurSearchContent(e) {
+      if (e.target === searchOverlayArea) {
+        openOrHideSearchContent()
+      }
+    }
+
+    document.querySelector("#search-icon").addEventListener("click", openOrHideSearchContent, false)
+    document.querySelector("#search-close-icon").addEventListener("click", openOrHideSearchContent, false)
+    searchOverlayArea.addEventListener("click", blurSearchContent, false)
+
+    var searchFunc = function (path, search_id, content_id) {
+      'use strict';
+      var $input = document.getElementById(search_id);
+      var $resultContent = document.getElementById(content_id);
+      $resultContent.innerHTML = "<ul><span class='local-search-empty'>First search, index file loading, please wait...<span></ul>";
+      $.ajax({
+        // 0x01. load xml file
+        url: path,
+        dataType: "xml",
+        success: function (xmlResponse) {
+          // 0x02. parse xml file
+          var datas = $("entry", xmlResponse).map(function () {
+            return {
+              title: $("title", this).text(),
+              content: $("content", this).text(),
+              url: $("url", this).text()
+            };
+          }).get();
+          $resultContent.innerHTML = "";
+
+          $input.addEventListener('input', function () {
+            // 0x03. parse query to keywords list
+            var str = '<ul class=\"search-result-list\">';
+            var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+            $resultContent.innerHTML = "";
+            if (this.value.trim().length <= 0) {
+              return;
+            }
+            // 0x04. perform local searching
+            datas.forEach(function (data) {
+              var isMatch = true;
+              var content_index = [];
+              if (!data.title || data.title.trim() === '') {
+                data.title = "Untitled";
+              }
+              var orig_data_title = data.title.trim();
+              var data_title = orig_data_title.toLowerCase();
+              var orig_data_content = data.content.trim().replace(/<[^>]+>/g, "");
+              var data_content = orig_data_content.toLowerCase();
+              var data_url = data.url;
+              var index_title = -1;
+              var index_content = -1;
+              var first_occur = -1;
+              // only match artiles with not empty contents
+              if (data_content !== '') {
+                keywords.forEach(function (keyword, i) {
+                  index_title = data_title.indexOf(keyword);
+                  index_content = data_content.indexOf(keyword);
+
+                  if (index_title < 0 && index_content < 0) {
+                    isMatch = false;
+                  } else {
+                    if (index_content < 0) {
+                      index_content = 0;
+                    }
+                    if (i == 0) {
+                      first_occur = index_content;
+                    }
+                    // content_index.push({index_content:index_content, keyword_len:keyword_len});
+                  }
+                });
+              } else {
+                isMatch = false;
+              }
+              // 0x05. show search results
+              if (isMatch) {
+                str += "<li><a href='" + data_url + "' class='search-result-title'>" + orig_data_title + "</a>";
+                var content = orig_data_content;
+                if (first_occur >= 0) {
+                  // cut out 100 characters
+                  var start = first_occur - 20;
+                  var end = first_occur + 80;
+
+                  if (start < 0) {
+                    start = 0;
+                  }
+
+                  if (start == 0) {
+                    end = 100;
+                  }
+
+                  if (end > content.length) {
+                    end = content.length;
+                  }
+
+                  var match_content = content.substr(start, end);
+
+                  // highlight all keywords
+                  keywords.forEach(function (keyword) {
+                    var regS = new RegExp(keyword, "gi");
+                    match_content = match_content.replace(regS, "<span class=\"search-keyword\">" + keyword + "</span>");
+                  });
+
+                  str += "<p class=\"search-result-abstract\">" + match_content + "...</p>"
+                }
+                str += "</li>";
+              }
+            });
+            str += "</ul>";
+            if (str.indexOf('<li>') === -1) {
+              return $resultContent.innerHTML = "<ul><span class='local-search-empty'>No result<span></ul>";
+            }
+            $resultContent.innerHTML = str;
+          });
+        },
+        error: function(xhr, status, error) {
+          $resultContent.innerHTML = ""
+          if (xhr.status === 404) {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The search.xml file was not found, please refer to：<a href='https://github.com/zchengsite/hexo-theme-oranges#configuration' target='_black'>configuration</a><span></ul>";
+          } else {
+            $resultContent.innerHTML = "<ul><span class='local-search-empty'>The request failed, Try to refresh the page or try again later.<span></ul>";
+          }
+        }
+      });
+      $(document).on('click', '#search-close-icon', function() {
+        $('#search-input').val('');
+        $('#search-result').html('');
+      });
+    }
+
+    var getSearchFile = function() {
+        var path = "/search.xml";
+        searchFunc(path, 'search-input', 'search-result');
+    }
+  </script>
+
+
+
+
+        
+  <div class="tools-bar-item theme-icon" id="switch-color-scheme">
+    <a href="javascript: void(0)">
+      <i id="theme-icon" class="iconfont icon-moon"></i>
+    </a>
+  </div>
+
+  
+<script src="/js/colorscheme.js"></script>
+
+
+
+
+
+        
+  
+    <div class="share-icon tools-bar-item">
+      <a href="javascript: void(0)" id="share-icon">
+        <i class="iconfont iconshare"></i>
+      </a>
+      <div class="share-content hidden">
+        
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JVM(4)%20JVM%E8%B0%83%E4%BC%98 + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F11%2F04%2FJVM-4-%25E8%25B0%2583%25E4%25BC%2598%2F + '" target="_blank" title="Twitter">
+            <i class="iconfont icon-twitter"></i>
+          </a>
+        
+        
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/11/04/JVM-4-%E8%B0%83%E4%BC%98/" target="_blank" title="Facebook">
+            <i class="iconfont icon-facebooksquare"></i>
+          </a>
+        
+      </div>
+    </div>
+  
+  
+<script src="/js/shares.js"></script>
+
+
+
+      </div>
+    </div>
+  </body>
+</html>

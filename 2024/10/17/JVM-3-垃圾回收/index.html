@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2024-11-04 16:57:36
+          2024-11-08 15:34:27
         </span>
         
               <span class="post-categories">
@@ -383,7 +383,7 @@
 <p>回收 Eden 区和 Survivor 区中不用的对象。会导致 STW，G1中可以通过参数 <code>-XX:MaxGCPauseMilis=n</code> (默认200) 设置每次垃圾回收时的最大暂停时间毫秒数，G1垃圾回收器会尽可能地保证暂停时间</p>
 <p>执行流程：</p>
 <ol>
-<li>新创建的对象会存放在Eden区。当 G1 判断年轻代区不足，无法分配对象时需要回收时会执行Young GC</li>
+<li>新创建的对象会存放在Eden区。当 G1 判断年轻代区不足(堆内存占用达到60%)，无法分配对象时需要回收时会执行Young GC</li>
 <li>标记出Eden和Survivor区域中的存活对象，</li>
 <li>根据配置的最大暂停时间选择某些区域将存活对象复制到一个新的Survivor区中(年龄+1)，清空这些区域</li>
 <li>后续Young GC时与之前相同，只不过Survivor区中存活对象会被搬运到另一个Survivor区。</li>
@@ -422,7 +422,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2024-11-04 16:57:36
+              2024-11-08 15:34:27
             </span>
             
                   <span class="post-categories">
@@ -444,6 +444,11 @@
               
           </div>
           <div class="post-foot-prev">
+            
+              <a href="/2024/11/04/JVM-4-%E8%B0%83%E4%BC%98/" target="_self">
+                <span>Next</span>
+                <i class="iconfont icon-chevronright"></i>
+              </a>
             
           </div>
         </div>
