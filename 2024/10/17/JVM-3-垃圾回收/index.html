@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2024-11-08 15:34:27
+          2024-11-14 14:02:44
         </span>
         
               <span class="post-categories">
@@ -407,6 +407,38 @@
 <blockquote>
 <p>注意: 如果清理过程中发现没有足够的空 Region 存放转移的对象，会出现Full GC。单线程执行标记-整理算法，此时会导致用户线程的暂停。所以尽量保证应该用的堆内存有一定多余的空间。</p>
 </blockquote>
+<h2 id="5-新一代的GC"><a href="#5-新一代的GC" class="headerlink" title="5. 新一代的GC"></a>5. 新一代的GC</h2><p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411141124000.png" alt="image-20241114112350550" style="zoom: 67%;" /></p>
+<h3 id="5-1-Shenandoah-GC"><a href="#5-1-Shenandoah-GC" class="headerlink" title="5.1 Shenandoah GC"></a>5.1 Shenandoah GC</h3><p>Shenandoah 是由Red Hat开发的一款低延迟的垃圾收集器，Shenandoah 并发执行大部分 GC 工作，包括并发的整理，堆大小对STW的时间基本没有影响。</p>
+<p>Shenandoah 只包含在 OpenJDK 中，需要单独构建，或者直接下载构建好的</p>
+<p><code>-XX:+UseShenandoahGC</code> 开启Shenandoah GC</p>
+<p><code>-Xlog:gc</code> 打印GC日志</p>
+<h3 id="5-2-ZGC"><a href="#5-2-ZGC" class="headerlink" title="5.2 ZGC"></a>5.2 ZGC</h3><p>ZGC 是一种可扩展的低延迟垃圾回收器。ZGC在垃圾回收过程中，STW的时间不会超过一毫秒，适合需要低延迟的应用。支持几百兆到 16TB 的堆大小，堆大小对STW的时间基本没有影响。</p>
+<p>ZGC降低了停顿时间，能降低接口的最大耗时，提升用户体验。但是吞吐量不佳，所以如果Java服务比较关注QPS(每秒的查询次数)那么G1是比较不错的选择。</p>
+<h4 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h4><p>OracleJDK和OpenJDK中都支持ZGC，阿里的DragonWell龙井JDK也支持ZGC但属于其自行对OpenJDK11的ZGC进行优化的版本。建议使用JDK17之后的版本，延迟较低同时无需手动配置并行线程数。</p>
+<ul>
+<li><p>分代 ZGC添加如下参数启用<code>-XX:+UseZGC</code> <code>-XX:+ZGenerational</code></p>
+</li>
+<li><p>非分代 ZGC通过命令行选项启用 <code>-XX:+UseZGC</code></p>
+</li>
+</ul>
+<p>ZGC在设计上做到了自适应，根据运行情况自动调整参数，让用户手动配置的参数最少化。</p>
+<ul>
+<li>自动设置年轻代大小，无需设置<code>-Xmn</code>参数。</li>
+<li>自动晋升阈值(复制中存活多少次才搬运到老年代)，无需设置<code>-XX:TenuringThreshold</code></li>
+<li>JDK17之后支持自动的并行线程数，无需设置<code>-XX:ConcGCThreads</code></li>
+</ul>
+<h4 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h4><p>需要设置的参数:</p>
+<p><code>-Xmx值</code>: 这是ZGC最重要的一个参数，必须设置。ZGC在运行过程中会使用一部分内存用来处理垃圾回收，所以尽量保<br>证堆中有足够的空间。设置多少值取决于对象分配的速度，根据测试情况来决定。</p>
+<p>可以设置的参数:</p>
+<p><code>-XX:SoftMaxHeapSize=值</code>: ZGC会尽量保证堆内存小于该值，这样在内存靠近这个值时会尽早地进行垃圾回收，但是依然有可能会超过该值。</p>
+<h4 id="调优"><a href="#调优" class="headerlink" title="调优"></a>调优</h4><p>ZGC 中可以使用Linux的Huge Page大页技术优化性能，提升吞吐量、降低延迟。</p>
+<p>注意:安装过程需要 root 权限，所以zGC默认没有开启此功能。</p>
+<p>操作步骤:</p>
+<ol>
+<li>计算所需页数，Linux x86架构中大页大小为2MB，根据所需堆内存的大小估算大页数量。比如堆空间需要16G，预留2G(JVM需要额外的一些非堆空间)，那么页数就是18G/2MB=9216。</li>
+<li>配置系统的大页池以具有所需的页数(需要root权限):<br><code>$echo 9216 &gt; /sys/kernel/mm/hugepages/hugepages-2048kB/nr_hugepages</code></li>
+<li>添加参数 <code>-XX:+UseLargePages</code> 启动程序进行测试</li>
+</ol>
 
       </div>
       
@@ -422,7 +454,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2024-11-08 15:34:27
+              2024-11-14 14:02:44
             </span>
             
                   <span class="post-categories">
@@ -462,7 +494,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%9B%9E%E6%94%B6"><span class="toc-text">1. 方法区的回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A0%86%E5%9B%9E%E6%94%B6"><span class="toc-text">2. 堆回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95%E5%92%8C%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E6%B3%95"><span class="toc-text">2.1 引用计数法和可达性分析法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8"><span class="toc-text">2.2 不同的对象引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="toc-text">3. 垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95"><span class="toc-text">3.1 标记-清除算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95"><span class="toc-text">3.2 复制算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-text">3.3 标记-整理算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%88%86%E4%BB%A3GC"><span class="toc-text">3.4 分代GC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4. 垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%B9%B4%E8%BD%BB%E4%BB%A3-Serial%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.1 年轻代-Serial垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%80%81%E5%B9%B4%E4%BB%A3-SerialOld%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.2 老年代-SerialOld垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%B9%B4%E8%BD%BB%E4%BB%A3-ParNew%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.3 年轻代-ParNew垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E8%80%81%E5%B9%B4%E4%BB%A3-CMS-Concurrent-Mark-Sweep-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.4 老年代-CMS(Concurrent Mark Sweep)垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%B9%B4%E8%BD%BB%E4%BB%A3-Parallel-Scavenge%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.5 年轻代-Parallel Scavenge垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E8%80%81%E5%B9%B4%E4%BB%A3-Parallel-Old%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.6 老年代-Parallel Old垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-G1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.6 G1垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="toc-text">内存结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-text">垃圾回收</span></a></li></ol></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%96%B9%E6%B3%95%E5%8C%BA%E7%9A%84%E5%9B%9E%E6%94%B6"><span class="toc-text">1. 方法区的回收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A0%86%E5%9B%9E%E6%94%B6"><span class="toc-text">2. 堆回收</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0%E6%B3%95%E5%92%8C%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%88%86%E6%9E%90%E6%B3%95"><span class="toc-text">2.1 引用计数法和可达性分析法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AF%B9%E8%B1%A1%E5%BC%95%E7%94%A8"><span class="toc-text">2.2 不同的对象引用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95"><span class="toc-text">3. 垃圾回收算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A0%87%E8%AE%B0-%E6%B8%85%E9%99%A4%E7%AE%97%E6%B3%95"><span class="toc-text">3.1 标记-清除算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%A4%8D%E5%88%B6%E7%AE%97%E6%B3%95"><span class="toc-text">3.2 复制算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%A0%87%E8%AE%B0-%E6%95%B4%E7%90%86%E7%AE%97%E6%B3%95"><span class="toc-text">3.3 标记-整理算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%88%86%E4%BB%A3GC"><span class="toc-text">3.4 分代GC</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4. 垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%B9%B4%E8%BD%BB%E4%BB%A3-Serial%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.1 年轻代-Serial垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%80%81%E5%B9%B4%E4%BB%A3-SerialOld%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.2 老年代-SerialOld垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%B9%B4%E8%BD%BB%E4%BB%A3-ParNew%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.3 年轻代-ParNew垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E8%80%81%E5%B9%B4%E4%BB%A3-CMS-Concurrent-Mark-Sweep-%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.4 老年代-CMS(Concurrent Mark Sweep)垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%B9%B4%E8%BD%BB%E4%BB%A3-Parallel-Scavenge%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.5 年轻代-Parallel Scavenge垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E8%80%81%E5%B9%B4%E4%BB%A3-Parallel-Old%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.6 老年代-Parallel Old垃圾回收器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-G1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8"><span class="toc-text">4.6 G1垃圾回收器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%BB%93%E6%9E%84"><span class="toc-text">内存结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6"><span class="toc-text">垃圾回收</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%96%B0%E4%B8%80%E4%BB%A3%E7%9A%84GC"><span class="toc-text">5. 新一代的GC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-Shenandoah-GC"><span class="toc-text">5.1 Shenandoah GC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-ZGC"><span class="toc-text">5.2 ZGC</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">使用方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE"><span class="toc-text">参数设置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E4%BC%98"><span class="toc-text">调优</span></a></li></ol></li></ol></li></ol>
       
     </div>
   </div>
@@ -771,5 +803,23 @@
 
       </div>
     </div>
-  </body>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<!--<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
+<!--<script src="https://cdn.bootcdn.net/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js"></script>-->
+<!--<script src="//cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML"></script>-->
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</body>
 </html>
