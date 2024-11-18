@@ -11,7 +11,7 @@
   
   <title>
     
-      JVM(5) GraalVM 
+      JVM(6) Java Agent 
       
       
       |
@@ -154,11 +154,11 @@
   <!-- 文章内容页 url形式：https://yoursite/文章标题/ -->
   <div class="container post-details" id="post-details">
     <div class="post-content">
-      <div class="post-title">JVM(5) GraalVM</div>
+      <div class="post-title">JVM(6) Java Agent</div>
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2024-11-14 11:10:03
+          2024-11-18 15:52:59
         </span>
         
               <span class="post-categories">
@@ -180,76 +180,99 @@
           
       </div>
       <div class="markdown-body">
-        <h2 id="1-GraalVM"><a href="#1-GraalVM" class="headerlink" title="1. GraalVM"></a>1. <a target="_blank" rel="noopener" href="https://www.graalvm.org/">GraalVM</a></h2><p>GraalVM是Oracle官方推出的一款高性能JDK，使用它享受比OpenJDK或者OracleJDK更好的性能。</p>
-<p>更低的CPU、内存使用率</p>
-<p>更快的启动速度，无需预热即可获得最好的性能</p>
-<p>更好的安全性、更小的可执行文件</p>
-<p>支持多种框架Spring Boot、Micronaut、Helidon 和 Quarkus.</p>
-<p>多家云平台支持。</p>
-<p>通过Truffle框架运行JS、Python、Ruby等其他语言。</p>
-<h2 id="2-运行模式"><a href="#2-运行模式" class="headerlink" title="2. 运行模式"></a>2. 运行模式</h2><h3 id="2-1-JIT模式"><a href="#2-1-JIT模式" class="headerlink" title="2.1 JIT模式"></a>2.1 JIT模式</h3><p>即时编译模式</p>
-<p>JIT(Just-In-Time)模式的处理方式与Oracle JDK类似，满足两个特点:</p>
+        <h2 id="1-Java-Agent"><a href="#1-Java-Agent" class="headerlink" title="1. Java Agent"></a>1. Java Agent</h2><p>Java Agent技术是JDK提供的用来编写Java工具的技术, 使用这种技术生成一种特殊的jar包, 这种jar包可以让Java程序运行其中的代码。</p>
+<h3 id="1-1-两种模式"><a href="#1-1-两种模式" class="headerlink" title="1.1 两种模式"></a>1.1 两种模式</h3><p>Java Agent技术实现了让Java程序执行独立的Java Agent程序中的代码, 执行方式有两种: 静态加载模式、动态加载模式</p>
+<h4 id="静态加载"><a href="#静态加载" class="headerlink" title="静态加载"></a>静态加载</h4><p>静态加载模式可以在程序启动的一开始就执行我们需要执行的代码, 适合用APM等性能监测系统从一开始就监控程序的执行性能。静态加载模式需要在Java Agent的项目中编写一个premain的方法, 并打包成jar包。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">premain</span><span class="hljs-params">(string agentArgs, Instrumentation inst)</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-comment"># 使用java工具</span><br>java -javaagent:./agent.jar -jar test.jar<br></code></pre></td></tr></table></figure>
+<p>premain方法会在主线程中执行</p>
+<h4 id="动态加载"><a href="#动态加载" class="headerlink" title="动态加载"></a>动态加载</h4><p>动态加载模式可以随时让java agent代码执行, 适用于Arthas等诊断系统。动态加载模式需要在Java Agent的项目中编写一个agentmain的方法, 并打包成jar包。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">agentmain</span><span class="hljs-params">(String agentArgs, Instrumentation inst)</span><br></code></pre></td></tr></table></figure>
+<p>接下来使用以下代码就可以让java agent代码在指定的java进程中执行了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">VirtualMachine</span> <span class="hljs-variable">vm</span> <span class="hljs-operator">=</span> virtualMachine.attach(<span class="hljs-string">&quot;24200&quot;</span>); <span class="hljs-comment">//动态连接到24200进程ID的java程序</span><br>vm.loadAgent(<span class="hljs-string">&quot;itheima-jvm-java-agent-jar-with-dependencies.jar&quot;</span>); <span class="hljs-comment">//加载java agent</span><br></code></pre></td></tr></table></figure>
+<p>agentmain方法会在独立线程中执行</p>
+<h3 id="1-2-搭建环境"><a href="#1-2-搭建环境" class="headerlink" title="1.2 搭建环境"></a>1.2 搭建环境</h3><p><strong>静态加载模式</strong></p>
+<ol>
+<li>创建maven项目, 添加maven-assembly-plugin插件, 此插件可以打包出java agent的jar包</li>
+<li>编写类和premain方法, premain方法中打印一行信息</li>
+<li>编写MANIFEST.MF文件, 此文件主要用于描述java agent的配置属性, 比如使用哪一个类的premain方法</li>
+<li>使用maven-assembly-plugin进行打包</li>
+<li>创建spring boot应用, 并静态加载上一步打包完的java agent</li>
+</ol>
+<p><strong>动态加载模式</strong></p>
+<ol>
+<li>创建maven项目, 添加maven-assembly-plugin插件, 此插件可以打包出java agent的jar包</li>
+<li>编写类和agentmain方法, agentmain方法中打印一行信息</li>
+<li>编写MANIFEST.MF文件, 此文件主要用于描述java agent的配置属性, 比如使用哪一个类的agentmain方法</li>
+<li>使用maven-assembly-plugin进行打包</li>
+<li>编写main方法, 动态连接到运行中的java程序</li>
+</ol>
+<h2 id="2-简化版Arthas"><a href="#2-简化版Arthas" class="headerlink" title="2. 简化版Arthas"></a>2. 简化版Arthas</h2><p>编写一个简化版的Arthas程序, 具备以下几个功能:</p>
 <ul>
-<li>Write Once, Run Anywhere -&gt; 一次编写，到处运行</li>
-<li>预热之后，通过内置的Graal即时编译器优化热点代码，生成比Hotspot JIT更高性能的机器码</li>
+<li>查看内存使用情况</li>
+<li>查看直接内存使用情况, 生成堆内存快照</li>
+<li>打印栈信息</li>
+<li>打印类加载器</li>
+<li>打印类的源码</li>
+<li>打印方法执行的参数和耗时</li>
 </ul>
-<h3 id="2-2-AOT模式"><a href="#2-2-AOT模式" class="headerlink" title="2.2 AOT模式"></a>2.2 AOT模式</h3><p>提前编译模式</p>
-<p>AOT(Ahead-Of-Time)编译器通过源代码，为特定平台创建可执行文件。比如，在Windows下编译完成之后，会生成exe文件。通过这种方式，达到启动之后获得最高性能的目的。但是不具备跨平台特性，不同平台使用需要单独编译。</p>
-<p>这种模式生成的文件称之为Native Image本地镜像。</p>
-<p>注：这种模式同样需要先将源代码编译为class文件，再通过 <code>native-image 类名</code> 制作本地镜像</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411131626903.png" alt="image-20241113162630777"></p>
-<h2 id="3-应用场景"><a href="#3-应用场景" class="headerlink" title="3. 应用场景"></a>3. 应用场景</h2><p>GraalVM的AOT模式虽然在启动速度、内存和CPU开销上非常有优势，但是使用这种技术会带来几个问题:</p>
-<ol>
-<li>跨平台问题，在不同平台下运行需要编译多次。编译平台的依赖库等环境要与运行平台保持一致。</li>
-<li>使用框架之后，编译本地镜像的时间比较长，同时也需要消耗大量的CPU和内存。</li>
-<li>AOT 编译器在编译时，需要知道运行时所有可访问的所有类。但是Java中有一些技术可以在运行时创建类，例如反射、动态代理等。这些技术在很多框架比如Spring中大量使用，所以框架需要对AOT编译器进行适配解决类似的问题。</li>
-</ol>
-<p>解决方案:</p>
-<ol>
-<li>使用公有云的Docker等容器化平台进行在线编译，确保编译环境和运行环境是一致的，同时解决了编译资源问题</li>
-<li>使用SpringBoot3等整合了GraalVM AOT模式的框架版本</li>
-</ol>
-<h3 id="3-1-SpringBoot3搭建GraalVM"><a href="#3-1-SpringBoot3搭建GraalVM" class="headerlink" title="3.1 SpringBoot3搭建GraalVM"></a>3.1 SpringBoot3搭建GraalVM</h3><ol>
-<li>使用 <a target="_blank" rel="noopener" href="https://start.spring.io/spring">https://start.spring.io/spring</a> 提供的在线生成器构建项目。</li>
-<li>编写业务代码。</li>
-<li>执行 <code>mvn -Pnative clean native:compile</code> 命令生成本地镜像。</li>
-<li>运行本地镜像。</li>
-</ol>
-<h3 id="3-2-Serverless架构-函数计算"><a href="#3-2-Serverless架构-函数计算" class="headerlink" title="3.2 Serverless架构-函数计算"></a>3.2 Serverless架构-函数计算</h3><p>随着虚拟化技术、云原生技术的愈发成熟，云服务商提供了一套称为Serverless无服务器化的架构。企业无需进行服务器的任何配置和部署，完全由云服务商提供。比较典型的有亚马逊AWS、阿里云等。</p>
-<p>Serverless架构中第一种常见的服务是函数计算(Function asa Service)，将一个应用拆分成多个函数，每个函数会以事件驱动的方式触发。典型代表有AWS的Lambda、阿里云的FC。</p>
-<p>函数计算主要应用场景有如下几种:</p>
+<h3 id="2-1-获取运行时信息-JMX"><a href="#2-1-获取运行时信息-JMX" class="headerlink" title="2.1 获取运行时信息-JMX"></a>2.1 获取运行时信息-JMX</h3><p>JDK从1.5开始提供了Java Management Extensions(JMX)技术, 通过Mbean对象的写入和获取, 实现:</p>
 <ul>
-<li>小程序、API服务中的接口，此类接口的调用频率不高，使用常规的服务器架构容易产生资源浪费，使用Serverless就可以实现按需付费降低成本，同时支持自动伸缩能应对流量的突发情况。</li>
-<li>大规模任务的处理，比如音视频文件转码、审核等，可以利用事件机制当文件上传之后，自动触发对应的任务。</li>
+<li>运行时配置的获取和更改</li>
+<li>应用程序运行信息的获取(线程栈、内存、类信息等)</li>
 </ul>
-<p>函数计算的计费标准中包含CPU和内存使用量，所以使用GraalVM AOT模式编译出来的本地镜像可以节省更多的成本。</p>
-<h3 id="3-3-Serverless架构-Serverless应用"><a href="#3-3-Serverless架构-Serverless应用" class="headerlink" title="3.3 Serverless架构-Serverless应用"></a>3.3 Serverless架构-Serverless应用</h3><p>函数计算的服务资源比较受限，比如AWS的Lambda服务一般无法支持超过15分钟的函数执行，所以云服务商提供了另外一套方案: 基于容器的Serverless应用，无需手动配置K8s中的Pod、Service等内容，只需选择镜像就可自动生成应用服务。</p>
-<p>同样，Serverless应用的计费标准中包含CPU和内存使用量，所以使用GraalVM AOT模式编译出来的本地镜像可以节省更多的成本。</p>
-<h2 id="4-参数优化和故障诊断"><a href="#4-参数优化和故障诊断" class="headerlink" title="4. 参数优化和故障诊断"></a>4. 参数优化和故障诊断</h2><h3 id="4-1-内存参数"><a href="#4-1-内存参数" class="headerlink" title="4.1 内存参数"></a>4.1 内存参数</h3><p>由于GraalVM是一款独立的JDK，所以大部分HotSpot中的虚拟机参数都不适用。</p>
-<p>社区版只能使用串行垃圾回收器(Serial Gc)，使用串行垃圾回收器的默认最大 Java 堆大小会设置为物理内存大小的 80%，调整方式为使用<code>-Xmx最大堆大小</code>。如果希望在编译期就指定该大小，可以在编译时添加参数<code>-R:MaxHeapSize=最大堆大小</code></p>
-<p>G1垃圾回收器只能在企业版中使用，开启方式为添加<code>--gc=G1</code>参数，有效降低垃圾回收的延迟</p>
-<p>另外提供一个Epsilon Gc，开启方式:<code>--gc=epsilon</code>，它不会产生任何的垃圾回收行为所以没有额外的内存、CPU开销。如果在公有云上运行的程序生命周期短暂不产生大量的对象，可以使用该垃圾回收器以节省最大的资源。</p>
-<p><code>-XX:+PrintGC</code> <code>-XX:+VerboseGC</code> 参数打印垃圾回收详细信息</p>
-<p><strong>获取内存快照文件</strong></p>
+<p>获取JMX默认提供的Mbean可以通过如下的方式, 例如获取内存信息: <code>ManagementFactory.getMemoryPoolMXBeans()</code></p>
+<p>ManagementFactory提供了一系列方法获取各种信息</p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411141659427.png" alt="image-20241114165945286" style="zoom:67%;" /></p>
+<p>更多的信息可以通过 <code>ManagementFactory.getPlatformMXBeans()</code> 获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 获取Java虚拟机中分配的直接内存和内存映射缓冲区的大小</span><br>Class <span class="hljs-type">bufferPoolMXBeanC</span> <span class="hljs-variable">lass</span> <span class="hljs-operator">=</span> Class.forName(<span class="hljs-string">&quot;java.lang.management.BufferPoolMXBean&quot;</span>);<br>List&lt;BufferPoolMxBean&gt; bufferPoolMXBeans = ManagementFactory.getPlatformMXBeans(bufferPoolMXBeanclass);<br><span class="hljs-comment">// 获取虚拟机诊断用的MXBean, 生成内存快照</span><br><span class="hljs-type">HotspotDiagnosticMXBean</span> <span class="hljs-variable">hotspotDiagnosticMXBean</span> <span class="hljs-operator">=</span> ManagementFactory.getPlatformMXBean(HotSpotDiagnosticMxBean.class);<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-获取类和类加载器信息-Instumentation对象"><a href="#2-2-获取类和类加载器信息-Instumentation对象" class="headerlink" title="2.2 获取类和类加载器信息-Instumentation对象"></a>2.2 获取类和类加载器信息-Instumentation对象</h3><p>Java Agent中可以获得Java虛拟机提供的Instumentation对象</p>
+<p>该对象有以下几个作用:</p>
 <ol>
-<li>编译程序时，添加 <code>--enable-monitoring=heapdump</code>，参数添加到pom文件的对应插件中。</li>
-<li>运行中使用 <code>kill -SIGUSR1 进程ID</code> 命令，创建内存快照文件。</li>
-<li>使用MAT分析内存快照文件。</li>
+<li>redefine, 重新设置类的字节码信息</li>
+<li>retransform, 根据现有类的字节码信息进行增强</li>
+<li>获取所有已加载的类信息</li>
 </ol>
-<p><strong>获取运行时数据</strong></p>
-<p>JDK Flight Recorder (JFR)是一个内置于 JVM 中的工具，可以收集正在运行中的 Java 应用程序的诊断和分析数据，比如线程、异常等内容。GraalVM本地镜像也支持使用JFR生成运行时数据，导出的数据可以使用VisualVM分析。</p>
+<p><a target="_blank" rel="noopener" href="https://docs.oracle.com/en/java/javase/17/docs/api/java.instrument/java/lang/instrument/Instrumentation.html">https://docs.oracle.com/en/java/javase/17/docs/api/java.instrument/java/lang/instrument/Instrumentation.html</a></p>
+<p><strong>打印类的源码</strong></p>
 <ol>
-<li>编译程序时，添加 <code>--enable-monitoring=jfr</code>，参数添加到pom文件的对应插件中。</li>
-<li>运行程序，添加 <code>-XX:StartFlightRecording=&quot;filename=recording.jfr,duration=10s&quot;</code>参数。</li>
-<li>使用VisualVM分析JFR记录文件。</li>
+<li><p>获得内存中的类的字节码信息。利用Instrumentation提供的转换器来获取字节码信息</p>
+<p>定义转换器, 实现 <code>ClassFileTransformer</code> 接口</p>
+</li>
+<li><p>通过反编译工具将字节码信息还原成源代码信息</p>
+<p>使用<a target="_blank" rel="noopener" href="https://github.com/java-decompiler/jd-core">jd-core</a>依赖库</p>
+</li>
 </ol>
+<h3 id="2-3-打印方法执行的参数和耗时-ASM"><a href="#2-3-打印方法执行的参数和耗时-ASM" class="headerlink" title="2.3 打印方法执行的参数和耗时-ASM"></a>2.3 打印方法执行的参数和耗时-ASM</h3><p>Spring AOP 可以实现统计方法执行时间, 打印方法参数等功能, 但是使用这种方式存在几个问题:</p>
+<ul>
+<li>代码有侵入性, AOP代码必须在当前项目中被引入才能完成相应的功能</li>
+<li>无法做到灵活地开启和关闭功能。</li>
+<li>与Spring框架强耦合, 如果项目没有使用Spring框架就不可以使用。</li>
+</ul>
+<p>使用Java Agent + 字节码增强技术, 就可以解决上述三个问题。字节码增强框架是在当前类的字节码信息中插入一部分字节码指令, 从而起到增强的作用。</p>
+<p>ASM是一个通用的Java字节码操作和分析框架。它可用于直接以二进制形式修改现有类或动态生成类。ASM重点关注性能。让操作尽可能小且尽可能快, 所以它非常适合在动态系统中使用。ASM的缺点是代码复杂。</p>
+<h3 id="2-4-打印方法执行的参数和耗时-Byte-Buddy"><a href="#2-4-打印方法执行的参数和耗时-Byte-Buddy" class="headerlink" title="2.4 打印方法执行的参数和耗时-Byte Buddy"></a>2.4 打印方法执行的参数和耗时-Byte Buddy</h3><p>Byte Buddy 是一个代码生成和操作库, 用于在 Java 应用程序运行时创建和修改 Java 类, 而无需编译器的帮助。Byte Buddy底层基于ASM, 提供了非常方便的 API。</p>
+<h2 id="3-APM系统的数据采集"><a href="#3-APM系统的数据采集" class="headerlink" title="3. APM系统的数据采集"></a>3. APM系统的数据采集</h2><p>Application performance monitor (APM) 应用程序性能监控系统是采集运行程序的实时数据并使用可视化的方式展示, 使用APM可以确保系统可用性, 优化服务性能和响应时间, 持续改善用户体验。常用的APM系统有Apacheskywalking、Zipkin等。</p>
+<p>需求: 编写一个简化版的APM数据采集程序，具备以下几个功能</p>
+<ol>
+<li>无侵入性获取spring boot应用中，controller层方法的调用时间。</li>
+<li>将所有调用时间写入文件中。</li>
+</ol>
+<p>一般程序启动之后就需要持续地进行信息的采集，所以采用静态加载模式</p>
+<h3 id="3-1-Java-Agent参数获取"><a href="#3-1-Java-Agent参数获取" class="headerlink" title="3.1 Java Agent参数获取"></a>3.1 Java Agent参数获取</h3><p>在Jaya Agent中，可以通过以下方式传递参数:</p>
+<ul>
+<li><code>java -javaagent:./agent.jar=参数 -jar test.jar</code></li>
+<li><code>java -javaagent:./agent.jar=paraml=valuel,param2=value2 -jar test.jar</code> 在Java代码中使用字符串解析出对应的key value</li>
+</ul>
+<p>接下来通过premain参数中的agentArgs字段获取</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">premain</span><span class="hljs-params">(String agentArgs, Instrumentation inst)</span> &#123;&#125;<br></code></pre></td></tr></table></figure>
 
       </div>
       
         <div class="prev-or-next">
           <div class="post-foot-next">
             
-              <a href="/2024/11/04/JVM-4-%E8%B0%83%E4%BC%98/" target="_self">
+              <a href="/2024/11/13/JVM-5-GraalVM/" target="_self">
                 <i class="iconfont icon-chevronleft"></i>
                 <span>Prev</span>
               </a>
@@ -258,7 +281,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2024-11-14 11:10:03
+              2024-11-18 15:52:59
             </span>
             
                   <span class="post-categories">
@@ -281,7 +304,7 @@
           </div>
           <div class="post-foot-prev">
             
-              <a href="/2024/11/14/JVM-6-Java-Agent/" target="_self">
+              <a href="/2024/11/18/JVM-7-%E5%8E%9F%E7%90%86/" target="_self">
                 <span>Next</span>
                 <i class="iconfont icon-chevronright"></i>
               </a>
@@ -298,7 +321,7 @@
     <div class="title">Contents</div>
     <div class="catalog-content">
       
-        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-GraalVM"><span class="toc-text">1. GraalVM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E8%BF%90%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-text">2. 运行模式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-JIT%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.1 JIT模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-AOT%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.2 AOT模式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-text">3. 应用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-SpringBoot3%E6%90%AD%E5%BB%BAGraalVM"><span class="toc-text">3.1 SpringBoot3搭建GraalVM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-Serverless%E6%9E%B6%E6%9E%84-%E5%87%BD%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-text">3.2 Serverless架构-函数计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-Serverless%E6%9E%B6%E6%9E%84-Serverless%E5%BA%94%E7%94%A8"><span class="toc-text">3.3 Serverless架构-Serverless应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96%E5%92%8C%E6%95%85%E9%9A%9C%E8%AF%8A%E6%96%AD"><span class="toc-text">4. 参数优化和故障诊断</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%86%85%E5%AD%98%E5%8F%82%E6%95%B0"><span class="toc-text">4.1 内存参数</span></a></li></ol></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Java-Agent"><span class="toc-text">1. Java Agent</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-text">1.1 两种模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-text">静态加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%8A%A0%E8%BD%BD"><span class="toc-text">动态加载</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83"><span class="toc-text">1.2 搭建环境</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%AE%80%E5%8C%96%E7%89%88Arthas"><span class="toc-text">2. 简化版Arthas</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E8%8E%B7%E5%8F%96%E8%BF%90%E8%A1%8C%E6%97%B6%E4%BF%A1%E6%81%AF-JMX"><span class="toc-text">2.1 获取运行时信息-JMX</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%8E%B7%E5%8F%96%E7%B1%BB%E5%92%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E4%BF%A1%E6%81%AF-Instumentation%E5%AF%B9%E8%B1%A1"><span class="toc-text">2.2 获取类和类加载器信息-Instumentation对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%89%93%E5%8D%B0%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E8%80%97%E6%97%B6-ASM"><span class="toc-text">2.3 打印方法执行的参数和耗时-ASM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%89%93%E5%8D%B0%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E7%9A%84%E5%8F%82%E6%95%B0%E5%92%8C%E8%80%97%E6%97%B6-Byte-Buddy"><span class="toc-text">2.4 打印方法执行的参数和耗时-Byte Buddy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-APM%E7%B3%BB%E7%BB%9F%E7%9A%84%E6%95%B0%E6%8D%AE%E9%87%87%E9%9B%86"><span class="toc-text">3. APM系统的数据采集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-Java-Agent%E5%8F%82%E6%95%B0%E8%8E%B7%E5%8F%96"><span class="toc-text">3.1 Java Agent参数获取</span></a></li></ol></li></ol>
       
     </div>
   </div>
@@ -588,12 +611,12 @@
       </a>
       <div class="share-content hidden">
         
-          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JVM(5)%20GraalVM + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F11%2F13%2FJVM-5-GraalVM%2F + '" target="_blank" title="Twitter">
+          <a class="share-item" href="https://twitter.com/intent/tweet?text=' + JVM(6)%20Java%20Agent + '&url=' + https%3A%2F%2Fwhale-lyi.github.io%2F2024%2F11%2F14%2FJVM-6-Java-Agent%2F + '" target="_blank" title="Twitter">
             <i class="iconfont icon-twitter"></i>
           </a>
         
         
-          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/11/13/JVM-5-GraalVM/" target="_blank" title="Facebook">
+          <a class="share-item" href="https://www.facebook.com/sharer.php?u=https://whale-lyi.github.io/2024/11/14/JVM-6-Java-Agent/" target="_blank" title="Facebook">
             <i class="iconfont icon-facebooksquare"></i>
           </a>
         
