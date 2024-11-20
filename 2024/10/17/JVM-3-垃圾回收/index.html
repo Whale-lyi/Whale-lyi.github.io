@@ -158,7 +158,7 @@
       <div class="post-attach">
         <span class="post-pubtime">
           <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-          2024-11-14 14:02:44
+          2024-11-20 16:37:50
         </span>
         
               <span class="post-categories">
@@ -396,14 +396,14 @@
 <p>比如 <code>-XX:MaxGCPauseMiis=n</code> (默认200)，每个Region回收耗时40ms，那么这次回收最多只能回收 4 个Region。</p>
 </blockquote>
 <p><strong>混合回收</strong>（Mixed GC）</p>
-<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411032350678.png" alt="image-20241103235034559" style="zoom:80%;" /></p>
+<p><img src="https://whale-picture.oss-cn-hangzhou.aliyuncs.com/img/202411201636046.png" alt="image-20241120163656921"></p>
 <ol>
 <li>初始标记(initial mark)</li>
 <li>并发标记(concurrent mark)</li>
 <li>最终标记(remark，Finalize Marking)</li>
-<li>并发清理(cleanup)</li>
+<li>筛选回收(evacuation)</li>
 </ol>
-<p>G1对老年代的清理会选择存活度最低的区域来进行回收，这样可以保证回收效率最高，这也G1(Garbage first)名称的由来。最后的清理阶段使用复制算法，不会产生内存碎片</p>
+<p>G1对老年代的清理会选择存活度最低的区域来进行回收，这样可以保证回收效率最高，这也G1(Garbage First)名称的由来。最后的清理阶段使用复制算法，不会产生内存碎片</p>
 <blockquote>
 <p>注意: 如果清理过程中发现没有足够的空 Region 存放转移的对象，会出现Full GC。单线程执行标记-整理算法，此时会导致用户线程的暂停。所以尽量保证应该用的堆内存有一定多余的空间。</p>
 </blockquote>
@@ -454,7 +454,7 @@
           <div class="post-attach">
             <span class="post-pubtime">
               <i class="iconfont icon-updatetime mr-10" title="Update time"></i>
-              2024-11-14 14:02:44
+              2024-11-20 16:37:50
             </span>
             
                   <span class="post-categories">
